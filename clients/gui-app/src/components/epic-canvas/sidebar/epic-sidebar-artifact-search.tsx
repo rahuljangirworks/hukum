@@ -32,7 +32,7 @@ import { useShallow } from "zustand/react/shallow";
 import type {
   SearchArtifactHit,
   SearchArtifactsResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import { useHostClient } from "@/lib/host";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";
 import { useOpenEpicHandle } from "@/providers/use-open-epic-handle";
@@ -581,7 +581,7 @@ function ArtifactSearchResultsRegion(props: ArtifactSearchResultsRegionProps) {
       <SidebarPanelEmptyState
         icon={SearchX}
         title="Search isn't available on this host."
-        description="Update this device's Traycer host to search artifacts."
+        description="Update this device's Hukum host to search artifacts."
         testId="epic-artifact-search-unsupported"
       />
     );

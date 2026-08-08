@@ -91,8 +91,8 @@ describe("dataTransferHasUsableClipboardData", () => {
     ["rich text", { "text/html": "<p>notes</p>" }, [], []],
     ["plain text", { "text/plain": "notes" }, [], []],
     [
-      "the Traycer composer payload",
-      { "application/x-traycer-composer+json": '{"version":1}' },
+      "the Hukum composer payload",
+      { "application/x-hukum-composer+json": '{"version":1}' },
       [],
       [],
     ],

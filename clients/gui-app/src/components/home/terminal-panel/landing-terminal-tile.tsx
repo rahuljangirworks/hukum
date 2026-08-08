@@ -14,7 +14,7 @@ import type {
   TerminalDataWriter,
   TerminalSessionStoreHandle,
 } from "@/stores/terminals/terminal-session-store";
-import type { TerminalScope } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { TerminalScope } from "@hukum/protocol/host/terminal/unary-schemas";
 import { Button } from "@/components/ui/button";
 import type { HostUnavailability } from "@traycer-clients/shared/host-client/remote-fetcher";
 import { useHostReachability } from "@/hooks/agent/use-host-reachability";

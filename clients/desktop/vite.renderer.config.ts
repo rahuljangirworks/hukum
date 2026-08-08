@@ -13,15 +13,15 @@ const rendererEnvPrefix = [
   "VITE_DEV_CLOUD_UI_BASE_URL",
   "VITE_DEV_DESKTOP_SLOT",
   "VITE_POSTHOG_KEY",
-  "VITE_TRAYCER_OSS_REPO",
-  "VITE_TRAYCER_SIGN_IN_URL",
+  "VITE_HUKUM_OSS_REPO",
+  "VITE_HUKUM_SIGN_IN_URL",
 ];
 
 /**
  * Desktop renderer Vite config.
  *
  * Builds `src/renderer-shell/index.html` + `src/renderer-shell/main.tsx` into
- * `dist/renderer/`. The renderer consumes `@traycer-clients/gui-app` as a
+ * `dist/renderer/`. The renderer consumes `@hukum-clients/gui-app` as a
  * workspace library - there is no separate `gui-app` build step - so this
  * config mirrors the plugin chain that `gui-app` itself previously required
  * (TanStack Router codegen, React + compiler preset, Tailwind v4). Aliases
@@ -29,7 +29,7 @@ const rendererEnvPrefix = [
  * the desktop build.
  */
 export default defineConfig((): UserConfig => {
-  const noWatch = process.env.TRAYCER_DESKTOP_NO_WATCH === "1";
+  const noWatch = process.env.HUKUM_DESKTOP_NO_WATCH === "1";
   const port = Number(process.env.PORT) || 5173;
   const guiAppRoot = resolve(__dirname, "..", "gui-app");
   const sharedRoot = resolve(__dirname, "..", "shared");
@@ -45,7 +45,7 @@ export default defineConfig((): UserConfig => {
       // (src/shared/content-security-policy.ts) so it can never drift from the
       // response-header CSP in electron-main/app/security.ts.
       {
-        name: "traycer-inject-csp-meta",
+        name: "hukum-inject-csp-meta",
         transformIndexHtml(): HtmlTagDescriptor[] {
           return [
             {
@@ -84,15 +84,15 @@ export default defineConfig((): UserConfig => {
     resolve: {
       alias: {
         "@": resolve(guiAppRoot, "src"),
-        "@traycer-clients/gui-app": resolve(guiAppRoot, "index.ts"),
-        "@traycer-clients/shared": sharedRoot,
+        "@hukum-clients/gui-app": resolve(guiAppRoot, "index.ts"),
+        "@hukum-clients/shared": sharedRoot,
         // Cross-workspace imports that gui-app makes at runtime - the
         // tsconfig `paths` entries cover type-checking, but vite needs
         // explicit aliases so dependency pre-bundling can resolve them.
-        // The `utils` entry must precede the bare `@traycer/protocol`
+        // The `utils` entry must precede the bare `@hukum/protocol`
         // entry so vite matches the longer prefix first.
-        "@traycer/protocol/utils": resolve(protocolRoot, "utils"),
-        "@traycer/protocol": resolve(protocolRoot, "src"),
+        "@hukum/protocol/utils": resolve(protocolRoot, "utils"),
+        "@hukum/protocol": resolve(protocolRoot, "src"),
       },
     },
     build: {

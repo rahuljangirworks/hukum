@@ -22,7 +22,7 @@ export const hostV115MutationV20Fixtures = {
     "codex",
     "opencode",
     "cursor",
-    "traycer",
+    "hukum",
     "grok",
     "qwen",
     "kiro",
@@ -38,7 +38,7 @@ export const hostV115MutationV20Fixtures = {
     "codex",
     "opencode",
     "cursor",
-    "traycer",
+    "hukum",
     "grok",
     "qwen",
     "kiro",
@@ -177,8 +177,8 @@ export const hostV115MutationV20Fixtures = {
       "loginCapability": null,
       "availabilityPending": false
     },
-    "traycer": {
-      "providerId": "traycer",
+    "hukum": {
+      "providerId": "hukum",
       "enabled": true,
       "disabledBy": null,
       "selected": {

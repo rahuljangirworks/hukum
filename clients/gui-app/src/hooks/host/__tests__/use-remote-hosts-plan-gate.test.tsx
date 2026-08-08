@@ -7,7 +7,7 @@
  */
 import { afterEach, describe, expect, it } from "vitest";
 import { renderHook } from "@testing-library/react";
-import type { SubscriptionStatus } from "@traycer/protocol/auth/user";
+import type { SubscriptionStatus } from "@hukum/protocol/auth/user";
 import { useAuthStore } from "@/stores/auth/auth-store";
 import { useRemoteHostsPlanRestricted } from "../use-remote-hosts-plan-gate";
 

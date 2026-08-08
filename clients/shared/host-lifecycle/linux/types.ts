@@ -1,7 +1,7 @@
 import type { DurableRecord, Evidence } from "../evidence";
 import type { InstallRecord, PendingActivation } from "../durable/records";
 import type { SentinelIndeterminateCause } from "../durable/sentinel";
-import type { TraycerIdentityAttestation } from "../identity";
+import type { HukumIdentityAttestation } from "../identity";
 import type { HostPidMetadata } from "../shared/host-process";
 import type { Reachability } from "../shared/reachability";
 
@@ -27,7 +27,7 @@ export type UnitFileState =
   | {
       readonly kind: "observed";
       readonly path: string;
-      readonly identity: TraycerIdentityAttestation;
+      readonly identity: HukumIdentityAttestation;
     }
   | { readonly kind: "absent" }
   | { readonly kind: "unreadable"; readonly cause: string }

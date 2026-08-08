@@ -122,7 +122,7 @@ describe("<AddNodeDropdown /> terminal-agent launch", () => {
       isPrimary: true,
       branch: {
         type: "new" as const,
-        name: "traycer/global-launch",
+        name: "hukum/global-launch",
         source: "main",
         carryUncommittedChanges: false,
       },

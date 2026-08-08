@@ -8,7 +8,7 @@ import {
   formatLinuxProcessStartIdentity,
   formatWindowsProcessStartIdentity,
   type ProcessStartIdentity,
-} from "@traycer/protocol/host/lifecycle";
+} from "@hukum/protocol/host/lifecycle";
 
 // Cross-platform process liveness + identity probing. Shared by the CLI's
 // `cli-lock` hardening (holder identity - Host Update Layer Redesign Tech
@@ -113,7 +113,7 @@ export type PublishedProcessIdentityVerdict =
  *
  * `publishedStartIdentity` is `pid.json`'s `processStartIdentity` - the
  * kernel's own record of when the publishing process was created (see
- * `@traycer/protocol/host/lifecycle`'s `process-start-identity`). It is
+ * `@hukum/protocol/host/lifecycle`'s `process-start-identity`). It is
  * compared byte-for-byte against the same value read now.
  *
  * ### What this used to do, and why it had to stop
@@ -127,14 +127,14 @@ export type PublishedProcessIdentityVerdict =
  * became `"mismatch"` - permanently, since every later read re-derived the
  * same shifted value - for a completely healthy process.
  *
- * traycerai/traycer#740 is what that costs. On WSL2, whose realtime clock is
+ * hukumai/hukum#740 is what that costs. On WSL2, whose realtime clock is
  * resynchronised when the VM resumes from an idle pause, one such verdict
  * both told `isPublishedHostEndpointReachable` that a host answering in 8ms
  * was unreachable AND told the recovery governor's liveness gate that a
  * running process was dead - manufacturing an outage and disabling the guard
  * against acting on it, in a single value. The user's session was torn down
  * every few minutes until the respawn budget ran out and the app wedged on
- * "Traycer Host became unavailable".
+ * "Hukum Host became unavailable".
  *
  * So there is no wall-clock fallback here on purpose. When the clock-immune
  * comparison cannot be made - a `pid.json` written by a host that predates
@@ -254,7 +254,7 @@ export type ProcessIdentityVerdict =
 // resuming a paused VM, a laptop waking, NTP correcting - two processes
 // could end up inside the same critical section.
 //
-// This is the same defect as traycerai/traycer#740, which reached users
+// This is the same defect as hukumai/hukum#740, which reached users
 // through `getPublishedProcessIdentityVerdict`. The tolerance was never the
 // problem and no value for it would have helped; the operands were.
 // `ProcessStartIdentity` is recorded once by the kernel and only read back,

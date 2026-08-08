@@ -5,7 +5,7 @@ import {
   epicArtifactSchema,
   roleClaimsSchema,
   tuiAgentSchema,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 
 /**
  * Private Zod value for the V200 epic record.

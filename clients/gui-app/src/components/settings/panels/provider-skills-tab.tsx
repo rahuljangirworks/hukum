@@ -3,12 +3,12 @@ import {
   PROVIDER_DISPLAY_NAMES,
   type ProviderCliState,
   type ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type {
   ProviderSkill,
   ProviderSkillsCapabilities,
   ProvidersSkillsMutateAction,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 import { ChevronRight, Download, Plus, Sparkles } from "lucide-react";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
@@ -638,7 +638,7 @@ function SkillsEmptyState({
         </div>
       ) : (
         <p className="max-w-prose text-ui-xs text-muted-foreground">
-          This provider reads skills but can&apos;t add them from Traycer. Put a
+          This provider reads skills but can&apos;t add them from Hukum. Put a
           skill folder in its skills directory and it will appear here.
         </p>
       )}

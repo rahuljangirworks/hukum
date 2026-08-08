@@ -1,5 +1,5 @@
-import type { EpicCloudSyncStatus } from "@traycer/protocol/host/epic/subscribe";
-import type { StreamConnectionStatus } from "@traycer-clients/shared/host-transport/i-stream-session";
+import type { EpicCloudSyncStatus } from "@hukum/protocol/host/epic/subscribe";
+import type { StreamConnectionStatus } from "@hukum-clients/shared/host-transport/i-stream-session";
 
 /**
  * What the Epic header's sync pill is allowed to claim.

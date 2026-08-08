@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
 import {
   buildChatLinkPolicy,
   firstEagerlyTrueIndex,
@@ -15,7 +15,7 @@ import type {
 import type { MarkdownFileLink } from "@/markdown/links/markdown-link-context";
 import type { FetchResolveArtifactByPathArgs } from "@/lib/host/resolve-artifact-by-path";
 import type { ProjectedSidebarNodeOpenArgs } from "@/components/epic-canvas/sidebar/open-projected-sidebar-node";
-import type { ResolveArtifactByPathResult } from "@traycer/protocol/host/epic/unary-schemas";
+import type { ResolveArtifactByPathResult } from "@hukum/protocol/host/epic/unary-schemas";
 import type { FetchWorkspaceFileExistsArgs } from "@/lib/host/probe-workspace-file-exists";
 
 const OPEN_EPIC_ID = "epic-open";
@@ -23,9 +23,9 @@ const ACTIVE_HOST_ID = "host-active";
 const CHAT_HOST_ID = "host-chat";
 const TAB_ID = "tab-1";
 
-const SAME_EPIC_ARTIFACT_PATH = `/Users/me/.traycer/epics/${OPEN_EPIC_ID}/artifacts/some-spec/index.md`;
+const SAME_EPIC_ARTIFACT_PATH = `/Users/me/.hukum/epics/${OPEN_EPIC_ID}/artifacts/some-spec/index.md`;
 const CROSS_EPIC_ARTIFACT_PATH =
-  "/Users/them/.traycer/epics/epic-other/artifacts/parent/child-ticket/index.md";
+  "/Users/them/.hukum/epics/epic-other/artifacts/parent/child-ticket/index.md";
 
 const mocks = vi.hoisted(() => ({
   resolveArtifactByPath:
@@ -725,7 +725,7 @@ describe("buildChatLinkPolicy", () => {
       id: "abs-content",
     });
     const skillPath =
-      "/Users/me/.traycer/.codex/skills/traycer-review/SKILL.md";
+      "/Users/me/.hukum/.codex/skills/hukum-review/SKILL.md";
     const run = buildChatLinkPolicy(makeDeps({}));
 
     expect(run(fileLink({ path: skillPath }), lifecycle)).toBe(true);
@@ -855,13 +855,13 @@ describe("buildChatLinkPolicy", () => {
   it("tries a structurally artifact-shaped candidate through the resolver before defaulting to the direct candidate when neither local probe hits (#4)", async () => {
     const directRef = {
       id: "foreign-direct",
-      workspacePath: "/Users/them/.traycer/epics/foreign-epic/artifacts",
+      workspacePath: "/Users/them/.hukum/epics/foreign-epic/artifacts",
       filePath: "some-dir",
     };
     const dirIndexRef = {
       id: "foreign-index",
       workspacePath:
-        "/Users/them/.traycer/epics/foreign-epic/artifacts/some-dir",
+        "/Users/them/.hukum/epics/foreign-epic/artifacts/some-dir",
       filePath: "index.md",
     };
     mocks.candidateWorkspaceFileRefsForAbsoluteLinkPath.mockReturnValue([
@@ -877,7 +877,7 @@ describe("buildChatLinkPolicy", () => {
 
     run(
       fileLink({
-        path: "/Users/them/.traycer/epics/foreign-epic/artifacts/some-dir",
+        path: "/Users/them/.hukum/epics/foreign-epic/artifacts/some-dir",
       }),
       lifecycle,
     );
@@ -887,7 +887,7 @@ describe("buildChatLinkPolicy", () => {
       expect.objectContaining({
         epicId: "foreign-epic",
         filePath:
-          "/Users/them/.traycer/epics/foreign-epic/artifacts/some-dir/index.md",
+          "/Users/them/.hukum/epics/foreign-epic/artifacts/some-dir/index.md",
       }),
     );
     // Cross-epic (differs from OPEN_EPIC_ID): navigate, not a same-epic preview.
@@ -898,13 +898,13 @@ describe("buildChatLinkPolicy", () => {
   it("falls back to the direct candidate when the artifact-shaped fallback also misses (#4)", async () => {
     const directRef = {
       id: "foreign-direct-miss",
-      workspacePath: "/Users/them/.traycer/epics/foreign-epic/artifacts",
+      workspacePath: "/Users/them/.hukum/epics/foreign-epic/artifacts",
       filePath: "some-dir",
     };
     const dirIndexRef = {
       id: "foreign-index-miss",
       workspacePath:
-        "/Users/them/.traycer/epics/foreign-epic/artifacts/some-dir",
+        "/Users/them/.hukum/epics/foreign-epic/artifacts/some-dir",
       filePath: "index.md",
     };
     mocks.candidateWorkspaceFileRefsForAbsoluteLinkPath.mockReturnValue([
@@ -918,7 +918,7 @@ describe("buildChatLinkPolicy", () => {
 
     run(
       fileLink({
-        path: "/Users/them/.traycer/epics/foreign-epic/artifacts/some-dir",
+        path: "/Users/them/.hukum/epics/foreign-epic/artifacts/some-dir",
       }),
       lifecycle,
     );
@@ -937,7 +937,7 @@ describe("buildChatLinkPolicy", () => {
 
     run(
       fileLink({
-        path: "/Users/them/.traycer/epics/foreign-epic/artifacts/some-dir",
+        path: "/Users/them/.hukum/epics/foreign-epic/artifacts/some-dir",
       }),
       lifecycle,
     );
@@ -947,7 +947,7 @@ describe("buildChatLinkPolicy", () => {
       expect.objectContaining({
         epicId: "foreign-epic",
         filePath:
-          "/Users/them/.traycer/epics/foreign-epic/artifacts/some-dir/index.md",
+          "/Users/them/.hukum/epics/foreign-epic/artifacts/some-dir/index.md",
       }),
     );
     expect(mocks.navigateToTabIntent).toHaveBeenCalledTimes(1);
@@ -970,7 +970,7 @@ describe("buildChatLinkPolicy", () => {
     const run = buildChatLinkPolicy(makeDeps({}));
 
     run(
-      fileLink({ path: "../../.traycer/epics/other-epic/artifacts/spec" }),
+      fileLink({ path: "../../.hukum/epics/other-epic/artifacts/spec" }),
       lifecycle,
     );
     await flush();
@@ -998,7 +998,7 @@ describe("buildChatLinkPolicy", () => {
     const run = buildChatLinkPolicy(makeDeps({}));
 
     run(
-      fileLink({ path: "../../.traycer/epics/other-epic/artifacts/spec" }),
+      fileLink({ path: "../../.hukum/epics/other-epic/artifacts/spec" }),
       lifecycle,
     );
     await flush();

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { RemoteHostDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { RemoteHostDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
 import {
   describeVersionSkew,
   hostAppVersionFromDirectoryEntry,
@@ -76,7 +76,7 @@ describe("hostAppVersionFromDirectoryEntry", () => {
       hostId: "remote-1",
       label: "Remote",
       kind: "remote",
-      websocketUrl: "wss://relay.traycer.invalid/attach",
+      websocketUrl: "wss://relay.hukum.invalid/attach",
       version: "1.0.0",
       transportDialability: "dialable",
       publicKey: "pk",

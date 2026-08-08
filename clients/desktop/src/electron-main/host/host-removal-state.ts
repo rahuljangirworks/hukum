@@ -8,9 +8,9 @@ import {
 import { log } from "../app/logger";
 
 /**
- * Persistent "the user removed Traycer's background components" sentinel.
+ * Persistent "the user removed Hukum's background components" sentinel.
  *
- * Set by the in-app "Remove Traycer" action (Settings → General → Danger
+ * Set by the in-app "Remove Hukum" action (Settings → General → Danger
  * Zone). While set, every auto-provision / respawn `HostController` intent
  * (`convergeReady`, `respawn`, `recoverIfDown`, the launch-time
  * `applyStaged` reconcile) short-circuits, so a removed host is never
@@ -19,7 +19,7 @@ import { log } from "../app/logger";
  * reinstall.
  *
  * Lives under `userData` (a desktop-app-level decision), NOT under
- * `~/.traycer` - removal does not touch the user's data directory.
+ * `~/.hukum` - removal does not touch the user's data directory.
  */
 const DEFAULT_STATE: HostRemovalState = { removedByUser: false };
 
@@ -51,7 +51,7 @@ function parseRemovalState(value: unknown): HostRemovalState {
 }
 
 /**
- * Whether the user has removed Traycer's background components on this
+ * Whether the user has removed Hukum's background components on this
  * device. Reads the cached value after the first load; the cache is kept in
  * lockstep with `mark` / `clear` below so a synchronous-feeling read after a
  * mutation always reflects it.
@@ -113,7 +113,7 @@ export async function clearHostRemovedByUser(): Promise<void> {
  * Test-only: both the in-memory cache and the memoized store handle are
  * module-level and would otherwise leak across test cases that point
  * `app.getPath("userData")` at a fresh temp dir per test (e.g. a
- * `HostController` suite exercising `removeTraycer`/`uninstallHost` against
+ * `HostController` suite exercising `removeHukum`/`uninstallHost` against
  * real on-disk state).
  */
 export function __resetHostRemovalStateForTest(): void {

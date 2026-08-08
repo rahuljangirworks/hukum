@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { Badge } from "@/components/ui/badge";
 import { isProviderAmbientSignedOut } from "@/lib/providers/provider-ambient-auth";
 

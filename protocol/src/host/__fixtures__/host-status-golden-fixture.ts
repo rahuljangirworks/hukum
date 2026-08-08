@@ -6,14 +6,14 @@ import type { HostListItem } from "../host-status";
  * would reintroduce the exact drift this fixture exists to catch.
  *
  * Consumers, both reading this same physical file:
- *  - `traycer/protocol/src/host/__tests__/host-status.test.ts` (this
+ *  - `hukum/protocol/src/host/__tests__/host-status.test.ts` (this
  *    package): imports it by relative path.
  *  - `authn-v3/src/utils/hosts/__tests__/host-status-dto.test.ts` (the outer
  *    repo, across the submodule boundary): imports it via the package
- *    specifier `@traycer/protocol/host/__fixtures__/host-status-golden-fixture`,
- *    which authn-v3's `tsconfig.json` (`paths["@traycer/protocol/*"]`) and the
- *    workspace's hoisted `node_modules/@traycer/protocol` symlink both resolve
- *    straight back to this file under `traycer/protocol/src/...` — no build
+ *    specifier `@hukum/protocol/host/__fixtures__/host-status-golden-fixture`,
+ *    which authn-v3's `tsconfig.json` (`paths["@hukum/protocol/*"]`) and the
+ *    workspace's hoisted `node_modules/@hukum/protocol` symlink both resolve
+ *    straight back to this file under `hukum/protocol/src/...` — no build
  *    step, no copy.
  *
  * authn-v3's test asserts its real serializer output (`toHostListItem`) is a

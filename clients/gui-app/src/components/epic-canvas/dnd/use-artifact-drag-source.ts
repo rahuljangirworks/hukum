@@ -4,7 +4,7 @@ import {
   type DraggableSyntheticListeners,
 } from "@dnd-kit/core";
 import { useId, useMemo } from "react";
-import type { EpicArtifactKind } from "@traycer/protocol/common/registry";
+import type { EpicArtifactKind } from "@hukum/protocol/common/registry";
 import {
   CHAT_ARTIFACT_DND_TYPE,
   getChatArtifactDragId,

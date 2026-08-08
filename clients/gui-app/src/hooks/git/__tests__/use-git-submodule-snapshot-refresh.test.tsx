@@ -6,7 +6,7 @@ import {
   type QueryClient,
 } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import type { GitListChangedFilesResponseV11 } from "@traycer/protocol/host";
+import type { GitListChangedFilesResponseV11 } from "@hukum/protocol/host";
 import { gitQueryKeys } from "@/lib/query-keys/git-query-keys";
 import { __resetRichSlotOrderingForTesting } from "@/lib/git/git-rich-slot-ordering";
 import { stampHostRpcMethod } from "@/lib/host-rpc-policy/host-method-policy-table";

@@ -89,7 +89,7 @@ import type {
   ChatMessage as ChatMessageModel,
   MessageSegment,
 } from "@/stores/composer/chat-store";
-import type { BackgroundItem } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { BackgroundItem } from "@hukum/protocol/host/agent/gui/subscribe";
 import type { LegendListRef } from "@legendapp/list/react";
 import {
   use,

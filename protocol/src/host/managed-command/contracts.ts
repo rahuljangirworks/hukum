@@ -8,14 +8,14 @@
  * The output itself is carried by the stream in `./subscribe.ts`; the set of
  * commands a chat owns rides that chat's `chat.subscribe` stream.
  */
-import { defineRpcContract } from "@traycer/protocol/framework/index";
+import { defineRpcContract } from "@hukum/protocol/framework/index";
 import {
   managedCommandControlRequestSchema,
   managedCommandControlResponseSchema,
   managedCommandDeleteRequestSchema,
   managedCommandDeleteResponseSchema,
-} from "@traycer/protocol/host/managed-command/unary-schemas";
-import { managedCommandSubscribeOutputV10 } from "@traycer/protocol/host/managed-command/subscribe";
+} from "@hukum/protocol/host/managed-command/unary-schemas";
+import { managedCommandSubscribeOutputV10 } from "@hukum/protocol/host/managed-command/subscribe";
 
 /** Idempotent: starting an already-running command is a no-op, not an error. */
 export const managedCommandStartV10 = defineRpcContract({

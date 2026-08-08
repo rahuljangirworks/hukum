@@ -1,8 +1,8 @@
 import type {
   ProviderNativeScope,
   ProviderSkill,
-} from "@traycer/protocol/host/provider-native-schemas";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ProviderSkillsTab } from "@/components/settings/panels/provider-skills-tab";

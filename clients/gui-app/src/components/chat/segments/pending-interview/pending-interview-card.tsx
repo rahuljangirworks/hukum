@@ -5,7 +5,7 @@ import * as m from "motion/react-m";
 import type {
   InterviewAnswer,
   InterviewQuestion,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import { Button } from "@/components/ui/button";
 import { Kbd, KbdGroup } from "@/components/ui/kbd";
 import { modLabel } from "@/lib/keybindings/platform";

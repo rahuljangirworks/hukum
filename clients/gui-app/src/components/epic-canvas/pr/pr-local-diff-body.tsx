@@ -4,7 +4,7 @@ import type {
   PrGetLocalDiffResponse,
   PrLocalDiffFile,
   PrLocalDiffUnavailableReason,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { DiffContentPrimitive } from "@/components/epic-canvas/git-diff/diff-content-primitive";
 import { DiffBundleCollapseChevron } from "@/components/epic-canvas/git-diff/diff-bundle-file-section";
 import { GitSectionStatsSummary } from "@/components/epic-canvas/git-diff/diff-tab-shell";

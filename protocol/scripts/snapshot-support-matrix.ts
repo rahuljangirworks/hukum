@@ -30,8 +30,8 @@
  * that removes it is the reviewable record of that decision, exactly like
  * regenerating `released-method-names.ts`).
  */
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
-import { buildManifestFromRegistry } from "@traycer/protocol/framework/rpc-manifest";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
+import { buildManifestFromRegistry } from "@hukum/protocol/framework/rpc-manifest";
 
 const version = process.argv[2];
 if (version === undefined || version.length === 0) {

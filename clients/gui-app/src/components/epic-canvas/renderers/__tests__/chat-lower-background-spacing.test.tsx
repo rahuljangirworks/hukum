@@ -1,7 +1,7 @@
 import { act, cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import type { ChatLowerSurfaceTopSpacing } from "@/components/chat/chat-pinned-stack";
 
 /**

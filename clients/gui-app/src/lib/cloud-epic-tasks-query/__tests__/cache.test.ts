@@ -5,7 +5,7 @@ import type {
   ListTaskLight,
   ListTasksResponse,
   TaskLight,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   LIST_CLOUD_TASKS_REQUEST,
   cloudEpicTasksQueryKey,
@@ -34,17 +34,17 @@ describe("removeDeletedEpicsFromCloudTaskCaches", () => {
     );
     queryClient.setQueryData<ListTasksResponse>(matchingKey, {
       tasks: [
-        taskLight("epic-a", "Alpha", "traycer/gui-app", "user-1"),
-        taskLight("epic-b", "Beta", "traycer/server", "user-1"),
+        taskLight("epic-a", "Alpha", "hukum/gui-app", "user-1"),
+        taskLight("epic-b", "Beta", "hukum/server", "user-1"),
       ],
       hasMore: false,
       facets: {
         repos: [
           {
-            repoIdentifier: { owner: "traycer", repo: "gui-app" },
+            repoIdentifier: { owner: "hukum", repo: "gui-app" },
             count: 1,
           },
-          { repoIdentifier: { owner: "traycer", repo: "server" }, count: 1 },
+          { repoIdentifier: { owner: "hukum", repo: "server" }, count: 1 },
         ],
         workspaces: [
           {
@@ -66,7 +66,7 @@ describe("removeDeletedEpicsFromCloudTaskCaches", () => {
       },
     });
     queryClient.setQueryData<ListTasksResponse>(otherUserKey, {
-      tasks: [taskLight("epic-a", "Alpha", "traycer/gui-app", "user-1")],
+      tasks: [taskLight("epic-a", "Alpha", "hukum/gui-app", "user-1")],
       hasMore: false,
     });
 
@@ -82,7 +82,7 @@ describe("removeDeletedEpicsFromCloudTaskCaches", () => {
     ]);
     expect(matching?.facets).toEqual({
       repos: [
-        { repoIdentifier: { owner: "traycer", repo: "server" }, count: 1 },
+        { repoIdentifier: { owner: "hukum", repo: "server" }, count: 1 },
       ],
       workspaces: [
         {
@@ -116,13 +116,13 @@ describe("readEpicTitlesFromCloudTaskCaches", () => {
     );
     queryClient.setQueryData<ListTasksResponse>(matchingKey, {
       tasks: [
-        taskLight("epic-a", " Alpha ", "traycer/gui-app", "user-1"),
-        taskLight("epic-b", "Beta", "traycer/server", "user-1"),
+        taskLight("epic-a", " Alpha ", "hukum/gui-app", "user-1"),
+        taskLight("epic-b", "Beta", "hukum/server", "user-1"),
       ],
       hasMore: false,
     });
     queryClient.setQueryData<ListTasksResponse>(otherUserKey, {
-      tasks: [taskLight("epic-c", "Wrong user", "traycer/gui-app", "user-2")],
+      tasks: [taskLight("epic-c", "Wrong user", "hukum/gui-app", "user-2")],
       hasMore: false,
     });
 
@@ -151,13 +151,13 @@ describe("updateEpicTitleInCloudTaskCaches", () => {
     );
     queryClient.setQueryData<ListTasksResponse>(matchingKey, {
       tasks: [
-        taskLight("epic-a", "Alpha", "traycer/gui-app", "user-1"),
-        taskLight("epic-b", "Beta", "traycer/server", "user-1"),
+        taskLight("epic-a", "Alpha", "hukum/gui-app", "user-1"),
+        taskLight("epic-b", "Beta", "hukum/server", "user-1"),
       ],
       hasMore: false,
     });
     queryClient.setQueryData<ListTasksResponse>(otherUserKey, {
-      tasks: [taskLight("epic-a", "Alpha", "traycer/gui-app", "user-2")],
+      tasks: [taskLight("epic-a", "Alpha", "hukum/gui-app", "user-2")],
       hasMore: false,
     });
 
@@ -197,7 +197,7 @@ describe("updateEpicTitleInCloudTaskCaches", () => {
       ["epic-a"],
     );
     queryClient.setQueryData<ListTasksResponse>(listKey, {
-      tasks: [taskLight("epic-a", "Alpha", "traycer/gui-app", "user-1")],
+      tasks: [taskLight("epic-a", "Alpha", "hukum/gui-app", "user-1")],
       hasMore: false,
     });
     queryClient.setQueryData<GetTaskContextsResponse>(batchKey, {
@@ -282,7 +282,7 @@ describe("setEpicPinnedInCloudTaskCaches", () => {
       ["epic-a"],
     );
     queryClient.setQueryData<ListTasksResponse>(listKey, {
-      tasks: [taskLight("epic-a", "Alpha", "traycer/gui-app", "user-1")],
+      tasks: [taskLight("epic-a", "Alpha", "hukum/gui-app", "user-1")],
       hasMore: false,
     });
     queryClient.setQueryData<GetTaskContextsResponse>(batchKey, {
@@ -378,7 +378,7 @@ function listTaskLight(
   createdBy: string,
 ): ListTaskLight {
   return {
-    ...taskLight(id, title, "traycer/gui-app", createdBy),
+    ...taskLight(id, title, "hukum/gui-app", createdBy),
     pinned: false,
   };
 }

@@ -38,13 +38,13 @@
  * a consumer can name the credential era a request belongs to instead of
  * re-reading whichever ambient accessor happens to be nearest - see `AuthEra`.
  */
-import type { AuthenticatedUser } from "@traycer/protocol/auth";
+import type { AuthenticatedUser } from "@hukum/protocol/auth";
 import {
   createRequestContext,
   identityFromAuthenticatedUser,
   type RequestContext,
   type RequestContextOrigin,
-} from "@traycer/protocol/auth/request-context";
+} from "@hukum/protocol/auth/request-context";
 
 /**
  * Disposer returned from `onChange(...)`. Calling it removes the listener

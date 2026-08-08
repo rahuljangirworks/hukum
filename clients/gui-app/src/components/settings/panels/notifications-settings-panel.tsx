@@ -4,13 +4,13 @@ import type {
   HostNotificationChannelId,
   HostNotificationSeverity,
   HostNotificationsSecretWrite,
-} from "@traycer/protocol/host/notifications/host-notifications";
+} from "@hukum/protocol/host/notifications/host-notifications";
 import type {
   HostRpcError,
   RequestOfMethod,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import { SettingsGroup } from "@/components/settings/settings-group";
 import { SettingsPanelShell } from "@/components/settings/settings-panel-shell";
 import { SettingsRow } from "@/components/settings/settings-row";

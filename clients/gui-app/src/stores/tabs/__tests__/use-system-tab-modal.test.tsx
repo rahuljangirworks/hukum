@@ -236,7 +236,7 @@ describe("settings section is store-backed, not URL-backed", () => {
     act(() => {
       useHistorySearchStore.getState().update({
         query: "persistence",
-        repos: ["traycerai/traycer", "traycerai/traycer-internal"],
+        repos: ["hukumai/hukum", "hukumai/hukum-internal"],
         repoMode: "all",
         workspaces: [
           { hostId: "host-a", workspacePath: "/workspace/a" },
@@ -255,7 +255,7 @@ describe("settings section is store-backed, not URL-backed", () => {
     });
     expect(router.state.location.search).toMatchObject({
       historyQuery: "persistence",
-      historyRepos: ["traycerai/traycer", "traycerai/traycer-internal"],
+      historyRepos: ["hukumai/hukum", "hukumai/hukum-internal"],
       historyRepoMode: "all",
       historyWorkspaces: ["host-a:%2Fworkspace%2Fa", "host-b:%2Fworkspace%2Fb"],
       historyWorkspaceMode: "all",
@@ -282,7 +282,7 @@ describe("settings section is store-backed, not URL-backed", () => {
     act(() => {
       useHistorySearchStore.getState().update({
         query: "before back",
-        repos: ["traycerai/traycer"],
+        repos: ["hukumai/hukum"],
         ownershipScopes: ["mine"],
       });
       modalProbe.current?.promoteToTab();
@@ -303,7 +303,7 @@ describe("settings section is store-backed, not URL-backed", () => {
     act(() => {
       useHistorySearchStore.getState().update({
         query: "after back",
-        repos: ["traycerai/traycer-internal", "traycerai/traycer"],
+        repos: ["hukumai/hukum-internal", "hukumai/hukum"],
         repoMode: "all",
         ownershipScopes: ["shared", "mine"],
         sort: "oldest",
@@ -315,14 +315,14 @@ describe("settings section is store-backed, not URL-backed", () => {
     await waitFor(() => expect(router.state.location.pathname).toBe("/epics"));
     expect(router.state.location.search).toMatchObject({
       historyQuery: "after back",
-      historyRepos: ["traycerai/traycer-internal", "traycerai/traycer"],
+      historyRepos: ["hukumai/hukum-internal", "hukumai/hukum"],
       historyRepoMode: "all",
       historyOwnership: ["shared", "mine"],
       historySort: "oldest",
     });
     expect(router.state.location.search).not.toMatchObject({
       historyQuery: "before back",
-      historyRepos: ["traycerai/traycer"],
+      historyRepos: ["hukumai/hukum"],
       historyOwnership: ["mine"],
     });
     expect(router.state.location.search).not.toHaveProperty("historyOverlay");
@@ -433,7 +433,7 @@ describe("useSystemTabModalRefreshGuard", () => {
     });
     const windowId = "cold-boot-overlay-ahead";
     window.localStorage.setItem(
-      `traycer-gui-app:last-route:${windowId}`,
+      `hukum-gui-app:last-route:${windowId}`,
       JSON.stringify({
         entries: [
           "/epics/epic-1/tab-1",
@@ -471,7 +471,7 @@ describe("canPopOverlayEntry", () => {
     index: number,
   ) {
     window.localStorage.setItem(
-      `traycer-gui-app:last-route:${windowId}`,
+      `hukum-gui-app:last-route:${windowId}`,
       JSON.stringify({ entries, index }),
     );
     return createPersistentMemoryHistory(null, windowId);

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import type { WorktreeIntent } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeIntent } from "@hukum/protocol/host/worktree-schemas";
 import type { LandingDraftWorkspaceSnapshot } from "@/stores/home/landing-draft-store";
 import { useWorktreeIntentStagingStore } from "@/stores/worktree/worktree-intent-staging-store";
 import { useSeededWorkspaceSnapshotStore } from "@/stores/worktree/seeded-workspace-snapshot-store";
@@ -36,7 +36,7 @@ function stagedWorktreeEntry(workspacePath: string, isPrimary: boolean) {
     isPrimary,
     branch: {
       type: "new" as const,
-      name: "traycer/feature",
+      name: "hukum/feature",
       source: "main",
       carryUncommittedChanges: false,
     },

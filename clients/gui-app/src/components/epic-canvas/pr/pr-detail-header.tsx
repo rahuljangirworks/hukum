@@ -13,7 +13,7 @@ import type {
   PrDetailCore,
   PrSourceNotice,
   PrState,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";

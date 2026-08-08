@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { WorktreeFolderIntent } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeFolderIntent } from "@hukum/protocol/host/worktree-schemas";
 import {
   locationSelectionChanges,
   workspaceRunBranchLabel,
@@ -22,7 +22,7 @@ function newWorktree(
     scripts: null,
     branch: {
       type: "new",
-      name: "traycer/swift-otter",
+      name: "hukum/swift-otter",
       source,
       carryUncommittedChanges,
     },
@@ -38,7 +38,7 @@ describe("workspaceRunBranchLabel — new worktree shows its target branch", () 
         currentIntent: newWorktree("development", true),
         diskWorktrees: [],
       }),
-    ).toBe("traycer/swift-otter");
+    ).toBe("hukum/swift-otter");
   });
 
   it("shows the new branch name for a clean fork", () => {
@@ -49,7 +49,7 @@ describe("workspaceRunBranchLabel — new worktree shows its target branch", () 
         currentIntent: newWorktree("development", false),
         diskWorktrees: [],
       }),
-    ).toBe("traycer/swift-otter");
+    ).toBe("hukum/swift-otter");
   });
 
   it("shows the new branch name rather than a non-working-tree source", () => {
@@ -60,7 +60,7 @@ describe("workspaceRunBranchLabel — new worktree shows its target branch", () 
         currentIntent: newWorktree("release/2", false),
         diskWorktrees: [],
       }),
-    ).toBe("traycer/swift-otter");
+    ).toBe("hukum/swift-otter");
   });
 
   it("shows the adopted branch name for an existing-branch checkout (the name IS the source)", () => {

@@ -3,8 +3,8 @@ import type {
   ChatQueuedItem,
   ChatQueuedPromptItem,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import {
   isChatRunInProgress,
   type ChatSessionStoreHandle,

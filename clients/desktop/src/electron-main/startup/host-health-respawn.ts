@@ -3,7 +3,7 @@ import { HOST_REMOVED_BY_USER_MESSAGE } from "../host/host-controller-types";
 
 export class HostRecoveryDeferredError extends Error {
   constructor() {
-    super("Host recovery deferred while another Traycer process owns the lock");
+    super("Host recovery deferred while another Hukum process owns the lock");
   }
 }
 

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useCallback, useMemo, useRef, useState } from "react";
-import type { UserSessionListItem } from "@traycer/protocol/auth/devices-sessions";
+import type { UserSessionListItem } from "@hukum/protocol/auth/devices-sessions";
 import {
   Clock,
   Globe,

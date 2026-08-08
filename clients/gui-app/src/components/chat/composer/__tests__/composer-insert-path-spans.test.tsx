@@ -8,7 +8,7 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import {
   ComposerPromptEditor,

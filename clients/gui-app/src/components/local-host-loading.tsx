@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import type { MutationProgress } from "@traycer-clients/shared/platform/runner-host";
+import type { MutationProgress } from "@hukum-clients/shared/platform/runner-host";
 import { AppHeader } from "@/components/layout/header/app-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { useRunnerHost } from "@/providers/use-runner-host";
 import { useRunnerRequestHostRespawn } from "@/hooks/runner/use-runner-request-host-respawn-mutation";
-import { useRunnerTraycerHostStatusQuery } from "@/hooks/runner/use-runner-traycer-host-status-query";
+import { useRunnerHukumHostStatusQuery } from "@/hooks/runner/use-runner-hukum-host-status-query";
 import { BootstrapAttemptDetails } from "@/components/host/bootstrap-attempt-details";
 import { summariseBootstrapAttempts } from "@/components/host/bootstrap-attempt-summary";
 
@@ -101,11 +101,11 @@ export function LocalHostLoadingContent(
   props: LocalHostLoadingContentProps,
 ): ReactNode {
   const runnerHost = useRunnerHost();
-  const hasCli = runnerHost.traycerCli !== null;
+  const hasCli = runnerHost.hukumCli !== null;
   const [showDetails, setShowDetails] = useState<boolean>(false);
   // Only poll while the disclosure is open. Cache stays warm if the user
   // toggles closed-then-open quickly.
-  const status = useRunnerTraycerHostStatusQuery({
+  const status = useRunnerHukumHostStatusQuery({
     pollIntervalMs: showDetails ? BOOTSTRAP_TAIL_POLL_MS : null,
   });
   const tail = status.data?.bootstrapLogTail ?? "";
@@ -202,7 +202,7 @@ interface ProgressView {
 function buildProgressView(progress: MutationProgress | null): ProgressView {
   if (progress === null) {
     return {
-      heading: "Starting local Traycer Host…",
+      heading: "Starting local Hukum Host…",
       detail: null,
       stage: null,
       percent: null,
@@ -216,8 +216,8 @@ function buildProgressView(progress: MutationProgress | null): ProgressView {
   return {
     heading:
       progress.stage === "download"
-        ? "Downloading Traycer Host…"
-        : "Setting up Traycer Host…",
+        ? "Downloading Hukum Host…"
+        : "Setting up Hukum Host…",
     detail: progress.message,
     stage: progress.stage,
     percent,
@@ -320,7 +320,7 @@ interface BootstrapLogTailProps {
 }
 
 /**
- * Live tail of `~/.traycer/bootstrap.log`. Auto-scrolls to the bottom on
+ * Live tail of `~/.hukum/bootstrap.log`. Auto-scrolls to the bottom on
  * every refresh so the most recent line stays visible - same UX as a
  * `tail -f` in a terminal pane.
  */

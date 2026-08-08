@@ -1,6 +1,8 @@
-traycer_local_path := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+hukum_local_path := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 SHELL := /bin/bash
+
+export PATH := $(HOME)/.bun/bin:$(PATH)
 
 GIT_ROOT := $(shell git rev-parse --show-toplevel)
 
@@ -9,8 +11,8 @@ GIT_ROOT := $(shell git rev-parse --show-toplevel)
 # ---------------------------------------------------------------------------
 # Developer stack
 #
-# Runs the desktop dev shell (Vite HMR) against PRODUCTION, with the Traycer
-# host DOWNLOADED from GitHub Releases. The Traycer Host and cloud backend are
+# Runs the desktop dev shell (Vite HMR) against PRODUCTION, with the Hukum
+# host DOWNLOADED from GitHub Releases. The Hukum Host and cloud backend are
 # not part of this repo — the CLI provisions the real signed host release and
 # the clients talk to the production cloud. macOS/Linux.
 #
@@ -20,22 +22,22 @@ GIT_ROOT := $(shell git rev-parse --show-toplevel)
 #   make host-clean                  # deregister + remove the dev host
 #
 # The CLI verifies the downloaded host against the signing public key committed
-# in clients/traycer-cli/src/config.ts, so no key setup is needed. The dev host
-# installs under the isolated `dev` slot (`~/.traycer/host/dev`, service label
-# `ai.traycer.host.dev`), so it never touches a production Traycer install.
-# Ctrl-C deregisters it; ~/.traycer user data (credentials, config) is preserved.
+# in clients/hukum-cli/src/config.ts, so no key setup is needed. The dev host
+# installs under the isolated `dev` slot (`~/.hukum/host/dev`, service label
+# `ai.hukum.host.dev`), so it never touches a production Hukum install.
+# Ctrl-C deregisters it; ~/.hukum user data (credentials, config) is preserved.
 # ---------------------------------------------------------------------------
 
-CLI := bun clients/traycer-cli/src/index.ts
+CLI := ~/.bun/bin/bun clients/hukum-cli/src/index.ts
 
 dev-desktop:
-	@bun run dev-desktop -- $(if $(strip $(VERSION)),--release $(VERSION),) $(ARGS)
+	@~/.bun/bin/bun scripts/dev-desktop.js -- $(if $(strip $(VERSION)),--release $(VERSION),) $(ARGS)
 
 # Stop the dev host service (leaves it installed).
 host-stop:
 	@$(CLI) host stop
 
-# Deregister + remove the dev host install (keeps ~/.traycer user data).
+# Deregister + remove the dev host install (keeps ~/.hukum user data).
 host-clean:
 	@$(CLI) host uninstall --all
 
@@ -44,22 +46,22 @@ host-clean:
 # ---------------------------------------------------------------------------
 
 install:
-	@bun install
+	@~/.bun/bin/bun install
 
 lint:
-	@bun run lint
+	@~/.bun/bin/bun run lint
 
 format:
-	@bun run format
+	@~/.bun/bin/bun run format
 
 test:
-	@bun run test
+	@~/.bun/bin/bun run test
 
 test-affected:
-	@bun run test:affected
+	@~/.bun/bin/bun run test:affected
 
 test-project:
-	@bun run test:project $(ARGS)
+	@~/.bun/bin/bun run test:project $(ARGS)
 
 workspace-checks:
 	@scripts/pre_commit_workspace_checks.sh
@@ -68,12 +70,12 @@ pre-commit-checks:
 	@pre-commit run --all-files
 
 build:
-	@bun install
-	@bun run build
+	@~/.bun/bin/bun install
+	@~/.bun/bin/bun run build
 
 compile:
-	@bun install
-	@bun run compile
+	@~/.bun/bin/bun install
+	@~/.bun/bin/bun run compile
 
 all: pre-commit-checks
 	@echo "Done"

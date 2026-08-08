@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   classifyWorktreeTier,
   type WorktreeTier,
-} from "@traycer-clients/shared/worktree/classify-worktree";
-import type { WorktreeHostEntryV14 } from "@traycer/protocol/host/index";
-import type { WorktreeListAllForHostResponseV14 } from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum-clients/shared/worktree/classify-worktree";
+import type { WorktreeHostEntryV14 } from "@hukum/protocol/host/index";
+import type { WorktreeListAllForHostResponseV14 } from "@hukum/protocol/host/worktree-schemas";
 import { useHostClient } from "@/lib/host";
 import { hostQueryKeys } from "@/lib/query-keys";
 import { useReactiveHostReadiness } from "@/hooks/host/use-reactive-host-readiness";
@@ -53,7 +53,7 @@ const EMPTY_ROWS: ReadonlyArray<EpicSweepWorktreeRow> = [];
  * false` (steady-state liveness is manual-refresh-owned), so a worktree that
  * was clean+Landed when last probed but was edited from an external terminal
  * since would still read "proven safe" from cache — and `worktree.deleteByPath`
- * force-removes a dirty tree (its busy-check only covers Traycer-registered
+ * force-removes a dirty tree (its busy-check only covers Hukum-registered
  * owners). The dialog therefore re-proves before offering: a cheap un-probed
  * walk finds the Task's paths, then ONE selection-mode `listAllForHost` with
  * `activityPaths` = those paths and `forceRefresh: true` re-derives the disk

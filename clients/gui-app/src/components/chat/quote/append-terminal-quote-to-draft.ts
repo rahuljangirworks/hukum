@@ -1,4 +1,4 @@
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { mentionAttrsFromAttachment } from "@/lib/composer/tiptap-json-content";
 import type { EntityMentionAttachment } from "@/lib/composer/types";

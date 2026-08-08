@@ -37,7 +37,7 @@ import {
   matchesReportImageMagicBytes,
   reportImageMediaTypeForMimeType,
   reportImagesExceedBudget,
-} from "@traycer-clients/shared/support/image-attachment-guards";
+} from "@hukum-clients/shared/support/image-attachment-guards";
 
 export function registerSupportIpc(bridge: RunnerIpcBridge): void {
   bridge.handleInvoke(

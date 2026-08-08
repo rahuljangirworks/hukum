@@ -6,7 +6,7 @@ import { join } from "node:path";
 import {
   isProcessStartIdentity,
   type ProcessStartIdentity,
-} from "@traycer/protocol/host/lifecycle";
+} from "@hukum/protocol/host/lifecycle";
 import {
   readProcessStartIdentity,
   readProcessStartTimeMs,
@@ -16,7 +16,7 @@ import {
 // Cross-process file lock protocol (Host Update Layer Redesign Tech Plan,
 // "cli-lock" rule 3: "Electron main implements the identical lock protocol
 // [as the CLI] (same file, desktop PID + start-time identity)"). Both the
-// CLI (`traycer-cli/src/store/cli-lock.ts`) and desktop main
+// CLI (`hukum-cli/src/store/cli-lock.ts`) and desktop main
 // (`desktop/src/electron-main/host/desktop-cli-lock.ts`) are thin wrappers
 // around this module - it owns the on-disk lock-file format, holder
 // identity, positive-evidence breaking, and the `.break` arbitration
@@ -438,7 +438,7 @@ async function breakStaleLock(
 // arbitrated "aborted" path was actually exercised rather than inferring it
 // from timing. Never read or written by production code paths. Shared by
 // the CLI's and desktop's own genuine multiprocess lock tests.
-const BREAK_HOOK_DIR_ENV = "TRAYCER_CLI_LOCK_TEST_BREAK_HOOK_DIR";
+const BREAK_HOOK_DIR_ENV = "HUKUM_CLI_LOCK_TEST_BREAK_HOOK_DIR";
 const BREAK_HOOK_POLL_MS = 20;
 const BREAK_HOOK_MAX_WAIT_MS = 15_000;
 

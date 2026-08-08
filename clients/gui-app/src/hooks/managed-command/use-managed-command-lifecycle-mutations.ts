@@ -7,9 +7,9 @@ import { toast } from "sonner";
 import {
   HostRpcError,
   withHostRpcErrorBoundary,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { ResponseOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { ResponseOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import {
   useHostClient,
   useHostDirectory,

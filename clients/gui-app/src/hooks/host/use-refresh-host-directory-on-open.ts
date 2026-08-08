@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 
 interface RefreshableHostDirectory {
   refresh(): Promise<readonly HostDirectoryEntry[]>;

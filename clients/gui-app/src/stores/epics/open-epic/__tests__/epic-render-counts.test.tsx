@@ -18,8 +18,8 @@ import {
   type EpicStreamClientFactory,
   type OpenEpicStoreHandle,
 } from "@/stores/epics/open-epic/store";
-import type { SnapshotMetaEpic } from "@traycer/protocol/host/epic/snapshot-meta";
-import type { EpicStreamCallbacks } from "@traycer-clients/shared/host-transport/epic-stream-client";
+import type { SnapshotMetaEpic } from "@hukum/protocol/host/epic/snapshot-meta";
+import type { EpicStreamCallbacks } from "@hukum-clients/shared/host-transport/epic-stream-client";
 import { useStore } from "zustand";
 
 function encodeBase64(bytes: Uint8Array): string {

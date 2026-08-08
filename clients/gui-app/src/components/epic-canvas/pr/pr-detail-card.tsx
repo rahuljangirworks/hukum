@@ -3,7 +3,7 @@ import { Check, Clock, Eye, X } from "lucide-react";
 import type {
   PrActivitySection,
   PrDetailCore,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import type {
   PrAttentionQueue,
   PrCheckCounts,

@@ -1,22 +1,22 @@
-; Tears down the host's per-user autostart when Traycer is REMOVED through the
+; Tears down the host's per-user autostart when Hukum is REMOVED through the
 ; OS-native route (Add/Remove Programs -> this NSIS uninstaller).
 ;
 ; WHY THIS FILE EXISTS
 ; -------------------
-; The host does not auto-start from anything inside $INSTDIR. `traycer host
-; service install` registers a per-user Scheduled Task `\Traycer\Host` whose
+; The host does not auto-start from anything inside $INSTDIR. `hukum host
+; service install` registers a per-user Scheduled Task `\Hukum\Host` whose
 ; action runs a launcher VBS under the user profile, so deleting the app
 ; directory removes the UI and leaves the host starting at every single logon,
 ; with no discoverable stop vector left (the task is `<Hidden>true</Hidden>`,
 ; and logon-trigger tasks are not listed in the Startup-apps panel).
 ;
-; Settings -> "Remove Traycer" in the app already does a full, tested teardown
-; via `traycer host uninstall --all`. This macro exists only for the users who
+; Settings -> "Remove Hukum" in the app already does a full, tested teardown
+; via `hukum host uninstall --all`. This macro exists only for the users who
 ; never open Settings and remove the app the way Windows tells them to.
 ;
 ; WHY RAW COMMANDS AND NOT THE BUNDLED CLI
 ; ---------------------------------------
-; `$INSTDIR\resources\cli\win32-x64\traycer.exe host uninstall --all` still
+; `$INSTDIR\resources\cli\win32-x64\hukum.exe host uninstall --all` still
 ; exists at this point (files are deleted after `customUnInstall`) and would be
 ; the more complete teardown - it also kills an already-running host through a
 ; slot-scoped, pid-verified scan this macro deliberately does not attempt.
@@ -27,7 +27,7 @@
 ; bounded OS utility, and each is best-effort - nothing here may fail the
 ; uninstall.
 ;
-; Residue deliberately left: `%USERPROFILE%\.traycer` (chats, SQLite, models,
+; Residue deliberately left: `%USERPROFILE%\.hukum` (chats, SQLite, models,
 ; credentials). Uninstalling an app does not destroy the user's data, and the
 ; CLI's own `host uninstall` has no destructive purge path either. The
 ; *execution* is what has to stop.
@@ -36,11 +36,11 @@
 ; Windows release job runs `set-deploy-target.cjs --target=production`, and
 ; `set-deploy-target.cjs` defines no target that would produce a Windows
 ; installer under another label. The names below must stay in lockstep with
-; `windowsTaskName()` in clients/traycer-cli/src/service/label.ts (production ->
-; `\Traycer\Host`) and `hiddenHostLauncherPath()` in
-; clients/traycer-cli/src/service/platforms/windows.ts, which resolves to
+; `windowsTaskName()` in clients/hukum-cli/src/service/label.ts (production ->
+; `\Hukum\Host`) and `hiddenHostLauncherPath()` in
+; clients/hukum-cli/src/service/platforms/windows.ts, which resolves to
 ; `<cliInstallHomeDir("production")>\host-start-hidden.vbs` =
-; `%USERPROFILE%\.traycer\cli\host-start-hidden.vbs`.
+; `%USERPROFILE%\.hukum\cli\host-start-hidden.vbs`.
 
 !macro customUnInstall
   ; THE UPDATE GUARD - the single most important line in this file.
@@ -51,7 +51,7 @@
   ;     ExecWait '"$uninstallerFileNameTemp" /S /KEEP_APP_DATA $0 _?=$installationDir'
   ; and `customUnInstall` is inserted near the TOP of the un.Uninstall section,
   ; so it fires on every update as well as on a real removal. Without this
-  ; guard, upgrading Traycer would silently delete the logon task and the host
+  ; guard, upgrading Hukum would silently delete the logon task and the host
   ; would stop starting after every update - a far worse defect than the one
   ; this file fixes.
   ;
@@ -67,9 +67,9 @@
   ${GetParameters} $R0
   ${GetOptions} $R0 "--updated" $R1
   ${ifNot} ${Errors}
-    DetailPrint "Traycer: in-place update - leaving the host autostart registered"
+    DetailPrint "Hukum: in-place update - leaving the host autostart registered"
   ${else}
-    DetailPrint "Traycer: removing the host autostart (Scheduled Task + launcher)"
+    DetailPrint "Hukum: removing the host autostart (Scheduled Task + launcher)"
 
     ; Stop the instance the task currently owns. This is not a complete stop -
     ; Task Scheduler does not job-object the tree, so a wrapper -> node child
@@ -77,18 +77,18 @@
     ; windows.ts, which needs a pid-verified scan to do better). That orphan is
     ; harmless here: it holds no handle on $INSTDIR, so it cannot block this
     ; uninstall, and with the trigger deleted below it never comes back.
-    nsExec::ExecToLog 'schtasks /End /TN "\Traycer\Host"'
+    nsExec::ExecToLog 'schtasks /End /TN "\Hukum\Host"'
     Pop $R0
 
     ; Delete the logon trigger. THIS is the fix - it is what stops the host
     ; coming back at every future logon.
-    nsExec::ExecToLog 'schtasks /Delete /TN "\Traycer\Host" /F'
+    nsExec::ExecToLog 'schtasks /Delete /TN "\Hukum\Host" /F'
     Pop $R0
 
     ; Remove the launcher the task's action pointed at.
-    Delete "$PROFILE\.traycer\cli\host-start-hidden.vbs"
+    Delete "$PROFILE\.hukum\cli\host-start-hidden.vbs"
 
-    ; `schtasks /Delete` removes only the task; the `\Traycer` FOLDER it lived
+    ; `schtasks /Delete` removes only the task; the `\Hukum` FOLDER it lived
     ; in survives and stays visible in the Task Scheduler tree. schtasks has no
     ; verb for folders, so this uses the same Schedule.Service COM call the CLI
     ; uninstall path already ships, and the same only-when-empty guard: a
@@ -106,7 +106,7 @@
     ;
     ; Wrapped in try/catch because GetFolder throws when the folder is already
     ; gone, which is a perfectly normal outcome here.
-    nsExec::ExecToLog `powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "try{$$s=New-Object -ComObject Schedule.Service;$$s.Connect();$$f=$$s.GetFolder('\Traycer');if((@($$f.GetTasks(1)).Count -eq 0) -and (@($$f.GetFolders(0)).Count -eq 0)){$$s.GetFolder('\').DeleteFolder('Traycer',0)}}catch{}"`
+    nsExec::ExecToLog `powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "try{$$s=New-Object -ComObject Schedule.Service;$$s.Connect();$$f=$$s.GetFolder('\Hukum');if((@($$f.GetTasks(1)).Count -eq 0) -and (@($$f.GetFolders(0)).Count -eq 0)){$$s.GetFolder('\').DeleteFolder('Hukum',0)}}catch{}"`
     Pop $R0
   ${endIf}
 !macroend

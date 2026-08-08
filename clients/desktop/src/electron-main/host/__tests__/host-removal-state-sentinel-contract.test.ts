@@ -2,9 +2,9 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { decodeBooleanSentinel } from "@traycer-clients/shared/host-lifecycle/durable/sentinel";
-import { canonicalBooleanSentinelBytes } from "@traycer-clients/shared/host-lifecycle/durable/repair";
-import type { BooleanSentinelRecord } from "@traycer-clients/shared/host-lifecycle/durable/sentinel";
+import { decodeBooleanSentinel } from "@hukum-clients/shared/host-lifecycle/durable/sentinel";
+import { canonicalBooleanSentinelBytes } from "@hukum-clients/shared/host-lifecycle/durable/repair";
+import type { BooleanSentinelRecord } from "@hukum-clients/shared/host-lifecycle/durable/sentinel";
 
 /**
  * **Writer ↔ reader pinning for the removed-by-user sentinel** (macOS annex
@@ -17,8 +17,8 @@ import type { BooleanSentinelRecord } from "@traycer-clients/shared/host-lifecyc
  * fell through **every other shape** to `observed(true)`. The only writer of
  * this file in either repo is `host-removal-state.ts` — right here — and it
  * writes `{"removedByUser": <bool>}`, which was neither recognised shape. So
- * the file that means *"the user did NOT remove Traycer"* decoded as *"the
- * user removed Traycer"*, every converge/respawn arm short-circuited, the host
+ * the file that means *"the user did NOT remove Hukum"* decoded as *"the
+ * user removed Hukum"*, every converge/respawn arm short-circuited, the host
  * never started, and nothing in the evidence trail said why.
  *
  * `observed(false)` was, in other words, unreachable from any byte sequence
@@ -35,7 +35,7 @@ let userDataDir = "";
 
 vi.mock("electron", () => ({
   app: {
-    getPath: vi.fn(() => process.env.TRAYCER_TEST_USER_DATA ?? tmpdir()),
+    getPath: vi.fn(() => process.env.HUKUM_TEST_USER_DATA ?? tmpdir()),
     isPackaged: false,
     getAppPath: vi.fn(() => "/tmp"),
   },
@@ -81,13 +81,13 @@ async function decodeWrittenSentinel(): Promise<{
 
 describe("removed-by-user sentinel: real writer → lifecycle reader", () => {
   beforeEach(async () => {
-    userDataDir = await mkdtemp(join(tmpdir(), "traycer-removal-sentinel-"));
-    process.env.TRAYCER_TEST_USER_DATA = userDataDir;
+    userDataDir = await mkdtemp(join(tmpdir(), "hukum-removal-sentinel-"));
+    process.env.HUKUM_TEST_USER_DATA = userDataDir;
     __resetHostRemovalStateForTest();
   });
 
   afterEach(async () => {
-    delete process.env.TRAYCER_TEST_USER_DATA;
+    delete process.env.HUKUM_TEST_USER_DATA;
     __resetHostRemovalStateForTest();
     await rm(userDataDir, { recursive: true, force: true });
   });

@@ -1,6 +1,6 @@
 import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import type { ProfileDropdownUsageEntry } from "../profile-dropdown-usage";
 import { ProfileUsageSidecar } from "../profile-usage-sidecar";
 

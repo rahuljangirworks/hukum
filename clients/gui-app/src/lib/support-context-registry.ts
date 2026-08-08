@@ -75,7 +75,7 @@ interface SupportContextRegistryState {
  * Module-level store (D5): deliberately NOT React context. A root crash
  * unmounts the authenticated runtime subtree that writes this registry, but
  * `ReportIssueDialogHost` stays mounted above the root error boundary (see
- * `traycer-app.tsx`) and must still be able to read the last-known session
+ * `hukum-app.tsx`) and must still be able to read the last-known session
  * state for the report it opens. A React context living inside the crashed
  * subtree would be torn down with it; a module-scoped Zustand store (same
  * shape as `desktop-dialog-store.ts`) lives independent of the React tree and

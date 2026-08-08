@@ -14,7 +14,7 @@ import {
   workspaceWriteFileRequestSchema,
   workspaceWriteFileResponseSchema,
   workspaceWorktreeMentionSuggestionsResponseSchema,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 
 describe("workspace mention host schemas", () => {
   it("accepts separate file/folder and git mention shapes", () => {
@@ -74,13 +74,13 @@ describe("workspace mention host schemas", () => {
         entries: [
           {
             kind: "worktree",
-            id: "worktree:/repo:/home/u/.traycer/worktrees/o/r/feature",
+            id: "worktree:/repo:/home/u/.hukum/worktrees/o/r/feature",
             label: "feature",
-            worktreePath: "/home/u/.traycer/worktrees/o/r/feature",
+            worktreePath: "/home/u/.hukum/worktrees/o/r/feature",
             workspacePath: "/repo",
             branch: "feature",
             isMain: false,
-            description: "/home/u/.traycer/worktrees/o/r/feature",
+            description: "/home/u/.hukum/worktrees/o/r/feature",
           },
         ],
       }).success,

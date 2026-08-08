@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import { buildStreamManifest } from "@traycer/protocol/framework/stream-compat";
-import type { ChatSubscribeClientFrame } from "@traycer/protocol/host/agent/gui/subscribe";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import { buildStreamManifest } from "@hukum/protocol/framework/stream-compat";
+import type { ChatSubscribeClientFrame } from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   createRequestContext,
   identityFromAuthenticatedUser,
   type RequestContext,
-} from "@traycer/protocol/auth/request-context";
+} from "@hukum/protocol/auth/request-context";
 import { mockLocalHostEntry } from "../../host-client/mock/mock-host-directory";
 import { createAuthenticatedUserFixture } from "../../test-fixtures/authenticated-user";
 import type {

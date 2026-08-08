@@ -33,7 +33,7 @@ describe("scrubSupportText", () => {
   it("pseudonymizes a quoted POSIX path, preserving surrounding quotes", () => {
     expect(
       scrubSupportText(
-        "Cannot find module '/Applications/Traycer.app/Contents/Resources/lifecycle_lock.node'",
+        "Cannot find module '/Applications/Hukum.app/Contents/Resources/lifecycle_lock.node'",
       ),
     ).toBe("Cannot find module '<path-1>'");
   });
@@ -41,7 +41,7 @@ describe("scrubSupportText", () => {
   it("pseudonymizes a Windows drive path", () => {
     expect(
       scrubSupportText(
-        "windows path C:\\Users\\anurag\\AppData\\Local\\Traycer\\log.txt end",
+        "windows path C:\\Users\\anurag\\AppData\\Local\\Hukum\\log.txt end",
       ),
     ).toBe("windows path <path-1> end");
   });

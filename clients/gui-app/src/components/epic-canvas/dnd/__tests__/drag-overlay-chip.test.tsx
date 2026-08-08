@@ -19,11 +19,11 @@ describe("<EpicRootDragOverlayContent />", () => {
   it("renders a Git bundle drag as an intrinsically sized semantic chip", () => {
     const tile = makeGitBundleDiffTile({
       hostId: "host-1",
-      runningDir: "/worktrees/right-click-context-menu/traycer",
+      runningDir: "/worktrees/right-click-context-menu/hukum",
       bundleGroup: "changes",
       repositoryContext: {
-        workspaceLabel: "traycer-internal",
-        repositoryLabel: "traycer",
+        workspaceLabel: "hukum-internal",
+        repositoryLabel: "hukum",
       },
     });
     const source: EpicCanvasGitDiffTileDragData = {
@@ -39,13 +39,13 @@ describe("<EpicRootDragOverlayContent />", () => {
     const chip = screen.getByTestId("git-diff-drag-overlay");
     expect(chip.className).toContain("w-max");
     expect(chip.getAttribute("aria-label")).toBe(
-      "Changes: traycer-internal › traycer",
+      "Changes: hukum-internal › hukum",
     );
     expect(screen.getByTestId("git-diff-drag-overlay-scope").textContent).toBe(
       "Changes",
     );
     expect(
       screen.getByTestId("git-diff-drag-overlay-subject").textContent,
-    ).toBe("traycer-internal › traycer");
+    ).toBe("hukum-internal › hukum");
   });
 });

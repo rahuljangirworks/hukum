@@ -1,4 +1,4 @@
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import {
   providerPackBlocksExecution,
   providerPackPreparingForProvider,
@@ -26,7 +26,7 @@ import { providerDisplayName } from "@/lib/provider-ordering";
  * noise, though not for the reason it is tempting to assume. An old host's
  * payload arrives with the key filled to `null` by the v6 -> v7 upgrade bridge
  * (`registry.ts`), not absent. `undefined` comes from the optional chain: a
- * provider whose `loginCapability` is itself `null` (Cursor, Traycer) or not
+ * provider whose `loginCapability` is itself `null` (Cursor, Hukum) or not
  * yet loaded (a map lookup before `providers.list` resolves). A bare `!== null`
  * would read those as "supports terminal login" and tell every such provider's
  * user to sign in from a composer affordance that will never appear. `!= null`
@@ -85,7 +85,7 @@ export function providerSignInUnavailableHint(
     // "Above" is intentionally gone: the API key field lives on the Account
     // tab after the providers tab split, not above this hint.
     const name = providerDisplayName(state.providerId);
-    if (state.providerId === "traycer") {
+    if (state.providerId === "hukum") {
       return `${name} does not support browser sign-in.`;
     }
     return `${name} does not support browser sign-in. Authenticate with its own CLI, or set an API key on the Account tab.`;
@@ -100,7 +100,7 @@ export function providerSignInUnavailableHint(
     return `${providerDisplayName(state.providerId)} is signed in from a terminal. Use the sign-in option in the chat composer.`;
   }
   if (!isSelectedHostLocal) {
-    return "Signing in opens a browser on the machine running Traycer, so it is only available on a local host.";
+    return "Signing in opens a browser on the machine running Hukum, so it is only available on a local host.";
   }
   const packPreparing = providerPackPreparingForProvider(state);
   // Blocking, not merely preparing: a login spawns whatever the resolver

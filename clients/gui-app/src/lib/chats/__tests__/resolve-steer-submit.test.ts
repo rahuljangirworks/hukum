@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ChatActiveTurn } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { ChatActiveTurn } from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   resolveSubmitDeliveryPolicy,
   steerHintIsActive,

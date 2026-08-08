@@ -25,13 +25,13 @@ vi.mock("electron", () => ({
 
 import { buildApplicationMenu } from "../menu-builder";
 import {
-  TRAYCER_DOCUMENTATION_URL,
-  TRAYCER_RELEASE_NOTES_URL,
+  HUKUM_DOCUMENTATION_URL,
+  HUKUM_RELEASE_NOTES_URL,
 } from "../../app/support-links";
 
 function buildState(platform: NodeJS.Platform): MenuState {
   return {
-    appName: "Traycer",
+    appName: "Hukum",
     platform,
     authSession: {
       status: "signed-in",
@@ -93,11 +93,11 @@ describe("buildApplicationMenu", () => {
     );
 
     expect(items.map((item) => item.id)).toEqual([
-      "traycer.top-level-menu.file",
-      "traycer.top-level-menu.edit",
-      "traycer.top-level-menu.view",
-      "traycer.top-level-menu.window",
-      "traycer.top-level-menu.help",
+      "hukum.top-level-menu.file",
+      "hukum.top-level-menu.edit",
+      "hukum.top-level-menu.view",
+      "hukum.top-level-menu.window",
+      "hukum.top-level-menu.help",
     ]);
   });
 
@@ -116,7 +116,7 @@ describe("buildApplicationMenu", () => {
     const appMenu =
       menuByLabel(
         template(buildApplicationMenu(withUpdate, actions)),
-        "Traycer",
+        "Hukum",
       ).submenu ?? [];
 
     const update = menuByLabel(appMenu, "Update to 2.0.0");
@@ -124,7 +124,7 @@ describe("buildApplicationMenu", () => {
     expect(commands).toEqual(["host.installUpdate"]);
 
     const withoutUpdate =
-      menuByLabel(template(buildApplicationMenu(state, actions)), "Traycer")
+      menuByLabel(template(buildApplicationMenu(state, actions)), "Hukum")
         .submenu ?? [];
     expect(
       withoutUpdate.some((item) => item.label?.startsWith("Update to ")),
@@ -146,12 +146,12 @@ describe("buildApplicationMenu", () => {
       }),
     );
 
-    const appMenu = menuByLabel(items, "Traycer").submenu ?? [];
-    const appAbout = menuByLabel(appMenu, "About Traycer");
+    const appMenu = menuByLabel(items, "Hukum").submenu ?? [];
+    const appAbout = menuByLabel(appMenu, "About Hukum");
     const helpMenu = menuByLabel(items, "Help").submenu ?? [];
     const documentation = menuByLabel(helpMenu, "Documentation");
     const releaseNotes = menuByLabel(helpMenu, "Release Notes");
-    const helpAbout = menuByLabel(helpMenu, "About Traycer");
+    const helpAbout = menuByLabel(helpMenu, "About Hukum");
     expect(appAbout.role).toBeUndefined();
     appAbout.click?.(null, null);
     documentation.click?.(null, null);
@@ -159,8 +159,8 @@ describe("buildApplicationMenu", () => {
     helpAbout.click?.(null, null);
     expect(commands).toEqual(["app.aboutDetails", "app.aboutDetails"]);
     expect(externalUrls).toEqual([
-      TRAYCER_DOCUMENTATION_URL,
-      TRAYCER_RELEASE_NOTES_URL,
+      HUKUM_DOCUMENTATION_URL,
+      HUKUM_RELEASE_NOTES_URL,
     ]);
   });
 
@@ -177,7 +177,7 @@ describe("buildApplicationMenu", () => {
         }),
       );
       const helpMenu = menuByLabel(items, "Help").submenu ?? [];
-      const about = menuByLabel(helpMenu, "About Traycer");
+      const about = menuByLabel(helpMenu, "About Hukum");
       about.click?.(null, null);
       expect(commands).toEqual(["app.aboutDetails"]);
     }

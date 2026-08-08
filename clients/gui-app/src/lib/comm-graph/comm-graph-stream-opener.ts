@@ -9,7 +9,7 @@
  * the chat / terminal / epic session stores use, so a comm-graph subscription
  * recovers from host restarts and OS sleep exactly like they do.
  */
-import { epicCommunicationGraphSubscribeServerFrameSchema } from "@traycer/protocol/host/epic/communication-graph";
+import { epicCommunicationGraphSubscribeServerFrameSchema } from "@hukum/protocol/host/epic/communication-graph";
 import type { DurableStreamTransport } from "@/lib/host/durable-stream-transport";
 import { appLogger } from "@/lib/logger";
 import type {

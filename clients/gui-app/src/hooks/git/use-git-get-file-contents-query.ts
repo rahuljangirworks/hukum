@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   HostRpcError,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { GitStage, HostRpcRegistry } from "@traycer/protocol/host";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { GitStage, HostRpcRegistry } from "@hukum/protocol/host";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 
 export function useGitGetFileContentsQuery(args: {

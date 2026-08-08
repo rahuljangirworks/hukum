@@ -75,8 +75,8 @@
  * Client frames: `ping` only, like the released stream.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
-import { worktreeEntryScriptsSchema } from "@traycer/protocol/host/worktree-schemas";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
+import { worktreeEntryScriptsSchema } from "@hukum/protocol/host/worktree-schemas";
 
 /**
  * Where the command came from. Durable: it rides into the notification
@@ -99,7 +99,7 @@ export const worktreeDeleteBatchTargetSchema = z.object({
   worktreePath: z.string().min(1),
   /**
    * Per-target script override from the Settings review modal. `null` means
-   * "read the worktree's own `.traycer/environment.json`", matching the
+   * "read the worktree's own `.hukum/environment.json`", matching the
    * released single-target request.
    */
   scripts: worktreeEntryScriptsSchema.nullable(),

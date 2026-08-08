@@ -1,4 +1,4 @@
-import type { InterviewQuestion } from "@traycer/protocol/persistence/epic/schemas";
+import type { InterviewQuestion } from "@hukum/protocol/persistence/epic/schemas";
 import type { StoredInterviewDraftAnswer } from "@/stores/composer/interview-draft-store";
 
 export interface DraftAnswer {

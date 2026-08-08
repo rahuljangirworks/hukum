@@ -5,9 +5,9 @@ import {
   type GitChangedFile,
   type GitGetFileDiffsResponse,
   type HostRpcRegistry,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import { useHostClient } from "@/lib/host";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import { writeBatchedDiffResponses } from "@/lib/git/write-batched-diff-responses";
 import { appLogger, describeLogErrorSummary } from "@/lib/logger";
 

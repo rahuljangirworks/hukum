@@ -1,8 +1,8 @@
-import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@traycer/protocol/host/provider-native-schemas";
+import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@hukum/protocol/host/provider-native-schemas";
 import type {
   ProviderAuthStatus,
   ProviderCliState,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 export function rateLimitProviderState(
   providerId: "claude-code" | "openrouter",

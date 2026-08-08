@@ -22,7 +22,7 @@ import {
   type LeftPanelId,
 } from "../left-panel-store";
 
-const PERSIST_KEY = "traycer-gui-app:left-panel";
+const PERSIST_KEY = "hukum-gui-app:left-panel";
 
 /**
  * Apply a group move through the public pipeline (the DnD commit path):

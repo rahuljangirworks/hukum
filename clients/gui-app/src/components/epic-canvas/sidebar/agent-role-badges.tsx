@@ -1,4 +1,4 @@
-import type { RoleClaim } from "@traycer/protocol/persistence/epic/role-claims";
+import type { RoleClaim } from "@hukum/protocol/persistence/epic/role-claims";
 import { Tag } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";

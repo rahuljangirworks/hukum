@@ -1,6 +1,6 @@
 {
-  "comment": "Dev CLI wrapper filenames staged by `make dev-desktop` (scripts/dev-desktop.js) and consumed by desktop CLI discovery + host-management IPC. Multi-run dev computes the root from DEV_DESKTOP_SLOT (`~/.traycer/cli/dev-runs/<slot>/bin/`); segments are the legacy no-slot dev layout.",
-  "segments": [".traycer", "cli", "dev", "bin"],
-  "filenamePosix": "traycer",
-  "filenameWin32": "traycer.cmd"
+  "comment": "Dev CLI wrapper filenames staged by `make dev-desktop` (scripts/dev-desktop.js) and consumed by desktop CLI discovery + host-management IPC. Multi-run dev computes the root from DEV_DESKTOP_SLOT (`~/.hukum/cli/dev-runs/<slot>/bin/`); segments are the legacy no-slot dev layout.",
+  "segments": [".hukum", "cli", "dev", "bin"],
+  "filenamePosix": "hukum",
+  "filenameWin32": "hukum.cmd"
 }

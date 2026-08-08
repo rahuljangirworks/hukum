@@ -45,9 +45,9 @@ import {
   useEpicBatchUpdateRoles,
   useEpicRevokeCollaborator,
 } from "@/hooks/epic/use-epic-collaborator-mutations";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { RpcErrorCode } from "@traycer/protocol/framework/versioned-rpc-types";
-import type { ListEpicCollaboratorsResponse } from "@traycer/protocol/host/epic/unary-schemas";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { RpcErrorCode } from "@hukum/protocol/framework/versioned-rpc-types";
+import type { ListEpicCollaboratorsResponse } from "@hukum/protocol/host/epic/unary-schemas";
 
 function makeError(code: RpcErrorCode, message: string): HostRpcError {
   return new HostRpcError({

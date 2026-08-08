@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { hostRpcRegistry } from "@traycer/protocol/host/registry";
+import { hostRpcRegistry } from "@hukum/protocol/host/registry";
 import {
   GET_TASK_CONTEXTS_MAX_IDS,
   getTaskContextsRequestSchema,
   getTaskContextsResponseSchema,
   listTaskLightSchema,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 
 /**
  * Contract + schema coverage for the optional `epic.getTaskContexts@1.0`

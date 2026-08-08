@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { WorktreeHostEntryV12 } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeHostEntryV12 } from "@hukum/protocol/host/worktree-schemas";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { useHostClient, type HostRpcRegistry } from "@/lib/host";
 

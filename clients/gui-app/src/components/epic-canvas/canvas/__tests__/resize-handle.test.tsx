@@ -265,7 +265,7 @@ describe("<SplitResizeHandle />", () => {
     );
     expect(flexGrowOf(left)).toBeCloseTo(0.6, 10);
     expect(
-      document.documentElement.classList.contains("traycer-panel-resizing"),
+      document.documentElement.classList.contains("hukum-panel-resizing"),
     ).toBe(true);
 
     fireEvent(window, new Event("blur"));
@@ -274,7 +274,7 @@ describe("<SplitResizeHandle />", () => {
     // restored to the pre-drag committed fractions (the cancel semantic),
     // not left frozen at the mid-drag value.
     expect(
-      document.documentElement.classList.contains("traycer-panel-resizing"),
+      document.documentElement.classList.contains("hukum-panel-resizing"),
     ).toBe(false);
     expect(flexGrowOf(left)).toBeCloseTo(0.5, 10);
     expect(flexGrowOf(right)).toBeCloseTo(0.5, 10);
@@ -386,7 +386,7 @@ describe("<SplitResizeHandle />", () => {
     );
     expect(onCommitSizes).not.toHaveBeenCalled();
     expect(
-      document.documentElement.classList.contains("traycer-panel-resizing"),
+      document.documentElement.classList.contains("hukum-panel-resizing"),
     ).toBe(false);
 
     // The module-global interaction id was released, so a FRESH handle's
@@ -452,7 +452,7 @@ describe("<SplitResizeHandle />", () => {
     expect(releasePointerCapture).not.toHaveBeenCalled();
     expect(onCommitSizes).not.toHaveBeenCalled();
     expect(
-      document.documentElement.classList.contains("traycer-panel-resizing"),
+      document.documentElement.classList.contains("hukum-panel-resizing"),
     ).toBe(false);
 
     const second = renderHandle([0.5, 0.5], onCommitSizes);

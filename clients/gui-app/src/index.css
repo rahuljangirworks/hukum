@@ -70,7 +70,7 @@
    workspace folder picker, where rows are 28px apart and a `side="top"`
    tooltip lands squarely on the row above: the covered row's controls never
    received the click, and the cursor read as a text caret over the tooltip's
-   text (traycerai/traycer#466, #446).
+   text (hukumai/hukum#466, #446).
 
    Scoped by the direct child so only tooltip wrappers opt out - popovers,
    dropdowns and hover cards hold real controls and must stay hit-testable. */
@@ -227,25 +227,25 @@
    * every preset gets correct contrast without per-preset overrides.
    */
   :root {
-    --traycer-code-bg: var(--color-muted);
-    --traycer-code-fg: var(--color-foreground);
-    --traycer-code-border: var(--color-border);
-    --traycer-code-header-bg: var(--color-card);
-    --traycer-code-muted-fg: var(--color-muted-foreground);
-    --traycer-code-hover-bg: var(--color-accent);
-    --traycer-code-font: var(--font-mono);
+    --hukum-code-bg: var(--color-muted);
+    --hukum-code-fg: var(--color-foreground);
+    --hukum-code-border: var(--color-border);
+    --hukum-code-header-bg: var(--color-card);
+    --hukum-code-muted-fg: var(--color-muted-foreground);
+    --hukum-code-hover-bg: var(--color-accent);
+    --hukum-code-font: var(--font-mono);
   }
 
   /*
    * Shared `.md-prose` selector. Layered ON TOP of Tailwind Typography's
    * `prose` class - binds the plugin's `--tw-prose-*` color tokens to our
-   * shadcn theme tokens so every preset (dracula, traycer-green,
+   * shadcn theme tokens so every preset (dracula, hukum-green,
    * catppuccin, etc.) gets correctly themed markdown without per-preset
    * overrides. Apply with a typography size:
    * `class="prose prose-base md-prose max-w-none"` for narrative text or
    * `class="prose prose-sm md-prose max-w-none"` for compact surfaces.
    *
-   * Consumed by the chat (`TraycerMarkdown` from `@/markdown`) and the
+   * Consumed by the chat (`HukumMarkdown` from `@/markdown`) and the
    * artifact editor (`tc-editor-prose` adds TipTap-specific extras on top).
    */
   .md-prose {
@@ -293,8 +293,8 @@
    * conflicting backgrounds. Foreground colour stays (token highlights
    * use `style="color: ..."` on inner spans, not the pre).
    */
-  .traycer-md-shiki > pre,
-  .traycer-md-shiki pre.shiki {
+  .hukum-md-shiki > pre,
+  .hukum-md-shiki pre.shiki {
     background: transparent !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -344,7 +344,7 @@
 
 /*
  * Inline `<code>` (anything not nested inside a `<pre>`). Themed pill styling
- * derived from `currentColor` so every preset (dracula, traycer-green,
+ * derived from `currentColor` so every preset (dracula, hukum-green,
  * etc.) gets a correct contrast ratio without per-preset tweaks.
  * `code-block.tsx#InlineCode` defers to this rule rather than shipping its own
  * inline styles.
@@ -388,13 +388,13 @@
 }
 
 :root {
-  --traycer-font-ui:
+  --hukum-font-ui:
     "Figtree Variable", "Figtree", ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --traycer-font-heading: var(--traycer-font-ui);
-  --traycer-font-pixel:
-    "Geist Pixel Square", "Geist Mono", var(--traycer-font-heading);
-  --traycer-font-mono:
+  --hukum-font-heading: var(--hukum-font-ui);
+  --hukum-font-pixel:
+    "Geist Pixel Square", "Geist Mono", var(--hukum-font-heading);
+  --hukum-font-mono:
     "SFMono-Regular", "SF Mono", "Cascadia Code", "Roboto Mono", ui-monospace,
     monospace;
 
@@ -565,11 +565,11 @@
 }
 
 /*
- * Traycer Green brand preset.
- * Palette - Primary: Onyx #0F0F0F, White #FFFFFF, Traycer Blue #0059FF, Traycer Light #7FBDCC.
- * Secondary: Dark Green #1A2421, Dark Grey #666666, Green White #EAEAEA, Traycer Sky #00CDFF, Traycer Green #257174.
+ * Hukum Green brand preset.
+ * Palette - Primary: Onyx #0F0F0F, White #FFFFFF, Hukum Blue #0059FF, Hukum Light #7FBDCC.
+ * Secondary: Dark Green #1A2421, Dark Grey #666666, Green White #EAEAEA, Hukum Sky #00CDFF, Hukum Green #257174.
  */
-[data-theme="traycer-green"] {
+[data-theme="hukum-green"] {
   --brand-onyx: #0f0f0f;
   --brand-white: #ffffff;
   --brand-blue: #0059ff;
@@ -602,7 +602,7 @@
   --success: oklch(0.58 0.13 142);
   --brand-gradient: linear-gradient(180deg, #1a2421 0%, #257174 100%);
 }
-.dark[data-theme="traycer-green"] {
+.dark[data-theme="hukum-green"] {
   --background: #121715;
   --foreground: #ffffff;
   --canvas: #0f0f0f;
@@ -1004,10 +1004,10 @@
 }
 
 @theme inline {
-  --font-sans: var(--traycer-font-ui);
-  --font-heading: var(--traycer-font-heading);
-  --font-pixel: var(--traycer-font-pixel);
-  --font-mono: var(--traycer-font-mono);
+  --font-sans: var(--hukum-font-ui);
+  --font-heading: var(--hukum-font-heading);
+  --font-pixel: var(--hukum-font-pixel);
+  --font-mono: var(--hukum-font-mono);
   --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
 
   --text-micro: 0.625rem;
@@ -1309,9 +1309,9 @@
     font-size: var(--text-code-sm);
     padding: 0.75rem 1rem;
     border-radius: var(--radius-lg);
-    background: var(--traycer-code-bg, var(--muted));
-    color: var(--traycer-code-fg, var(--foreground));
-    border: 1px solid var(--traycer-code-border, var(--border));
+    background: var(--hukum-code-bg, var(--muted));
+    color: var(--hukum-code-fg, var(--foreground));
+    border: 1px solid var(--hukum-code-border, var(--border));
     margin: 0.5rem 0;
     white-space: pre;
     overflow-x: auto;
@@ -1342,11 +1342,11 @@
  * `window.getSelection()` - contenteditable editors don't see a
  * selection change and don't grab focus away from the find input.
  */
-::highlight(traycer-find-match) {
+::highlight(hukum-find-match) {
   background-color: color-mix(in srgb, var(--primary) 35%, transparent);
   color: inherit;
 }
-::highlight(traycer-find-match-active) {
+::highlight(hukum-find-match-active) {
   background-color: color-mix(in srgb, var(--primary) 75%, transparent);
   color: var(--primary-foreground);
 }

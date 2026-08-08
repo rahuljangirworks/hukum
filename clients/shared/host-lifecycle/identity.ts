@@ -1,21 +1,21 @@
-// Positive Traycer identity attestation for eviction targets (plan F10,
+// Positive Hukum identity attestation for eviction targets (plan F10,
 // macOS annex §1.3 / §2.1 hard rule).
 //
 // A `cli-or-other` (or Linux unit / Windows task) is evictable only when we
-// have *positive* evidence it is a Traycer registration — never by path
+// have *positive* evidence it is a Hukum registration — never by path
 // alone, never by "looks like our label prefix".
 
 /**
  * Result of inspecting a registration's content (plist body, unit file,
  * task XML / ProgramArguments from launchctl print, etc.).
  */
-export type TraycerIdentityAttestation =
+export type HukumIdentityAttestation =
   | {
       readonly kind: "attested";
       readonly signals: readonly IdentitySignal[];
     }
   | {
-      readonly kind: "not-traycer";
+      readonly kind: "not-hukum";
       readonly reason: string;
     }
   | {
@@ -31,7 +31,7 @@ export type IdentitySignal =
   | { readonly kind: "task-name"; readonly value: string };
 
 /** Closed set of labels the lifecycle layer owns for a given environment. */
-export type TraycerLabelIds = {
+export type HukumLabelIds = {
   readonly cliRaw: string;
   readonly agent: string;
   readonly fallback: string;
@@ -39,9 +39,9 @@ export type TraycerLabelIds = {
 
 /**
  * Derive the three macOS/Linux label ids for a base CLI label
- * (`ai.traycer.host` or `ai.traycer.host.<env>`). Fallback is new (F7).
+ * (`ai.hukum.host` or `ai.hukum.host.<env>`). Fallback is new (F7).
  */
-export function traycerLabelIdsForBase(baseLabelId: string): TraycerLabelIds {
+export function hukumLabelIdsForBase(baseLabelId: string): HukumLabelIds {
   return {
     cliRaw: baseLabelId,
     agent: `${baseLabelId}.agent`,
@@ -49,7 +49,7 @@ export function traycerLabelIdsForBase(baseLabelId: string): TraycerLabelIds {
   };
 }
 
-const TRAYCER_CONTENT_TAG = "ai.traycer.host-lifecycle";
+const HUKUM_CONTENT_TAG = "ai.hukum.host-lifecycle";
 const HOST_START_TAIL = ["host", "start"] as const;
 const HOST_START_WITH_LABEL_TAIL = [
   "host",
@@ -59,7 +59,7 @@ const HOST_START_WITH_LABEL_TAIL = [
 
 /**
  * Basename of the launcher-file form of the macOS LaunchAgent (2026-07):
- * `ProgramArguments = [<...>/<label-id>/traycer-host-start, <cli-command>,
+ * `ProgramArguments = [<...>/<label-id>/hukum-host-start, <cli-command>,
  * <cli-args...>]`. The wrapper moved from an inline `/bin/sh -c` program to
  * an executable file because macOS background-task management names a raw
  * login item after `ProgramArguments[0]` - the inline form surfaced as a
@@ -68,27 +68,27 @@ const HOST_START_WITH_LABEL_TAIL = [
  *
  * Single source of truth for the same reason as
  * `COMPATIBLE_HOST_START_SCRIPT_PREFIX` directly below: the emitter
- * (`traycer-cli`'s service platform) builds the launcher path from this
+ * (`hukum-cli`'s service platform) builds the launcher path from this
  * constant, and this recognizer attests plists by it. If either side moved
- * alone, `attestTraycerRegistration` would degrade to `indeterminate` for
- * plists this codebase just wrote, and `isEvictableTraycerIdentity`
+ * alone, `attestHukumRegistration` would degrade to `indeterminate` for
+ * plists this codebase just wrote, and `isEvictableHukumIdentity`
  * refuses eviction on `indeterminate` - a lockout surviving the repair.
  */
-export const HOST_START_LAUNCHER_BASENAME = "traycer-host-start";
+export const HOST_START_LAUNCHER_BASENAME = "hukum-host-start";
 /**
  * The invariant head of the `/bin/sh -c` program the macOS LaunchAgent plist
  * and the systemd user unit both run — everything up to and including the
  * capability token, which is the part that does not vary by label.
  *
  * **This is the single source of truth.** `buildCompatibleHostStartScript()`
- * in `traycer-cli` builds its script from this constant rather than carrying
+ * in `hukum-cli` builds its script from this constant rather than carrying
  * its own copy, and `identity-host-start-script-lockstep.test.ts` pins the two
  * together. The reason is a real regression: the emitter moved from
  * `host start --help | grep` to `host capabilities --has service-label` and
- * this recognizer was left behind, so `attestTraycerRegistration` stopped
+ * this recognizer was left behind, so `attestHukumRegistration` stopped
  * recognizing a plist THIS CODEBASE had just written. With no content-tag and
  * no exact known-label match the attestation degraded to `indeterminate` —
- * and `isEvictableTraycerIdentity` refuses to evict on that, which is how a
+ * and `isEvictableHukumIdentity` refuses to evict on that, which is how a
  * lockout survives the repair meant to clear it.
  *
  * The direction of the dependency is forced: `host-lifecycle/**` is a
@@ -114,34 +114,34 @@ const LEGACY_HOST_START_SCRIPT_PREFIXES = [
  * Requires either an explicit content-tag OR a command line ending in
  * `host start` (legacy) or `host start --service-label <this-label>`.
  */
-export function attestTraycerRegistration(input: {
+export function attestHukumRegistration(input: {
   readonly labelId: string | null;
-  readonly knownLabels: TraycerLabelIds | null;
+  readonly knownLabels: HukumLabelIds | null;
   readonly programArguments: readonly string[] | null;
   readonly contentTag: string | null;
   readonly sourceText: string | null;
-}): TraycerIdentityAttestation {
+}): HukumIdentityAttestation {
   const signals: IdentitySignal[] = [];
 
   if (input.contentTag !== null) {
-    if (input.contentTag === TRAYCER_CONTENT_TAG) {
+    if (input.contentTag === HUKUM_CONTENT_TAG) {
       signals.push({ kind: "content-tag", value: input.contentTag });
     } else {
       return {
-        kind: "not-traycer",
+        kind: "not-hukum",
         reason: `foreign content-tag: ${input.contentTag}`,
       };
     }
   }
 
   // Optional in-body content tag for future plists that embed it as a
-  // Comment / X-Traycer-ContentTag key. Detect without requiring it.
+  // Comment / X-Hukum-ContentTag key. Detect without requiring it.
   if (
     input.contentTag === null &&
     input.sourceText !== null &&
-    input.sourceText.includes(TRAYCER_CONTENT_TAG)
+    input.sourceText.includes(HUKUM_CONTENT_TAG)
   ) {
-    signals.push({ kind: "content-tag", value: TRAYCER_CONTENT_TAG });
+    signals.push({ kind: "content-tag", value: HUKUM_CONTENT_TAG });
   }
 
   if (input.labelId !== null) {
@@ -153,17 +153,17 @@ export function attestTraycerRegistration(input: {
         input.labelId === known.fallback
       ) {
         signals.push({ kind: "label", value: input.labelId });
-      } else if (!isTraycerLabelShape(input.labelId)) {
+      } else if (!isHukumLabelShape(input.labelId)) {
         return {
-          kind: "not-traycer",
-          reason: `label '${input.labelId}' is outside the Traycer host namespace`,
+          kind: "not-hukum",
+          reason: `label '${input.labelId}' is outside the Hukum host namespace`,
         };
       } else {
         // In namespace but not the expected triple for this environment —
-        // still a positive Traycer signal (e.g. cross-env collision scan).
+        // still a positive Hukum signal (e.g. cross-env collision scan).
         signals.push({ kind: "label", value: input.labelId });
       }
-    } else if (isTraycerLabelShape(input.labelId)) {
+    } else if (isHukumLabelShape(input.labelId)) {
       signals.push({ kind: "label", value: input.labelId });
     }
   }
@@ -193,7 +193,7 @@ export function attestTraycerRegistration(input: {
       // moving the label block below this one would silently reverse it.
       if (!hasOwnershipSignal(signals)) {
         return {
-          kind: "not-traycer",
+          kind: "not-hukum",
           reason:
             "ProgramArguments do not end with a recognised 'host start' invocation",
         };
@@ -204,7 +204,7 @@ export function attestTraycerRegistration(input: {
   if (signals.length === 0) {
     return {
       kind: "indeterminate",
-      cause: "no positive Traycer identity signals found",
+      cause: "no positive Hukum identity signals found",
     };
   }
 
@@ -246,20 +246,20 @@ function hasOwnershipSignal(signals: readonly IdentitySignal[]): boolean {
 }
 
 /**
- * True only when attestation is positively Traycer — the eviction gate.
- * `indeterminate` and `not-traycer` both refuse eviction.
+ * True only when attestation is positively Hukum — the eviction gate.
+ * `indeterminate` and `not-hukum` both refuse eviction.
  */
-export function isEvictableTraycerIdentity(
-  attestation: TraycerIdentityAttestation,
+export function isEvictableHukumIdentity(
+  attestation: HukumIdentityAttestation,
 ): boolean {
   return attestation.kind === "attested";
 }
 
-export function isTraycerLabelShape(labelId: string): boolean {
+export function isHukumLabelShape(labelId: string): boolean {
   return (
-    labelId === "ai.traycer.host" ||
-    labelId.startsWith("ai.traycer.host.") ||
-    labelId.startsWith("ai.traycer.host-")
+    labelId === "ai.hukum.host" ||
+    labelId.startsWith("ai.hukum.host.") ||
+    labelId.startsWith("ai.hukum.host-")
   );
 }
 
@@ -279,11 +279,11 @@ function isHostStartInvocation(
   args: readonly string[],
   labelId: string | null,
 ): boolean {
-  // Launcher-file form: [<...>/<label-id>/traycer-host-start, <cli>, ...].
+  // Launcher-file form: [<...>/<label-id>/hukum-host-start, <cli>, ...].
   // The label id must be the launcher's IMMEDIATE parent directory - an
-  // exact `/<label-id>/traycer-host-start` suffix, not merely present
+  // exact `/<label-id>/hukum-host-start` suffix, not merely present
   // somewhere earlier in the path. `.includes()` let a path like
-  // `/tmp/<label-id>/nested/traycer-host-start` attest for a label it never
+  // `/tmp/<label-id>/nested/hukum-host-start` attest for a label it never
   // named as its parent, and a null label (no label context) accepted ANY
   // path ending in the launcher basename - both are exactly the "path
   // alone" / "looks like ours" evidence this module's header forbids for
@@ -325,4 +325,4 @@ function isHostStartInvocation(
   );
 }
 
-export const TRAYCER_HOST_CONTENT_TAG = TRAYCER_CONTENT_TAG;
+export const HUKUM_HOST_CONTENT_TAG = HUKUM_CONTENT_TAG;

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import type {
   PromptStashEntry,
@@ -20,7 +20,7 @@ vi.mock("@/lib/composer/prompt-stash-repository", () => ({
   deletePromptStashEntry: repoMocks.deletePromptStashEntry,
 }));
 
-const PROMPT_STASH_CHANNEL = "traycer-gui-app:prompt-stash:v1";
+const PROMPT_STASH_CHANNEL = "hukum-gui-app:prompt-stash:v1";
 
 /**
  * Minimal BroadcastChannel stand-in. Same-origin windows share a channel by

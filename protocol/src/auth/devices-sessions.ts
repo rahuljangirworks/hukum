@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { isoMillisecondTimestampSchema } from "@traycer/protocol/common/schemas";
+import { isoMillisecondTimestampSchema } from "@hukum/protocol/common/schemas";
 
 /**
  * Client-side mirror of authn-v3's Devices & Sessions account-security DTOs.
  *
- * The open-source client cannot import the internal `@traycerai/common`
+ * The open-source client cannot import the internal `@hukumai/common`
  * package, so this module mirrors the wire shape consumed by desktop surfaces.
  * Schemas are strict so a backend contract drift fails closed at the HTTP
  * boundary instead of rendering partial account-security state.

@@ -4,8 +4,8 @@ import {
   GET_TASK_CONTEXTS_MAX_IDS,
   type GetTaskContextsResponse,
   type ListTaskLight,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { useHostClient, type HostRpcRegistry } from "@/lib/host";
 import { useHostQueries } from "@/hooks/host/use-host-queries";
 

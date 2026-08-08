@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import type { PrOwnerRef } from "@traycer/protocol/host/pr-schemas";
+import type { PrOwnerRef } from "@hukum/protocol/host/pr-schemas";
 import type { EpicTreeIndex, EpicTreeNode } from "@/lib/epic-selectors";
 import {
   buildPrOwnerTree,

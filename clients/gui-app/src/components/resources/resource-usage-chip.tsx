@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Cpu } from "lucide-react";
-import type { ResourceOwnerKindWireV14 } from "@traycer/protocol/host/resources/subscribe";
+import type { ResourceOwnerKindWireV14 } from "@hukum/protocol/host/resources/subscribe";
 import {
   useEpicResourceUsage,
   useOwnerResourceUsage,

@@ -1,4 +1,4 @@
-// The Layer 0 frame is a host -> client wire payload, so `@traycer/protocol`
+// The Layer 0 frame is a host -> client wire payload, so `@hukum/protocol`
 // owns it and both sides import the same declaration.
 //
 // This file used to carry a hand-written "wire-level copy" of the host's
@@ -11,7 +11,7 @@ import type {
   Layer0Frame,
   Layer0IncumbentEvidence,
   Layer0UnavailableCause,
-} from "@traycer/protocol/host/lifecycle";
+} from "@hukum/protocol/host/lifecycle";
 
 export type { Layer0Frame, Layer0IncumbentEvidence, Layer0UnavailableCause };
 
@@ -95,7 +95,7 @@ export function mapLayer0FrameToProbeOutcome(
       };
     default:
       // Now genuinely reachable only by a host-side addition: the union is
-      // imported from `@traycer/protocol`, so a new arm there turns this into
+      // imported from `@hukum/protocol`, so a new arm there turns this into
       // a compile error here rather than a silently-unhandled frame. That is
       // the property the old hand-copy could not have.
       return exhaustiveFrame(frame);

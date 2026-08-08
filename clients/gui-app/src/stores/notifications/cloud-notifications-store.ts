@@ -2,15 +2,15 @@ import { create } from "zustand";
 import type {
   IStreamSession,
   StreamCloseReason,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
 import {
   hostNotificationsCloudFeedSubscribeServerFrameSchemaV10,
   type HostNotificationsCloudFeedRow,
   type HostNotificationsCloudFeedSummary,
   type HostNotificationsEntityRef,
-} from "@traycer/protocol/host/notifications/contracts";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/notifications/contracts";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import {
   createHostStreamReopenScheduler,
   isReopenableNotificationsStreamClose,

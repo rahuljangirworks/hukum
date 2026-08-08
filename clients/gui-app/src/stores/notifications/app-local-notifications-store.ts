@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { v4 as uuidv4 } from "uuid";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
 import type { NotificationPayload } from "@/lib/notifications";
 import {
   notificationEntitiesMatch,
@@ -11,7 +11,7 @@ import {
   parseNotificationPayload,
 } from "@/lib/notifications";
 import { appLocalNotificationsKey, basePersistOptions } from "@/lib/persist";
-import type { HostNotificationsEntityRef } from "@traycer/protocol/host/notifications/contracts";
+import type { HostNotificationsEntityRef } from "@hukum/protocol/host/notifications/contracts";
 import { clearAppLocalDisplayReceipts } from "@/lib/notifications/app-local-display-receipts";
 import {
   APP_LOCAL_COMPLETION_RECEIPT_CAP_PER_HOST,

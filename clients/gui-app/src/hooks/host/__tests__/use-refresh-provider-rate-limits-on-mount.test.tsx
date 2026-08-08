@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, renderHook } from "@testing-library/react";
-import { DEFAULT_ACCOUNT_CONTEXT } from "@traycer/protocol/common/schemas";
+import { DEFAULT_ACCOUNT_CONTEXT } from "@hukum/protocol/common/schemas";
 import {
   PROVIDER_RATE_LIMITS_STALE_TIME_MS,
   type RateLimitProviderId,

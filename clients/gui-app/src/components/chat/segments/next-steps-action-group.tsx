@@ -3,17 +3,17 @@ import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
 import { useClipboardCopy } from "@/hooks/ui/use-clipboard-copy";
-import type { TraycerNextStepOption } from "@/markdown/traycer-next-steps";
+import type { HukumNextStepOption } from "@/markdown/hukum-next-steps";
 import { reportableErrorToast } from "@/lib/reportable-error-toast";
 
 export interface NextStepActionHandler {
   readonly canSend: boolean;
-  readonly onSend: (option: TraycerNextStepOption) => boolean;
+  readonly onSend: (option: HukumNextStepOption) => boolean;
 }
 
 interface NextStepsActionGroupProps {
   readonly blockId: string;
-  readonly options: ReadonlyArray<TraycerNextStepOption>;
+  readonly options: ReadonlyArray<HukumNextStepOption>;
   readonly complete: boolean;
   readonly lockedOptionIds: ReadonlySet<string>;
   readonly actionHandler: NextStepActionHandler | null;
@@ -39,7 +39,7 @@ export function NextStepsActionGroup(props: NextStepsActionGroupProps) {
   return (
     <div
       className="not-prose mt-2 flex flex-col items-stretch gap-2"
-      data-testid="traycer-next-steps"
+      data-testid="hukum-next-steps"
       data-next-steps-complete={props.complete ? "true" : "false"}
       data-quote-exclude=""
     >
@@ -62,7 +62,7 @@ export function NextStepsActionGroup(props: NextStepsActionGroupProps) {
 }
 
 interface NextStepActionProps {
-  readonly option: TraycerNextStepOption;
+  readonly option: HukumNextStepOption;
   readonly complete: boolean;
   readonly disabled: boolean;
   readonly actionHandler: NextStepActionHandler | null;

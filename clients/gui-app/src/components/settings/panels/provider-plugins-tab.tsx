@@ -2,13 +2,13 @@ import { useCallback, useMemo, useState, type ReactNode } from "react";
 import type {
   ProviderCliState,
   ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type {
   ProviderNativeScope,
   ProviderPlugin,
   ProviderPluginsCapabilities,
   ProvidersPluginsMutateAction,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 import { Package, Plus, Trash2 } from "lucide-react";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
@@ -38,7 +38,7 @@ import { useProviderNativeScope } from "./use-provider-native-scope";
 const EMPTY_PLUGINS: readonly ProviderPlugin[] = [];
 
 /**
- * Shown for every provider whose contract sets `traycerSessionToolsNotice`
+ * Shown for every provider whose contract sets `hukumSessionToolsNotice`
  * (amp and cursor today). There used to be two strings selected by
  * `providerId === "cursor"`, which was the tail of a redundancy: cursor's
  * contract ALREADY sets the flag (`contract-registry/cursor.ts`), so the id
@@ -51,7 +51,7 @@ const EMPTY_PLUGINS: readonly ProviderPlugin[] = [];
  * ["read-only"]` already renders on screen without being told.
  */
 const SESSION_TOOLS_NOTICE =
-  "Plugin tools may not appear in Traycer-launched sessions. They load for this provider's own CLI, but not for the session stream Traycer drives.";
+  "Plugin tools may not appear in Hukum-launched sessions. They load for this provider's own CLI, but not for the session stream Hukum drives.";
 
 export function ProviderPluginsTab({
   state,
@@ -304,7 +304,7 @@ function ProviderPluginsTabBody({
     <div className="flex flex-col gap-3">
       {/*
        * `sessionNotice` is now the whole gate: `sessionNoticeFor` returns null
-       * unless the contract sets `traycerSessionToolsNotice`, so the separate
+       * unless the contract sets `hukumSessionToolsNotice`, so the separate
        * `showSessionNotice` flag (which also special-cased cursor by id) would
        * only re-ask a question the notice already answers.
        */}
@@ -398,7 +398,7 @@ function ProviderPluginsTabBody({
 }
 
 function sessionNoticeFor(caps: ProviderPluginsCapabilities): string | null {
-  return caps.traycerSessionToolsNotice ? SESSION_TOOLS_NOTICE : null;
+  return caps.hukumSessionToolsNotice ? SESSION_TOOLS_NOTICE : null;
 }
 
 function PluginAddFromSource({

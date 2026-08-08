@@ -5,7 +5,7 @@
  */
 import { cleanup, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import type { ComposerPromptEditorHandle } from "@/components/chat/composer/composer-prompt-editor";
 import { useNewConversationPromptStashDestination } from "@/components/epic-canvas/sidebar/use-new-conversation-prompt-stash-adapters";

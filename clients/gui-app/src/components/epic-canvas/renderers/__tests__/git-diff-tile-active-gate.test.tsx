@@ -1,17 +1,17 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { IStreamSession } from "@traycer-clients/shared/host-transport/i-stream-session";
+import type { IStreamSession } from "@hukum-clients/shared/host-transport/i-stream-session";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   WsStreamClient,
   type ParamsOf,
-} from "@traycer-clients/shared/host-transport/ws-stream-client";
+} from "@hukum-clients/shared/host-transport/ws-stream-client";
 import { StreamRuntimeContext } from "@/lib/host/stream-runtime-context";
 import { TabHostProvider } from "@/components/epic-canvas/tab-host-provider";
 import { makeGitBundleDiffTile } from "@/lib/git/git-diff-tile";

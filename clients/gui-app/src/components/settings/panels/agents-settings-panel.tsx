@@ -16,7 +16,7 @@ export function AgentsSettingsPanel() {
   return (
     <SettingsPanelShell
       title="Agent selection"
-      description="How Traycer picks a coding agent, model, and reasoning effort when it spawns child agents. This does not manage the agents inside a Task."
+      description="How Hukum picks a coding agent, model, and reasoning effort when it spawns child agents. This does not manage the agents inside a Task."
       fillHeight
     >
       <AgentSelectionGuideSection />

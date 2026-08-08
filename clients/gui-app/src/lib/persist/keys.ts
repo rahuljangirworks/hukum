@@ -8,7 +8,7 @@
 // guarantee is the hand-transcribed non-circular test in
 // `__tests__/keys.test.ts`.
 
-export const PERSIST_PREFIX = "traycer-gui-app";
+export const PERSIST_PREFIX = "hukum-gui-app";
 
 // Account-scoped stores bucket their key by the signed-in identity; an absent/empty
 // identity collapses to the shared anonymous bucket. Preserved verbatim from
@@ -170,15 +170,15 @@ export const worktreeListingCacheKey = (hostId: string): string =>
   scopedPersistKey("worktree-listing-cache", hostId);
 // ── Catalog ────────────────────────────────────────────────────────────────
 // `kind` tells enumeration the shape of each persisted surface:
-//   - "static"  : plain `traycer-gui-app:<leaf>` localStorage key.
-//   - "scoped"  : `traycer-gui-app:<leaf>:<bucket>[…]` localStorage key.
+//   - "static"  : plain `hukum-gui-app:<leaf>` localStorage key.
+//   - "scoped"  : `hukum-gui-app:<leaf>:<bucket>[…]` localStorage key.
 //   - "session" : sessionStorage key (not localStorage).
 //   - "channel" : a BroadcastChannel NAME, not a storage key.
 //
 // The `leaf` is the DIVERGENCE-CORRECT key leaf, not the store/file name (six
-// stores diverge — see the literals below). Non-zustand `traycer-gui-app:` keys
+// stores diverge — see the literals below). Non-zustand `hukum-gui-app:` keys
 // are cataloged here too; builders may stay local to their owner unless a
-// centralized builder is useful. Auth (`traycer.*`) keys are intentionally
+// centralized builder is useful. Auth (`hukum.*`) keys are intentionally
 // excluded.
 export type PersistStoreKind = "static" | "scoped" | "session" | "channel";
 
@@ -237,7 +237,7 @@ export const PERSIST_STORES = [
   { camelName: "composerDraft", leaf: "composer-drafts", kind: "static" },
   // Enumerated under the `interview-drafts` leaf, but persisted as one key per
   // (chatId, blockId) — `interview-drafts:{encChatId}:{encBlockId}` — for
-  // cross-window isolation (see `interviewDraftKey`). The `traycer-gui-app:`
+  // cross-window isolation (see `interviewDraftKey`). The `hukum-gui-app:`
   // prefix sweep in `wipe.ts` still clears every per-draft key.
   {
     camelName: "interviewDraft",

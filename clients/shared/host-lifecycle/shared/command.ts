@@ -1,6 +1,6 @@
 // Injectable command runner for the *read-only* probe. Deliberately
 // narrower than the CLI's ProcessRunner so this module never depends on
-// traycer-cli (and cannot import install/uninstall actuators).
+// hukum-cli (and cannot import install/uninstall actuators).
 
 export type ProbeCommandResult = {
   readonly exitCode: number;

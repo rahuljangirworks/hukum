@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { CanonicalTerminalSessionInfo } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { CanonicalTerminalSessionInfo } from "@hukum/protocol/host/terminal/unary-schemas";
 import {
   isVisibleEpicTerminalSession,
   isVisibleRawTerminalSession,

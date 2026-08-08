@@ -19,14 +19,14 @@ import { describe, expect, it } from "vitest";
 import {
   CredentialLeaseReleasedError,
   IdentityMismatchError,
-} from "@traycer/protocol/auth/request-context";
+} from "@hukum/protocol/auth/request-context";
 import {
   DefaultRequestContextProvider,
   mintRequestContextFromValidatedIdentity,
   type AuthEra,
   type RequestContextProvider,
 } from "../request-context-provider";
-import type { RequestContext } from "@traycer/protocol/auth/request-context";
+import type { RequestContext } from "@hukum/protocol/auth/request-context";
 import { createAuthenticatedUserFixture } from "../../test-fixtures/authenticated-user";
 
 function createProvider(): DefaultRequestContextProvider {

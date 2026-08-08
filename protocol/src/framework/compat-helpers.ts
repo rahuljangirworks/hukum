@@ -1,4 +1,4 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/index";
+import type { SchemaVersion } from "@hukum/protocol/framework/index";
 import type {
   ConnectionManifest,
   IncompatibilityUpgradeGuidance,

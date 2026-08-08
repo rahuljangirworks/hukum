@@ -8,11 +8,11 @@ import type {
  * routing branch can be unit-tested in isolation; the window factory feeds the
  * result to `appendPerfEvent`.
  *
- * A perf line looks like: `[traycer-perf] {"name":"...","tsMs":123,"fields":{}}`
+ * A perf line looks like: `[hukum-perf] {"name":"...","tsMs":123,"fields":{}}`
  * emitted by `gui-app/src/lib/perf/perf-telemetry.ts`.
  */
 
-export const PERF_RENDERER_LOG_PREFIX = "[traycer-perf]";
+export const PERF_RENDERER_LOG_PREFIX = "[hukum-perf]";
 
 /**
  * Returns a validated event, or `null` when the line is not a perf line or is

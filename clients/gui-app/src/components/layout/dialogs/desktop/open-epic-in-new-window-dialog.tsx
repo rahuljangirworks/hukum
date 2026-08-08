@@ -1,6 +1,6 @@
 import { useCallback, type ReactNode } from "react";
 import { ExternalLink, RefreshCw } from "lucide-react";
-import type { TaskLight } from "@traycer/protocol/host/epic/unary-schemas";
+import type { TaskLight } from "@hukum/protocol/host/epic/unary-schemas";
 import { Button } from "@/components/ui/button";
 import { ReportIssueAction } from "@/components/report-issue/report-issue-action";
 import { createReportIssueContext } from "@/lib/report-issue-context";
@@ -53,7 +53,7 @@ export function OpenEpicInNewWindowDialog(
             Open Epic in New Window
           </DialogTitle>
           <DialogDescription className="sr-only">
-            Select an Epic to move or focus in a Traycer window.
+            Select an Epic to move or focus in a Hukum window.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-2">

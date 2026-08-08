@@ -33,8 +33,8 @@
  * - `ping` - heartbeat. No application client frames.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
-import { worktreeEntryScriptsSchema } from "@traycer/protocol/host/worktree-schemas";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
+import { worktreeEntryScriptsSchema } from "@hukum/protocol/host/worktree-schemas";
 
 export const worktreeDeleteByPathOpenRequestSchema = z.object({
   worktreePath: z.string(),

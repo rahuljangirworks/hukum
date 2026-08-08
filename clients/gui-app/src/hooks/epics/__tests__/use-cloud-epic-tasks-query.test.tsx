@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type {
   ListTaskLight,
   ListTasksResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import { useCloudEpicTasksQuery } from "@/hooks/epics/use-cloud-epic-tasks-query";
 import { useAuthStore } from "@/stores/auth/auth-store";
 import {
@@ -128,7 +128,7 @@ describe("useCloudEpicTasksQuery", () => {
 
     // Start the FIRST "Show more" tail request for this identity through the
     // production `fetchNextPage` - the exact call path review finding 2
-    // reproduced (`traycer/clients/gui-app/src/hooks/epics/use-cloud-epic-tasks-query.ts`).
+    // reproduced (`hukum/clients/gui-app/src/hooks/epics/use-cloud-epic-tasks-query.ts`).
     act(() => {
       result.current.fetchNextPage();
     });

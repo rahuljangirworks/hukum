@@ -5,8 +5,8 @@ import type {
   ChatActiveTurn,
   ChatQueueDeliveryPolicy,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { createComposerPickerStore } from "../picker/composer-picker-store";
 import type { ComposerPromptEditorHandle } from "../composer-prompt-editor";

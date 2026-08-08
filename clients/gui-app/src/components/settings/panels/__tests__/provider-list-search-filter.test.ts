@@ -4,7 +4,7 @@ import type {
   ProviderMcpTool,
   ProviderPlugin,
   ProviderSkill,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 import {
   filterProviderMcpServers,
   filterProviderMcpTools,
@@ -67,7 +67,7 @@ const SKILLS: readonly ProviderSkill[] = [
   {
     name: "release-notes",
     description: "Write release notes from a changeset.",
-    path: "/Users/dev/.traycer/managed-skills/release-notes",
+    path: "/Users/dev/.hukum/managed-skills/release-notes",
     source: "managed",
   },
 ];

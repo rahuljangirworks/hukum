@@ -91,7 +91,7 @@ describe("rankSlashCommands", () => {
         description: "Review current animation changes",
       }),
       command({
-        name: "traycer-changeset-walkthrough",
+        name: "hukum-changeset-walkthrough",
         description: "Walk through a changeset with the user",
       }),
       command({

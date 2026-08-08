@@ -11,7 +11,7 @@ import type {
   HostProcessLiveness,
   HostRecoveryGovernor,
 } from "./host-recovery-governor";
-import type { ProcessStartIdentity } from "@traycer/protocol/host/lifecycle";
+import type { ProcessStartIdentity } from "@hukum/protocol/host/lifecycle";
 import type { IpcHostLifecycle } from "../ipc/runner-ipc-bridge";
 import type { DesktopLocalHostSnapshot } from "../../ipc-contracts/host-types";
 
@@ -24,7 +24,7 @@ import type { DesktopLocalHostSnapshot } from "../../ipc-contracts/host-types";
  * restart-on-failure (its hidden-launcher action detaches the host and exits,
  * so the job 'completed' long before the host can die)". That was FALSE, and
  * saying so here is worth the lines because it was the stated reason nobody
- * pursued the gap: `traycer host start` spawns the host with no `detached` and
+ * pursued the gap: `hukum host start` spawns the host with no `detached` and
  * no `unref()` (it must stay attached to tee the child's stderr), and the VBS
  * launcher uses `shell.Run(..., True)`, which waits. The chain therefore lives
  * as long as the host and exits with the host's own code - a crashed host DID
@@ -36,7 +36,7 @@ import type { DesktopLocalHostSnapshot } from "../../ipc-contracts/host-types";
  * app is CLOSED, when nothing here is running to notice. The two layers do not
  * fight - the supervisor is faster, so a later tick's `reloadSnapshotFromDisk`
  * simply converges onto the replacement, and any respawn this monitor does
- * request goes through `traycer host restart`, which announces stop intent and
+ * request goes through `hukum host restart`, which announces stop intent and
  * so suppresses the supervisor's own relaunch.
  *
  * `HostLifecycle`'s steady state is pid.json-watcher driven plus a
@@ -56,7 +56,7 @@ import type { DesktopLocalHostSnapshot } from "../../ipc-contracts/host-types";
  *  - pid.json still present  → the host died unexpectedly. Auto-respawn
  *    through `respawnHost` (the platform-correct entry point - it dedups
  *    concurrent respawns and refuses when the user removed the host).
- *  - pid.json gone           → a deliberate stop (`traycer host stop`,
+ *  - pid.json gone           → a deliberate stop (`hukum host stop`,
  *    uninstall). Just demote the snapshot so the renderer's gate takes
  *    over; resurrecting the host would fight the user.
  *
@@ -477,7 +477,7 @@ export function startHostHealthMonitor(
       // Endpoint dead and the reload demoted the snapshot. Read the pid
       // metadata AFTER the reload so the respawn decision reflects the current
       // disk, not a stale pre-reload read: a host stopped in the window
-      // (`traycer host stop`, uninstall) unlinks pid.json, and resurrecting it
+      // (`hukum host stop`, uninstall) unlinks pid.json, and resurrecting it
       // off a stale "still present" read would fight the user.
       const metadata = await readMetadata(deps.host.pidMetadataFile);
       if (isDisposed()) return;
@@ -490,7 +490,7 @@ export function startHostHealthMonitor(
       await attemptRecovery(metadata);
     } catch (err) {
       if (err instanceof HostRecoveryDeferredError) {
-        // Another Traycer process held the lock, so the host was never
+        // Another Hukum process held the lock, so the host was never
         // touched: hand the grant back rather than spending budget on a
         // restart that did not happen.
         governor.releaseGrant();

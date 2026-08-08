@@ -7,13 +7,13 @@ import { createElement, type ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook } from "@testing-library/react";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import type {
   CanonicalTerminalSessionInfoWithCurrentCwd,
   ListTerminalsResponseV22,
-} from "@traycer/protocol/host/terminal/unary-schemas";
+} from "@hukum/protocol/host/terminal/unary-schemas";
 import type { HostRpcRegistry } from "@/lib/host";
 import type { RenameTerminalMutationContext } from "@/hooks/terminal/use-terminal-rename-for-mutation";
 import { hostQueryKeys } from "@/lib/query-keys";

@@ -11,7 +11,7 @@ const originalPlatformDescriptor = Object.getOwnPropertyDescriptor(
 );
 const originalWslDistroName = process.env["WSL_DISTRO_NAME"];
 const originalWslInterop = process.env["WSL_INTEROP"];
-const originalKeepDumps = process.env["TRAYCER_KEEP_KERNEL_CORE_DUMPS"];
+const originalKeepDumps = process.env["HUKUM_KEEP_KERNEL_CORE_DUMPS"];
 
 afterEach(() => {
   if (originalPlatformDescriptor === undefined) {
@@ -21,7 +21,7 @@ afterEach(() => {
   }
   restoreEnvValue("WSL_DISTRO_NAME", originalWslDistroName);
   restoreEnvValue("WSL_INTEROP", originalWslInterop);
-  restoreEnvValue("TRAYCER_KEEP_KERNEL_CORE_DUMPS", originalKeepDumps);
+  restoreEnvValue("HUKUM_KEEP_KERNEL_CORE_DUMPS", originalKeepDumps);
   vi.resetModules();
   vi.restoreAllMocks();
   vi.doUnmock("node:fs");
@@ -188,7 +188,7 @@ async function loadGuard(opts: {
   });
   restoreEnvValue("WSL_DISTRO_NAME", opts.wslDistroName);
   Reflect.deleteProperty(process.env, "WSL_INTEROP");
-  restoreEnvValue("TRAYCER_KEEP_KERNEL_CORE_DUMPS", opts.keepDumps);
+  restoreEnvValue("HUKUM_KEEP_KERNEL_CORE_DUMPS", opts.keepDumps);
 
   const writeFileSyncMock: Mock = vi.fn(() => {
     if (opts.writeFailure === "enoent") {

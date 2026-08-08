@@ -20,7 +20,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { FileContents } from "@pierre/diffs";
 import type { EditorOptions } from "@pierre/diffs/edit";
-import type { GitChangedFile, GitStage } from "@traycer/protocol/host";
+import type { GitChangedFile, GitStage } from "@hukum/protocol/host";
 import { EpicSessionContext } from "@/lib/registries/epic-session-registry";
 import { DEFAULT_DIFF_VIEWER_PREFERENCES } from "@/lib/diff/diff-viewer-preferences";
 import { makeGitBundleDiffTile } from "@/lib/git/git-diff-tile";

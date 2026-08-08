@@ -7,7 +7,7 @@ import {
   MuxFrameSizeError,
   MuxFrameType,
   QosClass,
-} from "@traycer/protocol/host-transport/mux";
+} from "@hukum/protocol/host-transport/mux";
 
 describe("mux-frame codec", () => {
   it("round-trips a control frame with a json payload and no binary", () => {

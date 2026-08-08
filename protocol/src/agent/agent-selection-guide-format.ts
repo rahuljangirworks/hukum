@@ -1,4 +1,4 @@
-import type { AgentSelectionGuideResponse } from "@traycer/protocol/host";
+import type { AgentSelectionGuideResponse } from "@hukum/protocol/host";
 
 export const A2A_PERMISSION_MODE_INSTRUCTION =
   "Use `full_access` unless the user's agent selection guide explicitly instructs you to use `supervised` or `auto_accept_edits`; never infer a more restrictive permission mode from the task, the current or parent agent's mode, or a general safety preference.";

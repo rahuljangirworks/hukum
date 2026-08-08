@@ -17,7 +17,7 @@ import {
   Outlet,
   RouterProvider,
 } from "@tanstack/react-router";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
 import { NotificationsPopover } from "@/components/notifications/notifications-popover";
 import {
   __resetAppLocalNotificationsStoreForTests,
@@ -41,16 +41,16 @@ import {
   NOTIFICATION_CENTER_WIDTH_CAP_REM,
   useNotificationCenterGeometry,
 } from "@/hooks/notifications/use-notification-center-geometry";
-import type { NotificationsStreamCallbacks } from "@traycer-clients/shared/host-transport/notifications-stream-client";
+import type { NotificationsStreamCallbacks } from "@hukum-clients/shared/host-transport/notifications-stream-client";
 import {
   type NotificationEntry,
   NOTIFICATION_EVENT_TYPES,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 import {
   createNotificationRoomEntryMap,
   NOTIFICATIONS_ARRAY_KEY,
   type NotificationRoomEntryMap,
-} from "@traycer/protocol/notifications/notification-room";
+} from "@hukum/protocol/notifications/notification-room";
 import * as Y from "yjs";
 
 const activeHostIdRef = vi.hoisted(() => ({

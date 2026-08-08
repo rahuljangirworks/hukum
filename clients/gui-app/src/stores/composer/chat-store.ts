@@ -3,7 +3,7 @@ import { create } from "zustand";
 import type {
   ChatQueueSteerMode,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 import type {
   ApprovalDecision,
   ChatSessionAnchor,
@@ -14,7 +14,7 @@ import type {
   ImageGenerationResult,
   TodoItem,
   AgentUserMessage,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import type {
   AgentMessageSend,
   ArtifactOperationAction,
@@ -32,22 +32,22 @@ import type {
   ProviderNoticeTone,
   ToolInputDetail,
   WorkflowMeta,
-} from "@traycer/protocol/persistence/epic/content-blocks";
-import type { ParsedTaskTodo } from "@traycer/protocol/host/agent/gui/task-todo-tools";
+} from "@hukum/protocol/persistence/epic/content-blocks";
+import type { ParsedTaskTodo } from "@hukum/protocol/host/agent/gui/task-todo-tools";
 
 export type {
   DiffSource,
   FileEditReason,
-} from "@traycer/protocol/persistence/epic/content-blocks";
+} from "@hukum/protocol/persistence/epic/content-blocks";
 import type { Attachment } from "@/lib/composer/types";
 import type {
   EpicArtifactKind,
   JsonContent,
-} from "@traycer/protocol/common/registry";
+} from "@hukum/protocol/common/registry";
 import type {
   CheckpointFileOperation,
   TurnCheckpointManifest,
-} from "@traycer/protocol/persistence/epic/checkpoint-manifests";
+} from "@hukum/protocol/persistence/epic/checkpoint-manifests";
 import type { SnapshotSourceBlockIds } from "@/lib/chat/snapshot-source-block-ids";
 import type { SetupCardViewModel } from "@/components/chat/segments/setup-card-segment";
 

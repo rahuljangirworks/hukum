@@ -1,10 +1,10 @@
 import type {
   AgentSender,
   UserMessageSender,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import type { AuthProfile } from "@/stores/auth/auth-store";
 import type { EpicCollaboratorView } from "@/hooks/epics/use-epic-collaborators-query";
-import type { GuiHarnessId } from "@traycer/protocol/host";
+import type { GuiHarnessId } from "@hukum/protocol/host";
 
 export interface SenderDisplayContext {
   readonly profile: AuthProfile | null;
@@ -138,7 +138,7 @@ const AGENT_PROVIDER_LABEL: Record<GuiHarnessId, string> = {
   claude: "Claude Code",
   codex: "Codex",
   opencode: "OpenCode",
-  traycer: "Traycer",
+  hukum: "Hukum",
   openrouter: "OpenRouter",
   huggingface: "Hugging Face",
   cursor: "Cursor",

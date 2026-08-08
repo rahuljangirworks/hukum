@@ -36,15 +36,15 @@ const TRANSIENT_WINDOWS_RENAME_ERROR_CODES: ReadonlySet<string> = new Set([
   "EPERM",
 ]);
 
-// Re-exported so existing `@traycer/protocol/config/store` importers (the CLI's
+// Re-exported so existing `@hukum/protocol/config/store` importers (the CLI's
 // `../shell/defaults`) keep resolving the `defaultShellArgs` name from here.
 // Note the signature changed with the per-shell-flags model: it now takes the
 // program path. The flag logic lives in the browser-safe `./shell-family`.
 export { defaultShellArgs } from "./shell-family";
 
 /**
- * Filesystem-backed config store for `~/.traycer/cli/config.json`, shared
- * by the CLI (`traycer config …` CRUD) and the host (per-spawn shell
+ * Filesystem-backed config store for `~/.hukum/cli/config.json`, shared
+ * by the CLI (`hukum config …` CRUD) and the host (per-spawn shell
  * lookup, provider-CLI PATH discovery). Every read and write goes through
  * `cliConfigSchema`, so neither side can corrupt the file or drift from
  * the other's expectations.
@@ -357,7 +357,7 @@ export async function detectShells(): Promise<readonly DetectedShell[]> {
  * when the file no longer exists - so a removable row is never silently dropped;
  * a vanished file surfaces as `missing: true` (a fresh `F_OK` probe, never
  * persisted) so the UI can flag it while keeping its ✕. This is what
- * `traycer config shell list` returns, so every client and the host see one
+ * `hukum config shell list` returns, so every client and the host see one
  * list.
  */
 export async function listShells(): Promise<readonly DetectedShell[]> {
@@ -473,13 +473,13 @@ export async function readCliConfig(): Promise<CliConfig> {
     parsed = JSON.parse(raw);
   } catch {
     throw new Error(
-      "~/.traycer/cli/config.json is not valid JSON; refusing to overwrite. Fix or delete it.",
+      "~/.hukum/cli/config.json is not valid JSON; refusing to overwrite. Fix or delete it.",
     );
   }
   const result = parseCliConfig(parsed);
   if (!result.success) {
     throw new Error(
-      `~/.traycer/cli/config.json does not match the expected schema: ${result.error.message}`,
+      `~/.hukum/cli/config.json does not match the expected schema: ${result.error.message}`,
     );
   }
   return result.data;
@@ -575,7 +575,7 @@ export async function writeCliConfig(next: CliConfig): Promise<void> {
   await mkdir(cliConfigDir(), { recursive: true, mode: 0o700 });
   const target = cliConfigPath();
   // Per-write unique tmp name: two processes writing concurrently (e.g. two
-  // `traycer config …` invocations) must not share the same tmp file, or
+  // `hukum config …` invocations) must not share the same tmp file, or
   // their bytes interleave and the rename yields a corrupt config.json. Each
   // writer renames a fully-written file of its own, so the rename stays atomic
   // (last writer wins - acceptable; partial corruption is not).

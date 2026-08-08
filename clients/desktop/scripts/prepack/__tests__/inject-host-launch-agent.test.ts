@@ -111,7 +111,7 @@ function createFixture(environment: "dev" | "production"): {
     `darwin-${Arch[Arch.arm64]}`,
   );
   mkdirSync(cliDir, { recursive: true });
-  const cliBinary = path.join(cliDir, "traycer");
+  const cliBinary = path.join(cliDir, "hukum");
   writeFileSync(cliBinary, "#!/bin/sh\nexit 0\n", "utf8");
   chmodSync(cliBinary, 0o755);
   writeFileSync(
@@ -277,7 +277,7 @@ describe("inject-host-launch-agent afterPack", () => {
         // file - do NOT cover this, and cannot: the basename is the only
         // lever, which is what makes it worth its own test.
         //
-        // The prior basename `traycer-host-start` shipped a filename into a
+        // The prior basename `hukum-host-start` shipped a filename into a
         // product surface. Reverting it must fail here.
         const { modulePath, appOutDir, appPath } = createFixture("production");
         const injected = loadModule(modulePath);
@@ -323,7 +323,7 @@ describe("inject-host-launch-agent afterPack", () => {
 
         // ProgramArguments[0] and BundleProgram must name the same file.
         // launchd uses BundleProgram for the exec, but the argv is what
-        // `attestTraycerRegistration` reads, so drift between them would
+        // `attestHukumRegistration` reads, so drift between them would
         // leave the two halves disagreeing about which file this job is.
         const firstProgramArgument = agentPlist.match(
           /<key>ProgramArguments<\/key>\s*<array>\s*<string>([^<]+)<\/string>/,
@@ -352,7 +352,7 @@ describe("inject-host-launch-agent afterPack", () => {
           helperAppPath,
           "Contents",
           "MacOS",
-          "traycer",
+          "hukum",
         );
         expect(existsSync(helperBinary)).toBe(true);
         expect(statSync(helperBinary).mode & 0o111).not.toBe(0);
@@ -360,7 +360,7 @@ describe("inject-host-launch-agent afterPack", () => {
         // The premise the unconditional `--service-label` rests on: the CLI
         // the shim execs is a byte-identical copy of the one this same
         // afterPack run staged into the bundle, sitting beside the launcher -
-        // never the user's `~/.traycer` slot symlink. If this ever stops
+        // never the user's `~/.hukum` slot symlink. If this ever stops
         // holding, the shim needs a capability probe again.
         expect(readFileSync(helperBinary)).toEqual(
           readFileSync(
@@ -370,7 +370,7 @@ describe("inject-host-launch-agent afterPack", () => {
               "Resources",
               "cli",
               "darwin-arm64",
-              "traycer",
+              "hukum",
             ),
           ),
         );
@@ -392,7 +392,7 @@ describe("inject-host-launch-agent afterPack", () => {
           "Contents",
           "Library",
           "LaunchAgents",
-          "ai.traycer.host.agent.plist",
+          "ai.hukum.host.agent.plist",
         );
         expect(existsSync(agentPlistPath)).toBe(true);
         expect(() =>
@@ -405,7 +405,7 @@ describe("inject-host-launch-agent afterPack", () => {
           "Contents",
           "Library",
           "LaunchAgents",
-          "ai.traycer.host.plist",
+          "ai.hukum.host.plist",
         );
         expect(existsSync(inertOldPlistPath)).toBe(true);
         expect(() =>
@@ -477,7 +477,7 @@ describe("inject-host-launch-agent afterPack", () => {
           // hidden from help output.
           const relocatedCliPath = path.join(
             path.dirname(resolvedLauncherPath),
-            "traycer",
+            "hukum",
           );
           const invocationsPath = path.join(relocatedRoot, "invocations.txt");
           writeFileSync(
@@ -490,13 +490,13 @@ printf '%s\\n' "$@"
           );
           chmodSync(relocatedCliPath, 0o755);
           expect(
-            execFileSync(resolvedLauncherPath, ["ai.traycer.host.agent"], {
+            execFileSync(resolvedLauncherPath, ["ai.hukum.host.agent"], {
               encoding: "utf8",
             }),
-          ).toBe("host\nstart\n--service-label\nai.traycer.host.agent\n");
+          ).toBe("host\nstart\n--service-label\nai.hukum.host.agent\n");
           // Exactly one invocation: the host start. No probe round trip.
           expect(readFileSync(invocationsPath, "utf8")).toBe(
-            "host start --service-label ai.traycer.host.agent\n",
+            "host start --service-label ai.hukum.host.agent\n",
           );
 
           // Relative-`$0` hazard, exercised for real. An `argv0` override
@@ -510,10 +510,10 @@ printf '%s\\n' "$@"
           expect(
             execFileSync(
               path.join(".", relativeLauncherPath),
-              ["ai.traycer.host.agent"],
+              ["ai.hukum.host.agent"],
               { encoding: "utf8", cwd: relocatedAppPath },
             ),
-          ).toBe("host\nstart\n--service-label\nai.traycer.host.agent\n");
+          ).toBe("host\nstart\n--service-label\nai.hukum.host.agent\n");
         } finally {
           rmSync(relocatedRoot, { recursive: true, force: true });
         }

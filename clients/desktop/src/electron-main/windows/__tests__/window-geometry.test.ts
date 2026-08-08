@@ -133,7 +133,7 @@ class MemoryGeometryStore implements JsonFileStore<WindowGeometryState> {
 
 describe("window geometry", () => {
   beforeEach(() => {
-    testState.userDataDir = mkdtempSync(join(tmpdir(), "traycer-user-data-"));
+    testState.userDataDir = mkdtempSync(join(tmpdir(), "hukum-user-data-"));
   });
 
   afterEach(() => {

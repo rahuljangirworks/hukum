@@ -40,7 +40,7 @@ export async function handleTakeHeapSnapshot(
 ): Promise<string | null> {
   const window = BrowserWindow.fromWebContents(event.sender);
   if (window === null || window.isDestroyed()) return null;
-  const dir = await mkdtemp(join(tmpdir(), "traycer-heap-"));
+  const dir = await mkdtemp(join(tmpdir(), "hukum-heap-"));
   const filePath = join(dir, `renderer-${Date.now()}.heapsnapshot`);
   try {
     await window.webContents.takeHeapSnapshot(filePath);
@@ -146,7 +146,7 @@ export async function handleTraceStop(): Promise<string | null> {
     log.warn("[diagnostics] trace stop called with no active trace");
     return null;
   }
-  const dir = await mkdtemp(join(tmpdir(), "traycer-trace-"));
+  const dir = await mkdtemp(join(tmpdir(), "hukum-trace-"));
   const filePath = join(dir, `trace-${Date.now()}.json`);
   const written = await contentTracing.stopRecording(filePath);
   activeTraceCategories = null;

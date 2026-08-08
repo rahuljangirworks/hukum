@@ -54,11 +54,11 @@ export function resolveDesktopStateFilePath(): string {
   // environment's session. Such a foreign-environment epic tab would have the
   // host connect collab for an epic whose credential context this environment
   // can't establish, and tearing it down crashes the connecting socket. The
-  // epic data under ~/.traycer/epics stays shared - only the window/tab state
-  // is per-environment. production → ~/.traycer/desktop-windows.json;
+  // epic data under ~/.hukum/epics stays shared - only the window/tab state
+  // is per-environment. production → ~/.hukum/desktop-windows.json;
   // dev/staging nest under their name.
   const base = environmentSubdir(
-    join(homedir(), ".traycer"),
+    join(homedir(), ".hukum"),
     config.environment,
   );
   return join(base, "desktop-windows.json");

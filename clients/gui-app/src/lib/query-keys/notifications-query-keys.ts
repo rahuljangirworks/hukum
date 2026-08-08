@@ -1,5 +1,5 @@
 import { hostQueryKeys } from "@/lib/query-keys/host-query-keys";
-import type { HostNotificationsEntityRef } from "@traycer/protocol/host/notifications/contracts";
+import type { HostNotificationsEntityRef } from "@hukum/protocol/host/notifications/contracts";
 
 const INDICATOR_METHOD = "host.notifications.indicatorState";
 

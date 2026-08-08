@@ -29,7 +29,7 @@ afterEach(() => {
 
 function readySnapshot(): DesktopSupportSnapshot {
   return {
-    appName: "Traycer",
+    appName: "Hukum",
     appVersion: "1.0.0",
     platform: "darwin",
     arch: "arm64",
@@ -38,7 +38,7 @@ function readySnapshot(): DesktopSupportSnapshot {
     host: { status: "ready", version: "1", pid: 1, hostId: "host-1" },
     logs: [{ target: "desktop", label: "Desktop", path: "/tmp/desktop.log" }],
     links: [],
-    supportEmail: "support@traycer.ai",
+    supportEmail: "support@hukum.ai",
     privateDeliveryAvailable: true,
   };
 }

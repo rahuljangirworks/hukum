@@ -1,10 +1,10 @@
 import { useState, type ReactNode } from "react";
 import type { UseMutationResult } from "@tanstack/react-query";
-import type { HostListItem } from "@traycer/protocol/host/host-status";
+import type { HostListItem } from "@hukum/protocol/host/host-status";
 import type {
   HostVersionPolicyResult,
   UpdateHostVersionPolicyInput,
-} from "@traycer-clients/shared/host-client/host-version-policy-fetcher";
+} from "@hukum-clients/shared/host-client/host-version-policy-fetcher";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";

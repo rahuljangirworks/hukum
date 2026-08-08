@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { StreamAuthRevalidator } from "@traycer-clients/shared/auth/bearer-revalidator";
+import type { StreamAuthRevalidator } from "@hukum-clients/shared/auth/bearer-revalidator";
 import { createStreamAuthRevalidator } from "@/lib/auth/stream-auth-revalidator";
 import { useAuthService } from "@/lib/host";
 

@@ -4,7 +4,7 @@ import {
   MAX_REPORT_IMAGES,
   REPORT_LOG_TAIL_MAX_BYTES,
   TOTAL_ATTACHMENT_BUDGET_BYTES,
-} from "@traycer-clients/shared/support/image-attachment-guards";
+} from "@hukum-clients/shared/support/image-attachment-guards";
 import {
   parseSupportFreezeEvidenceInput,
   parseSupportReadFrozenLogTailInput,

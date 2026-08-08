@@ -10,10 +10,10 @@ import {
   managedCommandSubscribeOutputServerFrameSchema,
   type ManagedCommandLogLine,
   type ManagedCommandSubscribeOutputClientFrame,
-} from "@traycer/protocol/host/managed-command/subscribe";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
-import type { ManagedCommandOutputStreamCallbacks } from "@traycer-clients/shared/host-transport/managed-command-output-stream-client";
+} from "@hukum/protocol/host/managed-command/subscribe";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommandOutputStreamCallbacks } from "@hukum-clients/shared/host-transport/managed-command-output-stream-client";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   DEFAULT_CODE_FONT_SIZE,

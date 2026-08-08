@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import {
   PROVIDER_DISPLAY_NAMES,
   type ProviderCliState,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { Input } from "@/components/ui/input";
 import { useProvidersSetTerminalAgentArgs } from "@/hooks/providers/use-providers-set-terminal-agent-args-mutation";
@@ -16,7 +16,7 @@ const TERMINAL_AGENT_ARGS_PLACEHOLDER: Record<ProviderId, string> = {
   codex: "--full-auto",
   opencode: "--model anthropic/claude-opus-4-8",
   cursor: "CLI arguments (optional)",
-  traycer: "CLI arguments (optional)",
+  hukum: "CLI arguments (optional)",
   openrouter: "CLI arguments (optional)",
   huggingface: "CLI arguments (optional)",
   grok: "CLI arguments (optional)",

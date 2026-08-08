@@ -1,7 +1,7 @@
 import { useQueryClient, type UseMutationResult } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostNotificationsEntityRef } from "@traycer/protocol/host/notifications/contracts";
-import type { ResponseOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostNotificationsEntityRef } from "@hukum/protocol/host/notifications/contracts";
+import type { ResponseOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
 import { useHostClient, type HostRpcRegistry } from "@/lib/host";
 import { useHostMutation } from "@/hooks/host/use-host-query";
 import { toastFromBackgroundHostError } from "@/lib/host-error-toast";

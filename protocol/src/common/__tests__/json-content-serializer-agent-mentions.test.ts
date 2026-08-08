@@ -14,8 +14,8 @@ import {
  * after `Chat`, and before it existed a Terminal-interface Agent mention fell
  * through the serializer's `default:` arm and reached the coding agent as a
  * bare title - no `@agent:` marker and, critically, no `agentId`, so the
- * runtime had nothing to pass to `traycer_send_message` /
- * `traycer_get_transcript`. Referring to an Agent has to mean the same thing
+ * runtime had nothing to pass to `hukum_send_message` /
+ * `hukum_get_transcript`. Referring to an Agent has to mean the same thing
  * regardless of interface (Core Flows, Flow 3).
  */
 

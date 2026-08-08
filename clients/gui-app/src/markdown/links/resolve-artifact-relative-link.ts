@@ -27,7 +27,7 @@ import {
   EPIC_ARTIFACT_INDEX_FILENAME,
   EPIC_ARTIFACTS_DIRNAME,
   EPICS_DIRNAME,
-} from "@traycer/protocol/common/artifact-path";
+} from "@hukum/protocol/common/artifact-path";
 
 /**
  * Resolves `relativePath` (as authored inside the artifact whose own

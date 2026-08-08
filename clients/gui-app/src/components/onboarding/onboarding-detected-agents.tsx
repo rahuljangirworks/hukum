@@ -1,7 +1,7 @@
 import {
   type ProviderCliState,
   type ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type { ReactNode } from "react";
 import { ProviderList } from "@/components/providers/provider-list";
 import type { ProviderListRow } from "@/components/providers/provider-list";
@@ -42,9 +42,9 @@ interface AccountLine {
 
 /** Mirrors `ProviderAuthLine`, restyled for the cinematic copy column. */
 function accountLineFor(state: ProviderCliState): AccountLine {
-  if (state.providerId === "traycer" && state.enabled) {
+  if (state.providerId === "hukum" && state.enabled) {
     return {
-      text: "Ready with your Traycer subscription",
+      text: "Ready with your Hukum subscription",
       tone: "good",
       title: null,
     };
@@ -85,11 +85,11 @@ function accountLineFor(state: ProviderCliState): AccountLine {
 }
 
 function installLabelFor(
-  traycerProvider: boolean,
+  hukumProvider: boolean,
   hostUnavailable: boolean,
   installState: InstallState,
 ): string {
-  if (traycerProvider) return "Built in";
+  if (hukumProvider) return "Built in";
   if (hostUnavailable) return "Unavailable";
   return INSTALL_LABELS[installState];
 }
@@ -226,15 +226,15 @@ export function OnboardingDetectedAgents() {
   const rows = ORDERED_PROVIDERS.map(({ providerId }): ProviderListRow => {
     const state = providerStateFor(providers, providerId);
     const enabled = enabledForProvider(state);
-    const traycerProvider = providerId === "traycer";
-    const installState = traycerProvider ? "detected" : installStateFor(state);
+    const hukumProvider = providerId === "hukum";
+    const installState = hukumProvider ? "detected" : installStateFor(state);
     const installLabel = installLabelFor(
-      traycerProvider,
+      hukumProvider,
       hostUnavailable,
       installState,
     );
     const installDetected =
-      traycerProvider || (!hostUnavailable && installState === "detected");
+      hukumProvider || (!hostUnavailable && installState === "detected");
     const disablingLastEnabled = disablingLastEnabledFor(
       state,
       enabled,

@@ -233,16 +233,16 @@ import {
 } from "@testing-library/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import type { Key, ReactNode } from "react";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
 import type {
   GuiHarnessId,
   ListGuiAgentCommandsResponse,
   ListGuiAgentModelsResponse,
   ListGuiHarnessesResponse,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
 import { createAppQueryClient } from "@/lib/query-client";
@@ -258,7 +258,7 @@ import { useProvidersFocusStore } from "@/stores/settings/providers-focus-store"
 import { useProviderProfileAddFlowStore } from "@/stores/settings/provider-profile-add-flow-store";
 import { useKeybindingStore } from "@/stores/settings/keybinding-store";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ALL_PERMISSION_MODES } from "@traycer/protocol/persistence/epic/foundation";
+import { ALL_PERMISSION_MODES } from "@hukum/protocol/persistence/epic/foundation";
 import type { HarnessModelSelection } from "@/components/home/data/landing-options";
 
 function harnessEntry(
@@ -501,7 +501,7 @@ describe("<HarnessModelPicker /> real-RPC intent edges", () => {
     // cache was.
     expect(countFor(fixture.calls.listModels, "codex")).toBe(modelsBeforeOpen);
     // The commands prewarm has never loaded, so it IS due on this edge. It is
-    // the only call that reaches a Traycer/OpenRouter server (their models come
+    // the only call that reaches a Hukum/OpenRouter server (their models come
     // from remote HTTP and never touch it), which is the whole point of firing
     // it here.
     expect(countFor(fixture.calls.listCommands, "codex")).toBe(1);

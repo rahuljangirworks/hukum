@@ -5,7 +5,7 @@ import {
   epicSubscribeServerFrameSchemaV10,
   epicSubscribeServerFrameSchemaV11,
   epicSubscribeV10,
-} from "@traycer/protocol/host/epic/subscribe";
+} from "@hukum/protocol/host/epic/subscribe";
 
 /**
  * `epic.subscribe@1.0` frame fixtures.
@@ -647,7 +647,7 @@ describe("epic.subscribe dirtySnapshot + dirty deltas version gate (@1.0 frozen,
         kind: "epicDeleted",
         epicId: "epic-1",
         deletedByDisplayName: null,
-        deletedByTraycerUserId: null,
+        deletedByHukumUserId: null,
         hasBinaryPayload: false,
       },
     ];

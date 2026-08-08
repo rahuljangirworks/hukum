@@ -12,14 +12,14 @@
  * the same node shape a quoted transcript selection does, and the host flattens
  * both into `<user_quoted_section>` identically.
  */
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   PrActivityItem,
   PrChangedFile,
   PrCheckContext,
   PrDetailCore,
   PrReviewThread,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import {
   appendQuoteToDraft,
   buildQuoteBlockquote,

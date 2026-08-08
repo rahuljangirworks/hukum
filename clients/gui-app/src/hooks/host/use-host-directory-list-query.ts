@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useQueryClient, type UseQueryResult } from "@tanstack/react-query";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import { useHostBinding } from "@/lib/host";
 import {
   registerHostPickerDirectory,

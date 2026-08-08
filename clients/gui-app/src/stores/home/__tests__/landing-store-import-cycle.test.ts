@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 // In-memory idb-keyval stub so importing the landing stores (which pull in
 // landing-image-gc → landing-image-store) doesn't touch a real IndexedDB.

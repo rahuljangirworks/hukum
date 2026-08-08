@@ -7,7 +7,7 @@ import type {
   StoredCredentials,
   TrayEpic,
   TrayIndicatorState,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import {
   DesktopRunnerHost,
   type DesktopPreloadBridge,
@@ -287,7 +287,7 @@ function buildFakeBridge(
     },
     support: {
       getSnapshot: async () => ({
-        appName: "Traycer",
+        appName: "Hukum",
         appVersion: "0.0.0",
         platform: "darwin",
         arch: "arm64",
@@ -371,7 +371,7 @@ function buildFakeBridge(
       enableLinger: async () => undefined,
       getLogTail: async (_maxLines: number) => null,
     },
-    traycerCli: {
+    hukumCli: {
       hostStatus: async () => ({
         running: false,
         pidMetadata: null,
@@ -504,8 +504,8 @@ function buildFakeBridge(
       uninstallHost: async () => {
         throw new Error("uninstallHost not used in test");
       },
-      uninstallTraycer: async () => {
-        throw new Error("uninstallTraycer not used in test");
+      uninstallHukum: async () => {
+        throw new Error("uninstallHukum not used in test");
       },
       getRemovalState: async () => ({ removedByUser: false }),
       clearRemoval: async () => undefined,

@@ -2,7 +2,7 @@ import type {
   ProviderNativeScope,
   ProviderSkill,
   ProviderSkillsCapabilities,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 import { describe, expect, it } from "vitest";
 import {
   previewSkillMd,
@@ -130,7 +130,7 @@ describe("skillComposerTabs", () => {
 
 describe("previewSkillMd", () => {
   it("mirrors the host's formatSkillMd byte-for-byte for a filled-in skill", () => {
-    // Matches `traycer-host/.../skills-helpers.ts:formatSkillMd` exactly:
+    // Matches `hukum-host/.../skills-helpers.ts:formatSkillMd` exactly:
     // `---\nname: ${name}\ndescription: ${JSON.stringify(desc)}\n---\n\n${body}\n`.
     const result = previewSkillMd({
       name: "review-pr",
@@ -359,7 +359,7 @@ describe("providerRootFromSkills", () => {
     const skills: ProviderSkill[] = [
       { ...base, source: "shared", path: "/Users/dev/.agents/skills/a" },
       { ...base, source: "plugin", path: "/Users/dev/.plugin/skills/b" },
-      { ...base, source: "managed", path: "/Users/dev/.traycer/skills/c" },
+      { ...base, source: "managed", path: "/Users/dev/.hukum/skills/c" },
       { ...base, source: "provider", path: "/Users/dev/.codex/skills/d" },
     ];
     expect(providerRootFromSkills(skills)).toBe("/Users/dev/.codex/skills");

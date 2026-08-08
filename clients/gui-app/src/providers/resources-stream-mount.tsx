@@ -1,5 +1,5 @@
 import { useEffect, type ReactNode } from "react";
-import { ResourcesStreamClient } from "@traycer-clients/shared/host-transport/resources-stream-client";
+import { ResourcesStreamClient } from "@hukum-clients/shared/host-transport/resources-stream-client";
 import {
   useStreamMethodSchemaVersion,
   useStreamMethodSupport,

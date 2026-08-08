@@ -3,7 +3,7 @@ import { z } from "zod";
 import {
   defineRpcContract,
   defineVersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import type {
   HostRequestAuthority,
   RequestOfMethod,
@@ -21,7 +21,7 @@ import { mockLocalHostEntry } from "../mock/mock-host-directory";
 import {
   createRequestContext,
   identityFromAuthenticatedUser,
-} from "@traycer/protocol/auth/request-context";
+} from "@hukum/protocol/auth/request-context";
 import { createAuthenticatedUserFixture } from "../../test-fixtures/authenticated-user";
 
 const latestRead = defineRpcContract({

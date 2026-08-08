@@ -27,8 +27,8 @@ import {
   type InitialChatHandoffScope,
 } from "@/stores/epics/initial-chat-handoff-store";
 import type { EpicChatProjection } from "@/lib/epic-selectors";
-import type { PermissionRole } from "@traycer/protocol/host/epic/unary-schemas";
-import type { StreamConnectionStatus } from "@traycer-clients/shared/host-transport/i-stream-session";
+import type { PermissionRole } from "@hukum/protocol/host/epic/unary-schemas";
+import type { StreamConnectionStatus } from "@hukum-clients/shared/host-transport/i-stream-session";
 
 /**
  * How long a `pending` handoff may sit with no projected chat before the

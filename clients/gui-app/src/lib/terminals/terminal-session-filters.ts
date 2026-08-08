@@ -1,4 +1,4 @@
-import type { CanonicalTerminalSessionInfo } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { CanonicalTerminalSessionInfo } from "@hukum/protocol/host/terminal/unary-schemas";
 
 /**
  * Shared "is this a live raw terminal?" predicate for every surface that lists

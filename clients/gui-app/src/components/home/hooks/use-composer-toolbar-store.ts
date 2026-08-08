@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { useStore } from "zustand";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 
 import type {
   PermissionMode,
@@ -97,7 +97,7 @@ export function useComposerToolbarStore(
   const seedClient = seedSource.kind === "fallback" ? seedSource.client : null;
   const rawSeedProfileId = settingsSeed?.profileId ?? null;
   const resolvedSeedProfileId = useResolvedSeededProfileId(
-    settingsSeed?.harnessId ?? "traycer",
+    settingsSeed?.harnessId ?? "hukum",
     rawSeedProfileId,
     activityEnabled && !seedIsAuthoritative,
     seedClient,

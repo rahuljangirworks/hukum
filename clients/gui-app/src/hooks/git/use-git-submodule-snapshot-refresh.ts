@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { queryOptions, useQueryClient } from "@tanstack/react-query";
 import { withHostQueryErrorBoundary } from "@/lib/query/host-query-error-boundary";
-import type { GitListChangedFilesResponseV11 } from "@traycer/protocol/host";
+import type { GitListChangedFilesResponseV11 } from "@hukum/protocol/host";
 import { useHostClientFor } from "@/hooks/host/use-host-client-for";
 import { useHostDirectoryEntry } from "@/hooks/host/use-host-directory-entry";
 import { stampHostRpcMethod } from "@/lib/host-rpc-policy/host-method-policy-table";

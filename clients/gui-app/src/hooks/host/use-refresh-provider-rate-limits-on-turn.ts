@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { DEFAULT_ACCOUNT_CONTEXT } from "@traycer/protocol/common/schemas";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import { DEFAULT_ACCOUNT_CONTEXT } from "@hukum/protocol/common/schemas";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { subscribeChatTurnCompletions } from "@/lib/chats/chat-turn-completions";
 import { providerIdToGuiHarnessId } from "@/lib/provider-ordering";
 import { queryKeys } from "@/lib/query-keys";
@@ -16,7 +16,7 @@ import { enqueueRateLimitFetchForScope } from "@/lib/rate-limits/ephemeral-fetch
 /**
  * While mounted, refreshes `host.getRateLimitUsage` for the current host scope
  * whenever a chat turn on `providerId`'s harness completes - the provider-pull
- * analog of `useRefreshRateLimitUsageOnTraycerTurn`. Branches on the provider's
+ * analog of `useRefreshRateLimitUsageOnHukumTurn`. Branches on the provider's
  * fetch lane:
  *
  * - `ephemeralProcess` (codex, claude-code): enqueues onto the shared serial

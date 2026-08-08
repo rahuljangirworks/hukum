@@ -94,7 +94,7 @@ export const RunnerHostInvoke = {
   // asks for the current value instead of hoping it was told.
   localHostSnapshot: "runnerHost:host:localHostSnapshot",
   setUnsyncedEditsSnapshot: "runnerHost:appLifecycle:setUnsyncedEditsSnapshot",
-  // Renderer-initiated app quit (the removed surface's "Quit Traycer" button).
+  // Renderer-initiated app quit (the removed surface's "Quit Hukum" button).
   // Routes through the normal `before-quit` flow (unsynced-edits guard etc.).
   appLifecycleQuit: "runnerHost:appLifecycle:quit",
   acknowledgeQuitRequest: "runnerHost:appLifecycle:acknowledgeQuitRequest",
@@ -142,25 +142,25 @@ export const RunnerHostInvoke = {
   serviceGetLogTail: "runnerHost:service:getLogTail",
   migrationAnnounceRunning: "runnerHost:migration:announceRunning",
   migrationGetRunningSnapshot: "runnerHost:migration:getRunningSnapshot",
-  // `traycer` CLI subprocess invocations. The renderer drives bootstrap-
+  // `hukum` CLI subprocess invocations. The renderer drives bootstrap-
   // config CRUD and host-status reads through these instead of hitting
   // SQLite or host RPC directly - single seam, host-down-tolerant.
-  traycerHostStatus: "runnerHost:traycer:host:status",
-  traycerConfigShellGet: "runnerHost:traycer:config:shell:get",
-  traycerConfigShellSet: "runnerHost:traycer:config:shell:set",
-  traycerConfigShellReset: "runnerHost:traycer:config:shell:reset",
-  traycerConfigShellList: "runnerHost:traycer:config:shell:list",
-  traycerConfigShellAdd: "runnerHost:traycer:config:shell:add",
-  traycerConfigShellRemove: "runnerHost:traycer:config:shell:remove",
-  traycerConfigShellRevertArgs: "runnerHost:traycer:config:shell:revert-args",
+  hukumHostStatus: "runnerHost:hukum:host:status",
+  hukumConfigShellGet: "runnerHost:hukum:config:shell:get",
+  hukumConfigShellSet: "runnerHost:hukum:config:shell:set",
+  hukumConfigShellReset: "runnerHost:hukum:config:shell:reset",
+  hukumConfigShellList: "runnerHost:hukum:config:shell:list",
+  hukumConfigShellAdd: "runnerHost:hukum:config:shell:add",
+  hukumConfigShellRemove: "runnerHost:hukum:config:shell:remove",
+  hukumConfigShellRevertArgs: "runnerHost:hukum:config:shell:revert-args",
   // Native (non-CLI) helpers for the "Add a shell" picker section: a debounced
   // fs existence/executability probe and the native file dialog.
-  traycerConfigShellProbe: "runnerHost:traycer:config:shell:probe",
-  traycerConfigShellPickProgramFile:
-    "runnerHost:traycer:config:shell:pickProgramFile",
-  traycerConfigEnvList: "runnerHost:traycer:config:env:list",
-  traycerConfigEnvSet: "runnerHost:traycer:config:env:set",
-  traycerConfigEnvDelete: "runnerHost:traycer:config:env:delete",
+  hukumConfigShellProbe: "runnerHost:hukum:config:shell:probe",
+  hukumConfigShellPickProgramFile:
+    "runnerHost:hukum:config:shell:pickProgramFile",
+  hukumConfigEnvList: "runnerHost:hukum:config:env:list",
+  hukumConfigEnvSet: "runnerHost:hukum:config:env:set",
+  hukumConfigEnvDelete: "runnerHost:hukum:config:env:delete",
   recentDocumentAdd: "runnerHost:recentDocuments:add",
   windowFlashFrame: "runnerHost:window:flashFrame",
   windowSetProgressBar: "runnerHost:window:setProgressBar",
@@ -223,48 +223,48 @@ export const RunnerHostInvoke = {
   // here; main holds a single `powerSaveBlocker` while any window wants it.
   powerSetSleepBlocked: "runnerHost:power:setSleepBlocked",
   // Host management - Settings → Host, Doctor failure card, registry
-  // update notice. Each handler invokes a `traycer host …` subcommand
+  // update notice. Each handler invokes a `hukum host …` subcommand
   // (NDJSON) and projects the terminal `result.data` payload to the
   // renderer. Long-running invokes also fan out progress on
   // `cliOperationProgress` keyed by `operationId`.
   // Two-lane canonical `HostController` status (Host Update Layer Redesign
   // Tech Plan). Read once on mount; live updates arrive on
   // `hostControllerStatusChange`.
-  traycerHostControllerStatusGet:
-    "runnerHost:traycer:host:controllerStatus:get",
+  hukumHostControllerStatusGet:
+    "runnerHost:hukum:host:controllerStatus:get",
   // Idempotent "converge the host to reachable" (post-auth provisioning,
   // manual retry, Force restart). Resolves a `MutationOutcome`.
-  traycerHostConvergeReady: "runnerHost:traycer:host:convergeReady",
+  hukumHostConvergeReady: "runnerHost:hukum:host:convergeReady",
   // Applies the currently-staged version. Resolves a `MutationOutcome`.
-  traycerHostApplyStaged: "runnerHost:traycer:host:applyStaged",
+  hukumHostApplyStaged: "runnerHost:hukum:host:applyStaged",
   // Activates an installed-but-not-activated record (packaged-macOS
   // post-commit activation, or clearing activation debt). Resolves a
   // `MutationOutcome`.
-  traycerHostActivateInstalled: "runnerHost:traycer:host:activateInstalled",
+  hukumHostActivateInstalled: "runnerHost:hukum:host:activateInstalled",
   // Pins an explicit version (incl. downgrades). Resolves a
   // `MutationOutcome`.
-  traycerHostInstallVersion: "runnerHost:traycer:host:installVersion",
-  traycerHostUninstall: "runnerHost:traycer:host:uninstall",
-  // In-app "Remove Traycer" (Settings → General → Danger Zone). Orchestrates
+  hukumHostInstallVersion: "runnerHost:hukum:host:installVersion",
+  hukumHostUninstall: "runnerHost:hukum:host:uninstall",
+  // In-app "Remove Hukum" (Settings → General → Danger Zone). Orchestrates
   // the full background-component teardown (sentinel + login item + `host
-  // uninstall --all`); distinct from the host-only `traycerHostUninstall`.
-  traycerAppUninstall: "runnerHost:traycer:app:uninstall",
+  // uninstall --all`); distinct from the host-only `hukumHostUninstall`.
+  hukumAppUninstall: "runnerHost:hukum:app:uninstall",
   // Read / clear the persisted "removed by user" sentinel that gates
   // auto-provisioning after an in-app removal.
-  traycerHostRemovalGet: "runnerHost:traycer:host:removal:get",
-  traycerHostRemovalClear: "runnerHost:traycer:host:removal:clear",
-  traycerHostRestart: "runnerHost:traycer:host:restart",
-  traycerHostLogs: "runnerHost:traycer:host:logs",
-  traycerHostDoctor: "runnerHost:traycer:host:doctor",
-  traycerHostAvailable: "runnerHost:traycer:host:available",
-  traycerHostInstalled: "runnerHost:traycer:host:installed",
-  traycerServiceRegister: "runnerHost:traycer:service:register",
-  traycerServiceDeregister: "runnerHost:traycer:service:deregister",
-  traycerRegistryCheck: "runnerHost:traycer:registry:check",
-  traycerFreePortAndRestart: "runnerHost:traycer:freePortAndRestart",
-  traycerCliManifestRead: "runnerHost:traycer:cli:manifestRead",
-  traycerHostNameGet: "runnerHost:traycer:host:name:get",
-  traycerHostNameSet: "runnerHost:traycer:host:name:set",
+  hukumHostRemovalGet: "runnerHost:hukum:host:removal:get",
+  hukumHostRemovalClear: "runnerHost:hukum:host:removal:clear",
+  hukumHostRestart: "runnerHost:hukum:host:restart",
+  hukumHostLogs: "runnerHost:hukum:host:logs",
+  hukumHostDoctor: "runnerHost:hukum:host:doctor",
+  hukumHostAvailable: "runnerHost:hukum:host:available",
+  hukumHostInstalled: "runnerHost:hukum:host:installed",
+  hukumServiceRegister: "runnerHost:hukum:service:register",
+  hukumServiceDeregister: "runnerHost:hukum:service:deregister",
+  hukumRegistryCheck: "runnerHost:hukum:registry:check",
+  hukumFreePortAndRestart: "runnerHost:hukum:freePortAndRestart",
+  hukumCliManifestRead: "runnerHost:hukum:cli:manifestRead",
+  hukumHostNameGet: "runnerHost:hukum:host:name:get",
+  hukumHostNameSet: "runnerHost:hukum:host:name:set",
   zoomGet: "runnerHost:zoom:get",
   zoomSet: "runnerHost:zoom:set",
   zoomStepIn: "runnerHost:zoom:stepIn",

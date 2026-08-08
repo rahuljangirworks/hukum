@@ -11,9 +11,9 @@ import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import { v4 as uuidv4 } from "uuid";
 import { Plus, XIcon } from "lucide-react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { WorktreeIntent } from "@traycer/protocol/host/worktree-schemas";
+import type { JsonContent } from "@hukum/protocol/common/registry";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { WorktreeIntent } from "@hukum/protocol/host/worktree-schemas";
 
 import {
   AttachmentStrip,
@@ -65,7 +65,7 @@ import {
 } from "@/hooks/worktree/use-latest-conversation-workspace-seed";
 import { useOwnerWorkspaceInheritanceSeed } from "@/hooks/worktree/use-owner-workspace-inheritance-seed";
 import { useEpicStore } from "@/hooks/use-epic-store";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useHostClientForHostId } from "@/hooks/host/use-host-client-for-host-id";
 import { UNKNOWN_HOST_PLACEHOLDER } from "@/lib/host/constants";

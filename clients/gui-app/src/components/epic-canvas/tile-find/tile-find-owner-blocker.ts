@@ -11,7 +11,7 @@ import type { TileFindOwnerBlocker } from "@/stores/tile-find/types";
  * lags along: it is navigated when a tab is ACTIVATED, so a restored window
  * legitimately sits at `/` with a focused Epic surface showing a file tile.
  * Gating ownership on an epic-path match therefore blocked find and select-all
- * in the app's normal startup state (traycerai/traycer#592).
+ * in the app's normal startup state (hukumai/hukum#592).
  *
  * Which surface is frontmost is already answered, route-independently, by pane
  * activity: `TileFindScope` registers `isEligible: isActive && paneFocused`,

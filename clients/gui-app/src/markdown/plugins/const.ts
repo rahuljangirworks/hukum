@@ -1,11 +1,11 @@
 /**
- * Custom HTML tag names for Traycer reference types.
+ * Custom HTML tag names for Hukum reference types.
  * These tags are used to wrap references in LLM output and are transformed
  * by rehype plugins into interactive React components.
  */
-export const TRAYCER_SPEC_TAG = "traycer-spec";
-export const TRAYCER_TICKET_TAG = "traycer-ticket";
-export const TRAYCER_EPIC_TAG = "traycer-epic";
-export const TRAYCER_CHAT_TAG = "traycer-chat";
-export const TRAYCER_AGENT_TAG = "traycer-agent";
-export const TRAYCER_MERMAID_TAG = "traycer-mermaid";
+export const HUKUM_SPEC_TAG = "hukum-spec";
+export const HUKUM_TICKET_TAG = "hukum-ticket";
+export const HUKUM_EPIC_TAG = "hukum-epic";
+export const HUKUM_CHAT_TAG = "hukum-chat";
+export const HUKUM_AGENT_TAG = "hukum-agent";
+export const HUKUM_MERMAID_TAG = "hukum-mermaid";

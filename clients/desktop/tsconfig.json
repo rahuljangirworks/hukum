@@ -20,11 +20,11 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "@traycer-clients/shared/*": ["../shared/*"],
-      "@traycer-clients/desktop/*": ["./src/*"],
-      "@traycer-clients/gui-app": ["../gui-app/index"],
-      "@traycer/protocol/utils/*": ["../../protocol/utils/*"],
-      "@traycer/protocol/*": ["../../protocol/src/*"],
+      "@hukum-clients/shared/*": ["../shared/*"],
+      "@hukum-clients/desktop/*": ["./src/*"],
+      "@hukum-clients/gui-app": ["../gui-app/index"],
+      "@hukum/protocol/utils/*": ["../../protocol/utils/*"],
+      "@hukum/protocol/*": ["../../protocol/src/*"],
       "@/*": ["../gui-app/src/*"]
     }
   },

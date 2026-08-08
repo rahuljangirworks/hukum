@@ -8,7 +8,7 @@ Architecture decision #15 / R4-D2:
 > method, never a new method name.
 
 This decomposes into two checkable properties, both enforced as tests over
-`@traycer/protocol`, not runtime code:
+`@hukum/protocol`, not runtime code:
 
 1. **Name-set stability** - `protocol/src/host/__tests__/released-surface-compat.test.ts`.
    Freezes `Object.keys(hostRpcRegistry)` against the `host-v1.0.0` baseline
@@ -106,8 +106,8 @@ exactly the blind spot this whole guard exists to close.
 ## Wiring into the release pipeline
 
 Release/tagging logic lives in the **outer** (private) repo, not in this
-open-source `traycer/` submodule - this submodule's own CI
-(`traycer/.github/workflows/test.yml`) just runs `nx test` across packages,
+open-source `hukum/` submodule - this submodule's own CI
+(`hukum/.github/workflows/test.yml`) just runs `nx test` across packages,
 which already picks up both guard tests above on every push/PR since they're
 ordinary `vitest` specs under `protocol/src/host/__tests__/`. No extra wiring
 is needed for them to run as part of normal CI.
@@ -118,7 +118,7 @@ tag/publish a host build that fails the two-sided invariant against the
 support matrix:
 
 - `.github/workflows/release-host.yml` - add a step that runs
-  `bun run --filter @traycer/protocol test -- two-sided-release-invariant`
+  `bun run --filter @hukum/protocol test -- two-sided-release-invariant`
   AND `-- two-sided-stream-release-invariant` (or the equivalent `vitest run`
   invocation scoped to both spec files - unary and stream are complementary,
   neither substitutes for the other) as a **pre-tag gate**, positioned before
@@ -127,7 +127,7 @@ support matrix:
   `released-stream-surface-compat` run already implicitly would if it's part
   of the same `nx test` gate.
 - `.github/workflows/release-cli.yml` - same gate (both unary and stream),
-  same reasoning, since the CLI inlines `@traycer/protocol` at build time and
+  same reasoning, since the CLI inlines `@hukum/protocol` at build time and
   is the other side of this handshake.
 - If `release.yml` (the dispatcher that derives `RELEASE_REPO` tags and fans
   out to the host/CLI/desktop release workflows) has a single shared

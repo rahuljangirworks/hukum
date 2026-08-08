@@ -38,7 +38,7 @@ on:
         type: boolean
         default: false
       homebrew_versioned_only:
-        description: "Backfill mode: render only Formula/traycer@<version>.rb and leave Formula/traycer.rb untouched."
+        description: "Backfill mode: render only Formula/hukum@<version>.rb and leave Formula/hukum.rb untouched."
         required: false
         type: boolean
         default: false
@@ -148,7 +148,7 @@ jobs:
           echo "OSS source ref: $oss_ref ; supported host version: $supported_host_version"
 
   publish-npm:
-    name: Publish @traycerai/cli to npm
+    name: Publish @hukumai/cli to npm
     needs: resolve
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_npm != true }}
     runs-on: ubuntu-latest
@@ -189,35 +189,35 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Stamp CLI production deploy target
         env:
-          TRAYCER_SUPPORTED_HOST_VERSION: ${{ needs.resolve.outputs.supported_host_version }}
-          TRAYCER_RELEASE_REPO: ${{ env.RELEASE_REPO }}
-        run: bun clients/traycer-cli/scripts/set-deploy-target.cjs --target=production
+          HUKUM_SUPPORTED_HOST_VERSION: ${{ needs.resolve.outputs.supported_host_version }}
+          HUKUM_RELEASE_REPO: ${{ env.RELEASE_REPO }}
+        run: bun clients/hukum-cli/scripts/set-deploy-target.cjs --target=production
       - name: Build npm package
         env:
-          TRAYCER_CLI_SENTRY_DSN: ${{ secrets.TRAYCER_CLI_SENTRY_DSN }}
-          TRAYCER_CLI_VERSION: ${{ needs.resolve.outputs.version }}
-        run: bun run --cwd clients/traycer-cli build
+          HUKUM_CLI_SENTRY_DSN: ${{ secrets.HUKUM_CLI_SENTRY_DSN }}
+          HUKUM_CLI_VERSION: ${{ needs.resolve.outputs.version }}
+        run: bun run --cwd clients/hukum-cli build
       - name: Restore CLI deploy target to local
         if: always()
-        run: bun clients/traycer-cli/scripts/set-deploy-target.cjs --restore
+        run: bun clients/hukum-cli/scripts/set-deploy-target.cjs --restore
       - name: Skip existing npm version
         if: steps.gate.outputs.mode == 'publish'
         id: existing
         shell: bash
         run: |
           set -euo pipefail
-          if npm view "@traycerai/cli@${VERSION}" version --registry "https://registry.npmjs.org" >/dev/null 2>&1; then
+          if npm view "@hukumai/cli@${VERSION}" version --registry "https://registry.npmjs.org" >/dev/null 2>&1; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "@traycerai/cli@${VERSION} already exists; skipping publish."
+            echo "@hukumai/cli@${VERSION} already exists; skipping publish."
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
       - name: Publish npm package (with provenance)
         if: steps.gate.outputs.mode == 'publish' && steps.existing.outputs.exists != 'true'
-        run: npm publish clients/traycer-cli/dist-npm --provenance --access public --tag "$DIST_TAG" --registry "https://registry.npmjs.org"
+        run: npm publish clients/hukum-cli/dist-npm --provenance --access public --tag "$DIST_TAG" --registry "https://registry.npmjs.org"
       - name: npm dry run
         if: steps.gate.outputs.mode == 'dry-run'
-        run: npm publish clients/traycer-cli/dist-npm --access public --tag "$DIST_TAG" --registry "https://registry.npmjs.org" --dry-run
+        run: npm publish clients/hukum-cli/dist-npm --access public --tag "$DIST_TAG" --registry "https://registry.npmjs.org" --dry-run
 
   publish-homebrew-formula:
     name: Open Homebrew formula PR
@@ -236,13 +236,13 @@ jobs:
       - name: Check tap repo secrets
         if: ${{ inputs.dry_run != true }}
         env:
-          HOMEBREW_TAP_REPO: ${{ secrets.TRAYCER_HOMEBREW_TAP_REPO }}
-          TAP_PUSH_TOKEN: ${{ secrets.TRAYCER_TAP_PUSH_TOKEN }}
+          HOMEBREW_TAP_REPO: ${{ secrets.HUKUM_HOMEBREW_TAP_REPO }}
+          TAP_PUSH_TOKEN: ${{ secrets.HUKUM_TAP_PUSH_TOKEN }}
         shell: bash
         run: |
           set -euo pipefail
           if [[ -z "$HOMEBREW_TAP_REPO" || -z "$TAP_PUSH_TOKEN" ]]; then
-            echo "::error::TRAYCER_HOMEBREW_TAP_REPO and TRAYCER_TAP_PUSH_TOKEN must be set to open the Homebrew formula PR (or run with dry_run=true)."
+            echo "::error::HUKUM_HOMEBREW_TAP_REPO and HUKUM_TAP_PUSH_TOKEN must be set to open the Homebrew formula PR (or run with dry_run=true)."
             exit 1
           fi
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -304,17 +304,17 @@ jobs:
       - name: Open Homebrew formula PR
         if: ${{ inputs.dry_run != true }}
         env:
-          GH_TOKEN: ${{ secrets.TRAYCER_TAP_PUSH_TOKEN }}
-          TAP_REPO: ${{ secrets.TRAYCER_HOMEBREW_TAP_REPO }}
+          GH_TOKEN: ${{ secrets.HUKUM_TAP_PUSH_TOKEN }}
+          TAP_REPO: ${{ secrets.HUKUM_HOMEBREW_TAP_REPO }}
           HOMEBREW_VERSIONED_ONLY: ${{ inputs.homebrew_versioned_only }}
         shell: bash
         run: |
           set -euo pipefail
           git clone "https://x-access-token:${GH_TOKEN}@github.com/${TAP_REPO}.git" tap
           cd tap
-          git config user.name "traycer-release-bot"
-          git config user.email "release@traycer.ai"
-          branch="traycer-formula-${VERSION}"
+          git config user.name "hukum-release-bot"
+          git config user.email "release@hukum.ai"
+          branch="hukum-formula-${VERSION}"
           git checkout -B "$branch"
           mkdir -p Formula
           cp ../staging/homebrew/Formula/*.rb Formula/
@@ -323,18 +323,18 @@ jobs:
             echo "::notice::Formula already up to date for ${VERSION}; nothing to PR."
             exit 0
           fi
-          git commit -m "traycer ${VERSION}"
+          git commit -m "hukum ${VERSION}"
           git push --force origin "$branch"
           existing="$(gh pr list --repo "$TAP_REPO" --head "$branch" --state open --json number --jq '.[0].number // empty')"
           if [ "$HOMEBREW_VERSIONED_ONLY" = "true" ]; then
-            body="Automated Homebrew formula backfill for Traycer CLI ${VERSION}. Adds/updates only Formula/traycer@${VERSION}.rb; the rolling Formula/traycer.rb is intentionally left untouched. Generated by publish-cli-package-managers.yml. Review and merge to publish."
+            body="Automated Homebrew formula backfill for Hukum CLI ${VERSION}. Adds/updates only Formula/hukum@${VERSION}.rb; the rolling Formula/hukum.rb is intentionally left untouched. Generated by publish-cli-package-managers.yml. Review and merge to publish."
           else
-            body="Automated Homebrew formula update for Traycer CLI ${VERSION}. Updates the rolling Formula/traycer.rb and the exact-version Formula/traycer@${VERSION}.rb formula generated by publish-cli-package-managers.yml. Review and merge to publish."
+            body="Automated Homebrew formula update for Hukum CLI ${VERSION}. Updates the rolling Formula/hukum.rb and the exact-version Formula/hukum@${VERSION}.rb formula generated by publish-cli-package-managers.yml. Review and merge to publish."
           fi
           if [ -n "$existing" ]; then
             echo "::notice::PR #${existing} already open for ${branch}; updated its branch."
           else
             gh pr create --repo "$TAP_REPO" --base main --head "$branch" \
-              --title "traycer ${VERSION}" \
+              --title "hukum ${VERSION}" \
               --body "$body"
           fi

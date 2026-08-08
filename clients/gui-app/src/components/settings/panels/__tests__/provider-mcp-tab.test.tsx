@@ -1,7 +1,7 @@
 import type {
   ProviderMcpCapabilities,
   ProviderMcpServer,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 import {
   cleanup,
   fireEvent,
@@ -253,7 +253,7 @@ const FULL_CAPS: ProviderMcpCapabilities = {
   toolsSource: "probe",
   schemasSource: "probe",
   instructionsSource: "probe",
-  traycerSessionsOnlyEnforcement: false,
+  hukumSessionsOnlyEnforcement: false,
   stdioDegradeNotice: false,
   oauthDegradesToConfigOnly: true,
 };
@@ -512,7 +512,7 @@ describe("<ProviderMcpTab />", () => {
           },
           {
             worktreePath: "/Users/dev/worktrees/app-feature",
-            branch: "traycer/feature",
+            branch: "hukum/feature",
             head: null,
             isMain: false,
             isLocked: false,
@@ -541,7 +541,7 @@ describe("<ProviderMcpTab />", () => {
 
     // The branch is what distinguishes two near-identical basenames, so it has
     // to be on the row - not only in the path.
-    const row = screen.getByRole("option", { name: /traycer\/feature/ });
+    const row = screen.getByRole("option", { name: /hukum\/feature/ });
     fireEvent.click(row);
 
     const projectCall = mcpMocks.listCalls.find(
@@ -1396,17 +1396,17 @@ describe("<ProviderMcpTab />", () => {
    * tooltip keeps this a placement test; Radix renders the content into a
    * portal only while open.
    */
-  it("offers the Traycer-sessions-only caveat beside the bulk tool toggles", () => {
+  it("offers the Hukum-sessions-only caveat beside the bulk tool toggles", () => {
     mcpMocks.listResult.data = { servers: [connectedServer({})] };
     renderTab(
       {
         ...FULL_CAPS,
-        traycerSessionsOnlyEnforcement: true,
+        hukumSessionsOnlyEnforcement: true,
       },
       "codex",
     );
 
-    expect(screen.queryByText(/Traycer sessions only/)).toBeNull();
+    expect(screen.queryByText(/Hukum sessions only/)).toBeNull();
 
     fireEvent.click(screen.getByRole("button", { name: /Expand context7/ }));
 

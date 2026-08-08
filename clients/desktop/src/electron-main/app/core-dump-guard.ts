@@ -9,7 +9,7 @@ import { log } from "./logger";
 // write across every Electron child - not something support can walk a user
 // through. Whoever sets this accepts the giant-dump risk knowingly (WSL's
 // `.wslconfig` `crashDumpFolder` can at least point it at a large drive).
-const KEEP_KERNEL_CORE_DUMPS_ENV = "TRAYCER_KEEP_KERNEL_CORE_DUMPS";
+const KEEP_KERNEL_CORE_DUMPS_ENV = "HUKUM_KEEP_KERNEL_CORE_DUMPS";
 
 const COREDUMP_FILTER_PATH = "/proc/self/coredump_filter";
 

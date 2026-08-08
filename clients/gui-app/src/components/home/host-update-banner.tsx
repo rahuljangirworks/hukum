@@ -14,7 +14,7 @@ import type {
   IHostManagement,
   MutationLaneStatus,
   MutationOutcome,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import { useRunnerHostControllerStatusQuery } from "@/hooks/runner/use-runner-host-controller-status-query";
 import { useRunnerApplyStaged } from "@/hooks/runner/use-runner-apply-staged-mutation";
 import { useRunnerActivateInstalled } from "@/hooks/runner/use-runner-activate-installed-mutation";
@@ -348,9 +348,9 @@ function deriveBannerAriaLabel(
   offeredVersion: string | null,
 ): string {
   if (terminalOutcome !== null) {
-    return `Traycer host update failed: ${terminalOutcome.message}`;
+    return `Hukum host update failed: ${terminalOutcome.message}`;
   }
-  return `Traycer host update available: ${offeredVersion ?? ""}`;
+  return `Hukum host update available: ${offeredVersion ?? ""}`;
 }
 
 function deriveBannerClassName(
@@ -439,7 +439,7 @@ function UpdateOrDebtContent(props: UpdateOrDebtContentProps) {
       <span className="min-w-0 flex-1">
         {props.showUpdate ? (
           <>
-            A new Traycer host is available:{" "}
+            A new Hukum host is available:{" "}
             <span className="font-mono">{props.offeredVersion}</span>
             {props.installedVersion !== null ? (
               <>

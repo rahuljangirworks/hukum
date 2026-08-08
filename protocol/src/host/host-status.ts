@@ -4,14 +4,14 @@ import { z } from "zod";
  * Client-side mirror of the Remote Host Support status contract.
  *
  * ⚠️ CROSS-REPO MIRROR — keep in sync with the internal monorepo:
- *   - `@traycerai/common/types/host` (`HostStatusDTO`, `HostKind`,
+ *   - `@hukumai/common/types/host` (`HostStatusDTO`, `HostKind`,
  *     `HostUpdateState`, presence/viewer/cloud enums) — the T1 contract, and
  *   - `authn-v3/src/utils/hosts/host-status-dto.ts` (`HostListItem`) — the
  *     `GET /api/v3/hosts` response envelope.
  *
- * The open-source `traycer/` submodule does NOT depend on `@traycerai/common`
+ * The open-source `hukum/` submodule does NOT depend on `@hukumai/common`
  * (zero references in the repo), so the DTO cannot be imported across the repo
- * boundary. `@traycer/protocol` is the shared workspace every client already
+ * boundary. `@hukum/protocol` is the shared workspace every client already
  * consumes, so the contract is mirrored here. Field names match the JSON wire
  * shape verbatim (camelCase, exactly what authn-v3 serializes). When the
  * server contract changes, update this file to match — the Zod schemas below
@@ -47,7 +47,7 @@ import { z } from "zod";
  */
 
 // -----------------------------------------------------------------------------
-// Enums (mirror `@traycerai/common/types/host`)
+// Enums (mirror `@hukumai/common/types/host`)
 // -----------------------------------------------------------------------------
 
 /** Host classification. Mirrors the `HostKind` common type / Prisma enum. */
@@ -99,7 +99,7 @@ export type HostUpdateState =
 /**
  * Per-host update policy (Architecture §13, T16). `manual` (default) means
  * updates are the user's explicit choice; `auto` is an explicit per-host
- * opt-in. Mirrors `@traycerai/common/types/host`'s `HostUpdatePolicy` /
+ * opt-in. Mirrors `@hukumai/common/types/host`'s `HostUpdatePolicy` /
  * the `HostUpdatePolicy` Prisma enum verbatim.
  */
 export type HostUpdatePolicy = "manual" | "auto";

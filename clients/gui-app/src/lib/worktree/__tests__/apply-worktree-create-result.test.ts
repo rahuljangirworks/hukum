@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type {
   WorktreeCreateResponse,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   applyWorktreeCreateResult,
   type WorktreeCreateResultActions,
@@ -15,7 +15,7 @@ function worktreeEntry(workspacePath: string): WorktreeIntentEntry {
   return {
     workspacePath,
     kind: "worktree",
-    repoIdentifier: { owner: "traycerai", repo: "traycer" },
+    repoIdentifier: { owner: "hukumai", repo: "hukum" },
     branch: {
       type: "new",
       name: "feature/x",

@@ -2,7 +2,7 @@ import { app, globalShortcut } from "electron";
 import {
   toAccelerator,
   type ChordString,
-} from "@traycer-clients/shared/keybindings/chord-core";
+} from "@hukum-clients/shared/keybindings/chord-core";
 import {
   GLOBAL_SHORTCUT_DEFAULT_CHORDS,
   GLOBAL_SHORTCUT_IDS,

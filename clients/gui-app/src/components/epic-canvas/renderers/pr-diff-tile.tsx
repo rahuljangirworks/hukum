@@ -2,7 +2,7 @@ import { useCallback, useMemo, type ReactNode } from "react";
 import type {
   PrDetailCore,
   PrGetLocalDiffResponse,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import type { PrDiffTileRef } from "@/stores/epics/canvas/types";
 import { useEpicCanvasStore } from "@/stores/epics/canvas/store";
 import { useSettingsStore } from "@/stores/settings/settings-store";

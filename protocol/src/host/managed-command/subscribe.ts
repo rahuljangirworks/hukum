@@ -52,8 +52,8 @@
  * to - this is the first one.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
-import { managedCommandSchema } from "@traycer/protocol/host/managed-command/unary-schemas";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
+import { managedCommandSchema } from "@hukum/protocol/host/managed-command/unary-schemas";
 
 /**
  * Ceiling on one `loadOlder` window. The viewer pages in screenfuls, so this is

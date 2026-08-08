@@ -678,7 +678,7 @@ function CommGraphQualifiers(props: {
 }
 
 /**
- * A DIV, not a span: `TraycerMarkdown` roots at a block element, and React flags
+ * A DIV, not a span: `HukumMarkdown` roots at a block element, and React flags
  * (and browsers reparent) block content inside phrasing content.
  */
 function CommGraphMarkdownBody(props: {

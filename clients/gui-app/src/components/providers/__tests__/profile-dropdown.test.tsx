@@ -7,7 +7,7 @@ import {
   within,
 } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import type { ProfileDropdownShortcutHint } from "../profile-dropdown";
 
 // Render the Radix dropdown menu inline + always-open so tests can assert /

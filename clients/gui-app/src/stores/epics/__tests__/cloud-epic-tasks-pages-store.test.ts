@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import type {
   ListTaskLight,
   ListTasksResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   useCloudEpicTasksPagesStore,
   cloudEpicTasksPageGeneration,

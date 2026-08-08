@@ -1,5 +1,5 @@
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import { providerCliIdForHarness } from "@/lib/provider-ordering";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import type { HostRpcRegistry } from "@/lib/host";
@@ -47,7 +47,7 @@ export function useResolvedSeededProfileId(
   // `providers.list` always returns every configured provider in one atomic
   // response - once this has landed, a missing/empty entry for `providerId`
   // is a real "no support" verdict, not a partial load. `providerId === null`
-  // (a harness with no provider-CLI concept, e.g. `traycer`) never settles -
+  // (a harness with no provider-CLI concept, e.g. `hukum`) never settles -
   // there is nothing to judge a profile against either way.
   const settled = providerId !== null && providersQuery.data !== undefined;
   const profiles =

@@ -6,7 +6,7 @@ import {
   REPORT_LOG_TAIL_MAX_BYTES,
   TOTAL_ATTACHMENT_BUDGET_BYTES,
   reportImagesExceedBudget,
-} from "@traycer-clients/shared/support/image-attachment-guards";
+} from "@hukum-clients/shared/support/image-attachment-guards";
 import { useReportIssueAttachments } from "../use-report-issue-attachments";
 
 // Spyable budget predicate: with current constants (3 * 5 MiB + 2 * 512 KB
@@ -14,11 +14,11 @@ import { useReportIssueAttachments } from "../use-report-issue-attachments";
 // the budget-rejection test below forces the predicate via this mock while
 // every other test uses the real implementation.
 vi.mock(
-  "@traycer-clients/shared/support/image-attachment-guards",
+  "@hukum-clients/shared/support/image-attachment-guards",
   async (importOriginal) => {
     const actual =
       await importOriginal<
-        typeof import("@traycer-clients/shared/support/image-attachment-guards")
+        typeof import("@hukum-clients/shared/support/image-attachment-guards")
       >();
     return {
       ...actual,
@@ -29,8 +29,8 @@ vi.mock(
 
 const actualReportImagesExceedBudget = (
   await vi.importActual<
-    typeof import("@traycer-clients/shared/support/image-attachment-guards")
-  >("@traycer-clients/shared/support/image-attachment-guards")
+    typeof import("@hukum-clients/shared/support/image-attachment-guards")
+  >("@hukum-clients/shared/support/image-attachment-guards")
 ).reportImagesExceedBudget;
 
 function pngBytes(length: number): Uint8Array<ArrayBuffer> {

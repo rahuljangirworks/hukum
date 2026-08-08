@@ -2,7 +2,7 @@ import type {
   WorktreeBranchStatus,
   WorktreeHostEntryV12,
   WorktreeSubmoduleMergeFactV12,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 
 /**
  * Evidence tier for a host worktree. Names a PROVEN fact about the worktree, not
@@ -15,7 +15,7 @@ import type {
  * branch nothing points at). `review` is the amber catch-all for anything
  * unproven or with would-be-lost state; `orphaned` and `in-use` are neutral. The
  * same names are shared verbatim with the Task-delete dialog and the
- * `traycer-housekeeping` skill.
+ * `hukum-housekeeping` skill.
  */
 export type WorktreeTier =
   | "in-use"

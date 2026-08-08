@@ -94,7 +94,7 @@ export type AnalyticsHarness =
   | "openrouter"
   | "pi"
   | "qwen"
-  | "traycer";
+  | "hukum";
 
 /** Product vocabulary only - never the internal host/app-local/global source
  * seam. Callers pass `MergedNotificationRow.category`, already mapped at the
@@ -189,7 +189,7 @@ export type AnalyticsProvider =
   | "openrouter"
   | "pi"
   | "qwen"
-  | "traycer";
+  | "hukum";
 
 export type AnalyticsRole = "editor" | "owner" | "viewer";
 
@@ -246,7 +246,7 @@ export type AnalyticsTheme =
   | "preset:pink"
   | "preset:rose"
   | "preset:tokyo-night"
-  | "preset:traycer-green"
+  | "preset:hukum-green"
   | "preset:violet";
 
 export enum AnalyticsEvent {
@@ -916,7 +916,7 @@ const ANALYTICS_HARNESSES = new Set<string>([
   "openrouter",
   "pi",
   "qwen",
-  "traycer",
+  "hukum",
 ]);
 
 const ANALYTICS_PROVIDERS = new Set<string>([
@@ -938,7 +938,7 @@ const ANALYTICS_PROVIDERS = new Set<string>([
   "openrouter",
   "pi",
   "qwen",
-  "traycer",
+  "hukum",
 ]);
 
 /**
@@ -1018,7 +1018,7 @@ const ANALYTICS_THEMES = new Set<string>([
   "preset:pink",
   "preset:rose",
   "preset:tokyo-night",
-  "preset:traycer-green",
+  "preset:hukum-green",
   "preset:violet",
 ]);
 

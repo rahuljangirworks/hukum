@@ -22,7 +22,7 @@ import { scrubSupportText } from "./support-scrubber";
  */
 
 const COMPONENT_DESKTOP_APP = "Desktop app";
-const GENERIC_FALLBACK_TITLE = "Traycer desktop issue";
+const GENERIC_FALLBACK_TITLE = "Hukum desktop issue";
 // Titles are meant to stay short; a raw error message or intent sentence can
 // run to a full paragraph, so both are capped independently of the overall
 // URL budget below.
@@ -31,9 +31,9 @@ const PLACEHOLDER_NO_REPORT = "Filed from the in-app reporter.";
 
 const ISSUE_FORM_MAX_URL_LENGTH = 8 * 1024;
 // `issue-reporter.ts` (clients/shared, Vite-bundled renderer code) assembles
-// the real URL as `${TRAYCER_OSS_REPO}/issues/new?template=<name>.yml&
+// the real URL as `${HUKUM_OSS_REPO}/issues/new?template=<name>.yml&
 // title=...&...`. This module runs in Electron main, which has no access to
-// `VITE_TRAYCER_OSS_REPO` (a Vite-only `import.meta.env` binding) and so
+// `VITE_HUKUM_OSS_REPO` (a Vite-only `import.meta.env` binding) and so
 // cannot build or measure the real, final URL - only `issue-reporter.ts` can.
 // Rather than duplicate that env plumbing into the main-process build config
 // (`config.ts`) for one constant, this reserves conservative headroom for
@@ -190,7 +190,7 @@ function capturedFieldValue<T>(
   return field.value;
 }
 
-// "Traycer 1.1.9 · macOS arm64 · host 1.1.9 · Claude / Opus" - every value
+// "Hukum 1.1.9 · macOS arm64 · host 1.1.9 · Claude / Opus" - every value
 // traces back to main's own snapshot/registry (never renderer-composed), so
 // this is the single place that line is assembled.
 function composeEnvironmentSummary(input: {
@@ -207,7 +207,7 @@ function composeEnvironmentSummary(input: {
       ? `${harness} / ${model}`
       : (harness ?? model);
   const parts = [
-    `Traycer ${input.appVersion}`,
+    `Hukum ${input.appVersion}`,
     `${input.platform} ${input.arch}`,
     input.hostVersion !== null ? `host ${input.hostVersion}` : null,
     harnessModel,

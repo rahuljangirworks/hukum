@@ -82,7 +82,7 @@ import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import * as Y from "yjs";
-import type { EpicCommunicationGraphEvent } from "@traycer/protocol/host/epic/communication-graph";
+import type { EpicCommunicationGraphEvent } from "@hukum/protocol/host/epic/communication-graph";
 import { CommGraphTile } from "@/components/epic-canvas/renderers/comm-graph-tile";
 import { __setCommGraphSubscriptionOpenerForTests } from "@/lib/comm-graph/comm-graph-opener-override";
 import {

@@ -5,24 +5,24 @@ import { z } from "zod";
 import {
   hostRpcRegistry,
   hostStreamRpcRegistry,
-} from "@traycer/protocol/host/index";
-import { hostStatusV10 } from "@traycer/protocol/host/status/contracts";
-import { releasedMethodNames } from "@traycer/protocol/host/__tests__/__fixtures__/released-method-names";
+} from "@hukum/protocol/host/index";
+import { hostStatusV10 } from "@hukum/protocol/host/status/contracts";
+import { releasedMethodNames } from "@hukum/protocol/host/__tests__/__fixtures__/released-method-names";
 import {
   defineFallbackMethodDegrade,
   defineFloorAwareVersionedRpcRegistry,
   defineRpcContract,
-} from "@traycer/protocol/framework/index";
-import { buildStreamManifest } from "@traycer/protocol/framework/stream-compat";
+} from "@hukum/protocol/framework/index";
+import { buildStreamManifest } from "@hukum/protocol/framework/stream-compat";
 import {
   manifestFromSurface,
   protocolSurfaceSchema,
-} from "@traycer/protocol/framework/surface-compat";
+} from "@hukum/protocol/framework/surface-compat";
 import {
   createRequestContext,
   identityFromAuthenticatedUser,
   type RequestContext,
-} from "@traycer/protocol/auth/request-context";
+} from "@hukum/protocol/auth/request-context";
 import { mockLocalHostEntry } from "../../host-client/mock/mock-host-directory";
 import { createAuthenticatedUserFixture } from "../../test-fixtures/authenticated-user";
 import type {
@@ -44,7 +44,7 @@ import { WsStreamClient } from "../ws-stream-client";
 import type {
   ClientFrame,
   HostFrame,
-} from "@traycer/protocol/framework/ws-protocol";
+} from "@hukum/protocol/framework/ws-protocol";
 
 /**
  * Released-peer handshake smoke: drives the REAL shipped transports

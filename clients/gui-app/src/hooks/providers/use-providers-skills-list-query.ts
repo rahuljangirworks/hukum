@@ -1,7 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { ProviderNativeScope } from "@traycer/protocol/host/provider-native-schemas";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { ProviderNativeScope } from "@hukum/protocol/host/provider-native-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import { useHostClient, type HostRpcRegistry } from "@/lib/host";
 import { useHostQueryWithResponseMap } from "@/hooks/host/use-host-query";
 import {

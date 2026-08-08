@@ -12,7 +12,7 @@ import {
   type RevokeUserSessionResponse,
   type StepUpChallengeResponse,
   type VerifyStepUpResponse,
-} from "@traycer/protocol/auth/devices-sessions";
+} from "@hukum/protocol/auth/devices-sessions";
 import type { z } from "zod";
 
 const DEVICES_SESSIONS_FETCH_TIMEOUT_MS = 10_000;

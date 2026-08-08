@@ -10,7 +10,7 @@ import {
 } from "@testing-library/react";
 import { toast } from "sonner";
 import { Editor } from "@tiptap/core";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import {
   ComposerPromptEditor,
@@ -24,7 +24,7 @@ import {
   useComposerPaste,
   type ComposerPasteEditorHandle,
 } from "@/hooks/composer/use-composer-paste";
-import type { IFileDropHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IFileDropHost } from "@hukum-clients/shared/platform/runner-host";
 
 vi.mock("sonner", () => ({
   toast: {

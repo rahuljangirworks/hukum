@@ -54,7 +54,7 @@ export function defaultShellArgs(path: string): readonly string[] {
 /**
  * How the host derives a spawned agent's environment for a given Windows shell,
  * for the Settings → Shell caption. Kept in lockstep with the host's
- * `windowsShellFamily` (`traycer-host/.../provider-search-dirs.ts`) and
+ * `windowsShellFamily` (`hukum-host/.../provider-search-dirs.ts`) and
  * `detectShells` friendly-naming: PowerShell (pwsh 7 / Windows PowerShell 5.1)
  * and Git Bash are profile-probed; WSL runs agents as Windows processes; every
  * other shell (cmd, custom) gets the registry-merged Windows environment only.

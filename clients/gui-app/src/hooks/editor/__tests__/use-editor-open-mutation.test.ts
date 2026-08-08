@@ -30,8 +30,8 @@ vi.mock("@/hooks/host/use-host-query", () => ({
 
 import { toast } from "sonner";
 import { renderHook } from "@testing-library/react";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { RpcErrorCode } from "@traycer/protocol/framework/index";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { RpcErrorCode } from "@hukum/protocol/framework/index";
 import { useEditorOpen } from "@/hooks/editor/use-editor-open-mutation";
 import { editorMutationKeys } from "@/lib/query-keys";
 import { Analytics, AnalyticsEvent } from "@/lib/analytics";

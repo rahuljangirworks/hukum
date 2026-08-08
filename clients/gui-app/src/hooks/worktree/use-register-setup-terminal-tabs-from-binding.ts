@@ -7,7 +7,7 @@ import {
   setupTerminalCwd,
   setupTerminalTitle,
 } from "@/lib/setup-terminal-tab-descriptor";
-import type { WorktreeBinding } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeBinding } from "@hukum/protocol/host/worktree-schemas";
 
 /**
  * Registers each worktree SETUP terminal as a real (background) canvas tab the

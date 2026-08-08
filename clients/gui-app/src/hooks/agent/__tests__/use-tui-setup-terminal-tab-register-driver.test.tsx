@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import type {
   WorktreeBinding,
   WorktreeBindingEntry,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { TabHostProvider } from "@/components/epic-canvas/tab-host-provider";
 import { useTuiSetupTerminalTabRegisterDriver } from "@/hooks/agent/use-tui-setup-terminal-tab-register-driver";
 import { useSetupTerminalRegistrationStore } from "@/stores/chats/setup-terminal-registration-store";
@@ -17,10 +17,10 @@ const AGENT_ID = "tui-agent-setup-title";
 const HOST_ID = "host-tui-setup-title";
 
 const WORKTREE_ENTRY: WorktreeBindingEntry = {
-  workspacePath: "/Users/me/projects/traycer",
+  workspacePath: "/Users/me/projects/hukum",
   mode: "worktree",
-  repoIdentifier: { owner: "traycerai", repo: "traycer" },
-  worktreePath: "/Users/me/.traycer/worktrees/traycerai__traycer/feature",
+  repoIdentifier: { owner: "hukumai", repo: "hukum" },
+  worktreePath: "/Users/me/.hukum/worktrees/hukumai__hukum/feature",
   branch: "feature/setup-title",
   isPrimary: true,
   isImported: false,
@@ -77,7 +77,7 @@ describe("useTuiSetupTerminalTabRegisterDriver", () => {
     expect(setupTile).toMatchObject({
       id: WORKTREE_ENTRY.setupTerminalSessionId,
       type: "terminal",
-      name: "Setup: traycer feature/setup-title",
+      name: "Setup: hukum feature/setup-title",
       titleSource: "manual",
       hostId: HOST_ID,
       cwd: WORKTREE_ENTRY.worktreePath,
@@ -137,7 +137,7 @@ describe("useTuiSetupTerminalTabRegisterDriver", () => {
     const apiEntry: WorktreeBindingEntry = {
       ...WORKTREE_ENTRY,
       workspacePath: "/Users/me/projects/api",
-      worktreePath: "/Users/me/.traycer/worktrees/acme__api/feature-api",
+      worktreePath: "/Users/me/.hukum/worktrees/acme__api/feature-api",
       branch: "feature-api",
       isPrimary: false,
       setupTerminalSessionId: "setup-api",
@@ -145,7 +145,7 @@ describe("useTuiSetupTerminalTabRegisterDriver", () => {
     const webEntry: WorktreeBindingEntry = {
       ...WORKTREE_ENTRY,
       workspacePath: "/Users/me/projects/web",
-      worktreePath: "/Users/me/.traycer/worktrees/acme__web/feature-web",
+      worktreePath: "/Users/me/.hukum/worktrees/acme__web/feature-web",
       branch: "feature-web",
       isPrimary: false,
       setupTerminalSessionId: "setup-web",

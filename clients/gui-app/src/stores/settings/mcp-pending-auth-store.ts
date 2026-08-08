@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
-import type { ProviderNativeScope } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
+import type { ProviderNativeScope } from "@hukum/protocol/host/provider-native-schemas";
 
 /**
  * Navigate-safe MCP OAuth pending-auth store.

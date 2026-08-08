@@ -161,7 +161,7 @@ describe("runUpdateInstallQuitSequence", () => {
     const logger = { warn: vi.fn(), error: vi.fn() };
 
     beforeEach(async () => {
-      tempDir = await mkdtemp(join(tmpdir(), "traycer-update-quit-"));
+      tempDir = await mkdtemp(join(tmpdir(), "hukum-update-quit-"));
       logger.warn.mockClear();
       logger.error.mockClear();
     });

@@ -20,7 +20,7 @@ import type { CommandContext, CommandItem } from "@/lib/commands/types";
 const WINDOW_ID = "history-nav-source-test-window";
 
 function storageKey(windowId: string): string {
-  return `traycer-gui-app:last-route:${windowId}`;
+  return `hukum-gui-app:last-route:${windowId}`;
 }
 
 function makeRouter(history: RouterHistory): AppRouter {

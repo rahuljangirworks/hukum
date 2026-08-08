@@ -8,12 +8,12 @@
  * (single-file SEA, per platform/arch) is the only native asset Desktop
  * ships, staged into `resources/cli/` and mapped to `extraResources/cli/`.
  *
- * NP-7 publishes per-platform/arch binaries (`traycer-darwin-arm64`,
- * `traycer-win32-x64.exe`, ...). The desktop release workflows rename and
+ * NP-7 publishes per-platform/arch binaries (`hukum-darwin-arm64`,
+ * `hukum-win32-x64.exe`, ...). The desktop release workflows rename and
  * place each binary into a matching `resources/cli/<platform>-<arch>/`
  * directory so the renderer can resolve the binary for the current
  * `process.platform`/`process.arch` at runtime. The legacy flat layout
- * (`resources/cli/<traycer>`) stays accepted so local dev flows
+ * (`resources/cli/<hukum>`) stays accepted so local dev flows
  * (`make install-desktop`) that stage a single SEA binary continue to
  * work.
  *
@@ -54,7 +54,7 @@ function parseArgs(argv) {
 }
 
 function cliBinaryName(platform) {
-  return platform === "win32" ? "traycer.exe" : "traycer";
+  return platform === "win32" ? "hukum.exe" : "hukum";
 }
 
 function isExecutable(path) {

@@ -14,7 +14,7 @@ import {
 import type {
   PrLightItem,
   PrSourceStatus,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import type { LeftPanelSlotProps } from "@/components/epic-canvas/sidebar/left-panel-registry";
 import { SidebarPanelEmptyState } from "@/components/epic-canvas/sidebar/sidebar-panel-empty-state";
 import { PrRow, type PrRowEntry } from "@/components/epic-canvas/pr/pr-row";
@@ -350,7 +350,7 @@ function PrHostUpdateRequired(): ReactNode {
           Update required to view pull requests
         </p>
         <p className="text-ui-xs text-muted-foreground/50">
-          This host does not advertise the PR list stream yet. Update Traycer
+          This host does not advertise the PR list stream yet. Update Hukum
           Host to enable the Pull Requests panel.
         </p>
       </div>

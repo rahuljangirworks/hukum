@@ -232,7 +232,7 @@ export function GeneralSettingsPanel() {
               label="Agent roles"
               description={
                 featureSettings.isError
-                  ? "Couldn't read feature settings. Repair ~/.traycer/cli/config.json, or back it up before resetting it, then reopen Settings."
+                  ? "Couldn't read feature settings. Repair ~/.hukum/cli/config.json, or back it up before resetting it, then reopen Settings."
                   : "Let agents claim durable responsibilities and coordinate through role-aware tools and prompts."
               }
               control={
@@ -321,7 +321,7 @@ export function GeneralSettingsPanel() {
  * This box used to hold three rows at three different scopes: "File Edit
  * Snapshots" (ONE MACHINE's data - and it carried its own host dropdown, so a
  * red button took its target from a control shaped like a form field),
- * "Remove Traycer" (THIS DEVICE's installation) and "Local app state" (THIS
+ * "Remove Hukum" (THIS DEVICE's installation) and "Local app state" (THIS
  * APP). Only the last is app-global, so only it stays. The other two moved to
  * the machine's own page, where the page title already names the target.
  */

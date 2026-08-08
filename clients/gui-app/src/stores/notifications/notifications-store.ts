@@ -1,19 +1,19 @@
 import { useMemo } from "react";
 import { create, type UseBoundStore, type StoreApi } from "zustand";
 import * as Y from "yjs";
-import type { StreamConnectionStatus } from "@traycer-clients/shared/host-transport/i-stream-session";
+import type { StreamConnectionStatus } from "@hukum-clients/shared/host-transport/i-stream-session";
 import type {
   NotificationsSnapshotMeta,
   NotificationsStreamCallbacks,
   NotificationsStreamClient,
-} from "@traycer-clients/shared/host-transport/notifications-stream-client";
-import type { NotificationEntry } from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum-clients/shared/host-transport/notifications-stream-client";
+import type { NotificationEntry } from "@hukum/protocol/notifications/notification-entry";
 import {
   type NotificationRoomEntriesArray,
   type NotificationRoomEntryMap,
   NOTIFICATIONS_ARRAY_KEY,
   parseNotificationRoomEntry,
-} from "@traycer/protocol/notifications/notification-room";
+} from "@hukum/protocol/notifications/notification-room";
 import {
   createHostStreamReopenScheduler,
   isReopenableNotificationsStreamClose,

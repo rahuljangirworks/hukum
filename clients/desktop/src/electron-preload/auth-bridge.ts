@@ -3,7 +3,7 @@ import {
   RunnerHostEvent,
   RunnerHostInvoke,
 } from "../ipc-contracts/ipc-channels";
-import type { AuthIdentityValidationResult } from "@traycer-clients/shared/auth/auth-validation-types";
+import type { AuthIdentityValidationResult } from "@hukum-clients/shared/auth/auth-validation-types";
 import type {
   DeregisterHostFetchResult,
   HostListFetchResult,

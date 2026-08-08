@@ -10,7 +10,7 @@ import {
 /*
  * These rows are the contract between two readers that cannot import each
  * other: `clients/shared/host-lock/process-identity.ts` (desktop + CLI) and
- * `traycer-host/src/lifecycle/process-start-identity.ts` (the publisher). If
+ * `hukum-host/src/lifecycle/process-start-identity.ts` (the publisher). If
  * the format drifts, a published token stops matching an observed one, so the
  * failure direction is "cannot attest" rather than a false match - but it
  * would silently retire recycled-pid detection everywhere, so the bytes are
@@ -139,7 +139,7 @@ describe("compareProcessStartIdentity", () => {
    * the callers act on it by refusing to defer to a host or by allowing it to
    * be restarted. An absent, malformed, or cross-platform operand is a reason
    * to know less - turning it into positive evidence is exactly the class of
-   * bug that produced traycerai/traycer#740.
+   * bug that produced hukumai/hukum#740.
    */
   it("is unknown when either operand is missing", () => {
     expect(compareProcessStartIdentity(null, "linux:boot-a 1")).toBe("unknown");

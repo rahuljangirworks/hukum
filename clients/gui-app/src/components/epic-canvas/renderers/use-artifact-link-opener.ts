@@ -11,7 +11,7 @@ import {
   type ChatLinkPolicyDeps,
 } from "@/components/chat/build-chat-link-policy";
 import { candidateWorkspaceFileRefsForRelativeLinkPath } from "@/components/epic-canvas/workspace-file/workspace-file-link-ref";
-import type { ResolveArtifactByPathResult } from "@traycer/protocol/host/epic/unary-schemas";
+import type { ResolveArtifactByPathResult } from "@hukum/protocol/host/epic/unary-schemas";
 import type { OpenableArtifactLink } from "@/editor-core";
 import { useTabHostId } from "@/components/epic-canvas/hooks/use-tab-host-id";
 import { useEpicTileNavigation } from "@/hooks/epic/use-epic-tile-navigation";

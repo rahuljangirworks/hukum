@@ -69,7 +69,7 @@ import {
 import { useTabsStore } from "@/stores/tabs/store";
 import type { TabRef } from "@/stores/tabs/types";
 
-const HISTORY_ENVELOPE_KEY = "__traycerTabNavigation";
+const HISTORY_ENVELOPE_KEY = "__hukumTabNavigation";
 
 type NavigateMock = Mock<(options: NavigateOptions) => Promise<void>>;
 
@@ -2395,7 +2395,7 @@ describe("T3 rev-3 adversarial: external supersede + POP + envelope fields", () 
     const nav = makeDeferredNavigate();
     const committedHistorySearch = {
       historyQuery: "persistence",
-      historyRepos: ["traycerai/traycer"],
+      historyRepos: ["hukumai/hukum"],
       historyOwnership: ["mine"],
       historySort: "oldest",
     };

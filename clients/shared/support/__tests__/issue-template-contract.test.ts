@@ -15,7 +15,7 @@ import { describe, expect, it } from "vitest";
 import { parse } from "yaml";
 
 const THIS_DIR = dirname(fileURLToPath(import.meta.url));
-// support/__tests__ -> shared -> clients -> traycer root
+// support/__tests__ -> shared -> clients -> hukum root
 const ISSUE_TEMPLATE_DIR = join(THIS_DIR, "../../../../.github/ISSUE_TEMPLATE");
 
 /** Field ids that issue-reporter.ts currently prefills on bug_report.yml. */

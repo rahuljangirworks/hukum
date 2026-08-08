@@ -14,7 +14,7 @@ import type { DesktopStartupTestHooks } from "../desktop-startup";
 const electronMock = vi.hoisted(() => ({
   app: {
     getPath: vi.fn(() => "/tmp"),
-    getName: vi.fn(() => "Traycer"),
+    getName: vi.fn(() => "Hukum"),
     getVersion: vi.fn(() => "0.0.0"),
     on: vi.fn(),
   },
@@ -196,9 +196,9 @@ function fakeHostController(
         "fakeHostController.uninstallHost: not used by these tests",
       );
     },
-    removeTraycer: () => {
+    removeHukum: () => {
       throw new Error(
-        "fakeHostController.removeTraycer: not used by these tests",
+        "fakeHostController.removeHukum: not used by these tests",
       );
     },
     isPendingRevisionRefreshQuarantined: () => {

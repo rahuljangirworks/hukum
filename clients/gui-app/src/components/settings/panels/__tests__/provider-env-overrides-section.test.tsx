@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { ProviderEnvOverridesSection } from "../provider-env-overrides-section";
 
 vi.mock("@/hooks/providers/use-providers-set-env-override-mutation", () => ({
@@ -51,7 +51,7 @@ describe("ProviderEnvOverridesSection — envOverrideScope copy (F1)", () => {
         /Applied to native configuration operations, such as MCP setup,\s*but not chat turns/,
       ),
     ).toBeTruthy();
-    expect(screen.queryByText(/Applied when Traycer spawns the/)).toBeNull();
+    expect(screen.queryByText(/Applied when Hukum spawns the/)).toBeNull();
   });
 
   it("uses the native-config-only copy for any providerId when the descriptor says so", () => {
@@ -75,7 +75,7 @@ describe("ProviderEnvOverridesSection — envOverrideScope copy (F1)", () => {
     });
 
     expect(
-      screen.getByText(/Applied when Traycer spawns the Cursor harness/),
+      screen.getByText(/Applied when Hukum spawns the Cursor harness/),
     ).toBeTruthy();
     expect(screen.queryByText(/but not chat turns/)).toBeNull();
   });
@@ -87,7 +87,7 @@ describe("ProviderEnvOverridesSection — envOverrideScope copy (F1)", () => {
     });
 
     expect(
-      screen.getByText(/Applied when Traycer spawns the Codex harness/),
+      screen.getByText(/Applied when Hukum spawns the Codex harness/),
     ).toBeTruthy();
     expect(screen.queryByText(/but not chat turns/)).toBeNull();
   });

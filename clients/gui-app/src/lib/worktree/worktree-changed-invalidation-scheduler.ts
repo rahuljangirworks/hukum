@@ -1,4 +1,4 @@
-import type { WorktreeChangedScope } from "@traycer/protocol/host/worktree-changed-stream";
+import type { WorktreeChangedScope } from "@hukum/protocol/host/worktree-changed-stream";
 
 /**
  * Trailing-edge debounce for the burst shape the host's freshness sweep

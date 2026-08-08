@@ -1,10 +1,10 @@
 import type { QueryKey } from "@tanstack/react-query";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import type {
   ProviderNativeScope,
   ProviderPluginIconTheme,
-} from "@traycer/protocol/host/provider-native-schemas";
-import type { RequestOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host/provider-native-schemas";
+import type { RequestOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import { hostQueryKeys } from "@/lib/query-keys/host-query-keys";
 

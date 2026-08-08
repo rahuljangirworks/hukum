@@ -4,7 +4,7 @@ import { cleanup, renderHook } from "@testing-library/react";
 import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
 import {
   createOpenEpicStore,
   type EpicStreamClientFactory,

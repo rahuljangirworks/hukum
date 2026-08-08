@@ -25,7 +25,7 @@
  * first probes `host capabilities --has service-label`. Both stage the CLI as
  * a sibling of the launcher, but only here are the launcher and that CLI
  * built from a single repo at a single commit. The internal script is
- * internal-repo HEAD staging a CLI built from the `traycer/` submodule at the
+ * internal-repo HEAD staging a CLI built from the `hukum/` submodule at the
  * gitlink pin, so it can legitimately meet an N-1 CLI and must keep probing.
  * See `writeHostStartCompatibilityLauncher` in both files.
  *
@@ -65,7 +65,7 @@ const pkg = require("../../package.json");
 const PRODUCT_NAME = pkg.build.productName;
 const APP_ID = pkg.build.appId;
 const CONFIG_PATH = path.resolve(__dirname, "..", "..", "src", "config.ts");
-const CLI_BINARY_NAME = "traycer";
+const CLI_BINARY_NAME = "hukum";
 // The launcher's BASENAME is what the user reads in System Settings → Login
 // Items, so it is a product name, not a filename.
 //
@@ -84,7 +84,7 @@ const CLI_BINARY_NAME = "traycer";
 // `.app` directory name were all ignored — including in the variant whose
 // `BundleProgram` pointed at that bundle's `CFBundleExecutable`. So the
 // obvious-looking fix (retarget `BundleProgram` at `CFBundleExecutable`) does
-// NOT surface a product name; it would have shipped `Name: traycer`. Renaming
+// NOT surface a product name; it would have shipped `Name: hukum`. Renaming
 // the launcher file is the only lever, which is the same conclusion the CLI
 // path reached for `/bin/sh` (see `HOST_START_LAUNCHER_BASENAME`).
 //
@@ -93,8 +93,8 @@ const CLI_BINARY_NAME = "traycer";
 //
 // This name is NOT the CLI's `HOST_START_LAUNCHER_BASENAME`, and must not be
 // unified with it. That constant is the one
-// `attestTraycerRegistration`/`isHostStartInvocation` matches on for the
-// CLI's `~/.traycer/service/<label-id>/…` launcher form, where a rename is a
+// `attestHukumRegistration`/`isHostStartInvocation` matches on for the
+// CLI's `~/.hukum/service/<label-id>/…` launcher form, where a rename is a
 // field-compatibility and eviction-attestation change. The bundled agent
 // below never matches that arm (its launcher's parent directory is `MacOS`,
 // not the label id) — it attests through its label signal — so this basename
@@ -119,7 +119,7 @@ const HOST_SOFT_FILE_DESCRIPTOR_LIMIT = 8_192;
 // with `host-paths.ts:smAppServiceAgentLabelId`, the CLI's
 // `service/label.ts:smAppServiceAgentLabelId`, and the internal repo's
 // `desktop-install-cloud.js:hostAgentLabel` (none can import this file).
-const PRODUCTION_LABEL = "ai.traycer.host";
+const PRODUCTION_LABEL = "ai.hukum.host";
 const PRODUCTION_AGENT_LABEL = `${PRODUCTION_LABEL}.agent`;
 
 // `set-deploy-target.cjs` rewrites `environment: "dev"` to
@@ -156,7 +156,7 @@ function helperAppPathFor(appPath) {
 }
 
 // Stays in lockstep with `buildPlist` in
-// clients/traycer-cli/src/service/platforms/macos.ts, including
+// clients/hukum-cli/src/service/platforms/macos.ts, including
 // `ProcessType: Interactive` - the only launchd band that runs with app-
 // equivalent (i.e. no) resource limits. `Standard` is defined as "equivalent
 // to no ProcessType being set", which means launchd throttles CPU and I/O;
@@ -173,7 +173,7 @@ function buildLaunchAgentPlist(label, launcherRelativePath) {
   ].join(":");
   // BundleProgram is the executable launchd actually execs. It is a real
   // bundle-relative compatibility launcher, rather than a shell-shaped argv
-  // for the Traycer CLI: launchd does not interpret ProgramArguments[0] as
+  // for the Hukum CLI: launchd does not interpret ProgramArguments[0] as
   // the executable when BundleProgram is present.
   const programArgs = [launcherRelativePath, label];
   const programArgsXml = programArgs

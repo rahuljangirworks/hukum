@@ -1,16 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import { buildStreamManifest } from "@traycer/protocol/framework/stream-compat";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import { buildStreamManifest } from "@hukum/protocol/framework/stream-compat";
 import {
   defineStreamRpcContract,
   defineVersionedStreamRpcRegistry,
-} from "@traycer/protocol/framework/versioned-stream-rpc";
+} from "@hukum/protocol/framework/versioned-stream-rpc";
 import {
   createRequestContext,
   identityFromAuthenticatedUser,
   type RequestContext,
-} from "@traycer/protocol/auth/request-context";
+} from "@hukum/protocol/auth/request-context";
 import {
   mockLocalHostEntry,
   mockRemoteHostEntry,
@@ -25,7 +25,7 @@ import {
   hostNotificationsSubscribeServerFrameSchema,
   type HostNotificationEntry,
   type HostNotificationsSummary,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import { toStreamDialUrl } from "../ws-stream-client";
 import type {
   WebSocketCloseEvent,
@@ -2873,7 +2873,7 @@ describe("WsStreamClient host credential provisioning", () => {
     hostId: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
     label: "Host B",
     kind: "remote",
-    websocketUrl: "wss://mock-remote.traycer.invalid/rpc",
+    websocketUrl: "wss://mock-remote.hukum.invalid/rpc",
     version: "0.0.0-mock",
     transportDialability: "dialable",
   };

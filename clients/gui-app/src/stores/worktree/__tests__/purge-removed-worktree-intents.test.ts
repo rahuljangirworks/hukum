@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import type {
   WorktreeBindingSelectorRowV12,
   WorktreeFolderIntent,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import {
   worktreeFolderIntentReferencesRemoved,
   type RemovedWorktreeRefs,
@@ -19,7 +19,7 @@ const ACME = { owner: "acme", repo: "app" } as const;
 
 const REMOVED: RemovedWorktreeRefs = {
   worktreePaths: new Set(["/wt/gone"]),
-  branches: [{ repoIdentifier: ACME, branch: "traycer/gone-branch" }],
+  branches: [{ repoIdentifier: ACME, branch: "hukum/gone-branch" }],
 };
 
 function existingBranchIntent(branchName: string): WorktreeFolderIntent {
@@ -59,7 +59,7 @@ describe("worktreeFolderIntentReferencesRemoved", () => {
   it("matches deleted existing-branch checkouts, fork sources, and imports", () => {
     expect(
       worktreeFolderIntentReferencesRemoved(
-        existingBranchIntent("traycer/gone-branch"),
+        existingBranchIntent("hukum/gone-branch"),
         REMOVED,
       ),
     ).toBe(true);
@@ -71,7 +71,7 @@ describe("worktreeFolderIntentReferencesRemoved", () => {
           branch: {
             type: "new",
             name: "fresh",
-            source: "traycer/gone-branch",
+            source: "hukum/gone-branch",
             carryUncommittedChanges: false,
           },
           scripts: null,
@@ -87,7 +87,7 @@ describe("worktreeFolderIntentReferencesRemoved", () => {
   it("qualifies branches by repository so a same-named branch elsewhere survives", () => {
     expect(
       worktreeFolderIntentReferencesRemoved(
-        otherRepoBranchIntent("traycer/gone-branch"),
+        otherRepoBranchIntent("hukum/gone-branch"),
         REMOVED,
       ),
     ).toBe(false);
@@ -96,7 +96,7 @@ describe("worktreeFolderIntentReferencesRemoved", () => {
     expect(
       worktreeFolderIntentReferencesRemoved(
         {
-          ...otherRepoBranchIntent("traycer/gone-branch"),
+          ...otherRepoBranchIntent("hukum/gone-branch"),
           repoIdentifier: null,
         },
         REMOVED,
@@ -111,12 +111,12 @@ describe("worktreeFolderIntentReferencesRemoved", () => {
   it("purges on branch name alone when NEITHER side can identify its repo", () => {
     const removedUnidentified: RemovedWorktreeRefs = {
       worktreePaths: new Set(),
-      branches: [{ repoIdentifier: null, branch: "traycer/gone-branch" }],
+      branches: [{ repoIdentifier: null, branch: "hukum/gone-branch" }],
     };
     expect(
       worktreeFolderIntentReferencesRemoved(
         {
-          ...otherRepoBranchIntent("traycer/gone-branch"),
+          ...otherRepoBranchIntent("hukum/gone-branch"),
           repoIdentifier: null,
         },
         removedUnidentified,
@@ -125,7 +125,7 @@ describe("worktreeFolderIntentReferencesRemoved", () => {
     // ...but an identified intent is still safe from an unidentified removal.
     expect(
       worktreeFolderIntentReferencesRemoved(
-        existingBranchIntent("traycer/gone-branch"),
+        existingBranchIntent("hukum/gone-branch"),
         removedUnidentified,
       ),
     ).toBe(false);
@@ -149,7 +149,7 @@ describe("worktreeFolderIntentReferencesRemoved", () => {
           kind: "worktree",
           branch: {
             type: "new",
-            name: "traycer/gone-branch",
+            name: "hukum/gone-branch",
             source: "main",
             carryUncommittedChanges: false,
           },
@@ -180,12 +180,12 @@ describe("worktree intent purge on sweep completion", () => {
 
   it("drops stale per-folder memory and filters per-epic memory entries", () => {
     const memory = useWorktreeIntentMemoryStore.getState();
-    memory.setFolderIntent(existingBranchIntent("traycer/gone-branch"), 1);
+    memory.setFolderIntent(existingBranchIntent("hukum/gone-branch"), 1);
     memory.setEpicIntent(
       "epic-1",
       {
         entries: [
-          existingBranchIntent("traycer/gone-branch"),
+          existingBranchIntent("hukum/gone-branch"),
           existingBranchIntent("main"),
         ],
       },
@@ -212,7 +212,7 @@ describe("worktree intent purge on sweep completion", () => {
     const staleKey: WorktreeStagingKey = { surface: "landing", draftId: null };
     const staleId = worktreeStagingKeyString(staleKey);
     staging.setIntent(staleKey, {
-      entries: [existingBranchIntent("traycer/gone-branch")],
+      entries: [existingBranchIntent("hukum/gone-branch")],
     });
     const mixedKey: WorktreeStagingKey = {
       surface: "landing",

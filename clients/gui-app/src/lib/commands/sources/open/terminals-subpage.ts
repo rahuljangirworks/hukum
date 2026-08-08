@@ -9,8 +9,8 @@
  */
 import { useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
-import type { WorktreeBindingSelectorRowV12 } from "@traycer/protocol/host";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { WorktreeBindingSelectorRowV12 } from "@hukum/protocol/host";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import { buildTerminalTileRef } from "@/components/epic-canvas/sidebar/new-terminal-tile-ref";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";
 import { useHostClientForHostId } from "@/hooks/host/use-host-client-for-host-id";

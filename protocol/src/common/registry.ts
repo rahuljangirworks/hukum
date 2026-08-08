@@ -3,8 +3,8 @@ import {
   defineRecordContract,
   defineVersionedRecordRegistry,
   type RecordValue,
-} from "@traycer/protocol/framework/index";
-import { jsonContentMarkSchema } from "@traycer/protocol/common/schemas";
+} from "@hukum/protocol/framework/index";
+import { jsonContentMarkSchema } from "@hukum/protocol/common/schemas";
 import {
   attachmentMentionAttrsSchema,
   attachmentMentionNodeSchema,
@@ -12,7 +12,7 @@ import {
   harnessIdSchema,
   permissionRoleSchema,
   ticketStatusSchema,
-} from "@traycer/protocol/common/_internal/schemas";
+} from "@hukum/protocol/common/_internal/schemas";
 
 /**
  * Shared-vocabulary record registry.

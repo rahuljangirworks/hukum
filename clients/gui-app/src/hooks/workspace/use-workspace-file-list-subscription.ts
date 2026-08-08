@@ -1,17 +1,17 @@
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { QueryClient } from "@tanstack/react-query";
 import type {
   IStreamSession,
   StreamCloseReason,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import {
   workspaceSubscribeFileListServerFrameSchema,
   type WorkspaceSubscribeFileListClientFrame,
   type WorkspaceSubscribeFileListServerFrame,
-} from "@traycer/protocol/host/workspace/subscribe";
+} from "@hukum/protocol/host/workspace/subscribe";
 import { workspaceQueryKeys } from "@/lib/query-keys/workspace-query-keys";
 import { useWsStreamClient } from "@/lib/host/stream-runtime-context";
 import {

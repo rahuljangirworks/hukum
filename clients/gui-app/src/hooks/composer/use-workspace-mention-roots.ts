@@ -4,7 +4,7 @@ import type {
   WorktreeBindingEntry,
   WorktreeFolderIntent,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { useWorkspaceFoldersStore } from "@/stores/workspace/workspace-folders-store";
 import { useLandingDraftStore } from "@/stores/home/landing-draft-store";
 import {

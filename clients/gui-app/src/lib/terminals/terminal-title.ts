@@ -1,7 +1,7 @@
 import type {
   CanonicalTerminalSessionInfo,
   CanonicalTerminalSessionInfoWithCurrentCwd,
-} from "@traycer/protocol/host/terminal/unary-schemas";
+} from "@hukum/protocol/host/terminal/unary-schemas";
 
 export const DEFAULT_TERMINAL_TITLE = "New Terminal";
 

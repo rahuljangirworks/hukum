@@ -1,6 +1,6 @@
 /**
  * Global "a panel resize drag is in progress" signal, expressed as the
- * `traycer-panel-resizing` class on `<html>`. Before the class is added,
+ * `hukum-panel-resizing` class on `<html>`. Before the class is added,
  * registered transcript surfaces imperatively snapshot their currently
  * visible rows. Descendant selectors keep those marked rows live, freeze only
  * unmarked/off-screen rows, and suppress transient resize chrome without any
@@ -10,7 +10,7 @@
  */
 import { appLogger } from "@/lib/logger";
 
-const PANEL_RESIZING_CLASS_NAME = "traycer-panel-resizing";
+const PANEL_RESIZING_CLASS_NAME = "hukum-panel-resizing";
 
 let stopPanelResizeInteraction: (() => void) | null = null;
 

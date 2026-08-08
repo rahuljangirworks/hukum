@@ -12,19 +12,19 @@
 //   2. Renders ready-to-commit manifests for Homebrew, winget, scoop,
 //      a debian/rpm template metadata file, a Desktop Homebrew cask, and a generated install
 //      manifest hint (so package-manager install hooks can call
-//      `traycer cli mark-source` with the correct source identifier).
+//      `hukum cli mark-source` with the correct source identifier).
 //   3. Writes the rendered manifests under a staging directory the
 //      workflow then commits/pushes to the external taps using a
 //      configured PAT secret.
 //
 // External repository assumptions (configured via secrets in workflows):
-//   - Homebrew tap:   traycerai/homebrew-traycer   (Formula/traycer.rb, Casks/traycer-desktop.rb)
-//   - winget:        microsoft/winget-pkgs forks   (manifests/t/Traycer/CLI)
-//   - scoop:         traycerai/scoop-traycer        (bucket/traycer-cli.json)
-//   - deb/rpm:       traycerai/traycer-apt-rpm     (versions.json)
+//   - Homebrew tap:   hukumai/homebrew-hukum   (Formula/hukum.rb, Casks/hukum-desktop.rb)
+//   - winget:        microsoft/winget-pkgs forks   (manifests/t/Hukum/CLI)
+//   - scoop:         hukumai/scoop-hukum        (bucket/hukum-cli.json)
+//   - deb/rpm:       hukumai/hukum-apt-rpm     (versions.json)
 //
 // Required secrets (used by the calling workflow, not this script):
-//   TRAYCER_TAP_PUSH_TOKEN   PAT with `repo` scope on the tap repos.
+//   HUKUM_TAP_PUSH_TOKEN   PAT with `repo` scope on the tap repos.
 //
 // Output: writes files under --staging <dir>, prints a JSON summary
 // (paths + manifest snippets) on stdout.
@@ -35,10 +35,10 @@ const crypto = require("node:crypto");
 
 // Canonical public-facing repo URL used for auto-generated release-notes
 // links in Homebrew/winget/Scoop/deb-rpm manifests. The build-time repo
-// (`traycerai/traycer-development`) is private; auto-generated download
+// (`hukumai/hukum-development`) is private; auto-generated download
 // pages must point at the public mirror. Override per-invocation via
 // `--release-notes-url <url>` when cutting a release out of a fork.
-const DEFAULT_RELEASE_NOTES_REPO = "traycerai/traycer";
+const DEFAULT_RELEASE_NOTES_REPO = "hukumai/hukum";
 
 function parseArgs(argv) {
   const out = { descriptors: [] };
@@ -200,7 +200,7 @@ function homebrewExactVersionTokenSuffix(version) {
 }
 
 function homebrewVersionedClassName(version) {
-  return `TraycerAT${version.replace(/[^0-9]/g, "")}`;
+  return `HukumAT${version.replace(/[^0-9]/g, "")}`;
 }
 
 function compareDottedVersions(left, right) {
@@ -271,7 +271,7 @@ ${
 # Source: ${releaseNotesUrl}
 # Do not hand-edit - package-manager publishing regenerates this file.
 class ${className} < Formula
-  desc "Traycer CLI - host supervisor, auth, and config surface"
+  desc "Hukum CLI - host supervisor, auth, and config surface"
   homepage "${homepage}"
   version "${version}"
   license "${license}"
@@ -288,33 +288,33 @@ ${kegOnlyBlock}
   end${linuxBlock}
 
   def install
-    bin.install Dir["traycer*"].first => "traycer"
-    # Mark this install as homebrew-owned so 'traycer cli upgrade' guides
-    # the user to 'brew upgrade traycer' instead of self-replacing. Only the
+    bin.install Dir["hukum*"].first => "hukum"
+    # Mark this install as homebrew-owned so 'hukum cli upgrade' guides
+    # the user to 'brew upgrade hukum' instead of self-replacing. Only the
     # mark-source call is best-effort (it writes the CLI install manifest if
     # the user's home is writable) - a failed bin.install above must still
     # fail the formula rather than be swallowed.
     begin
-      system bin/"traycer", "cli", "mark-source", "--source", "homebrew",
-             "--binary-path", bin/"traycer", "--installed-version", version
+      system bin/"hukum", "cli", "mark-source", "--source", "homebrew",
+             "--binary-path", bin/"hukum", "--installed-version", version
     rescue
       nil
     end
   end
 
   test do
-    # 'traycer --version' prints only a semver-shaped version string
-    # (no 'traycer' prefix). We pin two checks:
+    # 'hukum --version' prints only a semver-shaped version string
+    # (no 'hukum' prefix). We pin two checks:
     #   1. The reported value matches the released formula version
     #      exactly. This catches release artifacts that were built
-    #      without TRAYCER_CLI_VERSION (which would otherwise report
+    #      without HUKUM_CLI_VERSION (which would otherwise report
     #      the source-tree placeholder "0.0.0-local" or a stale
     #      "0.0.0"); a generic /^\\d+\\.\\d+\\.\\d+/ shape match would
     #      let those slip through.
     #   2. As defence in depth, reject the literal placeholders so a
     #      future formula refactor that loosens (1) still cannot ship a
     #      placeholder build.
-    reported = shell_output("#{bin}/traycer --version").strip
+    reported = shell_output("#{bin}/hukum --version").strip
     assert_equal version.to_s, reported
     refute_match(/\\A0\\.0\\.0(?:-local)?\\z/, reported)
   end
@@ -363,11 +363,11 @@ cask "${token}" do
 
     depends_on macos: :monterey
 
-    app "Traycer.app"
+    app "Hukum.app"
   end${linuxBlock}
 
-  name "Traycer"
-  desc "Traycer desktop app"
+  name "Hukum"
+  desc "Hukum desktop app"
   homepage "${homepage}"
 
   auto_updates true
@@ -405,19 +405,19 @@ function renderWingetManifests({
     });
   }
 
-  const versionYaml = `PackageIdentifier: Traycer.CLI
+  const versionYaml = `PackageIdentifier: Hukum.CLI
 PackageVersion: ${version}
 DefaultLocale: en-US
 ManifestType: version
 ManifestVersion: 1.6.0
 `;
-  const installerYaml = `PackageIdentifier: Traycer.CLI
+  const installerYaml = `PackageIdentifier: Hukum.CLI
 PackageVersion: ${version}
 MinimumOSVersion: 10.0.0.0
 InstallModes:
   - silent
 Commands:
-  - traycer
+  - hukum
 ReleaseDate: ${new Date().toISOString().slice(0, 10)}
 Installers:
 ${installers
@@ -432,34 +432,34 @@ ${installers
 ManifestType: installer
 ManifestVersion: 1.6.0
 `;
-  const localeYaml = `PackageIdentifier: Traycer.CLI
+  const localeYaml = `PackageIdentifier: Hukum.CLI
 PackageVersion: ${version}
 PackageLocale: en-US
-Publisher: Traycer
+Publisher: Hukum
 PublisherUrl: ${homepage}
-PackageName: Traycer CLI
+PackageName: Hukum CLI
 PackageUrl: ${homepage}
 License: ${license}
-ShortDescription: Traycer CLI - host supervisor, auth, and config surface
+ShortDescription: Hukum CLI - host supervisor, auth, and config surface
 ReleaseNotesUrl: ${releaseNotesUrl}
 ManifestType: defaultLocale
 ManifestVersion: 1.6.0
 `;
   return {
-    "Traycer.CLI.yaml": versionYaml,
-    "Traycer.CLI.installer.yaml": installerYaml,
-    "Traycer.CLI.locale.en-US.yaml": localeYaml,
+    "Hukum.CLI.yaml": versionYaml,
+    "Hukum.CLI.installer.yaml": installerYaml,
+    "Hukum.CLI.locale.en-US.yaml": localeYaml,
   };
 }
 
 // Scoop manifest - single JSON describing per-arch SEA binaries.
 //
 // Per-architecture `bin` uses the `[[source, alias]]` form so the
-// downloaded asset (`traycer-cli-windows-x64.exe` /
-// `traycer-cli-windows-arm64.exe`)
-// is exposed on PATH as `traycer.exe` (and as the alias `traycer`).
+// downloaded asset (`hukum-cli-windows-x64.exe` /
+// `hukum-cli-windows-arm64.exe`)
+// is exposed on PATH as `hukum.exe` (and as the alias `hukum`).
 // Without the alias mapping `scoop install` would shim the long
-// asset name and `traycer ...` would not resolve from the user's
+// asset name and `hukum ...` would not resolve from the user's
 // shell.
 function renderScoopManifest({
   version,
@@ -476,7 +476,7 @@ function renderScoopManifest({
     "64bit": {
       url: winX64.url,
       hash: winX64.sha256,
-      bin: [[x64AssetName, "traycer"]],
+      bin: [[x64AssetName, "hukum"]],
     },
   };
   if (winArm !== null) {
@@ -484,12 +484,12 @@ function renderScoopManifest({
     architecture.arm64 = {
       url: winArm.url,
       hash: winArm.sha256,
-      bin: [[armAssetName, "traycer"]],
+      bin: [[armAssetName, "hukum"]],
     };
   }
   const manifest = {
     version,
-    description: "Traycer CLI - host supervisor, auth, and config surface",
+    description: "Hukum CLI - host supervisor, auth, and config surface",
     homepage,
     license,
     architecture,
@@ -498,18 +498,18 @@ function renderScoopManifest({
       // Locate the alias shim Scoop created from the [[source, alias]]
       // mapping above. Falls back to the raw asset if a future Scoop
       // version stops generating the alias.
-      "$traycerExe = Join-Path $dir 'traycer.exe'",
-      "if (-not (Test-Path $traycerExe)) {",
-      "  $candidate = Get-ChildItem -Path $dir -Filter 'traycer-cli-windows-*.exe' | Select-Object -First 1",
-      "  if ($candidate) { $traycerExe = $candidate.FullName }",
+      "$hukumExe = Join-Path $dir 'hukum.exe'",
+      "if (-not (Test-Path $hukumExe)) {",
+      "  $candidate = Get-ChildItem -Path $dir -Filter 'hukum-cli-windows-*.exe' | Select-Object -First 1",
+      "  if ($candidate) { $hukumExe = $candidate.FullName }",
       "}",
       // Scoop install runs `post_install` synchronously and blocks the
-      // user's shell prompt until every entry returns. `& $traycer ...`
+      // user's shell prompt until every entry returns. `& $hukum ...`
       // therefore stretches install time by however long `mark-source`
       // takes. Start the helper detached (`-Wait:$false`) and hide its
       // window so the source-attribution write is best-effort and never
       // visible to the user - errors are still silenced with `2>$null`.
-      "Start-Process -FilePath $traycerExe -ArgumentList @('cli','mark-source','--source','scoop','--binary-path',$traycerExe,'--installed-version',$version) -NoNewWindow -Wait:$false 2>$null",
+      "Start-Process -FilePath $hukumExe -ArgumentList @('cli','mark-source','--source','scoop','--binary-path',$hukumExe,'--installed-version',$version) -NoNewWindow -Wait:$false 2>$null",
     ],
     // checkver reads `latest` from the rolling `cli-manifest` GitHub
     // Release asset on RELEASE_REPO (the same versions.json the CLI
@@ -522,10 +522,10 @@ function renderScoopManifest({
     autoupdate: {
       architecture: {
         "64bit": {
-          url: `https://github.com/${releaseRepo}/releases/download/cli-v$version/traycer-cli-windows-x64.exe`,
+          url: `https://github.com/${releaseRepo}/releases/download/cli-v$version/hukum-cli-windows-x64.exe`,
         },
         arm64: {
-          url: `https://github.com/${releaseRepo}/releases/download/cli-v$version/traycer-cli-windows-arm64.exe`,
+          url: `https://github.com/${releaseRepo}/releases/download/cli-v$version/hukum-cli-windows-arm64.exe`,
         },
       },
     },
@@ -543,13 +543,13 @@ function basenameFromUrl(urlString) {
     // fall through
   }
   // Defensive default - keeps `bin` valid even if URL parsing fails.
-  return "traycer.exe";
+  return "hukum.exe";
 }
 
 // Per-package postRemove script. Only removes the marker for the
 // package being uninstalled (`apt` for .deb, `rpm` for .rpm) so the
 // other package manager's marker - if a user has both installed - is
-// left intact. Only `rmdir /var/lib/traycer` if the directory is now
+// left intact. Only `rmdir /var/lib/hukum` if the directory is now
 // empty (other markers might still be present).
 function renderPostRemoveScript(pkgKind) {
   if (pkgKind !== "deb" && pkgKind !== "rpm") {
@@ -558,8 +558,8 @@ function renderPostRemoveScript(pkgKind) {
   const markerSuffix = pkgKind === "deb" ? "apt" : "rpm";
   return [
     "#!/bin/sh",
-    `rm -f /var/lib/traycer/source.${markerSuffix}`,
-    '[ -z "$(ls -A /var/lib/traycer 2>/dev/null)" ] && rmdir /var/lib/traycer 2>/dev/null || true',
+    `rm -f /var/lib/hukum/source.${markerSuffix}`,
+    '[ -z "$(ls -A /var/lib/hukum 2>/dev/null)" ] && rmdir /var/lib/hukum 2>/dev/null || true',
     "exit 0",
   ].join("\n");
 }
@@ -567,8 +567,8 @@ function renderPostRemoveScript(pkgKind) {
 // Debian/RPM metadata - package-manager-agnostic JSON consumed by our
 // apt/rpm repo build pipeline. The pipeline downloads the binary,
 // builds a .deb / .rpm with post-install hooks that call
-// `traycer cli mark-source --source apt|rpm` and removes only the
-// installed binary on uninstall (post-remove does NOT touch ~/.traycer
+// `hukum cli mark-source --source apt|rpm` and removes only the
+// installed binary on uninstall (post-remove does NOT touch ~/.hukum
 // or the host install directory).
 function renderDebRpmMetadata({
   version,
@@ -594,17 +594,17 @@ function renderDebRpmMetadata({
     };
   }
   return {
-    name: "traycer-cli",
+    name: "hukum-cli",
     version,
-    description: "Traycer CLI - host supervisor, auth, and config surface",
+    description: "Hukum CLI - host supervisor, auth, and config surface",
     homepage,
     license,
     releaseNotesUrl,
     architectures,
     postInstall: {
       // Write a system-wide install-source marker that any subsequent
-      // `traycer cli upgrade` invocation reads (see
-      // traycer-clients/traycer-cli/src/manifest/cli-manifest.ts ::
+      // `hukum cli upgrade` invocation reads (see
+      // hukum-clients/hukum-cli/src/manifest/cli-manifest.ts ::
       // readSystemSourceMarker). The marker is preferred over the
       // legacy `cli mark-source` invocation because it works for
       // unattended installs where SUDO_USER is unset and for
@@ -613,15 +613,15 @@ function renderDebRpmMetadata({
         "#!/bin/sh",
         "set -e",
         "SRC=${PKG_SOURCE:-apt}",
-        "install -d -m 0755 /var/lib/traycer",
-        'printf \'{"source":"%s","binaryPath":"/usr/bin/traycer","version":"' +
+        "install -d -m 0755 /var/lib/hukum",
+        'printf \'{"source":"%s","binaryPath":"/usr/bin/hukum","version":"' +
           version +
-          '"}\\n\' "$SRC" > /var/lib/traycer/source.${SRC}',
-        "chmod 0644 /var/lib/traycer/source.${SRC}",
+          '"}\\n\' "$SRC" > /var/lib/hukum/source.${SRC}',
+        "chmod 0644 /var/lib/hukum/source.${SRC}",
         "exit 0",
       ].join("\n"),
     },
-    // Pre-remove must NEVER touch ~/.traycer/, the host install dir,
+    // Pre-remove must NEVER touch ~/.hukum/, the host install dir,
     // or the OS service registration. Package-manager uninstall removes
     // ONLY the CLI binary (handled implicitly by dpkg/rpm). The script
     // is a no-op placeholder so the build pipeline can include the hook
@@ -634,7 +634,7 @@ function renderDebRpmMetadata({
       // package being uninstalled (deb or rpm) so a subsequent
       // re-install through the same package manager cleanly re-records
       // it, and a coexisting install through the *other* manager keeps
-      // its marker untouched. Never touches ~/.traycer/, host install
+      // its marker untouched. Never touches ~/.hukum/, host install
       // dir, or service registration. The build pipeline reads the
       // per-kind variant matching the artifact it's emitting.
       deb: { script: renderPostRemoveScript("deb") },
@@ -664,7 +664,7 @@ function main() {
   const releaseNotesUrl =
     args.releaseNotesUrl ||
     `https://github.com/${releaseRepo}/releases/tag/cli-v${version}`;
-  const homepage = args.homepage || "https://traycer.ai";
+  const homepage = args.homepage || "https://hukum.ai";
   const license = args.license || "MIT";
   if (args.desktopCask === true) {
     const macArm = {
@@ -693,9 +693,9 @@ function main() {
     if (args.homebrewVersionedOnly !== true) {
       caskOutputs.push({
         manager: "homebrew-cask",
-        path: path.join(staging, "homebrew", "Casks", "traycer-desktop.rb"),
+        path: path.join(staging, "homebrew", "Casks", "hukum-desktop.rb"),
         content: renderHomebrewCask({
-          token: "traycer-desktop",
+          token: "hukum-desktop",
           version,
           homepage,
           macArm,
@@ -711,10 +711,10 @@ function main() {
           staging,
           "homebrew",
           "Casks",
-          `traycer-desktop@${versionedCaskVersion}.rb`,
+          `hukum-desktop@${versionedCaskVersion}.rb`,
         ),
         content: renderHomebrewCask({
-          token: `traycer-desktop@${versionedCaskVersion}`,
+          token: `hukum-desktop@${versionedCaskVersion}`,
           version,
           homepage,
           macArm,
@@ -763,10 +763,10 @@ function main() {
     if (args.homebrewVersionedOnly !== true) {
       formulaOutputs.push({
         manager: "homebrew",
-        path: path.join(staging, "homebrew", "Formula", "traycer.rb"),
+        path: path.join(staging, "homebrew", "Formula", "hukum.rb"),
         content: renderHomebrewFormula({
           version,
-          className: "Traycer",
+          className: "Hukum",
           kegOnly: false,
           byPlatform,
           homepage,
@@ -782,7 +782,7 @@ function main() {
           staging,
           "homebrew",
           "Formula",
-          `traycer@${versionedFormulaVersion}.rb`,
+          `hukum@${versionedFormulaVersion}.rb`,
         ),
         content: renderHomebrewFormula({
           version,
@@ -819,7 +819,7 @@ function main() {
       "winget",
       "manifests",
       "t",
-      "Traycer",
+      "Hukum",
       "CLI",
       version,
     );
@@ -844,7 +844,7 @@ function main() {
       releaseNotesUrl,
       releaseRepo,
     });
-    const scoopPath = path.join(staging, "scoop", "bucket", "traycer-cli.json");
+    const scoopPath = path.join(staging, "scoop", "bucket", "hukum-cli.json");
     const scoopContent = `${JSON.stringify(scoop, null, 2)}\n`;
     writeFile(scoopPath, scoopContent);
     summary.written.push({

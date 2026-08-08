@@ -58,8 +58,8 @@ function fakeControllerWithRecoverOutcome(
     uninstallHost: () => {
       throw new Error("fakeController.uninstallHost: not used by these tests");
     },
-    removeTraycer: () => {
-      throw new Error("fakeController.removeTraycer: not used by these tests");
+    removeHukum: () => {
+      throw new Error("fakeController.removeHukum: not used by these tests");
     },
     isPendingRevisionRefreshQuarantined: () => {
       throw new Error(
@@ -95,7 +95,7 @@ describe("respawnIfDown (fixup B3: automatic-intent lock-contention class)", () 
   it("throws a retryable signal on lock-contention deferred so the monitor retains recovery ownership", async () => {
     const controller = fakeControllerWithRecoverOutcome({
       kind: "deferred",
-      message: "Another Traycer process is managing the host.",
+      message: "Another Hukum process is managing the host.",
     });
     await expect(respawnIfDown(controller)).rejects.toBeInstanceOf(
       HostRecoveryDeferredError,

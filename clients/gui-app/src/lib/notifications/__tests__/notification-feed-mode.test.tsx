@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
-import type { StreamMethodSupport } from "@traycer-clients/shared/host-transport/ws-stream-client";
+import type { StreamMethodSupport } from "@hukum-clients/shared/host-transport/ws-stream-client";
 import { useNotificationFeedMode } from "@/lib/notifications/notification-feed-mode";
 import { useAuthStore } from "@/stores/auth/auth-store";
 

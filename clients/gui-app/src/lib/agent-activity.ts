@@ -1,4 +1,4 @@
-import type { AgentActivityByEpic } from "@traycer/protocol/host/agent/activity";
+import type { AgentActivityByEpic } from "@hukum/protocol/host/agent/activity";
 
 export type AgentActivityTier = "turn" | "background";
 

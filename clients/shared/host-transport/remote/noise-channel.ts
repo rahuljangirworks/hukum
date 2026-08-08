@@ -4,8 +4,8 @@ import {
   DEFAULT_REPLAY_WINDOW_SIZE,
   KEY_LEN,
   type NoiseHandshakeState,
-} from "@traycer/protocol/crypto/noise";
-import { NOISE_PROLOGUE } from "@traycer/protocol/host-transport/mux";
+} from "@hukum/protocol/crypto/noise";
+import { NOISE_PROLOGUE } from "@hukum/protocol/host-transport/mux";
 
 /**
  * The client's end-to-end Noise-NK channel (T8 crypto; Architecture §4). A fresh
@@ -13,7 +13,7 @@ import { NOISE_PROLOGUE } from "@traycer/protocol/host-transport/mux";
  * session has its own forward-secret transport keys derived from fresh
  * ephemerals (a later host-static-key compromise cannot decrypt past sessions).
  *
- * The crypto state machine itself lives in `@traycer/protocol/crypto/noise`; this
+ * The crypto state machine itself lives in `@hukum/protocol/crypto/noise`; this
  * class is only the client-side wiring: run the NK initiator handshake, then
  * seal/open mux frames over the resulting `NoiseSession`.
  *
@@ -23,7 +23,7 @@ import { NOISE_PROLOGUE } from "@traycer/protocol/host-transport/mux";
  * on the client leg — the relay owns/stamps `sid`, so there is no outer routing
  * metadata for the client to bind (the monotonic counter + replay window already
  * defeat replay). Pinned by
- * `@traycer/protocol/host-transport/__tests__/associated-data-invariant.test.ts`
+ * `@hukum/protocol/host-transport/__tests__/associated-data-invariant.test.ts`
  * — a future mux field externalized outside the ciphertext must be bound via
  * AD there, not left unbound like `sid`.
  */

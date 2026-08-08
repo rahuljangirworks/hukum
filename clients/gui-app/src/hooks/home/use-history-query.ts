@@ -28,8 +28,8 @@ import {
   listCloudTasksRequestForHistorySearch,
   type ListCloudTasksRequest,
 } from "@/lib/cloud-epic-tasks-query";
-import type { ListTasksResponse } from "@traycer/protocol/host/epic/unary-schemas";
-import type { WorktreeHostEntryV12 } from "@traycer/protocol/host/worktree-schemas";
+import type { ListTasksResponse } from "@hukum/protocol/host/epic/unary-schemas";
+import type { WorktreeHostEntryV12 } from "@hukum/protocol/host/worktree-schemas";
 import type { HistorySearchState } from "@/lib/history-search";
 import { patchHistorySearch } from "@/lib/history-search";
 import Fuse, { type IFuseOptions } from "fuse.js";

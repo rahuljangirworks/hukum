@@ -1,4 +1,4 @@
-name: "Traycer CodeQL config"
+name: "Hukum CodeQL config"
 
 # Test specs, and the support code that lives beside them, are excluded from
 # analysis. Queries still come from the workflow (`security-extended`); this

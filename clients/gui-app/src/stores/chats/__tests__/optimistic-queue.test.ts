@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   ChatQueuedManagedCommandItem,
   ChatQueuedPromptItem,
   ChatQueueState,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   appendOptimisticQueuedItem,
   mergeQueueWithOptimisticQueuedItems,

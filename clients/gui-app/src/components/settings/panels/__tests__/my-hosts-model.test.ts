@@ -4,7 +4,7 @@ import type {
   HostListItem,
   HostStatusDTO,
   HostUpdateState,
-} from "@traycer/protocol/host/host-status";
+} from "@hukum/protocol/host/host-status";
 import {
   deriveHostPresence,
   deriveUpdateAffordance,

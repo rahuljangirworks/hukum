@@ -16,7 +16,7 @@ import type {
   IRunnerHost,
   MutationOutcome,
   ServiceRegistrationOk,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import { HostTrayCommandListener } from "@/components/layout/bridges/host-tray-command-listener";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { createFakeRunnerHost } from "../../../../__tests__/create-fake-runner-host";
@@ -138,7 +138,7 @@ function makeManagement(overrides: ManagementOverrides): IHostManagement {
       }),
     ),
     restartHost: vi.fn(() => Promise.resolve({ kind: "restarted" as const })),
-    uninstallTraycer: vi.fn(() =>
+    uninstallHukum: vi.fn(() =>
       Promise.resolve({
         removedHost: true,
         deregisteredService: true,
@@ -358,7 +358,7 @@ describe("<HostTrayCommandListener /> - mounted in __root", () => {
       .mockResolvedValueOnce({
         kind: "busy" as const,
         continuation: "retry-with-force" as const,
-        message: "Another Traycer process is applying an update.",
+        message: "Another Hukum process is applying an update.",
       })
       .mockResolvedValueOnce({
         kind: "ok" as const,
@@ -381,7 +381,7 @@ describe("<HostTrayCommandListener /> - mounted in __root", () => {
       "host-busy-force-defer-dialog",
     );
     expect(busyDialog.textContent).toContain(
-      "Another Traycer process is applying an update.",
+      "Another Hukum process is applying an update.",
     );
 
     fireEvent.click(screen.getByTestId("host-busy-force"));
@@ -395,7 +395,7 @@ describe("<HostTrayCommandListener /> - mounted in __root", () => {
     const applyStaged = vi.fn(() =>
       Promise.resolve({
         kind: "deferred" as const,
-        message: "Another Traycer process is managing the host.",
+        message: "Another Hukum process is managing the host.",
       }),
     );
     const management = makeManagement({ status: READY_STATUS, applyStaged });
@@ -413,7 +413,7 @@ describe("<HostTrayCommandListener /> - mounted in __root", () => {
 
     await waitFor(() => {
       expect(toastErrorMock).toHaveBeenCalledWith(
-        "Another Traycer process is managing the host.",
+        "Another Hukum process is managing the host.",
       );
     });
     expect(screen.queryByTestId("host-busy-force-defer-dialog")).toBeNull();

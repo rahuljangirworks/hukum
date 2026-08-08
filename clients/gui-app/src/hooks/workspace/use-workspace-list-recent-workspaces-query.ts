@@ -1,5 +1,5 @@
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { WorkspacePrepareFoldersRequestV11 } from "@traycer/protocol/host/workspace/unary-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { WorkspacePrepareFoldersRequestV11 } from "@hukum/protocol/host/workspace/unary-schemas";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 

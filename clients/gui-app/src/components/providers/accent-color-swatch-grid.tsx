@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import {
   PROVIDER_PROFILE_ACCENT_COLORS,
   type ProviderProfileAccentColor,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { cn } from "@/lib/utils";
 
 interface AccentColorSwatchGridProps {

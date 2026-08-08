@@ -1,17 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
 import {
   hostRpcRegistry,
   type HostRpcRegistry,
-} from "@traycer/protocol/host/index";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/index";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 import type {
   ProviderCliState,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import {
   mapProfileIdAcrossHosts,
   resolveClonedChatSettings,

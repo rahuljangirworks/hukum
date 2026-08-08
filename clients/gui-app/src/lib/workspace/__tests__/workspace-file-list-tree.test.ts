@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { WorkspaceFileListEntry } from "@traycer/protocol/host/workspace/subscribe";
+import type { WorkspaceFileListEntry } from "@hukum/protocol/host/workspace/subscribe";
 import {
   isWithinDirectory,
   mergeExpandedDirectoryPaths,

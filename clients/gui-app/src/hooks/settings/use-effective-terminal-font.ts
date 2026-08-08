@@ -15,7 +15,7 @@ export interface EffectiveTerminalFont {
  * which itself falls back to the default mono stack.
  *
  * Every surface that shows command output has to resolve this the same way, and
- * none of them can read it from CSS: `--traycer-font-mono` carries the CODE
+ * none of them can read it from CSS: `--hukum-font-mono` carries the CODE
  * font, so `font-mono` silently ignores a Terminal override. xterm additionally
  * measures glyph cells on a hidden canvas where CSS variables do not resolve at
  * all. So the answer is computed from the store and applied inline, here, once

@@ -2,10 +2,10 @@ import { readFile } from "node:fs/promises";
 import {
   compareHostVersions,
   isStrictlyNewerHostVersion,
-} from "@traycer-clients/shared/host-version/compare-host-versions";
-import { encodeInstallGeneration } from "@traycer-clients/shared/host-version/install-generation";
-import { probeHostActivityBusy } from "@traycer-clients/shared/host-client/host-activity-probe";
-import type { Layer0UnavailableCause } from "@traycer/protocol/host/lifecycle/layer0-frame";
+} from "@hukum-clients/shared/host-version/compare-host-versions";
+import { encodeInstallGeneration } from "@hukum-clients/shared/host-version/install-generation";
+import { probeHostActivityBusy } from "@hukum-clients/shared/host-client/host-activity-probe";
+import type { Layer0UnavailableCause } from "@hukum/protocol/host/lifecycle/layer0-frame";
 import type { HostFsLayout } from "./host-paths";
 import { readPidMetadataState } from "./host-lifecycle";
 import {
@@ -19,7 +19,7 @@ export type { HostEndpointReachabilityProbe } from "./host-endpoint-reachability
 // `HostController` (Host Update Layer Redesign Tech Plan, "Desktop main:
 // HostController" > "State model"). Desktop cannot import the CLI's
 // `HostInstallRecord`/`HostStagedRecord` types (they live in
-// `clients/traycer-cli`, not `clients/shared`, and this ticket must not
+// `clients/hukum-cli`, not `clients/shared`, and this ticket must not
 // modify that workspace) - these are desktop-local mirrors of the on-disk
 // JSON shapes the CLI writes, read directly rather than duplicating the
 // CLI's own reader/writer logic.
@@ -109,7 +109,7 @@ export async function readDesktopHostStagedRecord(
 
 /**
  * Desktop interpretation of the host's Layer 0 single-writer (I1) verdict
- * from `pid.json`. The known degraded cause is owned by `@traycer/protocol`;
+ * from `pid.json`. The known degraded cause is owned by `@hukum/protocol`;
  * `unrecognized` exists so a desktop build older than its host reports "I
  * cannot confirm the guarantee" rather than dropping a newer record and
  * reporting nothing, which is the same silence this type exists to remove.
@@ -395,7 +395,7 @@ export type HostBusyVerdict = "no-host" | "idle" | "busy";
 /**
  * Desktop-side mirror of the CLI's `assertHostNotBusy` restart-verdict probe
  * (`host/busy-check.ts`) - deliberately duplicated rather than imported:
- * this ticket must not modify `clients/traycer-cli/`, and the probe itself
+ * this ticket must not modify `clients/hukum-cli/`, and the probe itself
  * (`probeHostActivityBusy`) already lives in `clients/shared` so both sides
  * share the actual HTTP check; only the "is there a live host to protect at
  * all" liveness gate is repeated here. Used by the desktop-held lock

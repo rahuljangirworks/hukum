@@ -1,5 +1,5 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
 
 /**
  * Interface for a single open `/stream` subscription. Returned by

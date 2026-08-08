@@ -22,8 +22,8 @@ import type {
   IHostManagement,
   IRunnerHost,
   MutationOutcome,
-} from "@traycer-clients/shared/platform/runner-host";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import type { DesktopHostControllerStatusBridge } from "@/lib/windows/types";
 import { runnerQueryKeys } from "@/lib/query-keys/runner-mutation-keys";
 
@@ -79,7 +79,7 @@ function makeManagement(overrides: Overrides): IHostManagement {
     installVersion: vi.fn(notImplemented("installVersion")),
     uninstallHost: vi.fn(notImplemented("uninstallHost")),
     restartHost: vi.fn(() => Promise.resolve({ kind: "restarted" as const })),
-    uninstallTraycer: vi.fn(notImplemented("uninstallTraycer")),
+    uninstallHukum: vi.fn(notImplemented("uninstallHukum")),
     getRemovalState: vi.fn(() => Promise.resolve({ removedByUser: false })),
     clearRemoval: vi.fn(() => Promise.resolve()),
     getHostLogs: vi.fn(() => Promise.resolve({ path: null, tail: "" })),
@@ -116,7 +116,7 @@ function makeHost(management: IHostManagement | null): IRunnerHost {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   // Preserve MockRunnerHost's prototype methods (signIn, signOut, …) while
   // overriding the readonly fields the test needs to vary. Spreading a class
@@ -184,13 +184,13 @@ function createStatusBridge(): {
 
 function findHostUpdateBanner(): Promise<HTMLElement> {
   return screen.findByRole("status", {
-    name: /Traycer host update available: 1\.4\.2/i,
+    name: /Hukum host update available: 1\.4\.2/i,
   });
 }
 
 function queryHostUpdateBanner(): HTMLElement | null {
   return screen.queryByRole("status", {
-    name: /Traycer host update/i,
+    name: /Hukum host update/i,
   });
 }
 
@@ -335,7 +335,7 @@ describe("HostUpdateBanner (Host Update Layer Redesign, D4)", () => {
       .mockResolvedValueOnce({
         kind: "busy" as const,
         continuation: "retry-with-force" as const,
-        message: "Another Traycer process is applying an update.",
+        message: "Another Hukum process is applying an update.",
       })
       .mockResolvedValueOnce({
         kind: "ok" as const,
@@ -348,7 +348,7 @@ describe("HostUpdateBanner (Host Update Layer Redesign, D4)", () => {
 
     const dialog = await screen.findByTestId("host-busy-force-defer-dialog");
     expect(dialog.textContent).toContain(
-      "Another Traycer process is applying an update.",
+      "Another Hukum process is applying an update.",
     );
     fireEvent.click(screen.getByTestId("host-busy-force"));
     await waitFor(() => {
@@ -392,7 +392,7 @@ describe("HostUpdateBanner (Host Update Layer Redesign, D4)", () => {
       Promise.resolve({
         kind: "busy" as const,
         continuation: "retry-with-force" as const,
-        message: "Another Traycer process is applying an update.",
+        message: "Another Hukum process is applying an update.",
       }),
     );
     const management = makeManagement({ status: READY_STATUS, applyStaged });
@@ -413,7 +413,7 @@ describe("HostUpdateBanner (Host Update Layer Redesign, D4)", () => {
       .fn()
       .mockResolvedValueOnce({
         kind: "deferred" as const,
-        message: "Another Traycer process is managing the host.",
+        message: "Another Hukum process is managing the host.",
       })
       .mockResolvedValueOnce({
         kind: "ok" as const,
@@ -426,7 +426,7 @@ describe("HostUpdateBanner (Host Update Layer Redesign, D4)", () => {
 
     const deferred = await screen.findByTestId("host-update-banner-deferred");
     expect(deferred.textContent).toContain(
-      "Another Traycer process is managing the host.",
+      "Another Hukum process is managing the host.",
     );
 
     fireEvent.click(screen.getByTestId("host-update-banner-retry"));

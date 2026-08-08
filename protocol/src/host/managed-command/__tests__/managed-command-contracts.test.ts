@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   MANAGED_COMMAND_MAX_WINDOW_LINES,
   managedCommandSubscribeOutputClientFrameSchema,
   managedCommandSubscribeOutputServerFrameSchema,
-} from "@traycer/protocol/host/managed-command/subscribe";
+} from "@hukum/protocol/host/managed-command/subscribe";
 
 /**
  * `managedCommand.*@1.0` contract fixtures + registry membership.

@@ -112,7 +112,7 @@ describe("file-edit-recovery-store", () => {
     });
     await indexedDbFileEditRecoveryJournal.save("desktop-file", ENTRY);
     expect(createStore).toHaveBeenLastCalledWith(
-      "traycer-gui-app:window-7:file-edit-recovery",
+      "hukum-gui-app:window-7:file-edit-recovery",
       "drafts",
     );
     expect(idbSet).toHaveBeenCalledTimes(1);
@@ -125,7 +125,7 @@ describe("file-edit-recovery-store", () => {
 
     await indexedDbFileEditRecoveryJournal.save("browser-file", ENTRY);
     expect(createStore).toHaveBeenLastCalledWith(
-      `traycer-gui-app:${partition}:file-edit-recovery`,
+      `hukum-gui-app:${partition}:file-edit-recovery`,
       "drafts",
     );
 
@@ -174,7 +174,7 @@ describe("file-edit-recovery-store", () => {
     // peer broadcasting the id this "original" tab is already using,
     // without touching this tab's own sessionStorage/module state at all.
     const duplicatePeer = new FakeBroadcastChannel(
-      "traycer-gui-app:file-edit-recovery-tab-claim:v1",
+      "hukum-gui-app:file-edit-recovery-tab-claim:v1",
     );
     duplicatePeer.postMessage({ id: original });
 

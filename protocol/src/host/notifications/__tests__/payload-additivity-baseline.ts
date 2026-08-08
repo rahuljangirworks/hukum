@@ -1,5 +1,5 @@
-import type { JsonSchemaFingerprint } from "@traycer/protocol/framework/json-schema-fingerprint";
-import type { HostNotificationKnownPayloadKind } from "@traycer/protocol/host/notifications/payloads";
+import type { JsonSchemaFingerprint } from "@hukum/protocol/framework/json-schema-fingerprint";
+import type { HostNotificationKnownPayloadKind } from "@hukum/protocol/host/notifications/payloads";
 
 /**
  * Committed structural baseline for the Lane-B payload evolution rule in

@@ -7,7 +7,7 @@ import { createJsonFileStore } from "../json-file-store";
 let directoryPath: string;
 
 beforeEach(() => {
-  directoryPath = mkdtempSync(join(tmpdir(), "traycer-json-file-store-"));
+  directoryPath = mkdtempSync(join(tmpdir(), "hukum-json-file-store-"));
 });
 
 afterEach(() => {

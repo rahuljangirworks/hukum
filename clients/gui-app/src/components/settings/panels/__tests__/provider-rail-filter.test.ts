@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import type {
   ProviderCliState,
   ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
-import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-schemas";
+import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@hukum/protocol/host/provider-native-schemas";
 import {
   DEFAULT_PROVIDER_RAIL_VIEW,
   filterProviderRail,
@@ -45,7 +45,7 @@ const PROVIDERS: readonly ProviderCliState[] = [
   state("codex", true),
   state("claude-code", false),
   state("opencode", true),
-  state("traycer", false),
+  state("hukum", false),
   state("kilocode", true),
 ];
 
@@ -98,11 +98,11 @@ describe("filterProviderRail", () => {
     expect(idsFor(view({ query: "claude-code" }))).toEqual(["claude-code"]);
   });
 
-  it("matches the words the rail RENDERS for Traycer, not the protocol name", () => {
-    // `providerDisplayName` overrides this one provider to "Traycer Inference".
+  it("matches the words the rail RENDERS for Hukum, not the protocol name", () => {
+    // `providerDisplayName` overrides this one provider to "Hukum Inference".
     // Searching the protocol's `PROVIDER_DISPLAY_NAMES` instead would leave the
     // second word visible in the rail and unsearchable.
-    expect(idsFor(view({ query: "inference" }))).toEqual(["traycer"]);
+    expect(idsFor(view({ query: "inference" }))).toEqual(["hukum"]);
   });
 
   it("filters to enabled and to disabled", () => {
@@ -113,7 +113,7 @@ describe("filterProviderRail", () => {
     ]);
     expect(idsFor(view({ status: PROVIDER_RAIL_STATUS.Disabled }))).toEqual([
       "claude-code",
-      "traycer",
+      "hukum",
     ]);
   });
 

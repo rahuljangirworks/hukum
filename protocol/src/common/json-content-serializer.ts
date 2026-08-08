@@ -33,7 +33,7 @@ export enum ContextType {
    * in, not an Agent. Distinct from `TerminalAgent` for exactly that reason:
    * `TerminalAgent` names an Agent reached through the terminal interface and
    * projects as `@agent:`, while this names the terminal itself, which a
-   * coding agent can only READ (`traycer_read_terminal` / `traycer terminal
+   * coding agent can only READ (`hukum_read_terminal` / `hukum terminal
    * output`) and never talk to.
    */
   Terminal = "terminal",
@@ -467,8 +467,8 @@ function formatMentionForLLMQuery(
     // Both Agent interfaces share this arm deliberately. "Refer to Agent B"
     // must mean the same thing to the coding agent whether B uses the Chat or
     // the Terminal interface, so both emit the interface-agnostic `@agent:`
-    // marker plus the durable id the agent needs for `traycer_send_message` /
-    // `traycer_get_transcript`. Falling through to `default:` dropped the id
+    // marker plus the durable id the agent needs for `hukum_send_message` /
+    // `hukum_get_transcript`. Falling through to `default:` dropped the id
     // entirely and handed the runtime a bare title.
     case ContextType.Chat:
     case ContextType.TerminalAgent: {
@@ -480,7 +480,7 @@ function formatMentionForLLMQuery(
     }
     // Mirrors the agent arm above: a human-readable title so the reference
     // reads as the user wrote it, plus the durable id the read tools address
-    // (`traycer_read_terminal`, `traycer terminal output`). Without the id the
+    // (`hukum_read_terminal`, `hukum terminal output`). Without the id the
     // runtime is handed a bare title it cannot resolve.
     case ContextType.Terminal: {
       const terminalId = attrs.terminalId || attrs.id || "";

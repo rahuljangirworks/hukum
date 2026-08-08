@@ -12,7 +12,7 @@
  * only searches the size directories declared in the theme's `index.theme`,
  * and hicolor tops out at 512x512. Handing electron-builder a lone 1024x1024
  * PNG makes it install exactly one icon, at `hicolor/1024x1024/apps/` - a
- * directory no icon lookup ever visits - so `Icon=traycer-desktop` in the
+ * directory no icon lookup ever visits - so `Icon=hukum-desktop` in the
  * generated `.desktop` entry silently resolves to nothing and the shell falls
  * back to a generic icon. Every size below is one hicolor does declare.
  *

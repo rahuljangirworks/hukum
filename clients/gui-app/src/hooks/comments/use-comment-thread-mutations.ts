@@ -2,8 +2,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import type {
   CreateCommentThreadRequest,
   ListCommentThreadsResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import { extractUserMentionIds } from "@traycer/protocol/notifications/comment-notification-utils";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import { extractUserMentionIds } from "@hukum/protocol/notifications/comment-notification-utils";
 import { useHostMutation } from "@/hooks/host/use-host-query";
 import { useHostClient } from "@/lib/host/runtime";
 import { toastFromHostError } from "@/lib/host-error-toast";

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState, type ReactNode } from "react";
-import type { TerminalScope } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { TerminalScope } from "@hukum/protocol/host/terminal/unary-schemas";
 import { useHostClient, useHostDirectory } from "@/lib/host";
 import { buildTransientHostClient } from "@/hooks/host/use-host-client-for";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";

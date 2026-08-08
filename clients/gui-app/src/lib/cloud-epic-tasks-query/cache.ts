@@ -7,8 +7,8 @@ import type {
   TaskLight,
   TaskRepoIdentifier,
   TaskWorkspaceIdentifier,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import { formatRepoIdentifier } from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import { formatRepoIdentifier } from "@hukum/protocol/host/epic/unary-schemas";
 import {
   isCloudEpicTasksQueryKey,
   isEpicTaskContextsQueryKey,

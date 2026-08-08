@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import type {
   ProfileDropdownUsageEntry,
   ProfileDropdownUsagePresentation,

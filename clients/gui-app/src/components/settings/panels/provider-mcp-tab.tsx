@@ -15,14 +15,14 @@ import {
   RefreshCw,
   Trash2,
 } from "lucide-react";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import type {
   ProviderMcpCapabilities,
   ProviderMcpServer,
   ProviderMcpServerStatus,
   ProviderMcpTool,
   ProviderNativeScope,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -1496,7 +1496,7 @@ function ServerToolsPanel(props: {
              * non-interactive element without a role fails
              * jsx-a11y/no-noninteractive-tabindex.
              */}
-            {capabilities.traycerSessionsOnlyEnforcement ? (
+            {capabilities.hukumSessionsOnlyEnforcement ? (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
@@ -1508,7 +1508,7 @@ function ServerToolsPanel(props: {
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  Tool enable/disable applies to Traycer sessions only for this
+                  Tool enable/disable applies to Hukum sessions only for this
                   provider.
                 </TooltipContent>
               </Tooltip>

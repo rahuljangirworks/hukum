@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
-import type { TuiHarnessId } from "@traycer/protocol/persistence/epic/schemas";
+import type { TuiHarnessId } from "@hukum/protocol/persistence/epic/schemas";
 import type { AppRouter } from "@/router";
 import {
   PROVIDER_DISPLAY_NAMES,
   TUI_HARNESS_ID_TO_PROVIDER_ID,
   type ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";
 import { useProvidersList } from "@/hooks/providers/use-providers-list-query";
 import { getOpenEpicRegistry } from "@/lib/registries/epic-session-registry";
@@ -55,8 +55,8 @@ function resolveProviderId(harnessId: string): ProviderId | null {
  * Reads the current route template directly off the router INSTANCE
  * (`router.state`/`router.subscribe`) rather than via `useRouterState`, which
  * requires a `<RouterProvider>` ancestor context. This bridge is mounted
- * above `RouterProvider` in the tree (`TraycerAuthenticatedRuntime`, a sibling
- * of the deeply-nested `TraycerAppRuntimeSurface` that renders
+ * above `RouterProvider` in the tree (`HukumAuthenticatedRuntime`, a sibling
+ * of the deeply-nested `HukumAppRuntimeSurface` that renders
  * `<RouterProvider>`), so no such context exists there - `useRouterState`
  * throws `Cannot read properties of null (reading 'isServer')` in that
  * position. Taking the live router as a prop and reading it imperatively
@@ -150,7 +150,7 @@ function resolveActiveHarnessContext(
 
 /**
  * Writes last-known session state into the module-level support-context
- * registry (critique D5). Mounted once inside `TraycerAuthenticatedRuntime`,
+ * registry (critique D5). Mounted once inside `HukumAuthenticatedRuntime`,
  * ABOVE nothing crash-relevant - `ReportIssueDialogHost` (which reads the
  * registry at report-open) is mounted above `RootErrorBoundary`, so a crash
  * that unmounts this bridge must not take the last-observed state with it;

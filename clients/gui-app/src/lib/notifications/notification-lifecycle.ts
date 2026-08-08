@@ -1,4 +1,4 @@
-import type { HostNotificationSeverity } from "@traycer/protocol/host/notifications/contracts";
+import type { HostNotificationSeverity } from "@hukum/protocol/host/notifications/contracts";
 import type { MergedNotificationSource } from "@/stores/notifications/merged-notifications";
 
 export type NotificationAttentionTier = "blocking" | "failure";

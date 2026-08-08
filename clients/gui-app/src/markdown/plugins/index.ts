@@ -1,10 +1,10 @@
 export {
-  extendTraycerSanitizeSchema,
-  TRAYCER_SANITIZE_SCHEMA,
+  extendHukumSanitizeSchema,
+  HUKUM_SANITIZE_SCHEMA,
 } from "./rehype-sanitize-schema";
-export { rehypeTraycerChat } from "./rehype-traycer-chat";
-export { rehypeTraycerEpic } from "./rehype-traycer-epic";
-export { rehypeTraycerSpec } from "./rehype-traycer-spec";
-export { rehypeTraycerTicket } from "./rehype-traycer-ticket";
+export { rehypeHukumChat } from "./rehype-hukum-chat";
+export { rehypeHukumEpic } from "./rehype-hukum-epic";
+export { rehypeHukumSpec } from "./rehype-hukum-spec";
+export { rehypeHukumTicket } from "./rehype-hukum-ticket";
 export { rehypeCustomMermaid } from "./rehype-custom-mermaid";
-export { TRAYCER_MERMAID_TAG } from "./const";
+export { HUKUM_MERMAID_TAG } from "./const";

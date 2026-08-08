@@ -30,7 +30,7 @@ import { useTabsStore } from "@/stores/tabs/store";
 import type { EpicNodeRef } from "@/stores/epics/canvas/types";
 import type { ReactNode } from "react";
 import type { ProviderId } from "@/components/home/data/landing-options";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 
 const LEADER_HINT_DELAY_MS = 300;
 

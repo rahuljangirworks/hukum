@@ -4,8 +4,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type {
   ListTasksResponse,
   ListTaskLight,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import type { WorktreeHostEntryV12 } from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import type { WorktreeHostEntryV12 } from "@hukum/protocol/host/worktree-schemas";
 import type { ListCloudTasksRequest } from "@/lib/cloud-epic-tasks-query";
 import {
   DEFAULT_HISTORY_SEARCH,
@@ -113,8 +113,8 @@ describe("useHistoryQuery", () => {
       Date.parse("2026-04-22T12:00:00.000Z"),
     );
     testState.tasks = [
-      taskLight("epic-alpha", "Alpha workbench", "traycer/gui-app"),
-      taskLight("epic-beta", "Beta search flow", "traycer/server"),
+      taskLight("epic-alpha", "Alpha workbench", "hukum/gui-app"),
+      taskLight("epic-beta", "Beta search flow", "hukum/server"),
     ];
     testState.response = { tasks: testState.tasks, hasMore: false };
     testState.isFetching = false;
@@ -164,8 +164,8 @@ describe("useHistoryQuery", () => {
 
   it("preserves the central last-viewed row order", () => {
     testState.tasks = [
-      taskLight("epic-beta", "Beta search flow", "traycer/server"),
-      taskLight("epic-alpha", "Alpha workbench", "traycer/gui-app"),
+      taskLight("epic-beta", "Beta search flow", "hukum/server"),
+      taskLight("epic-alpha", "Alpha workbench", "hukum/gui-app"),
     ];
     testState.response = { tasks: testState.tasks, hasMore: false };
 
@@ -190,7 +190,7 @@ describe("useHistoryQuery", () => {
       facets: {
         repos: [
           {
-            repoIdentifier: { owner: "traycer", repo: "gui-app" },
+            repoIdentifier: { owner: "hukum", repo: "gui-app" },
             count: 37,
           },
         ],
@@ -232,7 +232,7 @@ describe("useHistoryQuery", () => {
       testState.taskContexts = new Map([
         [
           "epic-beta",
-          taskLight("epic-beta", "Beta search flow", "traycer/server"),
+          taskLight("epic-beta", "Beta search flow", "hukum/server"),
         ],
       ]);
 
@@ -256,7 +256,7 @@ describe("useHistoryQuery", () => {
     testState.taskContexts = new Map([
       [
         "epic-beta",
-        taskLight("epic-beta", "Beta search flow", "traycer/server"),
+        taskLight("epic-beta", "Beta search flow", "hukum/server"),
       ],
     ]);
 
@@ -276,7 +276,7 @@ describe("useHistoryQuery", () => {
     testState.taskContexts = new Map([
       [
         "epic-beta",
-        taskLight("epic-beta", "Beta search flow", "traycer/server"),
+        taskLight("epic-beta", "Beta search flow", "hukum/server"),
       ],
     ]);
 
@@ -304,7 +304,7 @@ describe("useHistoryQuery", () => {
     testState.taskContexts = new Map([
       [
         "epic-beta",
-        taskLight("epic-beta", "Beta search flow", "traycer/server"),
+        taskLight("epic-beta", "Beta search flow", "hukum/server"),
       ],
     ]);
 
@@ -342,7 +342,7 @@ describe("useHistoryQuery", () => {
     testState.taskContexts = new Map([
       [
         "epic-alpha",
-        taskLight("epic-alpha", "Alpha workbench", "traycer/gui-app"),
+        taskLight("epic-alpha", "Alpha workbench", "hukum/gui-app"),
       ],
     ]);
 
@@ -366,7 +366,7 @@ describe("useHistoryQuery", () => {
     testState.taskContexts = new Map([
       [
         "epic-beta",
-        taskLight("epic-beta", "Beta search flow", "traycer/server"),
+        taskLight("epic-beta", "Beta search flow", "hukum/server"),
       ],
     ]);
 
@@ -389,9 +389,9 @@ describe("useHistoryQuery", () => {
     // instead of trusting the raw cached order, which still reflects the
     // pre-pin state.
     testState.tasks = [
-      taskLight("epic-alpha", "Alpha workbench", "traycer/gui-app"),
+      taskLight("epic-alpha", "Alpha workbench", "hukum/gui-app"),
       {
-        ...taskLight("epic-beta", "Beta search flow", "traycer/server"),
+        ...taskLight("epic-beta", "Beta search flow", "hukum/server"),
         pinned: true,
       },
     ];
@@ -412,9 +412,9 @@ describe("useHistoryQuery", () => {
     // first; the pin must still lift its (weaker-matching) row above it.
     testState.isFetching = true;
     testState.tasks = [
-      taskLight("epic-exact", "search", "traycer/gui-app"),
+      taskLight("epic-exact", "search", "hukum/gui-app"),
       {
-        ...taskLight("epic-pinned", "Beta search flow", "traycer/server"),
+        ...taskLight("epic-pinned", "Beta search flow", "hukum/server"),
         pinned: true,
       },
     ];
@@ -563,8 +563,8 @@ function taskLight(id: string, title: string, repo: string): ListTaskLight {
 function worktreeWithPullRequest(prNumber: number): WorktreeHostEntryV12 {
   return {
     worktreePath: "/worktrees/task-history",
-    repoLabel: "traycer/gui-app",
-    repoIdentifier: { owner: "traycer", repo: "gui-app" },
+    repoLabel: "hukum/gui-app",
+    repoIdentifier: { owner: "hukum", repo: "gui-app" },
     branch: "task-history",
     inUse: false,
     uncommittedCount: 0,
@@ -583,7 +583,7 @@ function worktreeWithPullRequest(prNumber: number): WorktreeHostEntryV12 {
     createdAt: null,
     prState: "open",
     prNumber,
-    prUrl: `https://github.com/traycer/gui-app/pull/${prNumber}`,
+    prUrl: `https://github.com/hukum/gui-app/pull/${prNumber}`,
     mergedHeadShaMatches: false,
     submodules: [],
     atBaseCommit: false,

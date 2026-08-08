@@ -1,7 +1,7 @@
 /**
  * Independent acceptance suite — seam S4: the managed-command output window.
  *
- * Expected behavior comes from the records (`traycer-host/src/domain/
+ * Expected behavior comes from the records (`hukum-host/src/domain/
  * managed-command/UI.md` §§3-4, 9, 9a and root `CONTEXT.md`), never from the
  * component code. The tile, its session hook, its zustand store and the epic
  * canvas store are all real; the one seam faked is the WebSocket stream
@@ -35,19 +35,19 @@ import { useEpicCanvasStore } from "@/stores/epics/canvas/store";
 import { findOpenArtifactInTab } from "@/stores/epics/canvas/canvas-selectors";
 import { makeManagedCommandOutputTileRef } from "@/stores/epics/canvas/tile-schema/managed-command-output-tile";
 import { __setManagedCommandOutputStreamClientFactoryForTests } from "@/providers/managed-command-output-stream-factory-override";
-import type { ManagedCommandOutputStreamCallbacks } from "@traycer-clients/shared/host-transport/managed-command-output-stream-client";
+import type { ManagedCommandOutputStreamCallbacks } from "@hukum-clients/shared/host-transport/managed-command-output-stream-client";
 import {
   managedCommandSubscribeOutputClientFrameSchema,
   managedCommandSubscribeOutputServerFrameSchema,
-} from "@traycer/protocol/host/managed-command/subscribe";
+} from "@hukum/protocol/host/managed-command/subscribe";
 import type {
   ManagedCommandLogLine,
   ManagedCommandLogPosition,
   ManagedCommandSubscribeOutputClientFrame,
   ManagedCommandSubscribeOutputServerFrame,
-} from "@traycer/protocol/host/managed-command/subscribe";
-import { managedCommandSchema } from "@traycer/protocol/host/managed-command/unary-schemas";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+} from "@hukum/protocol/host/managed-command/subscribe";
+import { managedCommandSchema } from "@hukum/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 
 const mocks = vi.hoisted(() => ({
   reachability: {

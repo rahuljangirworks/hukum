@@ -2,16 +2,16 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { act, renderHook } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { IHostDirectoryService } from "@traycer-clients/shared/host-client/host-runtime";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { IHostDirectoryService } from "@hukum-clients/shared/host-client/host-runtime";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
 import {
   mockLocalHostEntry,
   mockRemoteHostEntry,
-} from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
+} from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
 import type { NotificationNavigate } from "@/lib/notifications";
 

@@ -16,7 +16,7 @@ import type {
   PrCheckContext,
   PrChecksSection,
   PrFilesSection,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import type { PrCheckCounts } from "@/lib/pr/pr-attention-queue";
 import {
   formatPrChecksValue,

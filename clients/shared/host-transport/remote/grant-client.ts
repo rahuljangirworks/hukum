@@ -1,4 +1,4 @@
-import { attachGrantResponseSchema } from "@traycer/protocol/host/attach-grant";
+import { attachGrantResponseSchema } from "@hukum/protocol/host/attach-grant";
 
 /**
  * Client-leg attach-grant acquisition (Architecture §2, §4b; relay-do README).

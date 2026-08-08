@@ -10,24 +10,24 @@ import type {
   GitSubscribeStatusEventV12,
   GitSubscribeStatusEventV13,
   GitWatcherStatus,
-} from "@traycer/protocol/host/git-schemas";
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
+} from "@hukum/protocol/host/git-schemas";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
 import type {
   IStreamSession,
   ServerFrameHandler,
   StatusChangeHandler,
   StreamFrameEnvelope,
   StreamCloseReason,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   WsStreamClient,
   type ParamsOf,
-} from "@traycer-clients/shared/host-transport/ws-stream-client";
-import { DEFAULT_GIT_FILE_DIFF_BYTE_BUDGET } from "@traycer/protocol/host";
+} from "@hukum-clients/shared/host-transport/ws-stream-client";
+import { DEFAULT_GIT_FILE_DIFF_BYTE_BUDGET } from "@hukum/protocol/host";
 import { StreamRuntimeContext } from "@/lib/host/stream-runtime-context";
 import { gitQueryKeys } from "@/lib/query-keys/git-query-keys";
 import { __resetRichSlotOrderingForTesting } from "@/lib/git/git-rich-slot-ordering";

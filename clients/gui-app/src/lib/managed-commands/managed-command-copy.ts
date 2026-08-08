@@ -1,7 +1,7 @@
 import type {
   ManagedCommand,
   ManagedCommandStatus,
-} from "@traycer/protocol/host/managed-command/unary-schemas";
+} from "@hukum/protocol/host/managed-command/unary-schemas";
 
 /**
  * Copy for the Shells surface (root `CONTEXT.md`). There is ONE entity here -

@@ -1,7 +1,7 @@
 import type {
   ProviderMcpCapabilities,
   ProviderMcpServer,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 import {
   cleanup,
   fireEvent,
@@ -10,7 +10,7 @@ import {
   within,
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { ProviderMcpAuthWrite } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderMcpAuthWrite } from "@hukum/protocol/host/provider-native-schemas";
 import { ProviderMcpAddDialog } from "@/components/settings/panels/provider-mcp-add-dialog";
 import type { McpMutateVariables } from "@/hooks/providers/use-providers-mcp-mutate-mutation";
 
@@ -64,7 +64,7 @@ const REMOTE_HTTP_SSE_CAPS: ProviderMcpCapabilities = {
   toolsSource: "probe",
   schemasSource: "probe",
   instructionsSource: "probe",
-  traycerSessionsOnlyEnforcement: false,
+  hukumSessionsOnlyEnforcement: false,
   stdioDegradeNotice: false,
   oauthDegradesToConfigOnly: true,
 };

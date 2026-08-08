@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   hostRpcRegistry,
   hostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   HOST_NOTIFICATIONS_INDICATOR_BATCH_CAP,
   hostNotificationsClearAll,
@@ -42,11 +42,11 @@ import {
   hostNotificationsSubscribeOpenRequestSchema,
   hostNotificationsSubscribeOpenRequestSchemaV10,
   hostNotificationsSummarySchema,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import {
   buildStreamManifest,
   checkStreamMethodCompatibility,
-} from "@traycer/protocol/framework/stream-compat";
+} from "@hukum/protocol/framework/stream-compat";
 
 const APPROVAL_ENTRY = {
   id: "notification-1",

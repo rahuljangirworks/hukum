@@ -3,9 +3,9 @@ import {
   type WorktreeDeleteByPathServerFrame,
   type WorktreeDeleteOutputChannel,
   type WorktreeDeletePhase,
-} from "@traycer/protocol/host/worktree-delete-stream";
-import type { WorktreeEntryScripts } from "@traycer/protocol/host/worktree-schemas";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/worktree-delete-stream";
+import type { WorktreeEntryScripts } from "@hukum/protocol/host/worktree-schemas";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type {
   IStreamSession,
   StreamCloseReason,

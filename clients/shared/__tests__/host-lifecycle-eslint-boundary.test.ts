@@ -154,7 +154,7 @@ function expectBoundaryError(outcome: EslintOutcome): void {
  */
 describe("host-lifecycle read-only import boundary", () => {
   beforeEach(() => {
-    sandbox = mkdtempSync(join(tmpdir(), "traycer-boundary-"));
+    sandbox = mkdtempSync(join(tmpdir(), "hukum-boundary-"));
   });
 
   afterEach(() => {
@@ -247,7 +247,7 @@ describe("host-lifecycle read-only import boundary", () => {
   it("reports an error for importing a CLI service platform controller", () => {
     expectBoundaryError(
       lintViolator("host-lifecycle/cli-platform.ts", [
-        'import * as macos from "../../../traycer-cli/src/service/platforms/macos";',
+        'import * as macos from "../../../hukum-cli/src/service/platforms/macos";',
         "export function boom(): void {",
         "  void macos;",
         "}",

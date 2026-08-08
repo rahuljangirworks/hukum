@@ -1,4 +1,4 @@
-import type { WorktreeBindingSelectorRowV12 } from "@traycer/protocol/host";
+import type { WorktreeBindingSelectorRowV12 } from "@hukum/protocol/host";
 import { isWorkspaceResolvePending } from "@/lib/worktree/worktree-row-resolve-pending";
 
 /**

@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { splitConnectionManifest } from "@traycer/protocol/framework/index";
-import { hostRpcRegistry } from "@traycer/protocol/host/registry";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+import { splitConnectionManifest } from "@hukum/protocol/framework/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/registry";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   setChatArchivedRequestSchema,
   setChatArchivedResponseSchema,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import { releasedMethodNames } from "@traycer/protocol/host/__tests__/__fixtures__/released-method-names";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import { releasedMethodNames } from "@hukum/protocol/host/__tests__/__fixtures__/released-method-names";
 
 /**
  * `epic.setChatArchived` is a new ADDITIVE unary method. It must ride the

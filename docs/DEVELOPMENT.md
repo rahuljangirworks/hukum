@@ -1,6 +1,6 @@
 # Development guide
 
-Deeper notes for working on the Traycer clients, CLI, and protocol.
+Deeper notes for working on the Hukum clients, CLI, and protocol.
 
 ## Toolchain
 
@@ -11,7 +11,7 @@ Deeper notes for working on the Traycer clients, CLI, and protocol.
 ```sh
 bun install
 bun run build           # all packages
-bunx nx run @traycer/protocol:build   # a single package
+bunx nx run @hukum/protocol:build   # a single package
 ```
 
 ## Pre-commit hooks
@@ -22,15 +22,15 @@ Install the hygiene hooks once with `pipx install pre-commit && pre-commit insta
 
 | Path                   | Package                        | Responsibility                                                                      |
 | ---------------------- | ------------------------------ | ----------------------------------------------------------------------------------- |
-| `protocol/`            | `@traycer/protocol`            | The versioned client⇄host wire contract (schemas, RPC, framework versioning).       |
-| `clients/traycer-cli/` | `@traycer-clients/traycer-cli` | The `traycer` CLI — provisions/upgrades the host, auth, agent & workspace commands. |
-| `clients/shared/`      | `@traycer-clients/shared`      | Transport (WebSocket/RPC), auth (PKCE/bearer), comment & agent formatting.          |
-| `clients/gui-app/`     | `@traycer-clients/gui-app`     | The GUI renderer (React).                                                           |
-| `clients/desktop/`     | `@traycer-clients/desktop`     | Electron shell around `gui-app`.                                                    |
+| `protocol/`            | `@hukum/protocol`            | The versioned client⇄host wire contract (schemas, RPC, framework versioning).       |
+| `clients/hukum-cli/` | `@hukum-clients/hukum-cli` | The `hukum` CLI — provisions/upgrades the host, auth, agent & workspace commands. |
+| `clients/shared/`      | `@hukum-clients/shared`      | Transport (WebSocket/RPC), auth (PKCE/bearer), comment & agent formatting.          |
+| `clients/gui-app/`     | `@hukum-clients/gui-app`     | The GUI renderer (React).                                                           |
+| `clients/desktop/`     | `@hukum-clients/desktop`     | Electron shell around `gui-app`.                                                    |
 
 ## Protocol versioning
 
-`@traycer/protocol` defines the contract with **per-method `{ major, minor }` versioning negotiated at runtime** (not npm semver). Because the handshake negotiates compatibility, clients and the host can ship independently as long as their versions remain compatible. The CLI **inlines** the protocol at build time, so the published CLI has no runtime dependency on a protocol package.
+`@hukum/protocol` defines the contract with **per-method `{ major, minor }` versioning negotiated at runtime** (not npm semver). Because the handshake negotiates compatibility, clients and the host can ship independently as long as their versions remain compatible. The CLI **inlines** the protocol at build time, so the published CLI has no runtime dependency on a protocol package.
 
 ## Config targets (dev / staging / production)
 
@@ -42,4 +42,4 @@ The CLI normally downloads and verifies a **signed** host binary. For local deve
 
 ## Releases
 
-Releases are **built and signed in Traycer's internal repository** and published to this repo's [Releases](../../releases) cross-repo — signed CLI, host, and desktop binaries plus update feeds. Signing secrets never enter this repository, so **contributors need no secrets to build or test** the open-source code here.
+Releases are **built and signed in Hukum's internal repository** and published to this repo's [Releases](../../releases) cross-repo — signed CLI, host, and desktop binaries plus update feeds. Signing secrets never enter this repository, so **contributors need no secrets to build or test** the open-source code here.

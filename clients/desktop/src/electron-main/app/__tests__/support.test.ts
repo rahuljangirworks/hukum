@@ -11,7 +11,7 @@ import type {
 vi.mock("electron", () => ({
   app: {
     getVersion: (): string => "0.0.0-test",
-    getPath: (_key: string): string => "/tmp/traycer-desktop-support-test",
+    getPath: (_key: string): string => "/tmp/hukum-desktop-support-test",
   },
   shell: {
     showItemInFolder: vi.fn(),
@@ -102,7 +102,7 @@ function buildService(hostLayout: HostFsLayout): DesktopSupportService {
     profile: null,
   };
   return new DesktopSupportService({
-    appName: "Traycer",
+    appName: "Hukum",
     host: { getSnapshot: () => null },
     authSession: { get: () => authSession },
     hostLayout,
@@ -122,7 +122,7 @@ describe("DesktopSupportService.getSnapshot layer0", () => {
           attemptId: "sea-addon-degraded",
           cause: "addon-load-failed",
           evidence:
-            "Cannot find module '/Applications/Traycer.app/Contents/Resources/lifecycle_lock.node'",
+            "Cannot find module '/Applications/Hukum.app/Contents/Resources/lifecycle_lock.node'",
         },
       },
       async (hostLayout) => {
@@ -133,7 +133,7 @@ describe("DesktopSupportService.getSnapshot layer0", () => {
           attemptId: "sea-addon-degraded",
           cause: "addon-load-failed",
           evidence:
-            "Cannot find module '/Applications/Traycer.app/Contents/Resources/lifecycle_lock.node'",
+            "Cannot find module '/Applications/Hukum.app/Contents/Resources/lifecycle_lock.node'",
         });
       },
     );
@@ -189,7 +189,7 @@ describe("DesktopSupportService.submitReport layer0 routing", () => {
           attemptId: "sea-addon-degraded",
           cause: "addon-load-failed",
           evidence:
-            "Cannot find module '/Applications/Traycer.app/Contents/Resources/lifecycle_lock.node'",
+            "Cannot find module '/Applications/Hukum.app/Contents/Resources/lifecycle_lock.node'",
         },
       },
       async (hostLayout) => {

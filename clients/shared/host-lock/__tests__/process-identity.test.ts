@@ -100,7 +100,7 @@ describe("getPublishedProcessIdentityVerdict", () => {
   });
 
   /*
-   * traycerai/traycer#740. A pid.json written by a host that predates
+   * hukumai/hukum#740. A pid.json written by a host that predates
    * `processStartIdentity` gives this function nothing to compare. The old
    * code fell back to a wall-clock causality check and could answer
    * "mismatch"; both consumers read that as positive evidence - the liveness

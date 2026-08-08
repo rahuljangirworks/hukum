@@ -14,7 +14,7 @@ import type {
   GitListChangedFilesResponseV11,
   SubmoduleChangeset,
   SubmodulePointer,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import type { GitListChangedFilesSubscriptionResult } from "@/hooks/git/use-git-list-changed-files-subscription";
 import type { GitListChangedFilesWithSubmodulesResult } from "@/hooks/git/use-git-list-changed-files-with-submodules";
 import type { GitPanelSelectedRepo } from "@/stores/epics/git-panel-store";
@@ -101,8 +101,8 @@ function gitlink(path: string): GitChangedFileV11 {
 
 function changeset(overrides: Partial<SubmoduleChangeset>): SubmoduleChangeset {
   return {
-    repoRoot: "/repo/traycer",
-    parentPath: "traycer",
+    repoRoot: "/repo/hukum",
+    parentPath: "hukum",
     branch: "main",
     repoState: { kind: "clean" },
     files: [],
@@ -151,7 +151,7 @@ function renderSelectedChanges(snapshot: GitListChangedFilesResponseV11): void {
       epicId="epic-1"
       viewTabId="tab-1"
       selected={rootSelected}
-      rootLabel="traycer-internal"
+      rootLabel="hukum-internal"
       subscription={EMPTY_SUBSCRIPTION}
       snapshot={snapshotResult(snapshot)}
       onRefresh={vi.fn()}
@@ -178,7 +178,7 @@ describe("<SelectedRepoChanges /> module section state", () => {
   it("keeps root and submodule section collapse state independent", () => {
     renderSelectedChanges(
       response({
-        files: [file("src/root-working.ts"), gitlink("traycer")],
+        files: [file("src/root-working.ts"), gitlink("hukum")],
         submodules: [changeset({ files: [file("src/submodule-working.ts")] })],
       }),
     );
@@ -202,7 +202,7 @@ describe("<SelectedRepoChanges /> module section state", () => {
         files: [
           stagedFile("src/root-staged.ts"),
           file("src/root-working.ts"),
-          gitlink("traycer"),
+          gitlink("hukum"),
         ],
         submodules: [
           changeset({
@@ -216,16 +216,16 @@ describe("<SelectedRepoChanges /> module section state", () => {
     );
 
     const rootHeader = screen.getByRole("button", {
-      name: /traycer-internal\s*2 files\s*development/,
+      name: /hukum-internal\s*2 files\s*development/,
     });
     const submoduleHeader = screen.getByRole("button", {
-      name: /traycer\s*submodule\s*2 files\s*main\s*pinned commit out of date/,
+      name: /hukum\s*submodule\s*2 files\s*main\s*pinned commit out of date/,
     });
     expect(rootHeader.getAttribute("aria-expanded")).toBe("true");
     expect(submoduleHeader.getAttribute("aria-expanded")).toBe("true");
     const previewText = await expectModuleHeaderPreview(
       submoduleHeader,
-      "Path: /repo/traycer",
+      "Path: /repo/hukum",
     );
     expect(previewText).toContain("Status: pinned commit out of date");
     expect(rootHeader.className).toContain("bg-background");
@@ -348,7 +348,7 @@ describe("<SelectedRepoChanges /> module section state", () => {
         files: [
           stagedFile("src/root-staged.ts"),
           file("src/root-working.ts"),
-          gitlink("traycer"),
+          gitlink("hukum"),
         ],
         submodules: [changeset({ files: [file("src/submodule-working.ts")] })],
       }),
@@ -390,15 +390,15 @@ describe("<SelectedRepoChanges /> module section state", () => {
     vi.useFakeTimers();
     renderSelectedChanges(
       response({
-        files: [gitlink("traycer")],
+        files: [gitlink("hukum")],
         submodules: [changeset({ files: [file("src/needle.ts")] })],
       }),
     );
 
-    fireEvent.click(screen.getByTestId("git-module-header-traycer"));
+    fireEvent.click(screen.getByTestId("git-module-header-hukum"));
     expect(
       screen
-        .getByTestId("git-module-header-traycer")
+        .getByTestId("git-module-header-hukum")
         .getAttribute("aria-expanded"),
     ).toBe("false");
     expect(screen.queryByText("src/needle.ts")).toBeNull();
@@ -415,7 +415,7 @@ describe("<SelectedRepoChanges /> module section state", () => {
 
     expect(
       screen
-        .getByTestId("git-module-header-traycer")
+        .getByTestId("git-module-header-hukum")
         .getAttribute("aria-expanded"),
     ).toBe("true");
     expect(screen.getByText("src/needle.ts")).toBeDefined();
@@ -424,7 +424,7 @@ describe("<SelectedRepoChanges /> module section state", () => {
 
     expect(
       screen
-        .getByTestId("git-module-header-traycer")
+        .getByTestId("git-module-header-hukum")
         .getAttribute("aria-expanded"),
     ).toBe("false");
     expect(screen.queryByText("src/needle.ts")).toBeNull();
@@ -433,13 +433,13 @@ describe("<SelectedRepoChanges /> module section state", () => {
   it("preserves the toggled module header position when a tall module collapses", () => {
     renderSelectedChanges(
       response({
-        files: [file("src/root-working.ts"), gitlink("traycer")],
+        files: [file("src/root-working.ts"), gitlink("hukum")],
         submodules: [changeset({ files: [file("src/submodule-working.ts")] })],
       }),
     );
 
     const container = screen.getByTestId("git-module-groups");
-    const header = screen.getByTestId("git-module-header-traycer");
+    const header = screen.getByTestId("git-module-header-hukum");
     container.scrollTop = 160;
     vi.spyOn(container, "getBoundingClientRect").mockReturnValue(
       DOMRect.fromRect({ x: 0, y: 20, width: 320, height: 480 }),
@@ -570,7 +570,7 @@ describe("<SelectedRepoChanges /> module section state", () => {
           epicId="epic-global"
           viewTabId="tab-1"
           hostId="host-1"
-          runningDir="/repo/traycer"
+          runningDir="/repo/hukum"
           files={[file("src/normal-submodule.ts")]}
         />
       </>,

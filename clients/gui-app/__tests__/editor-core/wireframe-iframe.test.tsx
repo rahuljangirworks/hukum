@@ -2,8 +2,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { WireframeIframe } from "@/editor-core/nodes/wireframe/wireframe-iframe";
 
-const HEIGHT_MESSAGE_MARKER = "traycer:wireframe:height:v1";
-const MEASURE_REQUEST_MARKER = "traycer:wireframe:measure-request:v1";
+const HEIGHT_MESSAGE_MARKER = "hukum:wireframe:height:v1";
+const MEASURE_REQUEST_MARKER = "hukum:wireframe:measure-request:v1";
 const ARTIFACT_HTML =
   '<!doctype html><html><body><button id="demo">Demo</button><script>window.artifactScript = true;</script></body></html>';
 const ORIGINAL_INNER_HEIGHT = window.innerHeight;

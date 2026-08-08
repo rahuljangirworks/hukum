@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import { managedCommandNeedsAttention } from "@/lib/managed-commands/managed-command-copy";
 
 /**

@@ -1,20 +1,20 @@
 import { describe, expect, it } from "vitest";
 import { renderHook } from "@testing-library/react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   AgentSender,
   ChatEvent,
   ChatSessionAnchor,
   Message,
   UserMessageSender,
-} from "@traycer/protocol/persistence/epic/schemas";
-import type { TurnCheckpointManifest } from "@traycer/protocol/persistence/epic/checkpoint-manifests";
+} from "@hukum/protocol/persistence/epic/schemas";
+import type { TurnCheckpointManifest } from "@hukum/protocol/persistence/epic/checkpoint-manifests";
 import type {
   ChatActiveTurn,
   ChatQueuedPromptItem,
   ChatQueueSteerMode,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 import type { LiveAssistantMessage } from "@/stores/chats/chat-session-store";
 import type { MessageSegment } from "@/stores/composer/chat-store";
 import { collectAssistantReplyText } from "@/lib/chat/collect-assistant-reply-text";
@@ -27,12 +27,12 @@ import type {
   SubagentSegment,
   ToolSegment,
 } from "@/stores/composer/chat-store";
-import { deriveToolInputDetail } from "@traycer/protocol/host/agent/gui/tool-input-detail";
-import { deriveToolInputSummary } from "@traycer/protocol/host/agent/gui/tool-input-summary";
+import { deriveToolInputDetail } from "@hukum/protocol/host/agent/gui/tool-input-detail";
+import { deriveToolInputSummary } from "@hukum/protocol/host/agent/gui/tool-input-summary";
 import {
   isTaskTodoToolName,
   parseTaskTodoToolPayloads,
-} from "@traycer/protocol/host/agent/gui/task-todo-tools";
+} from "@hukum/protocol/host/agent/gui/task-todo-tools";
 
 // Mirror the host accumulator: a persisted tool_call/approval block carries
 // precomputed display fields, not the raw input. Computed via the same protocol

@@ -9,7 +9,7 @@ import {
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { Mock } from "vitest";
 import { useState, type ReactNode } from "react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import { ChatExpansionTestProviders } from "@/components/chat/__tests__/chat-expansion-test-providers";
 import { deriveA2AReceivedCollapsibleKey } from "@/components/chat/chat-collapsible-key";
 import { UserMessageBody } from "@/components/chat/chat-message-user-body";
@@ -238,7 +238,7 @@ const STRUCTURED_SKILL_TRIGGER_USER_CONTENT: JsonContent = {
       content: [
         {
           type: "slashCommand",
-          attrs: { commandName: "traycer-implement", trigger: "$" },
+          attrs: { commandName: "hukum-implement", trigger: "$" },
         },
         { type: "text", text: " Implement the runtime ticket." },
       ],
@@ -401,8 +401,8 @@ describe("<UserMessageBody /> agent messages", () => {
       />,
     );
 
-    expect(screen.getByText("$traycer-implement")).not.toBeNull();
-    expect(screen.queryByText("/traycer-implement")).toBeNull();
+    expect(screen.getByText("$hukum-implement")).not.toBeNull();
+    expect(screen.queryByText("/hukum-implement")).toBeNull();
   });
 
   it("keeps image reference labels coherent when a user message enters edit mode", async () => {

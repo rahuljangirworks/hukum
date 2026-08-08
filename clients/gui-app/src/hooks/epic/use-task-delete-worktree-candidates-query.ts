@@ -1,16 +1,16 @@
 import { useMemo } from "react";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { withHostQueryErrorBoundary } from "@/lib/query/host-query-error-boundary";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   WorktreeBranchStatus,
   WorktreeHostEntryV14,
-} from "@traycer/protocol/host/index";
-import type { WorktreeListAllForHostResponseV14 } from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/index";
+import type { WorktreeListAllForHostResponseV14 } from "@hukum/protocol/host/worktree-schemas";
 import { useHostClient, type HostRpcRegistry } from "@/lib/host";
 import { hostQueryKeys } from "@/lib/query-keys";
 import { useReactiveHostReadiness } from "@/hooks/host/use-reactive-host-readiness";
-import { provenRemovable } from "@traycer-clients/shared/worktree/classify-worktree";
+import { provenRemovable } from "@hukum-clients/shared/worktree/classify-worktree";
 
 /**
  * A host worktree the Task-delete dialog may offer to clean up: it has at least

@@ -3,7 +3,7 @@ import { QueryClient } from "@tanstack/react-query";
 import type {
   ProviderRateLimits,
   RateLimitUnavailableReason,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import {
   buildProviderRateLimitEnvelope,
   envelopeDegradedReason,

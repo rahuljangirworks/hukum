@@ -1,10 +1,10 @@
 import { useCallback } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   ProviderId,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/provider-schemas";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import type { ModelOption } from "@/components/home/data/landing-options";
 import { type HostRpcRegistry } from "@/lib/host";
 import { useProvidersListForClient } from "@/hooks/providers/use-providers-list-query";

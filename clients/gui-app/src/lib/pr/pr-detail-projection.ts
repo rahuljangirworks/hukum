@@ -10,7 +10,7 @@ import type {
   PrCheckContext,
   PrDetailCore,
   PrReviewState,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import type { PrChecksDotTone } from "./pr-list-projection";
 
 export type PrReviewerState = PrReviewState | "requested";

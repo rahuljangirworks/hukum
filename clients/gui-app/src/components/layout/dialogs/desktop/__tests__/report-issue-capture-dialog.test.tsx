@@ -15,7 +15,7 @@ import {
   RouterProvider,
 } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import { toast } from "sonner";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { useDesktopDialogStore } from "@/stores/dialogs/desktop-dialog-store";
@@ -47,7 +47,7 @@ vi.mock("sonner", () => ({
 }));
 
 const baseSnapshot: DesktopSupportSnapshot = {
-  appName: "Traycer",
+  appName: "Hukum",
   appVersion: "1.2.3",
   platform: "darwin",
   arch: "arm64",
@@ -67,7 +67,7 @@ const baseSnapshot: DesktopSupportSnapshot = {
     {
       target: "desktop",
       label: "Desktop Log",
-      path: "/tmp/traycer-desktop.log",
+      path: "/tmp/hukum-desktop.log",
     },
     {
       target: "host",
@@ -76,7 +76,7 @@ const baseSnapshot: DesktopSupportSnapshot = {
     },
   ],
   links: [],
-  supportEmail: "support@traycer.ai",
+  supportEmail: "support@hukum.ai",
   privateDeliveryAvailable: true,
 };
 
@@ -279,7 +279,7 @@ function createBaseRunnerHost(): IRunnerHost {
     requestHostRespawn: () => Promise.resolve({ kind: "restarted" as const }),
     getLastKnownLocalHostId: () => Promise.resolve(null),
     service: null,
-    traycerCli: null,
+    hukumCli: null,
     migration: null,
     hostManagement: null,
     hostTray: null,
@@ -437,7 +437,7 @@ function otherIntentField() {
   });
 }
 
-// VITE_TRAYCER_OSS_REPO is empty in unit tests, so buildGitHubIssueUrl returns
+// VITE_HUKUM_OSS_REPO is empty in unit tests, so buildGitHubIssueUrl returns
 // a path-only string (`/issues/new?...`) that `new URL(url)` rejects. Parse
 // the query string directly.
 function paramsOfOpenedLink(url: string): URLSearchParams {
@@ -1590,7 +1590,7 @@ describe("Report issue capture dialog (deep interactions)", () => {
       ).not.toBeNull();
       expect(screen.queryByRole("heading", { name: "Report sent" })).toBeNull();
       expect(
-        screen.queryByText("Sent privately to the Traycer team."),
+        screen.queryByText("Sent privately to the Hukum team."),
       ).toBeNull();
       expect(harness.openedLinks).toHaveLength(1);
     });

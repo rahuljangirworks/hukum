@@ -41,11 +41,11 @@ import {
   installManagedCommandChatSession,
   type ManagedCommandChatSessionStub,
 } from "@/stores/managed-commands/test-support/managed-command-chat-session";
-import { chatSubscribeServerFrameSchema } from "@traycer/protocol/host/agent/gui/subscribe";
-import { managedCommandSchema } from "@traycer/protocol/host/managed-command/unary-schemas";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
-import { autonomousResumeTriggerSchema } from "@traycer/protocol/persistence/epic/content-blocks";
-import type { AutonomousResumeTrigger } from "@traycer/protocol/persistence/epic/content-blocks";
+import { chatSubscribeServerFrameSchema } from "@hukum/protocol/host/agent/gui/subscribe";
+import { managedCommandSchema } from "@hukum/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
+import { autonomousResumeTriggerSchema } from "@hukum/protocol/persistence/epic/content-blocks";
+import type { AutonomousResumeTrigger } from "@hukum/protocol/persistence/epic/content-blocks";
 
 const mocks = vi.hoisted(() => ({
   methodSupport: { value: "supported" },

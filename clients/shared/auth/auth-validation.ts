@@ -15,9 +15,9 @@
  * inside the credentials file lock via the mutation store's `rotate`, which
  * injects the single-attempt `refreshOnceAbortable` below as its `RefreshFn`.
  */
-import { authRecordRegistry } from "@traycer/protocol/auth/registry";
-import { getRecordSchema } from "@traycer/protocol/framework/index";
-import type { AuthenticatedUser } from "@traycer/protocol/auth";
+import { authRecordRegistry } from "@hukum/protocol/auth/registry";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
+import type { AuthenticatedUser } from "@hukum/protocol/auth";
 import type {
   AuthTokenRefreshResult,
   StoredCredentials,
@@ -43,7 +43,7 @@ const authenticatedUserResponseSchema = getRecordSchema(
  * Every attempt is time-boxed with `AbortSignal.timeout(AUTH_FETCH_TIMEOUT_MS)`
  * so a stalled/half-open socket can no longer hang the caller indefinitely -
  * previously an un-timed-out `fetch` here could block `auth.start()` (and, through
- * it, the renderer's "Initializing Traycer Host…" gate) until the OS TCP timeout,
+ * it, the renderer's "Initializing Hukum Host…" gate) until the OS TCP timeout,
  * i.e. many minutes. A fired timeout rejects the `fetch`, which the surrounding
  * `catch` already collapses to `network-error`; that outcome (plus a 5xx or a 409
  * refresh-grace race) is the only one re-driven. A terminal `rejected`/`valid`
@@ -151,6 +151,7 @@ export async function validateAuthTokenIdentityAccessOnceAbortable(args: {
   }
   const parsed = authenticatedUserResponseSchema.safeParse(result.body);
   if (!parsed.success) {
+    console.error("[auth-validation] validateAuthTokenIdentityFetch parsed.success=false", parsed.error);
     return { kind: "rejected" };
   }
   return { kind: "valid", user: parsed.data };
@@ -167,6 +168,7 @@ async function validateAuthTokenIdentityFetch(
 
   const parsed = authenticatedUserResponseSchema.safeParse(result.body);
   if (!parsed.success) {
+    console.error("[auth-validation] fetchUserResponseOnce parsed.success=false", parsed.error);
     return { kind: "rejected" };
   }
   return { kind: "valid", user: parsed.data };
@@ -227,7 +229,9 @@ async function fetchUserResponseOnce(
 ): Promise<UserFetchResult> {
   let response: Response;
   try {
-    response = await fetch(authnApiUrl(authnBaseUrl, "api/v3/user"), {
+    const url = authnApiUrl(authnBaseUrl, "api/v3/user");
+    console.error("[auth-validation] fetchUserResponseOnce hitting url:", url);
+    response = await fetch(url, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -235,18 +239,21 @@ async function fetchUserResponseOnce(
       },
       signal,
     });
-  } catch {
+  } catch (err) {
     // A thrown `fetch` - a transport failure OR the per-attempt
     // `AbortSignal.timeout` firing (a `TimeoutError`) - is transient and
     // retriable, so both collapse to `network-error`.
+    console.error("[auth-validation] fetchUserResponseOnce throw:", err);
     return { kind: "failed", result: { kind: "network-error" } };
   }
 
   if (response.status === 401 || response.status === 404) {
+    console.error("[auth-validation] fetchUserResponseOnce rejected status:", response.status);
     return { kind: "failed", result: { kind: "rejected" } };
   }
 
   if (response.status < 200 || response.status >= 300) {
+    console.error("[auth-validation] fetchUserResponseOnce network-error status:", response.status);
     return { kind: "failed", result: { kind: "network-error" } };
   }
 

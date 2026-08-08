@@ -13,11 +13,11 @@ import type {
   HarnessOption,
   ProviderId,
 } from "@/components/home/data/landing-options";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import type {
   ProviderCliState,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type { ProfileRowAdmission } from "@/components/providers/provider-profile-model";
 import type { GuiHarnessCatalogEntry } from "@/hooks/harnesses/use-gui-harness-catalog";
 import type { ProviderPackPreparing } from "@/components/providers/provider-pack-readiness";

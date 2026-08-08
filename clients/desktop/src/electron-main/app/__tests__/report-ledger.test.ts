@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("electron", () => ({
   app: {
-    getPath: (_key: string): string => "/tmp/traycer-report-ledger-unused",
+    getPath: (_key: string): string => "/tmp/hukum-report-ledger-unused",
   },
 }));
 
@@ -38,7 +38,7 @@ let tempDir: string;
 let storeFile: string;
 
 beforeEach(() => {
-  tempDir = mkdtempSync(join(tmpdir(), "traycer-report-ledger-"));
+  tempDir = mkdtempSync(join(tmpdir(), "hukum-report-ledger-"));
   storeFile = join(tempDir, "report-ledger.json");
   __resetReportLedgerForTest({ storePath: storeFile });
 });

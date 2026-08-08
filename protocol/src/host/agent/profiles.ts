@@ -14,9 +14,9 @@ import {
   defineDowngradePath,
   defineRpcContract,
   defineUpgradePath,
-} from "@traycer/protocol/framework/index";
-import { agentModeSchema } from "@traycer/protocol/common/schemas";
-import { permissionModeSchema } from "@traycer/protocol/persistence/epic/foundation";
+} from "@hukum/protocol/framework/index";
+import { agentModeSchema } from "@hukum/protocol/common/schemas";
+import { permissionModeSchema } from "@hukum/protocol/persistence/epic/foundation";
 import {
   PROVIDER_AUTH_STATUS_SCHEMA,
   providerIdSchema,
@@ -24,14 +24,14 @@ import {
   providerIdSchemaV50,
   providerIdSchemaV60,
   providerProfileRateLimitStatusSchema,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import {
   mapGrokAvailableToUnavailable,
   providerRateLimitsSchema,
   providerRateLimitsSchemaV40,
   providerRateLimitsSchemaV50,
   providerRateLimitsSchemaV60,
-} from "@traycer/protocol/host/rate-limit/schemas";
+} from "@hukum/protocol/host/rate-limit/schemas";
 import {
   agentFacingHarnessIdSchema,
   concreteProfileSelectionSchema,
@@ -39,12 +39,12 @@ import {
   guiHarnessIdSchemaV40,
   guiHarnessIdSchemaV50,
   guiHarnessIdSchemaV60,
-} from "@traycer/protocol/host/agent/shared";
+} from "@hukum/protocol/host/agent/shared";
 
 // ─── `agent.listProviderProfiles@1.0` ─────────────────────────────────────
 //
 // Discovers the profiles available for one harness's provider: the ambient
-// CLI login plus any Traycer-managed subscriptions, with their cached
+// CLI login plus any Hukum-managed subscriptions, with their cached
 // rate-limit status. Harness-scoped (not provider-scoped) because creation
 // and model catalogs are also keyed by `harnessId`; the response echoes the
 // mapped `providerId` for transparency.
@@ -211,7 +211,7 @@ export const agentListProviderProfilesDowngradeV20ToV10 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Listing this provider's profiles requires a newer Traycer client.",
+            "Listing this provider's profiles requires a newer Hukum client.",
         },
       };
     }
@@ -253,7 +253,7 @@ export const agentListProviderProfilesDowngradeV30ToV20 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Listing this provider's profiles requires a newer Traycer client.",
+            "Listing this provider's profiles requires a newer Hukum client.",
         },
       };
     }
@@ -279,7 +279,7 @@ export const agentListProviderProfilesDowngradeV30ToV10 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Listing this provider's profiles requires a newer Traycer client.",
+            "Listing this provider's profiles requires a newer Hukum client.",
         },
       };
     }
@@ -322,7 +322,7 @@ export const agentListProviderProfilesDowngradeV40ToV30 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Listing this provider's profiles requires a newer Traycer client.",
+            "Listing this provider's profiles requires a newer Hukum client.",
         },
       };
     }
@@ -348,7 +348,7 @@ export const agentListProviderProfilesDowngradeV40ToV20 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Listing this provider's profiles requires a newer Traycer client.",
+            "Listing this provider's profiles requires a newer Hukum client.",
         },
       };
     }
@@ -374,7 +374,7 @@ export const agentListProviderProfilesDowngradeV40ToV10 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Listing this provider's profiles requires a newer Traycer client.",
+            "Listing this provider's profiles requires a newer Hukum client.",
         },
       };
     }
@@ -548,7 +548,7 @@ export const agentGetProviderProfileRateLimitsDowngradeV20ToV10 =
           error: {
             code: "DOWNGRADE_UNSUPPORTED",
             message:
-              "Reading rate limits for this provider requires a newer Traycer client.",
+              "Reading rate limits for this provider requires a newer Hukum client.",
           },
         };
       }
@@ -590,7 +590,7 @@ export const agentGetProviderProfileRateLimitsDowngradeV30ToV20 =
           error: {
             code: "DOWNGRADE_UNSUPPORTED",
             message:
-              "Reading rate limits for this provider requires a newer Traycer client.",
+              "Reading rate limits for this provider requires a newer Hukum client.",
           },
         };
       }
@@ -624,7 +624,7 @@ export const agentGetProviderProfileRateLimitsDowngradeV30ToV10 =
           error: {
             code: "DOWNGRADE_UNSUPPORTED",
             message:
-              "Reading rate limits for this provider requires a newer Traycer client.",
+              "Reading rate limits for this provider requires a newer Hukum client.",
           },
         };
       }
@@ -667,7 +667,7 @@ export const agentGetProviderProfileRateLimitsDowngradeV40ToV30 =
           error: {
             code: "DOWNGRADE_UNSUPPORTED",
             message:
-              "Reading rate limits for this provider requires a newer Traycer client.",
+              "Reading rate limits for this provider requires a newer Hukum client.",
           },
         };
       }
@@ -695,7 +695,7 @@ export const agentGetProviderProfileRateLimitsDowngradeV40ToV20 =
           error: {
             code: "DOWNGRADE_UNSUPPORTED",
             message:
-              "Reading rate limits for this provider requires a newer Traycer client.",
+              "Reading rate limits for this provider requires a newer Hukum client.",
           },
         };
       }
@@ -729,7 +729,7 @@ export const agentGetProviderProfileRateLimitsDowngradeV40ToV10 =
           error: {
             code: "DOWNGRADE_UNSUPPORTED",
             message:
-              "Reading rate limits for this provider requires a newer Traycer client.",
+              "Reading rate limits for this provider requires a newer Hukum client.",
           },
         };
       }
@@ -950,7 +950,7 @@ export const agentConfigureDowngradeV20ToV10 = defineDowngradePath<
     error: {
       code: "DOWNGRADE_UNSUPPORTED",
       message:
-        "Selecting an agent permission mode requires a newer Traycer host. Upgrade the host before configuring this agent.",
+        "Selecting an agent permission mode requires a newer Hukum host. Upgrade the host before configuring this agent.",
     },
   }),
   downgradeResponse: (response) => {
@@ -969,7 +969,7 @@ export const agentConfigureDowngradeV20ToV10 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Configuring an agent on this harness requires a newer Traycer client.",
+            "Configuring an agent on this harness requires a newer Hukum client.",
         },
       };
     }
@@ -1013,7 +1013,7 @@ export const agentConfigureDowngradeV30ToV20 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Configuring an agent on this harness requires a newer Traycer client.",
+            "Configuring an agent on this harness requires a newer Hukum client.",
         },
       };
     }
@@ -1059,7 +1059,7 @@ export const agentConfigureDowngradeV40ToV30 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Configuring an agent on this harness requires a newer Traycer client.",
+            "Configuring an agent on this harness requires a newer Hukum client.",
         },
       };
     }
@@ -1084,7 +1084,7 @@ export const agentConfigureDowngradeV40ToV20 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Configuring an agent on this harness requires a newer Traycer client.",
+            "Configuring an agent on this harness requires a newer Hukum client.",
         },
       };
     }
@@ -1105,7 +1105,7 @@ export const agentConfigureDowngradeV40ToV10 = defineDowngradePath<
     error: {
       code: "DOWNGRADE_UNSUPPORTED",
       message:
-        "Selecting an agent permission mode requires a newer Traycer host. Upgrade the host before configuring this agent.",
+        "Selecting an agent permission mode requires a newer Hukum host. Upgrade the host before configuring this agent.",
     },
   }),
   downgradeResponse: (response) => {
@@ -1117,7 +1117,7 @@ export const agentConfigureDowngradeV40ToV10 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Configuring an agent on this harness requires a newer Traycer client.",
+            "Configuring an agent on this harness requires a newer Hukum client.",
         },
       };
     }
@@ -1138,7 +1138,7 @@ export const agentConfigureDowngradeV30ToV10 = defineDowngradePath<
     error: {
       code: "DOWNGRADE_UNSUPPORTED",
       message:
-        "Selecting an agent permission mode requires a newer Traycer host. Upgrade the host before configuring this agent.",
+        "Selecting an agent permission mode requires a newer Hukum host. Upgrade the host before configuring this agent.",
     },
   }),
   downgradeResponse: (response) => {
@@ -1151,7 +1151,7 @@ export const agentConfigureDowngradeV30ToV10 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Configuring an agent on this harness requires a newer Traycer client.",
+            "Configuring an agent on this harness requires a newer Hukum client.",
         },
       };
     }

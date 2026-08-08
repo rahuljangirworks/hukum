@@ -44,7 +44,7 @@ import type {
   StoredCredentialsIdentity,
   TokenRotateResult,
   TokenStoreChange,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import { DesktopAuthSession } from "../auth/desktop-auth-session";
 import {
   createEmptyPerWindowSnapshot,
@@ -77,7 +77,7 @@ import { registerHostManagementIpc } from "./host-management-ipc";
 import { registerHostControllerStatusBroadcast } from "./host-controller-status-broadcast";
 import { registerMigrationIpc } from "./migration-ipc";
 import { registerSupportIpc } from "./support-ipc";
-import { registerTraycerCliIpc } from "./traycer-cli-ipc";
+import { registerHukumCliIpc } from "./hukum-cli-ipc";
 import { registerPlatformIpc } from "./platform-ipc";
 import { registerPowerIpc } from "./power-ipc";
 import { registerAppUpdateIpc } from "./app-update-ipc";
@@ -99,7 +99,7 @@ import type {
   InstallVersionOk,
   MutationOutcome,
   MutationProgress,
-  RemoveTraycerOk,
+  RemoveHukumOk,
   ServiceRegistrationOk,
   UninstallOk,
 } from "../host/host-controller-types";
@@ -287,7 +287,7 @@ export interface QuitDecisionWaiter {
  *
  * The legacy service-control passthroughs (install / uninstall / start / stop
  * / restart / upgrade / enableLinger) have been removed in favor of the
- * `traycer-cli`-driven host-management IPC handlers; only the metadata-first
+ * `hukum-cli`-driven host-management IPC handlers; only the metadata-first
  * status read and the log tail used by Doctor/support remain.
  */
 export interface IpcHostLifecycle {
@@ -384,7 +384,7 @@ export interface IpcHostController {
     port: number | null,
   ): Promise<MutationOutcome<ActivateInstalledOk>>;
   uninstallHost(all: boolean): Promise<MutationOutcome<UninstallOk>>;
-  removeTraycer(): Promise<MutationOutcome<RemoveTraycerOk>>;
+  removeHukum(): Promise<MutationOutcome<RemoveHukumOk>>;
   isPendingRevisionRefreshQuarantined(): boolean;
   onMutationProgress(
     listener: (progress: MutationProgress) => void,
@@ -433,7 +433,7 @@ interface FreshSnapshotWaiter {
 /**
  * Installs `ipcMain.handle` endpoints that back the preload `contextBridge`
  * surface. Each handler mirrors the shape of `IRunnerHost` from
- * `@traycer-clients/shared/platform/runner-host` - the bridge does not re-type
+ * `@hukum-clients/shared/platform/runner-host` - the bridge does not re-type
  * the interface, it only passes serializable payloads.
  */
 export class RunnerIpcBridge {
@@ -506,7 +506,7 @@ export class RunnerIpcBridge {
     registerHostManagementIpc(this);
     registerHostControllerStatusBroadcast(this);
     registerMigrationIpc(this);
-    registerTraycerCliIpc(this);
+    registerHukumCliIpc(this);
     // Platform IPC (recent docs, window effects, diagnostics, etc.) is wired
     // in here so `dispose()` also tears it down via the shared
     // `disposeFns` / `ipcMain.removeHandler` sweep.
@@ -1206,7 +1206,7 @@ class SingleWindowRegistry implements IpcWindowRegistry {
     return [
       {
         windowId: this.record.windowId,
-        title: "Traycer",
+        title: "Hukum",
         isFocused: this.record.window.isFocused(),
         isVisible: this.record.window.isVisible(),
       },
@@ -1390,7 +1390,7 @@ class NullPerWindowState implements IpcPerWindowState {
 class NullSupportService implements IpcSupportService {
   getSnapshot(): Promise<SupportSnapshot> {
     return Promise.resolve({
-      appName: "Traycer",
+      appName: "Hukum",
       appVersion: "0.0.0",
       platform: process.platform,
       arch: process.arch,

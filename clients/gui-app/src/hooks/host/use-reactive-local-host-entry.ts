@@ -1,5 +1,5 @@
 import { useCallback, useRef, useSyncExternalStore } from "react";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import { useHostBinding } from "@/lib/host";
 import { hostDirectoryEntryEquals } from "@/hooks/host/use-host-directory-entry";
 

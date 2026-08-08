@@ -20,8 +20,8 @@ import type {
   IHostManagement,
   IRunnerHost,
   MutationOutcome,
-} from "@traycer-clients/shared/platform/runner-host";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 
 // Ticket: renderer-surfaces-cutover (Host Update Layer Redesign). Reported
 // bug (host-update-race-conditions): triggering an update from the
@@ -99,7 +99,7 @@ function makeManagement(overrides: {
   const installedRecord: HostInstalledRecord = {
     version: "1.4.2",
     installedAt: "2026-05-10T00:00:00Z",
-    executablePath: "/tmp/traycer/1.4.2/host",
+    executablePath: "/tmp/hukum/1.4.2/host",
     source: { kind: "registry", value: "1.4.2" },
     archiveSha256: "abc",
     signatureKeyId: "key",
@@ -116,7 +116,7 @@ function makeManagement(overrides: {
     installVersion: vi.fn(notImplemented("installVersion")),
     uninstallHost: vi.fn(notImplemented("uninstallHost")),
     restartHost: vi.fn(() => Promise.resolve({ kind: "restarted" as const })),
-    uninstallTraycer: vi.fn(notImplemented("uninstallTraycer")),
+    uninstallHukum: vi.fn(notImplemented("uninstallHukum")),
     getRemovalState: vi.fn(() => Promise.resolve({ removedByUser: false })),
     clearRemoval: vi.fn(() => Promise.resolve()),
     getHostLogs: vi.fn(() => Promise.resolve({ path: null, tail: "" })),
@@ -170,7 +170,7 @@ function makeHost(management: IHostManagement): IRunnerHost {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const proto = Object.getPrototypeOf(host) as object;
   return Object.assign(Object.create(proto) as IRunnerHost, host, {

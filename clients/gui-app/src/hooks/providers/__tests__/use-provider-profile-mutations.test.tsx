@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
-import type { RequestOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { RequestOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import type { RenameProviderProfileRequest } from "@/hooks/providers/use-rename-provider-profile-mutation";
 import type { RecolorProviderProfileRequest } from "@/hooks/providers/use-recolor-provider-profile-mutation";

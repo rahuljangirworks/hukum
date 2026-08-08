@@ -8,8 +8,8 @@ import { isPublishedHostEndpointReachable } from "./host-endpoint-reachability";
 import {
   isProcessStartIdentity,
   type ProcessStartIdentity,
-} from "@traycer/protocol/host/lifecycle";
-import { TraycerCliError } from "../cli/traycer-cli";
+} from "@hukum/protocol/host/lifecycle";
+import { HukumCliError } from "../cli/hukum-cli";
 
 // Host-readiness + CLI-error helpers used by the post-auth host-ensure
 // flow (ipc/host-ensure-ipc.ts). The CLI's `host ensure` can report
@@ -143,7 +143,7 @@ async function readPidMetadataForReady(path: string): Promise<{
   };
 }
 
-// Shape of the `traycer host install`/`ensure` terminal payload we
+// Shape of the `hukum host install`/`ensure` terminal payload we
 // inspect for a service-registration failure. Mirrors the CLI producers
 // (commands/host-install.ts, commands/host-ensure.ts).
 export interface HostEnsureResultPayload {
@@ -208,7 +208,7 @@ export interface HostEnsureError {
 // Map a CLI failure into a stable, renderer-friendly error. The renderer
 // surfaces `message` in the host gate's unavailable/Doctor card.
 export function categorizeHostCliError(err: unknown): HostEnsureError {
-  if (err instanceof TraycerCliError) {
+  if (err instanceof HukumCliError) {
     if (
       err.code === "E_NETWORK" ||
       err.code === "E_OFFLINE" ||
@@ -218,7 +218,7 @@ export function categorizeHostCliError(err: unknown): HostEnsureError {
       return {
         kind: "offline",
         message:
-          "Traycer needs to download the host to finish setting up. Check your network connection and try again.",
+          "Hukum needs to download the host to finish setting up. Check your network connection and try again.",
         code: err.code,
       };
     }
@@ -230,7 +230,7 @@ export function categorizeHostCliError(err: unknown): HostEnsureError {
       return {
         kind: "signature",
         message:
-          "The downloaded host failed verification (signature, checksum, or size mismatch). This is a security check - please reinstall Traycer or contact support.",
+          "The downloaded host failed verification (signature, checksum, or size mismatch). This is a security check - please reinstall Hukum or contact support.",
         code: err.code,
       };
     }

@@ -38,15 +38,15 @@ const electronBin = prepareElectronBinary(
 );
 const childEnv = {
   ...process.env,
-  TRAYCER_DESKTOP_DEV_APP_PATH: workspaceRoot,
+  HUKUM_DESKTOP_DEV_APP_PATH: workspaceRoot,
   // This is the dev runner, so it always loads the renderer from the Vite dev
   // server. Default these here rather than via an inline `VAR=1 ... bun run`
   // prefix in the package.json `dev` script - that POSIX shell syntax isn't
-  // understood by cmd.exe, so on Windows it failed with "'TRAYCER_DESKTOP_DEV'
+  // understood by cmd.exe, so on Windows it failed with "'HUKUM_DESKTOP_DEV'
   // is not recognized". Any caller-provided value still wins.
-  TRAYCER_DESKTOP_DEV: process.env.TRAYCER_DESKTOP_DEV ?? "1",
-  TRAYCER_DESKTOP_DEV_URL:
-    process.env.TRAYCER_DESKTOP_DEV_URL ?? "http://localhost:5173",
+  HUKUM_DESKTOP_DEV: process.env.HUKUM_DESKTOP_DEV ?? "1",
+  HUKUM_DESKTOP_DEV_URL:
+    process.env.HUKUM_DESKTOP_DEV_URL ?? "http://localhost:5173",
 };
 if (devDesktopDisplayName === null) {
   delete childEnv[DEV_DESKTOP_DISPLAY_NAME_ENV];
@@ -65,7 +65,7 @@ delete childEnv.ELECTRON_RUN_AS_NODE;
 // at once. Kept at a fixed default because the Playwright MCP's static
 // `--cdp-endpoint` can't chase a per-slot port.
 const remoteDebuggingSetting =
-  process.env.TRAYCER_DESKTOP_REMOTE_DEBUGGING_PORT ?? "9222";
+  process.env.HUKUM_DESKTOP_REMOTE_DEBUGGING_PORT ?? "9222";
 const remoteDebuggingPort =
   remoteDebuggingSetting === "off" || remoteDebuggingSetting === "0"
     ? null

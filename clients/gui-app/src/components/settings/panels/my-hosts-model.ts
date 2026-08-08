@@ -2,8 +2,8 @@ import type {
   HostListItem,
   HostStatusDTO,
   HostUpdateState,
-} from "@traycer/protocol/host/host-status";
-import { HOST_VERSION_PATTERN } from "@traycer/protocol/host/version";
+} from "@hukum/protocol/host/host-status";
+import { HOST_VERSION_PATTERN } from "@hukum/protocol/host/version";
 
 /**
  * Pure status derivation for a host row. Every row is a pure function of the
@@ -161,7 +161,7 @@ export function deriveUpdatePill(
  * Validates a user-typed "Update now" target version client-side before
  * submit. Trims surrounding whitespace (a pasted value commonly carries it)
  * before matching. The pattern is shared with authn-v3's server-side check via
- * `@traycer/protocol/host/version`, so a client-accepted value never bounces
+ * `@hukum/protocol/host/version`, so a client-accepted value never bounces
  * off the server's 400.
  */
 export function isValidHostVersion(value: string): boolean {

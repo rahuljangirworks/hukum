@@ -1,16 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import {
   AUTH_FETCH_MAX_ATTEMPTS,
   authRetryDelayMs,
-} from "@traycer-clients/shared/auth/auth-validation";
+} from "@hukum-clients/shared/auth/auth-validation";
 import type {
   StoredAuthTokens,
   StoredCredentials,
   StoredCredentialsIdentity,
   TokenRotateResult,
-} from "@traycer-clients/shared/platform/runner-host";
-import type { UserSessionListItem } from "@traycer/protocol/auth/devices-sessions";
+} from "@hukum-clients/shared/platform/runner-host";
+import type { UserSessionListItem } from "@hukum/protocol/auth/devices-sessions";
 import {
   AuthService,
   type AuthSessionSnapshot,
@@ -48,7 +48,7 @@ const SESSIONS_URL = "http://localhost:5005/api/v3/user/sessions";
 // and the pre-filled verification URL the controller asks the shell to open.
 const MOCK_DEVICE_USER_CODE = "ABCDE-FGHIJ";
 const MOCK_DEVICE_VERIFICATION_URI_COMPLETE =
-  "https://app.traycer.ai/device?user_code=ABCDE-FGHIJ";
+  "https://app.hukum.ai/device?user_code=ABCDE-FGHIJ";
 
 // Collapse consecutive identical entries so an ordered validate -> refresh
 // assertion tolerates the auth boundary's bounded retry (a transient 5xx /
@@ -65,13 +65,13 @@ const trackedServices: AuthService[] = [];
 function makeService(): { service: AuthService; host: MockRunnerHost } {
   const host = new MockRunnerHost({
     signInUrl:
-      "https://auth.traycer.ai/sign-in?redirect_uri=traycer%3A%2F%2Fauth",
+      "https://auth.hukum.ai/sign-in?redirect_uri=hukum%3A%2F%2Fauth",
     authnBaseUrl: "http://localhost:5005",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const service = trackService(new AuthService({ runnerHost: host }));
   return { service, host };
@@ -1899,13 +1899,13 @@ describe("AuthService", () => {
 
   it("installs the onAuthCallback subscription before awaiting tokenStore.load()", async () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.ai/sign-in",
+      signInUrl: "https://auth.hukum.ai/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
     let authSubscribed = false;
     let resolveLoad: (value: StoredCredentials | null) => void = () =>
@@ -3166,7 +3166,7 @@ describe("AuthService", () => {
       await deviceSignIn(service, host, "live-token");
 
       // External rotation: put a new valid token for the same user and notify.
-      host.tokenStoreEntries.set("traycer.token", {
+      host.tokenStoreEntries.set("hukum.token", {
         token: "external-rotated",
         refreshToken: "external-rotated-refresh",
         savedAt: new Date().toISOString(),
@@ -3223,7 +3223,7 @@ describe("AuthService", () => {
       });
 
       // Pre-seed a foreign/stale file and fire reconcile (validate hangs).
-      host.tokenStoreEntries.set("traycer.token", {
+      host.tokenStoreEntries.set("hukum.token", {
         token: "stale-external",
         refreshToken: "stale-external-refresh",
         savedAt: new Date().toISOString(),
@@ -3331,7 +3331,7 @@ describe("AuthService", () => {
 
       // Concurrent file-watcher reconcile adopts a different valid token.
       // This changes currentBearer without bumping identityGeneration.
-      host.tokenStoreEntries.set("traycer.token", {
+      host.tokenStoreEntries.set("hukum.token", {
         token: "file-newer-token",
         refreshToken: "file-newer-token-refresh",
         savedAt: new Date().toISOString(),
@@ -3361,8 +3361,8 @@ describe("AuthService", () => {
   });
 
   describe("legacy credentials migration (tech plan §6 start pre-step)", () => {
-    const LEGACY_ACCESS_KEY = "traycer.token";
-    const LEGACY_REFRESH_KEY = "traycer.refresh-token";
+    const LEGACY_ACCESS_KEY = "hukum.token";
+    const LEGACY_REFRESH_KEY = "hukum.refresh-token";
 
     function seedLegacy(host: MockRunnerHost): void {
       host.secureStorageEntries.set(LEGACY_ACCESS_KEY, "legacy-access");

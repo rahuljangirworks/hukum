@@ -1,4 +1,4 @@
-import type { ProviderNativeErrorCode } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderNativeErrorCode } from "@hukum/protocol/host/provider-native-schemas";
 
 const NATIVE_ERROR_COPY: Readonly<Record<ProviderNativeErrorCode, string>> = {
   duplicate_name: "A server with this name already exists in this scope.",

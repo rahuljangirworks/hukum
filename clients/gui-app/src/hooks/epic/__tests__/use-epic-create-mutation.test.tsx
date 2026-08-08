@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type {
   ListTasksResponse,
   TaskLight,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   LIST_CLOUD_TASKS_REQUEST,
   cloudEpicTasksQueryKey,
@@ -306,7 +306,7 @@ describe("useEpicCreate", () => {
     const repoFilteredRequest: ListCloudTasksRequest = {
       ...LIST_CLOUD_TASKS_REQUEST,
       filters: {
-        repoIdentifiers: [{ owner: "traycer", repo: "gui-app" }],
+        repoIdentifiers: [{ owner: "hukum", repo: "gui-app" }],
         repoMatchMode: "any",
       },
     };
@@ -315,7 +315,7 @@ describe("useEpicCreate", () => {
       title: "Old epic",
       createdBy: "user-1",
       updatedAt: 1,
-      repos: ["traycer/gui-app"],
+      repos: ["hukum/gui-app"],
       workspaces: [],
     });
     const createdTask = makeTask({
@@ -323,13 +323,13 @@ describe("useEpicCreate", () => {
       title: "New epic",
       createdBy: "user-1",
       updatedAt: 2,
-      repos: ["traycer/host"],
+      repos: ["hukum/host"],
       workspaces: [{ hostId: "host-1", workspacePath: "/Users/me/host" }],
     });
     const initialFacets: NonNullable<ListTasksResponse["facets"]> = {
       repos: [
         {
-          repoIdentifier: { owner: "traycer", repo: "gui-app" },
+          repoIdentifier: { owner: "hukum", repo: "gui-app" },
           count: 1,
         },
       ],
@@ -365,8 +365,8 @@ describe("useEpicCreate", () => {
     );
     expect(taskIds(defaultResponse)).toEqual(["new", "old"]);
     expect(repoFacetLabels(defaultResponse)).toEqual([
-      "traycer/gui-app",
-      "traycer/host",
+      "hukum/gui-app",
+      "hukum/host",
     ]);
     expect(defaultResponse?.facets?.workspaces).toEqual([
       {
@@ -386,7 +386,7 @@ describe("useEpicCreate", () => {
       cloudEpicTasksQueryKey("host-1", "user-1", repoFilteredRequest),
     );
     expect(taskIds(repoFilteredResponse)).toEqual(["old"]);
-    expect(repoFacetLabels(repoFilteredResponse)).toEqual(["traycer/gui-app"]);
+    expect(repoFacetLabels(repoFilteredResponse)).toEqual(["hukum/gui-app"]);
     expect(repoFilteredResponse?.facets?.workspaces).toEqual([]);
     expect(repoFilteredResponse?.facets?.ownershipScopes).toEqual([
       { value: "mine", count: 1 },

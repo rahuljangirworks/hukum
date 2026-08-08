@@ -13,7 +13,7 @@ import {
   type JsonSchemaFingerprint,
   type ObjectJsonSchema,
   type UncheckedVersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 
 function expectObjectFingerprint(
   fingerprint: JsonSchemaFingerprint,

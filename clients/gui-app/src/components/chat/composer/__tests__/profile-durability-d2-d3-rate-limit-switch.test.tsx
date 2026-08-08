@@ -12,7 +12,7 @@ import type {
   ProviderId,
   ProviderProfile,
   ProviderProfileRateLimitStatus,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 const mocks = vi.hoisted(() => ({

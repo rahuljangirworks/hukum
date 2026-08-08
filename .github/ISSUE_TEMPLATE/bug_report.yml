@@ -17,9 +17,9 @@ body:
     attributes:
       label: Component
       options:
-        - CLI (@traycerai/cli)
+        - CLI (@hukumai/cli)
         - Desktop app
-        - Protocol (@traycer/protocol)
+        - Protocol (@hukum/protocol)
         - Other / not sure
     validations:
       required: true
@@ -27,7 +27,7 @@ body:
     id: version
     attributes:
       label: Version
-      description: "Output of `traycer --version` (or the app version)"
+      description: "Output of `hukum --version` (or the app version)"
       placeholder: "e.g. 1.2.3"
     validations:
       required: true
@@ -50,7 +50,7 @@ body:
     attributes:
       label: Steps to reproduce
       placeholder: |
-        1. Run `traycer ...`
+        1. Run `hukum ...`
         2. ...
     validations:
       required: true

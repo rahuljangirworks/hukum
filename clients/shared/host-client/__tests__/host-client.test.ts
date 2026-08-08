@@ -3,12 +3,12 @@ import { z } from "zod";
 import {
   defineRpcContract,
   defineVersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   createRequestContext,
   identityFromAuthenticatedUser,
   type RequestContext,
-} from "@traycer/protocol/auth/request-context";
+} from "@hukum/protocol/auth/request-context";
 import {
   HostClient,
   type HostClientChangeEvent,
@@ -35,7 +35,7 @@ import type {
 import type {
   ClientFrame,
   HostFrame,
-} from "@traycer/protocol/framework/ws-protocol";
+} from "@hukum/protocol/framework/ws-protocol";
 import { createAuthenticatedUserFixture } from "../../test-fixtures/authenticated-user";
 import type { RpcSchedulingPolicy } from "../rpc-scheduling-policy";
 
@@ -347,7 +347,7 @@ describe("HostClient", () => {
       kind: "remote",
       // Every remote host shares one fixed relay attach URL - a rotation is
       // a same-URL event by construction, so this must stay identical.
-      websocketUrl: "wss://mock-remote.traycer.invalid/rpc",
+      websocketUrl: "wss://mock-remote.hukum.invalid/rpc",
       version: "0.0.0-mock",
       transportDialability: "dialable",
       publicKey,

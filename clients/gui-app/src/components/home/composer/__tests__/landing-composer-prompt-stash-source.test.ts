@@ -10,7 +10,7 @@
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type { RefObject } from "react";
 import { toast } from "sonner";
 

@@ -1,4 +1,4 @@
-import type { WorktreeBindingEntry } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeBindingEntry } from "@hukum/protocol/host/worktree-schemas";
 
 /**
  * Canvas-tab descriptor fields for a worktree SETUP terminal, shared by the

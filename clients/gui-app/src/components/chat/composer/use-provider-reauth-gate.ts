@@ -4,8 +4,8 @@ import {
   PROVIDER_DISPLAY_NAMES,
   type ProviderCliState,
   type ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/provider-schemas";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import { useTabProvidersList } from "@/hooks/providers/use-tab-providers-list-query";
 import type { ComposerSeedSourceKind } from "@/lib/composer/composer-seed-source";
 import { reportableErrorToast } from "@/lib/reportable-error-toast";

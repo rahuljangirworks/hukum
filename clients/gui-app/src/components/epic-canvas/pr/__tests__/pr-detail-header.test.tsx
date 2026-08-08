@@ -7,11 +7,11 @@ import {
   screen,
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import type {
   PrDetailCore,
   PrSourceNotice,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PrDetailHeader } from "@/components/epic-canvas/pr/pr-detail-header";
 import { RunnerHostContext } from "@/providers/runner-host-context";
@@ -56,13 +56,13 @@ function buildPrDetailCore(overrides: Partial<PrDetailCore>): PrDetailCore {
 
 function createRunnerHost(): MockRunnerHost {
   return new MockRunnerHost({
-    signInUrl: "https://auth.traycer.test/sign-in",
-    authnBaseUrl: "https://auth.traycer.test",
+    signInUrl: "https://auth.hukum.test/sign-in",
+    authnBaseUrl: "https://auth.hukum.test",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 

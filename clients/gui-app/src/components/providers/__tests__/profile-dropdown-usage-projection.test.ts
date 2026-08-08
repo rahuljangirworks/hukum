@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import type { ProviderRateLimits } from "@traycer/protocol/host/rate-limit";
+import type { ProviderRateLimits } from "@hukum/protocol/host/rate-limit";
 import type { ProfileUsageComparisonEntry } from "@/lib/rate-limits/profile-usage-comparison-state";
 import {
   profileUsageAccessibleStatus,

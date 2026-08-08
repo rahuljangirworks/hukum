@@ -1,4 +1,4 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type {
   IStreamSession,
@@ -6,19 +6,19 @@ import type {
   StatusChangeHandler,
   StreamCloseReason,
   StreamFrameEnvelope,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
 import {
   WsStreamClient,
   type ParamsOf,
-} from "@traycer-clients/shared/host-transport/ws-stream-client";
+} from "@hukum-clients/shared/host-transport/ws-stream-client";
 import type {
   HostNotificationsCloudFeedRow,
   HostNotificationsCloudFeedSummary,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import { HOST_STREAM_REOPEN_INITIAL_BACKOFF_MS } from "@/lib/host/stream-reopen";
 import {
   cloudNotificationFeedId,

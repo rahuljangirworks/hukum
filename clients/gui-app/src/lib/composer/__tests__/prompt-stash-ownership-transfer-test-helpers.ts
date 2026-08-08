@@ -3,7 +3,7 @@
  * Drives real production surface adapters through usePromptStash + repository.
  */
 import { expect, onTestFinished, vi } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import { bytesToBase64 } from "@/lib/composer/image-base64";
 import {
   createComposerEditorIncarnation,

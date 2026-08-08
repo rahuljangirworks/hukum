@@ -1,4 +1,4 @@
-import type { WorktreeTier } from "@traycer-clients/shared/worktree/classify-worktree";
+import type { WorktreeTier } from "@hukum-clients/shared/worktree/classify-worktree";
 
 /**
  * The tiers Sweep pre-checks as safe for one Task (epic): the shared

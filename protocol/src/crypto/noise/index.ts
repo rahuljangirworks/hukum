@@ -1,7 +1,7 @@
 /**
  * Noise_NK_25519_AESGCM_SHA256 — the shared end-to-end crypto primitive for the
  * remote-host transport. The client (initiator) and host (responder) both
- * consume this module via the deep subpath `@traycer/protocol/crypto/noise`.
+ * consume this module via the deep subpath `@hukum/protocol/crypto/noise`.
  *
  * Handshake shape (NK): the responder's static X25519 key authenticates the
  * host; the initiator is anonymous at the Noise layer and authenticates

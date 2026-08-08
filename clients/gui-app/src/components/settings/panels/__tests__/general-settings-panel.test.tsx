@@ -130,7 +130,7 @@ const windowsBridgeMock = vi.hoisted(
 );
 
 interface TestRunnerHost {
-  hostManagement: { uninstallTraycer: Mock } | null;
+  hostManagement: { uninstallHukum: Mock } | null;
 }
 
 interface TestFeatureSettingsBridge {
@@ -530,7 +530,7 @@ describe("GeneralSettingsPanel", () => {
     expect(
       screen.queryByRole("button", { name: "Clear file edit snapshots" }),
     ).toBeNull();
-    expect(screen.queryByRole("button", { name: "Remove Traycer" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Remove Hukum" })).toBeNull();
   });
 
   it("opens the confirm dialog when clicking Clear local app state", () => {

@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useState, type ComponentType } from "react";
 import {
-  parseTraycerNextStepsMarkdown,
-  type TraycerNextStepsPart,
-} from "@/markdown/traycer-next-steps";
+  parseHukumNextStepsMarkdown,
+  type HukumNextStepsPart,
+} from "@/markdown/hukum-next-steps";
 import { withMemberAdded } from "@/lib/immutable-set";
 import type { AssistantMarkdownImageContext } from "@/stores/composer/chat-store";
 import { AgentReferenceMarkdown } from "./agent-reference-markdown";
@@ -39,7 +39,7 @@ export function TextSegment(props: TextSegmentProps) {
   const markdownComponents =
     imageContext === null ? null : ASSISTANT_IMAGE_COMPONENTS;
   const parts = useMemo(
-    () => parseTraycerNextStepsMarkdown(props.markdown, props.isStreaming),
+    () => parseHukumNextStepsMarkdown(props.markdown, props.isStreaming),
     [props.isStreaming, props.markdown],
   );
   const [lockedOptionKeys, setLockedOptionKeys] = useState<ReadonlySet<string>>(
@@ -75,7 +75,7 @@ export function TextSegment(props: TextSegmentProps) {
 }
 
 interface TextSegmentPartProps {
-  readonly part: TraycerNextStepsPart;
+  readonly part: HukumNextStepsPart;
   readonly lockedOptionKeys: ReadonlySet<string>;
   readonly isStreaming: boolean;
   readonly nextStepActions: NextStepActionHandler | null;

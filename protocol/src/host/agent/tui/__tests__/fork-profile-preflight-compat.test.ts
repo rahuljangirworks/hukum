@@ -1,17 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { splitConnectionManifest } from "@traycer/protocol/framework/index";
-import { hostRpcRegistry } from "@traycer/protocol/host/registry";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
-import { releasedMethodNames } from "@traycer/protocol/host/__tests__/__fixtures__/released-method-names";
+import { splitConnectionManifest } from "@hukum/protocol/framework/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/registry";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
+import { releasedMethodNames } from "@hukum/protocol/host/__tests__/__fixtures__/released-method-names";
 import {
   agentTuiPrepareLaunchUpgradeV10ToV11,
   agentTuiValidateForkProfileV10,
-} from "@traycer/protocol/host/agent/tui/contracts";
+} from "@hukum/protocol/host/agent/tui/contracts";
 import {
   prepareTuiLaunchRequestSchemaV11,
   validateTuiForkProfileRequestSchema,
   validateTuiForkProfileResponseSchema,
-} from "@traycer/protocol/host/agent/tui/unary-schemas";
+} from "@hukum/protocol/host/agent/tui/unary-schemas";
 
 /**
  * `agent.tui.validateForkProfile` is a new ADDITIVE unary method (tech plan

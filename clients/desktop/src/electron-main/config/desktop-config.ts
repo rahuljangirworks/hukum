@@ -41,6 +41,6 @@ function resolveAppIconPath(): string {
   // `dist/main`, so the workspace icon sits at `../../resources/app`
   // relative to it.
   return isDevBuild
-    ? join(__dirname, "..", "..", "resources", "app", "traycer-icon.png")
-    : join(process.resourcesPath, "app", "traycer-icon.png");
+    ? join(__dirname, "..", "..", "resources", "app", "hukum-icon.png")
+    : join(process.resourcesPath, "app", "hukum-icon.png");
 }

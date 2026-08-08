@@ -12,13 +12,13 @@ import type {
 } from "@/components/chat/chat-activity-groups";
 import { deriveActivityGroupRenderId } from "@/components/chat/chat-collapsible-key";
 import type { MessageSegment } from "@/stores/composer/chat-store";
-import type { AgentMessageSend } from "@traycer/protocol/persistence/epic/content-blocks";
-import { deriveToolInputDetail } from "@traycer/protocol/host/agent/gui/tool-input-detail";
-import { deriveToolInputSummary } from "@traycer/protocol/host/agent/gui/tool-input-summary";
+import type { AgentMessageSend } from "@hukum/protocol/persistence/epic/content-blocks";
+import { deriveToolInputDetail } from "@hukum/protocol/host/agent/gui/tool-input-detail";
+import { deriveToolInputSummary } from "@hukum/protocol/host/agent/gui/tool-input-summary";
 import {
   isTaskTodoToolName,
   parseTaskTodoToolPayloads,
-} from "@traycer/protocol/host/agent/gui/task-todo-tools";
+} from "@hukum/protocol/host/agent/gui/task-todo-tools";
 
 const EMPTY_PROMOTED_TOOL_BLOCK_IDS: ReadonlySet<string> = new Set();
 
@@ -943,7 +943,7 @@ describe("chat activity grouping", () => {
   it("promotes A2A send-message tools out of generic activity groups", () => {
     const timeline = buildCompleteTimeline([
       toolSegment("tool-1", "read_file", { path: "/repo/a.ts" }),
-      a2aToolSegment("tool-2", "traycer_a2a/traycer_send_message", {
+      a2aToolSegment("tool-2", "hukum_a2a/hukum_send_message", {
         receiverAgentId: "agent-receiver-1",
         message: "Please inspect the failure.",
         responseId: "response-1",
@@ -966,7 +966,7 @@ describe("chat activity grouping", () => {
       throw new Error("Expected tool segment");
     }
     expect(timeline[1].segment.toolName).toBe(
-      "traycer_a2a/traycer_send_message",
+      "hukum_a2a/hukum_send_message",
     );
   });
 
@@ -1173,7 +1173,7 @@ describe("chat activity grouping", () => {
   it("groups web_fetch alongside web_search in the search bucket", () => {
     expect(
       activityGroupSummary([
-        toolSegment("tool-1", "web_search", { query: "traycer" }),
+        toolSegment("tool-1", "web_search", { query: "hukum" }),
         toolSegment("tool-2", "web_fetch", { url: "https://example.com" }),
       ]),
     ).toBe("Searched 2 places");

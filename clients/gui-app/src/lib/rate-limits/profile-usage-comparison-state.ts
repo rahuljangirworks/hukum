@@ -1,5 +1,5 @@
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
-import type { ProviderRateLimits } from "@traycer/protocol/host/rate-limit";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
+import type { ProviderRateLimits } from "@hukum/protocol/host/rate-limit";
 import { PROVIDER_RATE_LIMITS_STALE_TIME_MS } from "@/lib/rate-limit-providers";
 import type {
   AvailableProviderRateLimits,

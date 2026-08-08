@@ -7,7 +7,7 @@ import type {
   HostVersionPolicyResult,
   UpdateHostVersionPolicyFetchResult,
   UpdateHostVersionPolicyInput,
-} from "@traycer-clients/shared/host-client/host-version-policy-fetcher";
+} from "@hukum-clients/shared/host-client/host-version-policy-fetcher";
 import { toastFromAuthError } from "@/lib/auth-error-toast";
 import type { AuthService } from "@/lib/auth/auth-service";
 import { useHostBinding } from "@/lib/host";
@@ -40,7 +40,7 @@ function unwrapUpdateHostVersionPolicyResult(
   if (result.kind === "unauthorized") {
     throw new Error("Sign in again to try that.");
   }
-  throw new Error("Couldn't reach Traycer to update this host.");
+  throw new Error("Couldn't reach Hukum to update this host.");
 }
 
 /**

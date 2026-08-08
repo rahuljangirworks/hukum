@@ -454,7 +454,7 @@ describe("HostLifecycle.bootstrap (metadata-first)", () => {
     }
   });
 
-  // traycer#961 / #996 / #1001, int #4845: on a machine where no host has
+  // hukum#961 / #996 / #1001, int #4845: on a machine where no host has
   // EVER been installed, the launch converge refuses to provision before
   // sign-in, so no provisioning lane exists to re-arm the quiet budget - the
   // wait below could only ever run to completion and then report that a host
@@ -552,9 +552,9 @@ describe("HostLifecycle.bootstrap (metadata-first)", () => {
     }
   }, 10_000);
 
-  // traycer#862: a fresh install downloaded ~800MB and extracted a 2.2GB
+  // hukum#862: a fresh install downloaded ~800MB and extracted a 2.2GB
   // runtime tree - 3m17s on that machine - and the flat wall-clock budget
-  // reported "Could not start Traycer Host" at the 60s mark, over an install
+  // reported "Could not start Hukum Host" at the 60s mark, over an install
   // that was still visibly running. The budget is quiet-time, not wall-clock:
   // installer progress re-arms it, and only silence spends it.
   it("holds the startup budget open while host provisioning reports progress", async () => {

@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   GuiAgentCommandOption,
   GuiHarnessId,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 import { useGuiHarnessCommandsQuery } from "@/hooks/harnesses/use-gui-harness-catalog";
 import type { HostRpcRegistry } from "@/lib/host";
 import { rankSlashCommands } from "@/lib/composer/slash-command-ranking";

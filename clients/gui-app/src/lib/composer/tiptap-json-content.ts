@@ -1,6 +1,6 @@
-import type { EpicArtifactKind } from "@traycer/protocol/common/registry";
-import type { WorkspaceMentionGitType } from "@traycer/protocol/host/index";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { EpicArtifactKind } from "@hukum/protocol/common/registry";
+import type { WorkspaceMentionGitType } from "@hukum/protocol/host/index";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import type {
   Attachment,

@@ -7,7 +7,7 @@
  * scattering partial fixtures.
  */
 import { vi, type Mock } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import type { ComposerPromptEditorHandle } from "../composer-prompt-editor";
 import {

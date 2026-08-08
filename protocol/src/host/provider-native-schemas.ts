@@ -204,7 +204,7 @@ export type ProviderMcpMutationAction = z.infer<
  * How per-tool toggles are persisted.
  * - `native` — provider config fields (opencode tools map, droid lists, kiro
  *   disabledTools, copilot `tools[]` allowlist, kilocode permissions, …)
- * - `store` — Traycer-owned store + session injection (amp, codex; also
+ * - `store` — Hukum-owned store + session injection (amp, codex; also
  *   grok/kimi when V1 per-tool identity is confirmed)
  * - `degraded-server-level` — V1 fallback: server enable/disable only, tools
  *   grid read-only (grok/kimi until request_permission identity is proven)
@@ -223,7 +223,7 @@ export type ProviderMcpPerToolBacking = z.infer<
 /**
  * Where live server status / tool names / schemas come from.
  * - `native` — provider CLI/RPC
- * - `probe` — Traycer MCP client (no-auth / API-key servers only)
+ * - `probe` — Hukum MCP client (no-auth / API-key servers only)
  * - `none` — capability unavailable
  */
 export const providerMcpDataSourceSchema = z.enum(["native", "probe", "none"]);
@@ -313,18 +313,18 @@ export const providerMcpCapabilitiesSchema = z.object({
   /** `initialize.instructions` — probe-only for every provider. */
   instructionsSource: z.enum(["probe", "none"]),
   /**
-   * True when store-backed enforcement only applies inside Traycer-launched
+   * True when store-backed enforcement only applies inside Hukum-launched
    * sessions (codex `-c enabled_tools`, amp SDK `enabledTools`). UI shows
-   * the "Traycer sessions only" note.
+   * the "Hukum sessions only" note.
    */
-  traycerSessionsOnlyEnforcement: z.boolean(),
+  hukumSessionsOnlyEnforcement: z.boolean(),
   /**
    * V3 ACP fallback: stdio servers are config-management-only (cannot inject
    * over ACP). UI shows a degrade notice when true.
    */
   stdioDegradeNotice: z.boolean(),
   /**
-   * OAuth'd servers have no Traycer probe path (wrong OAuth client). Status /
+   * OAuth'd servers have no Hukum probe path (wrong OAuth client). Status /
    * names only where a native source exists; hover schemas/instructions omit.
    */
   oauthDegradesToConfigOnly: z.boolean(),
@@ -381,9 +381,9 @@ export const providerPluginsCapabilitiesSchema = z.object({
   }),
   /**
    * V4 amp: plugins load for CLI `tools list` / `plugins list`, but plugin
-   * tools are absent from Traycer `execute()` stream. UI warns when true.
+   * tools are absent from Hukum `execute()` stream. UI warns when true.
    */
-  traycerSessionToolsNotice: z.boolean(),
+  hukumSessionToolsNotice: z.boolean(),
 });
 export type ProviderPluginsCapabilities = z.infer<
   typeof providerPluginsCapabilitiesSchema
@@ -729,7 +729,7 @@ export const providerMcpServerSchema = z.object({
    */
   instructions: z.string().nullable(),
   /**
-   * Server is OAuth-gated and Traycer cannot probe it; manage via provider
+   * Server is OAuth-gated and Hukum cannot probe it; manage via provider
    * native surface / config only.
    */
   configOnly: z.boolean(),

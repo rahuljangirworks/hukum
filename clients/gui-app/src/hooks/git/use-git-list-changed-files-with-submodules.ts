@@ -7,8 +7,8 @@ import {
   type QueryClient,
 } from "@tanstack/react-query";
 import { withHostQueryErrorBoundary } from "@/lib/query/host-query-error-boundary";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { GitListChangedFilesResponseV11 } from "@traycer/protocol/host";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { GitListChangedFilesResponseV11 } from "@hukum/protocol/host";
 import { hostClientUnavailableError } from "@/hooks/host/use-host-query";
 import { useHostClientFor } from "@/hooks/host/use-host-client-for";
 import { useHostDirectoryEntry } from "@/hooks/host/use-host-directory-entry";

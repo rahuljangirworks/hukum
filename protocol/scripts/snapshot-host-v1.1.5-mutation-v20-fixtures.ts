@@ -13,7 +13,7 @@
  *    TAG-era parsers (not the current branch)
  * 5. Emit a checked-in fixture with tag/source provenance hashes
  *
- * Regenerate (from traycer submodule root):
+ * Regenerate (from hukum submodule root):
  *
  *   bun run protocol/scripts/snapshot-host-v1.1.5-mutation-v20-fixtures.ts > \
  *     protocol/src/host/__tests__/__fixtures__/host-v1.1.5-mutation-v20.ts
@@ -141,10 +141,10 @@ function gitRevParse(repoRoot: string, rev: string): string {
  * keeps the checked-in fixture honest there is `guarded-files-tripwire`, which
  * needs no tag to notice the file being edited.
  */
-export function hostV115TagObjectsAvailable(traycerRoot: string): boolean {
+export function hostV115TagObjectsAvailable(hukumRoot: string): boolean {
   const reachable = (revPath: string): boolean =>
     spawnSync("git", ["cat-file", "-e", revPath], {
-      cwd: traycerRoot,
+      cwd: hukumRoot,
       encoding: "utf8",
       env: gitEnv(),
     }).status === 0;
@@ -432,7 +432,7 @@ export async function importTaggedProviderSchemas(
     const stubAgentDir = join(
       dir,
       "node_modules",
-      "@traycer",
+      "@hukum",
       "protocol",
       "host",
       "agent",
@@ -444,9 +444,9 @@ export async function importTaggedProviderSchemas(
     );
     // Also provide package subpath resolution via a tiny package.json exports map
     writeFileSync(
-      join(dir, "node_modules", "@traycer", "protocol", "package.json"),
+      join(dir, "node_modules", "@hukum", "protocol", "package.json"),
       JSON.stringify({
-        name: "@traycer/protocol",
+        name: "@hukum/protocol",
         type: "module",
         exports: {
           "./host/agent/shared": "./host/agent/shared.ts",
@@ -459,11 +459,11 @@ export async function importTaggedProviderSchemas(
       dirname(fileURLToPath(import.meta.url)),
       "..",
     );
-    const traycerRoot = findGitRoot(protocolRoot);
+    const hukumRoot = findGitRoot(protocolRoot);
     const zodCandidates = [
-      join(traycerRoot, "node_modules", "zod"),
+      join(hukumRoot, "node_modules", "zod"),
       join(protocolRoot, "node_modules", "zod"),
-      join(traycerRoot, "protocol", "node_modules", "zod"),
+      join(hukumRoot, "protocol", "node_modules", "zod"),
     ];
     let zodPath: string | null = null;
     for (const candidate of zodCandidates) {
@@ -535,10 +535,10 @@ export function assertParseAgainstTagSchema(
  * tripwire test. Always reads from the live `host-v1.1.5` git object.
  */
 export async function buildHostV115MutationV20Fixtures(
-  traycerRoot: string | null,
+  hukumRoot: string | null,
 ): Promise<HostV115MutationV20Fixtures> {
   const protocolRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-  const root = traycerRoot ?? findGitRoot(protocolRoot);
+  const root = hukumRoot ?? findGitRoot(protocolRoot);
   const tag = HOST_V115_MUTATION_V20_TAG;
   const tagSha = gitRevParse(root, tag);
   const taggedSchemasSource = gitShow(

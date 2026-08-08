@@ -1,8 +1,8 @@
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { RemoteHostDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { RemoteHostDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
 
 /**
  * Minimal directory stub that reproduces the production churn: `findById`

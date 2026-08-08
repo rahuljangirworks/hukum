@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { traycerLabelIdsForBase } from "../identity";
+import { hukumLabelIdsForBase } from "../identity";
 import {
   classifyLingerState,
   classifyUnitFile,
@@ -7,19 +7,19 @@ import {
   tokenizeExecStart,
 } from "../linux/unit-file";
 
-const KNOWN = traycerLabelIdsForBase("ai.traycer.host");
+const KNOWN = hukumLabelIdsForBase("ai.hukum.host");
 
 const UNIT_WITH_HOST_START = [
   "[Unit]",
-  "Description=Traycer Host",
+  "Description=Hukum Host",
   "[Service]",
-  "ExecStart=/opt/traycer/bin/traycer host start",
+  "ExecStart=/opt/hukum/bin/hukum host start",
 ].join("\n");
 
 describe("classifyUnitFile", () => {
   it("is unreadable when the fs read failed", () => {
     const result = classifyUnitFile({
-      path: "/home/x/.config/systemd/user/ai.traycer.host.service",
+      path: "/home/x/.config/systemd/user/ai.hukum.host.service",
       labelId: KNOWN.cliRaw,
       knownLabels: KNOWN,
       exists: true,
@@ -31,7 +31,7 @@ describe("classifyUnitFile", () => {
 
   it("is absent when the unit file does not exist", () => {
     const result = classifyUnitFile({
-      path: "/home/x/.config/systemd/user/ai.traycer.host.service",
+      path: "/home/x/.config/systemd/user/ai.hukum.host.service",
       labelId: KNOWN.cliRaw,
       knownLabels: KNOWN,
       exists: false,
@@ -43,7 +43,7 @@ describe("classifyUnitFile", () => {
 
   it("is indeterminate(parse-error) when the unit file has no ExecStart line", () => {
     const result = classifyUnitFile({
-      path: "/home/x/.config/systemd/user/ai.traycer.host.service",
+      path: "/home/x/.config/systemd/user/ai.hukum.host.service",
       labelId: KNOWN.cliRaw,
       knownLabels: KNOWN,
       exists: true,
@@ -53,9 +53,9 @@ describe("classifyUnitFile", () => {
     expect(result).toEqual({ kind: "indeterminate", cause: "parse-error" });
   });
 
-  it("is observed with an exec-start identity signal (not program-arguments) for a Traycer ExecStart line", () => {
+  it("is observed with an exec-start identity signal (not program-arguments) for a Hukum ExecStart line", () => {
     const result = classifyUnitFile({
-      path: "/home/x/.config/systemd/user/ai.traycer.host.service",
+      path: "/home/x/.config/systemd/user/ai.hukum.host.service",
       labelId: KNOWN.cliRaw,
       knownLabels: KNOWN,
       exists: true,
@@ -80,7 +80,7 @@ describe("classifyUnitFile", () => {
 describe("extractExecStartTokens", () => {
   it("extracts and tokenizes the ExecStart= line", () => {
     expect(extractExecStartTokens(UNIT_WITH_HOST_START)).toEqual([
-      "/opt/traycer/bin/traycer",
+      "/opt/hukum/bin/hukum",
       "host",
       "start",
     ]);

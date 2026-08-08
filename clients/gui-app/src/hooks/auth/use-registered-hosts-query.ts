@@ -3,7 +3,7 @@ import {
   useQuery,
   type UseQueryResult,
 } from "@tanstack/react-query";
-import type { HostListResponse } from "@traycer/protocol/host/host-status";
+import type { HostListResponse } from "@hukum/protocol/host/host-status";
 import type { AuthService } from "@/lib/auth/auth-service";
 import { useHostBinding } from "@/lib/host";
 import { useAuthStore } from "@/stores/auth/auth-store";

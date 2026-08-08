@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import {
   selectInitialChatHandoff,
   useInitialChatHandoffStore,

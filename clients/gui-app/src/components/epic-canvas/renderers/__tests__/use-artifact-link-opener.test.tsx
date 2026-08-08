@@ -6,7 +6,7 @@ import type { ChatLinkLifecycle } from "@/components/chat/build-chat-link-policy
 import type { FetchResolveArtifactByPathArgs } from "@/lib/host/resolve-artifact-by-path";
 import type { ProjectedSidebarNodeOpenArgs } from "@/components/epic-canvas/sidebar/open-projected-sidebar-node";
 import type { MarkdownFileLink } from "@/markdown/links/markdown-link-context";
-import type { ResolveArtifactByPathResult } from "@traycer/protocol/host/epic/unary-schemas";
+import type { ResolveArtifactByPathResult } from "@hukum/protocol/host/epic/unary-schemas";
 import { useArtifactLinkOpener } from "../use-artifact-link-opener";
 
 interface ExternalMutationOptions {
@@ -493,14 +493,14 @@ describe("useArtifactLinkOpener", () => {
 
     result.current.openLink({
       kind: "file",
-      path: "/Users/me/.traycer/epics/epic-1/artifacts/some-spec/README.md",
+      path: "/Users/me/.hukum/epics/epic-1/artifacts/some-spec/README.md",
       line: null,
       col: null,
     });
 
     expect(mocks.runPolicy).toHaveBeenCalledWith(
       expect.objectContaining({
-        path: "/Users/me/.traycer/epics/epic-1/artifacts/some-spec/README.md",
+        path: "/Users/me/.hukum/epics/epic-1/artifacts/some-spec/README.md",
       }),
       expect.anything(),
     );

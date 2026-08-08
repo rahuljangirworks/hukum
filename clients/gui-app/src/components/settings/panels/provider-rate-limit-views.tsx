@@ -9,8 +9,8 @@ import type {
   ProviderRateLimits,
   ProviderRateLimitWindow,
   RateLimitUnavailableReason,
-} from "@traycer/protocol/host";
-import { classifyProviderRateLimitWindow } from "@traycer/protocol/host/rate-limit";
+} from "@hukum/protocol/host";
+import { classifyProviderRateLimitWindow } from "@hukum/protocol/host/rate-limit";
 import type { ProviderRateLimitEnvelope } from "@/lib/rate-limits/rate-limit-envelope";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -24,7 +24,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { createReportIssueContext } from "@/lib/report-issue-context";
-import { MeterRow } from "@/components/settings/panels/traycer-subscription-views";
+import { MeterRow } from "@/components/settings/panels/hukum-subscription-views";
 import { contextUsageTone } from "@/components/chat/context-usage";
 import { creditUsageSeverity } from "@/lib/rate-limits/window-severity";
 import {
@@ -255,7 +255,7 @@ function WindowMeterDetail({
 /**
  * A single window row, shared identically by the Settings card and both
  * popover surfaces so they can never visually drift - delegates to the
- * shared `MeterRow` shell (`traycer-subscription-views.tsx`), passing
+ * shared `MeterRow` shell (`hukum-subscription-views.tsx`), passing
  * `WindowMeterDetail` as its `detail` slot. Renders nothing for a `null`
  * window so call sites can pass optional windows directly.
  */

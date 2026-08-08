@@ -1,8 +1,8 @@
-import { defineRpcContract } from "@traycer/protocol/framework/index";
+import { defineRpcContract } from "@hukum/protocol/framework/index";
 import {
   openPathsRequestSchema,
   openPathsResponseSchema,
-} from "@traycer/protocol/host/editor/unary-schemas";
+} from "@hukum/protocol/host/editor/unary-schemas";
 
 export const editorOpenPathsV10 = defineRpcContract({
   method: "editor.openPaths",

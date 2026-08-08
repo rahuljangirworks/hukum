@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { create } from "zustand";
-import { AgentActivityStreamClient } from "@traycer-clients/shared/host-transport/agent-activity-stream-client";
+import { AgentActivityStreamClient } from "@hukum-clients/shared/host-transport/agent-activity-stream-client";
 import type {
   StreamCloseReason,
   StreamConnectionStatus,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import type { AgentActivityServedBy } from "@traycer/protocol/host/agent/activity";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import type { AgentActivityServedBy } from "@hukum/protocol/host/agent/activity";
 import {
   EMPTY_AGENT_ACTIVITY_BY_EPIC,
   EMPTY_EPIC_AGENT_ACTIVITY,

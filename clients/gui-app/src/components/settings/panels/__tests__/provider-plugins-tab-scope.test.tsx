@@ -2,8 +2,8 @@ import type {
   ProviderNativeScope,
   ProviderPlugin,
   ProvidersPluginsMutateAction,
-} from "@traycer/protocol/host/provider-native-schemas";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import {
   cleanup,
   fireEvent,
@@ -171,7 +171,7 @@ function multiScopeCaps(over: {
       plugins: {
         addModes: over.addModes ?? ["cli-source"],
         marketplaceBrowse: false,
-        traycerSessionToolsNotice: false,
+        hukumSessionToolsNotice: false,
         actionScopes: {
           list: [...BOTH_SCOPES],
           add: [...(over.add ?? BOTH_SCOPES)],
@@ -389,7 +389,7 @@ describe("<ProviderPluginsTab /> scope (F5)", () => {
         plugins: {
           addModes: ["cli-source"],
           marketplaceBrowse: false,
-          traycerSessionToolsNotice: false,
+          hukumSessionToolsNotice: false,
           actionScopes: {
             list: ["project"],
             add: ["project"],

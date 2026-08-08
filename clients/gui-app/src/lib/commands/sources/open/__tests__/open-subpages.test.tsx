@@ -3,7 +3,7 @@ import { cleanup, renderHook } from "@testing-library/react";
 import type {
   WorktreeBindingSelectorRowV12,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import type { CommandContext, CommandItem } from "@/lib/commands/types";
 import type { KeybindingRouter } from "@/lib/keybindings/dispatch";
 import type { OpenTileIntoTargetGroupArgs } from "@/lib/commands/actions/open-into-target";
@@ -105,7 +105,7 @@ const latestConversationWorkspaceSeedMock = vi.hoisted(() => ({
       {
         kind: "local",
         workspacePath: "/repo-seeded",
-        repoIdentifier: { owner: "traycerai", repo: "seeded" },
+        repoIdentifier: { owner: "hukumai", repo: "seeded" },
         isPrimary: true,
       },
     ],
@@ -331,7 +331,7 @@ vi.mock("@/hooks/harnesses/use-gui-harness-catalog", () => ({
         models: [{ harnessId: "claude", slug: "sonnet", label: "Sonnet" }],
       },
       // GUI-only provider must be filtered out of the TUI harness picker.
-      { id: "traycer", label: "Traycer", available: true, models: [] },
+      { id: "hukum", label: "Hukum", available: true, models: [] },
     ],
   }),
 }));

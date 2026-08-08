@@ -34,7 +34,7 @@ describe("buildChildEnv", () => {
 
   it("does not forward the worktree label to the renderer chrome", () => {
     const childEnv = devStack.buildChildEnv({
-      DEV_DESKTOP_SLOT: "traycer-spry-panda-a2acaa5e",
+      DEV_DESKTOP_SLOT: "hukum-spry-panda-a2acaa5e",
     });
 
     expect(childEnv.VITE_DEV_DESKTOP_WORKTREE_LABEL).toBeUndefined();
@@ -42,7 +42,7 @@ describe("buildChildEnv", () => {
 
   it("forwards the loopback Cloud UI override to the renderer", () => {
     const childEnv = devStack.buildChildEnv({
-      TRAYCER_DEV_CLOUD_UI_BASE_URL: "http://localhost:21003",
+      HUKUM_DEV_CLOUD_UI_BASE_URL: "http://localhost:21003",
     });
 
     expect(childEnv.VITE_DEV_CLOUD_UI_BASE_URL).toBe("http://localhost:21003");
@@ -70,7 +70,7 @@ describe("buildChildEnv", () => {
     const childEnv = devStack.buildChildEnv({
       DEV_DESKTOP_SLOT: "active-slot",
       VITE_DEV_DESKTOP_WORKTREE_LABEL: "stale-slot",
-      VITE_DEV_DESKTOP_DISPLAY_NAME: "Traycer Dev — stale-slot",
+      VITE_DEV_DESKTOP_DISPLAY_NAME: "Hukum Dev — stale-slot",
     });
 
     expect(childEnv.VITE_DEV_DESKTOP_WORKTREE_LABEL).toBeUndefined();
@@ -87,9 +87,9 @@ describe("buildChildEnv", () => {
 
   it("marks the dev stack and derives the renderer URL from PORT", () => {
     const childEnv = devStack.buildChildEnv({ PORT: "21005" });
-    expect(childEnv.TRAYCER_DESKTOP_DEV).toBe("1");
+    expect(childEnv.HUKUM_DESKTOP_DEV).toBe("1");
     expect(childEnv.PORT).toBe("21005");
-    expect(childEnv.TRAYCER_DESKTOP_DEV_URL).toBe("http://localhost:21005");
+    expect(childEnv.HUKUM_DESKTOP_DEV_URL).toBe("http://localhost:21005");
   });
 
   it("overrides an inherited production NODE_ENV", () => {
@@ -98,10 +98,10 @@ describe("buildChildEnv", () => {
     expect(childEnv.NODE_ENV).toBe("development");
   });
 
-  it("keeps an explicit TRAYCER_DESKTOP_DEV_URL", () => {
+  it("keeps an explicit HUKUM_DESKTOP_DEV_URL", () => {
     const childEnv = devStack.buildChildEnv({
-      TRAYCER_DESKTOP_DEV_URL: "http://127.0.0.1:39584",
+      HUKUM_DESKTOP_DEV_URL: "http://127.0.0.1:39584",
     });
-    expect(childEnv.TRAYCER_DESKTOP_DEV_URL).toBe("http://127.0.0.1:39584");
+    expect(childEnv.HUKUM_DESKTOP_DEV_URL).toBe("http://127.0.0.1:39584");
   });
 });

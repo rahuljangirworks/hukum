@@ -3,17 +3,17 @@ import type {
   ProviderCliState,
   ProviderId,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import {
   rateLimitCapableProviderIdSchema,
   type RateLimitCapableProviderId,
-} from "@traycer/protocol/host/rate-limit";
+} from "@hukum/protocol/host/rate-limit";
 import { isProviderAmbientSignedOut } from "@/lib/providers/provider-ambient-auth";
 
 /**
  * The two providers `host.getRateLimitUsage @1.2`'s `providerRateLimits`
  * union reports full native detail for. Every other `ProviderId` (including
- * `traycer`, which uses the flat aperture fields on the same RPC) resolves
+ * `hukum`, which uses the flat aperture fields on the same RPC) resolves
  * to the `available: false` arm if ever queried - the GUI simply never asks
  * for it. Re-exported from the protocol's own enum (rather than hand-listed
  * here again) so the host's dispatch, the wire schema's two available arms,
@@ -88,7 +88,7 @@ export function rateLimitFetchLane(
     case "claude-code":
     case "grok":
       // Grok reads usage over the vendored CLI's own `_x.ai/billing` ACP
-      // extension (a subprocess RPC, so Traycer never touches the grok OAuth
+      // extension (a subprocess RPC, so Hukum never touches the grok OAuth
       // token) - an ephemeral spawn like codex/claude-code, despite grok's
       // credit-shaped payload resembling the httpFetch providers'.
       return "ephemeralProcess";

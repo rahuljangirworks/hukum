@@ -19,10 +19,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "paths": {
-      "@traycer/protocol/utils/*": [
+      "@hukum/protocol/utils/*": [
         "./utils/*"
       ],
-      "@traycer/protocol/*": [
+      "@hukum/protocol/*": [
         "./src/*"
       ]
     }

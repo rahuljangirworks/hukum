@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useSyncExternalStore } from "react";
 import { create, useStore } from "zustand";
-import type { StreamConnectionStatus } from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { StreamConnectionStatus } from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import {
   getChatSessionRegistry,
   useExistingChatSessionHandle,

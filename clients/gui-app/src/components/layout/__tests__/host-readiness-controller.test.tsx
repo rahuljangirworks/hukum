@@ -4,8 +4,8 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   MockRunnerHost,
-  MockTraycerCli,
-} from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+  MockHukumCli,
+} from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import {
   HostReadinessControllerContext,
   postLatchSurfaceFor,
@@ -91,7 +91,7 @@ function buildQueryClient(): QueryClient {
  * reads `useRunnerHost()` and issues a query - the same ancestor providers
  * the real `HostReadinessControllerProvider` sits under in production
  * (`RunnerHostProvider` -> `QueryClientProvider` -> ... ->
- * `HostReadinessControllerProvider`, see traycer-app.tsx). Tests that render
+ * `HostReadinessControllerProvider`, see hukum-app.tsx). Tests that render
  * one of those kinds need these two providers even though they stub the
  * readiness controller itself.
  */
@@ -113,13 +113,13 @@ function renderWithProviders(
 
 function buildRunnerHost(): MockRunnerHost {
   return new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 
@@ -665,19 +665,19 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
   afterEach(() => cleanup());
 
   it("renders the bootstrap-log disclosure, a working Configure shell, and a Retry wired to the controller-owned respawn on a slow default-host slot", async () => {
-    const cli = new MockTraycerCli();
+    const cli = new MockHukumCli();
     cli.hostStatusSnapshot = {
       ...cli.hostStatusSnapshot,
       bootstrapLogTail: "starting zsh -i -l -c ...",
     };
     const runnerHost = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: cli,
+      hukumCli: cli,
     });
     const requestRespawn = vi.fn();
     const configureShell = vi.fn();
@@ -752,9 +752,9 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
     fireEvent.click(reportButton);
     expect(useDesktopDialogStore.getState().activeDialog).toBe("report-issue");
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
-      title: "Could not start Traycer Host",
+      title: "Could not start Hukum Host",
       message:
-        "Traycer Host could not start. Host health: host unknown, compat compatible.",
+        "Hukum Host could not start. Host health: host unknown, compat compatible.",
       code: "HOST_PROVISIONING_FAILED",
       source: "Host startup",
     });
@@ -792,13 +792,13 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
       title: "Host update required",
       message:
-        "Traycer Host requires an update. Host health: host unknown, compat incompatible.",
+        "Hukum Host requires an update. Host health: host unknown, compat incompatible.",
       code: "HOST_INCOMPATIBLE",
       source: "Host compatibility",
     });
   });
 
-  // traycer#858 / #860 / #862: three field reports, one template, three
+  // hukum#858 / #860 / #862: three field reports, one template, three
   // unrelated causes. The pre-filled report must name the family it was filed
   // from, and carry the state the shell already knew.
   it("files an unreachable-host report, not a compatibility one, when the probe never reached the host", () => {
@@ -827,7 +827,7 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
       buildRunnerHost(),
     );
 
-    expect(screen.getByText("Traycer Host is not responding.")).toBeTruthy();
+    expect(screen.getByText("Hukum Host is not responding.")).toBeTruthy();
     expect(screen.getByText("fetch failed")).toBeTruthy();
     expect(
       screen.queryByText(/Could not verify host compatibility/),
@@ -835,9 +835,9 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
 
     fireEvent.click(screen.getByRole("button", { name: /Report issue/i }));
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
-      title: "Traycer Host is not responding",
+      title: "Hukum Host is not responding",
       message:
-        "The app could not reach Traycer Host. Host health: host ready, compat unreachable, busy.",
+        "The app could not reach Hukum Host. Host health: host ready, compat unreachable, busy.",
       code: "HOST_UNREACHABLE",
       source: "Host connection",
     });
@@ -874,15 +874,15 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
 
     fireEvent.click(screen.getByRole("button", { name: /Report issue/i }));
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
-      title: "Could not verify Traycer Host compatibility",
+      title: "Could not verify Hukum Host compatibility",
       message:
-        "Traycer Host rejected the compatibility handshake. Host health: host ready, compat rejected.",
+        "Hukum Host rejected the compatibility handshake. Host health: host ready, compat rejected.",
       code: "HOST_COMPAT_PROBE_REJECTED",
       source: "Host connection",
     });
   });
 
-  // traycer#860 / #4747: a host that answered host.status as busy-serving
+  // hukum#860 / #4747: a host that answered host.status as busy-serving
   // turns must not read like one that never started. The pre-filled report
   // health line carries the host's own busy session count.
   it("names the host's busy sessions in the provisioning-error report health line", () => {
@@ -914,9 +914,9 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
 
     fireEvent.click(screen.getByRole("button", { name: /Report issue/i }));
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
-      title: "Could not start Traycer Host",
+      title: "Could not start Hukum Host",
       message:
-        "Traycer Host could not start. Host health: host unknown, compat compatible, busy 3 sessions.",
+        "Hukum Host could not start. Host health: host unknown, compat compatible, busy 3 sessions.",
       code: "HOST_PROVISIONING_FAILED",
       source: "Host startup",
     });
@@ -951,15 +951,15 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
 
     fireEvent.click(screen.getByRole("button", { name: /Report issue/i }));
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
-      title: "Could not start Traycer Host",
+      title: "Could not start Hukum Host",
       message:
-        "Traycer Host could not start. Host health: host unknown, compat compatible, busy 1 session.",
+        "Hukum Host could not start. Host health: host unknown, compat compatible, busy 1 session.",
       code: "HOST_PROVISIONING_FAILED",
       source: "Host startup",
     });
   });
 
-  // traycer#862: once the provisioning mutation settles, live `progress` is
+  // hukum#862: once the provisioning mutation settles, live `progress` is
   // null. The report must still name the last observed stage via lastProgress.
   it("falls back to lastProgress in the provisioning-error report when live progress is null", () => {
     useDesktopDialogStore.setState({ reportIssueAvailable: true });
@@ -990,9 +990,9 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
 
     fireEvent.click(screen.getByRole("button", { name: /Report issue/i }));
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
-      title: "Could not start Traycer Host",
+      title: "Could not start Hukum Host",
       message:
-        "Traycer Host could not start. Host health: host unknown, compat compatible, last progress extract 80%.",
+        "Hukum Host could not start. Host health: host unknown, compat compatible, last progress extract 80%.",
       code: "HOST_PROVISIONING_FAILED",
       source: "Host startup",
     });
@@ -1014,9 +1014,9 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
         unreachable: true,
       },
       expected: {
-        title: "Traycer Host is not responding",
+        title: "Hukum Host is not responding",
         message:
-          "The app could not reach Traycer Host. Host health: host ready, compat unreachable.",
+          "The app could not reach Hukum Host. Host health: host ready, compat unreachable.",
         code: "HOST_UNREACHABLE",
         source: "Host connection",
       },
@@ -1032,7 +1032,7 @@ describe("<SurfaceReadinessBoundary /> restored default-host detail (MED7)", () 
       expected: {
         title: "Host update required",
         message:
-          "Traycer Host requires an update. Host health: host ready, compat incompatible.",
+          "Hukum Host requires an update. Host health: host ready, compat incompatible.",
         code: "HOST_INCOMPATIBLE",
         source: "Host compatibility",
       },

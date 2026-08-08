@@ -1,7 +1,7 @@
 import type {
   ProviderCliState,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -161,14 +161,14 @@ vi.mock("@/hooks/auth/use-auth-user-query", () => ({
     refetch: () => Promise.resolve({}),
   }),
 }));
-vi.mock("@/hooks/auth/use-refresh-credits-on-traycer-turn", () => ({
-  useRefreshCreditsOnTraycerTurn: () => {},
+vi.mock("@/hooks/auth/use-refresh-credits-on-hukum-turn", () => ({
+  useRefreshCreditsOnHukumTurn: () => {},
 }));
 vi.mock("@/hooks/host/use-host-rate-limit-usage-query", () => ({
   useHostRateLimitUsageQuery: () => ({ data: undefined }),
 }));
-vi.mock("@/hooks/host/use-refresh-rate-limit-usage-on-traycer-turn", () => ({
-  useRefreshRateLimitUsageOnTraycerTurn: () => {},
+vi.mock("@/hooks/host/use-refresh-rate-limit-usage-on-hukum-turn", () => ({
+  useRefreshRateLimitUsageOnHukumTurn: () => {},
 }));
 vi.mock("@/hooks/host/use-host-provider-rate-limits-query", () => ({
   useHostProviderRateLimitsQuery: () => ({

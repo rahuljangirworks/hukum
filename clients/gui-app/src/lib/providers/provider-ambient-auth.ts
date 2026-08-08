@@ -1,7 +1,7 @@
 import type {
   ProviderAuthStatus,
   ProviderCliState,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 /**
  * The terminal/ambient account's effective sign-in verdict for a provider,

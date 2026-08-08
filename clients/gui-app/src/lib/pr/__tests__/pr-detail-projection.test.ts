@@ -4,7 +4,7 @@ import type {
   PrActivitySection,
   PrCheckContext,
   PrDetailCore,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import {
   formatPrCheckStatusLabel,
   prParticipantActors,

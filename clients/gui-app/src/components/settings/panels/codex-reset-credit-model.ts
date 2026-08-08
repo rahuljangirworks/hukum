@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { ProviderRateLimits } from "@traycer/protocol/host";
+import type { ProviderRateLimits } from "@hukum/protocol/host";
 
 type CodexRateLimits = Extract<ProviderRateLimits, { provider: "codex" }>;
 

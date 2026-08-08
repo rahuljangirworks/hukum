@@ -1,4 +1,4 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -9,19 +9,19 @@ import type {
   StatusChangeHandler,
   StreamCloseReason,
   StreamFrameEnvelope,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   WsStreamClient,
   type ParamsOf,
-} from "@traycer-clients/shared/host-transport/ws-stream-client";
+} from "@hukum-clients/shared/host-transport/ws-stream-client";
 import type {
   WorkspaceFileListEntry,
   WorkspaceSubscribeFileListServerFrame,
-} from "@traycer/protocol/host/workspace/subscribe";
+} from "@hukum/protocol/host/workspace/subscribe";
 import { StreamRuntimeContext } from "@/lib/host/stream-runtime-context";
 import {
   fileTreeExpansionScopeKey,

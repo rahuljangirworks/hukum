@@ -8,14 +8,14 @@ import {
 } from "react";
 import { useStore } from "zustand";
 import { AlertTriangle } from "lucide-react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { JsonContent } from "@hukum/protocol/common/registry";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import type {
   ChatActiveTurn,
   ChatQueueDeliveryPolicy,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 
 import {
   isAttachmentIngestPending,

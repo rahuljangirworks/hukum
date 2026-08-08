@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ResponseOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { ResponseOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
 import {
   GIT_DIRTY_SUBMODULE_POLL_LANE,

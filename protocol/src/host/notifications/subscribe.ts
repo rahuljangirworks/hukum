@@ -26,7 +26,7 @@
  * - `ping`        - heartbeat. Text-only.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 
 /**
  * Awareness state field under which each host publishes its agent-activity

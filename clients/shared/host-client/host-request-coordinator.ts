@@ -1,7 +1,7 @@
 import {
   getLatestContract,
   type VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import type {
   HostRequestAuthority,
   RequestOfMethod,

@@ -1,4 +1,4 @@
-import type { RetainedStepUpVerifyResponse } from "@traycer-clients/shared/auth/devices-sessions-fetcher";
+import type { RetainedStepUpVerifyResponse } from "@hukum-clients/shared/auth/devices-sessions-fetcher";
 
 const STEP_UP_EXPIRY_SKEW_MS = 5_000;
 

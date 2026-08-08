@@ -5,7 +5,7 @@ import {
 } from "../../windows/window-registry";
 
 // `createMruWindowProxy` is the real, exported production proxy that backs
-// both the tray ("Open Traycer") and the global summon shortcut (decision 10
+// both the tray ("Open Hukum") and the global summon shortcut (decision 10
 // in the tech plan: the summon action resolves via `focusMru()`, not the
 // registry's first-inserted record). Prior review coverage rebuilt an
 // identical-looking copy of this proxy rather than importing it, so breaking
@@ -29,7 +29,7 @@ import {
 
 vi.mock("electron", () => ({
   app: {
-    getName: () => "Traycer",
+    getName: () => "Hukum",
     getPath: () => "/tmp",
     on: () => undefined,
     whenReady: () => Promise.resolve(),
@@ -209,7 +209,7 @@ vi.mock("../../app/host-resolver", () => ({
 }));
 vi.mock("../../app/network", () => ({
   configureUserAgent: () => undefined,
-  preconnectTraycerHosts: () => undefined,
+  preconnectHukumHosts: () => undefined,
 }));
 vi.mock("../../app/screen-monitor", () => ({
   installScreenMonitor: () => undefined,
@@ -267,7 +267,7 @@ vi.mock("../../app/host-login-item", () => ({
   hostManagesHostLoginItem: () => Promise.resolve(false),
 }));
 vi.mock("../../../config", () => ({
-  DESKTOP_APP_NAME: "Traycer",
+  DESKTOP_APP_NAME: "Hukum",
 }));
 vi.mock("../../app/update-preferences", () => ({
   hydrateUpdatePreferences: () => Promise.resolve({}),

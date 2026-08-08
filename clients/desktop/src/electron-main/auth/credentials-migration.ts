@@ -1,8 +1,8 @@
-import type { StoredCredentials } from "@traycer/protocol/config/credentials";
-import type { MutationResult } from "@traycer/protocol/config/credentials-mutation";
-import { credentialsIdentityFromAuthenticatedUser } from "@traycer-clients/shared/auth/auth-validation";
-import type { AuthIdentityValidationResult } from "@traycer-clients/shared/auth/auth-validation-types";
-import type { CredentialsMigrationOutcome } from "@traycer-clients/shared/platform/runner-host";
+import type { StoredCredentials } from "@hukum/protocol/config/credentials";
+import type { MutationResult } from "@hukum/protocol/config/credentials-mutation";
+import { credentialsIdentityFromAuthenticatedUser } from "@hukum-clients/shared/auth/auth-validation";
+import type { AuthIdentityValidationResult } from "@hukum-clients/shared/auth/auth-validation-types";
+import type { CredentialsMigrationOutcome } from "@hukum-clients/shared/platform/runner-host";
 
 /**
  * The one-time legacy→file credentials migration state machine (tech plan §6).

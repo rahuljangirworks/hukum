@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { lexMarkdownBlocks } from "@tailmark/core";
 import { afterEach, describe, expect, it } from "vitest";
-import { TraycerMarkdown } from "@/markdown/traycer-markdown";
+import { HukumMarkdown } from "@/markdown/hukum-markdown";
 
 /**
  * Raw-HTML block containers written around markdown - GitHub's
@@ -9,7 +9,7 @@ import { TraycerMarkdown } from "@/markdown/traycer-markdown";
  *
  * CommonMark ends a raw-HTML block at the first blank line, so `marked` emits
  * the opening tag, the body and the closing tag as separate top-level tokens.
- * `TraycerMarkdown` (via Tailmark) renders every block through its own
+ * `HukumMarkdown` (via Tailmark) renders every block through its own
  * `react-markdown` pipeline, so unmerged tokens leave the body as a SIBLING of
  * the `<details>` element - which is why the disclosure toggle appeared to do
  * nothing on PR descriptions and comments. Merge lives in `@tailmark/core`.
@@ -17,7 +17,7 @@ import { TraycerMarkdown } from "@/markdown/traycer-markdown";
 
 function renderMarkdown(content: string) {
   return render(
-    <TraycerMarkdown
+    <HukumMarkdown
       className={null}
       proseSize="normal"
       components={null}
@@ -27,7 +27,7 @@ function renderMarkdown(content: string) {
       isStreaming={false}
     >
       {content}
-    </TraycerMarkdown>,
+    </HukumMarkdown>,
   );
 }
 

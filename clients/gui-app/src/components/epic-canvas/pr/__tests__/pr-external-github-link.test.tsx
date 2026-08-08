@@ -7,7 +7,7 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { PrExternalGitHubLink } from "@/components/epic-canvas/pr/pr-external-github-link";
 import { RunnerHostContext } from "@/providers/runner-host-context";
 
@@ -21,13 +21,13 @@ function newQueryClient(): QueryClient {
 
 function createRunnerHost(): MockRunnerHost {
   return new MockRunnerHost({
-    signInUrl: "https://auth.traycer.test/sign-in",
-    authnBaseUrl: "https://auth.traycer.test",
+    signInUrl: "https://auth.hukum.test/sign-in",
+    authnBaseUrl: "https://auth.hukum.test",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 

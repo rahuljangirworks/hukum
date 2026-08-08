@@ -189,7 +189,7 @@ describe("resolveTrayIconPath", () => {
   });
 
   it("resolves to a real PNG on disk for every supported platform when pointed at the workspace tray dir", () => {
-    // The dev orchestrator sets `TRAYCER_DESKTOP_TRAY_DIR` to the
+    // The dev orchestrator sets `HUKUM_DESKTOP_TRAY_DIR` to the
     // workspace's `resources/tray/`. Assert that the staged PNGs exist
     // alongside this source tree - exactly what the helper resolves at
     // runtime when the override is set.
@@ -300,8 +300,8 @@ describe("DesktopTrayController menu structure", () => {
     const template = latestMenuTemplate();
     const labels = template.map((entry) => entry.label);
     expect(labels).toContain("No recent epics");
-    expect(labels).toContain("Open Traycer");
-    expect(labels).toContain("Quit Traycer");
+    expect(labels).toContain("Open Hukum");
+    expect(labels).toContain("Quit Hukum");
 
     const placeholder = template.find(
       (entry) => entry.label === "No recent epics",
@@ -324,10 +324,10 @@ describe("DesktopTrayController menu structure", () => {
     expect(statusRow).toBeUndefined();
 
     const tray = mostRecentTray();
-    expect(tray.toolTips[tray.toolTips.length - 1]).toBe("Traycer (attention)");
+    expect(tray.toolTips[tray.toolTips.length - 1]).toBe("Hukum (attention)");
   });
 
-  it("renders epic rows under separators alongside Open Traycer and Quit Traycer", () => {
+  it("renders epic rows under separators alongside Open Hukum and Quit Hukum", () => {
     const controller = new DesktopTrayController(makeWindow(), trayImage(), {
       onEpicSelected: null,
       onCommand: null,
@@ -341,10 +341,10 @@ describe("DesktopTrayController menu structure", () => {
     const template = latestMenuTemplate();
     const labels = template.map((entry) => entry.label ?? `<${entry.type}>`);
 
-    expect(labels[0]).toBe("Open Traycer");
+    expect(labels[0]).toBe("Open Hukum");
     expect(labels).toContain("First Epic");
     expect(labels).toContain("Second Epic");
-    expect(labels[labels.length - 1]).toBe("Quit Traycer");
+    expect(labels[labels.length - 1]).toBe("Quit Hukum");
 
     // Recency reads as native `sublabel` metadata beneath the epic title.
     expect(
@@ -410,10 +410,10 @@ describe("DesktopTrayController menu structure", () => {
 
     const firstTemplate = latestMenuTemplate();
     const openRow = firstTemplate.find(
-      (entry) => entry.label === "Open Traycer",
+      (entry) => entry.label === "Open Hukum",
     );
     if (openRow?.click === undefined) {
-      throw new Error("expected Open Traycer row to have a click handler");
+      throw new Error("expected Open Hukum row to have a click handler");
     }
 
     openRow.click();
@@ -429,7 +429,7 @@ describe("DesktopTrayController menu structure", () => {
     }
     epicRow.click();
 
-    // Two Open Traycer clicks (one per MRU window) plus the epic click landing
+    // Two Open Hukum clicks (one per MRU window) plus the epic click landing
     // on the current MRU window (windowB), which also forwards the epicId.
     expect(windowA.calls).toEqual({ show: 1, focus: 1 });
     expect(windowB.calls).toEqual({ show: 2, focus: 2 });
@@ -475,7 +475,7 @@ describe("DesktopTrayController menu structure", () => {
 
     const template = latestMenuTemplate();
     const labels = template.map((entry) => entry.label ?? `<${entry.type}>`);
-    expect(labels[0]).toBe("Open Traycer");
+    expect(labels[0]).toBe("Open Hukum");
     // Identity shows as `Name (email)` and sits directly above Sign Out.
     expect(labels).toContain("Ada Lovelace (ada@example.com)");
     const identityIndex = labels.indexOf("Ada Lovelace (ada@example.com)");
@@ -484,7 +484,7 @@ describe("DesktopTrayController menu structure", () => {
     expect(labels.some((l) => l.startsWith("Host"))).toBe(false);
     expect(labels).toContain("Open Logs");
     expect(labels).toContain("No recent epics");
-    expect(labels[labels.length - 1]).toBe("Quit Traycer");
+    expect(labels[labels.length - 1]).toBe("Quit Hukum");
 
     template.find((entry) => entry.label === "Open Logs")?.click?.();
     template.find((entry) => entry.label === "Check for Updates")?.click?.();
@@ -646,33 +646,33 @@ describe("DesktopTrayController menu structure", () => {
     expect(commands[0]?.hostUpdateVersion).not.toBe("1.6.0-rc.1");
   });
 
-  // Decision 9: the "Open Traycer" item is display-only for the summon
+  // Decision 9: the "Open Hukum" item is display-only for the summon
   // chord - `registerAccelerator: false` means the OS never binds it from
   // the menu, only the global-shortcuts registry does. Deleting either the
   // `accelerator` assignment or the `registerAccelerator: false` line from
   // `rebuildMenu()` must fail this test, not just checking the method exists.
-  it("shows the live summon accelerator on Open Traycer as display-only, and none when disabled", () => {
+  it("shows the live summon accelerator on Open Hukum as display-only, and none when disabled", () => {
     const controller = new DesktopTrayController(makeWindow(), trayImage(), {
       onEpicSelected: null,
       onCommand: null,
     });
 
     const beforeSet = latestMenuTemplate().find(
-      (entry) => entry.label === "Open Traycer",
+      (entry) => entry.label === "Open Hukum",
     );
     expect(beforeSet?.accelerator).toBeUndefined();
     expect(beforeSet?.registerAccelerator).toBe(false);
 
     controller.setSummonAccelerator("CommandOrControl+Shift+Space");
     const withAccelerator = latestMenuTemplate().find(
-      (entry) => entry.label === "Open Traycer",
+      (entry) => entry.label === "Open Hukum",
     );
     expect(withAccelerator?.accelerator).toBe("CommandOrControl+Shift+Space");
     expect(withAccelerator?.registerAccelerator).toBe(false);
 
     controller.setSummonAccelerator(null);
     const afterDisable = latestMenuTemplate().find(
-      (entry) => entry.label === "Open Traycer",
+      (entry) => entry.label === "Open Hukum",
     );
     expect(afterDisable?.accelerator).toBeUndefined();
     expect(afterDisable?.registerAccelerator).toBe(false);
@@ -695,7 +695,7 @@ describe("DesktopTrayController menu structure", () => {
     expect(mockMenuState.lastBuiltMenu).not.toBeNull();
     const templateAfterChange = latestMenuTemplate();
     expect(
-      templateAfterChange.find((entry) => entry.label === "Open Traycer")
+      templateAfterChange.find((entry) => entry.label === "Open Hukum")
         ?.accelerator,
     ).toBe("CommandOrControl+Alt+X");
     expect(templateAfterFirstSet).not.toBe(templateAfterChange);

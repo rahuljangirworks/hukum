@@ -19,7 +19,7 @@ import { buildGlobalShortcutsBridge } from "./global-shortcuts-bridge";
 import { buildLifecycleBridge } from "./lifecycle-bridge";
 import { buildMigrationBridge } from "./migration-bridge";
 import { buildServiceBridge } from "./service-bridge";
-import { buildTraycerCliBridge } from "./traycer-cli-bridge";
+import { buildHukumCliBridge } from "./hukum-cli-bridge";
 import { buildPlatformBridge } from "./platform-bridge";
 import { buildPowerBridge } from "./power-bridge";
 import {
@@ -34,7 +34,7 @@ import { readSyncString } from "./sync-bootstrap";
  * `contextBridge.exposeInMainWorld('runnerHost', …)`. The renderer entry
  * (`src/renderer-shell/main.tsx`) wraps this bridge into a `DesktopRunnerHost`
  * that implements the shared
- * `@traycer-clients/shared/platform/runner-host` interface.
+ * `@hukum-clients/shared/platform/runner-host` interface.
  *
  * Because `contextIsolation` is enabled, only serializable values and
  * registered functions cross the bridge. Per-feature bridge surfaces (auth,
@@ -73,7 +73,7 @@ contextBridge.exposeInMainWorld("runnerHost", {
   ...buildLifecycleBridge(),
   fileDrops: buildFileDropsBridge(nativeClipboardReadGate),
   service: buildServiceBridge(),
-  traycerCli: buildTraycerCliBridge(),
+  hukumCli: buildHukumCliBridge(),
   migration: buildMigrationBridge(),
   platform: buildPlatformBridge(),
   power: buildPowerBridge(),

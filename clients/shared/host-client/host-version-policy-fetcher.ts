@@ -1,7 +1,7 @@
 import {
   hostVersionPolicyResponseSchema,
   type HostUpdatePolicy,
-} from "@traycer/protocol/host/host-status";
+} from "@hukum/protocol/host/host-status";
 
 /**
  * "Update now" / auto-policy toggle / "Apply now — ends N sessions"

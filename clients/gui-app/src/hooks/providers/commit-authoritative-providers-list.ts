@@ -1,5 +1,5 @@
 import type { QueryClient } from "@tanstack/react-query";
-import type { ResponseOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { ResponseOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import { PROVIDER_INVALIDATIONS } from "@/hooks/providers/invalidations";
 import { hostQueryKeys } from "@/lib/query-keys";

@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach, beforeEach, vi } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { PrGetLocalDiffResponse } from "@traycer/protocol/host/pr-schemas";
+import type { PrGetLocalDiffResponse } from "@hukum/protocol/host/pr-schemas";
 import { DEFAULT_DIFF_VIEWER_PREFERENCES } from "@/lib/diff/diff-viewer-preferences";
 import { PrLocalDiffBody } from "@/components/epic-canvas/pr/pr-local-diff-body";
 import { makePrDiffTile } from "@/lib/pr/pr-diff-tile";

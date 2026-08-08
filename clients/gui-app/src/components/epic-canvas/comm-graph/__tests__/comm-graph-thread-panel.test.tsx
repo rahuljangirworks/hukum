@@ -125,7 +125,7 @@ function renderPanel(events: ReadonlyArray<CommGraphEvent>): () => void {
   const onClose = vi.fn();
   const [edge] = aggregateCommGraphEdges(events, new Set(["a", "b"]));
   render(
-    // The app mounts one of these at its root (`traycer-app.tsx`), so the panel
+    // The app mounts one of these at its root (`hukum-app.tsx`), so the panel
     // never renders without it in production - this supplies the real context
     // to a panel rendered in isolation, it does not stub anything out.
     <TooltipProvider>

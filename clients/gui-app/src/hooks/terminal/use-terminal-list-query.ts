@@ -1,10 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { ResponseOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { ResponseOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useTerminalListFor } from "@/hooks/terminal/use-terminal-list-for-query";
-import type { TerminalScope } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { TerminalScope } from "@hukum/protocol/host/terminal/unary-schemas";
 
 /**
  * Fetches the active host's current terminal sessions for the given scope so

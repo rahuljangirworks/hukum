@@ -1,10 +1,10 @@
 import type { QueryClient } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   WorkspaceReadFileRequest,
   WorkspaceReadFileResponse,
-} from "@traycer/protocol/host/workspace/unary-schemas";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/workspace/unary-schemas";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { hostQueryKeys } from "@/lib/query-keys";
 
 /** Cheapest possible read that still distinguishes "exists" from "missing". */

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Verify that the Traycer CLI binary (or binaries) bundled inside a packaged
-# macOS `Traycer.app` are correctly signed by the expected Apple Developer ID
+# Verify that the Hukum CLI binary (or binaries) bundled inside a packaged
+# macOS `Hukum.app` are correctly signed by the expected Apple Developer ID
 # team, accepted by Gatekeeper, and that the parent `.app` has a valid
 # notarization staple.
 #
 # Usage:
-#   APPLE_TEAM_ID=XXXXXXXXXX verify-macos-cli-signing.sh <path-to-Traycer.app>
+#   APPLE_TEAM_ID=XXXXXXXXXX verify-macos-cli-signing.sh <path-to-Hukum.app>
 #
 # Runs only on macOS; exits cleanly with a note on other platforms so
 # contributors on Linux/Windows can invoke it without noise.
@@ -14,7 +14,7 @@ set -euo pipefail
 PREFIX="[verify-macos-cli-signing]"
 
 if [ "$#" -lt 1 ] || [ -z "${1:-}" ]; then
-  echo "${PREFIX} usage: $0 <path-to-Traycer.app>" >&2
+  echo "${PREFIX} usage: $0 <path-to-Hukum.app>" >&2
   echo "${PREFIX}   APPLE_TEAM_ID must be exported in the environment on macOS." >&2
   exit 2
 fi

@@ -8,8 +8,8 @@ import {
   type ProviderRateLimitSeverity,
   type ProviderRateLimitWindow,
   type RateLimitUnavailableReason,
-} from "@traycer/protocol/host/rate-limit";
-import type { ProviderProfileRateLimitStatus } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/rate-limit";
+import type { ProviderProfileRateLimitStatus } from "@hukum/protocol/host/provider-schemas";
 import {
   envelopeDegradedReason,
   resolveRetainedProviderRateLimits,

@@ -2,7 +2,7 @@ import { Shimmer } from "@/components/ui/shimmer";
 import { reasoningBlockLabel } from "@/components/chat/chat-activity-groups";
 import { useLiveActivityPromote } from "./live-activity-promote-context";
 import { cn } from "@/lib/utils";
-import { TraycerMarkdown } from "@/markdown";
+import { HukumMarkdown } from "@/markdown";
 import { Brain, ChevronRight } from "lucide-react";
 import {
   useCallback,
@@ -97,7 +97,7 @@ const MUTED_PROSE = cn(
  * reader copying text, not collapsing it; a stray selection elsewhere on the
  * page must not swallow the click, which is why this is scoped to `node`.
  *
- * The list is bounded, not open-ended, and the bound is `TRAYCER_SANITIZE_SCHEMA`
+ * The list is bounded, not open-ended, and the bound is `HUKUM_SANITIZE_SCHEMA`
  * - nothing else can reach this DOM. Of the tags it admits only `a`, `input` and
  * `summary` self-activate on click (it allows no `role`, so `[role='button']`
  * and `button` cover only what our own React components render). `summary` is
@@ -171,7 +171,7 @@ function ReasoningContent(props: ReasoningContentProps) {
   const { className, markdown, isStreaming } = props;
   return (
     <div className={className}>
-      <TraycerMarkdown
+      <HukumMarkdown
         className={MUTED_PROSE}
         proseSize="compact"
         components={null}
@@ -181,7 +181,7 @@ function ReasoningContent(props: ReasoningContentProps) {
         isStreaming={isStreaming}
       >
         {markdown}
-      </TraycerMarkdown>
+      </HukumMarkdown>
     </div>
   );
 }

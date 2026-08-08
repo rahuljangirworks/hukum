@@ -50,7 +50,7 @@ import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
 const HOVER_SHOW_DELAY_MS = 300;
 const HOVER_HIDE_DELAY_MS = 100;
 
-export const ARTIFACT_LINK_CREATE_EVENT = "traycer:artifact-link-create";
+export const ARTIFACT_LINK_CREATE_EVENT = "hukum:artifact-link-create";
 
 export type OpenableArtifactLink = Extract<
   ClassifiedHref,
@@ -1491,7 +1491,7 @@ export function ArtifactLinkPopover(props: ArtifactLinkPopoverProps) {
           </div>
           {unusualScheme ? (
             <p role="status" className="text-ui-xs text-warning-foreground">
-              This scheme can be saved, but Traycer will not open it.
+              This scheme can be saved, but Hukum will not open it.
             </p>
           ) : null}
           <div className="flex flex-col gap-1.5">

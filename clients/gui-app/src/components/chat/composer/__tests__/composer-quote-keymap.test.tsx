@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { Editor } from "@tiptap/core";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { buildComposerExtensions } from "../editor/editor-config";
 import { createComposerPickerStore } from "../picker/composer-picker-store";

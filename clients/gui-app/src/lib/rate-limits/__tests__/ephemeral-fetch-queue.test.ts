@@ -1,12 +1,12 @@
 import { QueryClient } from "@tanstack/react-query";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import { DEFAULT_ACCOUNT_CONTEXT } from "@traycer/protocol/common/schemas";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import { DEFAULT_ACCOUNT_CONTEXT } from "@hukum/protocol/common/schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import type {
   ProviderRateLimits,
   RateLimitUnavailableReason,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import { queryKeys } from "@/lib/query-keys";
 import { createAppQueryClient } from "@/lib/query-client";
 import type { HostRpcRegistry } from "@/lib/host";

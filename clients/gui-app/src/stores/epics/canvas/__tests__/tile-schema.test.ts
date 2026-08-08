@@ -197,7 +197,7 @@ describe("parseTileRef / serializeTileRef", () => {
       stage: "unstaged",
       repositoryContext: {
         workspaceLabel: "workspace",
-        repositoryLabel: "packages/traycer",
+        repositoryLabel: "packages/hukum",
       },
     });
     const bundle = makeGitBundleDiffTile({
@@ -206,7 +206,7 @@ describe("parseTileRef / serializeTileRef", () => {
       bundleGroup: "changes",
       repositoryContext: {
         workspaceLabel: "workspace",
-        repositoryLabel: "packages/traycer",
+        repositoryLabel: "packages/hukum",
       },
     });
     expect(parseTileRef(serializeTileRef(file))).toEqual(file);
@@ -284,7 +284,7 @@ describe("parseTileRef / serializeTileRef", () => {
       hostId: HOST,
       diff: {
         kind: "bundle",
-        runningDir: "/worktrees/right-click-context-menu/traycer",
+        runningDir: "/worktrees/right-click-context-menu/hukum",
         bundleGroup: "changes",
       },
       view: {
@@ -293,7 +293,7 @@ describe("parseTileRef / serializeTileRef", () => {
     });
 
     expect(parsed).not.toBeNull();
-    expect(parsed?.name).toBe("traycer · Changes");
+    expect(parsed?.name).toBe("hukum · Changes");
   });
 
   it("rejects unknown tile kinds", () => {

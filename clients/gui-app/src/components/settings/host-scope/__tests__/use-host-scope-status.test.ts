@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import {
   deriveHostScopeStatus,

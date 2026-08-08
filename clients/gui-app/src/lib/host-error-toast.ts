@@ -2,7 +2,7 @@ import {
   HostTransportFailureError,
   isTransientHostRpcFailure,
   type HostRpcError,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import { emitHostErrorNotification } from "@/stores/notifications/app-local-notifications-store";
 import { useAuthStore } from "@/stores/auth/auth-store";
 import { createReportIssueContext } from "@/lib/report-issue-context";
@@ -96,7 +96,7 @@ function hostErrorToastMessage(error: HostRpcError, fallback: string) {
   // Connection-level failures name the underlying cause, not whichever
   // operation happened to be in flight when the host went away.
   if (error instanceof HostTransportFailureError) {
-    return "Can't reach the Traycer host. It may be restarting — try again in a moment.";
+    return "Can't reach the Hukum host. It may be restarting — try again in a moment.";
   }
   if (isLastOwnerRevokeError(error.message)) {
     return "Can't revoke the only Owner. Transfer ownership first.";
@@ -124,7 +124,7 @@ function hostErrorToastMessage(error: HostRpcError, fallback: string) {
   // unsupported`). This is a version gap, not a failed operation, so the copy
   // points at the fix rather than restating the operation name.
   if (error.code === "E_HOST_UNSUPPORTED") {
-    return "This needs a newer Traycer host. Update the host to continue.";
+    return "This needs a newer Hukum host. Update the host to continue.";
   }
   if (error.code === "FORBIDDEN") {
     return "You don't have permission to do that.";

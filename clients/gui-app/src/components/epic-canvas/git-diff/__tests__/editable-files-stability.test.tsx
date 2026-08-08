@@ -25,7 +25,7 @@ import { StrictMode, type ReactNode } from "react";
 import type {
   GitChangedFile,
   GitGetFileDiffResponse,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import { fileEditRuntimeRegistry } from "@/lib/workspace/file-edit-runtime-registry";
 import {
   useGitDiffEditing,

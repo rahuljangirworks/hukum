@@ -2,16 +2,16 @@ import { describe, expect, it } from "vitest";
 import {
   buildStreamManifest,
   checkStreamMethodCompatibility,
-} from "@traycer/protocol/framework/stream-compat";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/index";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+} from "@hukum/protocol/framework/stream-compat";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/index";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   hostCommunicationGraphCloudFeedEventSchema,
   hostCommunicationGraphCloudFeedSubscribeClientFrameSchemaV10,
   hostCommunicationGraphCloudFeedSubscribeOpenRequestSchemaV10,
   hostCommunicationGraphCloudFeedSubscribeServerFrameSchemaV10,
   hostCommunicationGraphCloudFeedSubscribeV10,
-} from "@traycer/protocol/host/epic/communication-graph";
+} from "@hukum/protocol/host/epic/communication-graph";
 
 /**
  * `host.communicationGraph.subscribe@1.0` contract fixtures + the

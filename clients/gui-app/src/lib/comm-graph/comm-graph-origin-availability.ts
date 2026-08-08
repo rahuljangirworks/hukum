@@ -1,4 +1,4 @@
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import type { CommGraphEvent } from "@/lib/comm-graph/comm-graph-events";
 import { dialableHostEndpointFor } from "@/lib/host/transport-key";
 

@@ -25,7 +25,7 @@ describe("rename-aside CLI binary install (Windows lock workaround)", () => {
 
   beforeEach(async () => {
     dir = await mkdtemp(join(tmpdir(), "cli-rename-aside-"));
-    stablePath = join(dir, "traycer.exe");
+    stablePath = join(dir, "hukum.exe");
   });
 
   afterEach(async () => {
@@ -37,7 +37,7 @@ describe("rename-aside CLI binary install (Windows lock workaround)", () => {
     await renameCliBinaryAside(stablePath);
     const names = await readdir(dir);
     expect(names).toHaveLength(1);
-    expect(names[0]).toMatch(/^traycer\.exe\.old-\d+$/);
+    expect(names[0]).toMatch(/^hukum\.exe\.old-\d+$/);
     expect(await readFile(join(dir, names[0]), "utf8")).toBe(
       "old-binary-bytes",
     );
@@ -55,14 +55,14 @@ describe("rename-aside CLI binary install (Windows lock workaround)", () => {
     await writeFile(join(dir, "unrelated.txt"), "keep");
     await sweepAsideCliBinaries(stablePath);
     expect((await readdir(dir)).sort()).toEqual([
-      "traycer.exe",
+      "hukum.exe",
       "unrelated.txt",
     ]);
   });
 
   it("sweep tolerates a missing directory", async () => {
     await expect(
-      sweepAsideCliBinaries(join(dir, "nope", "traycer.exe")),
+      sweepAsideCliBinaries(join(dir, "nope", "hukum.exe")),
     ).resolves.toBeUndefined();
   });
 
@@ -77,10 +77,10 @@ describe("rename-aside CLI binary install (Windows lock workaround)", () => {
     await writeFile(stablePath, "new");
     const names = (await readdir(dir)).sort();
     expect(names).toHaveLength(2);
-    expect(names).toContain("traycer.exe");
-    expect(names.some((name) => /^traycer\.exe\.old-\d+$/.test(name))).toBe(
+    expect(names).toContain("hukum.exe");
+    expect(names.some((name) => /^hukum\.exe\.old-\d+$/.test(name))).toBe(
       true,
     );
-    expect(names).not.toContain("traycer.exe.old-111");
+    expect(names).not.toContain("hukum.exe.old-111");
   });
 });

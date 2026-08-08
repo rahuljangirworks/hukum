@@ -17,7 +17,7 @@
  * process".
  *
  * That was not a theoretical risk. It is the mechanism behind
- * traycerai/traycer#740, where the same false verdict simultaneously made a
+ * hukumai/hukum#740, where the same false verdict simultaneously made a
  * host answering a WebSocket handshake in 8ms report as unreachable AND
  * dropped the "never auto-restart a host whose process still exists" guard
  * that exists to stop exactly that outcome.
@@ -46,7 +46,7 @@
  * The reader cannot be shared. It needs `node:fs` / `node:child_process`, and
  * the two consumers sit on opposite sides of the OSS/internal boundary -
  * `clients/shared/host-lock` (published by the desktop and the CLI) and
- * `traycer-host` (which publishes the token into `pid.json`). So there are
+ * `hukum-host` (which publishes the token into `pid.json`). So there are
  * deliberately two implementations, and the thing that keeps them honest is
  * this module: the token format is stated once, both sides build tokens
  * through these helpers, and `__tests__/process-start-identity.test.ts` pins

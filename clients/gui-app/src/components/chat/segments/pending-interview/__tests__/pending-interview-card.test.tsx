@@ -10,7 +10,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type {
   InterviewAnswer,
   InterviewQuestion,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import { PendingInterviewCard } from "@/components/chat/segments/pending-interview/pending-interview-card";
 import { focusActiveComposer } from "@/lib/composer/composer-focus-registry";
 import { TooltipProvider } from "@/components/ui/tooltip";

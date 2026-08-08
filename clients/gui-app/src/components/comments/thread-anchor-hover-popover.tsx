@@ -16,8 +16,8 @@ import {
   shift,
 } from "@floating-ui/dom";
 import type { Editor } from "@tiptap/core";
-import { type EpicArtifactKind } from "@traycer/protocol/common/registry";
-import type { CommentThreadWire } from "@traycer/protocol/host/epic/unary-schemas";
+import { type EpicArtifactKind } from "@hukum/protocol/common/registry";
+import type { CommentThreadWire } from "@hukum/protocol/host/epic/unary-schemas";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { usePanePortalContainer } from "@/components/epic-tabs/pane-visibility-context";

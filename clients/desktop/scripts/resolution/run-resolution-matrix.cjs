@@ -139,7 +139,7 @@ async function main() {
 
 async function runScenario(scenario, outputDir) {
   const profileDir = await mkdtemp(
-    path.join(os.tmpdir(), `traycer-resolution-${slug(scenario.name)}-`),
+    path.join(os.tmpdir(), `hukum-resolution-${slug(scenario.name)}-`),
   );
   const homeDir = path.join(profileDir, "home");
   await mkdir(homeDir, { recursive: true });
@@ -168,14 +168,14 @@ async function runScenario(scenario, outputDir) {
     return {
       ...scenario,
       profileDir:
-        process.env.TRAYCER_RESOLUTION_KEEP_PROFILES === "1"
+        process.env.HUKUM_RESOLUTION_KEEP_PROFILES === "1"
           ? profileDir
           : null,
       assertions,
       passes,
     };
   } finally {
-    if (process.env.TRAYCER_RESOLUTION_KEEP_PROFILES !== "1") {
+    if (process.env.HUKUM_RESOLUTION_KEEP_PROFILES !== "1") {
       await rm(profileDir, { recursive: true, force: true });
     }
   }
@@ -206,13 +206,13 @@ async function runElectronPass(
   const childEnv = {
     ...createResolutionChildEnv(process.env),
     HOME: homeDir,
-    TRAYCER_DESKTOP_DEV_APP_PATH: workspaceRoot,
-    TRAYCER_RESOLUTION_TEST_DISABLE_MAXIMIZE: "1",
-    TRAYCER_RESOLUTION_TEST_USE_BUILT_RENDERER: "1",
-    TRAYCER_RESOLUTION_TEST_USER_DATA_DIR: profileDir,
-    TRAYCER_RESOLUTION_TEST_DISPLAY_BOUNDS: `${scenario.width}x${scenario.height}`,
-    TRAYCER_RESOLUTION_TEST_DISPLAY_SCALE_FACTOR: String(scenario.scaleFactor),
-    TRAYCER_RESOLUTION_TEST_WINDOW_BOUNDS: `${scenario.width}x${scenario.height}`,
+    HUKUM_DESKTOP_DEV_APP_PATH: workspaceRoot,
+    HUKUM_RESOLUTION_TEST_DISABLE_MAXIMIZE: "1",
+    HUKUM_RESOLUTION_TEST_USE_BUILT_RENDERER: "1",
+    HUKUM_RESOLUTION_TEST_USER_DATA_DIR: profileDir,
+    HUKUM_RESOLUTION_TEST_DISPLAY_BOUNDS: `${scenario.width}x${scenario.height}`,
+    HUKUM_RESOLUTION_TEST_DISPLAY_SCALE_FACTOR: String(scenario.scaleFactor),
+    HUKUM_RESOLUTION_TEST_WINDOW_BOUNDS: `${scenario.width}x${scenario.height}`,
   };
   delete childEnv.ELECTRON_RUN_AS_NODE;
 
@@ -274,7 +274,7 @@ async function runElectronPass(
 function createResolutionChildEnv(env) {
   const childEnv = { ...env };
   delete childEnv.DEV_DESKTOP_SLOT;
-  delete childEnv.TRAYCER_DESKTOP_DEV_DISPLAY_NAME;
+  delete childEnv.HUKUM_DESKTOP_DEV_DISPLAY_NAME;
   return childEnv;
 }
 

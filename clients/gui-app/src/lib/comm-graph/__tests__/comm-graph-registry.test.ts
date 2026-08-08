@@ -12,7 +12,7 @@ import type {
   CommGraphSubscriptionManager,
   CommGraphSubscriptionRequest,
 } from "@/lib/comm-graph/comm-graph-subscription";
-import type { EpicCommunicationGraphEvent } from "@traycer/protocol/host/epic/communication-graph";
+import type { EpicCommunicationGraphEvent } from "@hukum/protocol/host/epic/communication-graph";
 
 interface RecordedOpener {
   readonly opener: (request: CommGraphSubscriptionRequest) => {

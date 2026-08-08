@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { DEFAULT_ACCOUNT_CONTEXT } from "@traycer/protocol/common/schemas";
+import { DEFAULT_ACCOUNT_CONTEXT } from "@hukum/protocol/common/schemas";
 import type {
   ProviderId,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { profileCommitId } from "@/components/providers/provider-profile-model";
 import { providerRateLimitQueryOptions } from "@/hooks/host/provider-rate-limit-query-options";
 import type { HostRequestSpec } from "@/hooks/host/use-host-queries";

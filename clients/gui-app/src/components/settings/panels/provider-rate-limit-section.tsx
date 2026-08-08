@@ -1,5 +1,5 @@
 import { useCallback, type ReactNode } from "react";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import { RefreshIconButton } from "@/components/refresh-icon-button";
 import { ProviderRateLimitBody } from "@/components/settings/panels/provider-rate-limit-views";
 import { resolveCodexResetCreditAction } from "@/components/settings/panels/codex-reset-credit-availability";

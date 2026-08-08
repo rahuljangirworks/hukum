@@ -1183,8 +1183,8 @@ describe("makeSelectIsActiveTile", () => {
     const tile = makePrDetailTile({
       hostId: TEST_HOST_ID,
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer-internal",
+      owner: "hukumai",
+      repo: "hukum-internal",
       prNumber: 4226,
       name: "Remote Host Support",
     });
@@ -1204,16 +1204,16 @@ describe("makeSelectIsActiveTile", () => {
     const shown = makePrDetailTile({
       hostId: TEST_HOST_ID,
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer-internal",
+      owner: "hukumai",
+      repo: "hukum-internal",
       prNumber: 4226,
       name: "Shown",
     });
     const hidden = makePrDetailTile({
       hostId: TEST_HOST_ID,
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
       prNumber: 675,
       name: "Hidden",
     });
@@ -1232,16 +1232,16 @@ describe("makeSelectIsActiveTile", () => {
     const left = makePrDetailTile({
       hostId: TEST_HOST_ID,
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer-internal",
+      owner: "hukumai",
+      repo: "hukum-internal",
       prNumber: 4226,
       name: "Left",
     });
     const right = makePrDetailTile({
       hostId: TEST_HOST_ID,
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
       prNumber: 675,
       name: "Right",
     });

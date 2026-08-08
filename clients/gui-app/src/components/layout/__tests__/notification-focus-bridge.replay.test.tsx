@@ -22,11 +22,11 @@ import {
 } from "@testing-library/react";
 import { useEffect, useState, type ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
 import { buildNotificationActivationEnvelope } from "@/lib/notifications/notification-activation-envelope";
 import { NotificationFocusBridge } from "@/components/layout/bridges/notification-focus-bridge";
@@ -36,7 +36,7 @@ import {
   useHostNotificationsStore,
 } from "@/stores/notifications/host-notifications-store";
 import { useNotificationEventsStore } from "@/stores/notifications/notification-events-store";
-import type { HostNotificationEntry } from "@traycer/protocol/host/notifications/contracts";
+import type { HostNotificationEntry } from "@hukum/protocol/host/notifications/contracts";
 import { useNotificationsPopoverStore } from "@/stores/notifications/notifications-popover-store";
 import { __resetTabNavigationControllerForTesting } from "@/lib/tab-navigation";
 

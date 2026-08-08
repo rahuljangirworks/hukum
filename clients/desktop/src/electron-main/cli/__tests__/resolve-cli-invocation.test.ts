@@ -10,17 +10,17 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { sandboxHome } from "../../__tests__/sandbox-home";
 
-// Native-packaging ticket - `resolveTraycerCliInvocation` in packaged
+// Native-packaging ticket - `resolveHukumCliInvocation` in packaged
 // mode must use the CLI discovery model (Tech Plan Decision 6):
-//   1. CLI manifest (~/.traycer/cli/manifest.json)
-//   2. PATH fallback (`traycer` / `traycer.exe`)
+//   1. CLI manifest (~/.hukum/cli/manifest.json)
+//   2. PATH fallback (`hukum` / `hukum.exe`)
 //   3. Bundled CLI in extraResources, arch-scoped first, flat fallback
-// It must NOT hardcode `<resourcesPath>/cli/traycer` - that broke
+// It must NOT hardcode `<resourcesPath>/cli/hukum` - that broke
 // Windows (`.exe`) packaging and ignored package-manager / PATH installs.
 //
 // The tests below stub the user home + electron resourcesPath onto a
 // throwaway directory so we can stage manifests / bundled binaries and
-// observe which one `resolveTraycerCliInvocation` picks.
+// observe which one `resolveHukumCliInvocation` picks.
 
 let work: string;
 let homeDir: string;
@@ -29,7 +29,7 @@ let manifestPath: string;
 let resourcesDir: string;
 
 function writeManifest(binaryPath: string, version: string): void {
-  mkdirSync(join(homeDir, ".traycer", "cli"), { recursive: true });
+  mkdirSync(join(homeDir, ".hukum", "cli"), { recursive: true });
   writeFileSync(
     manifestPath,
     JSON.stringify({
@@ -91,7 +91,7 @@ vi.mock("electron", () => ({
 
 // CLI discovery is environment-scoped (`config.environment`). These cases
 // cover the shipped resolution order on the production slot, where the CLI
-// home has no suffix (`~/.traycer/cli/...`), matching the manifest/bundled
+// home has no suffix (`~/.hukum/cli/...`), matching the manifest/bundled
 // paths the helpers below stage.
 vi.mock("../../../config", async (importActual) => {
   const actual = await importActual<typeof import("../../../config")>();
@@ -103,13 +103,13 @@ vi.mock("../../../config", async (importActual) => {
 });
 
 beforeEach(() => {
-  work = mkdtempSync(join(tmpdir(), "traycer-cli-discovery-"));
+  work = mkdtempSync(join(tmpdir(), "hukum-cli-discovery-"));
   homeDir = join(work, "home");
   resourcesDir = join(work, "resources");
   mkdirSync(homeDir, { recursive: true });
   mkdirSync(resourcesDir, { recursive: true });
-  cliBinDir = join(homeDir, ".traycer", "cli", "bin");
-  manifestPath = join(homeDir, ".traycer", "cli", "manifest.json");
+  cliBinDir = join(homeDir, ".hukum", "cli", "bin");
+  manifestPath = join(homeDir, ".hukum", "cli", "manifest.json");
   sandboxHome(homeDir);
   Object.defineProperty(process, "resourcesPath", {
     value: resourcesDir,
@@ -123,27 +123,27 @@ afterEach(() => {
   vi.resetModules();
 });
 
-describe("resolveTraycerCliInvocation (shipped / non-dev) - CLI discovery model", () => {
-  it("uses the manifest binary when ~/.traycer/cli/manifest.json points at a real executable", async () => {
+describe("resolveHukumCliInvocation (shipped / non-dev) - CLI discovery model", () => {
+  it("uses the manifest binary when ~/.hukum/cli/manifest.json points at a real executable", async () => {
     mkdirSync(cliBinDir, { recursive: true });
     const cliBinaryName =
-      process.platform === "win32" ? "traycer.exe" : "traycer";
+      process.platform === "win32" ? "hukum.exe" : "hukum";
     const installed = join(cliBinDir, cliBinaryName);
     writeExecutable(installed);
     writeManifest(installed, "2.0.0");
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(installed);
     expect(inv.args).toEqual([]);
   });
 
-  it("trusts a manifest binary outside the Desktop-owned cli/bin (e.g. Homebrew at /opt/homebrew/bin/traycer) without falling back to bundled", async () => {
+  it("trusts a manifest binary outside the Desktop-owned cli/bin (e.g. Homebrew at /opt/homebrew/bin/hukum) without falling back to bundled", async () => {
     const externalDir = join(work, "homebrew", "bin");
     mkdirSync(externalDir, { recursive: true });
     const externalBin = join(
       externalDir,
-      process.platform === "win32" ? "traycer.exe" : "traycer",
+      process.platform === "win32" ? "hukum.exe" : "hukum",
     );
     writeExecutable(externalBin);
     writeManifest(externalBin, "2.1.0");
@@ -151,22 +151,22 @@ describe("resolveTraycerCliInvocation (shipped / non-dev) - CLI discovery model"
     stageBundledCli({
       archScoped: true,
       flat: false,
-      binaryName: process.platform === "win32" ? "traycer.exe" : "traycer",
+      binaryName: process.platform === "win32" ? "hukum.exe" : "hukum",
     });
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(externalBin);
   });
 
   it("falls back to the bundled CLI under the arch-scoped resources directory when no manifest / PATH CLI is present", async () => {
     // Wipe PATH so PATH discovery returns null.
     process.env.PATH = "";
-    const binaryName = process.platform === "win32" ? "traycer.exe" : "traycer";
+    const binaryName = process.platform === "win32" ? "hukum.exe" : "hukum";
     stageBundledCli({ archScoped: true, flat: false, binaryName });
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(
       join(
         resourcesDir,
@@ -179,11 +179,11 @@ describe("resolveTraycerCliInvocation (shipped / non-dev) - CLI discovery model"
 
   it("falls back to the flat bundled CLI when arch-scoped is absent (legacy `make install-desktop` layout)", async () => {
     process.env.PATH = "";
-    const binaryName = process.platform === "win32" ? "traycer.exe" : "traycer";
+    const binaryName = process.platform === "win32" ? "hukum.exe" : "hukum";
     stageBundledCli({ archScoped: false, flat: true, binaryName });
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(join(resourcesDir, "cli", binaryName));
   });
 
@@ -198,19 +198,19 @@ describe("resolveTraycerCliInvocation (shipped / non-dev) - CLI discovery model"
     stageBundledCli({
       archScoped: true,
       flat: false,
-      binaryName: "traycer.exe",
+      binaryName: "hukum.exe",
     });
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
-    expect(inv.command.toLowerCase().endsWith("traycer.exe")).toBe(true);
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
+    expect(inv.command.toLowerCase().endsWith("hukum.exe")).toBe(true);
   });
 
   it("throws a packaging-error when no manifest, PATH CLI, or bundled CLI is reachable", async () => {
     process.env.PATH = "";
     // No manifest, no PATH, no bundled.
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    await expect(resolveTraycerCliInvocation()).rejects.toThrow(/no CLI found/);
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    await expect(resolveHukumCliInvocation()).rejects.toThrow(/no CLI found/);
   });
 });
 

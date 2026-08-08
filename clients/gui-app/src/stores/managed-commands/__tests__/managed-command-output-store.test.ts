@@ -4,9 +4,9 @@ import {
   type ManagedCommandLogLine,
   type ManagedCommandLogPosition,
   type ManagedCommandSubscribeOutputClientFrame,
-} from "@traycer/protocol/host/managed-command/subscribe";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
-import type { ManagedCommandOutputStreamCallbacks } from "@traycer-clients/shared/host-transport/managed-command-output-stream-client";
+} from "@hukum/protocol/host/managed-command/subscribe";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommandOutputStreamCallbacks } from "@hukum-clients/shared/host-transport/managed-command-output-stream-client";
 import {
   createManagedCommandOutputStore,
   MANAGED_COMMAND_OLDER_PAGE_LINES,

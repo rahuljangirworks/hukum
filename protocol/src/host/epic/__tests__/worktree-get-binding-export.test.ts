@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import * as hostIndex from "@traycer/protocol/host/index";
+import * as hostIndex from "@hukum/protocol/host/index";
 import {
   hostRpcRegistry,
   worktreeGetBindingV10,
@@ -8,7 +8,7 @@ import {
   workspaceBindingRemoveEntryV10,
   workspaceBindingRemoveEntryRequestSchema,
   workspaceBindingRemoveEntryResponseSchema,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 
 /**
  * `worktree.getBinding` is an additive read RPC used by non-chat surfaces

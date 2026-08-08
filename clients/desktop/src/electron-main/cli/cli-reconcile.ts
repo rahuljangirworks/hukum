@@ -42,7 +42,7 @@ type PackageManagerSource =
  *   - If the installed manifest/PATH CLI is **newer** than (or equal to)
  *     the bundled CLI, trust it silently for the session. A PATH CLI is
  *     only ever trusted after a successful `--version` probe: a PATH name
- *     that cannot answer is not a Traycer CLI (oss #872: the name squatted
+ *     that cannot answer is not a Hukum CLI (oss #872: the name squatted
  *     by a desktop-app launcher) and routes to bundled staging instead.
  *
  *   - If no installed CLI exists, leave staging to the first-launch
@@ -129,19 +129,19 @@ function packageManagerUpgradeHint(source: PackageManagerSource): string {
     case "homebrew":
       // Must match the Homebrew formula name shipped via
       // scripts/native-packaging/publish-cli-package-managers.cjs
-      // (`Formula/traycer.rb`) and the CLI self-upgrade guidance in
-      // traycer-cli/src/commands/cli-upgrade.ts.
-      return "brew upgrade traycer";
+      // (`Formula/hukum.rb`) and the CLI self-upgrade guidance in
+      // hukum-cli/src/commands/cli-upgrade.ts.
+      return "brew upgrade hukum";
     case "npm":
-      return "npm install -g @traycerai/cli@latest";
+      return "npm install -g @hukumai/cli@latest";
     case "winget":
-      return "winget upgrade Traycer.CLI";
+      return "winget upgrade Hukum.CLI";
     case "scoop":
-      return "scoop update traycer-cli";
+      return "scoop update hukum-cli";
     case "apt":
-      return "sudo apt update && sudo apt install --only-upgrade traycer-cli";
+      return "sudo apt update && sudo apt install --only-upgrade hukum-cli";
     case "rpm":
-      return "sudo dnf upgrade traycer-cli";
+      return "sudo dnf upgrade hukum-cli";
   }
 }
 
@@ -273,13 +273,13 @@ export async function reconcileCli(
           binaryPath: discovery.binaryPath,
         };
       }
-      // A `traycer` on PATH that cannot print its version is not a usable
+      // A `hukum` on PATH that cannot print its version is not a usable
       // CLI. Trusting it anyway is what suppressed bundled staging and
       // bricked first-launch service install when the name was squatted by
       // a desktop-app launcher (oss #872) - fall through to the
       // fresh-install staging below instead.
       deps.logger.warn(
-        "[cli-reconcile] PATH `traycer` failed the version probe - treating it as not-a-CLI and staging the bundled CLI",
+        "[cli-reconcile] PATH `hukum` failed the version probe - treating it as not-a-CLI and staging the bundled CLI",
         { binaryPath: discovery.binaryPath, bundledVersion },
       );
     }
@@ -288,11 +288,11 @@ export async function reconcileCli(
       (discovery.kind === "bundled" || discovery.kind === "path") &&
       bundledPath !== null
     ) {
-      // Fresh install: no manifest, and either no `traycer` on PATH or only
+      // Fresh install: no manifest, and either no `hukum` on PATH or only
       // a probe-failed imposter under that name, but the app ships a bundled
       // CLI. Stage it into the Desktop-owned slot (a symlink on
       // POSIX) so the bundle-blind host has a deterministic, space-free
-      // `~/.traycer/cli[/<slot>]/bin/traycer` to put on PATH for the monitor /
+      // `~/.hukum/cli[/<slot>]/bin/hukum` to put on PATH for the monitor /
       // title hooks / terminal agents. Nothing else self-heals this slot.
       const installedPath = await deps.installBundledCli({
         bundledCliPath: bundledPath,
@@ -319,7 +319,7 @@ export async function reconcileCli(
   // can remove the slot symlink while `manifest.json` lingers - its recorded
   // version still "trusts equal/newer" in the compare below, so without this
   // guard reconcile hands back a dead `binaryPath` and the bundle-blind host
-  // never gets a `traycer` on PATH (monitor / title hooks / terminal agents
+  // never gets a `hukum` on PATH (monitor / title hooks / terminal agents
   // all exit 127). When the manifest points at our own slot symlink and that
   // symlink is gone, re-stage the bundled CLI to recreate it before trusting
   // the manifest. PATH / package-manager manifests point outside our slot, so
@@ -511,7 +511,7 @@ export async function reconcileCli(
     });
     // Stage the bundled CLI into a writable Desktop-owned path before
     // recording `pendingUpgrade`. The staged copy is the artifact that
-    // `traycer cli upgrade` will rename onto the live binary path once the
+    // `hukum cli upgrade` will rename onto the live binary path once the
     // service restarts and releases the lock. We deliberately do NOT point
     // `stagedBinaryPath` at `process.resourcesPath` (packaged app
     // resources) or at the live `manifest.binaryPath` (renaming a file
@@ -565,8 +565,8 @@ async function persistPackageManagerUpgradeHint(
 ): Promise<string> {
   const upgradeHint = packageManagerUpgradeHint(args.source);
   // Persist the hint to a Desktop-owned sidecar so the renderer's
-  // `cliManifest()` IPC can surface "your homebrew traycer is N
-  // versions behind - `brew upgrade traycer`" without Desktop ever
+  // `cliManifest()` IPC can surface "your homebrew hukum is N
+  // versions behind - `brew upgrade hukum`" without Desktop ever
   // writing into the package-manager-owned manifest file.
   try {
     await deps.writeDesktopReconcileState({
@@ -616,7 +616,7 @@ async function persistPendingUpgrade(
 /**
  * Launch-time gate around `reconcileCli`. The dev slot's CLI lifecycle is
  * owned by the `make dev-desktop` orchestrator: it stages the dev wrapper at
- * `~/.traycer/cli/dev/bin/traycer`, which the desktop resolves via the
+ * `~/.hukum/cli/dev/bin/hukum`, which the desktop resolves via the
  * bundled-CLI path (see `resolveBundledCliPath`). The desktop's
  * reconcile/upgrade machinery (version probes, pending-upgrade staging,
  * package-manager hints) only applies to shipped builds, so it is skipped on
@@ -635,7 +635,7 @@ export async function runLaunchTimeCliReconciliation(args: {
 }): Promise<CliReconcileOutcome> {
   if (args.isDevDesktop) {
     args.deps.logger.info(
-      "[cli-reconcile] dev desktop detected - skipping launch-time reconciliation against production ~/.traycer/cli (dev CLI wrapper is staged by make dev-desktop)",
+      "[cli-reconcile] dev desktop detected - skipping launch-time reconciliation against production ~/.hukum/cli (dev CLI wrapper is staged by make dev-desktop)",
     );
     return { kind: "skipped-dev-desktop" };
   }
@@ -644,7 +644,7 @@ export async function runLaunchTimeCliReconciliation(args: {
 
 async function clearPackageManagerHint(deps: ReconcileCliDeps): Promise<void> {
   // Clear stale hints so the renderer never shows "upgrade your homebrew
-  // traycer" once the user has upgraded (next reconcile sees the new
+  // hukum" once the user has upgraded (next reconcile sees the new
   // version and lands here).
   try {
     await deps.writeDesktopReconcileState({ packageManagerUpgrade: null });

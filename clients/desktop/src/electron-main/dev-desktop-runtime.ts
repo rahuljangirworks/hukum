@@ -1,7 +1,7 @@
 import type { Environment } from "../config";
 import { devDesktopSlotForEnvironment } from "./host/dev-desktop-slot";
 
-export const DEV_DESKTOP_DISPLAY_NAME_ENV = "TRAYCER_DESKTOP_DEV_DISPLAY_NAME";
+export const DEV_DESKTOP_DISPLAY_NAME_ENV = "HUKUM_DESKTOP_DEV_DISPLAY_NAME";
 
 export interface DesktopRuntimeIdentity {
   readonly appName: string;

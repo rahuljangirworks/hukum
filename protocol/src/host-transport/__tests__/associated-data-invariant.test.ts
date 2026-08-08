@@ -6,7 +6,7 @@ import {
   NoiseDecryptError,
   NoiseSession,
   DEFAULT_REPLAY_WINDOW_SIZE,
-} from "@traycer/protocol/crypto/noise";
+} from "@hukum/protocol/crypto/noise";
 import { TRANSPORT_HEADER_LEN, TAG_LEN } from "../../crypto/noise/constants";
 import {
   decodeMuxFrame,
@@ -24,7 +24,7 @@ import {
  * `sid` (+ the transport suite-version byte) — every mux field (`type`,
  * `streamId`, `seq`, `qos`/flags, `json`, `binary`) is folded into the
  * plaintext that gets encrypted whole. Both production channels
- * (`traycer-host/src/transport/remote/noise-responder.ts` and
+ * (`hukum-host/src/transport/remote/noise-responder.ts` and
  * `clients/shared/host-transport/remote/noise-channel.ts`) call
  * `NoiseSession.encrypt`/`decrypt` with an EMPTY associated-data array — that
  * is correct *only* as long as the invariant above holds. This suite pins it:

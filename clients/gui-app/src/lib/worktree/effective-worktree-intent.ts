@@ -1,7 +1,7 @@
 import type {
   WorktreeFolderIntent,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import type { LandingDraftWorkspaceSnapshot } from "@/stores/home/landing-draft-store";
 import { buildForkWorkspaceSeedFromWorkspaceFolders } from "./fork-workspace-seed";
 import { resolvePrimaryPath } from "./resolve-primary-path";

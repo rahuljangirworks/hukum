@@ -1,4 +1,4 @@
-import type { ChatApprovalState } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { ChatApprovalState } from "@hukum/protocol/host/agent/gui/subscribe";
 
 export function visibleComposerApprovals(
   approvals: ReadonlyArray<ChatApprovalState>,

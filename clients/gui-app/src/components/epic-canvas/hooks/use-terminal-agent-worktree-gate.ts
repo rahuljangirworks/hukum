@@ -1,9 +1,9 @@
 import { useCallback } from "react";
-import type { TuiHarnessId } from "@traycer/protocol/persistence/epic/schemas";
+import type { TuiHarnessId } from "@hukum/protocol/persistence/epic/schemas";
 import type {
   WorktreeBindingWorkspaceMode,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { useCreateTuiAgent } from "@/hooks/agent/use-create-tui-agent";
 import { useWorktreeIntentMemoryStore } from "@/stores/worktree/worktree-intent-memory-store";
 import {

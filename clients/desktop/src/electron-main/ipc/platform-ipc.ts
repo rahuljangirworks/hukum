@@ -75,8 +75,8 @@ import {
   readLogLevels,
   setAgentRolesEnabled,
   setLogLevels,
-} from "@traycer/protocol/config/store";
-import { isLogLevel, type LogLevel } from "@traycer/protocol/config/log-level";
+} from "@hukum/protocol/config/store";
+import { isLogLevel, type LogLevel } from "@hukum/protocol/config/log-level";
 import type {
   LogLevelScope,
   LogLevelsSnapshot,
@@ -102,7 +102,7 @@ export function registerPlatformIpc(
       // Write under the OS temp dir, not `userData` - these are throwaway
       // copies of dragged-in documents. `temp` is OS-reclaimed, so a forgotten
       // file can't silently persist a user's private document across restarts.
-      const directory = path.join(app.getPath("temp"), "traycer-dropped-files");
+      const directory = path.join(app.getPath("temp"), "hukum-dropped-files");
       await mkdir(directory, { recursive: true });
       const fileName = buildTemporaryDroppedFileName(file.name, file.type);
       const target = path.join(directory, fileName);
@@ -121,7 +121,7 @@ export function registerPlatformIpc(
       // ephemeral source the OS deletes shortly after the drag. Copy it now,
       // while it still exists, so the path pasted into the terminal stays valid
       // when the running program reads it.
-      const directory = path.join(app.getPath("temp"), "traycer-dropped-files");
+      const directory = path.join(app.getPath("temp"), "hukum-dropped-files");
       await mkdir(directory, { recursive: true });
       return Promise.all(
         sourcePaths.map((sourcePath) =>

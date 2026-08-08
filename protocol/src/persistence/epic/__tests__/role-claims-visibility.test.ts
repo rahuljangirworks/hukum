@@ -17,7 +17,7 @@ import { describe, expect, it } from "vitest";
 import {
   projectVisibleRoleClaims,
   type RoleClaim,
-} from "@traycer/protocol/persistence/epic/role-claims";
+} from "@hukum/protocol/persistence/epic/role-claims";
 
 const USER_A = "user-a";
 const USER_B = "user-b";

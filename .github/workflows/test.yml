@@ -20,7 +20,7 @@ concurrency:
 jobs:
   test:
     name: ${{ matrix.name }}
-    runs-on: ${{ matrix.project == 'traycer-clients-gui-app' && 'ubuntu-latest-8-cores' || 'ubuntu-latest' }}
+    runs-on: ${{ matrix.project == 'hukum-clients-gui-app' && 'ubuntu-latest-8-cores' || 'ubuntu-latest' }}
     # The GUI suite deliberately runs isolated two-worker forks: disabling
     # isolation makes tests leak state. The organization caps every job at ten
     # minutes, so run its deterministic Vitest shards as parallel matrix jobs.
@@ -36,32 +36,32 @@ jobs:
         # names (gui-app's differs from its package scope). Keep in sync with
         # `nx show projects --with-target test`.
         include:
-          - project: "@traycer/protocol"
-            name: "test (@traycer/protocol)"
+          - project: "@hukum/protocol"
+            name: "test (@hukum/protocol)"
             test_args: ""
-          - project: traycer-clients-gui-app
-            name: "test (traycer-clients-gui-app)"
+          - project: hukum-clients-gui-app
+            name: "test (hukum-clients-gui-app)"
             test_args: "-- --shard=1/8"
-          - project: traycer-clients-gui-app
-            name: "test (traycer-clients-gui-app shard 2 of 8)"
+          - project: hukum-clients-gui-app
+            name: "test (hukum-clients-gui-app shard 2 of 8)"
             test_args: "-- --shard=2/8"
-          - project: traycer-clients-gui-app
-            name: "test (traycer-clients-gui-app shard 2)"
+          - project: hukum-clients-gui-app
+            name: "test (hukum-clients-gui-app shard 2)"
             test_args: "-- --shard=2/4"
-          - project: traycer-clients-gui-app
-            name: "test (traycer-clients-gui-app shard 3)"
+          - project: hukum-clients-gui-app
+            name: "test (hukum-clients-gui-app shard 3)"
             test_args: "-- --shard=3/4"
-          - project: traycer-clients-gui-app
-            name: "test (traycer-clients-gui-app shard 4)"
+          - project: hukum-clients-gui-app
+            name: "test (hukum-clients-gui-app shard 4)"
             test_args: "-- --shard=4/4"
-          - project: "@traycer-clients/desktop"
-            name: "test (@traycer-clients/desktop)"
+          - project: "@hukum-clients/desktop"
+            name: "test (@hukum-clients/desktop)"
             test_args: ""
-          - project: "@traycer-clients/shared"
-            name: "test (@traycer-clients/shared)"
+          - project: "@hukum-clients/shared"
+            name: "test (@hukum-clients/shared)"
             test_args: ""
-          - project: "@traycer-clients/traycer-cli"
-            name: "test (@traycer-clients/traycer-cli)"
+          - project: "@hukum-clients/hukum-cli"
+            name: "test (@hukum-clients/hukum-cli)"
             test_args: ""
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -102,7 +102,7 @@ jobs:
       # complete tree, so the blobs the oracle reads are all present (~2s, ~6MB;
       # a full `fetch-depth: 0` clone would buy nothing here).
       - name: Fetch the host-v1.1.5 tag the schema oracle regenerates from
-        if: matrix.project == '@traycer/protocol'
+        if: matrix.project == '@hukum/protocol'
         run: git fetch --depth=1 origin tag host-v1.1.5
       # `--outputStyle=stream` sends the child's stdout/stderr straight to the
       # step log. Nx's default buffers it into an internal stream and replays
@@ -174,7 +174,7 @@ jobs:
   # envelope implies exit 0", not "exit 0" — see the script header for why that
   # distinction keeps registry flakiness from turning this red.
   #
-  # Deliberately NOT path-filtered to `clients/traycer-cli/**`, even though the
+  # Deliberately NOT path-filtered to `clients/hukum-cli/**`, even though the
   # SEA build eats much of the ten-minute job cap: the exit path's behaviour
   # depends on dependencies it does not own — undici's global dispatcher and the
   # Sentry client are the two handles the teardown races against — so a
@@ -202,13 +202,13 @@ jobs:
             bun-${{ runner.os }}-
       - run: bun install --frozen-lockfile
       - name: Build the CLI SEA
-        run: bun run --filter @traycer-clients/traycer-cli build:sea
+        run: bun run --filter @hukum-clients/hukum-cli build:sea
       # Proves the artifact runs at all before the loop below attributes an
       # exit code to the teardown race.
       - name: SEA smoke
-        run: bun run --filter @traycer-clients/traycer-cli smoke:sea
+        run: bun run --filter @hukum-clients/hukum-cli smoke:sea
       - name: Exit-code repro loop
-        run: bun run --filter @traycer-clients/traycer-cli smoke:exit-code
+        run: bun run --filter @hukum-clients/hukum-cli smoke:exit-code
 
   # macOS job: the desktop workspace's packaging/signing-adjacent assertions
   # (prepack unit suite + the real electron-builder pack in test:packaging)
@@ -247,12 +247,12 @@ jobs:
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: .nx/cache
-          key: nx-${{ runner.os }}-@traycer-clients/desktop-${{ github.sha }}
+          key: nx-${{ runner.os }}-@hukum-clients/desktop-${{ github.sha }}
           restore-keys: |
-            nx-${{ runner.os }}-@traycer-clients/desktop-
+            nx-${{ runner.os }}-@hukum-clients/desktop-
       - run: bun install --frozen-lockfile
       - name: Desktop unit tests (darwin-gated blocks included)
-        run: bunx nx run-many --target=test --projects="@traycer-clients/desktop" --tui=false
+        run: bunx nx run-many --target=test --projects="@hukum-clients/desktop" --tui=false
       - name: Real electron-builder packaging test
         run: bun run test:packaging
         working-directory: clients/desktop

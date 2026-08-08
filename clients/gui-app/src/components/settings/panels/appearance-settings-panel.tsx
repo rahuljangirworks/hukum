@@ -226,7 +226,7 @@ export function AppearanceSettingsPanel() {
         >
           <SettingsRow
             label="UI font"
-            description="Font and size used across the Traycer interface."
+            description="Font and size used across the Hukum interface."
             control={
               <div className="flex flex-col items-end gap-2">
                 <FontPicker

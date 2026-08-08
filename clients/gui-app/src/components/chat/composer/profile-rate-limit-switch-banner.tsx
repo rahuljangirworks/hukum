@@ -7,11 +7,11 @@ import {
   type ReactNode,
 } from "react";
 import { AlertTriangle, ChevronDown, X } from "lucide-react";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import type {
   ProviderId,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { HarnessIcon } from "@/components/home/pickers/harness-icon";
 import { AccentDot } from "@/components/providers/accent-dot";
 import {

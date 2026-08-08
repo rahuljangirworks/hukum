@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   CanonicalTerminalSessionInfoWithCurrentCwd,
   TerminalScope,
-} from "@traycer/protocol/host/terminal/unary-schemas";
+} from "@hukum/protocol/host/terminal/unary-schemas";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useTerminalListFor } from "@/hooks/terminal/use-terminal-list-for-query";
 import { terminalSessionTitle } from "@/lib/terminals/terminal-title";

@@ -2,15 +2,15 @@ import { type ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
 import {
   hostRpcRegistry,
   type HostRpcRegistry,
-} from "@traycer/protocol/host/index";
-import type { SetChatArchivedRequest } from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/index";
+import type { SetChatArchivedRequest } from "@hukum/protocol/host/epic/unary-schemas";
 import { useEpicArchiveChat } from "@/hooks/epic/use-epic-chat-mutations";
 import { EpicSessionHostClientContext } from "@/lib/registries/epic-session-registry";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";

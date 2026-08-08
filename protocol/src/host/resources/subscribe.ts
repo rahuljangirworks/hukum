@@ -36,8 +36,8 @@
  * - `ping` - heartbeat. No application client frames.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
-import { defineRpcContract } from "@traycer/protocol/framework/index";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
+import { defineRpcContract } from "@hukum/protocol/framework/index";
 
 export const resourcesSubscribeOpenRequestV10Schema = z.object({
   epicId: z.string(),

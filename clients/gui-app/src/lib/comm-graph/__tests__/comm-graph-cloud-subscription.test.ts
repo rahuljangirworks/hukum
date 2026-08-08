@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { HostCommunicationGraphCloudFeedEvent } from "@traycer/protocol/host/epic/communication-graph";
+import type { HostCommunicationGraphCloudFeedEvent } from "@hukum/protocol/host/epic/communication-graph";
 import {
   CommGraphCloudSubscriptionManager,
   selectCommGraphAuthoritativeSnapshot,

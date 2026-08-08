@@ -9,7 +9,7 @@ import {
 } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { WorktreeBinding } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeBinding } from "@hukum/protocol/host/worktree-schemas";
 import type { TuiAgentProjection } from "@/stores/epics/open-epic/types";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
@@ -351,7 +351,7 @@ describe("<TuiAgentTile /> fork split button", () => {
         (item instanceof HTMLButtonElement && item.disabled),
     ).toBe(true);
     expect(tooltipTextNear(item)).toBe(
-      "Update Traycer host to continue this session under another profile.",
+      "Update Hukum host to continue this session under another profile.",
     );
     // amend-02 a11y fix: Radix's roving-tabindex skips this disabled item
     // entirely, so keyboard/AT users never focus it to hear the aria-label
@@ -360,7 +360,7 @@ describe("<TuiAgentTile /> fork split button", () => {
     // focus or hover.
     expect(
       within(item).getByText(
-        "Update Traycer host to continue this session under another profile.",
+        "Update Hukum host to continue this session under another profile.",
       ),
     ).not.toBeNull();
 

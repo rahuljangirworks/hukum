@@ -42,24 +42,24 @@ import { transientLiveAssistantMessageId } from "@/lib/chat/transient-live-assis
 import type {
   ChatStreamCallbacks,
   ChatStreamClient,
-} from "@traycer-clients/shared/host-transport/chat-stream-client";
+} from "@hukum-clients/shared/host-transport/chat-stream-client";
 import type {
   StreamCloseReason,
   StreamConnectionStatus,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   RuntimeApprovalDecision,
   RuntimeEvent,
-} from "@traycer/protocol/host/agent/gui/agent-runtime";
-import { AUTH_ERROR_CODE } from "@traycer/protocol/host/agent/gui/agent-runtime";
+} from "@hukum/protocol/host/agent/gui/agent-runtime";
+import { AUTH_ERROR_CODE } from "@hukum/protocol/host/agent/gui/agent-runtime";
 import {
   accumulateTurnContent,
   finalizeStreamingActionBlocks,
   reopenStreamingSubagentBlocks,
   type FinalizedActionStatus,
-} from "@traycer/protocol/host/agent/gui/agent-runtime-accumulator";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+} from "@hukum/protocol/host/agent/gui/agent-runtime-accumulator";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import type {
   BackgroundItem,
   ChatAccess,
@@ -76,18 +76,18 @@ import type {
   ChatRunSettings,
   ChatRunStatus,
   ChatSubscribeClientFrame,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 import type {
   WorktreeBinding,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
-import type { RestoreResultEntry } from "@traycer/protocol/persistence/epic/checkpoint-manifests";
+} from "@hukum/protocol/host/worktree-schemas";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
+import type { RestoreResultEntry } from "@hukum/protocol/persistence/epic/checkpoint-manifests";
 import type {
   PermissionMode,
   TokenUsage,
-} from "@traycer/protocol/persistence/epic/foundation";
+} from "@hukum/protocol/persistence/epic/foundation";
 import type {
   AssistantMessage,
   Chat,
@@ -97,7 +97,7 @@ import type {
   InterviewAnswer,
   Message,
   UserMessageSender,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import { v4 as uuidv4 } from "uuid";
 import { create, type StoreApi, type UseBoundStore } from "zustand";
 
@@ -607,7 +607,7 @@ export interface ChatSessionStoreOptions {
    * composer's re-auth gate refetches and reads the host's poisoned
    * `unauthenticated` (the host→renderer error frame is the only live push;
    * `providers.list` has no subscription). Distinct from `onAuthError`, which is
-   * the Traycer *session* auth (an unauthorized stream close).
+   * the Hukum *session* auth (an unauthorized stream close).
    */
   readonly onProviderAuthError: (() => void) | null;
 }

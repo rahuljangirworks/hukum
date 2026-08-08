@@ -22,7 +22,7 @@ import { z } from "zod";
 import {
   worktreeHostEntrySchemaV12,
   type WorktreeHostEntryV14,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   persistKey,
   worktreeActivityCacheKey,

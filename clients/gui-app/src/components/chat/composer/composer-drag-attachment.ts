@@ -1,5 +1,5 @@
-import type { EpicArtifactKind } from "@traycer/protocol/common/registry";
-import { epicArtifactMentionToken } from "@traycer/protocol/host/epic/unary-schemas";
+import type { EpicArtifactKind } from "@hukum/protocol/common/registry";
+import { epicArtifactMentionToken } from "@hukum/protocol/host/epic/unary-schemas";
 import {
   ACTIVE_AGENT_DND_TYPE,
   ARTIFACT_TAB_DND_TYPE,

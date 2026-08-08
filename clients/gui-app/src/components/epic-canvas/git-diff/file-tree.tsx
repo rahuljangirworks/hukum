@@ -8,7 +8,7 @@ import type {
   FileTreeDirectoryHandle,
   FileTreeItemHandle,
 } from "@pierre/trees";
-import type { GitChangedFile } from "@traycer/protocol/host";
+import type { GitChangedFile } from "@hukum/protocol/host";
 import { buildGitTreeDirectoryPaths } from "@/lib/git/panel-file-rendering";
 import { GIT_PANEL_PIERRE_FILE_TREE_THEME_STYLE } from "@/components/epic-canvas/pierre-tree-theme";
 import { extractPierreItemPathFromEvent } from "@/components/epic-canvas/pierre-tree-adapter";

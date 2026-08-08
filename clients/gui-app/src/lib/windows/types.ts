@@ -2,14 +2,14 @@ import type {
   GlobalShortcutId,
   GlobalShortcutIntent,
   GlobalShortcutStatus,
-} from "@traycer-clients/shared/keybindings/global-shortcuts";
+} from "@hukum-clients/shared/keybindings/global-shortcuts";
 
 export type {
   GlobalShortcutId,
   GlobalShortcutIntent,
   GlobalShortcutStatus,
-} from "@traycer-clients/shared/keybindings/global-shortcuts";
-import type { HostControllerStatus } from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/keybindings/global-shortcuts";
+import type { HostControllerStatus } from "@hukum-clients/shared/platform/runner-host";
 
 export type DesktopJsonPrimitive = string | number | boolean | null;
 export type DesktopJsonValue =
@@ -240,7 +240,7 @@ export interface DesktopSupportSaveDiagnosticBundleResult {
 /**
  * Field-for-field match with ticket 09's `SupportBugReportDraftFields`
  * (`ipc-contracts/window-types.ts`). Keys match the GitHub issue form's field
- * ids verbatim so `buildGitHubIssueUrl` (`@traycer-clients/shared/support/
+ * ids verbatim so `buildGitHubIssueUrl` (`@hukum-clients/shared/support/
  * issue-reporter`) can assemble `URLSearchParams` straight from this object.
  */
 export interface DesktopSupportBugReportDraftFields {

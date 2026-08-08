@@ -1,4 +1,4 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
 /**
  * The one mock stream session + client the `pr.*` suites drive.
  *
@@ -16,15 +16,15 @@ import type {
   StreamCloseReason,
   StreamConnectionStatus,
   StreamFrameEnvelope,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   WsStreamClient,
   type ParamsOf,
-} from "@traycer-clients/shared/host-transport/ws-stream-client";
+} from "@hukum-clients/shared/host-transport/ws-stream-client";
 
 export class MockStreamSession<
   TFrame extends StreamFrameEnvelope,

@@ -7,7 +7,7 @@
  * entitlement logic.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 
 export const agentActivitySubscribeOpenRequestSchema = z.object({});
 export type AgentActivitySubscribeOpenRequest = z.infer<

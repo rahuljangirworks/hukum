@@ -5,14 +5,14 @@ import {
   NoiseSession,
   DEFAULT_REPLAY_WINDOW_SIZE,
   bytesToHex,
-} from "@traycer/protocol/crypto/noise";
+} from "@hukum/protocol/crypto/noise";
 import {
   decodeHostPublicKey,
   InvalidHostPublicKeyError,
   NoiseChannel,
   NoiseChannelNotReadyError,
 } from "../noise-channel";
-import { NOISE_PROLOGUE } from "@traycer/protocol/host-transport/mux";
+import { NOISE_PROLOGUE } from "@hukum/protocol/host-transport/mux";
 
 const EMPTY = new Uint8Array(0);
 

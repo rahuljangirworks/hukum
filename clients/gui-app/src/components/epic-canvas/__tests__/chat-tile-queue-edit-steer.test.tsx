@@ -12,19 +12,19 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import * as Y from "yjs";
 import type { ComponentProps } from "react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   ChatQueuedItem,
   ChatRunSettings,
   ChatSubscribeClientFrame,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { ChatStreamCallbacks } from "@traycer-clients/shared/host-transport/chat-stream-client";
-import type { ChatStreamClient } from "@traycer-clients/shared/host-transport/chat-stream-client";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { ChatStreamCallbacks } from "@hukum-clients/shared/host-transport/chat-stream-client";
+import type { ChatStreamClient } from "@hukum-clients/shared/host-transport/chat-stream-client";
 import type { ChatComposerSubmitInput } from "@/components/chat/composer/chat-composer";
 import { ChatTile } from "@/components/epic-canvas/renderers/chat-tile";
 import { TabHostProvider } from "@/components/epic-canvas/tab-host-provider";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { useComposerDraftStore } from "@/stores/composer/composer-draft-store";
 import { useComposerRunSettingsStore } from "@/stores/composer/composer-run-settings-store";
 import { useComposerHarnessMemoryStore } from "@/stores/composer/composer-harness-memory-store";
@@ -546,7 +546,7 @@ function renderChatTile(): void {
               hosts: [],
               workspaceFolderPickerPaths: undefined,
               hasLocalHost: undefined,
-              traycerCli: undefined,
+              hukumCli: undefined,
             })
           }
         >

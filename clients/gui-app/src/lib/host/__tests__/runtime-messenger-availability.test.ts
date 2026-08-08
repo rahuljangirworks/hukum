@@ -15,19 +15,19 @@
  * subscription has to outlive the binding.
  */
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { RemoteHostDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
-import type { IRemoteSession } from "@traycer-clients/shared/host-transport/remote/index";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { RemoteHostDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
+import type { IRemoteSession } from "@hukum-clients/shared/host-transport/remote/index";
 import {
   HostRequestAbortedError,
   HostTransportFailureError,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/index";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/index";
 import {
   hostRpcRegistry,
   type HostRpcRegistry,
-} from "@traycer/protocol/host/index";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/index";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import { buildRuntimeHostMessenger } from "../host-messenger";
 
 // Only the network boundary is replaced. Every other export of this barrel
@@ -37,11 +37,11 @@ const mocks = vi.hoisted(() => ({
 }));
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/remote/index",
+  "@hukum-clients/shared/host-transport/remote/index",
   async (importOriginal) => {
     const actual =
       await importOriginal<
-        typeof import("@traycer-clients/shared/host-transport/remote/index")
+        typeof import("@hukum-clients/shared/host-transport/remote/index")
       >();
     return {
       ...actual,

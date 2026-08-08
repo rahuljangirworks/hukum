@@ -28,7 +28,7 @@ export const RPC_ERROR_CODES = [
   "PROVIDER_DISABLED",
   "SENDER_TUI_UNSUPPORTED",
   // Caller-supplied input is structurally valid but semantically rejected
-  // (e.g. minting the reserved `traycer:system` agent id). Additive and
+  // (e.g. minting the reserved `hukum:system` agent id). Additive and
   // degrade-safe: the wire `code` is an open string and old clients narrow
   // unknown codes to RPC_ERROR while keeping the 4xx status.
   "E_INVALID_ARGUMENT",

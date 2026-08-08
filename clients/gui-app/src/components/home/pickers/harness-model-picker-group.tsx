@@ -10,7 +10,7 @@ import type {
   HarnessOption,
   ProviderId,
 } from "@/components/home/data/landing-options";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import {
   singleDigitLeaderDigitFor,
   usePickerProviderLeaderForIndex,
@@ -32,7 +32,7 @@ import {
   type ProviderPackPreparing,
 } from "@/components/providers/provider-pack-readiness";
 import { cn } from "@/lib/utils";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 
 const LOCKED_PROVIDER_TOOLTIP =
   "Provider cannot be changed while forking terminal agent";

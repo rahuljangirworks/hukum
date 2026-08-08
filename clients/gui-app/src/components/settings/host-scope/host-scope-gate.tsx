@@ -107,7 +107,7 @@ export function HostScopeGate(props: {
         detail={
           scope.isLoading
             ? null
-            : "Install the Traycer host on a computer and sign in — it appears here on its own."
+            : "Install the Hukum host on a computer and sign in — it appears here on its own."
         }
         action={null}
         testId="host-scope-empty"

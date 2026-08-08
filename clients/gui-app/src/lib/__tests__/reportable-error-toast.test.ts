@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render } from "@testing-library/react";
 import { createElement, type ReactNode } from "react";
 import type { ExternalToast } from "sonner";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { Analytics, AnalyticsEvent } from "@/lib/analytics";
 
 const errorToast = vi.hoisted(() =>
@@ -204,7 +204,7 @@ describe("shared error helpers", () => {
   it("keeps runner details visible without putting env secrets in the draft", () => {
     useDesktopDialogStore.setState({ reportIssueAvailable: true });
     const rawError =
-      "Command failed: traycer env set API_KEY --value sk-secret-123";
+      "Command failed: hukum env set API_KEY --value sk-secret-123";
 
     toastFromRunnerError(new Error(rawError), "Failed to save env override");
     expect(readToastOptions().description).toBe(rawError);

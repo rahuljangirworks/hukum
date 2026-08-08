@@ -1,5 +1,5 @@
 import { app } from "electron";
-import { TRAYCER_WEBSITE_URL } from "./support-links";
+import { HUKUM_WEBSITE_URL } from "./support-links";
 
 export function configureNativeAboutPanel(
   appName: string,
@@ -9,9 +9,9 @@ export function configureNativeAboutPanel(
     applicationName: appName,
     applicationVersion: app.getVersion(),
     version: app.getVersion(),
-    copyright: `Copyright ${new Date().getFullYear()} Traycer AI`,
-    credits: "Traycer AI",
-    website: TRAYCER_WEBSITE_URL,
+    copyright: `Copyright ${new Date().getFullYear()} Hukum AI`,
+    credits: "Hukum AI",
+    website: HUKUM_WEBSITE_URL,
     ...(iconPath === null ? {} : { iconPath }),
   });
 }

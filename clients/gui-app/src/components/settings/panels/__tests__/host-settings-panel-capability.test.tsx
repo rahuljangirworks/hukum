@@ -1,8 +1,8 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { HostListItem } from "@traycer/protocol/host/host-status";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import type { HostListItem } from "@hukum/protocol/host/host-status";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { HostSettingsPanel } from "@/components/settings/panels/host-settings-panel";
 import { isConcealed } from "@/components/settings/host-scope/concealment-test-helpers";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
@@ -18,7 +18,7 @@ import type { HostScope } from "@/components/settings/host-scope/use-host-scope"
  *     `MyHostsList` — deleted by this branch — used to expose it.
  *   - the local service console runs over the CLI bridge, and is the recovery
  *     surface for a host that is DOWN.
- *   - only snapshots / Remove Traycer are host RPC.
+ *   - only snapshots / Remove Hukum are host RPC.
  *
  * These cases pin the split, because the whole settings suite passed while it
  * was wrong.
@@ -70,7 +70,7 @@ function renderOverview(overrides: Partial<HostScope>): void {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
@@ -112,7 +112,7 @@ describe("Overview capability split without host management", () => {
     ).not.toBeNull();
     // ...while the genuinely RPC-dependent ROW stays gated — concealed (the
     // gate preserves it hidden through the outage) or absent — and the gate
-    // says why. The zone itself still renders: its other row (Remove Traycer)
+    // says why. The zone itself still renders: its other row (Remove Hukum)
     // runs over the local CLI bridge, so the gate belongs around the
     // snapshots row, not around the region.
     const clearRow = screen.queryByTestId("settings-clear-file-edit-snapshots");

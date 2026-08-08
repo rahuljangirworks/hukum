@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import type { PrLightItem } from "@traycer/protocol/host/pr-schemas";
+import type { PrLightItem } from "@hukum/protocol/host/pr-schemas";
 import {
   formatPrRowTitle,
   groupPrItemsByRepo,
@@ -9,22 +9,22 @@ import {
 
 const BASE_ITEM: PrLightItem = {
   githubHost: "github.com",
-  base: { owner: "traycerai", repo: "traycer-internal", prNumber: 4226 },
-  prUrl: "https://github.com/traycerai/traycer-internal/pull/4226",
+  base: { owner: "hukumai", repo: "hukum-internal", prNumber: 4226 },
+  prUrl: "https://github.com/hukumai/hukum-internal/pull/4226",
   state: "open",
   liveness: "live",
   observedAt: 1_000,
   isDraft: false,
   title: "Remote host support",
   baseRefName: "development",
-  headRefName: "traycer/remote-host",
+  headRefName: "hukum/remote-host",
   additions: 10,
   deletions: 2,
   checksRollup: null,
   reviewDecision: null,
   commentCount: 0,
   updatedAt: 1_000,
-  repoIdentifier: { owner: "traycerai", repo: "traycer-internal" },
+  repoIdentifier: { owner: "hukumai", repo: "hukum-internal" },
   repoRole: "superproject",
   linkGroupKey: null,
   owners: [],
@@ -36,9 +36,9 @@ function item(overrides: Partial<PrLightItem>): PrLightItem {
 
 function submoduleItem(overrides: Partial<PrLightItem>): PrLightItem {
   return item({
-    base: { owner: "traycerai", repo: "traycer", prNumber: 675 },
-    prUrl: "https://github.com/traycerai/traycer/pull/675",
-    repoIdentifier: { owner: "traycerai", repo: "traycer" },
+    base: { owner: "hukumai", repo: "hukum", prNumber: 675 },
+    prUrl: "https://github.com/hukumai/hukum/pull/675",
+    repoIdentifier: { owner: "hukumai", repo: "hukum" },
     repoRole: "submodule",
     title: "Protocol bits",
     ...overrides,
@@ -53,8 +53,8 @@ describe("groupPrItemsByRepo", () => {
     ]);
 
     expect(groups.map((group) => group.repoIdentifier.repo)).toEqual([
-      "traycer-internal",
-      "traycer",
+      "hukum-internal",
+      "hukum",
     ]);
     // A full row of its own in that group - not folded into the parent's.
     expect(groups[1]?.items.map((entry) => entry.base?.prNumber)).toEqual([
@@ -68,16 +68,16 @@ describe("groupPrItemsByRepo", () => {
     const groups = groupPrItemsByRepo([
       item({ linkGroupKey: "/w/pair" }),
       item({
-        base: { owner: "traycerai", repo: "docs", prNumber: 12 },
-        repoIdentifier: { owner: "traycerai", repo: "docs" },
+        base: { owner: "hukumai", repo: "docs", prNumber: 12 },
+        repoIdentifier: { owner: "hukumai", repo: "docs" },
         linkGroupKey: null,
       }),
       submoduleItem({ linkGroupKey: "/w/pair" }),
     ]);
 
     expect(groups.map((group) => group.repoIdentifier.repo)).toEqual([
-      "traycer-internal",
-      "traycer",
+      "hukum-internal",
+      "hukum",
       "docs",
     ]);
   });
@@ -85,8 +85,8 @@ describe("groupPrItemsByRepo", () => {
   it("leaves a submodule group in place when its superproject PR is absent", () => {
     const groups = groupPrItemsByRepo([
       item({
-        base: { owner: "traycerai", repo: "docs", prNumber: 12 },
-        repoIdentifier: { owner: "traycerai", repo: "docs" },
+        base: { owner: "hukumai", repo: "docs", prNumber: 12 },
+        repoIdentifier: { owner: "hukumai", repo: "docs" },
         linkGroupKey: null,
       }),
       submoduleItem({ linkGroupKey: "/w/orphan" }),
@@ -94,7 +94,7 @@ describe("groupPrItemsByRepo", () => {
 
     expect(groups.map((group) => group.repoIdentifier.repo)).toEqual([
       "docs",
-      "traycer",
+      "hukum",
     ]);
     expect(groups[1]?.items).toHaveLength(1);
   });
@@ -103,17 +103,17 @@ describe("groupPrItemsByRepo", () => {
     const groups = groupPrItemsByRepo([
       item({ linkGroupKey: "/w/one" }),
       item({
-        base: { owner: "traycerai", repo: "docs", prNumber: 12 },
-        repoIdentifier: { owner: "traycerai", repo: "docs" },
+        base: { owner: "hukumai", repo: "docs", prNumber: 12 },
+        repoIdentifier: { owner: "hukumai", repo: "docs" },
         linkGroupKey: null,
       }),
       submoduleItem({ linkGroupKey: "/w/two" }),
     ]);
 
     expect(groups.map((group) => group.repoIdentifier.repo)).toEqual([
-      "traycer-internal",
+      "hukum-internal",
       "docs",
-      "traycer",
+      "hukum",
     ]);
   });
 
@@ -123,43 +123,43 @@ describe("groupPrItemsByRepo", () => {
       submoduleItem({ linkGroupKey: "/w/multi" }),
       submoduleItem({
         linkGroupKey: "/w/multi",
-        base: { owner: "traycerai", repo: "traycer", prNumber: 676 },
+        base: { owner: "hukumai", repo: "hukum", prNumber: 676 },
       }),
     ]);
 
     expect(groups.map((group) => group.repoIdentifier.repo)).toEqual([
-      "traycer-internal",
-      "traycer",
+      "hukum-internal",
+      "hukum",
     ]);
     expect(groups[1]?.items).toHaveLength(2);
   });
 
   it("keeps a group whose parent is itself a submodule of another group", () => {
-    // `traycer` is a submodule under /w/outer AND the superproject that owns
+    // `hukum` is a submodule under /w/outer AND the superproject that owns
     // `docs` under /w/inner. Expanding followers one level deep emitted
-    // `traycer` as a follower of `traycer-internal` and then dropped `docs`
+    // `hukum` as a follower of `hukum-internal` and then dropped `docs`
     // entirely - its `pulled` entry kept it out of the first-seen pass and
     // nothing re-emitted it.
     const groups = groupPrItemsByRepo([
       item({ linkGroupKey: "/w/outer" }),
       submoduleItem({ linkGroupKey: "/w/outer" }),
       submoduleItem({
-        repoIdentifier: { owner: "traycerai", repo: "traycer" },
+        repoIdentifier: { owner: "hukumai", repo: "hukum" },
         repoRole: "superproject",
         linkGroupKey: "/w/inner",
-        base: { owner: "traycerai", repo: "traycer", prNumber: 676 },
+        base: { owner: "hukumai", repo: "hukum", prNumber: 676 },
       }),
       item({
-        base: { owner: "traycerai", repo: "docs", prNumber: 12 },
-        repoIdentifier: { owner: "traycerai", repo: "docs" },
+        base: { owner: "hukumai", repo: "docs", prNumber: 12 },
+        repoIdentifier: { owner: "hukumai", repo: "docs" },
         repoRole: "submodule",
         linkGroupKey: "/w/inner",
       }),
     ]);
 
     expect(groups.map((group) => group.repoIdentifier.repo)).toEqual([
-      "traycer-internal",
-      "traycer",
+      "hukum-internal",
+      "hukum",
       "docs",
     ]);
   });
@@ -173,14 +173,14 @@ describe("groupPrItemsByRepo", () => {
       submoduleItem({
         repoRole: "superproject",
         linkGroupKey: "/w/b",
-        base: { owner: "traycerai", repo: "traycer", prNumber: 676 },
+        base: { owner: "hukumai", repo: "hukum", prNumber: 676 },
       }),
       item({ repoRole: "submodule", linkGroupKey: "/w/b" }),
     ]);
 
     expect(
       [...groups.map((group) => group.repoIdentifier.repo)].sort(),
-    ).toEqual(["traycer", "traycer-internal"]);
+    ).toEqual(["hukum", "hukum-internal"]);
   });
 
   it("orders rows open → merged → closed within a group", () => {

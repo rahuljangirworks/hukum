@@ -49,7 +49,7 @@ import type { TabRef } from "@/stores/tabs/types";
 
 type NavigateMock = Mock<(options: NavigateOptions) => Promise<void>>;
 
-const HISTORY_ENVELOPE_KEY = "__traycerTabNavigation";
+const HISTORY_ENVELOPE_KEY = "__hukumTabNavigation";
 
 interface DeferredNavigate {
   readonly asNavigate: UseNavigateResult<string>;

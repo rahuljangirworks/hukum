@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { SubscriptionStatus } from "@traycer/protocol/auth/user";
+import type { SubscriptionStatus } from "@hukum/protocol/auth/user";
 import { Analytics } from "@/lib/analytics";
 
 /**

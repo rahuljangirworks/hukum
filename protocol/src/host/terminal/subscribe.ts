@@ -67,12 +67,12 @@
  * the shell emits a supported current-directory OSC sequence.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 import {
   canonicalTerminalSessionInfoSchema,
   canonicalTerminalSessionInfoWithCurrentCwdSchema,
   terminalSessionInfoSchema,
-} from "@traycer/protocol/host/terminal/unary-schemas";
+} from "@hukum/protocol/host/terminal/unary-schemas";
 
 const textFrameFields = {
   hasBinaryPayload: z.literal(false),

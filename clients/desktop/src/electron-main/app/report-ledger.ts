@@ -10,7 +10,7 @@ import { log } from "./logger";
  * Install-local report ledger (T3.5).
  *
  * Lives under `userData` (per install, not per account). Never renderer
- * localStorage: `lib/persist/wipe.ts` sweeps every `traycer-gui-app:` key on
+ * localStorage: `lib/persist/wipe.ts` sweeps every `hukum-gui-app:` key on
  * logout, and those keys are identity-scoped while this ledger is install-
  * scoped. Copy that consumes these numbers must say "on this install".
  *

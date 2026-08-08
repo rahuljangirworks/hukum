@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { EpicCommunicationGraphEvent } from "@traycer/protocol/host/epic/communication-graph";
+import type { EpicCommunicationGraphEvent } from "@hukum/protocol/host/epic/communication-graph";
 import {
   CommGraphSubscriptionManager,
   type CommGraphSubscriptionHandlers,

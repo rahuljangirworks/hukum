@@ -1,7 +1,7 @@
 import type {
   ProviderNativeScope,
   ProviderSkillSourceBadge,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 
 /**
  * Whether the Remove affordance appears for one skill, and if not, whether

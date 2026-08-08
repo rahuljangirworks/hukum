@@ -21,7 +21,7 @@ import type {
   PrReviewState,
   PrReviewThread,
   PrReviewThreadsSection,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import {
   groupPrConversation,
   partitionThreadsByResolution,
@@ -47,7 +47,7 @@ import {
   prReviewStateTone,
 } from "@/components/epic-canvas/pr/pr-detail-tone";
 import { PrActorAvatar } from "@/components/epic-canvas/pr/pr-detail-avatar";
-import { TraycerMarkdown } from "@/markdown/traycer-markdown";
+import { HukumMarkdown } from "@/markdown/hukum-markdown";
 import { useRelativeTimestamp } from "@/lib/relative-time";
 import { cn } from "@/lib/utils";
 
@@ -556,7 +556,7 @@ function PrCardBody(props: {
           {props.emptyBody}
         </p>
       ) : (
-        <TraycerMarkdown
+        <HukumMarkdown
           className={null}
           proseSize="compact"
           components={null}
@@ -566,7 +566,7 @@ function PrCardBody(props: {
           isStreaming={false}
         >
           {props.body}
-        </TraycerMarkdown>
+        </HukumMarkdown>
       )}
     </div>
   );

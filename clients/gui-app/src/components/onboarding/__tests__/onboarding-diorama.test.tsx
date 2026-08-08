@@ -29,7 +29,7 @@ describe("OnboardingDiorama", () => {
       "Codex",
       "Claude Code",
       "OpenCode",
-      "Traycer Inference",
+      "Hukum Inference",
       "OpenRouter",
       "Hugging Face",
       "Droid",

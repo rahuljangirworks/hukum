@@ -2,16 +2,16 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 
 /**
- * `~/.traycer/cli/` - the shared CLI surface. Environment-agnostic: a
+ * `~/.hukum/cli/` - the shared CLI surface. Environment-agnostic: a
  * user's shell + env config is shared between prod and dev installs. The
- * CLI (`traycer config …`) and the host (terminal PTY spawns) both read
+ * CLI (`hukum config …`) and the host (terminal PTY spawns) both read
  * and write the single `config.json` underneath it.
  *
  * Resolved with `os.homedir()` + `path.join` so it is correct on Windows
  * too - the host and CLI both run there; never hand-build `~/` strings.
  */
 export function cliConfigDir(): string {
-  return join(homedir(), ".traycer", "cli");
+  return join(homedir(), ".hukum", "cli");
 }
 
 export function cliConfigPath(): string {
@@ -34,8 +34,8 @@ export type Environment = string;
  * cached identity) — the authn endpoint is each consumer's build-time/env
  * config, never file content.
  *
- * Lives in `@traycer/protocol/config` (not the CLI's `store/paths`) because BOTH
- * the CLI - which writes it on `traycer login` - and the host - which reads
+ * Lives in `@hukum/protocol/config` (not the CLI's `store/paths`) because BOTH
+ * the CLI - which writes it on `hukum login` - and the host - which reads
  * `user.id` from it to pin its owner (the owner-binding gate) - must resolve the
  * exact same path. The CLI re-exports this from its `store/paths` for existing
  * callers.

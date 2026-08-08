@@ -19,8 +19,8 @@ import {
   Outlet,
   RouterProvider,
 } from "@tanstack/react-router";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
 import { NotificationsPopover } from "@/components/notifications/notifications-popover";
 import {
   __resetAppLocalNotificationsStoreForTests,
@@ -35,21 +35,21 @@ import {
   openNotificationsStream,
 } from "@/stores/notifications/notifications-store";
 import { useNotificationsPopoverStore } from "@/stores/notifications/notifications-popover-store";
-import type { NotificationsStreamCallbacks } from "@traycer-clients/shared/host-transport/notifications-stream-client";
+import type { NotificationsStreamCallbacks } from "@hukum-clients/shared/host-transport/notifications-stream-client";
 import {
   type NotificationEntry,
   NOTIFICATION_EVENT_TYPES,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 import {
   type NotificationRoomEntryMap,
   NOTIFICATIONS_ARRAY_KEY,
   createNotificationRoomEntryMap,
-} from "@traycer/protocol/notifications/notification-room";
+} from "@hukum/protocol/notifications/notification-room";
 import type {
   HostNotificationEntry,
   HostNotificationsAttentionCursor,
   HostNotificationsChronologicalCursor,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import { ALL_NOTIFICATION_CATEGORIES } from "@/lib/notifications/notification-category";
 import { useNotificationCenterGeometry } from "@/hooks/notifications/use-notification-center-geometry";
 import { Analytics, AnalyticsEvent } from "@/lib/analytics";

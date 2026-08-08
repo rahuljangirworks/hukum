@@ -17,7 +17,7 @@ export interface ThemeSurfaces {
   /**
    * `--accent`. Carried because selection surfaces wash it over the row and
    * then composite a state tint on top, and most presets keep it a near-grey
-   * while `traycer-green` sets it to its saturated `--primary` - the one case
+   * while `hukum-green` sets it to its saturated `--primary` - the one case
    * that decides whether a tinted glyph survives being selected.
    */
   readonly accent: string;
@@ -36,7 +36,7 @@ export const LIGHT_THEME_SURFACES: Readonly<Record<string, ThemeSurfaces>> = {
     popover: "#ffffff",
     accent: "#ebebeb",
   },
-  "traycer-green": {
+  "hukum-green": {
     background: "#f6f9f8",
     canvas: "#ffffff",
     popover: "#ffffff",
@@ -105,7 +105,7 @@ export const DARK_THEME_SURFACES: Readonly<Record<string, ThemeSurfaces>> = {
     popover: "#1a1a1a",
     accent: "#1f1f1f",
   },
-  "traycer-green": {
+  "hukum-green": {
     background: "#121715",
     canvas: "#0f0f0f",
     popover: "#1a2421",
@@ -167,7 +167,7 @@ export const DARK_THEME_SURFACES: Readonly<Record<string, ThemeSurfaces>> = {
 export const MUTED_FOREGROUND_LIGHT: Readonly<Record<string, string>> = {
   default: "oklch(0.556 0 0)",
   amoled: "#7d7d7d",
-  "traycer-green": "#666666",
+  "hukum-green": "#666666",
   dracula: "#4f5d86",
   catppuccin: "#5c6074",
   github: "#656d76",
@@ -181,7 +181,7 @@ export const MUTED_FOREGROUND_LIGHT: Readonly<Record<string, string>> = {
 export const MUTED_FOREGROUND_DARK: Readonly<Record<string, string>> = {
   default: "oklch(0.708 0 0)",
   amoled: "#a0a0a0",
-  "traycer-green": "#a8a8a8",
+  "hukum-green": "#a8a8a8",
   dracula: "#a1a8c3",
   catppuccin: "#a6adc8",
   github: "#8b949e",

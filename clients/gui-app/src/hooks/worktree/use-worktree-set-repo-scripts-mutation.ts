@@ -3,8 +3,8 @@ import type {
   HostRpcError,
   RequestOfMethod,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useHostMutation } from "@/hooks/host/use-host-query";
 import { hostQueryKeys, worktreeMutationKeys } from "@/lib/query-keys";
@@ -24,7 +24,7 @@ const SET_REPO_SCRIPTS_INVALIDATIONS: ReadonlyArray<
 > = ["worktree.listByWorkspacePaths", "worktree.listAllForHost"];
 
 /**
- * Persists per-repo setup/teardown scripts to `<repoRoot>/.traycer/environment.json`
+ * Persists per-repo setup/teardown scripts to `<repoRoot>/.hukum/environment.json`
  * on an EXPLICIT host client (built via `useHostClientFor` /
  * `useTabHostClient` / the active-host binding). The Environment chip passes
  * `epicId: ""` pre-epic - the host resolver is authn-only for the empty epic

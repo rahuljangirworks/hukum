@@ -1,28 +1,28 @@
 import { useMemo, type ComponentType, type ReactNode } from "react";
-import { TraycerMarkdown } from "@/markdown";
+import { HukumMarkdown } from "@/markdown";
 import { AgentReferenceChip } from "@/components/chat/agent-reference-chip";
 import { CodeBlock } from "@/markdown/components/code-block";
 import { extractText } from "@/markdown/components/extract-react-node-text";
-import { TRAYCER_AGENT_TAG } from "@/markdown/plugins/const";
+import { HUKUM_AGENT_TAG } from "@/markdown/plugins/const";
 import {
   isUuidReferenceCandidate,
-  rehypeTraycerAgentReferences,
-} from "@/markdown/plugins/rehype-traycer-agent-references";
+  rehypeHukumAgentReferences,
+} from "@/markdown/plugins/rehype-hukum-agent-references";
 
-const AGENT_REFERENCE_REHYPE_PLUGINS = [rehypeTraycerAgentReferences];
+const AGENT_REFERENCE_REHYPE_PLUGINS = [rehypeHukumAgentReferences];
 
 const AGENT_REFERENCE_MARKDOWN_COMPONENTS: Record<
   string,
   ComponentType<Record<string, unknown>>
 > = {
-  [TRAYCER_AGENT_TAG]: AgentReferenceMarkdownNode as ComponentType<
+  [HUKUM_AGENT_TAG]: AgentReferenceMarkdownNode as ComponentType<
     Record<string, unknown>
   >,
   code: AgentAwareCodeBlock as ComponentType<Record<string, unknown>>,
 };
 
 /**
- * Renders a markdown string through {@link TraycerMarkdown} with the
+ * Renders a markdown string through {@link HukumMarkdown} with the
  * agent-reference plugin set wired in: complete or uniquely-matching UUID
  * prefixes for agents and role claims resolve to live
  * {@link AgentReferenceChip}s. This is
@@ -55,7 +55,7 @@ export function AgentReferenceMarkdown({
   > | null;
 }): ReactNode {
   // MEMOIZED, and above the early return so the hook order is unconditional.
-  // `TraycerMarkdown` keys its parse `useMemo` - and `MarkdownBlock` its memo
+  // `HukumMarkdown` keys its parse `useMemo` - and `MarkdownBlock` its memo
   // comparator - on this object's IDENTITY, so minting a fresh merge per render
   // would reparse every block of every body on any unrelated rerender of the
   // surface. Callers pass a module-level constant, so this key never churns.
@@ -68,7 +68,7 @@ export function AgentReferenceMarkdown({
   );
   if (markdown.length === 0) return null;
   return (
-    <TraycerMarkdown
+    <HukumMarkdown
       className={null}
       proseSize={proseSize}
       components={mergedComponents}
@@ -79,7 +79,7 @@ export function AgentReferenceMarkdown({
       isStreaming={isStreaming}
     >
       {markdown}
-    </TraycerMarkdown>
+    </HukumMarkdown>
   );
 }
 

@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { downgradeRequestAcrossMajors } from "@traycer/protocol/framework/index";
-import { agentListHarnessModelsDowngradeV2ToV1 } from "@traycer/protocol/host/agent/contracts";
+import { downgradeRequestAcrossMajors } from "@hukum/protocol/framework/index";
+import { agentListHarnessModelsDowngradeV2ToV1 } from "@hukum/protocol/host/agent/contracts";
 import {
   guiHarnessIdSchema,
   tuiHarnessIdSchema,
-} from "@traycer/protocol/host/agent/shared";
+} from "@hukum/protocol/host/agent/shared";
 import {
   agentSelectionGuideResponseSchema,
   createAgentRequestSchema,
@@ -17,7 +17,7 @@ import {
   listAgentsResponseSchema,
   listGuiAgentCommandsRequestSchema,
   listGuiAgentCommandsResponseSchema,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 
 describe("agent host schemas", () => {
   it("retains Cursor in the TUI wire schema as a compatibility value", () => {
@@ -257,7 +257,7 @@ describe("agent host schemas", () => {
         workspace: {
           entries: [
             {
-              path: "/Users/example/.traycer/worktrees/traycerai__traycer/feature-a2a-child",
+              path: "/Users/example/.hukum/worktrees/hukumai__hukum/feature-a2a-child",
               workspacePath: "/repo",
             },
             // `workspacePath` defaults to null when omitted (an existing folder
@@ -275,7 +275,7 @@ describe("agent host schemas", () => {
       workspace: {
         entries: [
           {
-            path: "/Users/example/.traycer/worktrees/traycerai__traycer/feature-a2a-child",
+            path: "/Users/example/.hukum/worktrees/hukumai__hukum/feature-a2a-child",
             workspacePath: "/repo",
           },
           { path: "/repo/packages/app", workspacePath: null },
@@ -388,13 +388,13 @@ describe("agent host schemas", () => {
           {
             kind: "workspace",
             workspacePath: "/repo",
-            path: "/repo/.traycer/agent-selection-guide.md",
+            path: "/repo/.hukum/agent-selection-guide.md",
             priority: 2,
             content: "Use review agents for review work.",
           },
           {
             kind: "global",
-            path: "/home/.traycer/agent-selection-guide.md",
+            path: "/home/.hukum/agent-selection-guide.md",
             priority: 1,
             content: "Use implementation agents for implementation work.",
           },

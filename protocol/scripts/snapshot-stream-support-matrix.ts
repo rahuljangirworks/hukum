@@ -25,8 +25,8 @@
  * it is the reviewable record of that decision, exactly like regenerating
  * `released-stream-method-names.ts`).
  */
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/index";
-import { buildStreamManifest } from "@traycer/protocol/framework/stream-compat";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/index";
+import { buildStreamManifest } from "@hukum/protocol/framework/stream-compat";
 
 const version = process.argv[2];
 if (version === undefined || version.length === 0) {

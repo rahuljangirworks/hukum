@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { keepPreviousData } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { EpicMentionSuggestion } from "@traycer/protocol/host/index";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { EpicMentionSuggestion } from "@hukum/protocol/host/index";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useHostBinding } from "@/lib/host";
 import { useHostQueries } from "@/hooks/host/use-host-queries";

@@ -18,10 +18,10 @@ import * as Y from "yjs";
 import { TestRouterProvider } from "@/__tests__/with-test-router";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import type { ChatStreamCallbacks } from "@traycer-clients/shared/host-transport/chat-stream-client";
-import type { ChatStreamClient } from "@traycer-clients/shared/host-transport/chat-stream-client";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import type { ChatStreamCallbacks } from "@hukum-clients/shared/host-transport/chat-stream-client";
+import type { ChatStreamClient } from "@hukum-clients/shared/host-transport/chat-stream-client";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   __getChatSessionRegistryForTests,
   __setChatStreamClientFactoryForTests,
@@ -86,7 +86,7 @@ import {
 import { chatTabPersistenceTabKey } from "@/stores/chats/chat-tab-persistence-key";
 import { evictChatTabPersistenceForEpic } from "@/stores/chats/chat-tab-persistence-eviction";
 import { resetPendingHydrationRestoreForTesting } from "@/stores/chats/chat-tab-pending-hydration-restore";
-import type { Message } from "@traycer/protocol/persistence/epic/messages";
+import type { Message } from "@hukum/protocol/persistence/epic/messages";
 
 /**
  * Ticket 21 slice 5 (jsdom half): the PERMANENT lifecycle-matrix gate for the
@@ -715,7 +715,7 @@ function renderMatrix(options: { readonly strictMode: boolean } | undefined) {
               hosts: [],
               workspaceFolderPickerPaths: undefined,
               hasLocalHost: undefined,
-              traycerCli: undefined,
+              hukumCli: undefined,
             })
           }
         >

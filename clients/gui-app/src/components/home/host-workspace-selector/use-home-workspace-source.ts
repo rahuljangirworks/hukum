@@ -3,7 +3,7 @@ import { useShallow } from "zustand/react/shallow";
 import type {
   WorktreeFolderIntent,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { useWorkspaceFoldersStore } from "@/stores/workspace/workspace-folders-store";
 import type { WorkspaceFolderInfo } from "@/stores/workspace/workspace-folders-store";
 import {

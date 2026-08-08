@@ -18,8 +18,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { create } from "zustand";
 import * as Y from "yjs";
 import { Awareness } from "y-protocols/awareness";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
-import type { TaskLight } from "@traycer/protocol/host/epic/unary-schemas";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
+import type { TaskLight } from "@hukum/protocol/host/epic/unary-schemas";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { useDesktopDialogStore } from "@/stores/dialogs/desktop-dialog-store";
 import type {
@@ -84,7 +84,7 @@ import { DesktopDialogHost } from "@/components/layout/dialogs/desktop-dialog-ho
 import { ReportIssueDialogHost } from "@/components/layout/dialogs/report-issue-dialog-host";
 
 const snapshot: DesktopSupportSnapshot = {
-  appName: "Traycer",
+  appName: "Hukum",
   appVersion: "1.2.3",
   platform: "darwin",
   arch: "arm64",
@@ -104,7 +104,7 @@ const snapshot: DesktopSupportSnapshot = {
     {
       target: "desktop",
       label: "Desktop Log",
-      path: "/tmp/traycer-desktop.log",
+      path: "/tmp/hukum-desktop.log",
     },
     {
       target: "host",
@@ -116,30 +116,30 @@ const snapshot: DesktopSupportSnapshot = {
     {
       id: "website",
       label: "Website",
-      url: "https://traycer.ai",
+      url: "https://hukum.ai",
     },
     {
       id: "documentation",
       label: "Documentation",
-      url: "https://docs.traycer.ai",
+      url: "https://docs.hukum.ai",
     },
     {
       id: "release-notes",
       label: "Release Notes",
-      url: "https://docs.traycer.ai/changelog",
+      url: "https://docs.hukum.ai/changelog",
     },
     {
       id: "discord",
       label: "Discord",
-      url: "https://traycer.ai/discord",
+      url: "https://hukum.ai/discord",
     },
     {
       id: "support",
       label: "Contact Support",
-      url: "mailto:support@traycer.ai",
+      url: "mailto:support@hukum.ai",
     },
   ],
-  supportEmail: "support@traycer.ai",
+  supportEmail: "support@hukum.ai",
   privateDeliveryAvailable: true,
 };
 
@@ -369,7 +369,7 @@ function createBaseRunnerHost(): IRunnerHost {
     requestHostRespawn: () => Promise.resolve({ kind: "restarted" as const }),
     getLastKnownLocalHostId: () => Promise.resolve(null),
     service: null,
-    traycerCli: null,
+    hukumCli: null,
     migration: null,
     hostManagement: null,
     hostTray: null,
@@ -645,7 +645,7 @@ describe("<DesktopDialogHost />", () => {
 
     expect(screen.getByText("1.2.3")).not.toBeNull();
     expect(screen.getByText("Test User <test@example.com>")).not.toBeNull();
-    expect(screen.getByText("support@traycer.ai")).not.toBeNull();
+    expect(screen.getByText("support@hukum.ai")).not.toBeNull();
     expect(screen.getByText("darwin arm64")).not.toBeNull();
     expect(screen.getByText("0.4.0 (pid 1234)")).not.toBeNull();
 
@@ -654,8 +654,8 @@ describe("<DesktopDialogHost />", () => {
 
     await waitFor(() => {
       expect(openedLinks).toEqual([
-        "https://docs.traycer.ai",
-        "https://docs.traycer.ai/changelog",
+        "https://docs.hukum.ai",
+        "https://docs.hukum.ai/changelog",
       ]);
     });
   });

@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
-import type { Message } from "@traycer/protocol/persistence/epic/schemas";
+import type { JsonContent } from "@hukum/protocol/common/registry";
+import type { Message } from "@hukum/protocol/persistence/epic/schemas";
 import type {
   ChatQueuedManagedCommandItem,
   ChatQueuedPromptItem,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   pruneAcceptedActions,
   reconcileQueueChange,

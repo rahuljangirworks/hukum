@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, type ReactNode } from "react";
-import type { GitChangedFile } from "@traycer/protocol/host";
+import type { GitChangedFile } from "@hukum/protocol/host";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { StartTruncatedText } from "@/components/ui/start-truncated-text";

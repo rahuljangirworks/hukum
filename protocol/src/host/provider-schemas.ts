@@ -1,16 +1,16 @@
 /**
  * Schemas for the `providers.*` host RPC surface. Manages the CLI binary
- * Traycer runs for each provider (Codex / Claude Code / OpenCode).
+ * Hukum runs for each provider (Codex / Claude Code / OpenCode).
  *
  * Each provider exposes a set of candidates - the host-bundled binary, the
  * binary auto-discovered on PATH (resolved to its real absolute path), and
  * any custom paths the user added. The user selects one via a radio in
  * Settings → Providers; the selection + custom paths + enabled flag persist
  * per-device (== per-host) in
- * `~/.traycer/host/config/provider-overrides.json`.
+ * `~/.hukum/host/config/provider-overrides.json`.
  */
 import { z } from "zod";
-import type { TuiHarnessId } from "@traycer/protocol/host/agent/shared";
+import type { TuiHarnessId } from "@hukum/protocol/host/agent/shared";
 import {
   providerIdSchema,
   providerIdSchemaV10,
@@ -76,7 +76,7 @@ export const providerIdSchemaV30 = z.enum([
   "codex",
   "opencode",
   "cursor",
-  "traycer",
+  "hukum",
   "grok",
   "qwen",
   "kiro",
@@ -102,7 +102,7 @@ export const providerIdSchemaV40 = z.enum([
   "codex",
   "opencode",
   "cursor",
-  "traycer",
+  "hukum",
   "grok",
   "qwen",
   "kiro",
@@ -129,7 +129,7 @@ export const providerIdSchemaV50 = z.enum([
   "codex",
   "opencode",
   "cursor",
-  "traycer",
+  "hukum",
   "grok",
   "qwen",
   "kiro",
@@ -157,7 +157,7 @@ export const providerIdSchemaV60 = z.enum([
   "codex",
   "opencode",
   "cursor",
-  "traycer",
+  "hukum",
   "grok",
   "qwen",
   "kiro",
@@ -213,7 +213,7 @@ export const PROVIDER_DISPLAY_NAMES: Record<ProviderId, string> = {
   codex: "Codex",
   opencode: "OpenCode",
   cursor: "Cursor",
-  traycer: "Traycer",
+  hukum: "Hukum",
   grok: "Grok",
   qwen: "Qwen Code",
   kiro: "Kiro",
@@ -321,7 +321,7 @@ export type ProviderCliCandidate = z.infer<typeof providerCliCandidateSchema>;
  * bytes - twice for the same digest, the second time against an independently
  * re-fetched copy. It is deliberately separate from `verification`, which says
  * the registry's signed material failed its cryptography and sends the user to
- * complain about Traycer's publishing, and from `unrepairable`, which says a
+ * complain about Hukum's publishing, and from `unrepairable`, which says a
  * published build is defective for everyone. Reported as either of those, the
  * one machine with failing storage looks like a fleet incident and the user is
  * pointed at something they cannot fix.
@@ -952,8 +952,8 @@ export const providerLoginCapabilitySchema = z.object({
    * URL the CLI prints. Copilot is the case: its `copilot login` prints a
    * device code that a headless child discards while the browser opens the
    * bare `github.com/login/device` page, dead-ending the sign-in. No CLI or
-   * SDK exposes that code natively, so Traycer never parses it out - the user
-   * reads it from the terminal Traycer opened.
+   * SDK exposes that code natively, so Hukum never parses it out - the user
+   * reads it from the terminal Hukum opened.
    *
    * Set here, `oauthArgs` stays the command source but the GUI must NOT offer
    * headless browser OAuth; the host refuses `providers.startLogin` for the
@@ -1051,9 +1051,9 @@ export type ProviderLoginCapabilityV70 = z.infer<
 /**
  * A single logged-in profile (subscription) for a provider. See the
  * multi-profile decision log's "Profile model". `ambient` is the read-only,
- * host-adopted `~/.claude` / `~/.codex` login Traycer never writes to;
- * `managed` is a Traycer-owned, isolated config dir under
- * `~/.traycer/harness-accounts/<provider>/<profileId>/`.
+ * host-adopted `~/.claude` / `~/.codex` login Hukum never writes to;
+ * `managed` is a Hukum-owned, isolated config dir under
+ * `~/.hukum/harness-accounts/<provider>/<profileId>/`.
  */
 export const providerProfileKindSchema = z.enum(["ambient", "managed"]);
 export type ProviderProfileKind = z.infer<typeof providerProfileKindSchema>;
@@ -1173,7 +1173,7 @@ export const providerProfileSchema = z.object({
   // "same account as <label>".
   duplicateOfProfileId: z.string().nullable().catch(null),
   // Only ever non-null on the ambient profile entry. Set when the ambient
-  // login's identity changed behind Traycer's back (a user ran `/login` in a
+  // login's identity changed behind Hukum's back (a user ran `/login` in a
   // terminal) - carries the pre-change email and when the drift was detected
   // so the GUI can rebadge and show a one-time dismissable notice ("Terminal
   // account is now bob@, was alice@"). See the decision log's "Ambient
@@ -1266,7 +1266,7 @@ const providerCliStateBaseShape = {
   // provider's harness. Sorted by key for stable rendering; `[]` when unset.
   envOverrides: z.array(providerEnvOverrideSchema).catch([]),
   // Login/re-auth options for this provider. Null for providers that have no
-  // supported login flow (cursor, traycer) or where login capability is not
+  // supported login flow (cursor, hukum) or where login capability is not
   // yet modelled. `.catch(null)` tolerates old host builds that omit the field.
   loginCapability: providerLoginCapabilitySchema.nullable().catch(null),
   // True while the host's shell-env probe for this provider is still running
@@ -1277,7 +1277,7 @@ const providerCliStateBaseShape = {
   // behavior treats every verdict as final, which is correct for old hosts.
   availabilityPending: z.boolean().catch(false),
   // Per-profile rows for this provider: the ambient login plus any
-  // Traycer-managed subscriptions. `[]` for providers that don't support the
+  // Hukum-managed subscriptions. `[]` for providers that don't support the
   // multi-profile capability (gated per-adapter, see the decision log's
   // rollout row). The field ships with the v4.0 line: hosts on older lines
   // never send it and the v3→v4 upgrade bridge fills `profiles: []` ("old

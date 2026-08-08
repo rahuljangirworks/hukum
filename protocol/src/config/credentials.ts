@@ -17,7 +17,7 @@ import {
 } from "./credentials-fs";
 
 /**
- * The `~/.traycer/cli/<env>/credentials` payload - the single, machine-local
+ * The `~/.hukum/cli/<env>/credentials` payload - the single, machine-local
  * source of truth for the signed-in user, shared by the CLI, the desktop app,
  * and the host. Stored as JSON with mode 0600 so other users on a shared
  * machine cannot read the bearer token. The `user` block is a cache of the last
@@ -26,8 +26,8 @@ import {
  * re-validated on demand.
  *
  * These primitives are the extraction target named in the credentials-file
- * token-store tech plan (§1): they live in `@traycer/protocol/config` because
- * the CLI (writer on `traycer login`), the desktop main process (the new
+ * token-store tech plan (§1): they live in `@hukum/protocol/config` because
+ * the CLI (writer on `hukum login`), the desktop main process (the new
  * `FileTokenStore`), and the host (reads `user.id` to pin its owner-binding
  * gate) must all resolve and parse the exact same file. They stay
  * dependency-light on purpose - `node:fs` + `node:crypto` only, no logger and

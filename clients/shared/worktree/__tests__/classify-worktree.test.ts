@@ -3,7 +3,7 @@ import type {
   WorktreeBranchStatus,
   WorktreeHostEntryV12,
   WorktreeSubmoduleMergeFactV12,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 import {
   WORKTREE_TIER_ORDER,
   classifyWorktree,
@@ -12,7 +12,7 @@ import {
   provenRemovable,
   worktreeTierRank,
   type WorktreeTier,
-} from "@traycer-clients/shared/worktree/classify-worktree";
+} from "@hukum-clients/shared/worktree/classify-worktree";
 
 function status(over: Partial<WorktreeBranchStatus>): WorktreeBranchStatus {
   return { ahead: 0, behind: 0, mergedIntoDefault: false, ...over };
@@ -772,7 +772,7 @@ describe("describeReviewReasons", () => {
           branchStatus: status({ ahead: 3 }),
           submodules: [
             subFact({
-              branch: "traycer/lib",
+              branch: "hukum/lib",
               prState: "none",
               unmergedCommitCount: 4,
               unmergedCommitSubjects: ["Newest"],
@@ -782,7 +782,7 @@ describe("describeReviewReasons", () => {
       ),
     ).toEqual([
       "2 uncommitted changes",
-      "acme/lib (traycer/lib): 4 unmerged commits",
+      "acme/lib (hukum/lib): 4 unmerged commits",
       "Superproject PR is open",
     ]);
   });

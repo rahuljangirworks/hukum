@@ -13,10 +13,10 @@ import {
   useQueryClient,
   type QueryClient,
 } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import { withHostQueryErrorBoundary } from "@/lib/query/host-query-error-boundary";
-import type { WorktreeHostEntryV14 } from "@traycer/protocol/host/index";
-import type { WorktreeListAllForHostResponseV14 } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeHostEntryV14 } from "@hukum/protocol/host/index";
+import type { WorktreeListAllForHostResponseV14 } from "@hukum/protocol/host/worktree-schemas";
 import { type HostRpcRegistry } from "@/lib/host";
 import { hostQueryKeys } from "@/lib/query-keys";
 import {

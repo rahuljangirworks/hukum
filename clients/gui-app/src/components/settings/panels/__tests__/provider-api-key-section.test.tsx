@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
-import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
+import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@hukum/protocol/host/provider-native-schemas";
 import { ProviderApiKeySection } from "@/components/settings/panels/provider-api-key-section";
 
 const openExternalLink = vi.fn();

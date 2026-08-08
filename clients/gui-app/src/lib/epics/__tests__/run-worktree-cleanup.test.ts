@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { WorktreeDeleteStreamCallbacks } from "@traycer-clients/shared/host-transport/worktree-delete-stream-client";
-import type { WorktreeDeleteBatchStreamCallbacks } from "@traycer-clients/shared/host-transport/worktree-delete-batch-stream-client";
-import type { WorktreeDeleteBatchTarget } from "@traycer/protocol/host/worktree-delete-batch-stream";
-import { WsStreamClient } from "@traycer-clients/shared/host-transport/ws-stream-client";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+import type { WorktreeDeleteStreamCallbacks } from "@hukum-clients/shared/host-transport/worktree-delete-stream-client";
+import type { WorktreeDeleteBatchStreamCallbacks } from "@hukum-clients/shared/host-transport/worktree-delete-batch-stream-client";
+import type { WorktreeDeleteBatchTarget } from "@hukum/protocol/host/worktree-delete-batch-stream";
+import { WsStreamClient } from "@hukum-clients/shared/host-transport/ws-stream-client";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type { DurableStreamTransport } from "@/lib/host/durable-stream-transport";
 import {
   runWorktreeCleanup,
@@ -55,7 +55,7 @@ vi.mock("@/lib/logger", () => ({
 }));
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/worktree-delete-batch-stream-client",
+  "@hukum-clients/shared/host-transport/worktree-delete-batch-stream-client",
   () => ({
     WorktreeDeleteBatchStreamClient: class {
       constructor(options: {
@@ -79,7 +79,7 @@ vi.mock(
 );
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/worktree-delete-stream-client",
+  "@hukum-clients/shared/host-transport/worktree-delete-stream-client",
   () => ({
     WorktreeDeleteStreamClient: class {
       constructor(options: {

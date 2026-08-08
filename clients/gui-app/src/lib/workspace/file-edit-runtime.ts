@@ -1,7 +1,7 @@
 import type {
   WorkspaceWriteFileRequest,
   WorkspaceWriteFileResponse,
-} from "@traycer/protocol/host/workspace/unary-schemas";
+} from "@hukum/protocol/host/workspace/unary-schemas";
 import { createStore, type StoreApi } from "zustand/vanilla";
 
 import { fileContentRevision } from "@/lib/workspace/file-content-revision";

@@ -24,7 +24,7 @@ const DRAFT_SETTINGS_PAYLOAD = {
 let tempDir: string;
 
 beforeEach(async () => {
-  tempDir = await mkdtemp(join(tmpdir(), "traycer-desktop-state-"));
+  tempDir = await mkdtemp(join(tmpdir(), "hukum-desktop-state-"));
   logger.warn.mockClear();
   logger.error.mockClear();
 });

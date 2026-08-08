@@ -1,6 +1,6 @@
 /** Raw record load/codec validation: corrupt rows, schema and reference checks. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import type { PromptStashEntry } from "@/lib/composer/prompt-stash-codec";
 import {

@@ -18,13 +18,13 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { sandboxHome } from "../../__tests__/sandbox-home";
-import { cliCredentialsPath } from "@traycer/protocol/config/paths";
+import { cliCredentialsPath } from "@hukum/protocol/config/paths";
 import {
   deleteCredentialsFile,
   writeCredentialsFile,
   type StoredCredentials,
-} from "@traycer/protocol/config/credentials";
-import type { TokenStoreChange } from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum/protocol/config/credentials";
+import type { TokenStoreChange } from "@hukum-clients/shared/platform/runner-host";
 
 const AUTHN_BASE_URL = "http://authn.file-token-store.test";
 const ENVIRONMENT = "development";
@@ -32,7 +32,7 @@ const REFRESH_URL = `${AUTHN_BASE_URL}/api/v3/auth/refresh`;
 
 const IDENTITY = {
   id: "u1",
-  email: "ada@traycer.ai",
+  email: "ada@hukum.ai",
   name: "Ada",
 } as const;
 
@@ -62,7 +62,7 @@ const TEST_TIMEOUT_BUFFER_MS = 5_000;
 
 vi.mock("electron", () => ({
   app: {
-    getPath: (): string => join(tmpdir(), "traycer-file-token-store-userdata"),
+    getPath: (): string => join(tmpdir(), "hukum-file-token-store-userdata"),
   },
 }));
 
@@ -138,7 +138,7 @@ describe("FileTokenStore (real fs + lock/WAL)", () => {
   }
 
   beforeEach(async () => {
-    homeDir = mkdtempSync(join(tmpdir(), "traycer-file-token-store-"));
+    homeDir = mkdtempSync(join(tmpdir(), "hukum-file-token-store-"));
     previousHome = process.env.HOME;
     sandboxHome(homeDir);
     vi.resetModules();
@@ -170,7 +170,7 @@ describe("FileTokenStore (real fs + lock/WAL)", () => {
   it("resolves the env-scoped cliCredentialsPath (never slot-scoped)", () => {
     const path = credentialsPath();
     expect(path).toBe(
-      join(homeDir, ".traycer", "cli", ENVIRONMENT, "credentials"),
+      join(homeDir, ".hukum", "cli", ENVIRONMENT, "credentials"),
     );
     // Smoke: constructing the store does not throw and targets that path.
     const store = makeStore();

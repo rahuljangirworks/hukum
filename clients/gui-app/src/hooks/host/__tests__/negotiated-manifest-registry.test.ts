@@ -4,7 +4,7 @@ import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
   subscribeNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
 
 /**
  * Direct unit tests for the per-host negotiated-method registry that backs

@@ -26,7 +26,7 @@ import { z } from "zod";
 import {
   hostNotificationOutcomeSchema,
   type HostNotificationKind,
-} from "@traycer/protocol/host/notifications/host-notifications";
+} from "@hukum/protocol/host/notifications/host-notifications";
 
 /** Identifier fields must be non-empty: an empty id is a malformed row, and
  * letting it through would mint an unusable deep-link instead of degrading. */

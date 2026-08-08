@@ -12,7 +12,7 @@ import type { Mock } from "vitest";
 import type {
   SearchArtifactHit,
   SearchArtifactsResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import type { UseEpicSearchArtifactsArgs } from "@/hooks/epic/use-epic-search-artifacts-query";
 
 interface QueryResultStub {

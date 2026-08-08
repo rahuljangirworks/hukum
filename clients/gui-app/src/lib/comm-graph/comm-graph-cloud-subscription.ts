@@ -1,7 +1,7 @@
 import type {
   HostCommunicationGraphCloudFeedCursor,
   HostCommunicationGraphCloudFeedEvent,
-} from "@traycer/protocol/host/epic/communication-graph";
+} from "@hukum/protocol/host/epic/communication-graph";
 import {
   compareCommGraphEvents,
   type CommGraphEvent,

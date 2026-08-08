@@ -15,7 +15,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import { useHostReachability } from "@/hooks/agent/use-host-reachability";
 import { useEpicCanvasStore } from "@/stores/epics/canvas/store";
 import type {
@@ -272,7 +272,7 @@ describe("host binding survives restart", () => {
         hostId: SOURCE_HOST,
         label: "Remote",
         kind: "remote",
-        websocketUrl: "wss://relay.traycer.invalid/attach",
+        websocketUrl: "wss://relay.hukum.invalid/attach",
         version: "1.0.0",
         transportDialability: "not-dialable",
       },

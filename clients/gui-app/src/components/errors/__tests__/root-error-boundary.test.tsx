@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { RootErrorBoundary } from "@/components/errors/root-error-boundary";
 import { ReportIssueDialogHost } from "@/components/layout/dialogs/report-issue-dialog-host";
 import { Toaster } from "@/components/ui/sonner";
@@ -75,7 +75,7 @@ describe("<RootErrorBoundary />", () => {
         hosts: [],
         workspaceFolderPickerPaths: undefined,
         hasLocalHost: undefined,
-        traycerCli: undefined,
+        hukumCli: undefined,
       }),
       {
         support: {

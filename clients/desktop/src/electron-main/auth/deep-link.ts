@@ -6,7 +6,7 @@ import {
   devDesktopSlotProtocolScheme,
 } from "../host/dev-desktop-slot";
 
-// Environment-specific so a dev build doesn't share `traycer://` with an
+// Environment-specific so a dev build doesn't share `hukum://` with an
 // installed staging/prod app (see `DESKTOP_PROTOCOL_SCHEME`), and
 // slot-specific under multi-run dev so concurrent `make dev-desktop` runs
 // don't steal each other's auth-callback deep links (the OS routes a scheme
@@ -23,7 +23,7 @@ const AUTH_CALLBACK_PATH = "auth/callback";
 
 /**
  * Fired when the user returns from the device-approval browser tab via a
- * `traycer://auth/callback` deep link. It is a pure, payload-free signal: the
+ * `hukum://auth/callback` deep link. It is a pure, payload-free signal: the
  * handler focuses the window and nudges the in-flight device poll (see
  * `runner-ipc-bridge.deliverAuthReturnSignal`). It parses no query string and
  * drives no token exchange - device flow is the only login, and the token
@@ -33,9 +33,9 @@ const AUTH_CALLBACK_PATH = "auth/callback";
 export type AuthReturnSignalHandler = () => void;
 
 /**
- * Whether `uri` is a `traycer://auth/callback` deep link (ignoring any query).
- * A stray legacy `?code=…` is tolerated - we never read it. Other traycer
- * deep links (e.g. session links) and non-traycer URIs return `false`.
+ * Whether `uri` is a `hukum://auth/callback` deep link (ignoring any query).
+ * A stray legacy `?code=…` is tolerated - we never read it. Other hukum
+ * deep links (e.g. session links) and non-hukum URIs return `false`.
  */
 function isAuthCallbackUri(uri: string): boolean {
   if (!uri.startsWith(`${PROTOCOL_SCHEME}://`)) {
@@ -54,7 +54,7 @@ function isAuthCallbackUri(uri: string): boolean {
 }
 
 /**
- * Registers the `traycer://` custom protocol and wires the platform-specific
+ * Registers the `hukum://` custom protocol and wires the platform-specific
  * entry points:
  *   - `app.setAsDefaultProtocolClient` is the cross-platform registration
  *     call. On macOS this is enough because OS deep links arrive via
@@ -65,9 +65,9 @@ function isAuthCallbackUri(uri: string): boolean {
  *     window exists.
  *
  * The protocol registration is unchanged from the redirect era; only the
- * handler is demoted. A `traycer://auth/callback` deep link fires the
+ * handler is demoted. A `hukum://auth/callback` deep link fires the
  * payload-free `AuthReturnSignalHandler` (focus + poll-nudge); it parses no
- * payload and drives no exchange. Non-auth traycer URIs are ignored.
+ * payload and drives no exchange. Non-auth hukum URIs are ignored.
  */
 export function registerDeepLinkHandling(
   handler: AuthReturnSignalHandler,
@@ -97,14 +97,14 @@ export function registerDeepLinkHandling(
   });
 
   app.on("second-instance", (_event, argv) => {
-    const url = findTraycerUrlInArgv(argv);
+    const url = findHukumUrlInArgv(argv);
     if (url !== null) {
       log.info("[deep-link] second-instance", { url: redactDeepLinkUrl(url) });
       deliver(url);
     }
   });
 
-  const initial = findTraycerUrlInArgv(process.argv);
+  const initial = findHukumUrlInArgv(process.argv);
   if (initial !== null) {
     log.info("[deep-link] initial argv contained deep link", {
       url: redactDeepLinkUrl(initial),
@@ -127,13 +127,13 @@ function redactDeepLinkUrl(rawUrl: string): string {
   }
 }
 
-function isTraycerUrl(value: string): boolean {
+function isHukumUrl(value: string): boolean {
   return value.startsWith(`${PROTOCOL_SCHEME}://`);
 }
 
-function findTraycerUrlInArgv(argv: readonly string[]): string | null {
+function findHukumUrlInArgv(argv: readonly string[]): string | null {
   for (const arg of argv) {
-    if (isTraycerUrl(arg)) {
+    if (isHukumUrl(arg)) {
       return arg;
     }
   }

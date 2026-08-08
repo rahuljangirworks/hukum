@@ -1,0 +1,10 @@
+{
+  "schema_version": "rahulos-state-pointer-v1",
+  "project": "hukum",
+  "scope": "personal",
+  "role": "project-executor",
+  "canonical_state": "PROJECT-STATE.md",
+  "canonical_controls": "PROJECT-CONTROLS.md",
+  "execution_workflow": ".agent/workflows/WF-00-project-execution-loop.md",
+  "note": "Compatibility pointer only; do not duplicate live project state here."
+}

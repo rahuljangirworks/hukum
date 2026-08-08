@@ -4,12 +4,12 @@ import {
   type UseQueryResult,
 } from "@tanstack/react-query";
 import { withHostQueryErrorBoundary } from "@/lib/query/host-query-error-boundary";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   GitGetFileDiffRequest,
   GitGetFileDiffResponse,
   GitStage,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import { hostClientUnavailableError } from "@/hooks/host/use-host-query";
 import { useHostClient } from "@/lib/host";
 import { gitQueryKeys } from "@/lib/query-keys/git-query-keys";

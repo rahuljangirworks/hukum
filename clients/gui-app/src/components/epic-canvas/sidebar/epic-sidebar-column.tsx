@@ -199,7 +199,7 @@ function isSidebarPanelElement(
 /**
  * Custom sidebar-width handle on the shared `usePointerDragCommit` state
  * machine: per-frame direct `style.width` mutation on the panel element,
- * one store commit on release, `traycer-panel-resizing` freeze for the
+ * one store commit on release, `hukum-panel-resizing` freeze for the
  * drag's duration. Double-click resets to the default width; arrow keys
  * nudge by a fixed step (committed immediately). Cancel restores the
  * inline width string captured at drag start (the canvas handle instead

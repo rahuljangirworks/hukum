@@ -21,7 +21,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createStore } from "zustand/vanilla";
 import { useState, type ComponentProps, type ReactElement } from "react";
 import { v4 as uuidv4 } from "uuid";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import {
   buildComposerClipboardHtml,
@@ -424,7 +424,7 @@ describe("landing paste lifecycle (real draft-runtime registry + keyed LandingCo
     await waitForEditorReady();
 
     const editorBefore = screen.getByRole("textbox", {
-      name: "Ask Traycer anything. @ mention for context",
+      name: "Ask Hukum anything. @ mention for context",
     });
 
     const bytes = bytesOf([8, 8, 8]);
@@ -435,7 +435,7 @@ describe("landing paste lifecycle (real draft-runtime registry + keyed LandingCo
     });
 
     const editorAfter = screen.getByRole("textbox", {
-      name: "Ask Traycer anything. @ mention for context",
+      name: "Ask Hukum anything. @ mention for context",
     });
     expect(editorAfter).toBe(editorBefore);
   });

@@ -4,8 +4,8 @@ import {
   HostTransportFailureError,
   RetryableTransportError,
   type HostRpcError,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { useHostClient } from "@/lib/host/runtime";
 import { queryKeys } from "@/lib/query-keys";
@@ -33,7 +33,7 @@ export function hostStatusProbeQueryKey(hostId: string): readonly unknown[] {
 /**
  * What the host's `host.status` answer said about itself, held alongside the
  * `compatible` verdict. A busy host that was up and serving turns
- * (traycer#860) used to be indistinguishable from one that never started,
+ * (hukum#860) used to be indistinguishable from one that never started,
  * because the probe read only success/failure and discarded this payload.
  */
 export interface HostStatusSnapshot {
@@ -89,7 +89,7 @@ export type HostCompatibility =
 type HostCompatibilityContextValue = Context<HostCompatibility | null>;
 
 interface HostCompatibilityDevGlobals {
-  __TRAYCER_HOST_COMPATIBILITY_CONTEXT__:
+  __HUKUM_HOST_COMPATIBILITY_CONTEXT__:
     HostCompatibilityContextValue | undefined;
 }
 
@@ -105,13 +105,13 @@ function createStableHostCompatibilityContext(): HostCompatibilityContextValue {
 
   const devGlobals = globalThis as typeof globalThis &
     HostCompatibilityDevGlobals;
-  const existing = devGlobals.__TRAYCER_HOST_COMPATIBILITY_CONTEXT__;
+  const existing = devGlobals.__HUKUM_HOST_COMPATIBILITY_CONTEXT__;
   if (existing !== undefined) {
     return existing;
   }
 
   const context = createContext<HostCompatibility | null>(null);
-  devGlobals.__TRAYCER_HOST_COMPATIBILITY_CONTEXT__ = context;
+  devGlobals.__HUKUM_HOST_COMPATIBILITY_CONTEXT__ = context;
   return context;
 }
 
@@ -186,7 +186,7 @@ export function useHostCompatibilityProbe(): HostCompatibility {
   // a success cached, but a host-scoped invalidation (every stream
   // availability recovery issues one) refetches anyway - and a refetch that
   // FAILS used to drop `isSuccess` and tear the whole workspace down
-  // mid-session, reporting a running host as a startup failure (traycer#860).
+  // mid-session, reporting a running host as a startup failure (hukum#860).
   // TanStack keeps the last successful `data` alongside the error, which is
   // exactly the evidence that this host answered the handshake: compatibility
   // cannot change without the host changing, and a host swap re-keys this
@@ -258,7 +258,7 @@ export function isPendingHostProbeError(error: unknown): boolean {
  * transport never got a reply (no bound client, dial/handshake/frame timeout,
  * dropped socket), or the host closed the connection with a fatal it marked
  * retryable - a host that is up but cannot verify the session right now, e.g.
- * because it cannot reach the sign-in service (traycer#858).
+ * because it cannot reach the sign-in service (hukum#858).
  *
  * Both arrive as `HostTransportFailureError` subclasses, which is the one
  * signal that separates "we could not talk to the host" from "the host

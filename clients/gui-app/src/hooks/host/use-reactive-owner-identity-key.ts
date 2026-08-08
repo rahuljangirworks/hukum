@@ -1,6 +1,6 @@
 import { useCallback, useSyncExternalStore } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { VersionedRpcRegistry } from "@traycer/protocol/framework/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { VersionedRpcRegistry } from "@hukum/protocol/framework/index";
 import { remoteAwareOwnerIdentityKey } from "@/lib/host/transport-key";
 
 /**

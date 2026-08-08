@@ -3,13 +3,13 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import {
   PROVIDER_DISPLAY_NAMES,
   type ProviderCliState,
-} from "@traycer/protocol/host/provider-schemas";
-import { RetryableTransportError } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host/provider-schemas";
+import { RetryableTransportError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   HostRpcError,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import { SettingsPanelShell } from "@/components/settings/settings-panel-shell";
 import { RefreshIconButton } from "@/components/refresh-icon-button";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
@@ -41,7 +41,7 @@ import {
   sortProviderStatesByProviderOrder,
 } from "@/lib/provider-ordering";
 import { ProviderAuthBadge, ProviderAuthLine } from "./provider-auth-display";
-import { TraycerSubscriptionSection } from "./traycer-subscription-section";
+import { HukumSubscriptionSection } from "./hukum-subscription-section";
 import { ProviderRateLimitForProvider } from "./provider-rate-limit-section";
 import { ProviderMcpTab } from "./provider-mcp-tab";
 import { ProviderModelProvidersTab } from "./provider-model-providers-tab";
@@ -178,7 +178,7 @@ const PROVIDER_DESCRIPTIONS: Record<ProviderId, string> = {
   opencode: "OpenCode CLI agent.",
   cursor:
     "Cursor coding agent - SDK-driven agents authenticated with your Cursor API key.",
-  traycer: "Traycer's managed harness uses the selected OpenCode CLI binary.",
+  hukum: "Hukum's managed harness uses the selected OpenCode CLI binary.",
   openrouter:
     "OpenRouter - OpenAI-compatible gateway authenticated with your OpenRouter API key.",
   huggingface:
@@ -354,7 +354,7 @@ function ProvidersSettingsPanelInner({
   return (
     <SettingsPanelShell
       title="Providers"
-      description="Choose the CLI binary Traycer runs for each coding agent. Pick the bundled binary, one found on your PATH, or a custom install. Disable a provider to hide it when creating an agent."
+      description="Choose the CLI binary Hukum runs for each coding agent. Pick the bundled binary, one found on your PATH, or a custom install. Disable a provider to hide it when creating an agent."
       fillHeight
       bodyClassName="max-h-[min(85vh,52rem)]"
       // No host readout here — the sidebar states the scoped host one row
@@ -725,16 +725,16 @@ function ProvidersRailLayout({
   );
 }
 
-// Gates the subscription card to the Traycer provider here (not via an inline
+// Gates the subscription card to the Hukum provider here (not via an inline
 // ternary in ProviderDetail) so the credits query never fires while viewing
 // another provider, and ProviderDetail's branch count stays put.
-function TraycerSubscriptionForProvider({
+function HukumSubscriptionForProvider({
   providerId,
 }: {
   readonly providerId: ProviderId;
 }): ReactNode {
-  if (providerId !== "traycer") return null;
-  return <TraycerSubscriptionSection />;
+  if (providerId !== "hukum") return null;
+  return <HukumSubscriptionSection />;
 }
 
 function ProviderEnableSwitch(props: {
@@ -1078,7 +1078,7 @@ function ProviderTabBody({
               profileTab.isSelectedHostLocal,
             )}
           />
-          <TraycerSubscriptionForProvider providerId={state.providerId} />
+          <HukumSubscriptionForProvider providerId={state.providerId} />
           {/* The unscoped card is the ZERO-profile shape, which is what
               `ProviderProfileScopedSection` documents it as. With profiles on
               this same tab its per-profile limits are already rendered above,

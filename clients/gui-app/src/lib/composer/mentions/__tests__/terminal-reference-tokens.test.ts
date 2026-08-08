@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   ContextType,
   formatMentionForDisplayQuery,
-} from "@traycer/protocol/common/json-content-serializer";
+} from "@hukum/protocol/common/json-content-serializer";
 import { createLegacyMentionAttachment } from "../legacy";
 import { mentionAttachmentFromSuggestion } from "../attachments";
 import { splitPromptIntoComposerSegments } from "@/lib/composer/segments";

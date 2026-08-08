@@ -7,7 +7,7 @@ import {
   type RenderResult,
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import {
   HostReadinessControllerContext,
   type DefaultHostReadinessPresentation,
@@ -25,8 +25,8 @@ import { useDesktopDialogStore } from "@/stores/dialogs/desktop-dialog-store";
 
 const routerState = vi.hoisted(() => ({ pathname: "/" }));
 
-// `traycer host status` is a CLI subprocess read. Stubbing the query rather
-// than a 15-method ITraycerCli keeps the seam at the boundary the component
+// `hukum host status` is a CLI subprocess read. Stubbing the query rather
+// than a 15-method IHukumCli keeps the seam at the boundary the component
 // actually consumes. `data: undefined` reproduces a shell with no CLI, where
 // the query is disabled and the diagnostics correctly stay hidden.
 const hostStatus = vi.hoisted(() => ({
@@ -43,8 +43,8 @@ const hostStatus = vi.hoisted(() => ({
     | undefined,
 }));
 
-vi.mock("@/hooks/runner/use-runner-traycer-host-status-query", () => ({
-  useRunnerTraycerHostStatusQuery: () => hostStatus,
+vi.mock("@/hooks/runner/use-runner-hukum-host-status-query", () => ({
+  useRunnerHukumHostStatusQuery: () => hostStatus,
 }));
 
 vi.mock("@tanstack/react-router", () => ({
@@ -119,13 +119,13 @@ function renderGate(
   presentation: DefaultHostReadinessPresentation,
 ): GateHarness {
   const runnerHost = new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
@@ -309,7 +309,7 @@ describe("<HostReadyGate />", () => {
     renderGate({ kind: "compatibility-checking" }, PRESENTATION);
     expect(screen.getByTestId("local-host-loading-spinner")).toBeTruthy();
     expect(
-      screen.queryByText("Checking Traycer Host compatibility…"),
+      screen.queryByText("Checking Hukum Host compatibility…"),
     ).toBeNull();
   });
 
@@ -323,7 +323,7 @@ describe("<HostReadyGate />", () => {
     );
     expect(screen.queryByTestId("local-host-loading-spinner")).toBeNull();
     expect(
-      screen.getByText("Checking Traycer Host compatibility…"),
+      screen.getByText("Checking Hukum Host compatibility…"),
     ).toBeTruthy();
   });
 
@@ -348,20 +348,20 @@ describe("<HostReadyGate />", () => {
         {
           timestamp: "t0",
           phase: "starting",
-          fields: { shell: "/bin/zsh", args: "-i -l -c traycer" },
+          fields: { shell: "/bin/zsh", args: "-i -l -c hukum" },
         },
         { timestamp: "t1", phase: "crashed", fields: { code: "1" } },
       ],
-      bootstrapLogPath: "/Users/me/.traycer/bootstrap.log",
+      bootstrapLogPath: "/Users/me/.hukum/bootstrap.log",
       bootstrapLogTail: "",
     };
     renderGate({ kind: "unavailable-host" }, SLOW_PRESENTATION);
 
     expect(
       screen.getByTestId("local-host-bootstrap-log-path").textContent,
-    ).toBe("/Users/me/.traycer/bootstrap.log");
+    ).toBe("/Users/me/.hukum/bootstrap.log");
     const details = screen.getByTestId("local-host-bootstrap-details");
-    expect(details.textContent).toContain("/bin/zsh -i -l -c traycer");
+    expect(details.textContent).toContain("/bin/zsh -i -l -c hukum");
     expect(details.textContent).toContain("Host crashed with code 1.");
   });
 
@@ -372,7 +372,7 @@ describe("<HostReadyGate />", () => {
       bootstrapMarkers: [
         { timestamp: "t0", phase: "starting", fields: { shell: "/bin/zsh" } },
       ],
-      bootstrapLogPath: "/Users/me/.traycer/bootstrap.log",
+      bootstrapLogPath: "/Users/me/.hukum/bootstrap.log",
       bootstrapLogTail: "",
     };
     renderGate({ kind: "loading-host" }, PRESENTATION);
@@ -399,12 +399,12 @@ describe("<HostReadyGate />", () => {
     ).toBe(true);
   });
 
-  it("tells a user who removed Traycer how to finish", () => {
+  it("tells a user who removed Hukum how to finish", () => {
     // "Reinstall to start the host again" answered a question they were not
     // asking - they removed it deliberately and need the next step.
     renderGate({ kind: "removed-host" }, PRESENTATION);
     expect(screen.getByTestId("local-host-removed-quit").textContent).toContain(
-      "Quit Traycer",
+      "Quit Hukum",
     );
     expect(
       screen.getByText(/drag it from Applications to the Trash/),
@@ -442,7 +442,7 @@ describe("<HostReadyGate />", () => {
 
   it("keeps recovery actions reachable inside the block", () => {
     // Blocking must not strand a user whose host cannot start: a full-screen
-    // surface with no retry is the lockout shape traycer#738 exists to avoid.
+    // surface with no retry is the lockout shape hukum#738 exists to avoid.
     renderGate(
       { kind: "provisioning-error" },
       { ...PRESENTATION, provisioningError: new Error("boom") },

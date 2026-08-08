@@ -1,14 +1,14 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { buildProtocolSurface } from "@traycer/protocol/framework/surface-build";
+import { buildProtocolSurface } from "@hukum/protocol/framework/surface-build";
 import {
   checkSurfaceCompatibility,
   parseCompatExceptionsFile,
   protocolSurfaceSchema,
-} from "@traycer/protocol/framework/surface-compat";
-import { hostRpcRegistry, hostStreamRpcRegistry } from "@traycer/protocol/host/index";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+} from "@hukum/protocol/framework/surface-compat";
+import { hostRpcRegistry, hostStreamRpcRegistry } from "@hukum/protocol/host/index";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 
 /**
  * Released baseline surface guard for host→client enum/union growth.

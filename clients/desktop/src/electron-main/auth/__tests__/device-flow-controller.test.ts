@@ -14,7 +14,7 @@ import {
 const AUTHN = "http://authn.test";
 // A slot-suffixed dev scheme, the shape that most needs to round-trip: the
 // /device page must deep-link back to THIS run, not an installed sibling.
-const RETURN_SCHEME = "traycer-dev-spry-panda-a2acaa5e";
+const RETURN_SCHEME = "hukum-dev-spry-panda-a2acaa5e";
 
 type FetchHandler = (url: string) => Response;
 

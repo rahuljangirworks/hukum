@@ -11,7 +11,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { KeybindingsSettingsPanel } from "@/components/settings/panels/keybindings-settings-panel";
 import { getDefaultBindings } from "@/lib/keybindings/actions";
 import { useKeybindingStore } from "@/stores/settings/keybinding-store";
-import { GLOBAL_SHORTCUT_DEFAULT_CHORDS } from "@traycer-clients/shared/keybindings/global-shortcuts";
+import { GLOBAL_SHORTCUT_DEFAULT_CHORDS } from "@hukum-clients/shared/keybindings/global-shortcuts";
 import type {
   DesktopGlobalShortcutsBridge,
   GlobalShortcutIntent,
@@ -99,7 +99,7 @@ describe("KeybindingsSettingsPanel - Global shortcuts (T2)", () => {
     renderPanel();
 
     expect(screen.getByText("Global shortcuts")).toBeTruthy();
-    expect(screen.getByText("Summon Traycer")).toBeTruthy();
+    expect(screen.getByText("Summon Hukum")).toBeTruthy();
   });
 
   // R1: a disabled/dormant summon chord doesn't reserve itself in the
@@ -332,7 +332,7 @@ describe("KeybindingsSettingsPanel - Global shortcuts (T2)", () => {
     );
     expect(
       screen.getByText(
-        "Already used by Summon Traycer (global shortcut). Pick a different chord.",
+        "Already used by Summon Hukum (global shortcut). Pick a different chord.",
       ),
     ).toBeTruthy();
   });

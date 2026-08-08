@@ -1,11 +1,11 @@
-import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@traycer/protocol/host/provider-native-schemas";
+import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@hukum/protocol/host/provider-native-schemas";
 import { describe, expect, it } from "vitest";
 import type {
   ProviderAuth,
   ProviderAuthStatus,
   ProviderCliState,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import {
   isProviderAmbientAuthenticated,
   isProviderAmbientSignedOut,

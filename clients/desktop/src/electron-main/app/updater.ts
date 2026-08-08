@@ -105,9 +105,9 @@ const CURRENT_VERSION = app.getVersion();
 // this to treat "no GA release exists yet" as a non-error on RC builds rather
 // than logging/surfacing a failure.
 const IS_PRERELEASE_BUILD = CURRENT_VERSION.split("+")[0].includes("-");
-const PRIVATE_UPDATE_REPO = process.env.VITE_TRAYCER_DESKTOP_UPDATE_REPO ?? "";
+const PRIVATE_UPDATE_REPO = process.env.VITE_HUKUM_DESKTOP_UPDATE_REPO ?? "";
 const PRIVATE_UPDATE_TOKEN =
-  process.env.VITE_TRAYCER_DESKTOP_UPDATE_TOKEN ?? "";
+  process.env.VITE_HUKUM_DESKTOP_UPDATE_TOKEN ?? "";
 
 // User-facing copy for the update failure classes. Deliberately generic and
 // reassuring - users shouldn't see release-feed internals, HTTP bodies, or be
@@ -115,13 +115,13 @@ const PRIVATE_UPDATE_TOKEN =
 // and the renderer offers "Report an issue" (which privately attaches logs) so
 // support has the real diagnostics for anything the user can't resolve.
 const UPDATE_ERROR_OFFLINE_MESSAGE =
-  "Traycer couldn't connect to check for updates. Please check your internet connection and try again.";
+  "Hukum couldn't connect to check for updates. Please check your internet connection and try again.";
 const UPDATE_ERROR_SERVICE_MESSAGE =
-  "Traycer couldn't reach the update service right now. Please try again in a little while.";
+  "Hukum couldn't reach the update service right now. Please try again in a little while.";
 const UPDATE_ERROR_DOWNLOAD_MESSAGE =
-  "Traycer couldn't download and install the latest update. Please try again in a little while.";
+  "Hukum couldn't download and install the latest update. Please try again in a little while.";
 const UPDATE_ERROR_GENERIC_MESSAGE =
-  "Traycer ran into a problem while updating. Please try again in a little while.";
+  "Hukum ran into a problem while updating. Please try again in a little while.";
 // Linux deb/rpm only: a live install attempt hit an escalation failure
 // (pkexec/sudo/dpkg/rpm). Unlike the other generic messages, this one points
 // at the guidance dialog rather than suggesting a retry - the escalation path
@@ -129,7 +129,7 @@ const UPDATE_ERROR_GENERIC_MESSAGE =
 // alongside this message (see `handleUpdaterError`'s `installingUpdate`
 // branch).
 const UPDATE_ERROR_LINUX_MANUAL_INSTALL_MESSAGE =
-  "Traycer couldn't finish installing the update automatically. Follow the instructions below to finish it manually.";
+  "Hukum couldn't finish installing the update automatically. Follow the instructions below to finish it manually.";
 
 const listeners = new Set<AppUpdateListener>();
 let sequence = 0;
@@ -515,7 +515,7 @@ export async function checkForUpdatesNow(
   // feed (review amendment 2).
   if (invalidPrivateConfig()) {
     log.warn(
-      "[updater] refusing update check: VITE_TRAYCER_DESKTOP_UPDATE_TOKEN is set but VITE_TRAYCER_DESKTOP_UPDATE_REPO is not a valid owner/repo coordinate",
+      "[updater] refusing update check: VITE_HUKUM_DESKTOP_UPDATE_TOKEN is set but VITE_HUKUM_DESKTOP_UPDATE_REPO is not a valid owner/repo coordinate",
     );
     if (intent === "manual") {
       emitSnapshot({
@@ -891,7 +891,7 @@ function configurePrivateGitHubUpdateFeed(): void {
   const coordinate = parseGitHubRepoCoordinate(PRIVATE_UPDATE_REPO);
   if (coordinate === null) {
     log.warn(
-      "[updater] private GitHub update token is configured but VITE_TRAYCER_DESKTOP_UPDATE_REPO is not a valid owner/repo coordinate",
+      "[updater] private GitHub update token is configured but VITE_HUKUM_DESKTOP_UPDATE_REPO is not a valid owner/repo coordinate",
     );
     return;
   }
@@ -918,7 +918,7 @@ function resolveUpdateRepo(): GitHubRepoCoordinate | null {
   if (PRIVATE_UPDATE_TOKEN.trim().length > 0) {
     return parsed;
   }
-  return parsed ?? { owner: "traycerai", repo: "traycer" };
+  return parsed ?? { owner: "hukumai", repo: "hukum" };
 }
 
 // True when a private update token is configured but its repository coordinate
@@ -939,7 +939,7 @@ function configureStableGitHubUpdateFeed(): void {
     // Token set + invalid coordinate: fail closed. Leave the existing feed in
     // place rather than point an authenticated build at the public repo.
     log.warn(
-      "[updater] private update token is configured but VITE_TRAYCER_DESKTOP_UPDATE_REPO is not a valid owner/repo coordinate; leaving the update feed unchanged",
+      "[updater] private update token is configured but VITE_HUKUM_DESKTOP_UPDATE_REPO is not a valid owner/repo coordinate; leaving the update feed unchanged",
     );
     return;
   }
@@ -1200,16 +1200,16 @@ function notifyUpdateWhenUnfocused(
     // When updates can't be installed from this location, point at the fix
     // instead of telling the user to download something they can't apply.
     showSimpleNotification(
-      "Traycer update available",
+      "Hukum update available",
       currentInstallBlockedReason() ??
-        `Open Traycer to download${versionLabel}.`,
+        `Open Hukum to download${versionLabel}.`,
       focus,
     );
     return;
   }
   showSimpleNotification(
-    "Traycer update ready",
-    `Restart Traycer to install${versionLabel}.`,
+    "Hukum update ready",
+    `Restart Hukum to install${versionLabel}.`,
     focus,
   );
 }

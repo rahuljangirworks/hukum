@@ -18,10 +18,10 @@ import type {
   PrSourceNotice,
   PrSourceStatus,
   PrSubscribeDetailServerFrame,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { MockWsStreamClient as SharedMockWsStreamClient } from "@/components/epic-canvas/pr/__tests__/pr-stream-test-fixtures";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import type { WsStreamClient } from "@traycer-clients/shared/host-transport/ws-stream-client";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import type { WsStreamClient } from "@hukum-clients/shared/host-transport/ws-stream-client";
 import { readComposerDraftSnapshot } from "@/stores/composer/composer-draft-store";
 
 /**

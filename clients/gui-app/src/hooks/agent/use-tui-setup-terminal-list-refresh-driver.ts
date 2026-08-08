@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTabHostId } from "@/components/epic-canvas/hooks/use-tab-host-id";
 import { hostQueryKeys } from "@/lib/query-keys";
-import type { WorktreeBinding } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeBinding } from "@hukum/protocol/host/worktree-schemas";
 
 /**
  * Terminal-agent analog of `useSetupTerminalListRefreshDriver`: keeps the setup

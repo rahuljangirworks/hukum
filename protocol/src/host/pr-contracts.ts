@@ -8,8 +8,8 @@
  * these methods simply doesn't advertise them). `pr.getLocalDiff` IS unary, so
  * it must declare `degrade` and stay out of the floor - see its own note.
  */
-import { defineRpcContract } from "@traycer/protocol/framework/index";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { defineRpcContract } from "@hukum/protocol/framework/index";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 import {
   prSubscribeListForEpicOpenRequestSchema,
   prSubscribeListForEpicServerFrameSchema,

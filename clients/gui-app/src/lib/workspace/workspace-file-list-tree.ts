@@ -9,7 +9,7 @@
  * uses for its canonical directory paths, which is why the union of covered
  * listings can be handed to the tree adapter as a flat path list unchanged.
  */
-import type { WorkspaceFileListEntry } from "@traycer/protocol/host/workspace/subscribe";
+import type { WorkspaceFileListEntry } from "@hukum/protocol/host/workspace/subscribe";
 
 /** The workspace root's directory token; always covered while a stream is open. */
 export const WORKSPACE_FILE_LIST_ROOT_PATH = "";

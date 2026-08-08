@@ -4,7 +4,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import type {
   PrLightItem,
   PrSubscribeListForEpicServerFrame,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import {
   MockStreamSession as SharedMockStreamSession,
   MockWsStreamClient as SharedMockWsStreamClient,

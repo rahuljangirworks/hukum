@@ -2,9 +2,9 @@ import { z } from "zod";
 import {
   agentModeSchema,
   tuiHarnessIdSchema,
-} from "@traycer/protocol/host/agent/shared";
-import { GENERATE_TITLE_SOURCE_TEXT_MAX_CHARS } from "@traycer/protocol/host/epic/unary-schemas";
-import { worktreeBindingWorkspaceModeSchema } from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/agent/shared";
+import { GENERATE_TITLE_SOURCE_TEXT_MAX_CHARS } from "@hukum/protocol/host/epic/unary-schemas";
+import { worktreeBindingWorkspaceModeSchema } from "@hukum/protocol/host/worktree-schemas";
 
 // ─── Catalog rows (per-surface) ───────────────────────────────────────────
 //
@@ -55,7 +55,7 @@ export type ListTuiHarnessesResponse = z.infer<
 // Two identifiers travel together because two layers each need their own
 // handle on the session:
 //
-//   • `tuiAgentId` - Traycer's artifact id for the tab (the row id in the
+//   • `tuiAgentId` - Hukum's artifact id for the tab (the row id in the
 //     epic's `tuiAgents` Y.Map). Lets the resolver write a freshly-discovered
 //     harness session id back onto the right record, and also serves as the
 //     adapter-side per-tab key (e.g. the `codex app-server` instance map).
@@ -141,7 +141,7 @@ export const prepareTuiLaunchResponseSchema = z.object({
   // so the host-side active-run busy registry can refuse `worktree.delete`
   // for any of these paths until the PTY exits - covering multi-repo
   // worktree bindings where the sibling worktree paths would otherwise be
-  // missed by the single-cwd backstop. Local workspace rows and Traycer
+  // missed by the single-cwd backstop. Local workspace rows and Hukum
   // support directories are intentionally excluded.
   worktreeBusyPaths: z.array(z.string()),
 });
@@ -240,7 +240,7 @@ export const generateTuiAgentTitleRequestSchema = z.object({
   tuiAgentId: z.string().nullable().default(null),
   // OpenCode plugin events run inside the singleton `opencode serve` process,
   // not the per-agent attach PTY, so they identify the TUI agent by upstream
-  // sessionID instead of TRAYCER_EPIC_ID / TRAYCER_AGENT_ID.
+  // sessionID instead of HUKUM_EPIC_ID / HUKUM_AGENT_ID.
   harnessSessionId: z.string().nullable().default(null),
   harnessId: tuiHarnessIdSchema,
   promptText: z.string().min(1).max(GENERATE_TITLE_SOURCE_TEXT_MAX_CHARS),
@@ -300,7 +300,7 @@ export const recordTuiAgentActivityRequestSchema = z.object({
   tuiAgentId: z.string().nullable().default(null),
   // OpenCode plugin events run inside the singleton `opencode serve` process,
   // not the per-agent attach PTY, so they identify the TUI agent by upstream
-  // sessionID instead of TRAYCER_EPIC_ID / TRAYCER_AGENT_ID.
+  // sessionID instead of HUKUM_EPIC_ID / HUKUM_AGENT_ID.
   harnessSessionId: z.string().nullable().default(null),
   harnessId: tuiHarnessIdSchema,
   event: z.enum(["start", "stop"]),

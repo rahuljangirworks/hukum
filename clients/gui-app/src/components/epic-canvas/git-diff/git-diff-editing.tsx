@@ -11,20 +11,20 @@ import {
 import { useQueryClient, type UseQueryResult } from "@tanstack/react-query";
 import type { FileContents } from "@pierre/diffs";
 import type { EditorOptions } from "@pierre/diffs/edit";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   HostRpcError,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   GitChangedFile,
   GitGetFileDiffResponse,
   HostRpcRegistry,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import {
   DEFAULT_GIT_FILE_DIFF_BYTE_BUDGET,
   WORKSPACE_WRITE_FILE_MAX_CHARS,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import { preloadDiffEditProvider } from "@/components/diff/diff-edit-provider-loader";
 import {
   useDiffClickToEdit,

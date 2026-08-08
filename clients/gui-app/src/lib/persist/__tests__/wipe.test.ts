@@ -59,24 +59,24 @@ function snapshotKeys(storage: Storage): string[] {
 }
 
 // Seed both storages with: real persisted keys (on the `:` boundary), an auth
-// key (`traycer.` prefix), an unrelated key, and the tricky `traycer-gui-appX:`
-// key that must survive because it is NOT on the `traycer-gui-app:` boundary.
+// key (`hukum.` prefix), an unrelated key, and the tricky `hukum-gui-appX:`
+// key that must survive because it is NOT on the `hukum-gui-app:` boundary.
 const LOCAL_SEED: Record<string, string> = {
-  "traycer-gui-app:settings": "{}",
-  "traycer-gui-app:composer-run-settings:anon": "{}",
-  "traycer-gui-app:open-epic:u1:e1": "{}",
-  "traycer-gui-app:reading-position:u1:epic-1:view:native:tile-1": "{}",
-  "traycer.token": "secret-auth-token",
+  "hukum-gui-app:settings": "{}",
+  "hukum-gui-app:composer-run-settings:anon": "{}",
+  "hukum-gui-app:open-epic:u1:e1": "{}",
+  "hukum-gui-app:reading-position:u1:epic-1:view:native:tile-1": "{}",
+  "hukum.token": "secret-auth-token",
   "some-unrelated-key": "keep-me",
-  "traycer-gui-appX:foo": "must-not-be-swept",
+  "hukum-gui-appX:foo": "must-not-be-swept",
 };
 
 const SESSION_SEED: Record<string, string> = {
-  "traycer-gui-app:consumed-initial-route:w1:/home": "1",
-  "traycer-gui-app:tabs": "{}",
-  "traycer.session": "secret-session",
+  "hukum-gui-app:consumed-initial-route:w1:/home": "1",
+  "hukum-gui-app:tabs": "{}",
+  "hukum.session": "secret-session",
   "unrelated-session-key": "keep-me-too",
-  "traycer-gui-appX:bar": "must-not-be-swept",
+  "hukum-gui-appX:bar": "must-not-be-swept",
 };
 
 // A minimal `IDBOpenDBRequest` stand-in: `deleteDatabase` returns it and we
@@ -137,17 +137,17 @@ afterEach(() => {
 });
 
 describe("clearAllPersistedStores — blanket-prefix sweep", () => {
-  it("removes only `traycer-gui-app:`-boundary keys from BOTH storages; auth + unrelated + `traycer-gui-appX` survive", async () => {
+  it("removes only `hukum-gui-app:`-boundary keys from BOTH storages; auth + unrelated + `hukum-gui-appX` survive", async () => {
     await clearAllPersistedStores({ hostClear: null });
 
     expect(snapshotKeys(localStorageMock)).toEqual(
-      ["traycer.token", "some-unrelated-key", "traycer-gui-appX:foo"].sort(),
+      ["hukum.token", "some-unrelated-key", "hukum-gui-appX:foo"].sort(),
     );
     expect(snapshotKeys(sessionStorageMock)).toEqual(
       [
-        "traycer.session",
+        "hukum.session",
         "unrelated-session-key",
-        "traycer-gui-appX:bar",
+        "hukum-gui-appX:bar",
       ].sort(),
     );
   });
@@ -273,11 +273,11 @@ describe("clearAllPersistedStores — renderer IndexedDB drop", () => {
   // A mix of app-owned per-window partitions, a same-prefix db that is not one
   // of ours, and an unrelated db. Only the known renderer stores are deleted.
   const DB_NAMES = [
-    "traycer-gui-app:default:landing-images",
-    "traycer-gui-app:window-7:landing-images",
-    "traycer-gui-app:default:file-edit-recovery",
-    "traycer-gui-app:window-7:file-edit-recovery",
-    "traycer-gui-app:some-other-store",
+    "hukum-gui-app:default:landing-images",
+    "hukum-gui-app:window-7:landing-images",
+    "hukum-gui-app:default:file-edit-recovery",
+    "hukum-gui-app:window-7:file-edit-recovery",
+    "hukum-gui-app:some-other-store",
     "unrelated-app-db",
   ];
 
@@ -316,11 +316,11 @@ describe("clearAllPersistedStores — renderer IndexedDB drop", () => {
     // by exact fixed name even when enumeration never lists it.
     expect(deleted.sort()).toEqual(
       [
-        "traycer-gui-app:default:landing-images",
-        "traycer-gui-app:prompt-stash",
-        "traycer-gui-app:window-7:landing-images",
-        "traycer-gui-app:default:file-edit-recovery",
-        "traycer-gui-app:window-7:file-edit-recovery",
+        "hukum-gui-app:default:landing-images",
+        "hukum-gui-app:prompt-stash",
+        "hukum-gui-app:window-7:landing-images",
+        "hukum-gui-app:default:file-edit-recovery",
+        "hukum-gui-app:window-7:file-edit-recovery",
       ].sort(),
     );
     expect(reloadSpy).toHaveBeenCalledTimes(1);
@@ -349,14 +349,14 @@ describe("clearAllPersistedStores — renderer IndexedDB drop", () => {
 
     await clearAllPersistedStores({ hostClear: null });
 
-    expect(order).toEqual(["deleted:traycer-gui-app:prompt-stash", "reset"]);
+    expect(order).toEqual(["deleted:hukum-gui-app:prompt-stash", "reset"]);
   });
 
   it("drops the dbs AFTER the storage sweep and BEFORE the reload", async () => {
     const order: string[] = [];
     const value = {
       databases: vi.fn(() =>
-        Promise.resolve([{ name: "traycer-gui-app:default:landing-images" }]),
+        Promise.resolve([{ name: "hukum-gui-app:default:landing-images" }]),
       ),
       deleteDatabase: vi.fn((name: string) => {
         order.push(`deleteDatabase:${name}`);
@@ -379,7 +379,7 @@ describe("clearAllPersistedStores — renderer IndexedDB drop", () => {
 
     const sweepIndex = order.indexOf("local:removeItem");
     const deleteIndex = order.indexOf(
-      "deleteDatabase:traycer-gui-app:default:landing-images",
+      "deleteDatabase:hukum-gui-app:default:landing-images",
     );
     const reloadIndex = order.indexOf("reload");
     expect(sweepIndex).toBeLessThan(deleteIndex);
@@ -392,8 +392,8 @@ describe("clearAllPersistedStores — renderer IndexedDB drop", () => {
     const value = {
       databases: vi.fn(() =>
         Promise.resolve([
-          { name: "traycer-gui-app:default:landing-images" },
-          { name: "traycer-gui-app:window-7:landing-images" },
+          { name: "hukum-gui-app:default:landing-images" },
+          { name: "hukum-gui-app:window-7:landing-images" },
         ]),
       ),
       deleteDatabase: vi.fn((name: string) => {
@@ -443,7 +443,7 @@ describe("clearAllPersistedStores — renderer IndexedDB drop", () => {
 
     // Without enumeration, landing partitions cannot be found - accepted gap -
     // but the single known prompt-stash name is always deleted.
-    expect(deleteDatabase).toHaveBeenCalledWith("traycer-gui-app:prompt-stash");
+    expect(deleteDatabase).toHaveBeenCalledWith("hukum-gui-app:prompt-stash");
     expect(reloadSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -466,7 +466,7 @@ describe("clearAllPersistedStores — renderer IndexedDB drop", () => {
       clearAllPersistedStores({ hostClear: null }),
     ).resolves.toBeUndefined();
 
-    expect(deleteDatabase).toHaveBeenCalledWith("traycer-gui-app:prompt-stash");
+    expect(deleteDatabase).toHaveBeenCalledWith("hukum-gui-app:prompt-stash");
     expect(publishPromptStashReset).toHaveBeenCalledTimes(1);
     expect(reloadSpy).toHaveBeenCalledTimes(1);
   });
@@ -488,7 +488,7 @@ describe("clearAllPersistedStores — renderer IndexedDB drop", () => {
   it("deleteDatabase onblocked resolves so the wipe still reloads", async () => {
     const value = {
       databases: vi.fn(() =>
-        Promise.resolve([{ name: "traycer-gui-app:default:landing-images" }]),
+        Promise.resolve([{ name: "hukum-gui-app:default:landing-images" }]),
       ),
       deleteDatabase: vi.fn((_name: string) => {
         const request = {

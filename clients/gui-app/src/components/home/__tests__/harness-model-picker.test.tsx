@@ -113,7 +113,7 @@ import {
   PROVIDER_PROFILE_ACCENT_COLORS,
   type ProviderCliState,
   type ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { useState, type Key, type KeyboardEvent, type ReactNode } from "react";
 
 interface CatalogHarness extends HarnessOption {
@@ -485,7 +485,7 @@ import { useProviderProfileAddFlowStore } from "@/stores/settings/provider-profi
 import { useKeybindingStore } from "@/stores/settings/keybinding-store";
 import { formatChordForDisplay } from "@/lib/keybindings/chord";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ALL_PERMISSION_MODES } from "@traycer/protocol/persistence/epic/foundation";
+import { ALL_PERMISSION_MODES } from "@hukum/protocol/persistence/epic/foundation";
 
 import { tooltipTextNear } from "@/components/ui/__tests__/tooltip-probe";
 const CODEX_HARNESS: HarnessOption = {
@@ -1150,7 +1150,7 @@ describe("<HarnessModelPicker />", () => {
   it("shows a deprecated-model badge with its notice as a tooltip", async () => {
     const deprecationNotice =
       "Claude Sonnet 4.6 is deprecated in favor of Claude Sonnet 5 and " +
-      "will be removed from Traycer on 2026-08-31. Switch to Claude Sonnet 5.";
+      "will be removed from Hukum on 2026-08-31. Switch to Claude Sonnet 5.";
     installClaudeCatalog([
       model({
         harnessId: "claude",
@@ -1640,7 +1640,7 @@ describe("<HarnessModelPicker />", () => {
         candidates: [
           {
             kind: "bundled",
-            path: "/opt/traycer/resources/providers/claude/claude",
+            path: "/opt/hukum/resources/providers/claude/claude",
             version: "1.0.0",
             available: true,
             versionPending: false,

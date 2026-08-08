@@ -4,7 +4,7 @@ import { useThrottledHighlight } from "@tailmark/react";
 import { useClipboardCopy } from "@/hooks/ui/use-clipboard-copy";
 import { cn } from "@/lib/utils";
 import { extractText } from "./extract-react-node-text";
-import { getTraycerStreamingHighlighter } from "../traycer-streaming-highlighter";
+import { getHukumStreamingHighlighter } from "../hukum-streaming-highlighter";
 
 interface CodeBlockProps {
   children?: ReactNode;
@@ -53,7 +53,7 @@ function FencedCodeBlock({
 }) {
   // Module singleton also passed to StreamingMarkdown as `highlighter` so
   // throttle/subscribe share one readiness bus with the wrapper.
-  const highlighter = getTraycerStreamingHighlighter();
+  const highlighter = getHukumStreamingHighlighter();
   // Empty fence info stays unhighlighted (plain path) but still quoteable.
   const highlightLang = language.length > 0 ? language : null;
   const highlightedNodes = useThrottledHighlight(
@@ -115,7 +115,7 @@ function FencedCodeBlock({
 
       <div className="overflow-x-auto px-3.5 py-3 font-mono text-code">
         {highlightedNodes !== null ? (
-          <div className="traycer-md-shiki">{highlightedNodes}</div>
+          <div className="hukum-md-shiki">{highlightedNodes}</div>
         ) : (
           <pre className="m-0 bg-transparent p-0">
             <code className="font-mono text-code text-foreground">{code}</code>

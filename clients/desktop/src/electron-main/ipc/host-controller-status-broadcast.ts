@@ -133,7 +133,7 @@ export function registerHostControllerStatusBroadcast(
   // streams thousands of them while it downloads. `getStatus()` is not cheap
   // (three JSON reads plus a TCP reachability probe), so letting those calls
   // overlap buried libuv's four-thread pool under thousands of concurrent fs
-  // operations and starved the main process event loop - the "Traycer is not
+  // operations and starved the main process event loop - the "Hukum is not
   // responding" dialogs seen while installing.
   //
   // Serializing collapses a burst into the only status the renderer actually

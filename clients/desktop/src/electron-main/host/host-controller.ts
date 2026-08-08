@@ -1,7 +1,7 @@
 import { constants } from "node:fs";
 import { access } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import { encodeStageFingerprint } from "@traycer-clients/shared/host-version/stage-fingerprint";
+import { encodeStageFingerprint } from "@hukum-clients/shared/host-version/stage-fingerprint";
 import { log } from "../app/logger";
 import { prereleaseUpdatesEnabled } from "../app/update-preferences";
 import {
@@ -15,11 +15,11 @@ import {
 } from "../app/host-login-item";
 import { resolveBundledCliPath } from "../cli/cli-discovery";
 import {
-  runBundledTraycerCliJson,
-  streamBundledTraycerCliJson,
-  TraycerCliError,
+  runBundledHukumCliJson,
+  streamBundledHukumCliJson,
+  HukumCliError,
   type NdjsonEvent,
-} from "../cli/traycer-cli";
+} from "../cli/hukum-cli";
 import { withDesktopCliLock } from "./desktop-cli-lock";
 import {
   getHostFsLayout,
@@ -68,7 +68,7 @@ import {
   type MutationLaneStatus,
   type MutationOutcome,
   type MutationProgress,
-  type RemoveTraycerOk,
+  type RemoveHukumOk,
   type ServiceRegistrationOk,
   type UninstallOk,
 } from "./host-controller-types";
@@ -81,13 +81,13 @@ import {
 
 // How long a streaming CLI child may stay SILENT before it is treated as
 // wedged and killed. Not a ceiling on how long the work may take: the timer
-// re-arms on every NDJSON event (`streamTraycerCliJson`), and the CLI emits
+// re-arms on every NDJSON event (`streamHukumCliJson`), and the CLI emits
 // progress per downloaded chunk plus watchdog/backoff heartbeats while a
 // transfer is stalled.
 //
 // As an absolute cap this same 10 minutes made the host download
 // unfinishable below ~1.2 MB/s - the CLI was SIGKILLed mid-transfer and the
-// partial went with it (traycer#585/#589). Kept at 10 minutes as an idle
+// partial went with it (hukum#585/#589). Kept at 10 minutes as an idle
 // budget: comfortably longer than the CLI's own 30s transfer watchdog, so
 // only a child that has genuinely stopped reporting trips it.
 const CLI_STREAM_IDLE_TIMEOUT_MS = 10 * 60_000;
@@ -104,7 +104,7 @@ export const DESKTOP_LOCK_WAIT_MS = 30_000;
 export const DESKTOP_LOCK_POLL_INTERVAL_MS = 100;
 const CLI_LOCK_BUSY_CODE = "E_CLI_LOCK_BUSY";
 const HOST_BUSY_CODE = "E_HOST_BUSY";
-const LOCK_BUSY_MESSAGE = "Another Traycer process is managing the host.";
+const LOCK_BUSY_MESSAGE = "Another Hukum process is managing the host.";
 
 class HostReadinessError extends Error {
   constructor(message: string) {
@@ -124,9 +124,9 @@ function sleep(ms: number): Promise<void> {
 // actionable copy can never drift into two texts that quietly diverge.
 function approvalRequiredMessage(): string {
   return (
-    "Traycer's background host is registered but disabled by macOS. " +
+    "Hukum's background host is registered but disabled by macOS. " +
     "Open System Settings → General → Login Items & Extensions and turn on " +
-    'Traycer under "Allow in the Background", then click Retry.'
+    'Hukum under "Allow in the Background", then click Retry.'
   );
 }
 
@@ -170,7 +170,7 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 //
 // Desktop-local mirrors of the CLI producers' shapes (commands/host-*.ts),
 // not imports of CLI-internal types - this ticket must not modify or
-// depend on `clients/traycer-cli/` internals. Parsed the same
+// depend on `clients/hukum-cli/` internals. Parsed the same
 // defensively-tolerant way `host-management-ipc.ts`'s existing
 // `projectInstallResult`/`projectUninstallResult` already do.
 
@@ -466,12 +466,12 @@ interface EligibleStage {
   readonly fingerprint: string;
 }
 
-// Mirrors the real wire shape `traycer host available --json` emits
-// (`traycer-cli/src/commands/host-available.ts`'s `data` envelope):
+// Mirrors the real wire shape `hukum host available --json` emits
+// (`hukum-cli/src/commands/host-available.ts`'s `data` envelope):
 // `{ manifest: { latest, versions[].platforms[platformKey] }, manifestUrl,
 // platformKey }` - NOT a flat `{latest, versions[].platformAsset}` shape.
 // Pinned against the CLI's real command output by the contract test in
-// `traycer-cli/src/commands/__tests__/host-available.test.ts`.
+// `hukum-cli/src/commands/__tests__/host-available.test.ts`.
 function parseAvailableSnapshot(raw: unknown): AvailableSnapshotShape {
   if (!isPlainObject(raw) || typeof raw.platformKey !== "string") {
     return { valid: false, latest: "", versions: [] };
@@ -856,7 +856,7 @@ export class HostController {
     // Those are emitted from INSIDE whatever stage is already running (the
     // manifest fetch, the archive transfer, the signature fetch) rather than
     // being stages in their own right, so letting one overwrite `stage` made
-    // the renderer's heading flip away from "Downloading Traycer Host…" and
+    // the renderer's heading flip away from "Downloading Hukum Host…" and
     // back on every retry. The progress-aware retry budget turned that from a
     // rare blip into a constant flicker on exactly the throttled links it
     // exists for. A genuine stage transition (resolve/download/extract/swap/
@@ -925,7 +925,7 @@ export class HostController {
   // ---- Shared CLI invocation helpers --------------------------------------
 
   private async streamBundled<T>(args: readonly string[]): Promise<T> {
-    const result = await streamBundledTraycerCliJson<T>({
+    const result = await streamBundledHukumCliJson<T>({
       args,
       env: null,
       idleTimeoutMs: CLI_STREAM_IDLE_TIMEOUT_MS,
@@ -943,7 +943,7 @@ export class HostController {
   }
 
   private async runBundled<T>(args: readonly string[]): Promise<T> {
-    return runBundledTraycerCliJson<T>(args);
+    return runBundledHukumCliJson<T>(args);
   }
 
   // ---- Lock-contention terminal contract ----------------------------------
@@ -1020,7 +1020,7 @@ export class HostController {
     );
     if (!readiness.ready) {
       throw new HostReadinessError(
-        `Traycer Host did not become reachable after activation (${readiness.reason}) - run \`traycer host doctor\` to recover.`,
+        `Hukum Host did not become reachable after activation (${readiness.reason}) - run \`hukum host doctor\` to recover.`,
       );
     }
     if (
@@ -1028,7 +1028,7 @@ export class HostController {
       readiness.version !== expectedRuntimeVersion
     ) {
       throw new HostReadinessError(
-        `Traycer Host published runtime ${readiness.version} after activation, but the committed installation expects ${expectedRuntimeVersion}. Run \`traycer host doctor\` to recover.`,
+        `Hukum Host published runtime ${readiness.version} after activation, but the committed installation expects ${expectedRuntimeVersion}. Run \`hukum host doctor\` to recover.`,
       );
     }
     return readiness;
@@ -1057,7 +1057,7 @@ export class HostController {
       );
     } catch (err) {
       throw new Error(
-        `Traycer Host stamp-runtime command failed: ${describeError(err)}`,
+        `Hukum Host stamp-runtime command failed: ${describeError(err)}`,
       );
     }
     if (
@@ -1078,7 +1078,7 @@ export class HostController {
       );
     }
     throw new Error(
-      "Traycer Host activation could not be confirmed - run `traycer host doctor` to recover.",
+      "Hukum Host activation could not be confirmed - run `hukum host doctor` to recover.",
     );
   }
 
@@ -1098,7 +1098,7 @@ export class HostController {
     await this.stampIfNullRuntime(expectedInstallGeneration, readiness);
     if (!(await this.publishReachableHostSnapshot())) {
       throw new HostReadinessError(
-        "Traycer Host became unavailable while activation was being published - run `traycer host doctor` to recover.",
+        "Hukum Host became unavailable while activation was being published - run `hukum host doctor` to recover.",
       );
     }
   }
@@ -1178,7 +1178,7 @@ export class HostController {
         ...this.devServiceInstallExtras(),
       ]);
     } catch (err) {
-      if (err instanceof TraycerCliError && err.code === HOST_BUSY_CODE) {
+      if (err instanceof HukumCliError && err.code === HOST_BUSY_CODE) {
         log.info(
           "[host-controller] CLI takeover declined - the running host has work in progress",
           { status: args.failedStatus },
@@ -1194,7 +1194,7 @@ export class HostController {
       return {
         recovered: false,
         hostBusy: false,
-        message: `Failed to register the host login item (status=${args.failedStatus}), and the fallback service registration failed: ${describeError(err)} Run 'traycer host service uninstall' and relaunch Traycer, or run 'traycer host doctor' to recover.`,
+        message: `Failed to register the host login item (status=${args.failedStatus}), and the fallback service registration failed: ${describeError(err)} Run 'hukum host service uninstall' and relaunch Hukum, or run 'hukum host doctor' to recover.`,
       };
     }
     const result = parseServiceStartResult(raw);
@@ -1548,7 +1548,7 @@ export class HostController {
       // and this is the one card a locked-out user actually reads.
       return {
         kind: "retryable-readiness-timeout",
-        message: `Traycer Host did not start within ${HOST_READY_TIMEOUT_MS}ms (${readiness.reason}) - run \`traycer host doctor\` to recover.`,
+        message: `Hukum Host did not start within ${HOST_READY_TIMEOUT_MS}ms (${readiness.reason}) - run \`hukum host doctor\` to recover.`,
         prePid,
         expectedRuntimeVersion,
       };
@@ -1558,7 +1558,7 @@ export class HostController {
       readiness.version !== expectedRuntimeVersion
     ) {
       return this.failedAfterServiceCycle(
-        `Traycer Host published runtime ${readiness.version} after activation, but the committed installation expects ${expectedRuntimeVersion}. Run \`traycer host doctor\` to recover.`,
+        `Hukum Host published runtime ${readiness.version} after activation, but the committed installation expects ${expectedRuntimeVersion}. Run \`hukum host doctor\` to recover.`,
       );
     }
     try {
@@ -1568,7 +1568,7 @@ export class HostController {
     }
     if (!(await this.publishReachableHostSnapshot())) {
       return this.failedAfterServiceCycle(
-        "Traycer Host became unavailable while activation was being published - run `traycer host doctor` to recover.",
+        "Hukum Host became unavailable while activation was being published - run `hukum host doctor` to recover.",
       );
     }
     return { kind: "ok", value: { activated: true } };
@@ -1824,7 +1824,7 @@ export class HostController {
         { reason: readiness.reason },
       );
       return this.failedAfterServiceCycle(
-        `The host's background service was refreshed but did not become reachable in time (${readiness.reason}). Open Doctor or run 'traycer host doctor' to recover.`,
+        `The host's background service was refreshed but did not become reachable in time (${readiness.reason}). Open Doctor or run 'hukum host doctor' to recover.`,
       );
     }
     if (
@@ -1832,7 +1832,7 @@ export class HostController {
       readiness.version !== expectedRuntimeVersion
     ) {
       return this.failedAfterServiceCycle(
-        `Traycer Host published runtime ${readiness.version} after activation, but the committed installation expects ${expectedRuntimeVersion}. Run \`traycer host doctor\` to recover.`,
+        `Hukum Host published runtime ${readiness.version} after activation, but the committed installation expects ${expectedRuntimeVersion}. Run \`hukum host doctor\` to recover.`,
       );
     }
     try {
@@ -1846,7 +1846,7 @@ export class HostController {
     });
     if (!(await this.publishReachableHostSnapshot())) {
       return this.failedAfterServiceCycle(
-        "Traycer Host became unavailable while the pending LaunchAgent revision was being published - run `traycer host doctor` to recover.",
+        "Hukum Host became unavailable while the pending LaunchAgent revision was being published - run `hukum host doctor` to recover.",
       );
     }
     return {
@@ -1928,7 +1928,7 @@ export class HostController {
     // Surface it as non-converged instead - never "update ready"/"removed".
     if (result.postSwapError !== null) {
       return this.failedAfterServiceCycle(
-        `Host installed, but the background service failed to start after the swap: ${result.postSwapError}. Open Doctor or run 'traycer host doctor' to recover.`,
+        `Host installed, but the background service failed to start after the swap: ${result.postSwapError}. Open Doctor or run 'hukum host doctor' to recover.`,
       );
     }
     if (result.action !== "noop") {
@@ -1946,7 +1946,7 @@ export class HostController {
     }
     if (!(await this.publishReachableHostSnapshot())) {
       return this.failedAfterServiceCycle(
-        "Traycer Host became unavailable while ensure was being published - run `traycer host doctor` to recover.",
+        "Hukum Host became unavailable while ensure was being published - run `hukum host doctor` to recover.",
       );
     }
     return {
@@ -2014,7 +2014,7 @@ export class HostController {
     );
     if (version === null) {
       return this.failedAfterServiceCycle(
-        "Traycer Host became unavailable while ensure was being published - run `traycer host doctor` to recover.",
+        "Hukum Host became unavailable while ensure was being published - run `hukum host doctor` to recover.",
       );
     }
     return {
@@ -2027,7 +2027,7 @@ export class HostController {
     err: unknown,
     isConvergeReady: boolean,
   ): MutationOutcome<T> {
-    if (err instanceof TraycerCliError) {
+    if (err instanceof HukumCliError) {
       if (err.code === CLI_LOCK_BUSY_CODE)
         return this.lockBusyOutcome<T>(isConvergeReady);
       if (err.code === HOST_BUSY_CODE) {
@@ -2251,7 +2251,7 @@ export class HostController {
   private async runDownloadLane(explicitVersion: string | null): Promise<void> {
     const job = this.downloadTail.then(async () => {
       // This work may have sat behind another download. Check both gates at
-      // execution time: a mutation can have started, or Remove Traycer can
+      // execution time: a mutation can have started, or Remove Hukum can
       // have persisted its sentinel, while it was waiting.
       if (await isHostRemovedByUser()) return;
       if (this.mutationStatus !== null) {
@@ -2267,12 +2267,12 @@ export class HostController {
           explicitVersion !== null
             ? ["host", "download", explicitVersion]
             : ["host", "download", "--automatic"];
-        await streamBundledTraycerCliJson<unknown>({
+        await streamBundledHukumCliJson<unknown>({
           args,
           env: null,
           idleTimeoutMs: CLI_STREAM_IDLE_TIMEOUT_MS,
           // Fixup C4: this download's own `AbortController` - `abortInFlightDownload`
-          // (only called by `removeTraycer`) now actually kills the spawned CLI
+          // (only called by `removeHukum`) now actually kills the spawned CLI
           // subprocess instead of only flipping `.aborted` on a signal nothing
           // downstream read.
           signal: controller.signal,
@@ -2353,7 +2353,7 @@ export class HostController {
     );
     if (runningRuntimeVersion === null) {
       return this.installedNotConverged(
-        "No staged host update was available, but the current host is not reachable. Open Doctor or run 'traycer host doctor' to recover.",
+        "No staged host update was available, but the current host is not reachable. Open Doctor or run 'hukum host doctor' to recover.",
       );
     }
     return {
@@ -2457,7 +2457,7 @@ export class HostController {
     }
     if (result.postSwapError !== null) {
       return this.installedNotConverged(
-        `Host bytes were applied, but the background service failed to start after the swap: ${result.postSwapError}. Open Doctor or run 'traycer host doctor' to recover.`,
+        `Host bytes were applied, but the background service failed to start after the swap: ${result.postSwapError}. Open Doctor or run 'hukum host doctor' to recover.`,
       );
     }
     // A CLI-owned apply can itself restart the supervisor. Readiness is
@@ -2476,7 +2476,7 @@ export class HostController {
       }
     } else {
       return this.installedNotConverged(
-        "Host bytes were applied, but the background service was not started. Open Doctor or run 'traycer host doctor' to recover.",
+        "Host bytes were applied, but the background service was not started. Open Doctor or run 'hukum host doctor' to recover.",
       );
     }
     return {
@@ -2538,7 +2538,7 @@ export class HostController {
     err: unknown,
     continuation: BusyContinuation,
   ): MutationOutcome<T> {
-    if (err instanceof TraycerCliError) {
+    if (err instanceof HukumCliError) {
       if (err.code === CLI_LOCK_BUSY_CODE)
         return this.lockBusyOutcome<T>(false);
       if (err.code === HOST_BUSY_CODE)
@@ -2645,7 +2645,7 @@ export class HostController {
       );
     } catch (err) {
       await this.reloadAfterServiceCycleFailure();
-      if (err instanceof TraycerCliError) {
+      if (err instanceof HukumCliError) {
         if (err.code === CLI_LOCK_BUSY_CODE) return this.lockBusyOutcome(false);
         if (err.code === HOST_BUSY_CODE)
           return this.hostBusyOutcome("retry-with-force");
@@ -2862,7 +2862,7 @@ export class HostController {
           ]);
         } catch (err) {
           await this.reloadAfterServiceCycleFailure();
-          if (err instanceof TraycerCliError && err.code === CLI_LOCK_BUSY_CODE)
+          if (err instanceof HukumCliError && err.code === CLI_LOCK_BUSY_CODE)
             return this.lockBusyOutcome(false);
           return { kind: "failed", message: describeError(err) };
         }
@@ -2907,7 +2907,7 @@ export class HostController {
         try {
           await this.runBundled<unknown>(["host", "service", "uninstall"]);
         } catch (err) {
-          if (err instanceof TraycerCliError && err.code === CLI_LOCK_BUSY_CODE)
+          if (err instanceof HukumCliError && err.code === CLI_LOCK_BUSY_CODE)
             return this.lockBusyOutcome(false);
           return { kind: "failed", message: describeError(err) };
         }
@@ -2930,7 +2930,7 @@ export class HostController {
       "respawn",
       "respawn",
       async () => {
-        // Fixup B14: Remove Traycer may have persisted the removed-by-user
+        // Fixup B14: Remove Hukum may have persisted the removed-by-user
         // sentinel but failed/been interrupted mid-uninstall, leaving
         // remaining bytes on disk - without this check, Restart/Retry would
         // resurrect them instead of respecting the removal.
@@ -2964,7 +2964,7 @@ export class HostController {
           // Fixup B14: same healing as the packaged-mac branch above - a
           // CLI-lock-busy/failed restart never touched the host either.
           await this.reloadAfterServiceCycleFailure();
-          if (err instanceof TraycerCliError && err.code === CLI_LOCK_BUSY_CODE)
+          if (err instanceof HukumCliError && err.code === CLI_LOCK_BUSY_CODE)
             return this.lockBusyOutcome(false);
           return { kind: "failed", message: describeError(err) };
         }
@@ -3030,7 +3030,7 @@ export class HostController {
           raw = await this.streamBundled<unknown>(["host", "restart"]);
         } catch (err) {
           await this.reloadAfterServiceCycleFailure();
-          if (err instanceof TraycerCliError && err.code === CLI_LOCK_BUSY_CODE)
+          if (err instanceof HukumCliError && err.code === CLI_LOCK_BUSY_CODE)
             return this.lockBusyOutcome(false);
           return { kind: "failed", message: describeError(err) };
         }
@@ -3079,7 +3079,7 @@ export class HostController {
               ]);
             } catch (err) {
               if (
-                err instanceof TraycerCliError &&
+                err instanceof HukumCliError &&
                 err.code === CLI_LOCK_BUSY_CODE
               )
                 return this.lockBusyOutcome(false);
@@ -3100,7 +3100,7 @@ export class HostController {
           raw = await this.streamBundled<unknown>(args);
         } catch (err) {
           await this.reloadAfterServiceCycleFailure();
-          if (err instanceof TraycerCliError && err.code === CLI_LOCK_BUSY_CODE)
+          if (err instanceof HukumCliError && err.code === CLI_LOCK_BUSY_CODE)
             return this.lockBusyOutcome(false);
           return { kind: "failed", message: describeError(err) };
         }
@@ -3144,7 +3144,7 @@ export class HostController {
             all ? ["host", "uninstall", "--all"] : ["host", "uninstall"],
           );
         } catch (err) {
-          if (err instanceof TraycerCliError && err.code === CLI_LOCK_BUSY_CODE)
+          if (err instanceof HukumCliError && err.code === CLI_LOCK_BUSY_CODE)
             return this.lockBusyOutcome(false);
           return { kind: "failed", message: describeError(err) };
         }
@@ -3162,18 +3162,18 @@ export class HostController {
     );
   }
 
-  // ---- removeTraycer (Danger Zone; sentinel + BTM cleanup) -----------------
+  // ---- removeHukum (Danger Zone; sentinel + BTM cleanup) -----------------
 
-  async removeTraycer(): Promise<MutationOutcome<RemoveTraycerOk>> {
+  async removeHukum(): Promise<MutationOutcome<RemoveHukumOk>> {
     // Persist the sentinel FIRST, before entering the lane, so any
     // already-queued automatic intent that hasn't executed yet observes it
     // the moment it runs (functional "cancel queued automatic intents" -
     // they still execute their job body but immediately no-op).
     await markHostRemovedByUser();
     this.abortInFlightDownload();
-    return this.enqueueMutation<RemoveTraycerOk>(
-      "removeTraycer",
-      "removeTraycer",
+    return this.enqueueMutation<RemoveHukumOk>(
+      "removeHukum",
+      "removeHukum",
       async () => {
         // The abort asks the child to exit; wait for the stream's `close`
         // before unregistering or uninstalling, and let queued automatic
@@ -3197,7 +3197,7 @@ export class HostController {
         try {
           raw = await this.runBundled<unknown>(["host", "uninstall", "--all"]);
         } catch (err) {
-          if (err instanceof TraycerCliError && err.code === CLI_LOCK_BUSY_CODE)
+          if (err instanceof HukumCliError && err.code === CLI_LOCK_BUSY_CODE)
             return this.lockBusyOutcome(false);
           return { kind: "failed", message: describeError(err) };
         }

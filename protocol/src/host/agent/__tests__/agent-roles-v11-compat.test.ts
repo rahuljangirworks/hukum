@@ -21,7 +21,7 @@ import {
   roleAwarenessDeliverySchema,
   roleAwarenessDeliverySchemaV11,
   roleClaimWireSchema,
-} from "@traycer/protocol/host/agent/roles";
+} from "@hukum/protocol/host/agent/roles";
 
 const CLAIM = roleClaimWireSchema.parse({
   claimId: "11111111-1111-4111-8111-111111111111",

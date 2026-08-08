@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 import { cappedByUpdatedAt } from "@/lib/bounded-record";
 import { basePersistOptions, composerRunSettingsKey } from "@/lib/persist";
 

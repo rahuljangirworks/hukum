@@ -2,8 +2,8 @@ import {
   migrationRunServerFrameSchema,
   type MigrationCompleteCounts,
   type MigrationRunServerFrame,
-} from "@traycer/protocol/host/migration/run";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/migration/run";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type {
   IStreamSession,
   StreamCloseReason,

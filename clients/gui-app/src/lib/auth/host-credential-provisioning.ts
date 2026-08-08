@@ -2,7 +2,7 @@ import type {
   HostCredentialMintFlow,
   HostCredentialMintOutcome,
   HostCredentialMintRequest,
-} from "@traycer-clients/shared/host-transport/host-credential-mint-flow";
+} from "@hukum-clients/shared/host-transport/host-credential-mint-flow";
 
 /**
  * App-wide policy for delegated host-credential provisioning.

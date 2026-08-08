@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, type ReactNode } from "react";
 import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
-import type { GitChangedFile } from "@traycer/protocol/host";
+import type { GitChangedFile } from "@hukum/protocol/host";
 import { sortGitPanelFlatFiles } from "@/lib/git/panel-file-rendering";
 import { NO_HIGHLIGHT, type HighlightRanges } from "@/lib/git/path-highlight";
 import type { GitDiffRepositoryContext } from "@/stores/epics/canvas/types";

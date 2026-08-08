@@ -23,7 +23,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -105,7 +105,7 @@ import type {
   HistorySearchPatch,
   HistorySearchState,
 } from "@/lib/history-search";
-import type { WorktreeHostEntryV12 } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeHostEntryV12 } from "@hukum/protocol/host/worktree-schemas";
 import { WorktreePrPills } from "@/components/worktree/worktree-pr-metadata";
 import { worktreePrReferences } from "@/components/worktree/worktree-pr-metadata-model";
 
@@ -1936,7 +1936,7 @@ function errorHeadline(error: Error): string {
       return "You don't have permission to view these epics.";
     }
   }
-  return "Couldn't reach Traycer Cloud";
+  return "Couldn't reach Hukum Cloud";
 }
 
 function formatError(error: Error): string {

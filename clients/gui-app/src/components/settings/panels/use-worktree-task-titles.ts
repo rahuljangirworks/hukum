@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { useQueryClient, type UseQueryResult } from "@tanstack/react-query";
-import type { WorktreeHostEntryV14 } from "@traycer/protocol/host/index";
+import type { WorktreeHostEntryV14 } from "@hukum/protocol/host/index";
 import {
   GET_TASK_CONTEXTS_MAX_IDS,
   type GetTaskContextsResponse,
   type ListTaskLight,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { type HostRpcRegistry } from "@/lib/host";
 import { useHostQueries } from "@/hooks/host/use-host-queries";
 import { useCloudEpicTasksQuery } from "@/hooks/epics/use-cloud-epic-tasks-query";

@@ -6,8 +6,8 @@ import {
   type WorktreeDeleteBatchPhase,
   type WorktreeDeleteBatchTarget,
   type WorktreeDeletionSource,
-} from "@traycer/protocol/host/worktree-delete-batch-stream";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/worktree-delete-batch-stream";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type {
   IStreamSession,
   StreamCloseReason,

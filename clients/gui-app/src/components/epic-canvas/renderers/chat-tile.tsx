@@ -20,15 +20,15 @@ import type {
   InterviewAnswer,
   Message,
   UserMessageSender,
-} from "@traycer/protocol/persistence/epic/schemas";
-import type { TokenUsage } from "@traycer/protocol/persistence/epic/foundation";
+} from "@hukum/protocol/persistence/epic/schemas";
+import type { TokenUsage } from "@hukum/protocol/persistence/epic/foundation";
 import type {
   BackgroundItem,
   ChatQueuedPromptItem,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { WorktreeBinding } from "@traycer/protocol/host/worktree-schemas";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { WorktreeBinding } from "@hukum/protocol/host/worktree-schemas";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import {
   ChatMessages,
   type ChatMessageScrollRequest,
@@ -179,8 +179,8 @@ import {
 import { ChatTileErrorNoticeToasts } from "./chat-tile-error-notice-toasts";
 import { ChatTileRestoreResultToasts } from "./chat-tile-restore-result-toasts";
 import { HostWorkspaceSelector } from "@/components/home/host-workspace-selector/host-workspace-selector";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
-import type { TraycerNextStepOption } from "@/markdown/traycer-next-steps";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
+import type { HukumNextStepOption } from "@/markdown/hukum-next-steps";
 import { ChatLowerInteractionSurfaces } from "./chat-tile-lower-surfaces";
 import { ManagedCommandChatMenu } from "@/components/managed-commands/managed-command-chat-menu";
 import { composerHasBlockingApprovals } from "./chat-approval-visibility";
@@ -1818,7 +1818,7 @@ function useChatTileSessionViewModel(props: ChatTileSessionViewProps) {
       state.pendingFileEditApprovals.length,
     );
   const sendNextStep = useCallback(
-    (option: TraycerNextStepOption): boolean => {
+    (option: HukumNextStepOption): boolean => {
       if (!canSendNextStep) return false;
       const sender = userMessageSenderForProfile(profile);
       if (sender === null) return false;

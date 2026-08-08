@@ -12,7 +12,7 @@
  * because a reader scanning the list wants to know a check did not run rather
  * than see it claimed as green.
  */
-import type { PrCheckContext } from "@traycer/protocol/host/pr-schemas";
+import type { PrCheckContext } from "@hukum/protocol/host/pr-schemas";
 
 export type PrCheckOutcome = "failing" | "pending" | "skipped" | "successful";
 

@@ -4,7 +4,7 @@ import type {
   HostNotificationsEntityRef,
   HostNotificationsIndicatorState,
   HostNotificationsIndicatorStateResponse,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import {
   notificationPayloadBelongsToEntity,
   notificationPayloadBelongsToEpic,

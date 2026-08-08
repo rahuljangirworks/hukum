@@ -121,7 +121,7 @@ import {
 } from "../app/app-protocol";
 import { applyHardwareAccelerationPreference } from "../app/gpu-acceleration";
 import { configureHostResolverDoH } from "../app/host-resolver";
-import { configureUserAgent, preconnectTraycerHosts } from "../app/network";
+import { configureUserAgent, preconnectHukumHosts } from "../app/network";
 import {
   installScreenMonitor,
   readDisplayTopology,
@@ -381,7 +381,7 @@ async function runOnReady(state: BootState): Promise<void> {
     timed("on-ready", "cert-handler", () => installCertificateErrorHandler()),
     timed("on-ready", "jumplist", () => installWindowsJumplistTasks()),
     timed("on-ready", "download-observer", () => installDownloadObserver()),
-    timed("on-ready", "preconnect", () => preconnectTraycerHosts()),
+    timed("on-ready", "preconnect", () => preconnectHukumHosts()),
     timed("on-ready", "gpu-info", () => logGpuInfo()),
     timed("on-ready", "crash-dump-prune", () => pruneStaleCrashDumps()),
     timed("on-ready", "global-shortcuts-preferences", () =>
@@ -537,9 +537,9 @@ async function runWindowPhase(state: BootState): Promise<AppServices> {
   });
   // The mutation lane's NDJSON progress is the only evidence main has that a
   // first install is still downloading/extracting rather than stuck. Feeding it
-  // to the lifecycle is what keeps `bootstrap()` from declaring "Traycer Host
+  // to the lifecycle is what keeps `bootstrap()` from declaring "Hukum Host
   // did not start" over an install that is minutes from finishing
-  // (traycer#862). Wired here, at the one place that owns both objects, rather
+  // (hukum#862). Wired here, at the one place that owns both objects, rather
   // than handing the lifecycle a controller it must not otherwise touch - the
   // controller already holds the lifecycle, and the reverse edge would be a
   // cycle.

@@ -16,18 +16,18 @@ import type {
   UpdateChatProfileResponse,
   UpdateChatRunSettingsRequest,
   UpdateChatRunSettingsResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import {
   classifyHostRequestFailure,
   HostRpcError,
   toHostRpcError,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import { useHostMutation } from "@/hooks/host/use-host-query";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";
 import { useTabHostClient } from "@/hooks/host/use-tab-host-client";
 import { useEpicSessionHostClient } from "@/hooks/epic/use-epic-session-host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { useHostClient } from "@/lib/host/runtime";
 import { hostQueryKeys, epicMutationKeys } from "@/lib/query-keys";
 import { toastFromHostError } from "@/lib/host-error-toast";

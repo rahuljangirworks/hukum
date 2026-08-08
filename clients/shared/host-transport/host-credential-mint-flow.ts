@@ -1,4 +1,4 @@
-import type { HostCredentialState } from "@traycer/protocol/framework/stream-ws-protocol";
+import type { HostCredentialState } from "@hukum/protocol/framework/stream-ws-protocol";
 
 /**
  * What the transport tells the app when a host reports it has no usable device

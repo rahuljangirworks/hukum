@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import type { ChatEvent } from "@traycer/protocol/persistence/epic/schemas";
+import type { ChatEvent } from "@hukum/protocol/persistence/epic/schemas";
 import {
   buildSetupCardRows,
   type SetupCardBinding,
@@ -264,7 +264,7 @@ describe("buildSetupCardRows", () => {
       isPrimary: true,
       branch: {
         type: "new",
-        name: "traycer/fresh-fox",
+        name: "hukum/fresh-fox",
         source: "main",
         carryUncommittedChanges: false,
       },
@@ -273,14 +273,14 @@ describe("buildSetupCardRows", () => {
     const row = onlyRow([
       setupEvent(
         "setup.creating",
-        { workspacePath: "/repo", branch: "traycer/fresh-fox" },
+        { workspacePath: "/repo", branch: "hukum/fresh-fox" },
         null,
       ),
       setupEvent(
         "setup.failed",
         {
           workspacePath: "/repo",
-          branch: "traycer/fresh-fox",
+          branch: "hukum/fresh-fox",
           operation: "provision",
           setupExitCode: null,
           errorMessage: "fatal: could not create work tree dir",

@@ -10,9 +10,9 @@ import { delimiter, dirname, join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { sandboxHome } from "../../__tests__/sandbox-home";
 
-// Production PATH discovery must walk EVERY `traycer` on PATH, not just the
+// Production PATH discovery must walk EVERY `hukum` on PATH, not just the
 // first executable with that name. The name is squattable - oss #872 saw an
-// AppImage manager expose the desktop app itself as `traycer` - and a
+// AppImage manager expose the desktop app itself as `hukum` - and a
 // squatter sitting ahead of a real CLI must not hide it (nor make discovery
 // report "nothing anywhere" while a usable CLI is still further down PATH).
 //
@@ -23,10 +23,10 @@ let homeDir: string;
 let resourcesDir: string;
 
 function cliName(): string {
-  return process.platform === "win32" ? "traycer.exe" : "traycer";
+  return process.platform === "win32" ? "hukum.exe" : "hukum";
 }
 
-// A `traycer` on PATH whose `--version` answer decides whether discovery may
+// A `hukum` on PATH whose `--version` answer decides whether discovery may
 // adopt it. `answersVersion: false` reproduces the #872 imposter shape: exit
 // 0, console noise, no version - indistinguishable from a real CLI by name
 // or exit code alone.
@@ -88,7 +88,7 @@ const ORIGINAL_HOME = process.env.HOME;
 const ORIGINAL_USERPROFILE = process.env.USERPROFILE;
 
 beforeEach(() => {
-  work = mkdtempSync(join(tmpdir(), "traycer-cli-path-scan-"));
+  work = mkdtempSync(join(tmpdir(), "hukum-cli-path-scan-"));
   homeDir = join(work, "home");
   resourcesDir = join(work, "resources");
   mkdirSync(homeDir, { recursive: true });

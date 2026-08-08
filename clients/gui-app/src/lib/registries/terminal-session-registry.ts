@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useReducer, useRef } from "react";
-import { TerminalStreamClient } from "@traycer-clients/shared/host-transport/terminal-stream-client";
+import { TerminalStreamClient } from "@hukum-clients/shared/host-transport/terminal-stream-client";
 import { useHostClient } from "@/lib/host";
 import { useHostDirectoryEntry } from "@/hooks/host/use-host-directory-entry";
 import {
@@ -21,7 +21,7 @@ import type {
   ListTerminalsResponseV22,
   TerminalSessionKind,
   TerminalScope,
-} from "@traycer/protocol/host/terminal/unary-schemas";
+} from "@hukum/protocol/host/terminal/unary-schemas";
 
 const registry = new TerminalSessionRegistry();
 

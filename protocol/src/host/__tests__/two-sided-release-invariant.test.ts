@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   checkCompatibility,
   splitConnectionManifest,
-} from "@traycer/protocol/framework/index";
-import type { ConnectionManifest } from "@traycer/protocol/framework/index";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+} from "@hukum/protocol/framework/index";
+import type { ConnectionManifest } from "@hukum/protocol/framework/index";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import { supportMatrix } from "./__fixtures__/support-matrix";
 
 /**

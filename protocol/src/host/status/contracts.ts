@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
   defineRpcContract,
   defineUpgradePath,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 
 export const hostStatusV10 = defineRpcContract({
   method: "host.status",
@@ -19,9 +19,9 @@ export const hostStatusV10 = defineRpcContract({
 });
 
 /**
- * Mirror of `traycer-host`'s host-local `HostUpdateProgress` (itself a
- * mirror of `@traycerai/common/types/host` in the internal monorepo - this
- * open-source package cannot depend on it). Set only while a `traycer host
+ * Mirror of `hukum-host`'s host-local `HostUpdateProgress` (itself a
+ * mirror of `@hukumai/common/types/host` in the internal monorepo - this
+ * open-source package cannot depend on it). Set only while a `hukum host
  * update` is actually in flight on this box (Architecture §13, T16);
  * `null` the rest of the time.
  */

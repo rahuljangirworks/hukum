@@ -1,6 +1,6 @@
 # Persistence compatibility policy
 
-The persistence registry is the authority for Traycer's versioned on-disk and
+The persistence registry is the authority for Hukum's versioned on-disk and
 Yjs record contracts. Its schema versions are independent of both npm package
 versions and RPC method versions.
 

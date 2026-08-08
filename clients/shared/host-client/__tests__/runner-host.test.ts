@@ -22,13 +22,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
   it("emits the current local-host snapshot synchronously on subscribe", () => {
     const snapshot = makeSnapshot("mock-1");
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: snapshot,
       hosts: [mockLocalHostEntry],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     const handler = vi.fn();
@@ -42,13 +42,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("emits `null` synchronously when no local host is present", () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     const handler = vi.fn();
@@ -60,13 +60,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("forwards subsequent local-host transitions to live subscribers", () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     const handler = vi.fn();
@@ -83,13 +83,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("stops delivering transitions once the subscription is disposed", () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     const handler = vi.fn();
@@ -103,13 +103,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("fans out the payload-free browser-return signal to every subscriber", () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     const handler = vi.fn();
@@ -126,13 +126,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("tracks hostPicker open/close/onChange transitions", () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     const onChange = vi.fn();
@@ -158,13 +158,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("exposes no-op tray and notification surfaces that never fire", async () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     const traySelection = vi.fn();
@@ -205,30 +205,30 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("persists secure-storage writes in memory across get/delete", async () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
-    await host.secureStorage.set("traycer.token", "tok");
-    await expect(host.secureStorage.get("traycer.token")).resolves.toBe("tok");
-    await host.secureStorage.delete("traycer.token");
-    await expect(host.secureStorage.get("traycer.token")).resolves.toBe(null);
+    await host.secureStorage.set("hukum.token", "tok");
+    await expect(host.secureStorage.get("hukum.token")).resolves.toBe("tok");
+    await host.secureStorage.delete("hukum.token");
+    await expect(host.secureStorage.get("hukum.token")).resolves.toBe(null);
   });
 
   it("exposes a configurable mock host list", () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [mockLocalHostEntry],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     expect(host.hosts).toEqual([mockLocalHostEntry]);
@@ -238,13 +238,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("returns configured workspace-folder picker selections", async () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: ["/tmp/project-a"],
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     await expect(host.workspaceFolders.pickFolders()).resolves.toEqual([
@@ -259,13 +259,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("does not expose a remoteHosts surface on the runner host", () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [mockLocalHostEntry],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     expect("remoteHosts" in host).toBe(false);
@@ -273,13 +273,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("round-trips the tokenStore through signIn/get/delete", async () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     await expect(host.tokenStore.get()).resolves.toBe(null);
@@ -304,13 +304,13 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("resolves requestHostRespawn and increments the test counter", async () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
     expect(host.requestHostRespawnCalls).toBe(0);
@@ -326,16 +326,16 @@ describe("MockRunnerHost - IRunnerHost contract", () => {
 
   it("reflects the authnBaseUrl option on the constructed host", () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
-      authnBaseUrl: "https://authn.traycer.invalid",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
+      authnBaseUrl: "https://authn.hukum.invalid",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
 
-    expect(host.authnBaseUrl).toBe("https://authn.traycer.invalid");
+    expect(host.authnBaseUrl).toBe("https://authn.hukum.invalid");
   });
 });
 

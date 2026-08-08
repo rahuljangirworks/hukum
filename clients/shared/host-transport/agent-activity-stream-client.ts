@@ -2,8 +2,8 @@ import {
   agentActivitySubscribeServerFrameSchema,
   type AgentActivityByEpic,
   type AgentActivityServedBy,
-} from "@traycer/protocol/host/agent/activity";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/agent/activity";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type {
   IStreamSession,
   StreamCloseReason,

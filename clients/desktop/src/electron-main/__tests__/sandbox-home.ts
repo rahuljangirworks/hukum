@@ -10,8 +10,8 @@ import os from "node:os";
  * `vitest.setup.ts` has not been loaded to re-point `homedir` - `bun test`
  * never loads vitest setup files - `homedir()` keeps resolving the REAL
  * home. That exact escape let desktop suites write their fixtures into the
- * real `~/.traycer/cli/bin/traycer` (the v1.1.9-rc.3 dead-CLI incident) and
- * the real `~/.traycer/host/host-name.json`. Throwing here kills the test
+ * real `~/.hukum/cli/bin/hukum` (the v1.1.9-rc.3 dead-CLI incident) and
+ * the real `~/.hukum/host/host-name.json`. Throwing here kills the test
  * before its subject can write anything.
  *
  * Every desktop test that points home-relative production code at a temp

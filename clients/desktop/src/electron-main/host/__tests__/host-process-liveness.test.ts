@@ -102,7 +102,7 @@ describe("readPublishedHostProcessLiveness", () => {
   });
 
   /*
-   * traycerai/traycer#740, at the exact seam where it did its damage.
+   * hukumai/hukum#740, at the exact seam where it did its damage.
    *
    * A pid.json written by a host that predates `processStartIdentity` gives
    * the verdict nothing to compare. The retired code fell back to comparing a

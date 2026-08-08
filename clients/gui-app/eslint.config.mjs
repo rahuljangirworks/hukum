@@ -11,12 +11,12 @@ import react from "eslint-plugin-react";
 import reactRefresh from "eslint-plugin-react-refresh";
 import pluginQuery from "@tanstack/eslint-plugin-query";
 import pluginRouter from "@tanstack/eslint-plugin-router";
-import { traycerTypeSafetyRestrictions } from "../../eslint/traycer-type-safety-rules.mjs";
-import { traycerClientsImportBoundaryRestrictions } from "../../eslint/traycer-clients-import-boundary-rules.mjs";
+import { hukumTypeSafetyRestrictions } from "../../eslint/hukum-type-safety-rules.mjs";
+import { hukumClientsImportBoundaryRestrictions } from "../../eslint/hukum-clients-import-boundary-rules.mjs";
 import {
   nestedFocusBoundaryRestrictions,
   tabNavigationStoreActionRestrictions,
-} from "../../eslint/traycer-nested-focus-boundary-rules.mjs";
+} from "../../eslint/hukum-nested-focus-boundary-rules.mjs";
 
 // Do not subscribe to the entire Zustand store - reused across the base rules
 // and the overrides that still need to ban it.
@@ -213,12 +213,12 @@ export default tseslint.config(
       // ── Import boundaries + full-store Zustand selectors ────────────────────
       "@typescript-eslint/no-restricted-imports": [
         "error",
-        traycerClientsImportBoundaryRestrictions,
+        hukumClientsImportBoundaryRestrictions,
       ],
 
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...generalCustomSyntaxRestrictions,
         ...nestedFocusBoundaryRestrictions([]),
@@ -249,9 +249,9 @@ export default tseslint.config(
       "@typescript-eslint/no-restricted-imports": [
         "error",
         {
-          ...traycerClientsImportBoundaryRestrictions,
+          ...hukumClientsImportBoundaryRestrictions,
           patterns: [
-            ...(traycerClientsImportBoundaryRestrictions.patterns ?? []),
+            ...(hukumClientsImportBoundaryRestrictions.patterns ?? []),
             {
               group: ["posthog-js", "posthog-js/*"],
               message:
@@ -272,7 +272,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...generalCustomSyntaxRestrictions.filter(
           (restriction) =>
@@ -303,7 +303,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
       ],
     },
@@ -316,7 +316,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...generalCustomSyntaxRestrictions.filter(
           (restriction) => !tabNavigationStoreActionBans.includes(restriction),
@@ -336,7 +336,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...generalCustomSyntaxRestrictions.filter(
           (restriction) => !tabNavigationStoreActionBans.includes(restriction),
@@ -354,7 +354,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...generalCustomSyntaxRestrictions.filter(
           (restriction) =>
@@ -377,7 +377,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...tabNavigationStoreActionRestrictions([
           "useEpicCanvasStore.setActiveTab",
@@ -415,7 +415,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...generalCustomSyntaxRestrictions.filter(
           (restriction) => !tabNavigationStoreActionBans.includes(restriction),
@@ -429,7 +429,7 @@ export default tseslint.config(
   },
 
   // ── Nested-focus-opener boundary allowlist ──────────────────────────────────
-  // See eslint/traycer-nested-focus-boundary-rules.mjs for the contract this
+  // See eslint/hukum-nested-focus-boundary-rules.mjs for the contract this
   // enforces. Every entry below is a verified, empirical exception (grep the
   // codebase for the two banned AST shapes before adding another) - not a
   // restatement of the original audit brief, which over-listed several files
@@ -445,7 +445,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...generalCustomSyntaxRestrictions,
         ...nestedFocusBoundaryRestrictions([
@@ -464,7 +464,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...generalCustomSyntaxRestrictions,
         ...nestedFocusBoundaryRestrictions(["openTileInTab"]),
@@ -484,7 +484,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...generalCustomSyntaxRestrictions,
         ...nestedFocusBoundaryRestrictions(["openTileInBackgroundTab"]),
@@ -502,7 +502,7 @@ export default tseslint.config(
     rules: {
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         noFullStoreSubscription,
         ...generalCustomSyntaxRestrictions,
         ...nestedFocusBoundaryRestrictions(["closeCanvasTab"]),

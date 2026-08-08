@@ -1,7 +1,7 @@
 # Desktop release pipeline
 
 Desktop releases — the signed `.dmg` / `.zip` / Windows / Linux installers and
-the auto-update feeds — are **built and signed in Traycer's internal
+the auto-update feeds — are **built and signed in Hukum's internal
 repository** and published to this repo's [Releases](../../releases) cross-repo.
 Signing secrets never enter this open-source repo, so the release workflows live
 internally rather than here.

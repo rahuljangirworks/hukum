@@ -21,7 +21,7 @@ import type {
   HostControllerStatus,
   IHostManagement,
   IRunnerHost,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import { MenuCommandListener } from "@/components/layout/bridges/menu-command-listener";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { useDesktopDialogStore } from "@/stores/dialogs/desktop-dialog-store";
@@ -553,7 +553,7 @@ describe("<MenuCommandListener />", () => {
       installVersion: vi.fn(() => Promise.reject(new Error("not used"))),
       uninstallHost: vi.fn(() => Promise.reject(new Error("not used"))),
       restartHost: vi.fn(() => Promise.resolve({ kind: "restarted" as const })),
-      uninstallTraycer: vi.fn(() => Promise.reject(new Error("not used"))),
+      uninstallHukum: vi.fn(() => Promise.reject(new Error("not used"))),
       getRemovalState: vi.fn(() => Promise.resolve({ removedByUser: false })),
       clearRemoval: vi.fn(() => Promise.resolve()),
       getHostLogs: vi.fn(() => Promise.reject(new Error("not used"))),

@@ -9,8 +9,8 @@ import {
   type GuiHarnessOption,
   type AgentReasoningEffortOption,
   type AgentServiceTierOption,
-} from "@traycer/protocol/host/index";
-import type { TuiHarnessId } from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/host/index";
+import type { TuiHarnessId } from "@hukum/protocol/persistence/epic/schemas";
 import {
   FileCheck2,
   ShieldCheck,

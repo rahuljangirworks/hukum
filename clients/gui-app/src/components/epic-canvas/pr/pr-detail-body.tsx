@@ -6,7 +6,7 @@ import type {
   PrReviewThread,
   PrChangedFile,
   PrSourceStatus,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { useEpicTileNavigation } from "@/hooks/epic/use-epic-tile-navigation";
 import { useTabHostId } from "@/components/epic-canvas/hooks/use-tab-host-id";
@@ -533,7 +533,7 @@ function PrDetailHostUpdateRequired(): ReactNode {
           Update required to view this pull request
         </p>
         <p className="text-ui-xs text-muted-foreground/50">
-          This host does not advertise the PR detail stream yet. Update Traycer
+          This host does not advertise the PR detail stream yet. Update Hukum
           Host to enable the full view.
         </p>
       </div>

@@ -15,7 +15,7 @@ import {
   profileDisplayLabel,
   type ProfileAccentDotInput,
 } from "@/components/providers/provider-profile-model";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 
 interface HarnessModelPickerPresentationInput {
   readonly selection: HarnessModelSelection;

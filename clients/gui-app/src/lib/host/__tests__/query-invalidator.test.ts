@@ -4,7 +4,7 @@ import {
   type QueryClient,
   type QueryKey,
 } from "@tanstack/react-query";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
 import { createAppQueryClient } from "@/lib/query-client";
 import { queryKeys } from "@/lib/query-keys";
@@ -45,7 +45,7 @@ const controlKey = queryKeys.hostMethod<HostRpcRegistry, "git.getCapabilities">(
 );
 
 /**
- * traycer#912: host-scope active recovery must not re-probe harness catalogs.
+ * hukum#912: host-scope active recovery must not re-probe harness catalogs.
  * Catalogs are cache-only (`staleTime: Infinity`) with three documented refresh
  * points; an un-carved `invalidateQueries({queryKey})` would beat that and
  * re-spawn provider CLIs on every recovery sweep. Same-host transport rebind

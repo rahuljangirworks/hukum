@@ -25,7 +25,7 @@ import {
   type DiffViewerPreferences,
   type DiffViewerPreferencesPatch,
 } from "@/lib/diff/diff-viewer-preferences";
-import { type EditorId } from "@traycer/protocol/host";
+import { type EditorId } from "@hukum/protocol/host";
 import { worktreeBranchPrefixError } from "@/lib/worktree/worktree-branch-prefix-validation";
 
 export type ThemeMode = "system" | "light" | "dark";
@@ -61,7 +61,7 @@ export const DEFAULT_CODE_FONT_SIZE = 12;
 // Default worktree branch prefix, shared with the General panel so its
 // reset-to-default affordance and the store's initial state stay a single
 // source of truth.
-export const DEFAULT_WORKTREE_BRANCH_PREFIX = "traycer/";
+export const DEFAULT_WORKTREE_BRANCH_PREFIX = "hukum/";
 
 export interface SettingsState {
   theme: ThemeMode;
@@ -119,7 +119,7 @@ export interface SettingsState {
   /**
    * Prefix prepended verbatim to the branch name pre-filled when creating a
    * new worktree (no separator is auto-appended - the user types it, e.g.
-   * `traycer/`, `anurag/`, `feat-`). Empty string means no prefix.
+   * `hukum/`, `anurag/`, `feat-`). Empty string means no prefix.
    */
   worktreeBranchPrefix: string;
   /**

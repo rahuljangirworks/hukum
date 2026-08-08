@@ -1,4 +1,4 @@
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";
 import { useRefreshProvidersListOnTurn } from "@/hooks/providers/use-refresh-providers-list-on-turn";
 

@@ -7,7 +7,7 @@ import type {
   ApplyStagedOk,
   ApplyStagedTrigger,
   MutationOutcome,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import { useRunnerHost } from "@/providers/use-runner-host";
 import { runnerMutationKeys, runnerQueryKeys } from "@/lib/query-keys";
 

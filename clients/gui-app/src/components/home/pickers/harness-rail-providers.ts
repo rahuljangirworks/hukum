@@ -1,6 +1,6 @@
 import type { HarnessOption } from "@/components/home/data/landing-options";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import { sortGuiHarnessesByProviderOrder } from "@/lib/provider-ordering";
 import {
   profileAccentDotInput,

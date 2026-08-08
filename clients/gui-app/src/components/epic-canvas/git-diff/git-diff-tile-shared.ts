@@ -1,4 +1,4 @@
-import type { GitChangedFile } from "@traycer/protocol/host";
+import type { GitChangedFile } from "@hukum/protocol/host";
 import type {
   GitDiffBundleTilePayload,
   GitDiffFileTilePayload,

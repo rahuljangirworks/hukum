@@ -4,7 +4,7 @@ import type {
   PrChangedFile,
   PrDetailCore,
   PrFilesSection,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { Button } from "@/components/ui/button";
 import { useEpicNestedFocusNavigation } from "@/hooks/epic/use-epic-nested-focus-navigation";
 import { makePrDiffTile } from "@/lib/pr/pr-diff-tile";

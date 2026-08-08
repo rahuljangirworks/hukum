@@ -58,7 +58,7 @@ const speech = vi.hoisted(() => {
   return { FakeSpeechStreamClient };
 });
 
-vi.mock("@traycer-clients/shared/host-transport/speech-stream-client", () => ({
+vi.mock("@hukum-clients/shared/host-transport/speech-stream-client", () => ({
   SpeechStreamClient: speech.FakeSpeechStreamClient,
 }));
 

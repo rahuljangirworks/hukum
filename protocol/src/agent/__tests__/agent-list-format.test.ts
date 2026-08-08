@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { AgentSummary, ListAgentsResponse } from "@traycer/protocol/host";
-import { listAgentsResponseSchema } from "@traycer/protocol/host/agent/shared";
+import type { AgentSummary, ListAgentsResponse } from "@hukum/protocol/host";
+import { listAgentsResponseSchema } from "@hukum/protocol/host/agent/shared";
 import { formatAgentListResponse, formatAgentSelf } from "../agent-list-format";
 
 function agent(

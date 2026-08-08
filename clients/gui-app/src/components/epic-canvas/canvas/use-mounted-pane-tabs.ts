@@ -1,6 +1,6 @@
 /**
  * Per-pane keep-alive policy for canvas tab bodies (paseo
- * `use-mounted-tab-set` port + traycer terminal pinning):
+ * `use-mounted-tab-set` port + hukum terminal pinning):
  *
  *   mounted = {pinned terminal surfaces} ∪ LRU(cap 3, head = active tab) ∪ {active chat tab}
  *

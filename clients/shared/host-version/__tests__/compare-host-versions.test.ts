@@ -110,7 +110,7 @@ describe("compareHostVersions", () => {
     // Shape produced by the CLI's `deriveLocalVersion` for `--from` installs.
     expect(
       compareHostVersions(
-        "local-traycer-host-2026-01-01T00-00-00-000Z",
+        "local-hukum-host-2026-01-01T00-00-00-000Z",
         "1.5.0",
       ),
     ).toEqual({ comparable: false });

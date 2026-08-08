@@ -2,8 +2,8 @@ import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import type {
   ChatQueuedItem,
   ChatQueueState,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { GuiAgentCommandOption } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { GuiAgentCommandOption } from "@hukum/protocol/host/index";
 
 import {
   findManualCompactCommand,

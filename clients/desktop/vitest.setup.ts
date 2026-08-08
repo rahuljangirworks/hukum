@@ -14,7 +14,7 @@ import { afterAll } from "vitest";
 // (`bunx --bun vitest`, `bun node_modules/.bin/vitest`) - the production
 // code under test writes its fixtures into the real `~`. That is not
 // hypothetical: one escaped run overwrote the real
-// `~/.traycer/cli/bin/traycer` with the `cli-bytes-v2` fixture (a dead CLI
+// `~/.hukum/cli/bin/hukum` with the `cli-bytes-v2` fixture (a dead CLI
 // in the field on v1.1.9-rc.3, because launch-time reconcile then trusted
 // the poisoned manifest) and another planted "Studio Mac" as the user's
 // real host display name.
@@ -35,7 +35,7 @@ import { afterAll } from "vitest";
 // backstop there.
 
 const baselineHome = mkdtempSync(
-  join(os.tmpdir(), "traycer-desktop-tests-home-"),
+  join(os.tmpdir(), "hukum-desktop-tests-home-"),
 );
 process.env.HOME = baselineHome;
 process.env.USERPROFILE = baselineHome;

@@ -1,4 +1,4 @@
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 
 /**
  * Canonical provider-profile identity model (multi-profile UX overhaul):

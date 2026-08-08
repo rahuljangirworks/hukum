@@ -5,15 +5,15 @@ import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import type {
   ListTasksResponse,
   TaskLight,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import type { RemoteHostDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import type { RemoteHostDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
 import {
   hostRpcRegistry,
   type HostRpcRegistry,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 
 const hostState = vi.hoisted((): { id: string | null } => ({ id: "host-a" }));
 const authServiceStub = vi.hoisted(() => ({

@@ -123,7 +123,7 @@ export type OsScript = z.infer<typeof osScriptSchema>;
 
 /**
  * Setup/teardown scripts for a repo. Persisted as
- * `<repoRoot>/.traycer/environment.json` on the host's disk (committable
+ * `<repoRoot>/.hukum/environment.json` on the host's disk (committable
  * & shareable, Codex-style) - no longer in host-local SQLite. The file is
  * keyed by the workspace's git toplevel; the owning repo is conveyed by the
  * enclosing `WorktreeWorkspaceSummary.repoIdentifier`, so it is not
@@ -205,7 +205,7 @@ export const worktreeBranchSelectionSchema: z.ZodType<WorktreeBranchSelection> =
 /**
  * Setup/teardown override carried on a `kind:"worktree"` folder intent. The
  * user enters/prefills these in the Environment chip; the host writes them
- * into the new worktree's `<root>/.traycer/environment.json` at create time
+ * into the new worktree's `<root>/.hukum/environment.json` at create time
  * (before reading + running setup), so the override reaches the worktree
  * without ever writing the source checkout. `updatedAt` is omitted here - it
  * is stamped by `writeWorkspaceScriptsAtRoot` on write.
@@ -348,8 +348,8 @@ export type WorktreeListByWorkspacePathsResponse = z.infer<
 /**
  * One committed-scripts-at-ref read request. `ref` is a branch name - the fork
  * `source` for a new branch, or the branch `name` for an existing-branch
- * checkout. The host reads the committed `<repoRoot>/.traycer/environment.json`
- * at that ref (`git show <ref>:.traycer/environment.json`) without checking it
+ * checkout. The host reads the committed `<repoRoot>/.hukum/environment.json`
+ * at that ref (`git show <ref>:.hukum/environment.json`) without checking it
  * out - exactly one `git show` per entry, never a walk of every branch.
  */
 export const worktreeScriptRefSchema = z.object({
@@ -849,7 +849,7 @@ export type WorktreeDeleteResponse = z.infer<
 >;
 
 /**
- * One worktree under the host's `~/.traycer/worktrees/` creation path,
+ * One worktree under the host's `~/.hukum/worktrees/` creation path,
  * for the Settings ▸ Worktrees section. The list is **disk-truth** (a walk
  * of that directory), so a worktree whose owning epic/chat was deleted but
  * whose folder lingers - an orphan - still surfaces. Binding state is

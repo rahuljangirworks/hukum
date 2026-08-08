@@ -1,5 +1,5 @@
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import { describe, expect, it } from "vitest";
 import {
   deriveOwnerSettingsHeader,

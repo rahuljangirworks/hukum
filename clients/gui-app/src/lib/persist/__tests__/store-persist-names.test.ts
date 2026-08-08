@@ -54,12 +54,12 @@ const STORE_PERSIST_NAME_CASES: ReadonlyArray<
   [
     "useCommandPaletteStore",
     useCommandPaletteStore,
-    "traycer-gui-app:command-palette",
+    "hukum-gui-app:command-palette",
   ],
   [
     "useComposerDraftStore",
     useComposerDraftStore,
-    "traycer-gui-app:composer-drafts",
+    "hukum-gui-app:composer-drafts",
   ],
   // NOTE: useInterviewDraftStore is intentionally absent. It no longer uses the
   // zustand `persist` middleware (so it has no `.persist.getOptions().name`): it
@@ -69,87 +69,87 @@ const STORE_PERSIST_NAME_CASES: ReadonlyArray<
   [
     "useArtifactReadStateStore",
     useArtifactReadStateStore,
-    "traycer-gui-app:artifact-read-state",
+    "hukum-gui-app:artifact-read-state",
   ],
-  ["useGitPanelStore", useGitPanelStore, "traycer-gui-app:git-panel"],
-  ["usePrPresenceStore", usePrPresenceStore, "traycer-gui-app:pr-presence"],
+  ["useGitPanelStore", useGitPanelStore, "hukum-gui-app:git-panel"],
+  ["usePrPresenceStore", usePrPresenceStore, "hukum-gui-app:pr-presence"],
   [
     "useInitialChatHandoffStore",
     useInitialChatHandoffStore,
-    "traycer-gui-app:initial-chat-handoffs",
+    "hukum-gui-app:initial-chat-handoffs",
   ],
-  ["useLeftPanelStore", useLeftPanelStore, "traycer-gui-app:left-panel"],
-  ["useFileTreeStore", useFileTreeStore, "traycer-gui-app:file-tree"],
+  ["useLeftPanelStore", useLeftPanelStore, "hukum-gui-app:left-panel"],
+  ["useFileTreeStore", useFileTreeStore, "hukum-gui-app:file-tree"],
   [
     "useHistorySearchStore",
     useHistorySearchStore,
-    "traycer-gui-app:history-search",
+    "hukum-gui-app:history-search",
   ],
-  ["useLandingDraftStore", useLandingDraftStore, "traycer-gui-app:draft"],
+  ["useLandingDraftStore", useLandingDraftStore, "hukum-gui-app:draft"],
   [
     "useHostUpdateBannerStore",
     useHostUpdateBannerStore,
-    "traycer-gui-app:host-update-banner",
+    "hukum-gui-app:host-update-banner",
   ],
-  ["useKeybindingStore", useKeybindingStore, "traycer-gui-app:keybindings"],
+  ["useKeybindingStore", useKeybindingStore, "hukum-gui-app:keybindings"],
   [
     "useLocalSnapshotClearStore",
     useLocalSnapshotClearStore,
-    "traycer-gui-app:local-snapshot-clears",
+    "hukum-gui-app:local-snapshot-clears",
   ],
-  ["useSettingsStore", useSettingsStore, "traycer-gui-app:settings"],
+  ["useSettingsStore", useSettingsStore, "hukum-gui-app:settings"],
   [
     "useSettingsSectionStore",
     useSettingsSectionStore,
-    "traycer-gui-app:settings-section",
+    "hukum-gui-app:settings-section",
   ],
   [
     "useWorktreesSettingsViewStore",
     useWorktreesSettingsViewStore,
-    "traycer-gui-app:worktrees-settings-view",
+    "hukum-gui-app:worktrees-settings-view",
   ],
   [
     "useRateLimitPopoverStore",
     useRateLimitPopoverStore,
-    "traycer-gui-app:rate-limit-popover",
+    "hukum-gui-app:rate-limit-popover",
   ],
-  ["useTabsStore", useTabsStore, "traycer-gui-app:tabs"],
+  ["useTabsStore", useTabsStore, "hukum-gui-app:tabs"],
   [
     "useWorkspaceFoldersStore",
     useWorkspaceFoldersStore,
-    "traycer-gui-app:workspace-folders",
+    "hukum-gui-app:workspace-folders",
   ],
 
   // ── Scoped singletons (initial `anon` bucket at construction) ─────────────
   [
     "useComposerRunSettingsStore",
     useComposerRunSettingsStore,
-    "traycer-gui-app:composer-run-settings:anon",
+    "hukum-gui-app:composer-run-settings:anon",
   ],
   [
     "useComposerHarnessMemoryStore",
     useComposerHarnessMemoryStore,
-    "traycer-gui-app:composer-harness-memory:anon",
+    "hukum-gui-app:composer-harness-memory:anon",
   ],
   [
     "useWorktreeIntentMemoryStore",
     useWorktreeIntentMemoryStore,
-    "traycer-gui-app:worktree-intent-memory:anon",
+    "hukum-gui-app:worktree-intent-memory:anon",
   ],
   [
     "useWorktreeIntentStagingStore",
     useWorktreeIntentStagingStore,
-    "traycer-gui-app:worktree-intent-staging:anon",
+    "hukum-gui-app:worktree-intent-staging:anon",
   ],
   [
     "useEpicCanvasStore",
     useEpicCanvasStore,
-    "traycer-gui-app:epic-canvas:anon",
+    "hukum-gui-app:epic-canvas:anon",
   ],
   [
     "useAppLocalNotificationsStore",
     useAppLocalNotificationsStore,
-    "traycer-gui-app:app-local-notifications:anon",
+    "hukum-gui-app:app-local-notifications:anon",
   ],
 ];
 

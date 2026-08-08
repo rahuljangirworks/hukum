@@ -13,7 +13,7 @@ import type {
   ProviderId,
   ProviderProfile,
   ProviderProfileRateLimitStatus,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type { ModelOption } from "@/components/home/data/landing-options";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ProfileRateLimitSwitchBanner } from "@/components/chat/composer/profile-rate-limit-switch-banner";
@@ -26,7 +26,7 @@ import {
 import { commitProfileSelection } from "@/stores/composer/commit-selection";
 import { useComposerHarnessMemoryStore } from "@/stores/composer/composer-harness-memory-store";
 import { useRateLimitSwitchPromptDismissalsStore } from "@/stores/rate-limits/rate-limit-switch-prompt-dismissals-store";
-import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@traycer/protocol/host/provider-native-schemas";
+import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@hukum/protocol/host/provider-native-schemas";
 
 /**
  * Landing-surface durability for the rate-limit switch banner.

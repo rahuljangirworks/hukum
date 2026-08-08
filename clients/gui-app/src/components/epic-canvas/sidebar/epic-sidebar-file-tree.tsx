@@ -41,13 +41,13 @@ import type {
   GitStatusEntry,
 } from "@pierre/trees";
 import { Search } from "lucide-react";
-import type { GitChangedFile } from "@traycer/protocol/host";
+import type { GitChangedFile } from "@hukum/protocol/host";
 import type {
   WorkspaceListFileTreeResponse,
   WorkspaceSearchPathResult,
-} from "@traycer/protocol/host/workspace/unary-schemas";
+} from "@hukum/protocol/host/workspace/unary-schemas";
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   getPaneScopedDndId,
   getWorkspaceFileDragId,

@@ -1,7 +1,7 @@
 // Single-authority SemVer comparator for the host registry's version
 // domain (`install.json.version`, `staged.json.version`, manifest
 // versions - see the Host Update Layer Redesign Tech Plan's "Version
-// identity" section). Consumed by both the CLI (`clients/traycer-cli`)
+// identity" section). Consumed by both the CLI (`clients/hukum-cli`)
 // and desktop main (`clients/desktop`) so update/stage/promote decisions
 // never diverge between the two processes.
 //

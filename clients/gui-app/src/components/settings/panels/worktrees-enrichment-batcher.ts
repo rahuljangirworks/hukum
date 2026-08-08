@@ -5,11 +5,11 @@ import {
   type QueryKey,
   type UseQueryResult,
 } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   WorktreeHostEntryV14,
   WorktreeListAllForHostResponseV14,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { type HostRpcRegistry } from "@/lib/host";
 import { hostQueryKeys } from "@/lib/query-keys";
 import { hostClientUnavailableError } from "@/hooks/host/use-host-query";

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import {
   providerSignInUnavailableHint,
   providerSupportsTerminalLogin,
@@ -14,7 +14,7 @@ function providerState(overrides: Partial<ProviderCliState>): ProviderCliState {
     candidates: [
       {
         kind: "bundled",
-        path: "/opt/traycer/bin/claude",
+        path: "/opt/hukum/bin/claude",
         version: "1.0.0",
         available: true,
         versionPending: false,
@@ -74,9 +74,9 @@ describe("providerSignInUnavailableHint", () => {
     expect(hint).not.toContain("local host");
   });
 
-  it("does not invent a CLI or API-key path for traycer", () => {
+  it("does not invent a CLI or API-key path for hukum", () => {
     const hint = providerSignInUnavailableHint(
-      providerState({ providerId: "traycer", loginCapability: null }),
+      providerState({ providerId: "hukum", loginCapability: null }),
       true,
     );
     expect(hint).toContain("does not support browser sign-in");
@@ -86,7 +86,7 @@ describe("providerSignInUnavailableHint", () => {
 
   it("explains the remote-host case in terms of what sign-in does", () => {
     const hint = providerSignInUnavailableHint(providerState({}), false);
-    expect(hint).toContain("opens a browser on the machine running Traycer");
+    expect(hint).toContain("opens a browser on the machine running Hukum");
   });
 
   it("reports a blocking managed pack rather than a false host precondition", () => {
@@ -163,7 +163,7 @@ describe("providerSupportsTerminalLogin", () => {
   // that case, so a pre-terminal-login host's payload decodes with the key
   // present and `null` (the `NO_TERMINAL_LOGIN_CAP` case above), never absent.
   // `loginCapability` reads `null` for an API-key-only provider (Cursor,
-  // Traycer) and `undefined` for one not yet loaded (a map lookup before
+  // Hukum) and `undefined` for one not yet loaded (a map lookup before
   // `providers.list` resolves) - both must read as "does not support terminal
   // login".
   it("is false when loginCapability itself is null", () => {

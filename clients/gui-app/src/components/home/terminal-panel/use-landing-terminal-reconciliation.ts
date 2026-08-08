@@ -1,8 +1,8 @@
 import { queryOptions, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { toHostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { toHostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import { hostQueryKeys } from "@/lib/query-keys";
 import {

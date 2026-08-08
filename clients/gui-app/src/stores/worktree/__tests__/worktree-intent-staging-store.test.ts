@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import type { WorktreeFolderIntent } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeFolderIntent } from "@hukum/protocol/host/worktree-schemas";
 import {
   newConversationModalStagingKey,
   pendingChildTerminalAgentStagingKey,

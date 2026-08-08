@@ -1,6 +1,6 @@
 /**
  * `agent.inbox.subscribe@1.0` - streaming-RPC contract used by the
- * `traycer monitor` background command (spawned inside a Claude Code TUI
+ * `hukum monitor` background command (spawned inside a Claude Code TUI
  * session) to receive inbox messages addressed to a single agent id.
  *
  * Delivery model:
@@ -33,10 +33,10 @@ import {
   defineDowngradePath,
   defineRpcContract,
   defineUpgradePath,
-} from "@traycer/protocol/framework/index";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+} from "@hukum/protocol/framework/index";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 import { z } from "zod";
-import { roleAwarenessEventSchema } from "@traycer/protocol/host/agent/roles";
+import { roleAwarenessEventSchema } from "@hukum/protocol/host/agent/roles";
 
 const textFrameFields = {
   hasBinaryPayload: z.literal(false),
@@ -337,17 +337,17 @@ export const agentInboxSubscribeV12 = defineStreamRpcContract({
 //
 // Lets a TUI agent re-read its recently-delivered inbox messages IN FULL,
 // page by page.
-// The `traycer monitor` stream surfaces each message to the agent through a
+// The `hukum monitor` stream surfaces each message to the agent through a
 // harness background-output notification, which the harness truncates for
 // large payloads. This unary read returns the durable inbox's full bodies,
-// oldest first, through a direct `traycer agent inbox` call, whose stdout is
+// oldest first, through a direct `hukum agent inbox` call, whose stdout is
 // not subject to that notification cap. GUI agents have no truncation problem
 // and never route through the durable TUI inbox, so this is a TUI-only
 // recovery path.
 
 export const agentInboxReadRequestSchema = z.object({
   epicId: z.string(),
-  /** The calling agent reading its own inbox (defaults to $TRAYCER_AGENT_ID). */
+  /** The calling agent reading its own inbox (defaults to $HUKUM_AGENT_ID). */
   agentId: z.string(),
 });
 export type AgentInboxReadRequest = z.infer<typeof agentInboxReadRequestSchema>;
@@ -427,7 +427,7 @@ export const agentInboxReadDowngradeV20ToV10 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "Paginated inbox reads require a newer Traycer host. Upgrade the host before using --after.",
+            "Paginated inbox reads require a newer Hukum host. Upgrade the host before using --after.",
         },
       };
     }
@@ -443,7 +443,7 @@ export const agentInboxReadDowngradeV20ToV10 = defineDowngradePath<
         error: {
           code: "DOWNGRADE_UNSUPPORTED",
           message:
-            "This inbox has more messages than an older Traycer client can read safely. Upgrade the client to continue.",
+            "This inbox has more messages than an older Hukum client can read safely. Upgrade the client to continue.",
         },
       };
     }

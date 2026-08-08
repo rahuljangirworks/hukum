@@ -1,6 +1,6 @@
 import { createContext, use } from "react";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { MutationProgress } from "@traycer-clients/shared/platform/runner-host";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { MutationProgress } from "@hukum-clients/shared/platform/runner-host";
 import type { HostStatusSnapshot } from "@/lib/host/compatibility-state";
 import { dialableHostEndpointFor } from "@/lib/host/transport-key";
 import type { AuthStatus } from "@/stores/auth/auth-store";
@@ -136,7 +136,7 @@ export interface DefaultHostReadinessPresentation {
      * `failed` because the probe never reached the host, rather than because
      * the host rejected the handshake. Drives connection-shaped copy: calling
      * an unreachable host "incompatible" is what made an offline host
-     * (traycer#858) and a load-stalled host (traycer#860) both read as version
+     * (hukum#858) and a load-stalled host (hukum#860) both read as version
      * problems.
      */
     readonly unreachable: boolean;
@@ -144,7 +144,7 @@ export interface DefaultHostReadinessPresentation {
      * What the host's last `host.status` answer said about itself. Only a
      * `compatible` verdict has an answer to hold; the other states never
      * heard one, so this is null there. Carried for the pre-filled report's
-     * health line - a busy host serving turns (traycer#860) must not read
+     * health line - a busy host serving turns (hukum#860) must not read
      * like a host that never started.
      */
     readonly hostStatus: HostStatusSnapshot | null;

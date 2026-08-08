@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import type {
   WorktreeFolderIntent,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   WORKTREE_INTENT_MEMORY_EPIC_CAP,
   WORKTREE_INTENT_MEMORY_FOLDER_CAP,

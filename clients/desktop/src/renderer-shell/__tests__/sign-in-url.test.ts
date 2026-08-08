@@ -7,17 +7,17 @@ import { DESKTOP_SIGN_IN_BASE_URL } from "../../config";
  * base from `config`), decided at compile time by the `environment` field.
  * The OSS build ships production endpoints in source, so the base URL is the
  * production Cloud UI; the deep-link callback still uses the dev
- * `traycer-dev://` scheme because an unpackaged source build runs the dev shell.
+ * `hukum-dev://` scheme because an unpackaged source build runs the dev shell.
  */
 describe("composeDesktopSignInUrl", () => {
   it("appends the deep-link redirect to the source-controlled Cloud UI base URL", () => {
     expect(composeDesktopSignInUrl(DESKTOP_REDIRECT_URI)).toBe(
-      `${DESKTOP_SIGN_IN_BASE_URL}?redirect_uri=traycer-dev%3A%2F%2Fauth%2Fcallback`,
+      `${DESKTOP_SIGN_IN_BASE_URL}?redirect_uri=hukum-dev%3A%2F%2Fauth%2Fcallback`,
     );
   });
 
   it("uses the production Cloud UI base URL in source", () => {
-    expect(DESKTOP_SIGN_IN_BASE_URL).toBe("https://platform.traycer.ai");
+    expect(DESKTOP_SIGN_IN_BASE_URL).toBe("https://platform.hukum.ai");
   });
 
   it("uses the Vite-injected loopback Cloud UI URL for a dev desktop run", async () => {
@@ -34,7 +34,7 @@ describe("composeDesktopSignInUrl", () => {
   });
 
   it("rejects a non-loopback Cloud UI override", async () => {
-    vi.stubEnv("VITE_DEV_CLOUD_UI_BASE_URL", "https://platform.traycer.ai");
+    vi.stubEnv("VITE_DEV_CLOUD_UI_BASE_URL", "https://platform.hukum.ai");
     vi.resetModules();
 
     const slotted = await import("../sign-in-url");
@@ -59,7 +59,7 @@ describe("DESKTOP_REDIRECT_URI under a dev-desktop slot", () => {
   });
 
   it("uses the bare dev scheme when no slot is active", () => {
-    expect(DESKTOP_REDIRECT_URI).toBe("traycer-dev://auth/callback");
+    expect(DESKTOP_REDIRECT_URI).toBe("hukum-dev://auth/callback");
   });
 
   it("suffixes the scheme with the sanitized slot", async () => {
@@ -67,7 +67,7 @@ describe("DESKTOP_REDIRECT_URI under a dev-desktop slot", () => {
     vi.resetModules();
     const slotted = await import("../sign-in-url");
     expect(slotted.DESKTOP_REDIRECT_URI).toBe(
-      "traycer-dev-my-worktree://auth/callback",
+      "hukum-dev-my-worktree://auth/callback",
     );
   });
 
@@ -75,6 +75,6 @@ describe("DESKTOP_REDIRECT_URI under a dev-desktop slot", () => {
     vi.stubEnv("VITE_DEV_DESKTOP_SLOT", "  !!  ");
     vi.resetModules();
     const slotted = await import("../sign-in-url");
-    expect(slotted.DESKTOP_REDIRECT_URI).toBe("traycer-dev://auth/callback");
+    expect(slotted.DESKTOP_REDIRECT_URI).toBe("hukum-dev://auth/callback");
   });
 });

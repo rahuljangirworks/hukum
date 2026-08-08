@@ -1,4 +1,4 @@
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type { ComposerEditorIncarnation } from "@/lib/composer/composer-editor-incarnation";
 import type { PromptStashEntry } from "@/lib/composer/prompt-stash-codec";
 

@@ -11,7 +11,7 @@
  * only has to pass a prefix (`events.filter(e => e.timestamp <= t)`) to get the
  * graph as of `t`; nothing here reads "now".
  */
-import type { TuiHarnessId } from "@traycer/protocol/persistence/epic/schemas";
+import type { TuiHarnessId } from "@hukum/protocol/persistence/epic/schemas";
 import type { CommGraphEvent } from "@/lib/comm-graph/comm-graph-events";
 
 export type CommGraphAgentKind = "chat" | "terminal-agent";

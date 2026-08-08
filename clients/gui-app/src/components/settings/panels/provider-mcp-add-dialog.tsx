@@ -10,8 +10,8 @@ import type {
   ProviderMcpServerTransportWrite,
   ProviderMcpTransport,
   ProviderNativeScope,
-} from "@traycer/protocol/host/provider-native-schemas";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import {
@@ -832,7 +832,7 @@ function RemoteAuthFields(props: {
           onChange={props.onEnvAuthVarNameChange}
           placeholder="GITHUB_TOKEN"
           type="text"
-          hint="Traycer passes this name to the provider; the value must already be set in your environment."
+          hint="Hukum passes this name to the provider; the value must already be set in your environment."
         />
       ) : null}
 

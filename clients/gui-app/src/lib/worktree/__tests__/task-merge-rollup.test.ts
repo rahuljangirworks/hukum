@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type {
   WorktreeHostEntryV12,
   WorktreeSubmoduleMergeFactV12,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 import {
   buildTaskMergeRollups,
   computeTaskMergeRollup,

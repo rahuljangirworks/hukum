@@ -4,7 +4,7 @@ import type {
   ProviderCliState,
   ProviderId,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import {
   isRateLimitCapableProvider,
   isRateLimitProfileFetchEligible,
@@ -72,7 +72,7 @@ describe("isRateLimitCapableProvider", () => {
     expect(isRateLimitCapableProvider("codex")).toBe(true);
     expect(isRateLimitCapableProvider("kilocode")).toBe(true);
     expect(isRateLimitCapableProvider("cursor")).toBe(false);
-    expect(isRateLimitCapableProvider("traycer")).toBe(false);
+    expect(isRateLimitCapableProvider("hukum")).toBe(false);
   });
 });
 

@@ -46,12 +46,12 @@ import { cn } from "@/lib/utils";
 import type {
   HostRpcError,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   WorkspaceSearchSource,
   WorkspaceSearchTextMatch,
   WorkspaceSearchTextOptions,
-} from "@traycer/protocol/host/workspace/unary-schemas";
+} from "@hukum/protocol/host/workspace/unary-schemas";
 import type { CommandContext } from "@/lib/commands/types";
 import type { SearchRunTarget } from "@/lib/commands/sources/open/search-target";
 

@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ProfileRateLimitSwitchBanner } from "../profile-rate-limit-switch-banner";
 

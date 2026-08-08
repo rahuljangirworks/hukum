@@ -9,78 +9,78 @@ import {
 import {
   serviceLabelFor,
   smAppServiceAgentLabelId as cliSmAppServiceAgentLabelId,
-} from "../../../../../traycer-cli/src/service/label";
-import { withDevDesktopSlot } from "@traycer-clients/shared/test-fixtures/dev-desktop-slot";
+} from "../../../../../hukum-cli/src/service/label";
+import { withDevDesktopSlot } from "@hukum-clients/shared/test-fixtures/dev-desktop-slot";
 
 /**
  * Pin the cross-workspace contract: the desktop runner MUST look for the
  * host PID metadata at the environment-scoped path that the CLI supervisor
- * and the host runtime agree on. Prod = `~/.traycer/host/pid.json`;
- * dev = `~/.traycer/host/dev/pid.json`. Changing these without also
- * updating the host (the external Traycer Host) helper
+ * and the host runtime agree on. Prod = `~/.hukum/host/pid.json`;
+ * dev = `~/.hukum/host/dev/pid.json`. Changing these without also
+ * updating the host (the external Hukum Host) helper
  * `getDefaultHostPidMetadataPath` AND the CLI's
- * `clients/traycer-cli/src/store/paths.ts` breaks local host
+ * `clients/hukum-cli/src/store/paths.ts` breaks local host
  * discovery.
  */
 describe("getHostFsLayout", () => {
-  it("resolves the prod ~/.traycer/host/pid.json metadata path", () => {
+  it("resolves the prod ~/.hukum/host/pid.json metadata path", () => {
     const layout = getHostFsLayout("production");
     expect(layout.environment).toBe("production");
-    expect(layout.rootDir).toBe(join(homedir(), ".traycer", "host"));
+    expect(layout.rootDir).toBe(join(homedir(), ".hukum", "host"));
     expect(layout.pidMetadataFile).toBe(
-      join(homedir(), ".traycer", "host", "pid.json"),
+      join(homedir(), ".hukum", "host", "pid.json"),
     );
     expect(layout.logFile).toBe(
-      join(homedir(), ".traycer", "host", "host.log"),
+      join(homedir(), ".hukum", "host", "host.log"),
     );
   });
 
   it("resolves the prod path when environment='production' is passed explicitly", () => {
     const layout = getHostFsLayout("production");
     expect(layout.environment).toBe("production");
-    expect(layout.rootDir).toBe(join(homedir(), ".traycer", "host"));
+    expect(layout.rootDir).toBe(join(homedir(), ".hukum", "host"));
     expect(layout.pidMetadataFile).toBe(
-      join(homedir(), ".traycer", "host", "pid.json"),
+      join(homedir(), ".hukum", "host", "pid.json"),
     );
     expect(layout.logFile).toBe(
-      join(homedir(), ".traycer", "host", "host.log"),
+      join(homedir(), ".hukum", "host", "host.log"),
     );
   });
 
-  it("nests the dev environment one level deeper under ~/.traycer/host/dev/", () => {
+  it("nests the dev environment one level deeper under ~/.hukum/host/dev/", () => {
     const layout = getHostFsLayout("dev");
     expect(layout.environment).toBe("dev");
-    expect(layout.rootDir).toBe(join(homedir(), ".traycer", "host", "dev"));
+    expect(layout.rootDir).toBe(join(homedir(), ".hukum", "host", "dev"));
     expect(layout.pidMetadataFile).toBe(
-      join(homedir(), ".traycer", "host", "dev", "pid.json"),
+      join(homedir(), ".hukum", "host", "dev", "pid.json"),
     );
     expect(layout.logFile).toBe(
-      join(homedir(), ".traycer", "host", "dev", "host.log"),
+      join(homedir(), ".hukum", "host", "dev", "host.log"),
     );
   });
 
   // Channel-aware install record paths (Ticket 29cf341f). The host-
   // management IPC reads the install record from `installRecordFile`;
-  // dev Desktop must point at `~/.traycer/host/dev/install/install.json`
+  // dev Desktop must point at `~/.hukum/host/dev/install/install.json`
   // so a `make dev-desktop` session never reads the production install
   // record (and never mutates prod via host-install/uninstall).
-  it("exposes the prod install dir + install record at ~/.traycer/host/install/install.json", () => {
+  it("exposes the prod install dir + install record at ~/.hukum/host/install/install.json", () => {
     const layout = getHostFsLayout("production");
     expect(layout.installDir).toBe(
-      join(homedir(), ".traycer", "host", "install"),
+      join(homedir(), ".hukum", "host", "install"),
     );
     expect(layout.installRecordFile).toBe(
-      join(homedir(), ".traycer", "host", "install", "install.json"),
+      join(homedir(), ".hukum", "host", "install", "install.json"),
     );
   });
 
-  it("exposes the dev install dir + install record at ~/.traycer/host/dev/install/install.json", () => {
+  it("exposes the dev install dir + install record at ~/.hukum/host/dev/install/install.json", () => {
     const layout = getHostFsLayout("dev");
     expect(layout.installDir).toBe(
-      join(homedir(), ".traycer", "host", "dev", "install"),
+      join(homedir(), ".hukum", "host", "dev", "install"),
     );
     expect(layout.installRecordFile).toBe(
-      join(homedir(), ".traycer", "host", "dev", "install", "install.json"),
+      join(homedir(), ".hukum", "host", "dev", "install", "install.json"),
     );
   });
 
@@ -89,7 +89,7 @@ describe("getHostFsLayout", () => {
       const layout = getHostFsLayout("dev");
       const root = join(
         homedir(),
-        ".traycer",
+        ".hukum",
         "host",
         "dev-runs",
         "worktree-slot",
@@ -109,37 +109,37 @@ describe("getHostFsLayout", () => {
  * The service label namespaces the host's LaunchAgent / SMAppService
  * registration per slot. It MUST agree with the in-bundle plist the installer
  * ships (`scripts/desktop-install-cloud.js` `hostAgentLabel`) and the CLI's
- * `serviceLabelFor`: production keeps the bare `ai.traycer.host`; every other
+ * `serviceLabelFor`: production keeps the bare `ai.hukum.host`; every other
  * slot nests under its own name. A dev-only fallback that mapped internal
- * `staging` builds onto `ai.traycer.host.dev` broke staging host bring-up.
+ * `staging` builds onto `ai.hukum.host.dev` broke staging host bring-up.
  */
 describe("labelForEnvironment", () => {
-  it("keeps the bare ai.traycer.host id for production", () => {
+  it("keeps the bare ai.hukum.host id for production", () => {
     const label = labelForEnvironment("production");
-    expect(label.id).toBe("ai.traycer.host");
-    expect(label.appSupportDirName).toBe("Traycer");
+    expect(label.id).toBe("ai.hukum.host");
+    expect(label.appSupportDirName).toBe("Hukum");
   });
 
-  it("nests the dev slot under ai.traycer.host.dev", () => {
+  it("nests the dev slot under ai.hukum.host.dev", () => {
     const label = labelForEnvironment("dev");
-    expect(label.id).toBe("ai.traycer.host.dev");
-    expect(label.appSupportDirName).toBe("Traycer-Dev");
+    expect(label.id).toBe("ai.hukum.host.dev");
+    expect(label.appSupportDirName).toBe("Hukum-Dev");
   });
 
   it("uses a per-run dev service label when DEV_DESKTOP_SLOT is set", () => {
     withDevDesktopSlot("Worktree Slot", () => {
       const label = labelForEnvironment("dev");
-      expect(label.id).toBe("ai.traycer.host.dev.worktree-slot");
-      expect(label.displayName).toBe("Traycer Host (Dev worktree-slot)");
-      expect(label.appSupportDirName).toBe("Traycer-Dev-worktree-slot");
+      expect(label.id).toBe("ai.hukum.host.dev.worktree-slot");
+      expect(label.displayName).toBe("Hukum Host (Dev worktree-slot)");
+      expect(label.appSupportDirName).toBe("Hukum-Dev-worktree-slot");
     });
   });
 
-  it("gives the internal staging slot its OWN ai.traycer.host.staging id (never the dev slot's)", () => {
+  it("gives the internal staging slot its OWN ai.hukum.host.staging id (never the dev slot's)", () => {
     const label = labelForEnvironment("staging");
-    expect(label.id).toBe("ai.traycer.host.staging");
-    expect(label.displayName).toBe("Traycer Host (Staging)");
-    expect(label.appSupportDirName).toBe("Traycer-Staging");
+    expect(label.id).toBe("ai.hukum.host.staging");
+    expect(label.displayName).toBe("Hukum Host (Staging)");
+    expect(label.appSupportDirName).toBe("Hukum-Staging");
   });
 });
 
@@ -156,11 +156,11 @@ describe("labelForEnvironment", () => {
  */
 describe("smAppServiceAgentLabelId", () => {
   it("derives `<cli-label>.agent`", () => {
-    expect(smAppServiceAgentLabelId("ai.traycer.host")).toBe(
-      "ai.traycer.host.agent",
+    expect(smAppServiceAgentLabelId("ai.hukum.host")).toBe(
+      "ai.hukum.host.agent",
     );
-    expect(smAppServiceAgentLabelId("ai.traycer.host.staging")).toBe(
-      "ai.traycer.host.staging.agent",
+    expect(smAppServiceAgentLabelId("ai.hukum.host.staging")).toBe(
+      "ai.hukum.host.staging.agent",
     );
   });
 

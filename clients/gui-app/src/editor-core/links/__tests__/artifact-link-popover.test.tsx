@@ -298,7 +298,7 @@ describe("ArtifactLinkPopover", () => {
       if (transaction.docChanged) documentTransaction();
     });
 
-    fireEvent.change(url, { target: { value: "https://traycer.ai" } });
+    fireEvent.change(url, { target: { value: "https://hukum.ai" } });
     fireEvent.change(text, { target: { value: "Changed Label" } });
     fireEvent.submit(screen.getByRole("form", { name: "Edit link" }));
     fireEvent.blur(text, { relatedTarget: editor.view.dom });
@@ -306,7 +306,7 @@ describe("ArtifactLinkPopover", () => {
     expect(documentTransaction).toHaveBeenCalledTimes(1);
     expect(editor.getText()).toBe("Changed Label");
     expect(editor.view.dom.querySelector("a")?.dataset.linkHref).toBe(
-      "https://traycer.ai",
+      "https://hukum.ai",
     );
     expect(screen.queryByRole("dialog", { name: "Edit link" })).toBeNull();
   });
@@ -759,11 +759,11 @@ describe("ArtifactLinkPopover", () => {
       name: "Link URL",
     });
     expect(document.activeElement).toBe(url);
-    fireEvent.change(url, { target: { value: "https://traycer.ai" } });
+    fireEvent.change(url, { target: { value: "https://hukum.ai" } });
     fireEvent.blur(url, { relatedTarget: document.body });
 
     expect(editor.view.dom.querySelector("a")?.dataset.linkHref).toBe(
-      "https://traycer.ai",
+      "https://hukum.ai",
     );
     expect(screen.queryByRole("dialog", { name: "Edit link" })).toBeNull();
   });
@@ -975,13 +975,13 @@ describe("ArtifactLinkPopover", () => {
 
     second.commands.insertContentAt(4, "REMOTE");
     updates.mockClear();
-    fireEvent.change(url, { target: { value: "https://traycer.ai" } });
+    fireEvent.change(url, { target: { value: "https://hukum.ai" } });
     fireEvent.submit(screen.getByRole("form", { name: "Edit link" }));
 
     expect(first.getText()).toBe("ExaREMOTEmple");
     expect(first.view.dom.querySelectorAll("a")).toHaveLength(1);
     expect(first.view.dom.querySelector("a")?.dataset.linkHref).toBe(
-      "https://traycer.ai",
+      "https://hukum.ai",
     );
     expect(updates).toHaveBeenCalledTimes(1);
   });
@@ -1023,7 +1023,7 @@ describe("ArtifactLinkPopover", () => {
     await screen.findByRole("dialog", { name: "Link preview" });
     fireEvent.click(screen.getByRole("button", { name: "Edit" }));
     const url = await screen.findByRole("textbox", { name: "Link URL" });
-    fireEvent.change(url, { target: { value: "https://traycer.ai" } });
+    fireEvent.change(url, { target: { value: "https://hukum.ai" } });
     fireEvent.submit(screen.getByRole("form", { name: "Edit link" }));
 
     second.commands.insertContentAt(1, "X");
@@ -1625,7 +1625,7 @@ describe("ArtifactLinkPopover", () => {
   it("closes an open card when a plain click navigates a different editable link", async () => {
     vi.useFakeTimers();
     const editor = makeEditor(
-      '<p><a href="https://example.com">Example</a> <a href="https://traycer.ai">Traycer</a></p>',
+      '<p><a href="https://example.com">Example</a> <a href="https://hukum.ai">Hukum</a></p>',
     );
     editor.commands.setTextSelection(editor.state.doc.content.size - 2);
     const { openLink, onOpenChange } = renderPopover(editor, true);
@@ -1646,7 +1646,7 @@ describe("ArtifactLinkPopover", () => {
     expect(openLink).toHaveBeenCalledTimes(1);
     expect(openLink).toHaveBeenCalledWith({
       kind: "external",
-      url: "https://traycer.ai",
+      url: "https://hukum.ai",
     });
     expect(screen.queryByRole("dialog", { name: "Link preview" })).toBeNull();
     expect(screen.queryByRole("dialog", { name: "Edit link" })).toBeNull();
@@ -1655,7 +1655,7 @@ describe("ArtifactLinkPopover", () => {
 
   it("commits a dirty edit before a plain click navigates a different link", async () => {
     const editor = makeEditor(
-      '<p><a href="https://example.com">Example</a> <a href="https://traycer.ai">Traycer</a></p>',
+      '<p><a href="https://example.com">Example</a> <a href="https://hukum.ai">Hukum</a></p>',
     );
     editor.commands.setTextSelection(2);
     const { openLink } = renderPopover(editor, true);
@@ -1674,7 +1674,7 @@ describe("ArtifactLinkPopover", () => {
 
     expect(openLink).toHaveBeenCalledWith({
       kind: "external",
-      url: "https://traycer.ai",
+      url: "https://hukum.ai",
     });
     expect(editor.view.dom.querySelector("a")?.dataset.linkHref).toBe(
       "https://changed.example",

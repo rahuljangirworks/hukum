@@ -50,7 +50,7 @@ let filePath: string;
 
 beforeEach(async () => {
   persistFaults.writeFailuresRemaining = 0;
-  tempDir = await mkdtemp(join(tmpdir(), "traycer-desktop-state-store-"));
+  tempDir = await mkdtemp(join(tmpdir(), "hukum-desktop-state-store-"));
   filePath = join(tempDir, "desktop-windows.json");
   logger.warn.mockClear();
   logger.error.mockClear();

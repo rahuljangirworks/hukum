@@ -3,7 +3,7 @@ import type {
   WorktreeBinding,
   WorktreeBindingEntry,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   buildAbForkWorkspaceSeed,
   buildForkWorkspaceSeed,
@@ -17,7 +17,7 @@ function bindingEntry(
   return {
     workspacePath: "/repo",
     mode: "local",
-    repoIdentifier: { owner: "traycerai", repo: "traycer" },
+    repoIdentifier: { owner: "hukumai", repo: "hukum" },
     worktreePath: null,
     branch: "development",
     isPrimary: true,
@@ -51,7 +51,7 @@ describe("visibleWorktreeIntent", () => {
         {
           kind: "worktree",
           workspacePath: "/repo-b",
-          repoIdentifier: { owner: "traycerai", repo: "repo-b" },
+          repoIdentifier: { owner: "hukumai", repo: "repo-b" },
           isPrimary: false,
           branch: {
             type: "new",
@@ -69,7 +69,7 @@ describe("visibleWorktreeIntent", () => {
         {
           kind: "local",
           workspacePath: "/repo-a",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           isPrimary: true,
         },
         stagedIntent.entries[0],
@@ -105,10 +105,10 @@ describe("buildAbForkWorkspaceSeed", () => {
       binding: {
         entries: [
           bindingEntry({
-            workspacePath: "/Users/me/traycer",
+            workspacePath: "/Users/me/hukum",
             mode: "worktree",
-            worktreePath: "/wt/traycer-rugged-panda",
-            branch: "traycer-rugged-panda",
+            worktreePath: "/wt/hukum-rugged-panda",
+            branch: "hukum-rugged-panda",
           }),
         ],
       },
@@ -121,19 +121,19 @@ describe("buildAbForkWorkspaceSeed", () => {
       entries: [
         {
           kind: "local",
-          workspacePath: "/wt/traycer-rugged-panda",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          workspacePath: "/wt/hukum-rugged-panda",
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           isPrimary: true,
         },
       ],
     });
-    expect(seed.workspace.folders).toEqual(["/wt/traycer-rugged-panda"]);
+    expect(seed.workspace.folders).toEqual(["/wt/hukum-rugged-panda"]);
   });
 
   it("keeps a locally-bound folder as its own base", () => {
     const seed = buildAbForkWorkspaceSeed({
       binding: {
-        entries: [bindingEntry({ workspacePath: "/Users/me/traycer" })],
+        entries: [bindingEntry({ workspacePath: "/Users/me/hukum" })],
       },
       stagedIntent: null,
     });
@@ -142,8 +142,8 @@ describe("buildAbForkWorkspaceSeed", () => {
       entries: [
         {
           kind: "local",
-          workspacePath: "/Users/me/traycer",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          workspacePath: "/Users/me/hukum",
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           isPrimary: true,
         },
       ],
@@ -157,8 +157,8 @@ describe("buildForkWorkspaceSeed", () => {
       binding: {
         entries: [
           bindingEntry({
-            workspacePath: "/Users/me/traycer",
-            repoIdentifier: { owner: "traycerai", repo: "traycer" },
+            workspacePath: "/Users/me/hukum",
+            repoIdentifier: { owner: "hukumai", repo: "hukum" },
           }),
         ],
       },
@@ -166,22 +166,22 @@ describe("buildForkWorkspaceSeed", () => {
     });
 
     expect(seed.workspace).toEqual({
-      folders: ["/Users/me/traycer"],
+      folders: ["/Users/me/hukum"],
       folderInfoByPath: {
-        "/Users/me/traycer": {
-          path: "/Users/me/traycer",
-          name: "traycer",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+        "/Users/me/hukum": {
+          path: "/Users/me/hukum",
+          name: "hukum",
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           hostId: null,
         },
       },
-      primaryPath: "/Users/me/traycer",
+      primaryPath: "/Users/me/hukum",
     });
   });
 
   it("builds a local fallback seed from persisted terminal-agent folders", () => {
     const seed = buildForkWorkspaceSeedFromWorkspaceFolders([
-      "/Users/me/traycer",
+      "/Users/me/hukum",
       "/Users/me/project/some-pkg",
     ]);
 
@@ -189,7 +189,7 @@ describe("buildForkWorkspaceSeed", () => {
       entries: [
         {
           kind: "local",
-          workspacePath: "/Users/me/traycer",
+          workspacePath: "/Users/me/hukum",
           repoIdentifier: null,
           isPrimary: true,
         },
@@ -202,7 +202,7 @@ describe("buildForkWorkspaceSeed", () => {
       ],
     });
     expect(seed.workspace.folders).toEqual([
-      "/Users/me/traycer",
+      "/Users/me/hukum",
       "/Users/me/project/some-pkg",
     ]);
   });

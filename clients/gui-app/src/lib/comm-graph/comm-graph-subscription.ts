@@ -19,7 +19,7 @@
  *     StrictMode mount / unmount / remount re-attaches and resumes from the
  *     cursor instead of re-pulling every snapshot.
  */
-import type { EpicCommunicationGraphEvent } from "@traycer/protocol/host/epic/communication-graph";
+import type { EpicCommunicationGraphEvent } from "@hukum/protocol/host/epic/communication-graph";
 import { appLogger } from "@/lib/logger";
 import {
   compareCommGraphEvents,

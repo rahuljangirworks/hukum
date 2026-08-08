@@ -1,4 +1,4 @@
-import type { WorktreeFolderIntent } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeFolderIntent } from "@hukum/protocol/host/worktree-schemas";
 
 /**
  * The repo-identity shape shared structurally by worktree listing entries and

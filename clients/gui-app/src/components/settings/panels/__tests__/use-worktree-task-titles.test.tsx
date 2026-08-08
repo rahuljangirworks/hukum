@@ -2,14 +2,14 @@ import { createElement, type ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { WorktreeHostEntryV14 } from "@traycer/protocol/host/index";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { WorktreeHostEntryV14 } from "@hukum/protocol/host/index";
 import type {
   GetTaskContextsResponse,
   ListTaskLight,
   ListTasksResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import { GET_TASK_CONTEXTS_MAX_IDS } from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import { GET_TASK_CONTEXTS_MAX_IDS } from "@hukum/protocol/host/epic/unary-schemas";
 import {
   LIST_CLOUD_TASKS_REQUEST,
   cloudEpicTasksQueryKey,

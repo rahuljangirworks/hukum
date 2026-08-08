@@ -57,7 +57,7 @@ interface TabSelectionSnapshot {
   readonly focusedSide: "left" | "right" | null;
 }
 
-const HISTORY_ENVELOPE_KEY = "__traycerTabNavigation";
+const HISTORY_ENVELOPE_KEY = "__hukumTabNavigation";
 
 /**
  * Mirror of `@tanstack/history` ParsedHistoryState. The router stamps

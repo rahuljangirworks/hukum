@@ -2,7 +2,7 @@ import type {
   HostNotificationEntryV21,
   HostNotificationsEntityRef,
   HostNotificationsPresenceEntity,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 
 /**
  * The entity a HOST notification addresses, from the wire entry's typed

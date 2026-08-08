@@ -64,7 +64,7 @@ function AboutDetailsDialogContent(
             title: "Couldn't load desktop details",
             message: null,
             code: null,
-            source: "About Traycer",
+            source: "About Hukum",
           })}
           presentation="link"
           className="h-auto p-0 text-current"
@@ -82,7 +82,7 @@ function AboutDetailsDialogContent(
       <DialogHeader>
         <DialogTitle className="flex items-center gap-2">
           <Info className="size-4" />
-          About Traycer
+          About Hukum
         </DialogTitle>
         <DialogDescription className="sr-only">
           Desktop runtime and diagnostics details.
@@ -100,7 +100,7 @@ function AboutDetailsDialogContent(
               title: "Couldn't open the link",
               message: null,
               code: null,
-              source: "About Traycer",
+              source: "About Hukum",
             })}
             presentation="link"
             className="h-auto p-0 text-current"

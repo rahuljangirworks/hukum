@@ -181,7 +181,7 @@ describe("<SetupCardSegment /> worktree location", () => {
         workspace({
           state: "ready",
           branch: "my-feature",
-          worktreePath: "/home/me/.traycer/worktrees/app/my-feature",
+          worktreePath: "/home/me/.hukum/worktrees/app/my-feature",
         }),
       ]),
     );
@@ -190,7 +190,7 @@ describe("<SetupCardSegment /> worktree location", () => {
       "my-feature",
     );
     const path = screen.getByTestId("setup-card-worktree-path");
-    expect(path.textContent).toBe("/home/me/.traycer/worktrees/app/my-feature");
+    expect(path.textContent).toBe("/home/me/.hukum/worktrees/app/my-feature");
     // The path truncates from the START (leaf stays visible); the full path is
     // on hover via FilePathTooltip (a portal), so there is no `title` attr.
     expect(path.getAttribute("title")).toBeNull();
@@ -365,7 +365,7 @@ describe("<SetupCardSegment /> single-repo dropdown (two steps)", () => {
       isPrimary: true,
       branch: {
         type: "new" as const,
-        name: "traycer/fresh-fox",
+        name: "hukum/fresh-fox",
         source: "main",
         carryUncommittedChanges: false,
       },
@@ -412,7 +412,7 @@ describe("<SetupCardSegment /> single-repo dropdown (two steps)", () => {
       isPrimary: true,
       branch: {
         type: "new" as const,
-        name: "traycer/fresh-fox",
+        name: "hukum/fresh-fox",
         source: "main",
         carryUncommittedChanges: false,
       },
@@ -441,7 +441,7 @@ describe("<SetupCardSegment /> single-repo dropdown (two steps)", () => {
           workspacePath: "/repo",
           ok: true,
           worktreePath: "/worktrees/fresh-fox",
-          branch: "traycer/fresh-fox",
+          branch: "hukum/fresh-fox",
           errorMessage: null,
         },
       ],
@@ -455,14 +455,14 @@ describe("<SetupCardSegment /> single-repo dropdown (two steps)", () => {
           workspacePath: "/repo",
           ok: false,
           worktreePath: null,
-          branch: "traycer/fresh-fox",
+          branch: "hukum/fresh-fox",
           errorMessage:
-            "traycer/fresh-fox is already checked out in /elsewhere",
+            "hukum/fresh-fox is already checked out in /elsewhere",
         },
       ],
     });
     expect(errorToast).toHaveBeenCalledWith(
-      "traycer/fresh-fox is already checked out in /elsewhere",
+      "hukum/fresh-fox is already checked out in /elsewhere",
       undefined,
       expect.objectContaining({ title: "Worktree re-provision failed" }),
     );
@@ -474,13 +474,13 @@ describe("<SetupCardSegment /> single-repo dropdown (two steps)", () => {
         workspace({
           state: "failed",
           worktreePath: null,
-          errorMessage: "fatal: a branch named 'traycer/x' already exists",
+          errorMessage: "fatal: a branch named 'hukum/x' already exists",
         }),
       ]),
     );
 
     expect(screen.getByRole("alert").textContent).toBe(
-      "fatal: a branch named 'traycer/x' already exists",
+      "fatal: a branch named 'hukum/x' already exists",
     );
   });
 

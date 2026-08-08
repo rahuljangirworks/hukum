@@ -1,5 +1,5 @@
 import { useMemo, type ReactNode } from "react";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import { AddProviderProfileDialog } from "@/components/settings/panels/add-provider-profile-dialog";
 import { useProvidersListForClient } from "@/hooks/providers/use-providers-list-query";
 import { useProviderProfileAddFlowStore } from "@/stores/settings/provider-profile-add-flow-store";

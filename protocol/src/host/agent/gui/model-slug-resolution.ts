@@ -3,7 +3,7 @@ import type { GuiAgentModelOption } from "./unary-schemas";
 /**
  * Which catalog row a persisted model slug denotes.
  *
- * Traycer identifies a model by a persisted string (`ChatRunSettings.model`)
+ * Hukum identifies a model by a persisted string (`ChatRunSettings.model`)
  * and then has to find it again in a LIVE, account-scoped catalog. Those two
  * things drift: a row's `slug` carries account-entitlement decoration
  * (`opus[1m]`, `claude-fable-5[1m]`), so a slug persisted when the account

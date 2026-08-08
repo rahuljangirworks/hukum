@@ -496,7 +496,7 @@ function useStableChatTimelineRows(
  * frames over 1.5x budget, 50-75ms long tasks); a count-only ResizeObserver
  * pass recorded substantial multi-row churn per pointermove (~22 entries in
  * a typical callback - not literally every mounted row on every event).
- * During a panel-resize drag (`traycer-panel-resizing` on `<html>`),
+ * During a panel-resize drag (`hukum-panel-resizing` on `<html>`),
  * `ChatTimeline`'s capture pass (D20 port, wired through
  * `registerPanelResizeParticipant`) marks each row that was on-screen at
  * drag START with `data-panel-resize-visible`; only UNMARKED rows flip to
@@ -530,7 +530,7 @@ const ChatTimelineRow = memo(function ChatTimelineRow({
       data-message-id={message.id}
       data-navigation-highlighted={isNavigationHighlighted ? "true" : undefined}
       className={cn(
-        "mx-auto w-full max-w-3xl rounded-lg px-6 pb-6 transition-[background-color,box-shadow] duration-300 [contain:layout_paint_style] [.traycer-panel-resizing_&:not([data-panel-resize-visible])]:[content-visibility:hidden]",
+        "mx-auto w-full max-w-3xl rounded-lg px-6 pb-6 transition-[background-color,box-shadow] duration-300 [contain:layout_paint_style] [.hukum-panel-resizing_&:not([data-panel-resize-visible])]:[content-visibility:hidden]",
         isNavigationHighlighted &&
           "bg-primary/15 ring-2 ring-inset ring-primary/80 motion-safe:animate-pulse",
         chatTimelineRowSizeHintClassName(message.role),

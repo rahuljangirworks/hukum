@@ -33,13 +33,13 @@ function readRendererPort(env) {
 function buildChildEnv(env) {
   const rendererPort = readRendererPort(env);
   const rendererUrl =
-    env.TRAYCER_DESKTOP_DEV_URL ?? `http://localhost:${rendererPort}`;
+    env.HUKUM_DESKTOP_DEV_URL ?? `http://localhost:${rendererPort}`;
   const childEnv = {
     ...env,
     NODE_ENV: "development",
     PORT: String(rendererPort),
-    TRAYCER_DESKTOP_DEV: "1",
-    TRAYCER_DESKTOP_DEV_URL: rendererUrl,
+    HUKUM_DESKTOP_DEV: "1",
+    HUKUM_DESKTOP_DEV_URL: rendererUrl,
   };
   if (typeof env.DEV_DESKTOP_SLOT === "string") {
     childEnv.VITE_DEV_DESKTOP_SLOT = env.DEV_DESKTOP_SLOT;
@@ -49,8 +49,8 @@ function buildChildEnv(env) {
   // Worktree display identity belongs to native app chrome, never the renderer.
   delete childEnv.VITE_DEV_DESKTOP_DISPLAY_NAME;
   delete childEnv.VITE_DEV_DESKTOP_WORKTREE_LABEL;
-  if (typeof env.TRAYCER_DEV_CLOUD_UI_BASE_URL === "string") {
-    childEnv.VITE_DEV_CLOUD_UI_BASE_URL = env.TRAYCER_DEV_CLOUD_UI_BASE_URL;
+  if (typeof env.HUKUM_DEV_CLOUD_UI_BASE_URL === "string") {
+    childEnv.VITE_DEV_CLOUD_UI_BASE_URL = env.HUKUM_DEV_CLOUD_UI_BASE_URL;
   } else {
     delete childEnv.VITE_DEV_CLOUD_UI_BASE_URL;
   }

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";
 import { useHostDirectoryList } from "@/hooks/host/use-host-directory-list-query";
 import { providerIdToGuiHarnessId } from "@/lib/provider-ordering";

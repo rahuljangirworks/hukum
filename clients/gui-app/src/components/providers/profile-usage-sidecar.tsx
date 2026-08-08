@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import type { ProfileUsageWindow } from "@/lib/rate-limits/profile-usage-projection";
 import { AccentDot } from "@/components/providers/accent-dot";
 import type { ProfileDropdownUsageEntry } from "@/components/providers/profile-dropdown-usage";
@@ -9,7 +9,7 @@ import {
   type ProfileUsageSidecarPosition,
 } from "@/components/providers/profile-usage-sidecar-position";
 import { waitForAnchorReady } from "@/components/providers/profile-usage-sidecar-anchor-readiness";
-import { MeterRow } from "@/components/settings/panels/traycer-subscription-views";
+import { MeterRow } from "@/components/settings/panels/hukum-subscription-views";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";

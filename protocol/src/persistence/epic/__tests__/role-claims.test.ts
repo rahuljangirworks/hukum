@@ -12,7 +12,7 @@ import {
   roleClaimIdentityKey,
   roleNameSchema,
   roleScopeSchema,
-} from "@traycer/protocol/persistence/epic/role-claims";
+} from "@hukum/protocol/persistence/epic/role-claims";
 
 const NUL = "\u0000";
 const C1_NEL = "\u0085";

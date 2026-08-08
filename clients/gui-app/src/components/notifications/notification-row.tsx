@@ -45,7 +45,7 @@ import {
 import {
   type NotificationEvent,
   NOTIFICATION_EVENT_TYPES,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 
 interface NotificationRowProps {
   readonly feedId: string;

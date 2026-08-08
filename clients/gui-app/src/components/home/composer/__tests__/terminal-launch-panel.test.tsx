@@ -80,7 +80,7 @@ function makeGuiOnlyToolbarStore() {
     seedKey: "test",
     values: {
       permission: "supervised",
-      selection: { harnessId: "traycer", modelSlug: "", profileId: null },
+      selection: { harnessId: "hukum", modelSlug: "", profileId: null },
       reasoning: "",
       serviceTier: "",
     },
@@ -92,8 +92,8 @@ function makeGuiOnlyToolbarStore() {
   store.getState().setCatalog({
     harnesses: [
       {
-        id: "traycer",
-        label: "Traycer",
+        id: "hukum",
+        label: "Hukum",
         enabled: true,
         available: true,
         error: null,
@@ -103,7 +103,7 @@ function makeGuiOnlyToolbarStore() {
         availabilityPending: false,
       },
     ],
-    modelsHarnessId: "traycer",
+    modelsHarnessId: "hukum",
     models: [],
     modelsLoaded: true,
     tuiOnly: true,

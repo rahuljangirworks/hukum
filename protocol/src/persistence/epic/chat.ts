@@ -1,14 +1,14 @@
 import {
   chatEventSchema,
   chatEventSchemaPreInReplyTo,
-} from "@traycer/protocol/persistence/epic/chat-events";
-import { chatRunSettingsSchema } from "@traycer/protocol/persistence/epic/foundation";
+} from "@hukum/protocol/persistence/epic/chat-events";
+import { chatRunSettingsSchema } from "@hukum/protocol/persistence/epic/foundation";
 import {
   messageSchema,
   messageSchemaPreImage,
   messageSchemaPreInReplyTo,
-} from "@traycer/protocol/persistence/epic/messages";
-import { activeSessionChainSchema } from "@traycer/protocol/persistence/epic/senders";
+} from "@hukum/protocol/persistence/epic/messages";
+import { activeSessionChainSchema } from "@hukum/protocol/persistence/epic/senders";
 import { z } from "zod";
 
 /**

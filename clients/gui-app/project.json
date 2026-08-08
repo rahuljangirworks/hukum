@@ -1,6 +1,6 @@
 {
-  "name": "traycer-clients-gui-app",
-  "implicitDependencies": ["@traycer-clients/shared", "@traycer/protocol"],
+  "name": "hukum-clients-gui-app",
+  "implicitDependencies": ["@hukum-clients/shared", "@hukum/protocol"],
   "namedInputs": {
     "default": ["{projectRoot}/**/*"]
   },

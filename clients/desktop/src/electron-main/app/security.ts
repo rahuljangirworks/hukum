@@ -21,7 +21,7 @@ const ALLOWED_NAVIGATION_ORIGINS: ReadonlySet<string> = new Set([
 
 function isAllowedNavigationOrigin(origin: string): boolean {
   if (ALLOWED_NAVIGATION_ORIGINS.has(origin)) return true;
-  // `TRAYCER_DESKTOP_DEV_URL` is only meaningful (and only ever set) on a dev
+  // `HUKUM_DESKTOP_DEV_URL` is only meaningful (and only ever set) on a dev
   // build. Gating on `isDevBuild` means a stray/attacker-set env var in a
   // packaged production app can never widen the navigation allow-list.
   if (!isDevBuild) return false;

@@ -53,7 +53,7 @@ import {
   providersStartLoginResponseSchema,
   providersCancelLoginRequestSchema,
   providersCancelLoginResponseSchema,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import {
   hostRpcRegistry,
   providersListDowngradeV7ToV1,
@@ -68,7 +68,7 @@ import {
   providersStartLoginUpgradeV10ToV11,
   providersCancelLoginUpgradeV10ToV11,
   providersAwaitLoginUpgradeV20ToV21,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   nativeAuthActionSchema,
   nativeAuthCancelContextSchema,
@@ -80,11 +80,11 @@ import {
   providerNativeCapabilitiesSchema,
   providerNativeErrorCodeSchema,
   providerNativeScopeSchema,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 import {
   providerIdSchema,
   providerIdSchemaV20,
-} from "@traycer/protocol/host/provider-ids";
+} from "@hukum/protocol/host/provider-ids";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -216,7 +216,7 @@ const sampleMcpCapabilities = {
   toolsSource: "native" as const,
   schemasSource: "probe" as const,
   instructionsSource: "probe" as const,
-  traycerSessionsOnlyEnforcement: true,
+  hukumSessionsOnlyEnforcement: true,
   stdioDegradeNotice: false,
   oauthDegradesToConfigOnly: true,
 };
@@ -397,7 +397,7 @@ describe("providers.list@7.0 upgrade/downgrade bridges", () => {
                 remove: ["global"],
                 setEnabled: [],
               },
-              traycerSessionToolsNotice: true,
+              hukumSessionToolsNotice: true,
             },
             skills: null,
             modelProviders: null,
@@ -1030,16 +1030,16 @@ describe("B1: mutation@2.0 is amp-inclusive (host-v1.1.5 oracle)", () => {
   const requestMethods = fixtures.mutationRequestMethods;
   // Everything below that reads the tag itself needs this clone to actually
   // have the host-v1.1.5 objects. `actions/checkout` fetches no tags, so the
-  // `@traycer/protocol` leg of `test.yml` fetches the one tag explicitly to
+  // `@hukum/protocol` leg of `test.yml` fetches the one tag explicitly to
   // keep these two live in CI — skipping them there would have left generator
   // drift uncaught, since `guarded-files-tripwire` only stops the checked-in
   // fixture being hand-edited. The skip remains for local clones without the
   // tag, so a shallow checkout reports "no evidence" rather than a failure.
-  const traycerRoot = resolve(
+  const hukumRoot = resolve(
     dirname(fileURLToPath(import.meta.url)),
     "../../../../",
   );
-  const tagReachable = hostV115TagObjectsAvailable(traycerRoot);
+  const tagReachable = hostV115TagObjectsAvailable(hukumRoot);
 
   it.skipIf(!tagReachable)(
     "regenerate-and-compare: checked-in fixture equals live generator output",
@@ -1047,7 +1047,7 @@ describe("B1: mutation@2.0 is amp-inclusive (host-v1.1.5 oracle)", () => {
       // Catches ANY hand-edit to the checked-in fixture (not just
       // enum/provenance fields): re-run the full generator against
       // host-v1.1.5 and deep-equal.
-      const regenerated = await buildHostV115MutationV20Fixtures(traycerRoot);
+      const regenerated = await buildHostV115MutationV20Fixtures(hukumRoot);
       // Strip `as const` readonly by JSON round-trip for stable deep equality.
       expect(JSON.parse(JSON.stringify(fixtures))).toEqual(
         JSON.parse(JSON.stringify(regenerated)),
@@ -1078,7 +1078,7 @@ describe("B1: mutation@2.0 is amp-inclusive (host-v1.1.5 oracle)", () => {
       // schemas. A wrong field type fails the tag-era parser (not the current
       // branch).
       const taggedSource = gitShow(
-        traycerRoot,
+        hukumRoot,
         `${HOST_V115_MUTATION_V20_TAG}:${HOST_V115_MUTATION_V20_SCHEMAS_PATH}`,
       );
       const tagSchemas = await importTaggedProviderSchemas(taggedSource);

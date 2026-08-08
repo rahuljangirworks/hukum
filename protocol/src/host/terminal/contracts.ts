@@ -4,7 +4,7 @@ import {
   defineUpgradePath,
   type DowngradeResult,
   type RpcErrorDetails,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   type CanonicalTerminalSessionInfo,
   createTerminalRequestSchema,
@@ -25,7 +25,7 @@ import {
   renameTerminalResponseSchema,
   type TerminalScope,
   type TerminalSessionInfo,
-} from "@traycer/protocol/host/terminal/unary-schemas";
+} from "@hukum/protocol/host/terminal/unary-schemas";
 import {
   terminalSubscribeV10,
   terminalSubscribeV11,
@@ -33,7 +33,7 @@ import {
   terminalSubscribeV13,
   terminalSubscribeV14,
   terminalSubscribeV15,
-} from "@traycer/protocol/host/terminal/subscribe";
+} from "@hukum/protocol/host/terminal/subscribe";
 
 // Terminal sessions live entirely in the host's memory; these contracts
 // expose the unary lifecycle (create/kill/list). The actual byte stream is

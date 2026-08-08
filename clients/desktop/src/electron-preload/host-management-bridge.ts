@@ -24,7 +24,7 @@ import type {
   InstallVersionOk,
   MutationOutcome,
   ServiceRegistrationOk,
-  TraycerUninstallResult,
+  HukumUninstallResult,
   FreePortAndRestartInput,
 } from "../ipc-contracts/host-management-types";
 
@@ -54,7 +54,7 @@ export interface HostManagementBridgeSurface {
     force: boolean,
   ): Promise<MutationOutcome<InstallVersionOk>>;
   uninstallHost(input: { readonly all: boolean }): Promise<HostUninstallResult>;
-  uninstallTraycer(): Promise<TraycerUninstallResult>;
+  uninstallHukum(): Promise<HukumUninstallResult>;
   getRemovalState(): Promise<HostRemovalState>;
   clearRemoval(): Promise<void>;
   restartHost(): Promise<HostRestartRequestResult>;
@@ -85,89 +85,89 @@ export function buildHostManagementBridge(): HostManagementBridgeSurface {
   return {
     getHostControllerStatus: () =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerHostControllerStatusGet,
+        RunnerHostInvoke.hukumHostControllerStatusGet,
       ) as Promise<HostControllerStatus>,
     convergeReady: (force) =>
-      ipcRenderer.invoke(RunnerHostInvoke.traycerHostConvergeReady, {
+      ipcRenderer.invoke(RunnerHostInvoke.hukumHostConvergeReady, {
         force,
       }) as Promise<MutationOutcome<ConvergeReadyOk>>,
     applyStaged: (trigger, force) =>
-      ipcRenderer.invoke(RunnerHostInvoke.traycerHostApplyStaged, {
+      ipcRenderer.invoke(RunnerHostInvoke.hukumHostApplyStaged, {
         trigger,
         force,
       }) as Promise<MutationOutcome<ApplyStagedOk>>,
     activateInstalled: (force) =>
-      ipcRenderer.invoke(RunnerHostInvoke.traycerHostActivateInstalled, {
+      ipcRenderer.invoke(RunnerHostInvoke.hukumHostActivateInstalled, {
         force,
       }) as Promise<MutationOutcome<ActivateInstalledOk>>,
     installVersion: (pin, force) =>
-      ipcRenderer.invoke(RunnerHostInvoke.traycerHostInstallVersion, {
+      ipcRenderer.invoke(RunnerHostInvoke.hukumHostInstallVersion, {
         pin,
         force,
       }) as Promise<MutationOutcome<InstallVersionOk>>,
     uninstallHost: ({ all }) =>
-      ipcRenderer.invoke(RunnerHostInvoke.traycerHostUninstall, {
+      ipcRenderer.invoke(RunnerHostInvoke.hukumHostUninstall, {
         all,
       }) as Promise<HostUninstallResult>,
-    uninstallTraycer: () =>
+    uninstallHukum: () =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerAppUninstall,
-      ) as Promise<TraycerUninstallResult>,
+        RunnerHostInvoke.hukumAppUninstall,
+      ) as Promise<HukumUninstallResult>,
     getRemovalState: () =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerHostRemovalGet,
+        RunnerHostInvoke.hukumHostRemovalGet,
       ) as Promise<HostRemovalState>,
     clearRemoval: () =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerHostRemovalClear,
+        RunnerHostInvoke.hukumHostRemovalClear,
       ) as Promise<void>,
     restartHost: () =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerHostRestart,
+        RunnerHostInvoke.hukumHostRestart,
       ) as Promise<HostRestartRequestResult>,
     getHostLogs: ({ tailLines }) =>
-      ipcRenderer.invoke(RunnerHostInvoke.traycerHostLogs, {
+      ipcRenderer.invoke(RunnerHostInvoke.hukumHostLogs, {
         tailLines,
       }) as Promise<HostLogsTailResult>,
     runDoctor: () =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerHostDoctor,
+        RunnerHostInvoke.hukumHostDoctor,
       ) as Promise<HostDoctorReport>,
     availableVersions: ({ includePreReleases }) =>
-      ipcRenderer.invoke(RunnerHostInvoke.traycerHostAvailable, {
+      ipcRenderer.invoke(RunnerHostInvoke.hukumHostAvailable, {
         includePreReleases,
       }) as Promise<HostAvailableSnapshot>,
     installedRecord: () =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerHostInstalled,
+        RunnerHostInvoke.hukumHostInstalled,
       ) as Promise<HostInstalledRecord | null>,
     registerService: () =>
-      ipcRenderer.invoke(RunnerHostInvoke.traycerServiceRegister) as Promise<
+      ipcRenderer.invoke(RunnerHostInvoke.hukumServiceRegister) as Promise<
         MutationOutcome<ServiceRegistrationOk>
       >,
     deregisterService: () =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerServiceDeregister,
+        RunnerHostInvoke.hukumServiceDeregister,
       ) as Promise<void>,
     registryCheck: ({ force }) =>
-      ipcRenderer.invoke(RunnerHostInvoke.traycerRegistryCheck, {
+      ipcRenderer.invoke(RunnerHostInvoke.hukumRegistryCheck, {
         force,
       }) as Promise<HostRegistryUpdateState>,
     freePortAndRestart: (input) =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerFreePortAndRestart,
+        RunnerHostInvoke.hukumFreePortAndRestart,
         input,
       ) as Promise<FreePortAndRestartInput>,
     cliManifest: () =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerCliManifestRead,
+        RunnerHostInvoke.hukumCliManifestRead,
       ) as Promise<CliInstallManifestSnapshot | null>,
     getHostName: () =>
       ipcRenderer.invoke(
-        RunnerHostInvoke.traycerHostNameGet,
+        RunnerHostInvoke.hukumHostNameGet,
       ) as Promise<HostNameSettings>,
     setHostName: ({ customName }) =>
-      ipcRenderer.invoke(RunnerHostInvoke.traycerHostNameSet, {
+      ipcRenderer.invoke(RunnerHostInvoke.hukumHostNameSet, {
         customName,
       }) as Promise<HostNameSettings>,
   };

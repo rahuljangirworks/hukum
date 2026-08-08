@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { REPORT_LOG_TAIL_MAX_BYTES } from "@traycer-clients/shared/support/image-attachment-guards";
+import { REPORT_LOG_TAIL_MAX_BYTES } from "@hukum-clients/shared/support/image-attachment-guards";
 
 interface CapturedAttachment {
   readonly filename: string;
@@ -153,7 +153,7 @@ function buildService(signedInEmail: string | null): DesktopSupportService {
     environment: "production",
   };
   return new DesktopSupportService({
-    appName: "Traycer",
+    appName: "Hukum",
     host: { getSnapshot: () => null },
     authSession: {
       get: () =>
@@ -199,8 +199,8 @@ function makeFakeSentryClient(): FakeSentryClient {
 }
 
 beforeEach(async () => {
-  tempDir = await mkdtemp(join(tmpdir(), "traycer-support-"));
-  loggerMock.desktopLogPath = join(tempDir, "traycer-desktop.log");
+  tempDir = await mkdtemp(join(tmpdir(), "hukum-support-"));
+  loggerMock.desktopLogPath = join(tempDir, "hukum-desktop.log");
   hostLogPath = join(tempDir, "host.log");
   await writeFile(loggerMock.desktopLogPath, "desktop log line\n", "utf8");
   await writeFile(hostLogPath, "host log line\n", "utf8");
@@ -426,7 +426,7 @@ describe("DesktopSupportService.submitReport - consent panel log toggles", () =>
 
 describe("DesktopSupportService.submitReport - identity gating (G1)", () => {
   it("attaches no identity when allowContact is false, even with a signed-in email", async () => {
-    const service = buildService("anurag@traycer.ai");
+    const service = buildService("anurag@hukum.ai");
     await service.freezeEvidence(KEY, null);
     await service.submitReport({ ...FORM, allowContact: false }, KEY);
 
@@ -440,17 +440,17 @@ describe("DesktopSupportService.submitReport - identity gating (G1)", () => {
   });
 
   it("attaches identity when allowContact is true and a signed-in email exists", async () => {
-    const service = buildService("anurag@traycer.ai");
+    const service = buildService("anurag@hukum.ai");
     await service.freezeEvidence(KEY, null);
     await service.submitReport({ ...FORM, allowContact: true }, KEY);
 
     const [feedback] = sentryMock.captureFeedback.mock.calls.at(-1) ?? [];
     expect(
       (feedback as { name?: string; email?: string } | undefined)?.name,
-    ).toBe("anurag@traycer.ai");
+    ).toBe("anurag@hukum.ai");
     expect(
       (feedback as { name?: string; email?: string } | undefined)?.email,
-    ).toBe("anurag@traycer.ai");
+    ).toBe("anurag@hukum.ai");
   });
 
   it("stays anonymous when allowContact is true but there is no signed-in email", async () => {

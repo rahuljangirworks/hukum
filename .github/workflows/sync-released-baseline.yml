@@ -58,7 +58,7 @@ jobs:
           # restriction). Falls back to GITHUB_TOKEN when the secret is unset:
           # the PR still opens, but its checks must be started manually
           # (re-run from the UI or push to the bot branch).
-          GH_TOKEN: ${{ secrets.TRAYCER_RELEASE_BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.HUKUM_RELEASE_BOT_TOKEN || secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
           set -euo pipefail
@@ -69,8 +69,8 @@ jobs:
           fi
 
           branch="bot/sync-released-baseline"
-          git config user.name "traycer-release-bot"
-          git config user.email "release@traycer.ai"
+          git config user.name "hukum-release-bot"
+          git config user.email "release@hukum.ai"
           # Route git pushes through GH_TOKEN (bot token when configured).
           gh auth setup-git
 

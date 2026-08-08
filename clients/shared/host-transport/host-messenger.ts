@@ -6,8 +6,8 @@ import type {
   RpcErrorCode,
   RpcErrorDetails,
   VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
+} from "@hukum/protocol/framework/index";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
 import type { OpenFrameBearerSource } from "../auth/bearer-source";
 
 /**

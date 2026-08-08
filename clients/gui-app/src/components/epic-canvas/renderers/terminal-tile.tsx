@@ -9,7 +9,7 @@ import {
 } from "react";
 import type { Terminal } from "@xterm/xterm";
 import type { EpicTerminalRef } from "@/stores/epics/canvas/types";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import { useProviderTerminalLogin } from "@/hooks/providers/use-provider-terminal-login";
 import { useOpenEpicId } from "@/lib/epic-selectors";
 import { beginTerminalLoad } from "@/lib/perf/terminal-load-perf";

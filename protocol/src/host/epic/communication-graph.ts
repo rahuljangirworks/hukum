@@ -96,7 +96,7 @@
  * released floor (`released-floor.ts`), which is fail-closed on the name set.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 
 const textFrameFields = {
   hasBinaryPayload: z.literal(false),
@@ -337,7 +337,7 @@ export const epicCommunicationGraphSubscribeV10 = defineStreamRpcContract({
 /**
  * `host.communicationGraph.subscribe@1.0` - the CLOUD-relayed
  * counterpart of `epic.communicationGraph.subscribe` above: a per-epic
- * Communication Graph feed sourced from Traycer Cloud (any host the user is
+ * Communication Graph feed sourced from Hukum Cloud (any host the user is
  * signed into, not just the one that captured the rows) rather than this
  * host's own local event log.
  *
@@ -362,7 +362,7 @@ export const epicCommunicationGraphSubscribeV10 = defineStreamRpcContract({
  *     the same name.
  *
  * `historicalUpload` on each event is carried straight from the cloud row
- * (see `CommunicationGraphReadEventV1` in `@traycerai/common`): true for a
+ * (see `CommunicationGraphReadEventV1` in `@hukumai/common`): true for a
  * row uploaded as backlog, false for one captured by an already-caught-up
  * replication lane. Only a `false` row is eligible for a live pulse - a
  * `historicalUpload: true` row is inserted into the timeline and model but

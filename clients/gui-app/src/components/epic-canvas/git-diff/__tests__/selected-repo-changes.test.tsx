@@ -8,13 +8,13 @@ import {
   within,
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   GitChangedFileV11,
   GitListChangedFilesResponseV11,
   SubmoduleChangeset,
   SubmodulePointer,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import type { GitListChangedFilesSubscriptionResult } from "@/hooks/git/use-git-list-changed-files-subscription";
 import type { GitListChangedFilesWithSubmodulesResult } from "@/hooks/git/use-git-list-changed-files-with-submodules";
 import type { GitPanelSelectedRepo } from "@/stores/epics/git-panel-store";
@@ -84,8 +84,8 @@ function file(
 
 function changeset(overrides: Partial<SubmoduleChangeset>): SubmoduleChangeset {
   return {
-    repoRoot: "/repo/traycer",
-    parentPath: "traycer",
+    repoRoot: "/repo/hukum",
+    parentPath: "hukum",
     branch: "main",
     repoState: { kind: "clean" },
     files: [],
@@ -169,7 +169,7 @@ function renderChanges(props: {
           epicId="epic-1"
           viewTabId="tab-1"
           selected={rootSelected}
-          rootLabel="traycer-internal"
+          rootLabel="hukum-internal"
           subscription={nextProps.subscription ?? EMPTY_SUBSCRIPTION}
           snapshot={nextProps.snapshot}
           onRefresh={nextProps.onRefresh ?? vi.fn()}
@@ -280,7 +280,7 @@ describe("<SelectedRepoChanges /> module groups", () => {
     renderChanges({
       snapshot: snapshotResult(
         response({
-          files: [file("traycer", normalPointer)],
+          files: [file("hukum", normalPointer)],
           submodules: [changeset({ files: [file("src/submodule.ts", null)] })],
         }),
       ),
@@ -288,24 +288,24 @@ describe("<SelectedRepoChanges /> module groups", () => {
 
     expect(screen.getByTestId("git-module-no-changes-root")).toBeDefined();
     expect(
-      screen.getByTestId("git-module-group-submodule-traycer"),
+      screen.getByTestId("git-module-group-submodule-hukum"),
     ).toBeDefined();
     await expectModuleHeaderPreview(
-      screen.getByTestId("git-module-header-traycer"),
+      screen.getByTestId("git-module-header-hukum"),
       "pinned commit out of date",
     );
     expect(screen.queryByText("pinned commit out of date")).toBeNull();
-    expect(screen.getByTestId("file-list-/repo/traycer")).toBeDefined();
+    expect(screen.getByTestId("file-list-/repo/hukum")).toBeDefined();
     expect(screen.getByText("src/submodule.ts")).toBeDefined();
     expect(screen.queryByText("Submodule reference:")).toBeNull();
-    expect(screen.queryByTestId("file-row-/repo-traycer")).toBeNull();
+    expect(screen.queryByTestId("file-row-/repo-hukum")).toBeNull();
   });
 
   it("renders empty modules intrinsically and file modules in compact flow", () => {
     renderChanges({
       snapshot: snapshotResult(
         response({
-          files: [file("traycer", normalPointer)],
+          files: [file("hukum", normalPointer)],
           submodules: [changeset({ files: [file("src/submodule.ts", null)] })],
         }),
       ),
@@ -313,9 +313,9 @@ describe("<SelectedRepoChanges /> module groups", () => {
 
     const rootGroup = screen.getByTestId("git-module-group-root");
     const submoduleGroup = screen.getByTestId(
-      "git-module-group-submodule-traycer",
+      "git-module-group-submodule-hukum",
     );
-    const fileList = screen.getByTestId("file-list-/repo/traycer");
+    const fileList = screen.getByTestId("file-list-/repo/hukum");
     const body = fileList.parentElement;
     if (body === null) {
       throw new Error("Expected module file list to have a body wrapper");
@@ -338,7 +338,7 @@ describe("<SelectedRepoChanges /> module groups", () => {
     renderChanges({
       snapshot: snapshotResult(
         response({
-          files: [file("src/app.ts", null), file("traycer", normalPointer)],
+          files: [file("src/app.ts", null), file("hukum", normalPointer)],
           submodules: [
             changeset({ files: [file("clients/gui-app/src/view.tsx", null)] }),
           ],
@@ -347,7 +347,7 @@ describe("<SelectedRepoChanges /> module groups", () => {
     });
 
     expect(screen.getByTestId("file-list-/repo")).toBeDefined();
-    expect(screen.getByTestId("file-list-/repo/traycer")).toBeDefined();
+    expect(screen.getByTestId("file-list-/repo/hukum")).toBeDefined();
     expect(
       screen
         .getByTestId("git-module-group-root")
@@ -355,33 +355,33 @@ describe("<SelectedRepoChanges /> module groups", () => {
     ).toBe("true");
     expect(
       screen
-        .getByTestId("git-module-group-submodule-traycer")
+        .getByTestId("git-module-group-submodule-hukum")
         .getAttribute("data-file-body-expanded"),
     ).toBe("true");
     expect(screen.getByText("src/app.ts")).toBeDefined();
     expect(screen.getByText("clients/gui-app/src/view.tsx")).toBeDefined();
-    expect(screen.queryByTestId("file-row-/repo-traycer")).toBeNull();
+    expect(screen.queryByTestId("file-row-/repo-hukum")).toBeNull();
   });
 
   it("shows a parent-reference mismatch on a clean submodule working tree", async () => {
     renderChanges({
       snapshot: snapshotResult(
         response({
-          files: [file("traycer", normalPointer)],
+          files: [file("hukum", normalPointer)],
           submodules: [changeset({ files: [] })],
         }),
       ),
     });
 
     await expectModuleHeaderPreview(
-      screen.getByTestId("git-module-header-traycer"),
+      screen.getByTestId("git-module-header-hukum"),
       "pinned commit out of date",
     );
     expect(screen.queryByText("pinned commit out of date")).toBeNull();
-    expect(screen.getByTestId("git-module-count-traycer").textContent).toBe(
+    expect(screen.getByTestId("git-module-count-hukum").textContent).toBe(
       "0 files",
     );
-    expect(screen.getByTestId("git-module-no-changes-traycer")).toBeDefined();
+    expect(screen.getByTestId("git-module-no-changes-hukum")).toBeDefined();
     expect(screen.queryByTestId("git-clean-modules-affordance")).toBeNull();
   });
 
@@ -389,7 +389,7 @@ describe("<SelectedRepoChanges /> module groups", () => {
     renderChanges({
       snapshot: snapshotResult(
         response({
-          files: [file("traycer", normalPointer)],
+          files: [file("hukum", normalPointer)],
           submodules: [
             changeset({
               availability: { state: "unavailable", reason: "git-error" },
@@ -400,9 +400,9 @@ describe("<SelectedRepoChanges /> module groups", () => {
     });
 
     expect(
-      screen.getByTestId("git-module-group-submodule-traycer"),
+      screen.getByTestId("git-module-group-submodule-hukum"),
     ).toBeDefined();
-    const header = screen.getByTestId("git-module-header-traycer");
+    const header = screen.getByTestId("git-module-header-hukum");
     expect(header.getAttribute("aria-label")).toContain("details unavailable");
     const previewText = await expectModuleHeaderPreview(
       header,
@@ -412,7 +412,7 @@ describe("<SelectedRepoChanges /> module groups", () => {
     expect(screen.queryByText("details unavailable")).toBeNull();
     expect(header.querySelectorAll(".lucide-triangle-alert")).toHaveLength(1);
     expect(
-      screen.getByTestId("git-module-parent-reference-traycer").className,
+      screen.getByTestId("git-module-parent-reference-hukum").className,
     ).toContain("text-warning");
     expect(screen.getByTestId("git-submodule-unavailable")).toBeDefined();
   });
@@ -431,7 +431,7 @@ describe("<SelectedRepoChanges /> module groups", () => {
     });
 
     expect(
-      screen.queryByTestId("git-module-group-submodule-traycer"),
+      screen.queryByTestId("git-module-group-submodule-hukum"),
     ).toBeNull();
     expect(screen.queryByTestId("git-clean-modules-affordance")).toBeNull();
     expect(screen.queryByTestId("git-module-no-changes-root")).toBeNull();
@@ -443,7 +443,7 @@ describe("<SelectedRepoChanges /> module groups", () => {
     const view = renderChanges({
       snapshot: snapshotResult(
         response({
-          files: [file("traycer", normalPointer)],
+          files: [file("hukum", normalPointer)],
           submodules: [changeset({ files: [] })],
         }),
       ),
@@ -451,7 +451,7 @@ describe("<SelectedRepoChanges /> module groups", () => {
 
     fireEvent.change(
       screen.getByRole("textbox", { name: "Filter submodules and files" }),
-      { target: { value: "traycer" } },
+      { target: { value: "hukum" } },
     );
     act(() => {
       vi.advanceTimersByTime(150);
@@ -469,7 +469,7 @@ describe("<SelectedRepoChanges /> module groups", () => {
       screen.getByRole("textbox", { name: "Filter submodules and files" }),
     ).toBeDefined();
     expect(
-      screen.getByTestId("git-module-group-submodule-traycer"),
+      screen.getByTestId("git-module-group-submodule-hukum"),
     ).toBeDefined();
     expect(screen.queryByTestId("git-diff-empty-refresh")).toBeNull();
   });
@@ -477,30 +477,30 @@ describe("<SelectedRepoChanges /> module groups", () => {
   it("turns an unmatched dirty gitlink into an unavailable module group", () => {
     renderChanges({
       snapshot: snapshotResult(
-        response({ files: [file("traycer", normalPointer)], submodules: [] }),
+        response({ files: [file("hukum", normalPointer)], submodules: [] }),
       ),
     });
 
     expect(
-      screen.getByTestId("git-module-group-submodule-traycer"),
+      screen.getByTestId("git-module-group-submodule-hukum"),
     ).toBeDefined();
     expect(screen.getByTestId("git-submodule-unavailable")).toBeDefined();
     expect(screen.queryByText("Submodule reference:")).toBeNull();
-    expect(screen.queryByTestId("file-row-/repo-traycer")).toBeNull();
+    expect(screen.queryByTestId("file-row-/repo-hukum")).toBeNull();
   });
 
   it("renders old-host parent-only snapshots without submodule metadata as root file rows", () => {
     renderChanges({
       snapshot: snapshotResult(
-        response({ files: [file("traycer", null)], submodules: [] }),
+        response({ files: [file("hukum", null)], submodules: [] }),
       ),
     });
 
     expect(screen.getByTestId("git-single-repo-changes")).toBeDefined();
     expect(screen.queryByTestId("git-module-group-root")).toBeNull();
-    expect(screen.getByTestId("file-row-/repo-traycer")).toBeDefined();
+    expect(screen.getByTestId("file-row-/repo-hukum")).toBeDefined();
     expect(
-      screen.queryByTestId("git-module-group-submodule-traycer"),
+      screen.queryByTestId("git-module-group-submodule-hukum"),
     ).toBeNull();
     expect(screen.queryByText("Submodule reference:")).toBeNull();
   });

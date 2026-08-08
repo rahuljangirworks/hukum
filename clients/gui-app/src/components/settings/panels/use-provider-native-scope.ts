@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import type { ProviderNativeScope } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderNativeScope } from "@hukum/protocol/host/provider-native-schemas";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";
 import { useResolvedWorkspaceFolders } from "@/hooks/workspace/use-resolved-workspace-folders-query";
 import {
@@ -123,7 +123,7 @@ export function useProviderNativeScope(
     [workspaces],
   );
 
-  // Worktrees are targets, not trivia. A Traycer-managed worktree is a real
+  // Worktrees are targets, not trivia. A Hukum-managed worktree is a real
   // project root with its own config, and previously it could only be picked
   // here by coincidence - if its path happened to sit in the global
   // recent-folders store - and then showed as a bare basename indistinguishable

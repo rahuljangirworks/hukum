@@ -6,9 +6,9 @@
  * points can never drift apart.
  *
  * The magic-byte patterns below are copied from `matchesImageMagicBytes` in
- * `traycer-host/src/harnesses/runtime-image-attachments.ts` (INTERNAL repo)
+ * `hukum-host/src/harnesses/runtime-image-attachments.ts` (INTERNAL repo)
  * rather than imported across the repo boundary - this module ships in the
- * OSS `traycer/` submodule, which cannot depend on the internal host, and the
+ * OSS `hukum/` submodule, which cannot depend on the internal host, and the
  * internal host cannot depend on this OSS package either. Keep the two sets
  * of patterns in sync by hand; `runtime-image-attachments.ts` carries the
  * matching provenance comment pointing back here.
@@ -79,7 +79,7 @@ export function reportImagesExceedBudget(imageBytesTotal: number): boolean {
 /**
  * Verifies the first 12 decoded bytes of an image payload against the
  * canonical magic byte sequence for its declared media type. Copied
- * verbatim from `matchesImageMagicBytes` in `traycer-host/src/harnesses/
+ * verbatim from `matchesImageMagicBytes` in `hukum-host/src/harnesses/
  * runtime-image-attachments.ts` (internal repo) - see that file's matching
  * provenance comment. Keep the two in sync by hand.
  */

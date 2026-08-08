@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
-import type { WorktreeBindingSelectorRowV12 } from "@traycer/protocol/host";
+import type { WorktreeBindingSelectorRowV12 } from "@hukum/protocol/host";
 import { WorktreeRowDisabledBadge } from "@/components/worktree/worktree-row-disabled-badge";
 import type { WorktreeFolderRowBadge } from "@/lib/worktree/worktree-folder-disabled-reason";
 import {

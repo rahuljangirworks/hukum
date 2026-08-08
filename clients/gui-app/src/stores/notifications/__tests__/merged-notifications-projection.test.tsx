@@ -5,18 +5,18 @@ import type {
   HostNotificationEntry,
   HostNotificationsCloudFeedRow,
   HostNotificationsSummary,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import {
   type NotificationEntry,
   NOTIFICATION_EVENT_TYPES,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 import {
   createNotificationRoomEntryMap,
   NOTIFICATIONS_ARRAY_KEY,
   type NotificationRoomEntryMap,
-} from "@traycer/protocol/notifications/notification-room";
-import type { NotificationsStreamCallbacks } from "@traycer-clients/shared/host-transport/notifications-stream-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
+} from "@hukum/protocol/notifications/notification-room";
+import type { NotificationsStreamCallbacks } from "@hukum-clients/shared/host-transport/notifications-stream-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
 import {
   ALL_NOTIFICATION_CATEGORIES,
   type NotificationCategory,

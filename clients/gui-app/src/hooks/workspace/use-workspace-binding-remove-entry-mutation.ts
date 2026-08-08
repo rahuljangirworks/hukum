@@ -3,13 +3,13 @@ import {
   useMutationState,
   type UseMutationResult,
 } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   HostRpcError,
   RequestOfMethod,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { WorktreeBindingOwnerKind } from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { WorktreeBindingOwnerKind } from "@hukum/protocol/host/worktree-schemas";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useHostScopedMutationForClient } from "@/hooks/host/use-host-scoped-mutation";
 import { WORKTREE_BINDING_INVALIDATIONS } from "@/hooks/worktree/invalidations";

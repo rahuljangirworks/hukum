@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import type { ProfileDropdownUsageEntry } from "@/components/providers/profile-dropdown-usage";
 import { profileCommitId } from "@/components/providers/provider-profile-model";
 import { TooltipProvider } from "@/components/ui/tooltip";

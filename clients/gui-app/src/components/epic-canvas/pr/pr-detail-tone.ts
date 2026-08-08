@@ -18,7 +18,7 @@ import type {
   PrDetailCore,
   PrReviewDecision,
   PrReviewState,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import type { PrCheckCounts } from "@/lib/pr/pr-attention-queue";
 import type { PrChecksDotTone } from "@/lib/pr/pr-list-projection";
 

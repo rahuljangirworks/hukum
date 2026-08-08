@@ -1,7 +1,7 @@
 import type {
   ProviderProfile,
   ProviderId as WireProviderId,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type { ProviderId } from "@/components/home/data/landing-options";
 import { guiHarnessIdToProviderId } from "@/lib/provider-ordering";
 

@@ -5,7 +5,7 @@ import type {
   PrCheckContext,
   PrChecksSection,
   PrDetailCore,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import {
   countPrChecks,
   derivePrAttentionQueue,

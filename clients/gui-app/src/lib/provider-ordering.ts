@@ -1,8 +1,8 @@
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import {
   PROVIDER_DISPLAY_NAMES,
   type ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 export interface OrderedProvider {
   readonly providerId: ProviderId;
@@ -13,7 +13,7 @@ const PROVIDER_ID_ORDER = [
   "codex",
   "claude-code",
   "opencode",
-  "traycer",
+  "hukum",
   "openrouter",
   "huggingface",
   "droid",
@@ -47,7 +47,7 @@ const GUI_HARNESS_BY_PROVIDER_ID = {
   codex: "codex",
   "claude-code": "claude",
   opencode: "opencode",
-  traycer: "traycer",
+  hukum: "hukum",
   openrouter: "openrouter",
   huggingface: "huggingface",
   droid: "droid",
@@ -84,15 +84,15 @@ export function providerIdToGuiHarnessId(providerId: ProviderId): GuiHarnessId {
 
 /**
  * Total harness -> provider projection: every `GuiHarnessId` maps to its
- * `ProviderId` in `ORDERED_PROVIDERS`, `traycer` included. Use this for
+ * `ProviderId` in `ORDERED_PROVIDERS`, `hukum` included. Use this for
  * surfaces that reason about a provider's usage/profile data regardless of
  * whether it has an external CLI login - e.g. the rate-limit profile picker
- * and the add-profile flow, both of which show Traycer Inference's own
+ * and the add-profile flow, both of which show Hukum Inference's own
  * profiles/usage even though it has no CLI to authenticate.
  *
  * For surfaces that gate on provider-CLI login specifically (reauth, seed
  * validation, cross-host clone continuity), use `providerCliIdForHarness`
- * instead - it excludes `traycer`, which has no provider-CLI concept at all.
+ * instead - it excludes `hukum`, which has no provider-CLI concept at all.
  */
 export function guiHarnessIdToProviderId(
   harnessId: GuiHarnessId,
@@ -108,11 +108,11 @@ export function guiHarnessIdToProviderId(
  * explicit, single-membership set (rather than a second hand-maintained
  * table) so adding a future CLI-less harness is a visible, deliberate edit
  * here instead of a silent divergence between two mappers. Currently only
- * `traycer` (Traycer's own inference, not an external CLI a user
+ * `hukum` (Hukum's own inference, not an external CLI a user
  * authenticates).
  */
 const HARNESS_IDS_WITHOUT_PROVIDER_CLI: ReadonlySet<GuiHarnessId> = new Set([
-  "traycer",
+  "hukum",
 ]);
 
 /**
@@ -122,7 +122,7 @@ const HARNESS_IDS_WITHOUT_PROVIDER_CLI: ReadonlySet<GuiHarnessId> = new Set([
  * managed profile - the reauth gate, seeded-profile validation, cross-host
  * chat clone, and tombstoned-profile lookup all fall through to "nothing to
  * check" for a harness with no CLI login, rather than misreading
- * `guiHarnessIdToProviderId`'s `"traycer"` as a loggable-in provider.
+ * `guiHarnessIdToProviderId`'s `"hukum"` as a loggable-in provider.
  */
 export function providerCliIdForHarness(
   harnessId: GuiHarnessId,
@@ -132,7 +132,7 @@ export function providerCliIdForHarness(
 }
 
 export function providerDisplayName(providerId: ProviderId): string {
-  if (providerId === "traycer") return "Traycer Inference";
+  if (providerId === "hukum") return "Hukum Inference";
   return PROVIDER_DISPLAY_NAMES[providerId];
 }
 

@@ -7,10 +7,10 @@ import {
 describe("resolution test env", () => {
   it("parses deterministic window and display overrides", () => {
     const env = {
-      TRAYCER_RESOLUTION_TEST_WINDOW_BOUNDS: "3840x2160",
-      TRAYCER_RESOLUTION_TEST_DISABLE_MAXIMIZE: "1",
-      TRAYCER_RESOLUTION_TEST_DISPLAY_BOUNDS: "3840x2160",
-      TRAYCER_RESOLUTION_TEST_DISPLAY_SCALE_FACTOR: "1",
+      HUKUM_RESOLUTION_TEST_WINDOW_BOUNDS: "3840x2160",
+      HUKUM_RESOLUTION_TEST_DISABLE_MAXIMIZE: "1",
+      HUKUM_RESOLUTION_TEST_DISPLAY_BOUNDS: "3840x2160",
+      HUKUM_RESOLUTION_TEST_DISPLAY_SCALE_FACTOR: "1",
     };
 
     expect(readResolutionTestWindowConfig(env)).toEqual({
@@ -26,14 +26,14 @@ describe("resolution test env", () => {
   it("ignores malformed deterministic display overrides", () => {
     expect(
       readResolutionTestDisplay({
-        TRAYCER_RESOLUTION_TEST_DISPLAY_BOUNDS: "3840",
-        TRAYCER_RESOLUTION_TEST_DISPLAY_SCALE_FACTOR: "1",
+        HUKUM_RESOLUTION_TEST_DISPLAY_BOUNDS: "3840",
+        HUKUM_RESOLUTION_TEST_DISPLAY_SCALE_FACTOR: "1",
       }),
     ).toBeNull();
     expect(
       readResolutionTestDisplay({
-        TRAYCER_RESOLUTION_TEST_DISPLAY_BOUNDS: "3840x2160",
-        TRAYCER_RESOLUTION_TEST_DISPLAY_SCALE_FACTOR: "nope",
+        HUKUM_RESOLUTION_TEST_DISPLAY_BOUNDS: "3840x2160",
+        HUKUM_RESOLUTION_TEST_DISPLAY_SCALE_FACTOR: "nope",
       }),
     ).toBeNull();
   });

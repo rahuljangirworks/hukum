@@ -4,7 +4,7 @@
  * renderers feature-detect `window.runnerHost.windows` before using them.
  */
 
-import type { Layer0UnavailableCause } from "@traycer/protocol/host/lifecycle/layer0-frame";
+import type { Layer0UnavailableCause } from "@hukum/protocol/host/lifecycle/layer0-frame";
 
 export type JsonPrimitive = string | number | boolean | null;
 export type JsonValue =
@@ -158,7 +158,7 @@ export type DesktopRuntimePlatform = "darwin" | "win32" | "linux";
 export function desktopTopLevelMenuItemId(
   menuId: DesktopTopLevelMenuId,
 ): string {
-  return `traycer.top-level-menu.${menuId}`;
+  return `hukum.top-level-menu.${menuId}`;
 }
 
 export function isDesktopTopLevelMenuId(

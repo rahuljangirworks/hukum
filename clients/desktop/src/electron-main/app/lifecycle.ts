@@ -22,7 +22,7 @@ export function configureV8CodeCache(): void {
  *
  * `use-mock-keychain` is critical on macOS: without it, Chromium's OSCrypt
  * initializes cookie encryption against the real Keychain at app launch,
- * which creates a "Traycer Safe Storage" item and prompts the user for
+ * which creates a "Hukum Safe Storage" item and prompts the user for
  * their login password. The renderer's auth tokens go through
  * `encrypt-storage` (AES in localStorage), not cookies, so plaintext
  * cookies on disk are an acceptable trade for skipping the prompt.
@@ -47,7 +47,7 @@ export function trimUnusedChromiumFeatures(): void {
 }
 
 /**
- * Raises V8's old-space ceiling for the renderer + main heap. Traycer's
+ * Raises V8's old-space ceiling for the renderer + main heap. Hukum's
  * renderer holds long-lived agent transcripts, document snapshots, and
  * cached host state - the default ~2GB cap is close enough for some
  * users to hit OOM on large epics. 4GB is conservative; bump if telemetry
@@ -60,7 +60,7 @@ export function configureV8HeapSize(): void {
 /**
  * Windows-only: required for toast-notification grouping and jumplist
  * support. Without an AppUserModelId, toasts may be attributed to
- * "electron.app.Traycer" instead of the product, and jumplist entries are
+ * "electron.app.Hukum" instead of the product, and jumplist entries are
  * dropped. The id must match the AppUserModelId baked into the installer -
  * electron-builder uses `appId` from `build.appId` for this.
  */

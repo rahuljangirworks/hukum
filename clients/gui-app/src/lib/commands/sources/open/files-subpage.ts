@@ -17,8 +17,8 @@
  */
 import { useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
-import type { WorktreeBindingSelectorRow } from "@traycer/protocol/host";
-import type { WorkspaceSearchSource } from "@traycer/protocol/host/workspace/unary-schemas";
+import type { WorktreeBindingSelectorRow } from "@hukum/protocol/host";
+import type { WorkspaceSearchSource } from "@hukum/protocol/host/workspace/unary-schemas";
 import { getBasename } from "@/lib/path/cross-platform-path";
 import { useHostClient } from "@/lib/host";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";

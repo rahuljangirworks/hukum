@@ -15,16 +15,16 @@ import { configureNativeAboutPanel } from "../about";
 
 describe("configureNativeAboutPanel", () => {
   it("includes the native macOS metadata available to this slice", () => {
-    configureNativeAboutPanel("Traycer", "/tmp/traycer-icon.png");
+    configureNativeAboutPanel("Hukum", "/tmp/hukum-icon.png");
 
     expect(electronMock.setAboutPanelOptions).toHaveBeenCalledWith({
-      applicationName: "Traycer",
+      applicationName: "Hukum",
       applicationVersion: "1.2.3",
       version: "1.2.3",
-      copyright: `Copyright ${new Date().getFullYear()} Traycer AI`,
-      credits: "Traycer AI",
-      website: "https://traycer.ai",
-      iconPath: "/tmp/traycer-icon.png",
+      copyright: `Copyright ${new Date().getFullYear()} Hukum AI`,
+      credits: "Hukum AI",
+      website: "https://hukum.ai",
+      iconPath: "/tmp/hukum-icon.png",
     });
   });
 });

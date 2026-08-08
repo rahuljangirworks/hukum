@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ProviderMcpCapabilities } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderMcpCapabilities } from "@hukum/protocol/host/provider-native-schemas";
 import { mcpBinaryAbsentNotice } from "@/components/settings/panels/provider-mcp-binary-gate";
 
 const BOTH = ["global", "project"] as const;
@@ -31,7 +31,7 @@ function baseMcpCaps(): ProviderMcpCapabilities {
     toolsSource: "probe",
     schemasSource: "probe",
     instructionsSource: "probe",
-    traycerSessionsOnlyEnforcement: false,
+    hukumSessionsOnlyEnforcement: false,
     stdioDegradeNotice: false,
     oauthDegradesToConfigOnly: true,
   };

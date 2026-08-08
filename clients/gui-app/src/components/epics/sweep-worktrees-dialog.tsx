@@ -5,7 +5,7 @@ import {
   WORKTREE_TIER_LABEL,
   WORKTREE_TIER_TOOLTIP,
   type WorktreeTier,
-} from "@traycer-clients/shared/worktree/classify-worktree";
+} from "@hukum-clients/shared/worktree/classify-worktree";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";

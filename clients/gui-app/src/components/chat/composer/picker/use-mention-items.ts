@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 
 import { useEpicMentionEntries } from "@/hooks/composer/use-epic-mention-entries";
 import { useReactiveHostReadiness } from "@/hooks/host/use-reactive-host-readiness";
@@ -19,13 +19,13 @@ import type {
   TerminalAgentsSlice,
   TuiAgentProjection,
 } from "@/stores/epics/open-epic/types";
-import { isSubsequence } from "@traycer/protocol/utils/text/fuzzy";
-import { canParticipateInA2A } from "@traycer/protocol/host/agent/shared";
-import type { EpicMentionArtifactSuggestion } from "@traycer/protocol/host/epic/unary-schemas";
+import { isSubsequence } from "@hukum/protocol/utils/text/fuzzy";
+import { canParticipateInA2A } from "@hukum/protocol/host/agent/shared";
+import type { EpicMentionArtifactSuggestion } from "@hukum/protocol/host/epic/unary-schemas";
 import {
   epicArtifactMentionId,
   epicArtifactMentionToken,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   EMPTY_GITHUB_SECTION_CONTEXT,
   githubMentionCategoryAvailable,
@@ -56,7 +56,7 @@ import type {
 import { useTerminalListFor } from "@/hooks/terminal/use-terminal-list-for-query";
 import { isVisibleEpicTerminalSession } from "@/lib/terminals/terminal-session-filters";
 import { terminalSessionLabel } from "@/lib/terminals/terminal-title";
-import type { CanonicalTerminalSessionInfo } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { CanonicalTerminalSessionInfo } from "@hukum/protocol/host/terminal/unary-schemas";
 
 import type {
   ComposerPickerItem,

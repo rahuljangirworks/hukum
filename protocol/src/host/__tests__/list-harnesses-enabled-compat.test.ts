@@ -2,14 +2,14 @@ import { describe, expect, it } from "vitest";
 import {
   downgradeResponseAcrossMajors,
   upgradeResponseToVersion,
-} from "@traycer/protocol/framework/index";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/framework/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   guiHarnessOptionSchema,
   listGuiHarnessesResponseSchemaV10,
   listGuiHarnessesResponseSchemaV20,
   listGuiHarnessesResponseSchemaV21,
-} from "@traycer/protocol/host/agent/gui/unary-schemas";
+} from "@hukum/protocol/host/agent/gui/unary-schemas";
 
 /**
  * `agent.gui.listHarnesses` released-line coverage: `enabled` (#178) and

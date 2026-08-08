@@ -26,7 +26,7 @@ export interface JumplistCommandSink {
 /**
  * Handles relaunches of an already-running app. Every second launch surfaces
  * the main window first - jump-list tasks, deep links, and plain
- * double-launches all mean "bring Traycer forward" - then a recognized
+ * double-launches all mean "bring Hukum forward" - then a recognized
  * jump-list flag dispatches its command. Cold-start flags are handled by the
  * startup orchestrator instead: the second-instance event never fires for
  * the first launch.

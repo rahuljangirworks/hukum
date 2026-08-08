@@ -2,8 +2,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import { mockRemoteHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import { mockRemoteHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
 
 interface DirectoryListener {
   (): void;

@@ -5,7 +5,7 @@
  * only sonner is mocked for toast side effects.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import {
   LANDING_IMAGE_BUDGET_BYTES,

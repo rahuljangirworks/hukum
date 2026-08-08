@@ -28,7 +28,7 @@ export const STOP_EXIT_GRACE_MARGIN_MS = 2_000;
 
 /**
  * Per-step timeouts for the Windows Scheduled-Task restart sequence
- * (`traycer-cli/src/service/platforms/windows.ts`: `stopService` /
+ * (`hukum-cli/src/service/platforms/windows.ts`: `stopService` /
  * `killHostProcessTree` / `startService` / `restartService`). Windows has no
  * single graceful-stop signal like launchd SIGTERM - `restart` runs a
  * sequence of independently-capped steps: `schtasks /End`, a PowerShell
@@ -77,7 +77,7 @@ export const WINDOWS_RESTART_SEQUENCE_TIMEOUT_MS =
   WINDOWS_SCHTASKS_QUERY_TIMEOUT_MS;
 
 /**
- * Budget for a full `traycer host restart` subprocess as invoked by Desktop
+ * Budget for a full `hukum host restart` subprocess as invoked by Desktop
  * (Settings, tray, and the native-menu respawn path all route through this
  * one constant). `host restart` runs stop-then-start, and a caller-side
  * timeout shorter than the platform's own worst-case sequence SIGKILLs the

@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
-import type { RoleClaim } from "@traycer/protocol/persistence/epic/role-claims";
+import type { RoleClaim } from "@hukum/protocol/persistence/epic/role-claims";
 import { AgentRoleBadges, AgentRoleHoverContent } from "../agent-role-badges";
 
 afterEach(cleanup);

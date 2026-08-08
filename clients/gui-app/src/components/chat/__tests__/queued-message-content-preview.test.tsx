@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import { ComposerContentPreview } from "@/components/chat/composer/composer-content-preview";
 import { TooltipProvider } from "@/components/ui/tooltip";
 

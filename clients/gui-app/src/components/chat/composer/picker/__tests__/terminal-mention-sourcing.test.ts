@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import type {
   CanonicalTerminalSessionInfo,
   TerminalScope,
-} from "@traycer/protocol/host/terminal/unary-schemas";
+} from "@hukum/protocol/host/terminal/unary-schemas";
 import { isVisibleEpicTerminalSession } from "@/lib/terminals/terminal-session-filters";
 import { epicTerminalMentionEntriesFromSessions } from "../use-mention-items";
 

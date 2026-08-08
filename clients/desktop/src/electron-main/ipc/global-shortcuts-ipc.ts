@@ -1,8 +1,8 @@
-import { isValidChordString } from "@traycer-clients/shared/keybindings/chord-core";
+import { isValidChordString } from "@hukum-clients/shared/keybindings/chord-core";
 import {
   GLOBAL_SHORTCUT_IDS,
   globalShortcutIntentSchema,
-} from "@traycer-clients/shared/keybindings/global-shortcuts";
+} from "@hukum-clients/shared/keybindings/global-shortcuts";
 import type {
   GlobalShortcutId,
   GlobalShortcutIntent,

@@ -26,7 +26,7 @@ import { ProfileUsageSidecar } from "@/components/providers/profile-usage-sideca
 import { isProfileUsageSidecarTarget } from "@/components/providers/profile-usage-sidecar-target";
 import { ProfileUsageCompactMeter } from "@/components/providers/profile-usage-compact-meter";
 import { cn } from "@/lib/utils";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import { useState, type ReactNode } from "react";
 
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";

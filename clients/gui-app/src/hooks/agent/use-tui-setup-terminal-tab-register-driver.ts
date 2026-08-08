@@ -1,5 +1,5 @@
 import { useRegisterSetupTerminalTabsFromBinding } from "@/hooks/worktree/use-register-setup-terminal-tabs-from-binding";
-import type { WorktreeBinding } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeBinding } from "@hukum/protocol/host/worktree-schemas";
 
 /**
  * Terminal-agent analog of `useSetupTerminalTabRegisterDriver`: a terminal

@@ -633,7 +633,7 @@ function createXtermEntry(
   // that forces a full redraw with absolute positioning.
   //
   // This is one half of a width contract with the host's snapshot emulator
-  // (traycer-host `terminal-snapshot-emulator.ts`), which sets the same
+  // (hukum-host `terminal-snapshot-emulator.ts`), which sets the same
   // unicode version so a reattach snapshot replays into an identically
   // measured grid. The two must move together.
   term.loadAddon(new Unicode11Addon());
@@ -1247,7 +1247,7 @@ function useVisibleTerminalRepair(input: {
   const { termRef, controlsRef, canvasRef, theme } = input;
   // Repaint when this pane becomes visible again. A tab switch never unmounts
   // the tile (the pane is hidden via `visibility:hidden` / `display:none` and
-  // kept mounted so xterm scrollback survives), so the Traycer Host reattach pulse
+  // kept mounted so xterm scrollback survives), so the Hukum Host reattach pulse
   // never runs here - this hook is the ONLY recovery for the live screen.
   //
   // While hidden the container measures 0x0 (or a collapsed sub-`MIN_FIT_*`

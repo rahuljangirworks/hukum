@@ -9,8 +9,8 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import {
   GET_TASK_CONTEXTS_MAX_IDS,
   type GetTaskContextsResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { useShallow } from "zustand/react/shallow";
 import {
   useHostClient,

@@ -3,7 +3,7 @@ import { ExternalLink } from "lucide-react";
 import {
   PROVIDER_DISPLAY_NAMES,
   type ProviderCliState,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,7 +34,7 @@ const API_KEY_DASHBOARD_URL: Record<ProviderId, string | null> = {
   codex: null,
   opencode: null,
   cursor: "https://cursor.com/dashboard/api?section=user-keys#user-api-keys",
-  traycer: null,
+  hukum: null,
   openrouter: "https://openrouter.ai/settings/keys",
   huggingface: "https://huggingface.co/settings/tokens",
   grok: null,

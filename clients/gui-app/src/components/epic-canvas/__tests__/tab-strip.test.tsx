@@ -404,11 +404,11 @@ describe("<TabStrip />", () => {
   it("shows repository hierarchy in Git bundle titles and structured tooltips", async () => {
     const gitTab = makeGitBundleDiffTile({
       hostId: "host-A",
-      runningDir: "/worktrees/right-click-context-menu/traycer",
+      runningDir: "/worktrees/right-click-context-menu/hukum",
       bundleGroup: "changes",
       repositoryContext: {
-        workspaceLabel: "traycer-internal",
-        repositoryLabel: "traycer",
+        workspaceLabel: "hukum-internal",
+        repositoryLabel: "hukum",
       },
     });
     renderTabStripForTab(gitTab, {
@@ -419,7 +419,7 @@ describe("<TabStrip />", () => {
     });
 
     const title = screen.getByTestId(`tab-title-${gitTab.instanceId}`);
-    expect(title.textContent).toBe("traycer-internal › traycer · Changes");
+    expect(title.textContent).toBe("hukum-internal › hukum · Changes");
 
     fireEvent.focus(title);
 
@@ -428,16 +428,16 @@ describe("<TabStrip />", () => {
     );
     const tooltip = within(tooltips[0]);
     expect(tooltip.getByTestId("git-diff-tooltip-workspace").textContent).toBe(
-      "Workspacetraycer-internal",
+      "Workspacehukum-internal",
     );
     expect(tooltip.getByTestId("git-diff-tooltip-repository").textContent).toBe(
-      "Repositorytraycer",
+      "Repositoryhukum",
     );
     expect(tooltip.getByTestId("git-diff-tooltip-scope").textContent).toBe(
       "DiffChanges",
     );
     expect(tooltip.getByTestId("git-diff-tooltip-path").textContent).toBe(
-      "Path/worktrees/right-click-context-menu/traycer",
+      "Path/worktrees/right-click-context-menu/hukum",
     );
   });
 });

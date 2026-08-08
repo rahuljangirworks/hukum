@@ -8,7 +8,7 @@ import {
   type Node as ProseMirrorNode,
   type Schema,
 } from "@tiptap/pm/model";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { readComposerContentFromClipboardData } from "@/lib/composer/composer-clipboard";
 import { normalizeComposerContent } from "@/lib/composer/composer-content-normalizer";

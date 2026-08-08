@@ -8,7 +8,7 @@ import {
 import type {
   DownloadProgress,
   HostRegistryUpdateState,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 
 interface HostUpdateRegionProps {
   readonly registryState: HostRegistryUpdateState | undefined;

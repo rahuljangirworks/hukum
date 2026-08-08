@@ -1,6 +1,6 @@
-import { commonRecordRegistry } from "@traycer/protocol/common/registry";
-import { getRecordSchema } from "@traycer/protocol/framework/index";
-import { userMessageSenderSchema } from "@traycer/protocol/persistence/epic/senders";
+import { commonRecordRegistry } from "@hukum/protocol/common/registry";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
+import { userMessageSenderSchema } from "@hukum/protocol/persistence/epic/senders";
 import { z } from "zod";
 import {
   imageByteLengthSchema,
@@ -377,7 +377,7 @@ export const fileChangeBlockSchema = z.object({
   operation: z.string(),
   diffSource: diffSourceSchema,
   // Content-addressed snapshot refs into the on-disk SnapshotStore
-  // (`~/.traycer/snapshots/<userId>/blobs/<sha>`). The before/after file
+  // (`~/.hukum/snapshots/<userId>/blobs/<sha>`). The before/after file
   // contents are NOT inlined here (they were the dominant chat-doc bloat);
   // the GUI lazy-fetches them by hash on expand via `snapshots.readSnapshotDiff`.
   // Null on the side that doesn't exist (create ⇒ no before, delete ⇒ no after)

@@ -15,7 +15,7 @@ import type {
   SubmoduleChangeset,
   SubmodulePointer,
   WorktreeBindingSelectorRowV12,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import type { HostRpcRegistry } from "@/lib/host";
 import { gitQueryKeys } from "@/lib/query-keys/git-query-keys";
 import { hostQueryKeys } from "@/lib/query-keys/host-query-keys";
@@ -194,7 +194,7 @@ function row(
     worktreePath: null,
     mode: "local",
     isGitRepo: true,
-    repoIdentifier: { owner: "acme", repo: "traycer-internal" },
+    repoIdentifier: { owner: "acme", repo: "hukum-internal" },
     branch: "development",
     isPrimary: true,
     isImported: false,
@@ -237,8 +237,8 @@ function stagedFile(
 
 function changeset(overrides: Partial<SubmoduleChangeset>): SubmoduleChangeset {
   return {
-    repoRoot: "/repo/traycer",
-    parentPath: "traycer",
+    repoRoot: "/repo/hukum",
+    parentPath: "hukum",
     branch: "main",
     repoState: { kind: "clean" },
     files: [],
@@ -359,7 +359,7 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
     testState.snapshots.set(
       "/repo",
       response({
-        files: [file("traycer", normalPointer)],
+        files: [file("hukum", normalPointer)],
         submodules: [
           changeset({
             files: Array.from({ length: 133 }, (_value, index) =>
@@ -386,8 +386,8 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
       "/repo",
       response({
         files: [
-          stagedFile("traycer", normalPointer),
-          file("traycer", normalPointer),
+          stagedFile("hukum", normalPointer),
+          file("hukum", normalPointer),
         ],
         submodules: [changeset({ files: [] })],
       }),
@@ -439,20 +439,20 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
 
     fireEvent.change(
       screen.getByRole("textbox", { name: "Search workspaces" }),
-      { target: { value: "/repo/traycer" } },
+      { target: { value: "/repo/hukum" } },
     );
 
     expect(
-      screen.getByTestId("git-diff-repo-switcher-root-traycer-internal"),
+      screen.getByTestId("git-diff-repo-switcher-root-hukum-internal"),
     ).toBeDefined();
     expect(
-      screen.queryByTestId("git-diff-repo-switcher-submodule-traycer"),
+      screen.queryByTestId("git-diff-repo-switcher-submodule-hukum"),
     ).toBeNull();
     expect(
       useGitPanelStore.getState().stateByEpicId[EPIC_ID].selectedRepo,
     ).toEqual(rootSelected);
     expect(
-      screen.getByTestId("git-module-group-submodule-traycer"),
+      screen.getByTestId("git-module-group-submodule-hukum"),
     ).toBeDefined();
     expect(
       screen
@@ -472,12 +472,12 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
     renderPanel({
       hostId: "host-1",
       rootRunningDir: "/repo",
-      repoRoot: "/repo/traycer",
+      repoRoot: "/repo/hukum",
     });
 
     expect(
       screen.getByTestId("git-diff-repo-switcher-trigger").textContent,
-    ).toContain("traycer-internal");
+    ).toContain("hukum-internal");
     expect(
       screen
         .getByTestId("mock-open-in-editor")
@@ -496,7 +496,7 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
     testState.snapshots.set(
       "/repo",
       response({
-        files: [file("traycer", normalPointer)],
+        files: [file("hukum", normalPointer)],
         submodules: [changeset({ files: [] })],
       }),
     );
@@ -504,14 +504,14 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
     renderPanel(rootSelected);
 
     expect(
-      screen.getByTestId("git-module-group-submodule-traycer"),
+      screen.getByTestId("git-module-group-submodule-hukum"),
     ).toBeDefined();
     await expectModuleHeaderPreview(
-      screen.getByTestId("git-module-header-traycer"),
+      screen.getByTestId("git-module-header-hukum"),
       "pinned commit out of date",
     );
     expect(screen.queryByText("pinned commit out of date")).toBeNull();
-    expect(screen.getByTestId("git-module-no-changes-traycer")).toBeDefined();
+    expect(screen.getByTestId("git-module-no-changes-hukum")).toBeDefined();
     expect(
       screen
         .getByTestId("git-diff-repo-switcher-trigger")
@@ -536,7 +536,7 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
     expect(screen.queryByTestId("git-module-no-changes-root")).toBeNull();
     expect(screen.queryByTestId("git-clean-modules-affordance")).toBeNull();
     expect(
-      screen.queryByTestId("git-module-group-submodule-traycer"),
+      screen.queryByTestId("git-module-group-submodule-hukum"),
     ).toBeNull();
     expect(screen.queryByLabelText("1 changed submodule")).toBeNull();
   });
@@ -545,7 +545,7 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
     testState.snapshots.set(
       "/repo",
       response({
-        files: [file("traycer", normalPointer)],
+        files: [file("hukum", normalPointer)],
         submodules: [],
       }),
     );
@@ -553,7 +553,7 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
     renderPanel(rootSelected);
 
     expect(
-      screen.getByTestId("git-module-group-submodule-traycer"),
+      screen.getByTestId("git-module-group-submodule-hukum"),
     ).toBeDefined();
     expect(screen.getByTestId("git-submodule-unavailable")).toBeDefined();
     expect(screen.queryByText("Submodule reference:")).toBeNull();
@@ -563,7 +563,7 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
     testState.snapshots.set(
       "/repo",
       response({
-        files: [file("traycer", normalPointer)],
+        files: [file("hukum", normalPointer)],
         submodules: [
           changeset({
             availability: { state: "unavailable", reason: "git-error" },
@@ -575,11 +575,11 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
     renderPanel({
       hostId: "host-1",
       rootRunningDir: "/repo",
-      repoRoot: "/repo/traycer",
+      repoRoot: "/repo/hukum",
     });
 
     expect(
-      screen.getByTestId("git-module-group-submodule-traycer"),
+      screen.getByTestId("git-module-group-submodule-hukum"),
     ).toBeDefined();
     expect(screen.getByTestId("git-submodule-unavailable")).toBeDefined();
     expect(
@@ -603,19 +603,19 @@ describe("<GitDiffPanelBodyLive /> workspace switcher integration", () => {
     testState.snapshots.set(
       "/repo",
       response({
-        files: [file("traycer", normalPointer)],
+        files: [file("hukum", normalPointer)],
         submodules: [changeset({ files: [file("src/submodule.ts", null)] })],
       }),
     );
     renderPanel(rootSelected);
 
-    fireEvent.click(screen.getByTestId("git-module-header-traycer"));
+    fireEvent.click(screen.getByTestId("git-module-header-hukum"));
 
     expect(
       useGitPanelStore.getState().stateByEpicId[EPIC_ID].selectedRepo,
     ).toEqual(rootSelected);
     expect(
-      screen.getByTestId("git-module-group-submodule-traycer"),
+      screen.getByTestId("git-module-group-submodule-hukum"),
     ).toBeDefined();
   });
 

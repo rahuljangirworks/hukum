@@ -8,8 +8,8 @@ import type {
   EpicStreamClientFactory,
   OpenEpicStoreHandle,
 } from "@/stores/epics/open-epic/store";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { releaseDesktopEpicOwnershipForEpic } from "@/lib/windows/desktop-epic-ownership";
 
 export const EpicSessionContext = createContext<OpenEpicStoreHandle | null>(

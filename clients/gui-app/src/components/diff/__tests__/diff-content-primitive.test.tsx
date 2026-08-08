@@ -277,7 +277,7 @@ describe("<DiffContentPrimitive />", () => {
       expect(host.getAttribute("data-edit")).toBe("true");
     });
     expect(screen.getByTestId("file-diff")).toBe(host);
-    expect(captured.lastUnsafeCSS).toContain("traycer-edit-cache-ready");
+    expect(captured.lastUnsafeCSS).toContain("hukum-edit-cache-ready");
   });
 
   it("ignores a late worker result for a superseded edit target", async () => {

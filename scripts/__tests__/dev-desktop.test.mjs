@@ -15,7 +15,7 @@ const REPO_ROOT = path.resolve(
 const CLI_ENTRY = path.join(
   REPO_ROOT,
   "clients",
-  "traycer-cli",
+  "hukum-cli",
   "src",
   "index.ts",
 );
@@ -121,7 +121,7 @@ describe("dev-desktop port allocation", () => {
 describe("dev-desktop concurrent stack entries", () => {
   it("passes the dev slot + renderer port to Desktop and tails the run-specific host log", () => {
     const entries = devDesktop.buildDevDesktopEntries(
-      "/tmp/traycer/example-slot/host.log",
+      "/tmp/hukum/example-slot/host.log",
       "example-slot",
       19123,
     );
@@ -132,7 +132,7 @@ describe("dev-desktop concurrent stack entries", () => {
       "DEV_DESKTOP_SLOT='example-slot' PORT='19123' bun run --cwd clients/desktop dev",
     );
     expect(hostEntry?.command).toContain(
-      "/tmp/traycer/example-slot/host.log",
+      "/tmp/hukum/example-slot/host.log",
     );
   });
 

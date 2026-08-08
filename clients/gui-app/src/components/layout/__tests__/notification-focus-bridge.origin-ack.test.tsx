@@ -18,15 +18,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostRuntime } from "@traycer-clients/shared/host-client/host-runtime";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import { DefaultRequestContextProvider } from "@traycer-clients/shared/auth/request-context-provider";
-import { createAuthenticatedUserFixture } from "@traycer-clients/shared/test-fixtures/authenticated-user";
-import type { LocalHostSnapshot } from "@traycer-clients/shared/platform/runner-host";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
+import { HostRuntime } from "@hukum-clients/shared/host-client/host-runtime";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import { DefaultRequestContextProvider } from "@hukum-clients/shared/auth/request-context-provider";
+import { createAuthenticatedUserFixture } from "@hukum-clients/shared/test-fixtures/authenticated-user";
+import type { LocalHostSnapshot } from "@hukum-clients/shared/platform/runner-host";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
 import type { NotificationPayload } from "@/lib/notifications/payload";
 
 const navigateSpy = vi.hoisted(() => vi.fn());
@@ -89,7 +89,7 @@ const ORIGIN_HOST: HostDirectoryEntry = {
   hostId: "build-box",
   label: "Build Box",
   kind: "remote",
-  websocketUrl: "wss://build-box.traycer.invalid/rpc",
+  websocketUrl: "wss://build-box.hukum.invalid/rpc",
   version: "1.2.3",
   transportDialability: "dialable",
 };
@@ -117,13 +117,13 @@ async function mountBridge(
   markReadOutcome: "ok" | "refused",
 ): Promise<Mounted> {
   const runnerHost = new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: LOCAL_SNAPSHOT,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const directory = new HostDirectoryService({
     runnerHost,

@@ -13,8 +13,8 @@ import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 import type {
   WorktreeFolderIntent,
   WorktreeWorkspaceSummary,
-} from "@traycer/protocol/host/worktree-schemas";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum/protocol/host/worktree-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import { Input } from "@/components/ui/input";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import {

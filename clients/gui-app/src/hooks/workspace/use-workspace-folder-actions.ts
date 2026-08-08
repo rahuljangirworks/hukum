@@ -4,18 +4,18 @@ import {
   useQueryClient,
   type UseMutationResult,
 } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import type {
   PreparedWorkspaceFolder,
   RemoveEpicRepoRequest,
   RemoveEpicRepoResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import type {
   WorkspacePrepareFoldersRequestV11,
   WorkspacePrepareFoldersResponseV11,
-} from "@traycer/protocol/host/workspace/unary-schemas";
+} from "@hukum/protocol/host/workspace/unary-schemas";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useHostClient } from "@/lib/host/runtime";
 import { useHostMutation } from "@/hooks/host/use-host-query";

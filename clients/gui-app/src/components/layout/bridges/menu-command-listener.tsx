@@ -9,7 +9,7 @@ import type {
   HostRestartRequestResult,
   IRunnerHost,
   MutationOutcome,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import type { AuthService } from "@/lib/auth/auth-service";
 import { useCloseTabFlow } from "@/components/layout/dialogs/use-close-tab-flow";
 import { useAuthService } from "@/lib/host";
@@ -101,7 +101,7 @@ export function MenuCommandListener() {
     (state) => state.openEpicInNewWindow,
   );
   const management = runnerHost.hostManagement;
-  const traycerCli = runnerHost.traycerCli;
+  const hukumCli = runnerHost.hukumCli;
   const status = useRunnerHostControllerStatusQuery().data;
   const [pendingHostRestart, setPendingHostRestart] = useState<boolean>(false);
   const [busy, setBusy] = useState<MenuBusyState | null>(null);
@@ -119,9 +119,9 @@ export function MenuCommandListener() {
         return;
       }
       toast.success("Host restart requested");
-      if (traycerCli !== null) {
+      if (hukumCli !== null) {
         void queryClient.invalidateQueries({
-          queryKey: runnerQueryKeys.traycerHostStatus(traycerCli),
+          queryKey: runnerQueryKeys.hukumHostStatus(hukumCli),
         });
       }
     },

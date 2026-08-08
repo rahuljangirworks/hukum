@@ -10,14 +10,14 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
 import type {
   RequestOfMethod,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   NotificationsSettingsPanel,
   NotificationsSettingsPanelForClient,
@@ -90,7 +90,7 @@ type RenderNotificationsOptions = {
   readonly deferTest: boolean | undefined;
 };
 
-const HOOKS_CONFIG_PATH = "/Users/me/.traycer/notification-hooks.json";
+const HOOKS_CONFIG_PATH = "/Users/me/.hukum/notification-hooks.json";
 
 afterEach(() => {
   cleanup();
@@ -173,7 +173,7 @@ describe("<NotificationsSettingsPanel /> severity policy", () => {
       host: "smtp.example.com",
       port: 587,
       user: "me@example.com",
-      from: "Traycer <me@example.com>",
+      from: "Hukum <me@example.com>",
       password: { kind: "leaveUnchanged" },
     });
   });
@@ -939,7 +939,7 @@ function makeNotificationConfig(): NotificationConfig {
         host: "smtp.example.com",
         port: 587,
         user: "me@example.com",
-        from: "Traycer <me@example.com>",
+        from: "Hukum <me@example.com>",
         credentialConfigured: true,
         lastError: "previous email failed",
       },

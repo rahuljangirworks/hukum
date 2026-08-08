@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import type { HostRpcRegistry } from "@/lib/host";
 import {
   useProvidersList,

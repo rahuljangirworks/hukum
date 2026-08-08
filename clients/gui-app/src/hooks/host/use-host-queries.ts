@@ -7,13 +7,13 @@ import {
   type QueryKey,
   type UseQueryResult,
 } from "@tanstack/react-query";
-import type { HostRequester } from "@traycer-clients/shared/host-client/host-client";
+import type { HostRequester } from "@hukum-clients/shared/host-client/host-client";
 import {
   toHostRpcError,
   type HostRpcError,
   type RequestOfMethod,
   type ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import { queryKeys } from "@/lib/query-keys";
 import { withHostQueryErrorBoundary } from "@/lib/query/host-query-error-boundary";

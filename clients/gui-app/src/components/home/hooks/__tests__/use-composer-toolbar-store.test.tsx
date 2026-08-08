@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import type { ReactNode } from "react";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 
 const harnessesData: {
   value:
@@ -114,7 +114,7 @@ import { Analytics, AnalyticsEvent } from "@/lib/analytics";
 import type { FocusedComposerKind } from "@/lib/commands/types";
 
 function seedDefault(
-  harnessId: "claude" | "codex" | "opencode" | "traycer" | "cursor",
+  harnessId: "claude" | "codex" | "opencode" | "hukum" | "cursor",
 ): void {
   useSettingsStore.setState({
     defaultSelection: { harnessId, modelSlug: "saved-model", profileId: null },
@@ -211,14 +211,14 @@ describe("useComposerToolbarStore selection reconciliation", () => {
   });
 
   it("reroutes a GUI-only selection off the terminal surface", async () => {
-    // `traycer` is selectable in chat but can't back a terminal agent. On the
+    // `hukum` is selectable in chat but can't back a terminal agent. On the
     // terminal surface (`tuiOnly`) it must reroute to the first available
     // TUI-capable harness in provider order instead of being carried forward
     // un-launchable.
-    seedDefault("traycer");
+    seedDefault("hukum");
     harnessesData.value = {
       harnesses: [
-        { id: "traycer", available: true, modes: ["gui"] },
+        { id: "hukum", available: true, modes: ["gui"] },
         { id: "claude", available: true, modes: ["gui", "tui"] },
         { id: "codex", available: true, modes: ["gui", "tui"] },
       ],
@@ -233,7 +233,7 @@ describe("useComposerToolbarStore selection reconciliation", () => {
     );
     // Raw sticky value is untouched, so switching back to chat re-presents it.
     expect(result.current.getState().values.selection.harnessId).toBe(
-      "traycer",
+      "hukum",
     );
   });
 
@@ -259,14 +259,14 @@ describe("useComposerToolbarStore selection reconciliation", () => {
   });
 
   it("never persists the rerouted harness when editing on the terminal surface", async () => {
-    // GUI-only `traycer` is rerouted to `codex` on the terminal surface. The
+    // GUI-only `hukum` is rerouted to `codex` on the terminal surface. The
     // reroute is display/launch-only: an edit there must NOT emit (and thus
     // persist) `codex`, or switching back to chat would lose the sticky
-    // `traycer`. The edit is held until the derived harness matches the raw one.
-    seedDefault("traycer");
+    // `hukum`. The edit is held until the derived harness matches the raw one.
+    seedDefault("hukum");
     harnessesData.value = {
       harnesses: [
-        { id: "traycer", available: true, modes: ["gui"] },
+        { id: "hukum", available: true, modes: ["gui"] },
         { id: "codex", available: true, modes: ["gui", "tui"] },
       ],
     };
@@ -310,7 +310,7 @@ describe("useComposerToolbarStore selection reconciliation", () => {
     expect(onSettingsChange).not.toHaveBeenCalled();
     // The raw sticky harness is untouched, so flipping back to chat re-presents it.
     expect(result.current.getState().values.selection.harnessId).toBe(
-      "traycer",
+      "hukum",
     );
   });
 
@@ -1188,13 +1188,13 @@ describe("useComposerToolbarStore selection reconciliation", () => {
   });
 
   it("does not record memory while the surface reroutes the harness", async () => {
-    // GUI-only `traycer` is rerouted to `codex` on the terminal surface. The edit
+    // GUI-only `hukum` is rerouted to `codex` on the terminal surface. The edit
     // is suppressed (rerouted), so the catalog-confirmed write must record
     // nothing - not under the rerouted harness, not under the raw one.
-    seedDefault("traycer");
+    seedDefault("hukum");
     harnessesData.value = {
       harnesses: [
-        { id: "traycer", available: true, modes: ["gui"] },
+        { id: "hukum", available: true, modes: ["gui"] },
         { id: "codex", available: true, modes: ["gui", "tui"] },
       ],
     };

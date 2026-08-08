@@ -1,6 +1,6 @@
 "use strict";
 
-const DEV_DESKTOP_DISPLAY_NAME_ENV = "TRAYCER_DESKTOP_DEV_DISPLAY_NAME";
+const DEV_DESKTOP_DISPLAY_NAME_ENV = "HUKUM_DESKTOP_DEV_DISPLAY_NAME";
 
 function resolveDevDesktopIdentity(env) {
   const rawSlot = env.DEV_DESKTOP_SLOT;
@@ -13,7 +13,7 @@ function resolveDevDesktopIdentity(env) {
   }
   const worktreeLabel = displayNameForSlot(slot);
   return {
-    displayName: `Traycer Dev — ${worktreeLabel}`,
+    displayName: `Hukum Dev — ${worktreeLabel}`,
     worktreeLabel,
   };
 }
@@ -33,10 +33,10 @@ function sanitizeDevDesktopSlot(value) {
 }
 
 function displayNameForSlot(slot) {
-  if (/^traycer-[a-f0-9]{8}$/.test(slot)) {
+  if (/^hukum-[a-f0-9]{8}$/.test(slot)) {
     return slot;
   }
-  const worktreeMatch = /^(?:traycer-)?(.+)-[a-f0-9]{8}$/.exec(slot);
+  const worktreeMatch = /^(?:hukum-)?(.+)-[a-f0-9]{8}$/.exec(slot);
   return worktreeMatch?.[1] ?? slot;
 }
 

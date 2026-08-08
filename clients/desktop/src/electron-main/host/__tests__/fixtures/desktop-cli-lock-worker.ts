@@ -80,7 +80,7 @@ async function main(): Promise<void> {
     env: {
       ...process.env,
       DEV_DESKTOP_SLOT: devDesktopSlot,
-      TRAYCER_CLI_LOCK_ACQUIRED_MARKER: cliLockAcquiredMarker,
+      HUKUM_CLI_LOCK_ACQUIRED_MARKER: cliLockAcquiredMarker,
     },
     stdio: ["ignore", "pipe", "pipe"],
   });

@@ -52,7 +52,7 @@ export const harnessIdSchema = z.enum([
   "claude",
   "codex",
   "opencode",
-  "traycer",
+  "hukum",
   "cursor",
   "grok",
   "qwen",

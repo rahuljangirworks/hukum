@@ -22,7 +22,7 @@ import { useEpicCanvasStore } from "@/stores/epics/canvas/store";
 const WINDOW_ID = "history-nav-test-window";
 
 function storageKey(windowId: string): string {
-  return `traycer-gui-app:last-route:${windowId}`;
+  return `hukum-gui-app:last-route:${windowId}`;
 }
 
 function makeRouter(history: RouterHistory): AppRouter {

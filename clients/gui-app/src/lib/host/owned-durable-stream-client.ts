@@ -1,5 +1,5 @@
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type { DurableStreamTransport } from "@/lib/host/durable-stream-transport";
 import { appLogger } from "@/lib/logger";
 

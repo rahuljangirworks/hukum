@@ -9,9 +9,9 @@ import {
 import { useStore } from "zustand";
 import { toast } from "sonner";
 import { CircleAlert } from "lucide-react";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import type { HostRpcRegistry } from "@/lib/host";
 import type { TuiAgentProjection } from "@/stores/epics/open-epic/types";
 import type { ForkWorkspaceSeed } from "@/lib/worktree/fork-workspace-seed";
@@ -78,7 +78,7 @@ const EMPTY_FORK_ADMISSION: ReadonlyMap<string | null, ProfileRowAdmission> =
   new Map();
 
 const CAPABILITY_LOCK_REASON =
-  "Update Traycer host to continue this session under another profile.";
+  "Update Hukum host to continue this session under another profile.";
 const ADMISSION_PENDING_REASON =
   "Checking whether this profile can continue this session…";
 const ADMISSION_FAILED_REASON =

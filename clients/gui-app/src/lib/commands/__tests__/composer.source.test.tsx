@@ -19,7 +19,7 @@ import type {
   CommandItem,
   FocusedComposerKind,
 } from "@/lib/commands/types";
-import type { WorktreeIntent } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeIntent } from "@hukum/protocol/host/worktree-schemas";
 
 const catalogMock = vi.hoisted(() => ({
   harnesses: [

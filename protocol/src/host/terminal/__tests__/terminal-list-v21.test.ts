@@ -12,19 +12,19 @@ import {
   downgradeResponseAcrossMajors,
   upgradeRequestToVersion,
   upgradeResponseToVersion,
-} from "@traycer/protocol/framework/index";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/framework/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   terminalListDowngradeV21ToV10,
   terminalListUpgradeV20ToV21,
-} from "@traycer/protocol/host/terminal/contracts";
+} from "@hukum/protocol/host/terminal/contracts";
 import {
   listTerminalsResponseSchema,
   listTerminalsResponseSchemaV20,
   listTerminalsResponseSchemaV21,
   listTerminalsResponseSchemaV22,
   type CanonicalTerminalSessionInfo,
-} from "@traycer/protocol/host/terminal/unary-schemas";
+} from "@hukum/protocol/host/terminal/unary-schemas";
 
 const V20 = { major: 2, minor: 0 } as const;
 const V21 = { major: 2, minor: 1 } as const;

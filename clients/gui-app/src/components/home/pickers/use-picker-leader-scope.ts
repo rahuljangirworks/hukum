@@ -14,7 +14,7 @@ import {
   registerLeaderScope,
 } from "@/lib/keybindings/leader-scope";
 import type { ReasoningFooterConfig } from "@/components/home/pickers/harness-model-picker-footers";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 
 interface PickerLeaderScopeInput {
   /** While true, the picker owns ⌘ (rail), ⌥ (reasoning, when actionable), and

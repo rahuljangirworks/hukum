@@ -1,10 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import {
-  TraycerApp,
+  HukumApp,
   hostRpcRegistry,
   installTitleBarOverlayThemeSync,
-} from "@traycer-clients/gui-app";
+} from "@hukum-clients/gui-app";
 import * as Sentry from "@sentry/electron/renderer";
 import { makeFetchTransport } from "@sentry/browser";
 import "./index.css";
@@ -39,13 +39,13 @@ function bootstrap(): void {
       profilesSampleRate: sampleRate,
       attachStacktrace: true,
       // Use fetch transport so renderer events go directly to the renderer
-      // Sentry project (traycer-desktop-renderer), not forwarded to main.
+      // Sentry project (hukum-desktop-renderer), not forwarded to main.
       transport: makeFetchTransport,
     });
   }
 
   // Dev builds receive a runtime loopback redirect_uri from main (the
-  // `traycer-dev://` scheme is unregistrable for an unpackaged app); staging/
+  // `hukum-dev://` scheme is unregistrable for an unpackaged app); staging/
   // prod leave it empty and fall back to the compile-time custom-scheme URI.
   const redirectUri =
     bridge.authRedirectUri.length > 0
@@ -73,7 +73,7 @@ function bootstrap(): void {
 
   createRoot(container).render(
     <StrictMode>
-      <TraycerApp
+      <HukumApp
         runnerHost={host}
         registry={hostRpcRegistry}
         remoteFetcher={null}

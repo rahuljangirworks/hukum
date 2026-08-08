@@ -20,8 +20,8 @@ import {
   Outlet,
   RouterProvider,
 } from "@tanstack/react-router";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
 import { NotificationsBell } from "@/components/notifications/notifications-bell";
 import { NotificationsPopover } from "@/components/notifications/notifications-popover";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -39,17 +39,17 @@ import {
   openNotificationsStream,
 } from "@/stores/notifications/notifications-store";
 import { useNotificationsPopoverStore } from "@/stores/notifications/notifications-popover-store";
-import type { NotificationsStreamCallbacks } from "@traycer-clients/shared/host-transport/notifications-stream-client";
+import type { NotificationsStreamCallbacks } from "@hukum-clients/shared/host-transport/notifications-stream-client";
 import {
   type NotificationEntry,
   NOTIFICATION_EVENT_TYPES,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 import {
   createNotificationRoomEntryMap,
   NOTIFICATIONS_ARRAY_KEY,
   type NotificationRoomEntryMap,
-} from "@traycer/protocol/notifications/notification-room";
-import type { HostNotificationEntry } from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/notifications/notification-room";
+import type { HostNotificationEntry } from "@hukum/protocol/host/notifications/contracts";
 import { ALL_NOTIFICATION_CATEGORIES } from "@/lib/notifications/notification-category";
 
 const hostRequestMock = vi.hoisted(() => vi.fn());
@@ -314,7 +314,7 @@ function createRunnerHost(): MockRunnerHost {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 

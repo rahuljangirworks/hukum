@@ -15,7 +15,7 @@ import type {
   GitListChangedFilesResponse,
   GitListChangedFilesResponseV11,
   WorktreeBindingSelectorRowV12,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import { useWorktreeListBindingsForEpic } from "@/hooks/worktree/use-worktree-list-bindings-for-epic-query";
 import { useGitPrefetchWorktreeStatus } from "@/hooks/git/use-git-prefetch-worktree-status";
 import { useGitCapabilitiesQuery } from "@/hooks/git/use-git-capabilities-query";

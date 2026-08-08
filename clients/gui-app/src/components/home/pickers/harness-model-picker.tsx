@@ -86,11 +86,11 @@ import {
   resolveCreateProfileGate,
   useCreateProfileHostIsLocal,
 } from "@/components/home/pickers/harness-model-picker-create-profile-gate";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import type {
   ProviderCliState,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import {
   guiHarnessIdToProviderId,
   providerIdToGuiHarnessId,
@@ -129,7 +129,7 @@ interface HarnessModelPickerProps {
   /**
    * When true, the provider rail and model rows are restricted to TUI-capable
    * harnesses (the terminal-launch surface), hiding GUI-only providers like
-   * `traycer`. `false` shows every GUI harness (chat surfaces).
+   * `hukum`. `false` shows every GUI harness (chat surfaces).
    */
   tuiOnly: boolean;
   lockedHarnessId: ProviderId | null;
@@ -374,7 +374,7 @@ function HarnessModelPickerImpl(props: HarnessModelPickerProps) {
       subscribed: activityEnabled,
     },
   );
-  // Traycer, OpenRouter and Hugging Face fetch their model catalogs over
+  // Hukum, OpenRouter and Hugging Face fetch their model catalogs over
   // remote HTTP, so
   // `selectedModelsQuery` never touches their managed OpenCode server - only
   // `listCommands` (or chat) does. The intent edges below therefore also
@@ -430,7 +430,7 @@ function HarnessModelPickerImpl(props: HarnessModelPickerProps) {
   // Each query is asked separately whether it is due, rather than sharing one
   // verdict: models are seeded by the app-load prefetch while the commands
   // prewarm is only ever fired from here, so a shared verdict keyed on models
-  // would leave a Traycer/OpenRouter/Hugging Face server un-prewarmed for the
+  // would leave a Hukum/OpenRouter/Hugging Face server un-prewarmed for the
   // whole first
   // window (their models come from remote HTTP and never touch it - only
   // `listCommands` does).
@@ -468,7 +468,7 @@ function HarnessModelPickerImpl(props: HarnessModelPickerProps) {
     subscribed: catalogActive,
   });
   // In terminal mode the rail/rows only offer TUI-capable harnesses; GUI-only
-  // providers (e.g. `traycer`) are filtered out of the catalog up front so every
+  // providers (e.g. `hukum`) are filtered out of the catalog up front so every
   // derived structure (active provider, rows, rail) inherits the restriction.
   const catalogHarnesses = useMemo(
     () =>

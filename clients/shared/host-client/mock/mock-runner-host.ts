@@ -17,7 +17,7 @@ import type {
   ISecureStorage,
   ITokenStore,
   ITrayState,
-  ITraycerCli,
+  IHukumCli,
   IWorkspaceFoldersHost,
   LocalHostSnapshot,
   StoredAuthTokens,
@@ -25,16 +25,16 @@ import type {
   StoredCredentialsIdentity,
   TokenRotateResult,
   TokenStoreChange,
-  TraycerHostStatusSnapshot,
-  TraycerDetectedShell,
-  TraycerEnvOverride,
-  TraycerShellConfig,
-  TraycerShellConfigSetInput,
-  TraycerShellProbeResult,
+  HukumHostStatusSnapshot,
+  HukumDetectedShell,
+  HukumEnvOverride,
+  HukumShellConfig,
+  HukumShellConfigSetInput,
+  HukumShellProbeResult,
   TrayEpic,
   TrayIndicatorState,
 } from "../../platform/runner-host";
-import { defaultShellArgs } from "@traycer/protocol/config/shell-family";
+import { defaultShellArgs } from "@hukum/protocol/config/shell-family";
 import {
   listUserSessionsViaHttp,
   requestStepUpChallengeViaHttp,
@@ -50,7 +50,7 @@ import {
   type RevokeUserSessionFetchResult,
   type StepUpChallengeFetchResult,
 } from "../../auth/devices-sessions-fetcher";
-import type { MintHostCredentialRequest } from "@traycer/protocol/auth/devices-sessions";
+import type { MintHostCredentialRequest } from "@hukum/protocol/auth/devices-sessions";
 import {
   credentialsIdentityFromAuthenticatedUser,
   refreshOnceAbortable,
@@ -86,13 +86,13 @@ export interface MockRunnerHostOptions {
    */
   readonly hasLocalHost: boolean | undefined;
   /**
-   * In-memory `traycerCli` surface. Pass `null` to match mobile/web shells
+   * In-memory `hukumCli` surface. Pass `null` to match mobile/web shells
    * that do not bundle the CLI; pass `undefined` for the same effect to keep
    * call sites terse. Tests that exercise the bootstrap-status failure card
    * or the Shell & environment settings page pass an instance preloaded with
    * deterministic state.
    */
-  readonly traycerCli: ITraycerCli | null | undefined;
+  readonly hukumCli: IHukumCli | null | undefined;
   readonly hostManagement?: IHostManagement | null;
   /**
    * Mirrors `IRunnerHost.getLastKnownLocalHostId()` - the durable host id read
@@ -105,7 +105,7 @@ export interface MockRunnerHostOptions {
   readonly lastKnownLocalHostId?: string | null;
 }
 
-const MOCK_TOKEN_STORE_KEY = "traycer.token";
+const MOCK_TOKEN_STORE_KEY = "hukum.token";
 const STEP_UP_EXPIRY_SKEW_MS = 5_000;
 
 interface RetainedStepUpCredential {
@@ -122,7 +122,7 @@ function sameFlags(a: readonly string[], b: readonly string[]): boolean {
  * In-memory `IRunnerHost` used by `gui-app` dev/preview and shared tests.
  *
  * Mirrors the composite surface real desktop and mobile runners hand to
- * `<TraycerApp />` so shared tests and dev shells can exercise the full
+ * `<HukumApp />` so shared tests and dev shells can exercise the full
  * runtime without a native host attached. All capabilities are always
  * present; capabilities the concrete shell would not implement (tray on
  * mobile, notifications on web preview) install no-op handlers that never
@@ -198,7 +198,7 @@ export class MockRunnerHost implements IRunnerHost {
     readNativeClipboardFilePaths: async (): Promise<readonly string[]> => [],
   };
   readonly service: null = null;
-  readonly traycerCli: ITraycerCli | null;
+  readonly hukumCli: IHukumCli | null;
   readonly migration: null = null;
   readonly hostManagement: IHostManagement | null;
   readonly hostTray: null = null;
@@ -231,8 +231,8 @@ export class MockRunnerHost implements IRunnerHost {
         : options.workspaceFolderPickerPaths;
     this.hasLocalHost =
       options.hasLocalHost === undefined ? true : options.hasLocalHost;
-    this.traycerCli =
-      options.traycerCli === undefined ? null : options.traycerCli;
+    this.hukumCli =
+      options.hukumCli === undefined ? null : options.hukumCli;
     this.hostManagement =
       options.hostManagement === undefined ? null : options.hostManagement;
   }
@@ -641,7 +641,7 @@ export class MockRunnerHost implements IRunnerHost {
 
   /**
    * Fires the payload-free browser-return signal to every `onAuthCallback`
-   * subscriber, modelling the shell delivering the `traycer://` deep link when
+   * subscriber, modelling the shell delivering the `hukum://` deep link when
    * the user comes back from the device-approval tab.
    */
   emitAuthCallback(): void {
@@ -717,33 +717,33 @@ export class MockTrayState implements ITrayState {
 }
 
 /**
- * In-memory `ITraycerCli` for tests and dev shells. Mirrors what the real
+ * In-memory `IHukumCli` for tests and dev shells. Mirrors what the real
  * desktop CLI surfaces: a host-status snapshot, an effective shell config,
  * and a flat env-override map. Mutations replace the in-memory state in-place
  * - no subprocess, no SQLite - so tests can preload deterministic responses
  * and assert renderer behaviour without standing up a host.
  */
-export class MockTraycerCli implements ITraycerCli {
-  hostStatusSnapshot: TraycerHostStatusSnapshot = {
+export class MockHukumCli implements IHukumCli {
+  hostStatusSnapshot: HukumHostStatusSnapshot = {
     running: false,
     pidMetadata: null,
     bootstrapMarkers: [],
     bootstrapLogPath: "/mock/bootstrap.log",
     bootstrapLogTail: "",
   };
-  shellConfig: TraycerShellConfig = {
+  shellConfig: HukumShellConfig = {
     path: "/bin/zsh",
     args: ["-i", "-l"],
     synthesised: true,
   };
-  envOverrides: TraycerEnvOverride[] = [];
+  envOverrides: HukumEnvOverride[] = [];
   /**
    * Remembered/customised launch specs, mirroring the store's `shell.entries`.
    * Mutated by `shellConfigAdd`/`Remove`/`Set`; drives the "added" rows and the
    * per-shell flags a pick materialises.
    */
   shellEntries: { path: string; args: readonly string[] | null }[] = [];
-  detectedShells: readonly TraycerDetectedShell[] = [
+  detectedShells: readonly HukumDetectedShell[] = [
     {
       name: "zsh",
       path: "/bin/zsh",
@@ -772,11 +772,11 @@ export class MockTraycerCli implements ITraycerCli {
   /** Path the next `pickShellProgramFile` resolves with, or null to cancel. */
   pickedProgramFile: string | null = null;
 
-  async hostStatus(): Promise<TraycerHostStatusSnapshot> {
+  async hostStatus(): Promise<HukumHostStatusSnapshot> {
     return this.hostStatusSnapshot;
   }
 
-  async shellConfigGet(): Promise<TraycerShellConfig> {
+  async shellConfigGet(): Promise<HukumShellConfig> {
     return this.shellConfig;
   }
 
@@ -798,7 +798,7 @@ export class MockTraycerCli implements ITraycerCli {
     ];
   }
 
-  async shellConfigSet(input: TraycerShellConfigSetInput): Promise<void> {
+  async shellConfigSet(input: HukumShellConfigSetInput): Promise<void> {
     if (input.args !== null) {
       // Flag customisation: upsert the entry for the effective shell. While on
       // the system default (no explicit selection), keep `synthesised` so the
@@ -876,7 +876,7 @@ export class MockTraycerCli implements ITraycerCli {
 
   async shellProbe(input: {
     readonly path: string;
-  }): Promise<TraycerShellProbeResult> {
+  }): Promise<HukumShellProbeResult> {
     const executable = this.probeFs.get(input.path);
     return {
       exists: executable !== undefined,
@@ -887,8 +887,8 @@ export class MockTraycerCli implements ITraycerCli {
   pickShellProgramFile: (() => Promise<string | null>) | null = () =>
     Promise.resolve(this.pickedProgramFile);
 
-  async shellListDetected(): Promise<readonly TraycerDetectedShell[]> {
-    const added: TraycerDetectedShell[] = this.shellEntries
+  async shellListDetected(): Promise<readonly HukumDetectedShell[]> {
+    const added: HukumDetectedShell[] = this.shellEntries
       .filter(
         (entry) => !this.detectedShells.some((d) => d.path === entry.path),
       )
@@ -904,7 +904,7 @@ export class MockTraycerCli implements ITraycerCli {
     return [...this.detectedShells, ...added];
   }
 
-  async envOverrideList(): Promise<readonly TraycerEnvOverride[]> {
+  async envOverrideList(): Promise<readonly HukumEnvOverride[]> {
     return this.envOverrides;
   }
 
@@ -934,9 +934,9 @@ export class MockTraycerCli implements ITraycerCli {
  */
 const MOCK_DEVICE_AUTHORIZATION: DeviceFlowAuthorization = {
   userCode: "ABCDE-FGHIJ",
-  verificationUri: "https://app.traycer.ai/device",
+  verificationUri: "https://app.hukum.ai/device",
   verificationUriComplete:
-    "https://app.traycer.ai/device?user_code=ABCDE-FGHIJ",
+    "https://app.hukum.ai/device?user_code=ABCDE-FGHIJ",
   expiresInSeconds: 600,
   intervalSeconds: 5,
 };

@@ -6,8 +6,8 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcRegistry } from "@hukum/protocol/host";
 import { useWorkspaceWriteFile } from "@/hooks/workspace/use-workspace-write-file-mutation";
 import {
   fileEditRuntimeRegistry,

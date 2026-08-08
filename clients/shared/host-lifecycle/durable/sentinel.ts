@@ -13,7 +13,7 @@
 // suppresses a start, so every shape that reaches it is load-bearing. A
 // decoder that accepts *any* known sentinel key on *any* sentinel file lets a
 // stray or mis-keyed `{"stoppedByUser":true}` sitting at the removed-by-user
-// path decode as "the user removed Traycer" — silently preventing the host
+// path decode as "the user removed Hukum" — silently preventing the host
 // from ever running, from a file no writer in either repo produces at that
 // path. Cross-sentinel and mixed shapes are corrupt, and `corrupt` proceeds
 // (and is repaired — see `./repair`).

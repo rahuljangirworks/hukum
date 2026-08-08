@@ -9,7 +9,7 @@
  * unrelated events, so `id` alone is not an identity and must never be compared
  * across hosts.
  */
-import type { EpicCommunicationGraphEvent } from "@traycer/protocol/host/epic/communication-graph";
+import type { EpicCommunicationGraphEvent } from "@hukum/protocol/host/epic/communication-graph";
 
 export type CommGraphEvent = EpicCommunicationGraphEvent & {
   /** Host whose log this row came from. Scopes `id` (and `sinceCursor`). */

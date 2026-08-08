@@ -9,7 +9,7 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type { ComposerPromptEditorHandle } from "@/components/chat/composer/composer-prompt-editor";
 import { createComposerEditorIncarnation } from "@/lib/composer/composer-editor-incarnation";
 import { useAuthStore } from "@/stores/auth/auth-store";
@@ -421,11 +421,11 @@ describe("<HomePage />", () => {
 
   it("creates a host-backed epic and navigates to the returned route", async () => {
     useWorkspaceFoldersStore.setState({
-      folders: ["/tmp/traycer"],
+      folders: ["/tmp/hukum"],
       folderInfoByPath: {
-        "/tmp/traycer": {
-          path: "/tmp/traycer",
-          name: "traycer",
+        "/tmp/hukum": {
+          path: "/tmp/hukum",
+          name: "hukum",
           repoIdentifier: null,
           hostId: null,
         },
@@ -489,7 +489,7 @@ describe("<HomePage />", () => {
         version: "2.0.0",
       },
       repoIdentifiers: [],
-      workspaces: [{ workspacePath: "/tmp/traycer" }],
+      workspaces: [{ workspacePath: "/tmp/hukum" }],
     });
 
     await waitFor(() => {
@@ -524,13 +524,13 @@ describe("<HomePage />", () => {
         "/tmp/gui-app": {
           path: "/tmp/gui-app",
           name: "gui-app",
-          repoIdentifier: { owner: "traycerai", repo: "gui-app" },
+          repoIdentifier: { owner: "hukumai", repo: "gui-app" },
           hostId: null,
         },
         "/tmp/host": {
           path: "/tmp/host",
           name: "host",
-          repoIdentifier: { owner: "traycerai", repo: "host" },
+          repoIdentifier: { owner: "hukumai", repo: "host" },
           hostId: null,
         },
       },
@@ -561,8 +561,8 @@ describe("<HomePage />", () => {
     );
     expect(createEpicCall?.[1]).toMatchObject({
       repoIdentifiers: [
-        { owner: "traycerai", repo: "gui-app" },
-        { owner: "traycerai", repo: "host" },
+        { owner: "hukumai", repo: "gui-app" },
+        { owner: "hukumai", repo: "host" },
       ],
       workspaces: [
         { workspacePath: "/tmp/gui-app" },

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useSyncExternalStore } from "react";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import type { ModelOption } from "@/components/home/data/landing-options";
 import { useTabHostId } from "@/components/epic-canvas/hooks/use-tab-host-id";
 import { useEpicUpdateChatProfile } from "@/hooks/epic/use-epic-chat-mutations";

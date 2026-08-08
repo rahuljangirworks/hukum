@@ -13,11 +13,11 @@ import { sandboxHome } from "../../__tests__/sandbox-home";
 // Internal-only `staging` deploy slot. Like dev, staging is a NON-production
 // build, but unlike dev it is NOT `isDevBuild`. CLI discovery must still skip
 // the PATH lookup for it: a developer's machine routinely has a released/prod
-// `traycer` on PATH (Homebrew, `~/.traycer/cli/bin` symlinked into the prod
-// `Traycer.app`), and adopting it would drive the staging app's `host
+// `hukum` on PATH (Homebrew, `~/.hukum/cli/bin` symlinked into the prod
+// `Hukum.app`), and adopting it would drive the staging app's `host
 // ensure`/`host start` through a PRODUCTION CLI - onto the prod host slot
-// (`ai.traycer.host`) and prod cloud, leaving the staging splash stuck on
-// "Starting local Traycer Host...". PATH trust is production-only; every other
+// (`ai.hukum.host`) and prod cloud, leaving the staging splash stuck on
+// "Starting local Hukum Host...". PATH trust is production-only; every other
 // slot uses its bundled/slot CLI. These tests pin that contract.
 
 let work: string;
@@ -25,7 +25,7 @@ let homeDir: string;
 let resourcesDir: string;
 
 function bundledCliBinaryName(): string {
-  return process.platform === "win32" ? "traycer.exe" : "traycer";
+  return process.platform === "win32" ? "hukum.exe" : "hukum";
 }
 
 function writeExecutable(path: string): void {
@@ -81,7 +81,7 @@ vi.mock("electron", () => ({
 
 // Pin the staging slot: non-dev (so discovery reaches the PATH section) but
 // non-production (so the PATH section must be skipped). The env-scoped CLI home
-// resolves to `~/.traycer/cli/staging`.
+// resolves to `~/.hukum/cli/staging`.
 vi.mock("../../../config", async (importActual) => {
   const actual = await importActual<typeof import("../../../config")>();
   return {
@@ -96,7 +96,7 @@ const ORIGINAL_HOME = process.env.HOME;
 const ORIGINAL_USERPROFILE = process.env.USERPROFILE;
 
 beforeEach(() => {
-  work = mkdtempSync(join(tmpdir(), "traycer-cli-discovery-staging-"));
+  work = mkdtempSync(join(tmpdir(), "hukum-cli-discovery-staging-"));
   homeDir = join(work, "home");
   resourcesDir = join(work, "resources");
   mkdirSync(homeDir, { recursive: true });
@@ -129,10 +129,10 @@ afterEach(() => {
   }
 });
 
-describe("resolveTraycerCliInvocation (staging slot) - env-scoped resolution", () => {
-  it("skips a `traycer` on PATH and uses the bundled Staging.app CLI (a prod CLI on PATH must not hijack the staging slot)", async () => {
+describe("resolveHukumCliInvocation (staging slot) - env-scoped resolution", () => {
+  it("skips a `hukum` on PATH and uses the bundled Staging.app CLI (a prod CLI on PATH must not hijack the staging slot)", async () => {
     // Simulate the user's released/prod CLI on PATH (Homebrew / the
-    // `~/.traycer/cli/bin` symlink into the production Traycer.app).
+    // `~/.hukum/cli/bin` symlink into the production Hukum.app).
     const fakePathBin = join(work, "fake-prod-cli-bin", bundledCliBinaryName());
     writeExecutable(fakePathBin);
     process.env.PATH = dirname(fakePathBin);
@@ -140,28 +140,28 @@ describe("resolveTraycerCliInvocation (staging slot) - env-scoped resolution", (
     // The Staging.app bundles its own arch-scoped CLI under resources/cli/.
     const bundled = stageBundledArchCli();
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(bundled);
     expect(inv.command).not.toBe(fakePathBin);
   });
 
   it("reads the staging-slot manifest, never the prod slot's", async () => {
-    // A leftover prod install wrote `~/.traycer/cli/manifest.json`; the staging
-    // slot must read `~/.traycer/cli/staging/manifest.json` instead.
+    // A leftover prod install wrote `~/.hukum/cli/manifest.json`; the staging
+    // slot must read `~/.hukum/cli/staging/manifest.json` instead.
     const prodBin = join(
       homeDir,
-      ".traycer",
+      ".hukum",
       "cli",
       "bin",
       bundledCliBinaryName(),
     );
     writeExecutable(prodBin);
-    writeManifestAt(join(homeDir, ".traycer", "cli", "manifest.json"), prodBin);
+    writeManifestAt(join(homeDir, ".hukum", "cli", "manifest.json"), prodBin);
 
     const stagingBin = join(
       homeDir,
-      ".traycer",
+      ".hukum",
       "cli",
       "staging",
       "bin",
@@ -169,12 +169,12 @@ describe("resolveTraycerCliInvocation (staging slot) - env-scoped resolution", (
     );
     writeExecutable(stagingBin);
     writeManifestAt(
-      join(homeDir, ".traycer", "cli", "staging", "manifest.json"),
+      join(homeDir, ".hukum", "cli", "staging", "manifest.json"),
       stagingBin,
     );
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(stagingBin);
   });
 });

@@ -20,9 +20,9 @@ import { useClipboardCopy } from "@/hooks/ui/use-clipboard-copy";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-const INSTALL_COMMAND = "curl -fsSL traycer.ai/install | sh";
-const WINDOWS_COMMAND = "irm traycer.ai/install.ps1 | iex";
-const LOGIN_COMMAND = "traycer login";
+const INSTALL_COMMAND = "curl -fsSL hukum.ai/install | sh";
+const WINDOWS_COMMAND = "irm hukum.ai/install.ps1 | iex";
+const LOGIN_COMMAND = "hukum login";
 /**
  * Tolerance when comparing a registry `createdAt` (server clock) against the
  * dialog's open time (client clock) — see the enrollment-beat-the-baseline
@@ -202,7 +202,7 @@ function AddHostDialogBody(): ReactNode {
       <DialogHeader>
         <DialogTitle>Add host</DialogTitle>
         <DialogDescription>
-          Run these on the computer you want to reach. Traycer can&apos;t
+          Run these on the computer you want to reach. Hukum can&apos;t
           install itself onto another computer, so this part happens over there
           — this window will notice the moment it connects.
         </DialogDescription>

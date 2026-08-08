@@ -21,7 +21,7 @@
  * exactly once per snapshot.
  */
 import * as Y from "yjs";
-import type { RoleClaim } from "@traycer/protocol/persistence/epic/role-claims";
+import type { RoleClaim } from "@hukum/protocol/persistence/epic/role-claims";
 import type { StoreApi } from "zustand";
 import type { OpenEpicState } from "./store";
 import {

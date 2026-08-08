@@ -7,8 +7,8 @@ import {
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import { WindowsMenuBar } from "@/components/layout/header/windows-menu-bar";
 import type {
   DesktopMenuCommandPayload,
@@ -34,13 +34,13 @@ function buildHost(
   ) => Promise<void>,
 ) {
   const host = new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   return Object.assign(host, {
     menu: {
@@ -135,13 +135,13 @@ describe("WindowsMenuBar", () => {
 
   it("stays absent when no desktop menu bridge is present", () => {
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
     renderMenuBar(host);
 

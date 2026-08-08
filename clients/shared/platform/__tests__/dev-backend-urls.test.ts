@@ -7,13 +7,13 @@ import {
   devRelayBaseUrlFromEnv,
 } from "../dev-backend-urls";
 
-const BAKED = "https://authn.traycer.ai";
-const BAKED_RELAY = "wss://relay.traycer.ai/attach";
+const BAKED = "https://authn.hukum.ai";
+const BAKED_RELAY = "wss://relay.hukum.ai/attach";
 
 describe("dev-backend-urls", () => {
   it("pins the env var names (contract with the internal dev orchestrator)", () => {
-    expect(DEV_AUTHN_BASE_URL_ENV).toBe("TRAYCER_DEV_AUTHN_BASE_URL");
-    expect(DEV_CLOUD_UI_BASE_URL_ENV).toBe("TRAYCER_DEV_CLOUD_UI_BASE_URL");
+    expect(DEV_AUTHN_BASE_URL_ENV).toBe("HUKUM_DEV_AUTHN_BASE_URL");
+    expect(DEV_CLOUD_UI_BASE_URL_ENV).toBe("HUKUM_DEV_CLOUD_UI_BASE_URL");
   });
 
   it("returns the baked URL when the env var is unset or blank", () => {
@@ -78,7 +78,7 @@ describe("dev-backend-urls", () => {
   });
 
   it("pins the relay env var name", () => {
-    expect(DEV_RELAY_BASE_URL_ENV).toBe("TRAYCER_DEV_RELAY_BASE_URL");
+    expect(DEV_RELAY_BASE_URL_ENV).toBe("HUKUM_DEV_RELAY_BASE_URL");
   });
 
   it("returns the baked relay URL when the env var is unset, blank, or the environment isn't dev", () => {

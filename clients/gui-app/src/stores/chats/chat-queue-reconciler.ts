@@ -1,8 +1,8 @@
 import type {
   ChatQueueState,
   ChatRunStatus,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { Message } from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { Message } from "@hukum/protocol/persistence/epic/schemas";
 import type {
   AcceptedChatAction,
   FailedSendRestorationState,

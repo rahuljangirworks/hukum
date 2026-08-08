@@ -1,16 +1,16 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   ListTasksRequest,
   ListTasksResponse,
   TaskOwnershipScope,
   TaskRepoIdentifier,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import { formatRepoIdentifier } from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import { formatRepoIdentifier } from "@hukum/protocol/host/epic/unary-schemas";
 import {
   CURRENT_EPIC_VERSION,
   CURRENT_PHASE_VERSION,
-} from "@traycer-clients/shared/epic/epic-version";
+} from "@hukum-clients/shared/epic/epic-version";
 import type { HostRpcRegistry } from "@/lib/host";
 import { queryKeys } from "@/lib/query-keys";
 import { getCloudEpicTasksClient } from "@/lib/cloud-epic-tasks-query/client-registry";

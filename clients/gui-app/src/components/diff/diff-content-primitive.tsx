@@ -34,10 +34,10 @@ import type { DiffClickToEditAdapter } from "@/components/diff/use-diff-click-to
 import { EmptyOriginEditAffordance } from "@/components/diff/empty-origin-edit-affordance";
 
 const DIFF_FIND_UNSAFE_CSS = `
-  [data-traycer-diff-find-match] {
+  [data-hukum-diff-find-match] {
     --diffs-line-bg: color-mix(in srgb, var(--primary) 22%, var(--diffs-computed-diff-line-bg));
   }
-  [data-traycer-diff-find-active] {
+  [data-hukum-diff-find-active] {
     --diffs-line-bg: color-mix(in srgb, var(--primary) 52%, var(--diffs-computed-diff-line-bg));
     outline: 1px solid color-mix(in srgb, var(--primary) 70%, transparent);
     outline-offset: -1px;
@@ -302,7 +302,7 @@ function renderDiffContentBody(args: {
   // edit-attach layout effect runs. The host node stays mounted; only the
   // library's internal render cache is refreshed.
   const diffUnsafeCSS = args.nonEmptyEditorReady
-    ? `${DIFF_PANEL_WITH_FIND_UNSAFE_CSS}\n/* traycer-edit-cache-ready */`
+    ? `${DIFF_PANEL_WITH_FIND_UNSAFE_CSS}\n/* hukum-edit-cache-ready */`
     : DIFF_PANEL_WITH_FIND_UNSAFE_CSS;
   if (emptyFileEditSession !== null) {
     return (

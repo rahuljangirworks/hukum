@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { tuiHarnessIdSchema } from "@traycer/protocol/persistence/epic/foundation";
-import { tuiAgentSchema } from "@traycer/protocol/persistence/epic/tui-agents";
+import { tuiHarnessIdSchema } from "@hukum/protocol/persistence/epic/foundation";
+import { tuiAgentSchema } from "@hukum/protocol/persistence/epic/tui-agents";
 
 /**
  * Cursor terminal-agent read-compatibility guard.

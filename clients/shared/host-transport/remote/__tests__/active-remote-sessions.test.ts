@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { VersionedRpcRegistry } from "@traycer/protocol/framework/index";
-import type { VersionedStreamRpcRegistry } from "@traycer/protocol/framework/versioned-stream-rpc";
+import type { VersionedRpcRegistry } from "@hukum/protocol/framework/index";
+import type { VersionedStreamRpcRegistry } from "@hukum/protocol/framework/versioned-stream-rpc";
 import { REMOTE_SESSION_LINGER_MS } from "../config";
 import type { IRemoteSession } from "../remote-session";
 import {

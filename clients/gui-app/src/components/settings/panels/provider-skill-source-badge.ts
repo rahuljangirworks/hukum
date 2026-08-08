@@ -1,4 +1,4 @@
-import type { ProviderSkillSourceBadge } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderSkillSourceBadge } from "@hukum/protocol/host/provider-native-schemas";
 
 /**
  * How a skill's origin is named and toned. Shared by the list row and the

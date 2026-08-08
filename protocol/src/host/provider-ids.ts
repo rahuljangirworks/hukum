@@ -5,7 +5,7 @@ export const providerIdSchema = z.enum([
   "codex",
   "opencode",
   "cursor",
-  "traycer",
+  "hukum",
   "grok",
   "qwen",
   "kiro",
@@ -34,7 +34,7 @@ export const providerIdSchemaV10 = z.enum([
   "codex",
   "opencode",
   "cursor",
-  "traycer",
+  "hukum",
 ]);
 export type ProviderIdV10 = z.infer<typeof providerIdSchemaV10>;
 
@@ -49,7 +49,7 @@ export const providerIdSchemaV20 = z.enum([
   "codex",
   "opencode",
   "cursor",
-  "traycer",
+  "hukum",
   "grok",
   "qwen",
   "kiro",

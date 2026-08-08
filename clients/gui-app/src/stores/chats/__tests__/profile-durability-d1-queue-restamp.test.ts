@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   ChatQueuedManagedCommandItem,
   ChatQueuedPromptItem,
   ChatRunSettings,
   ChatSubscribeClientFrame,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { ChatStreamCallbacks } from "@traycer-clients/shared/host-transport/chat-stream-client";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { ChatStreamCallbacks } from "@hukum-clients/shared/host-transport/chat-stream-client";
 import {
   createChatSessionStore,
   type ChatSessionStoreHandle,

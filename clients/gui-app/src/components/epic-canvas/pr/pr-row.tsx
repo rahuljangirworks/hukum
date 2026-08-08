@@ -16,7 +16,7 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import type { PrLightItem, PrState } from "@traycer/protocol/host/pr-schemas";
+import type { PrLightItem, PrState } from "@hukum/protocol/host/pr-schemas";
 import { PrOwnerBadges } from "@/components/epic-canvas/pr/pr-owner-label";
 import { Badge } from "@/components/ui/badge";
 import { DropLine } from "@/components/ui/drop-line";
@@ -213,7 +213,7 @@ export function PrRow(props: {
           // `bg-accent` fill a chat/terminal row uses. Those rows are one line
           // of plain text, so a flat fill costs nothing; this row carries the
           // status palette (state tint, failing checks, review decision), and
-          // most presets keep `--accent` a near-grey while `traycer-green` sets
+          // most presets keep `--accent` a near-grey while `hukum-green` sets
           // it to its saturated `--primary` (#257174) - a full fill there stacks
           // the row's hues on a competing one and leaves the state glyph at
           // 3.08:1, the WCAG 1.4.11 graphic floor with nothing to spare. The

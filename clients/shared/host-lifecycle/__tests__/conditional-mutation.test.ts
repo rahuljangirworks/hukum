@@ -18,13 +18,13 @@ describe("runConditionalMutation", () => {
     ],
     [
       "nested",
-      { state: { owner: "traycer", pid: 41 } },
-      { state: { owner: "traycer", pid: 42 } },
+      { state: { owner: "hukum", pid: 41 } },
+      { state: { owner: "hukum", pid: 42 } },
     ],
     ["array", { labels: ["agent", "raw"] }, { labels: ["agent", "fallback"] }],
     [
       "map",
-      { fields: new Map([["owner", "traycer"]]) },
+      { fields: new Map([["owner", "hukum"]]) },
       { fields: new Map([["owner", "other"]]) },
     ],
   ])(
@@ -93,7 +93,7 @@ describe("runConditionalMutation", () => {
     let mutations = 0;
     const world = {
       fields: new Map([
-        ["owner", "traycer"],
+        ["owner", "hukum"],
         ["revision", "7"],
       ]),
       set: new Set(["agent", "raw"]),
@@ -105,7 +105,7 @@ describe("runConditionalMutation", () => {
         set: new Set(["raw", "agent"]),
         fields: new Map([
           ["revision", "7"],
-          ["owner", "traycer"],
+          ["owner", "hukum"],
         ]),
       }),
       operation: "test-mutation",

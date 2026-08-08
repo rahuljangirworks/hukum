@@ -73,7 +73,7 @@ function readLintRuleModule(value: unknown): LintRuleModule {
 const lintRuleModuleUrl = pathToFileURL(
   path.resolve(
     process.cwd(),
-    "../../eslint/traycer-nested-focus-boundary-rules.mjs",
+    "../../eslint/hukum-nested-focus-boundary-rules.mjs",
   ),
 ).href;
 const importedLintRuleModule: unknown = await import(lintRuleModuleUrl);

@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { describe, expect, it } from "vitest";
-import type { ListTasksResponse } from "@traycer/protocol/host/epic/unary-schemas";
+import type { ListTasksResponse } from "@hukum/protocol/host/epic/unary-schemas";
 import type { HistorySearchState } from "@/lib/history-search";
 import {
   DEFAULT_HISTORY_SEARCH,
@@ -15,7 +15,7 @@ describe("listCloudTasksRequestForHistorySearch", () => {
   it("builds a type-safe server request from typed history search state", () => {
     const search = parseHistorySearch({
       historyQuery: "api",
-      historyRepos: ["traycer/gui-app", "invalid/repo/label"],
+      historyRepos: ["hukum/gui-app", "invalid/repo/label"],
       historyRepoMode: "all",
       historyWorkspaces: ["host-1:%2FUsers%2Fme%2Fgui-app"],
       historyWorkspaceMode: "all",
@@ -28,7 +28,7 @@ describe("listCloudTasksRequestForHistorySearch", () => {
       sort: "title-asc",
       filters: {
         query: "api",
-        repoIdentifiers: [{ owner: "traycer", repo: "gui-app" }],
+        repoIdentifiers: [{ owner: "hukum", repo: "gui-app" }],
         repoMatchMode: "all",
         workspaceIdentifiers: [
           {

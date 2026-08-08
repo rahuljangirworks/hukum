@@ -146,7 +146,7 @@ describe("WorktreeBranchPrefixSection", () => {
   });
 
   it("never saves invalid values even after the debounce window elapses", async () => {
-    useSettingsStore.setState({ worktreeBranchPrefix: "traycer/" });
+    useSettingsStore.setState({ worktreeBranchPrefix: "hukum/" });
     render(<WorktreeBranchPrefixSection />);
     const input = getPrefixInput();
 
@@ -160,7 +160,7 @@ describe("WorktreeBranchPrefixSection", () => {
       await vi.advanceTimersByTimeAsync(SAVE_DEBOUNCE_MS * 3);
     });
 
-    expect(useSettingsStore.getState().worktreeBranchPrefix).toBe("traycer/");
+    expect(useSettingsStore.getState().worktreeBranchPrefix).toBe("hukum/");
     expect(input.value).toBe("bad prefix");
     expect(screen.getByText("Prefix can't contain spaces.")).toBeTruthy();
     expectQuietChrome();
@@ -188,7 +188,7 @@ describe("WorktreeBranchPrefixSection", () => {
   });
 
   it("keeps the invalid draft visible without reverting on blur", () => {
-    useSettingsStore.setState({ worktreeBranchPrefix: "traycer/" });
+    useSettingsStore.setState({ worktreeBranchPrefix: "hukum/" });
     render(<WorktreeBranchPrefixSection />);
     const input = getPrefixInput();
 
@@ -201,7 +201,7 @@ describe("WorktreeBranchPrefixSection", () => {
     expect(
       screen.getByText("Prefix can't contain ~ ^ : ? * [ or \\."),
     ).toBeTruthy();
-    expect(useSettingsStore.getState().worktreeBranchPrefix).toBe("traycer/");
+    expect(useSettingsStore.getState().worktreeBranchPrefix).toBe("hukum/");
   });
 
   it("flushes a pending valid save immediately on blur", () => {
@@ -237,7 +237,7 @@ describe("WorktreeBranchPrefixSection", () => {
   });
 
   it("shows an inline error and does not persist invalid input on blur", () => {
-    useSettingsStore.setState({ worktreeBranchPrefix: "traycer/" });
+    useSettingsStore.setState({ worktreeBranchPrefix: "hukum/" });
     render(<WorktreeBranchPrefixSection />);
     const input = getPrefixInput();
 
@@ -247,7 +247,7 @@ describe("WorktreeBranchPrefixSection", () => {
     expect(screen.getByText("Prefix can't contain spaces.")).toBeTruthy();
     expect(input.getAttribute("aria-invalid")).toBe("true");
     expect(input.value).toBe("bad prefix");
-    expect(useSettingsStore.getState().worktreeBranchPrefix).toBe("traycer/");
+    expect(useSettingsStore.getState().worktreeBranchPrefix).toBe("hukum/");
   });
 
   it("grows the card with an additive error row rather than replacing the strip", () => {

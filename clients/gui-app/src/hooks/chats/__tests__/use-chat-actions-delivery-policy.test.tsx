@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   ChatQueueDeliveryPolicy,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { UserMessageSender } from "@traycer/protocol/persistence/epic/senders";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { UserMessageSender } from "@hukum/protocol/persistence/epic/senders";
 import type { ChatSessionStoreHandle } from "@/stores/chats/chat-session-store";
 import { useChatActions } from "@/hooks/chats/use-chat-actions";
 

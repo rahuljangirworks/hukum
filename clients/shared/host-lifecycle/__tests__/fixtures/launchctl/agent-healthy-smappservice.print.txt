@@ -1,16 +1,16 @@
-gui/501/ai.traycer.host.agent = {
+gui/501/ai.hukum.host.agent = {
 	active count = 1
 	path = (submitted by smd.93299)
 	type = Submitted
 	managed_by = com.apple.xpc.ServiceManagement
 	state = running
 
-	program identifier = Contents/Library/LaunchAgents/Traycer Host.app/Contents/MacOS/traycer (mode: 2)
-	parent bundle identifier = ai.traycer.desktop
+	program identifier = Contents/Library/LaunchAgents/Hukum Host.app/Contents/MacOS/hukum (mode: 2)
+	parent bundle identifier = ai.hukum.desktop
 	parent bundle version = 0.0.0
 	BTM uuid = 2E0FA2B2-5AED-4B9D-9D29-518D9AF8A49F
 	arguments = {
-		Contents/Library/LaunchAgents/Traycer Host.app/Contents/MacOS/traycer
+		Contents/Library/LaunchAgents/Hukum Host.app/Contents/MacOS/hukum
 		host
 		start
 	}
@@ -27,7 +27,7 @@ gui/501/ai.traycer.host.agent = {
 		OSLogRateLimit => 64
 		PATH => /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 		NODE_OPTIONS => --max-semi-space-size=16
-		XPC_SERVICE_NAME => ai.traycer.host.agent
+		XPC_SERVICE_NAME => ai.hukum.host.agent
 	}
 
 	domain = gui/501 [100023]
@@ -58,7 +58,7 @@ gui/501/ai.traycer.host.agent = {
 		type = resource
 		state = active
 		active count = 1
-		name = ai.traycer.host.agent
+		name = ai.hukum.host.agent
 	}
 
 	jetsam coalition = {
@@ -66,7 +66,7 @@ gui/501/ai.traycer.host.agent = {
 		type = jetsam
 		state = active
 		active count = 1
-		name = ai.traycer.host.agent
+		name = ai.hukum.host.agent
 	}
 
 	spawn type = interactive (4)

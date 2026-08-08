@@ -148,7 +148,7 @@ export function WorkspaceFolderSummaryControl(props: {
    * Re-derives these folders from disk, or `null` on a surface with no host to
    * ask. The picker is the only place the Local branch label can be corrected:
    * it is read-only by design (users switch that checkout with git, outside
-   * Traycer), so when the host's cached view falls behind disk there is no
+   * Hukum), so when the host's cached view falls behind disk there is no
    * other control that would incidentally fix it.
    */
   readonly refresh: WorktreeWorkspacesRefresh | null;

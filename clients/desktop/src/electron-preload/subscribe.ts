@@ -1,5 +1,5 @@
 import { ipcRenderer } from "electron";
-import type { Disposable } from "@traycer-clients/shared/platform/uri-callback";
+import type { Disposable } from "@hukum-clients/shared/platform/uri-callback";
 
 export type { Disposable };
 export type Listener<T> = (value: T) => void;

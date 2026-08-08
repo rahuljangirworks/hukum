@@ -5,7 +5,7 @@ import type {
   ProviderCliState,
   ProviderId,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 // The gate's only collaborators are the tab-scoped providers query and its
 // force-refresh twin, plus a reconnect toast - stub all three so the test drives

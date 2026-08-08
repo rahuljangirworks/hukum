@@ -1,7 +1,7 @@
 import { Profiler, useState, type ProfilerOnRenderCallback } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import { act, cleanup, render } from "@testing-library/react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import type { ImageAttachmentAttrs } from "@/components/chat/composer/editor/extensions/image-attachment-extension";
 import { composerInlineChipClassNames } from "@/components/chat/composer/nodes/composer-inline-chip-classnames";

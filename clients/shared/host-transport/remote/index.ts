@@ -5,7 +5,7 @@
  *
  * The client↔host mux wire contract this transport speaks is documented for the
  * T11 host responder in `../host-client/REMOTE-TRANSPORT.md` and codified in
- * `@traycer/protocol/host-transport/mux`.
+ * `@hukum/protocol/host-transport/mux`.
  */
 
 export {
@@ -48,4 +48,4 @@ export {
   type MuxFrame,
   type SessionOpenPayload,
   type SessionOpenAckPayload,
-} from "@traycer/protocol/host-transport/mux";
+} from "@hukum/protocol/host-transport/mux";

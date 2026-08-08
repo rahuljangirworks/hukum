@@ -6,12 +6,12 @@ import type {
   StoredCredentialsIdentity,
   TokenRotateResult,
   TokenStoreChange,
-} from "@traycer-clients/shared/platform/runner-host";
-import type { Disposable } from "@traycer-clients/shared/platform/uri-callback";
+} from "@hukum-clients/shared/platform/runner-host";
+import type { Disposable } from "@hukum-clients/shared/platform/uri-callback";
 
 /**
  * Renderer-side handle onto the shell's credentials-file token store (tech plan
- * §3). The single machine-local `~/.traycer/cli/<env>/credentials` file is owned
+ * §3). The single machine-local `~/.hukum/cli/<env>/credentials` file is owned
  * by the shell (desktop main's `FileTokenStore`, reached over IPC); this wrapper
  * only serializes the mutating operations and exposes the typed seam.
  *

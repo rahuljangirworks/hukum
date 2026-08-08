@@ -1,6 +1,6 @@
-import type { IncompatibilityUpgradeGuidance } from "@traycer/protocol/framework/index";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import { isRemoteHostDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
+import type { IncompatibilityUpgradeGuidance } from "@hukum/protocol/framework/index";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import { isRemoteHostDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
 import { appLogger } from "@/lib/logger";
 
 export interface VersionSkewCopy {

@@ -4,7 +4,7 @@ import type {
   ProviderCliState,
   ProviderId,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 /**
  * Real-hook coverage for `useAmbientDriftGate` (use-ambient-drift-gate.ts).

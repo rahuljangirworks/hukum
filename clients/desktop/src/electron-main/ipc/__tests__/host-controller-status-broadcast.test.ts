@@ -80,7 +80,7 @@ function fakeHostController(withMutationStatus: boolean): FakeHostController {
     recoverIfDown: notUsedByBroadcaster,
     freePortAndRestart: notUsedByBroadcaster,
     uninstallHost: notUsedByBroadcaster,
-    removeTraycer: notUsedByBroadcaster,
+    removeHukum: notUsedByBroadcaster,
     isPendingRevisionRefreshQuarantined: notUsedByBroadcaster,
     onMutationProgress(
       listener: (progress: MutationProgress) => void,

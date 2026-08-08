@@ -35,7 +35,7 @@ import { uiQueryKeys } from "@/lib/query-keys";
  * `HostRuntime.onSelectionChange(...)` and rebinds `HostClient`
  * (Decision 14 - host-scoped cache invalidation fires automatically).
  *
- * The component is always mounted inside `<TraycerApp />` and short-
+ * The component is always mounted inside `<HukumApp />` and short-
  * circuits to `null` when the runtime binding is not yet ready (auth
  * still booting) so the shell affordance does not render pre-binding.
  */

@@ -42,7 +42,7 @@ import { readCliConfig, setShell } from "../store";
 const SHELL_PATH = "C:\\Windows\\System32\\wsl.exe";
 
 beforeEach(async () => {
-  h.home = await mkdtemp(join(tmpdir(), "traycer-config-rename-retry-"));
+  h.home = await mkdtemp(join(tmpdir(), "hukum-config-rename-retry-"));
   h.platform = "win32";
   h.renameCalls = 0;
   h.renameFailures = [];

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { chatQueuedManagedCommandItemSchema } from "@traycer/protocol/host/agent/gui/subscribe";
-import { autonomousResumeTriggerSchema } from "@traycer/protocol/persistence/epic/content-blocks";
+import { chatQueuedManagedCommandItemSchema } from "@hukum/protocol/host/agent/gui/subscribe";
+import { autonomousResumeTriggerSchema } from "@hukum/protocol/persistence/epic/content-blocks";
 
 /**
  * The chat-side doors into the managed-command UI: the queue chip and the

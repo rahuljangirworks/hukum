@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import type { GitChangedFile, GitStage } from "@traycer/protocol/host";
+import type { GitChangedFile, GitStage } from "@hukum/protocol/host";
 import { getBasename } from "@/lib/path/cross-platform-path";
 import { TILE_KIND_GIT_DIFF } from "@/stores/epics/canvas/tile-kinds";
 import type {

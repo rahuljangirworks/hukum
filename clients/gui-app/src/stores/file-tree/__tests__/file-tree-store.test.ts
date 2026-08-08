@@ -4,7 +4,7 @@ import {
   useFileTreeStore,
 } from "../file-tree-store";
 
-const PERSIST_KEY = "traycer-gui-app:file-tree";
+const PERSIST_KEY = "hukum-gui-app:file-tree";
 
 interface PersistedFileTreeState {
   readonly state: {

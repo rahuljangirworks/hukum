@@ -1,6 +1,6 @@
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { v4 as uuidv4 } from "uuid";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type { DraftSelection } from "@/stores/composer/composer-draft-store";
 import { collectImageAtoms } from "@/lib/composer/image-atoms";
 import { EMPTY_LANDING_DRAFT_CONTENT } from "./landing-draft-content";

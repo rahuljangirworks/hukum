@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { create } from "zustand";
-import type { TerminalSessionExitReason } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { TerminalSessionExitReason } from "@hukum/protocol/host/terminal/unary-schemas";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useEpicCanvasStore } from "@/stores/epics/canvas/store";

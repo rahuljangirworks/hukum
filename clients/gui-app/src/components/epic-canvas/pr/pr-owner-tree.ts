@@ -1,4 +1,4 @@
-import type { PrOwnerRef } from "@traycer/protocol/host/pr-schemas";
+import type { PrOwnerRef } from "@hukum/protocol/host/pr-schemas";
 import type { EpicTreeIndex } from "@/lib/epic-selectors";
 
 /**

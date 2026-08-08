@@ -13,7 +13,7 @@ import {
 import type {
   MigrationStreamCallbacks,
   MigrationStreamClientOptions,
-} from "@traycer-clients/shared/host-transport/migration-stream-client";
+} from "@hukum-clients/shared/host-transport/migration-stream-client";
 
 interface MigrationClientHarness {
   callbacks: MigrationStreamCallbacks | null;
@@ -37,7 +37,7 @@ const toastWarning = vi.hoisted(() =>
 );
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/migration-stream-client",
+  "@hukum-clients/shared/host-transport/migration-stream-client",
   () => ({
     MigrationStreamClient: class {
       constructor(options: MigrationStreamClientOptions) {

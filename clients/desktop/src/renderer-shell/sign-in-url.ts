@@ -1,11 +1,11 @@
 import {
   DEV_CLOUD_UI_BASE_URL_ENV,
   devBackendUrlFromEnv,
-} from "@traycer-clients/shared/platform/dev-backend-urls";
+} from "@hukum-clients/shared/platform/dev-backend-urls";
 import {
   devDesktopSlotProtocolScheme,
   sanitizeDevDesktopSlot,
-} from "@traycer-clients/shared/platform/dev-desktop-slot";
+} from "@hukum-clients/shared/platform/dev-desktop-slot";
 import { DESKTOP_PROTOCOL_SCHEME, DESKTOP_SIGN_IN_BASE_URL } from "../config";
 
 // The renderer has no `process.env`, so multi-run dev threads the slot in via

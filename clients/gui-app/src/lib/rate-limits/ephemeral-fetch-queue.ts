@@ -1,7 +1,7 @@
 import type { QueryClient } from "@tanstack/react-query";
-import type { AccountContext } from "@traycer/protocol/common/schemas";
+import type { AccountContext } from "@hukum/protocol/common/schemas";
 import { withHostQueryErrorBoundary } from "@/lib/query/host-query-error-boundary";
-import type { RequestOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { RequestOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import { stampHostRpcMethod } from "@/lib/host-rpc-policy/host-method-policy-table";
 import { queryKeys } from "@/lib/query-keys";

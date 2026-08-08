@@ -1,5 +1,5 @@
 import { useCallback, type ReactNode } from "react";
-import type { GitChangedFile } from "@traycer/protocol/host";
+import type { GitChangedFile } from "@hukum/protocol/host";
 import type { HighlightRanges } from "@/lib/git/path-highlight";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { GitFlatFileList } from "./git-flat-file-list";

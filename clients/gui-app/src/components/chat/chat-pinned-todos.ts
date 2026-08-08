@@ -8,7 +8,7 @@ import {
   createTaskTodoState,
   isTaskTodoToolName,
   type ParsedTaskTodo,
-} from "@traycer/protocol/host/agent/gui/task-todo-tools";
+} from "@hukum/protocol/host/agent/gui/task-todo-tools";
 
 export interface PinnedTodoSnapshot {
   readonly id: string;

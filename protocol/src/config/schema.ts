@@ -2,7 +2,7 @@ import { z } from "zod";
 import { LOG_LEVELS, DEFAULT_LOG_LEVEL } from "./log-level";
 
 /**
- * Current on-disk schema version for `~/.traycer/cli/config.json`. Bump it
+ * Current on-disk schema version for `~/.hukum/cli/config.json`. Bump it
  * (and add a `migrators` entry in `./store`) whenever the shape changes in
  * a NON-additive way - purely additive keys should instead be added as
  * `.optional()`/`.default()` fields so old files keep validating without a
@@ -27,7 +27,7 @@ export interface EnvOverrideEntry {
 const envOverrideMapSchema = z.record(z.string(), z.string().nullable());
 
 /**
- * The `logs` block in `~/.traycer/cli/config.json`: two independent thresholds —
+ * The `logs` block in `~/.hukum/cli/config.json`: two independent thresholds —
  * one for the client processes (CLI + desktop/renderer), one for the host — both
  * defaulting to `info` so a fresh install is quiet by default. Additive and
  * `.default()`-ed, so older config files that lack it keep validating; the only
@@ -50,9 +50,9 @@ export const featureSettingsSchema = z
 export type FeatureSettings = z.infer<typeof featureSettingsSchema>;
 
 /**
- * Zod schema for `~/.traycer/cli/config.json` - the single on-disk source
+ * Zod schema for `~/.hukum/cli/config.json` - the single on-disk source
  * of truth for the user's shell + env-override config, shared by the CLI
- * (`traycer config …`) and the host (terminal PTY spawns, provider-CLI
+ * (`hukum config …`) and the host (terminal PTY spawns, provider-CLI
  * PATH discovery). Validating through this schema on every read and write
  * is what guarantees neither side can silently corrupt the file or drift
  * from the other's expectations.

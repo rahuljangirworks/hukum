@@ -1,5 +1,5 @@
 import { useMemo, type RefObject } from "react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { appendPromptStashContent } from "@/lib/composer/prompt-stash-content";
 import type {

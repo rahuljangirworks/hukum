@@ -42,11 +42,11 @@ function applyCodeFontSize(size: number): void {
 function applyUiFontFamily(family: string | null): void {
   const style = window.document.documentElement.style;
   if (family === null) {
-    style.removeProperty("--traycer-font-ui");
+    style.removeProperty("--hukum-font-ui");
     return;
   }
   style.setProperty(
-    "--traycer-font-ui",
+    "--hukum-font-ui",
     buildFontFamilyValue(family, DEFAULT_UI_FONT_STACK),
   );
 }
@@ -54,11 +54,11 @@ function applyUiFontFamily(family: string | null): void {
 function applyCodeFontFamily(family: string | null): void {
   const style = window.document.documentElement.style;
   if (family === null) {
-    style.removeProperty("--traycer-font-mono");
+    style.removeProperty("--hukum-font-mono");
     return;
   }
   style.setProperty(
-    "--traycer-font-mono",
+    "--hukum-font-mono",
     buildFontFamilyValue(family, DEFAULT_MONO_FONT_STACK),
   );
 }

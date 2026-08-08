@@ -18,8 +18,8 @@ vi.mock("electron-log", () => ({
   },
 }));
 
-vi.mock("../../cli/traycer-cli", () => ({
-  streamTraycerCliJson: vi.fn(async () => ({ data: {} })),
+vi.mock("../../cli/hukum-cli", () => ({
+  streamHukumCliJson: vi.fn(async () => ({ data: {} })),
 }));
 
 import { HostLifecycle, PRODUCTION_LABEL } from "../host-lifecycle";
@@ -253,7 +253,7 @@ describe("HostLifecycle reachability retry ladder", () => {
       expect(lifecycle.getSnapshot()).toBeNull();
       await waitUntil(() => probeCalls >= 2, 5_000);
 
-      // `traycer host stop` unlinks pid.json on graceful teardown. Even if an
+      // `hukum host stop` unlinks pid.json on graceful teardown. Even if an
       // unrelated process now answers on that port, an ABSENT file must clear
       // the ladder and never resurface a host the user deliberately stopped.
       await unlink(layout.pidMetadataFile);

@@ -37,8 +37,8 @@ const POINTER_DRAG_THRESHOLD_PX = 4;
 // indefinitely. After this window, unsolicited current-generation reports are
 // accepted again; a matching reply clears the wait immediately.
 const MEASURE_REQUEST_TIMEOUT_MS = 1_000;
-const HEIGHT_MESSAGE_MARKER = "traycer:wireframe:height:v1";
-const MEASURE_REQUEST_MARKER = "traycer:wireframe:measure-request:v1";
+const HEIGHT_MESSAGE_MARKER = "hukum:wireframe:height:v1";
+const MEASURE_REQUEST_MARKER = "hukum:wireframe:measure-request:v1";
 const INITIAL_DOCTYPE_PATTERN = /^\s*<!doctype(?:\s+[^>]*)?>/i;
 function buildHeightMeasurementScript(documentGeneration: number): string {
   return `

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import { createFakeRunnerHost } from "../../../__tests__/create-fake-runner-host";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { WindowsBridgeProvider } from "@/providers/windows-bridge-provider";
@@ -32,7 +32,7 @@ import {
 import { emptyTabStripLayout } from "@/stores/tabs/layout";
 import { useTabsStore } from "@/stores/tabs/store";
 import { getTabSplitCompatibility } from "@/stores/tabs/tab-split-compatibility";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   DesktopAuthSessionSnapshot,
   DesktopJsonValue,
@@ -276,7 +276,7 @@ describe("<WindowsBridgeProvider />", () => {
   it("does not replay legacy localStorage migration from renderer bootstrap", async () => {
     const fake = createDesktopWindowsBridge();
     window.localStorage.setItem(
-      "traycer-gui-app:epic-canvas:anon",
+      "hukum-gui-app:epic-canvas:anon",
       JSON.stringify({
         state: {
           openEpicTabs: [{ id: "epic-a", name: "Alpha" }],
@@ -285,7 +285,7 @@ describe("<WindowsBridgeProvider />", () => {
       }),
     );
     window.localStorage.setItem(
-      "traycer-gui-app:draft",
+      "hukum-gui-app:draft",
       JSON.stringify({
         state: {
           draft: { id: "draft-a", prompt: "Continue the plan" },
@@ -306,9 +306,9 @@ describe("<WindowsBridgeProvider />", () => {
     );
     expect(fake.perWindowUpdates).toEqual([]);
     expect(
-      window.localStorage.getItem("traycer-gui-app:epic-canvas:anon"),
+      window.localStorage.getItem("hukum-gui-app:epic-canvas:anon"),
     ).not.toBeNull();
-    expect(window.localStorage.getItem("traycer-gui-app:draft")).not.toBeNull();
+    expect(window.localStorage.getItem("hukum-gui-app:draft")).not.toBeNull();
   });
 
   it("keeps desktop hydration pending until the per-window snapshot is applied", async () => {

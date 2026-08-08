@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { GuiHarnessId } from "@traycer/protocol/host";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { GuiHarnessId } from "@hukum/protocol/host";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 import { cappedByUpdatedAt } from "@/lib/bounded-record";
 import { basePersistOptions, composerHarnessMemoryKey } from "@/lib/persist";
 import { useComposerRunSettingsStore } from "@/stores/composer/composer-run-settings-store";

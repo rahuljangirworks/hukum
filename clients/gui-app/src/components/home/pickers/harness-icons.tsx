@@ -122,8 +122,8 @@ export const OmpIcon: HarnessIcon = (props) => (
   </svg>
 );
 
-// Traycer does not have a lobehub entry — hand-rolled from the brand mark.
-export const TraycerIcon: HarnessIcon = (props) => (
+// Hukum does not have a lobehub entry — hand-rolled from the brand mark.
+export const HukumIcon: HarnessIcon = (props) => (
   <svg {...props} viewBox="0 0 211 218" fill="currentColor">
     <path
       fillRule="evenodd"

@@ -19,7 +19,7 @@ import {
 import {
   HostRpcError,
   HostTransportFailureError,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 
 function makeError(code: HostRpcError["code"], message: string): HostRpcError {
   return new HostRpcError({
@@ -206,7 +206,7 @@ describe("toastFromHostError", () => {
     );
 
     expect(toast.error).toHaveBeenCalledWith(
-      "Can't reach the Traycer host. It may be restarting — try again in a moment.",
+      "Can't reach the Hukum host. It may be restarting — try again in a moment.",
       { id: "host-error:transport", cancel: null },
     );
     expect(useAppLocalNotificationsStore.getState().orderedIds).toHaveLength(0);
@@ -242,7 +242,7 @@ describe("toastFromHostError", () => {
     );
 
     expect(toast.error).toHaveBeenCalledWith(
-      "This needs a newer Traycer host. Update the host to continue.",
+      "This needs a newer Hukum host. Update the host to continue.",
       {
         id: "host-error:E_HOST_UNSUPPORTED:E_HOST_UNSUPPORTED",
         cancel: null,

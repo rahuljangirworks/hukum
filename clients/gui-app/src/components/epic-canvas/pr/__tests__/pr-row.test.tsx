@@ -7,8 +7,8 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import type { PrLightItem } from "@traycer/protocol/host/pr-schemas";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import type { PrLightItem } from "@hukum/protocol/host/pr-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { RunnerHostContext } from "@/providers/runner-host-context";
 import { PrRow, type PrRowEntry } from "@/components/epic-canvas/pr/pr-row";
@@ -47,22 +47,22 @@ vi.mock("@/components/epic-canvas/pr/pr-owner-label", () => ({
 
 const BASE_ITEM: PrLightItem = {
   githubHost: "github.com",
-  base: { owner: "traycerai", repo: "traycer-internal", prNumber: 4226 },
-  prUrl: "https://github.com/traycerai/traycer-internal/pull/4226",
+  base: { owner: "hukumai", repo: "hukum-internal", prNumber: 4226 },
+  prUrl: "https://github.com/hukumai/hukum-internal/pull/4226",
   state: "open",
   liveness: "live",
   observedAt: 1_000,
   isDraft: false,
   title: "Remote Host Support",
   baseRefName: "development",
-  headRefName: "traycer/remote-host-support",
+  headRefName: "hukum/remote-host-support",
   additions: 10,
   deletions: 2,
   checksRollup: null,
   reviewDecision: null,
   commentCount: 0,
   updatedAt: null,
-  repoIdentifier: { owner: "traycerai", repo: "traycer-internal" },
+  repoIdentifier: { owner: "hukumai", repo: "hukum-internal" },
   repoRole: "superproject",
   linkGroupKey: null,
   owners: [],
@@ -71,13 +71,13 @@ const BASE_ITEM: PrLightItem = {
 const ROW_TILE_COORDS = {
   hostId: "host1",
   githubHost: "github.com",
-  owner: "traycerai",
-  repo: "traycer-internal",
+  owner: "hukumai",
+  repo: "hukum-internal",
   prNumber: 4226,
 };
 const LINKED_TILE_COORDS = {
   ...ROW_TILE_COORDS,
-  repo: "traycer",
+  repo: "hukum",
   prNumber: 675,
 };
 const ROW_TILE_ID = prDetailTileId(ROW_TILE_COORDS);
@@ -116,13 +116,13 @@ function renderRow(overrides: Partial<PrLightItem>) {
 
 function createRunnerHost(): MockRunnerHost {
   return new MockRunnerHost({
-    signInUrl: "https://auth.traycer.test/sign-in",
-    authnBaseUrl: "https://auth.traycer.test",
+    signInUrl: "https://auth.hukum.test/sign-in",
+    authnBaseUrl: "https://auth.hukum.test",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 
@@ -168,7 +168,7 @@ describe("PrRow band 1: identity badges", () => {
     const link = screen.getByRole("link", { name: "Open #4226 on GitHub" });
     expect(link).toBe(screen.getByTestId("pr-row-number"));
     expect(link.getAttribute("href")).toBe(
-      "https://github.com/traycerai/traycer-internal/pull/4226",
+      "https://github.com/hukumai/hukum-internal/pull/4226",
     );
   });
 
@@ -213,7 +213,7 @@ describe("PrRow band 1: identity badges", () => {
     await new Promise<void>((resolve) => setTimeout(resolve, 0));
     expect(openExternalLink).toHaveBeenCalledTimes(1);
     expect(openExternalLink).toHaveBeenCalledWith(
-      "https://github.com/traycerai/traycer-internal/pull/4226",
+      "https://github.com/hukumai/hukum-internal/pull/4226",
     );
 
     resolveOpen?.();
@@ -234,7 +234,7 @@ describe("PrRow band 2-4: title, branches, owners", () => {
     renderRow({});
 
     expect(screen.getByTestId("pr-row").textContent).toContain(
-      "development ← traycer/remote-host-support",
+      "development ← hukum/remote-host-support",
     );
   });
 
@@ -277,7 +277,7 @@ describe("PrRow band 2-4: title, branches, owners", () => {
     // row's identity with it.
     expect(screen.getByTestId("pr-row").textContent).toContain("#4226");
     expect(screen.getByTestId("pr-row").textContent).toContain(
-      "development ← traycer/remote-host-support",
+      "development ← hukum/remote-host-support",
     );
   });
 
@@ -414,9 +414,9 @@ describe("PrRow submodule PRs", () => {
     // it gets the same four bands - and it reaches the row through its own
     // repo group (see `groupPrItemsByRepo`), not as somebody's nested detail.
     renderRow({
-      base: { owner: "traycerai", repo: "traycer", prNumber: 675 },
-      prUrl: "https://github.com/traycerai/traycer/pull/675",
-      repoIdentifier: { owner: "traycerai", repo: "traycer" },
+      base: { owner: "hukumai", repo: "hukum", prNumber: 675 },
+      prUrl: "https://github.com/hukumai/hukum/pull/675",
+      repoIdentifier: { owner: "hukumai", repo: "hukum" },
       repoRole: "submodule",
       linkGroupKey: "/w/pair",
       title: "Protocol bits",
@@ -440,7 +440,7 @@ describe("PrRow selection surface", () => {
   //
   // The first attempt was a solid `bg-accent` fill, copied from the one-line
   // chat row. Measured, it is not a WCAG failure - it bottoms out at 3.08:1 on
-  // `traycer-green` dark, whose `--accent` is its saturated `--primary`
+  // `hukum-green` dark, whose `--accent` is its saturated `--primary`
   // (#257174) - but that is the 3:1 graphic floor with nothing to spare, on a
   // row whose whole job is carrying status colour. The wash restores the
   // margin; these two tests pin both halves of that.

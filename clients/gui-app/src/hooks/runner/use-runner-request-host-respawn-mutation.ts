@@ -3,7 +3,7 @@ import {
   useQueryClient,
   type UseMutationResult,
 } from "@tanstack/react-query";
-import type { HostRestartRequestResult } from "@traycer-clients/shared/platform/runner-host";
+import type { HostRestartRequestResult } from "@hukum-clients/shared/platform/runner-host";
 import { useRunnerHost } from "@/providers/use-runner-host";
 import { runnerMutationKeys, runnerQueryKeys } from "@/lib/query-keys";
 import { toastFromRunnerError } from "@/lib/runner-error-toast";
@@ -35,7 +35,7 @@ export function useRunnerRequestHostRespawn(): UseMutationResult<
 > {
   const runnerHost = useRunnerHost();
   const queryClient = useQueryClient();
-  const traycerCli = runnerHost.traycerCli;
+  const hukumCli = runnerHost.hukumCli;
   return useMutation<HostRestartRequestResult>({
     mutationKey: runnerMutationKeys.requestHostRespawn(),
     mutationFn: () => runnerHost.requestHostRespawn(),
@@ -48,9 +48,9 @@ export function useRunnerRequestHostRespawn(): UseMutationResult<
         toastHostRestartDeclined(result.message);
         return;
       }
-      if (traycerCli === null) return;
+      if (hukumCli === null) return;
       void queryClient.invalidateQueries({
-        queryKey: runnerQueryKeys.traycerHostStatus(traycerCli),
+        queryKey: runnerQueryKeys.hukumHostStatus(hukumCli),
       });
     },
     onError: (err) => toastFromRunnerError(err, "Couldn't restart host"),

@@ -9,7 +9,7 @@
 import type {
   ProviderCliState,
   ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { providerDisplayName } from "@/lib/provider-ordering";
 
 export const PROVIDER_RAIL_STATUS = {
@@ -56,7 +56,7 @@ export function providerRailStatusLabel(status: ProviderRailStatus): string {
 
 /**
  * Matches on the name the rail actually RENDERS plus the wire id, so both
- * "Traycer Inference" and "traycer" find the same row - `providerDisplayName`
+ * "Hukum Inference" and "hukum" find the same row - `providerDisplayName`
  * overrides the protocol's display name for that one provider, and matching the
  * protocol string instead would leave the visible words unsearchable.
  *

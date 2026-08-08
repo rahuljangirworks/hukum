@@ -1,8 +1,8 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { HostCommunicationGraphCloudFeedEvent } from "@traycer/protocol/host/epic/communication-graph";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { RemoteHostDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
+import type { HostCommunicationGraphCloudFeedEvent } from "@hukum/protocol/host/epic/communication-graph";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { RemoteHostDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
 import { useCommGraphSnapshot } from "@/components/epic-canvas/comm-graph/use-comm-graph-snapshot";
 import {
   __setCommGraphCloudSubscriptionOpenerForTests,

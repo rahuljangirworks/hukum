@@ -39,7 +39,7 @@ function prepareMacDevBundle(
     .update(workspaceRoot)
     .digest("hex")
     .slice(0, 8);
-  const devBundleId = `ai.traycer.desktop.dev.${checkoutTag}`;
+  const devBundleId = `ai.hukum.desktop.dev.${checkoutTag}`;
   const sourceAppPath = path.resolve(defaultElectronBinary, "..", "..", "..");
   const sourceInfoPlistPath = path.join(
     sourceAppPath,
@@ -59,7 +59,7 @@ function prepareMacDevBundle(
     "icon.icns",
   );
   const outputRoot = path.resolve(workspaceRoot, "dist", "dev-macos");
-  const devAppPath = path.join(outputRoot, "Traycer.app");
+  const devAppPath = path.join(outputRoot, "Hukum.app");
   const devExecutablePath = path.join(
     devAppPath,
     "Contents",
@@ -67,7 +67,7 @@ function prepareMacDevBundle(
     "Electron",
   );
   const metadataPath = path.join(outputRoot, "bundle-state.json");
-  const bundleDisplayName = devDesktopDisplayName ?? "Traycer";
+  const bundleDisplayName = devDesktopDisplayName ?? "Hukum";
   const nextState = createDevBundleState({
     devBundleId,
     bundleDisplayName,
@@ -91,12 +91,12 @@ function prepareMacDevBundle(
 
   copyFileSync(
     sourceIconPath,
-    path.join(devAppPath, "Contents", "Resources", "traycer.icns"),
+    path.join(devAppPath, "Contents", "Resources", "hukum.icns"),
   );
 
   const plistPath = path.join(devAppPath, "Contents", "Info.plist");
   replacePlistString(plistPath, "CFBundleDisplayName", bundleDisplayName);
-  replacePlistString(plistPath, "CFBundleIconFile", "traycer.icns");
+  replacePlistString(plistPath, "CFBundleIconFile", "hukum.icns");
   replacePlistString(plistPath, "CFBundleIdentifier", devBundleId);
   replacePlistString(plistPath, "CFBundleName", bundleDisplayName);
   execFileSync("codesign", ["--force", "--deep", "--sign", "-", devAppPath]);

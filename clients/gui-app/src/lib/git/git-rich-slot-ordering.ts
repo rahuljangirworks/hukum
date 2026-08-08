@@ -18,8 +18,8 @@
  * manual refresh observe the SAME ordering authority.
  */
 import type { QueryClient } from "@tanstack/react-query";
-import type { GitListChangedFilesResponseV11 } from "@traycer/protocol/host";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { GitListChangedFilesResponseV11 } from "@hukum/protocol/host";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { gitQueryKeys } from "@/lib/query-keys/git-query-keys";
 
 interface RichSlotOrdering {

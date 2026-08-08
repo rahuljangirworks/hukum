@@ -2,8 +2,8 @@ import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import type {
   ProviderRateLimits,
   RateLimitUnavailableReason,
-} from "@traycer/protocol/host";
-import type { ResponseOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host";
+import type { ResponseOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 
 const PROVIDERS_LIST_METHOD_DISCRIMINATOR = "providers.list";
@@ -107,7 +107,7 @@ export interface ProviderRateLimitEnvelope {
 /**
  * Whether `response` carries a snapshot for a provider whose `providers.list`
  * profile rows report cached `rateLimitStatus`: claude-code, codex, or grok.
- * Openrouter/kilocode/traycer-aperture reads gate out here so a convergence
+ * Openrouter/kilocode/hukum-aperture reads gate out here so a convergence
  * invalidation isn't spent on a provider that could never affect the
  * switch-prompt banner. Failed probes (`available: false` - timeout,
  * cli_not_found, ...) gate out too: they carry no usage the host's gauge cache

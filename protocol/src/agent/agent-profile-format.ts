@@ -9,7 +9,7 @@
  *   - **Reusable selections.** A profile is always rendered as the exact
  *     `--profile <value>` token the next command takes (`ambient`, or the
  *     managed profile id), so an agent can copy a row straight into
- *     `traycer agent create` / `profile-rate-limits` / `configure` without
+ *     `hukum agent create` / `profile-rate-limits` / `configure` without
  *     transcribing an id out of prose.
  *   - **Never invent availability.** The unavailable rate-limit arm renders
  *     its reason; a `null` window or an uncaptured `usageUpdatedAt` renders
@@ -25,7 +25,7 @@ import type {
   ConcreteProfileSelection,
   ProviderRateLimits,
   ProviderRateLimitWindow,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 
 /**
  * The `--profile` token that reselects this profile in a later command: the
@@ -44,8 +44,8 @@ export function formatAgentProviderProfilesResponse(
   response: AgentListProviderProfilesResponse,
 ): string {
   const legend = `Each line is: --profile <value> - label [auth: status] [limits: status, captured <time>] [last-used]
-Pass the --profile value to 'traycer agent create', 'traycer agent profile-rate-limits', or 'traycer agent configure'.
-Limit status is the cached reading from the profile's last use - run 'traycer agent profile-rate-limits' for a fresh, detailed read.`;
+Pass the --profile value to 'hukum agent create', 'hukum agent profile-rate-limits', or 'hukum agent configure'.
+Limit status is the cached reading from the profile's last use - run 'hukum agent profile-rate-limits' for a fresh, detailed read.`;
   if (response.profiles.length === 0) {
     return `${legend}
 

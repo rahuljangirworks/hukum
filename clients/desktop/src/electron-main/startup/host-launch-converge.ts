@@ -205,7 +205,7 @@ export async function runLaunchHostConvergeReconcile(
  * Only `busy` passes through untouched: it is the controller's own gate saying
  * the host has work in progress, and `convergeReady` consults the same gate.
  * `deferred` does NOT pass through, because it is not one fact. The same arm
- * carries at least three: another Traycer process holding the CLI lock, a
+ * carries at least three: another Hukum process holding the CLI lock, a
  * launch-trigger apply on a removed host, and - the one that broke this - a
  * registry outage leaving the stage un-eligibility-checked
  * (`host-controller.ts`, `coalesceIntent`'s `eligibleStage === null` return).

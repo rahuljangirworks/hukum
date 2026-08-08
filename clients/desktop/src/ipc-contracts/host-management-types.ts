@@ -1,6 +1,6 @@
 /**
  * Desktop IPC re-exports of the shared host-management contract. The
- * canonical definitions live in `@traycer-clients/shared/platform/
+ * canonical definitions live in `@hukum-clients/shared/platform/
  * runner-host` so `gui-app`, mock runner host, and the desktop preload
  * agree on a single shape; this file lets the Electron main code and the
  * preload bridge keep their existing import paths.
@@ -44,6 +44,6 @@ export type {
   MutationOutcome,
   MutationProgress,
   ServiceRegistrationOk,
-  TraycerUninstallResult,
+  HukumUninstallResult,
   FreePortAndRestartInput,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";

@@ -12,7 +12,7 @@ import { Gauge, Settings } from "lucide-react";
 import {
   DEFAULT_ACCOUNT_CONTEXT,
   type AccountContext,
-} from "@traycer/protocol/common/schemas";
+} from "@hukum/protocol/common/schemas";
 import { Badge } from "@/components/ui/badge";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { PopoverContent } from "@/components/ui/popover";
@@ -44,12 +44,12 @@ import {
   type ProviderRateLimitEnvelope,
 } from "@/lib/rate-limits/rate-limit-envelope";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";
-import type { RateLimitUnavailableReason } from "@traycer/protocol/host";
-import type { TraycerTeamSubscription } from "@traycer/protocol/auth";
+import type { RateLimitUnavailableReason } from "@hukum/protocol/host";
+import type { HukumTeamSubscription } from "@hukum/protocol/auth";
 import type {
   ProviderId,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import {
   useVisibleRateLimitProviders,
   type ConfiguredRateLimitProvider,
@@ -92,14 +92,14 @@ import {
 import {
   accountContextValue,
   isCreditBasedPricing,
-  isTraycerEligible,
-  resolveTraycerSubscriptionState,
+  isHukumEligible,
+  resolveHukumSubscriptionState,
   selectSubscription,
   subscriptionPlanLabel,
-  type TraycerSubscription,
-  type TraycerSubscriptionState,
-} from "@/lib/auth/traycer-subscription-content";
-import { TraycerSubscriptionView } from "@/components/settings/panels/traycer-subscription-views";
+  type HukumSubscription,
+  type HukumSubscriptionState,
+} from "@/lib/auth/hukum-subscription-content";
+import { HukumSubscriptionView } from "@/components/settings/panels/hukum-subscription-views";
 import {
   useRateLimitPopoverStore,
   type RateLimitPopoverTab,
@@ -108,13 +108,13 @@ import { cn } from "@/lib/utils";
 
 /**
  * A rail/Overview entry, in draw order: either a host-RPC provider or the
- * synthetic Traycer entry. `railTabProviderId` maps each to a `ProviderId` so a
- * single `sortProviderStatesByProviderOrder` positions Traycer at its
+ * synthetic Hukum entry. `railTabProviderId` maps each to a `ProviderId` so a
+ * single `sortProviderStatesByProviderOrder` positions Hukum at its
  * `PROVIDER_ID_ORDER` slot among the providers.
  */
 type RailTabDescriptor =
   | { readonly kind: "provider"; readonly providerId: RateLimitProviderId }
-  | { readonly kind: "traycer" };
+  | { readonly kind: "hukum" };
 
 const PERSONAL_ACCOUNT_CONTEXT: AccountContext = { type: "PERSONAL" };
 const NO_RATE_LIMIT_FETCH_ELIGIBILITY: RateLimitFetchEligibility = {
@@ -283,10 +283,10 @@ function rateLimitPopoverViewportBounds(
 type RateLimitPopoverSurfaceVariant = "content" | "empty";
 
 function railTabProviderId(tab: RailTabDescriptor): ProviderId {
-  return tab.kind === "traycer" ? "traycer" : tab.providerId;
+  return tab.kind === "hukum" ? "hukum" : tab.providerId;
 }
 
-function useTraycerSubscription() {
+function useHukumSubscription() {
   const query = useAuthUser();
   const storedAccountContext = useAccountContextStore((s) => s.accountContext);
   const user = query.data ?? null;
@@ -310,7 +310,7 @@ function useTraycerSubscription() {
   ];
   const eligible = accountSubscriptions.some(
     (account) =>
-      account.subscription !== null && isTraycerEligible(account.subscription),
+      account.subscription !== null && isHukumEligible(account.subscription),
   );
   const rateLimitAccountContexts = accountSubscriptions
     .filter(
@@ -332,13 +332,13 @@ function useTraycerSubscription() {
 
 function orderRailTabs(
   providers: ReadonlyArray<ConfiguredRateLimitProvider>,
-  includeTraycer: boolean,
+  includeHukum: boolean,
 ): ReadonlyArray<RailTabDescriptor> {
   const descriptors: RailTabDescriptor[] = providers.map((provider) => ({
     kind: "provider",
     providerId: provider.providerId,
   }));
-  if (includeTraycer) descriptors.push({ kind: "traycer" });
+  if (includeHukum) descriptors.push({ kind: "hukum" });
   return sortProviderStatesByProviderOrder(
     descriptors.map((descriptor) => ({
       providerId: railTabProviderId(descriptor),
@@ -662,22 +662,22 @@ function RateLimitPopoverBody({
     [displayProviders],
   );
 
-  // Traycer is a GUI-only rail entry (AuthService subscription, not a host RPC),
+  // Hukum is a GUI-only rail entry (AuthService subscription, not a host RPC),
   // gated on the *selected* account being paid or credit-bundled. Recomputed
   // reactively from the auth query + account-context store, so the tab appears /
   // disappears live as either changes - not snapshotted at popover-open time.
-  const traycerSubscription = useTraycerSubscription();
+  const hukumSubscription = useHukumSubscription();
 
   const railTabs = useMemo(
-    () => orderRailTabs(providers, traycerSubscription.eligible),
-    [providers, traycerSubscription.eligible],
+    () => orderRailTabs(providers, hukumSubscription.eligible),
+    [providers, hukumSubscription.eligible],
   );
   const activeTab = useRateLimitPopoverStore((state) => state.activeTab);
   const setActiveTab = useRateLimitPopoverStore((state) => state.setActiveTab);
 
   // Zero-state only when there is genuinely nothing to show: no host-RPC
-  // providers AND no eligible Traycer tab.
-  if (providers.length === 0 && !traycerSubscription.eligible) {
+  // providers AND no eligible Hukum tab.
+  if (providers.length === 0 && !hukumSubscription.eligible) {
     return (
       <RateLimitPopoverResizeSurface variant="empty">
         <RateLimitZeroState onClose={onClose} />
@@ -685,13 +685,13 @@ function RateLimitPopoverBody({
     );
   }
 
-  // A credential removed (or Traycer becoming ineligible) mid-session can drop
+  // A credential removed (or Hukum becoming ineligible) mid-session can drop
   // the active tab from the rail; fall back to Overview rather than rendering a
   // tab that no longer exists.
   const validTabs = new Set<RateLimitPopoverTab>([
     "overview",
     ...railTabs.map((tab) =>
-      tab.kind === "traycer" ? "traycer" : tab.providerId,
+      tab.kind === "hukum" ? "hukum" : tab.providerId,
     ),
   ]);
   const resolvedTab: RateLimitPopoverTab = validTabs.has(activeTab)
@@ -707,12 +707,12 @@ function RateLimitPopoverBody({
       <RateLimitRail
         railTabs={railTabs}
         providers={providers}
-        traycerRefreshTarget={{
-          enabled: traycerSubscription.eligible,
+        hukumRefreshTarget={{
+          enabled: hukumSubscription.eligible,
           rateLimitAccountContexts:
-            traycerSubscription.rateLimitAccountContexts,
-          isFetching: traycerSubscription.query.isFetching,
-          refetch: traycerSubscription.query.refetch,
+            hukumSubscription.rateLimitAccountContexts,
+          isFetching: hukumSubscription.query.isFetching,
+          refetch: hukumSubscription.query.refetch,
         }}
         activeTab={resolvedTab}
         onSelect={setActiveTab}
@@ -738,7 +738,7 @@ function RateLimitPopoverBody({
 }
 
 /**
- * The single-tab detail pane: the synthetic Traycer block, or a host-RPC
+ * The single-tab detail pane: the synthetic Hukum block, or a host-RPC
  * provider block. Split out so `RateLimitPopoverBody` picks Overview-vs-detail
  * with one ternary instead of a nested one.
  */
@@ -751,8 +751,8 @@ function RateLimitDetailPane({
   readonly providers: ReadonlyArray<ConfiguredRateLimitProvider>;
   readonly profileSelection: RateLimitProfileSelection;
 }): ReactNode {
-  return tab === "traycer" ? (
-    <TraycerRateLimitBlock variant="popover-detail" onReady={null} />
+  return tab === "hukum" ? (
+    <HukumRateLimitBlock variant="popover-detail" onReady={null} />
   ) : (
     <RateLimitProviderBlock
       providerId={tab}
@@ -777,14 +777,14 @@ function RateLimitDetailPane({
 function RateLimitRail({
   railTabs,
   providers,
-  traycerRefreshTarget,
+  hukumRefreshTarget,
   activeTab,
   onSelect,
   onClose,
 }: {
   readonly railTabs: ReadonlyArray<RailTabDescriptor>;
   readonly providers: ReadonlyArray<ConfiguredRateLimitProvider>;
-  readonly traycerRefreshTarget: TraycerRefreshTarget;
+  readonly hukumRefreshTarget: HukumRefreshTarget;
   readonly activeTab: RateLimitPopoverTab;
   readonly onSelect: (tab: RateLimitPopoverTab) => void;
   readonly onClose: () => void;
@@ -810,14 +810,14 @@ function RateLimitRail({
         />
         <div aria-hidden className="my-0.5 h-px w-5 bg-border" />
         {railTabs.map((tab) =>
-          tab.kind === "traycer" ? (
+          tab.kind === "hukum" ? (
             <RailTab
-              key="traycer"
-              label={providerDisplayName("traycer")}
-              selected={activeTab === "traycer"}
-              onSelect={() => onSelect("traycer")}
+              key="hukum"
+              label={providerDisplayName("hukum")}
+              selected={activeTab === "hukum"}
+              onSelect={() => onSelect("hukum")}
               icon={
-                <HarnessIcon harnessId={providerIdToGuiHarnessId("traycer")} />
+                <HarnessIcon harnessId={providerIdToGuiHarnessId("hukum")} />
               }
             />
           ) : (
@@ -837,7 +837,7 @@ function RateLimitRail({
       </div>
       <RateLimitRefreshAllButton
         providers={providers}
-        traycerRefreshTarget={traycerRefreshTarget}
+        hukumRefreshTarget={hukumRefreshTarget}
       />
       <TooltipWrapper
         label="Provider settings"
@@ -892,9 +892,9 @@ function RailTab({
  * The Overview tab: every rail entry's *condensed* block
  * (`variant="popover-overview"`), in rail order, each separated by a divider.
  * For host-RPC providers that's their 5h/Weekly windows plus credit/balance
- * figures; for the Traycer entry it's the tier badge + credit/rate-limit
+ * figures; for the Hukum entry it's the tier badge + credit/rate-limit
  * breakdown. Per-model breakdowns, spend controls, badges, plan labels, and the
- * Traycer account picker are single-provider-tab detail, not shown here. The
+ * Hukum account picker are single-provider-tab detail, not shown here. The
  * "Refresh all" and settings controls live on the rail (shared across every
  * tab), so this pane is pure content - no header row, and dividers only
  * *between* consecutive blocks. Not capped at 3 (unlike the header glyph) -
@@ -950,8 +950,8 @@ function RateLimitOverview({
             {showDivider ? (
               <div aria-hidden className="h-px bg-border/70" />
             ) : null}
-            {tab.kind === "traycer" ? (
-              <TraycerRateLimitBlock
+            {tab.kind === "hukum" ? (
+              <HukumRateLimitBlock
                 variant="popover-overview"
                 onReady={onReady}
               />
@@ -991,14 +991,14 @@ function RateLimitOverviewLoading(): ReactNode {
   );
 }
 
-interface TraycerRefreshTarget {
+interface HukumRefreshTarget {
   readonly enabled: boolean;
   readonly rateLimitAccountContexts: ReadonlyArray<AccountContext>;
   readonly isFetching: boolean;
   readonly refetch: () => Promise<unknown>;
 }
 
-function useTraycerRateLimitUsageState(
+function useHukumRateLimitUsageState(
   accountContexts: ReadonlyArray<AccountContext>,
 ): {
   readonly isFetching: boolean;
@@ -1032,7 +1032,7 @@ function useTraycerRateLimitUsageState(
  * refresh as one queued batch whose profile pulls run concurrently
  * (`force: true`), while httpFetch providers refresh concurrently alongside via
  * a direct query invalidation - a plain GET has no subprocess cost to serialize.
- * The synthetic Traycer entry refreshes here too: it refetches the AuthService
+ * The synthetic Hukum entry refreshes here too: it refetches the AuthService
  * subscription query, and rate-limit based plans additionally invalidate the
  * unscoped aperture `host.getRateLimitUsage` query that backs the live artifact
  * bar.
@@ -1041,24 +1041,24 @@ function useTraycerRateLimitUsageState(
  * settled, even after one provider's own `isFetching` clears), each configured
  * httpFetch provider's own
  * `isFetching` (read via `useHostQueries` against the exact same query keys the
- * invalidation below targets), plus Traycer's auth/aperture fetch state - so
+ * invalidation below targets), plus Hukum's auth/aperture fetch state - so
  * the icon spins for the whole round regardless of which lane(s) are actually
  * configured, not just when an ephemeralProcess provider happens to be in the
  * mix.
  */
 function RateLimitRefreshAllButton({
   providers,
-  traycerRefreshTarget,
+  hukumRefreshTarget,
 }: {
   readonly providers: ReadonlyArray<ConfiguredRateLimitProvider>;
-  readonly traycerRefreshTarget: TraycerRefreshTarget;
+  readonly hukumRefreshTarget: HukumRefreshTarget;
 }): ReactNode {
   const draining = useIsRateLimitQueueDraining();
   const queryClient = useQueryClient();
   const hostId = useReactiveActiveHostId();
   const client = useHostClient();
-  const traycerRateLimitUsageState = useTraycerRateLimitUsageState(
-    traycerRefreshTarget.rateLimitAccountContexts,
+  const hukumRateLimitUsageState = useHukumRateLimitUsageState(
+    hukumRefreshTarget.rateLimitAccountContexts,
   );
   const httpFetchProviders = providers.filter(
     (provider) => provider.lane === "httpFetch",
@@ -1114,21 +1114,21 @@ function RateLimitRefreshAllButton({
     options: httpFetchOptions,
     mapResponse: mapResponseToProviderRateLimitEnvelope,
   });
-  const traycerRefreshing =
-    traycerRefreshTarget.enabled &&
-    (traycerRefreshTarget.isFetching || traycerRateLimitUsageState.isFetching);
+  const hukumRefreshing =
+    hukumRefreshTarget.enabled &&
+    (hukumRefreshTarget.isFetching || hukumRateLimitUsageState.isFetching);
   const refreshing =
     draining ||
     httpFetchQueries.some((query) => query.isFetching) ||
-    traycerRefreshing;
+    hukumRefreshing;
   const hasRefreshTarget =
     httpFetchRequests.length > 0 ||
     ephemeralProcessRequests.length > 0 ||
-    traycerRefreshTarget.enabled;
+    hukumRefreshTarget.enabled;
 
   // Fire-and-forget, not awaited: httpFetch providers refresh concurrently via a
   // direct invalidation, ephemeralProcess profiles fan out inside one queued
-  // batch, and Traycer refetches its subscription/usage queries. Returns
+  // batch, and Hukum refetches its subscription/usage queries. Returns
   // an already-resolved promise so `RefreshIconButton` gets its
   // `() => Promise<void>` contract without gating the spinner on the fetches
   // themselves - `refreshing` (above) owns that.
@@ -1146,12 +1146,12 @@ function RateLimitRefreshAllButton({
       });
     });
     void enqueueRateLimitFetchBatch(ephemeralProcessRequests, { force: true });
-    if (traycerRefreshTarget.enabled) {
-      void traycerRefreshTarget.refetch();
-      traycerRefreshTarget.rateLimitAccountContexts.forEach(
+    if (hukumRefreshTarget.enabled) {
+      void hukumRefreshTarget.refetch();
+      hukumRefreshTarget.rateLimitAccountContexts.forEach(
         (accountContext) => {
           void queryClient.invalidateQueries({
-            queryKey: queryKeys.hostTraycerRateLimitUsage(
+            queryKey: queryKeys.hostHukumRateLimitUsage(
               hostId,
               accountContext,
             ),
@@ -1776,7 +1776,7 @@ function RateLimitProviderBody({
 }
 
 /**
- * The synthetic "Traycer" block - the GUI-sourced analogue of
+ * The synthetic "Hukum" block - the GUI-sourced analogue of
  * `RateLimitProviderBlock`. Its data is the signed-in user's subscription
  * (`useAuthUser`) for the globally-selected account (`useAccountContextStore`),
  * NOT a `host.getRateLimitUsage` provider pull. Header mirrors the provider
@@ -1785,45 +1785,45 @@ function RateLimitProviderBody({
  * and is shown on each account card in the single-provider tab. The detail
  * variant and Overview both render Personal/Team cards like the Codex and
  * Claude profile cards; selecting a card updates the global account selection
- * (and therefore Overview, the Settings card, and what a Traycer run bills).
- * Both variants render through the shared `TraycerSubscriptionView`. `onReady` mirrors
+ * (and therefore Overview, the Settings card, and what a Hukum run bills).
+ * Both variants render through the shared `HukumSubscriptionView`. `onReady` mirrors
  * `RateLimitProviderBlock`'s own - fires once `state.kind` moves past `cold`,
  * `null` on the single-provider detail tab.
  */
-function TraycerRateLimitBlock({
+function HukumRateLimitBlock({
   variant,
   onReady,
 }: {
   readonly variant: PopoverBlockVariant;
   readonly onReady: (() => void) | null;
 }): ReactNode {
-  const traycerSubscription = useTraycerSubscription();
+  const hukumSubscription = useHukumSubscription();
   const setAccountContext = useAccountContextStore((s) => s.setAccountContext);
   const queryClient = useQueryClient();
   const hostId = useReactiveActiveHostId();
-  const state = resolveTraycerSubscriptionState({
-    isPending: traycerSubscription.query.isPending,
-    isError: traycerSubscription.query.isError,
-    subscription: traycerSubscription.subscription,
+  const state = resolveHukumSubscriptionState({
+    isPending: hukumSubscription.query.isPending,
+    isError: hukumSubscription.query.isError,
+    subscription: hukumSubscription.subscription,
   });
   useEffect(() => {
     if (state.kind !== "cold" && onReady !== null) onReady();
   }, [state.kind, onReady]);
 
   const overview = variant === "popover-overview";
-  const rateLimitUsageState = useTraycerRateLimitUsageState(
-    traycerSubscription.rateLimitAccountContexts,
+  const rateLimitUsageState = useHukumRateLimitUsageState(
+    hukumSubscription.rateLimitAccountContexts,
   );
   const isRefreshing =
-    traycerSubscription.query.isFetching || rateLimitUsageState.isFetching;
+    hukumSubscription.query.isFetching || rateLimitUsageState.isFetching;
   // Refetch the subscription and every rendered rate-limit account. Exact
   // invalidation targets only aperture `{ accountContext }` keys, never provider
   // `{ accountContext, providerId }` pulls.
   const refresh = async (): Promise<void> => {
-    const result = await traycerSubscription.query.refetch();
-    traycerSubscription.rateLimitAccountContexts.forEach((accountContext) => {
+    const result = await hukumSubscription.query.refetch();
+    hukumSubscription.rateLimitAccountContexts.forEach((accountContext) => {
       void queryClient.invalidateQueries({
-        queryKey: queryKeys.hostTraycerRateLimitUsage(hostId, accountContext),
+        queryKey: queryKeys.hostHukumRateLimitUsage(hostId, accountContext),
         exact: true,
       });
     });
@@ -1841,10 +1841,10 @@ function TraycerRateLimitBlock({
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-1.5">
           {overview ? (
-            <HarnessIcon harnessId={providerIdToGuiHarnessId("traycer")} />
+            <HarnessIcon harnessId={providerIdToGuiHarnessId("hukum")} />
           ) : null}
           <span className="text-ui-sm font-medium text-foreground">
-            {providerDisplayName("traycer")}
+            {providerDisplayName("hukum")}
           </span>
         </div>
         <div className="flex items-center gap-1.5">
@@ -1853,18 +1853,18 @@ function TraycerRateLimitBlock({
           {!overview ? (
             <RefreshIconButton
               onRefresh={refresh}
-              label={`Refresh ${providerDisplayName("traycer")}`}
+              label={`Refresh ${providerDisplayName("hukum")}`}
               refreshing={isRefreshing}
             />
           ) : null}
         </div>
       </div>
-      <TraycerAccountCards
+      <HukumAccountCards
         state={state}
-        teams={traycerSubscription.teams}
-        personalSubscription={traycerSubscription.personalSubscription}
-        activeAccountContext={traycerSubscription.resolvedAccountContext}
-        updatedAt={traycerSubscription.query.dataUpdatedAt}
+        teams={hukumSubscription.teams}
+        personalSubscription={hukumSubscription.personalSubscription}
+        activeAccountContext={hukumSubscription.resolvedAccountContext}
+        updatedAt={hukumSubscription.query.dataUpdatedAt}
         rateLimitUpdatedAtByAccount={rateLimitUsageState.updatedAtByAccount}
         refreshing={isRefreshing}
         onSelect={setAccountContext}
@@ -1873,7 +1873,7 @@ function TraycerRateLimitBlock({
   );
 }
 
-function TraycerAccountCards({
+function HukumAccountCards({
   state,
   teams,
   personalSubscription,
@@ -1883,9 +1883,9 @@ function TraycerAccountCards({
   refreshing,
   onSelect,
 }: {
-  readonly state: TraycerSubscriptionState;
-  readonly teams: readonly TraycerTeamSubscription[];
-  readonly personalSubscription: TraycerSubscription | null;
+  readonly state: HukumSubscriptionState;
+  readonly teams: readonly HukumTeamSubscription[];
+  readonly personalSubscription: HukumSubscription | null;
   readonly activeAccountContext: AccountContext;
   readonly updatedAt: number;
   readonly rateLimitUpdatedAtByAccount: ReadonlyMap<string, number>;
@@ -1894,7 +1894,7 @@ function TraycerAccountCards({
 }): ReactNode {
   if (state.kind !== "ready") {
     return (
-      <TraycerRateLimitBody
+      <HukumRateLimitBody
         state={state}
         accountContext={activeAccountContext}
       />
@@ -1964,7 +1964,7 @@ function TraycerAccountCards({
                 refreshing={refreshing}
               />
             </div>
-            <TraycerSubscriptionView
+            <HukumSubscriptionView
               subscription={account.subscription}
               accountContext={account.accountContext}
             />
@@ -1975,11 +1975,11 @@ function TraycerAccountCards({
   );
 }
 
-function TraycerRateLimitBody({
+function HukumRateLimitBody({
   state,
   accountContext,
 }: {
-  readonly state: TraycerSubscriptionState;
+  readonly state: HukumSubscriptionState;
   readonly accountContext: AccountContext;
 }): ReactNode {
   switch (state.kind) {
@@ -1988,9 +1988,9 @@ function TraycerRateLimitBody({
     case "error":
       return (
         <RateLimitErrorMessage
-          message="Couldn't load your Traycer subscription right now."
+          message="Couldn't load your Hukum subscription right now."
           reportContext={createReportIssueContext({
-            title: "Couldn't load your Traycer subscription",
+            title: "Couldn't load your Hukum subscription",
             message: null,
             code: null,
             source: "Subscription",
@@ -2006,7 +2006,7 @@ function TraycerRateLimitBody({
     case "ready":
       return (
         <div className={cn(state.degraded && "opacity-60")}>
-          <TraycerSubscriptionView
+          <HukumSubscriptionView
             subscription={state.subscription}
             accountContext={accountContext}
           />

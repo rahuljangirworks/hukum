@@ -50,7 +50,7 @@ vi.mock("../../perf/perf-telemetry-writer", async () => {
 vi.mock("electron", () => ({
   app: {
     getAppPath: (): string => electronState.appPath,
-    getPath: (): string => "/tmp/traycer-user-data",
+    getPath: (): string => "/tmp/hukum-user-data",
     on: vi.fn(),
   },
   BrowserWindow: class {
@@ -171,7 +171,7 @@ function createMainWindowForTest(
   options: Omit<MainWindowOptions, "devWindowTitle">,
 ): void {
   createMainWindow({
-    devWindowTitle: "Traycer Dev — spry-panda",
+    devWindowTitle: "Hukum Dev — spry-panda",
     ...options,
   });
 }
@@ -224,7 +224,7 @@ describe("loadMainWindow", () => {
     expect(electronState.browserWindowOptions).toEqual([
       expect.objectContaining({
         webPreferences: expect.objectContaining({
-          additionalArguments: ["--traycer-initial-route=%2Fepics%2Fepic-a"],
+          additionalArguments: ["--hukum-initial-route=%2Fepics%2Fepic-a"],
         }),
       }),
     ]);
@@ -240,7 +240,7 @@ describe("loadMainWindow", () => {
     });
 
     expect(electronState.browserWindowOptions).toEqual([
-      expect.objectContaining({ title: "Traycer Dev — spry-panda" }),
+      expect.objectContaining({ title: "Hukum Dev — spry-panda" }),
     ]);
 
     electronState.browserWindows[0].pageTitleUpdated();
@@ -249,7 +249,7 @@ describe("loadMainWindow", () => {
       electronState.browserWindows[0].preventDefault,
     ).toHaveBeenCalledOnce();
     expect(electronState.browserWindows[0].setTitleCalls).toEqual([
-      "Traycer Dev — spry-panda",
+      "Hukum Dev — spry-panda",
     ]);
   });
 
@@ -420,7 +420,7 @@ describe("loadMainWindow", () => {
       electronState.webContentsListeners.get("console-message");
     expect(consoleMessageListener).toBeDefined();
 
-    const perfLine = `[traycer-perf] ${JSON.stringify({
+    const perfLine = `[hukum-perf] ${JSON.stringify({
       name: "test-event",
       tsMs: 1_700_000_000_000,
       fields: {
@@ -447,8 +447,8 @@ describe("loadMainWindow", () => {
   });
 
   it("honors resolution harness window bounds without changing zoom minimums", () => {
-    process.env.TRAYCER_RESOLUTION_TEST_WINDOW_BOUNDS = "3840x2160";
-    process.env.TRAYCER_RESOLUTION_TEST_DISABLE_MAXIMIZE = "1";
+    process.env.HUKUM_RESOLUTION_TEST_WINDOW_BOUNDS = "3840x2160";
+    process.env.HUKUM_RESOLUTION_TEST_DISABLE_MAXIMIZE = "1";
 
     createMainWindowForTest({
       preloadPath: "/preload.js",
@@ -503,7 +503,7 @@ describe("loadMainWindow", () => {
 
   it("can load the built renderer in a dev build for resolution screenshots", async () => {
     configState.isDevBuild = true;
-    process.env.TRAYCER_RESOLUTION_TEST_USE_BUILT_RENDERER = "1";
+    process.env.HUKUM_RESOLUTION_TEST_USE_BUILT_RENDERER = "1";
     const target = createLoadTarget();
 
     await loadMainWindow(target);
@@ -525,7 +525,7 @@ describe("loadMainWindow", () => {
 
   it("loads the dynamic Vite dev renderer URL when provided", async () => {
     configState.isDevBuild = true;
-    process.env.TRAYCER_DESKTOP_DEV_URL = "http://localhost:21005";
+    process.env.HUKUM_DESKTOP_DEV_URL = "http://localhost:21005";
     const target = createLoadTarget();
 
     await loadMainWindow(target);
@@ -535,7 +535,7 @@ describe("loadMainWindow", () => {
 
   it("rejects non-loopback dev renderer URLs", async () => {
     configState.isDevBuild = true;
-    process.env.TRAYCER_DESKTOP_DEV_URL = "http://example.com:21005";
+    process.env.HUKUM_DESKTOP_DEV_URL = "http://example.com:21005";
     const target = createLoadTarget();
 
     await expect(loadMainWindow(target)).rejects.toThrow(/loopback/);

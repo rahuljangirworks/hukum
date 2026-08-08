@@ -1,4 +1,4 @@
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { base64ToBytes, bytesToBase64 } from "@/lib/composer/image-base64";
 import {

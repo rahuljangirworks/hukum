@@ -3,7 +3,7 @@ import type {
   HostDoctorIssue,
   FreePortAndRestartInput,
   IHostManagement,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import { reportableErrorToast } from "@/lib/reportable-error-toast";
 
 export function copyTerminalCommand(command: string): void {

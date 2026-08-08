@@ -1,9 +1,9 @@
 import type {
   StreamCloseReason,
   StreamConnectionStatus,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { ChatStreamCallbacks } from "@traycer-clients/shared/host-transport/chat-stream-client";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { ChatStreamCallbacks } from "@hukum-clients/shared/host-transport/chat-stream-client";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import { __getChatSessionRegistryForTests } from "@/lib/registries/chat-session-registry";
 import { createChatSessionStore } from "@/stores/chats/chat-session-store";
 import { IMMEDIATE_STREAM_FLUSH_COORDINATOR } from "@/stores/chats/stream-flush-coordinator";

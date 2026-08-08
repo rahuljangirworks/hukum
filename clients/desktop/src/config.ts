@@ -7,8 +7,8 @@
  * builds, then reverts.
  * There is ONE runtime env-var lookup, and it is dead code in shipped
  * builds: when the baked `environment` is `"dev"`, the backend base URLs
- * may be overridden to a loopback http origin (`TRAYCER_DEV_*_BASE_URL`,
- * validated in `@traycer-clients/shared/platform/dev-backend-urls`) so the
+ * may be overridden to a loopback http origin (`HUKUM_DEV_*_BASE_URL`,
+ * validated in `@hukum-clients/shared/platform/dev-backend-urls`) so the
  * internal `make dev-desktop` orchestrator can point a source run at its
  * per-slot local backend without mutating this file. Staging/production
  * builds have a non-`"dev"` literal baked in, so a stray `process.env`
@@ -33,7 +33,7 @@ import {
   DEV_RELAY_BASE_URL_ENV,
   devBackendUrlFromEnv,
   devRelayBaseUrlFromEnv,
-} from "@traycer-clients/shared/platform/dev-backend-urls";
+} from "@hukum-clients/shared/platform/dev-backend-urls";
 
 export type Environment = string;
 
@@ -45,19 +45,19 @@ const bakedConfig = {
   // Desktop and bundled CLI from the same release. Desktop bundles only the
   // CLI; the CLI subprocess owns host install/update/restart decisions.
   version: "0.0.0-dev",
-  authnBaseUrl: "https://authn.traycer.ai",
-  cloudUiBaseUrl: "https://platform.traycer.ai",
+  authnBaseUrl: "https://authn.hukum.ai",
+  cloudUiBaseUrl: "https://platform.hukum.ai",
   // Remote Host Support (ticket T14): the relay worker's WebSocket attach
   // endpoint (`workers/relay-do`, ticket T10) — mirrors the host build's own
-  // `relayAttachUrl` (`traycer-host/src/config.ts`). Committed directly like
+  // `relayAttachUrl` (`hukum-host/src/config.ts`). Committed directly like
   // `authnBaseUrl`/`cloudUiBaseUrl` (the OSS build ships production endpoints
   // in source); not stamped per-environment by the deploy script. Overridable
-  // in dev via `TRAYCER_DEV_RELAY_BASE_URL` (see `devRelayBaseUrlFromEnv`
+  // in dev via `HUKUM_DEV_RELAY_BASE_URL` (see `devRelayBaseUrlFromEnv`
   // below) so `make dev-remote` can point it at a local relay worker.
-  // Served via Cloudflare for SaaS custom hostnames: traycer.ai DNS stays on
+  // Served via Cloudflare for SaaS custom hostnames: hukum.ai DNS stays on
   // GCP Cloud DNS (CNAME into the helper zone) and a per-hostname Worker
   // route delivers the traffic to the relay worker.
-  relayBaseUrl: "wss://relay.traycer.ai/attach",
+  relayBaseUrl: "wss://relay.hukum.ai/attach",
   // Sentry crash-reporting DSN for the main process. Empty for local
   // (reporting disabled); the deploy script bakes the staging/production DSN.
   sentryDsn: "",
@@ -71,9 +71,9 @@ const bakedConfig = {
   // script stamps the shipped values for a packaged build. Keeping each slot's
   // identity distinct is what lets separate builds coexist without stealing one
   // another's lock/state.
-  appName: "Traycer Dev",
-  protocolScheme: "traycer-dev",
-  appId: "ai.traycer.desktop",
+  appName: "Hukum Dev",
+  protocolScheme: "hukum-dev",
+  appId: "ai.hukum.desktop",
 };
 
 // The dev-gated backend URL overrides resolve once, at module init, so every
@@ -116,7 +116,7 @@ export const canOpenDevTools = config.environment !== "production";
 export const DESKTOP_SIGN_IN_BASE_URL = config.cloudUiBaseUrl;
 
 // Custom URL scheme for the OAuth deep-link callback. Each build registers its
-// own scheme (dev `traycer-dev://`, production `traycer://`) so the cloud's
+// own scheme (dev `hukum-dev://`, production `hukum://`) so the cloud's
 // `${scheme}://auth/callback` redirect is routed by the OS to THIS app and not
 // a sibling install sharing a scheme. The value is per-environment in `config`
 // (`protocolScheme`); packaged builds register it via the bundle's Info.plist

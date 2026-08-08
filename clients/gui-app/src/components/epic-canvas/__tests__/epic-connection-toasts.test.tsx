@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render, waitFor } from "@testing-library/react";
 import * as Y from "yjs";
-import type { PermissionRole } from "@traycer/protocol/host/epic/unary-schemas";
-import type { SnapshotMetaEpic } from "@traycer/protocol/host/epic/snapshot-meta";
-import type { EpicStreamCallbacks } from "@traycer-clients/shared/host-transport/epic-stream-client";
+import type { PermissionRole } from "@hukum/protocol/host/epic/unary-schemas";
+import type { SnapshotMetaEpic } from "@hukum/protocol/host/epic/snapshot-meta";
+import type { EpicStreamCallbacks } from "@hukum-clients/shared/host-transport/epic-stream-client";
 import { EpicConnectionToasts } from "@/components/epic-canvas/panels/epic-connection-toasts";
 import { EpicSessionProvider } from "@/providers/epic-session-provider";
 import { EpicSessionGate } from "@/providers/epic-session-gate";

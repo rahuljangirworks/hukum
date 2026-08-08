@@ -3,8 +3,8 @@ import {
   useQueryClient,
   type UseMutationResult,
 } from "@tanstack/react-query";
-import type { RevokeAllSessionsResponse } from "@traycer/protocol/auth/devices-sessions";
-import type { RevokeAllSessionsFetchResult } from "@traycer-clients/shared/auth/devices-sessions-fetcher";
+import type { RevokeAllSessionsResponse } from "@hukum/protocol/auth/devices-sessions";
+import type { RevokeAllSessionsFetchResult } from "@hukum-clients/shared/auth/devices-sessions-fetcher";
 import type { AuthService } from "@/lib/auth/auth-service";
 import { StepUpRequiredError } from "@/lib/auth/step-up-flow";
 import { useHostBinding } from "@/lib/host";
@@ -28,7 +28,7 @@ function unwrapRevokeAllSessionsResult(
   if (result.kind === "unauthorized") {
     throw new Error("Sign in again to try that.");
   }
-  throw new Error("Couldn't reach Traycer to sign out everywhere.");
+  throw new Error("Couldn't reach Hukum to sign out everywhere.");
 }
 
 export function useAuthRevokeAllSessions(): UseMutationResult<

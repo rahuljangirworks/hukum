@@ -2,8 +2,8 @@ import type {
   ProviderNativeScope,
   ProviderSkill,
   ProvidersSkillsMutateAction,
-} from "@traycer/protocol/host/provider-native-schemas";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import {
   cleanup,
   fireEvent,

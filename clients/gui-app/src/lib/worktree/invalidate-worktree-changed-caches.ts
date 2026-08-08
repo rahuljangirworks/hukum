@@ -50,7 +50,7 @@ export function invalidateWorktreeChangedCaches(
     refetchType: "active",
   });
   // The branch LIST is a separate host-side read, so a summary refresh alone
-  // leaves a branch deleted outside Traycer sitting in the new-worktree source
+  // leaves a branch deleted outside Hukum sitting in the new-worktree source
   // picker. `refetchType: "active"` (unlike the manual Refresh, which uses
   // "all"): this path fires on every external git event, and these lists live
   // in nested forms that are usually unmounted - refetching every cached one

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import type { IHostDirectoryService } from "@traycer-clients/shared/host-client/host-runtime";
+import type { IHostDirectoryService } from "@hukum-clients/shared/host-client/host-runtime";
 import { useHostBinding } from "@/lib/host";
 import { dialableHostEndpoint } from "@/lib/host/transport-key";
 import {

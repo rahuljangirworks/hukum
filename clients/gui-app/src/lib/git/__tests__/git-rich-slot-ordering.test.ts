@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { QueryClient } from "@tanstack/react-query";
-import type { GitListChangedFilesResponseV11 } from "@traycer/protocol/host";
+import type { GitListChangedFilesResponseV11 } from "@hukum/protocol/host";
 import { gitQueryKeys } from "@/lib/query-keys/git-query-keys";
 import {
   __resetRichSlotOrderingForTesting,

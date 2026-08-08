@@ -8,9 +8,9 @@ import type {
   ProviderPlugin,
   ProviderPluginIcon,
   ProviderSkill,
-} from "@traycer/protocol/host/provider-native-schemas";
-import type { ResponseOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host/provider-native-schemas";
+import type { ResponseOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import { nativeErrorMessage } from "@/lib/providers/native-error-copy";
 

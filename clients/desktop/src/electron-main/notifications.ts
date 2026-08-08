@@ -17,7 +17,7 @@ export interface NativeNotificationOptions {
 }
 
 /**
- * Shows a native notification when every Traycer window is unfocused. A
+ * Shows a native notification when every Hukum window is unfocused. A
  * replacement key groups notifications that describe the same entity: a newer
  * notification closes and re-alerts over the prior one instead of leaving a
  * stack in the OS notification center.

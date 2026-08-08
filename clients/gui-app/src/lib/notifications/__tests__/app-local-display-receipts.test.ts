@@ -20,7 +20,7 @@ function version(
 }
 
 function receiptKeysForUser(userId: string): ReadonlyArray<string> {
-  const prefix = `traycer-gui-app:app-local-notification-display-receipt:${userId}:`;
+  const prefix = `hukum-gui-app:app-local-notification-display-receipt:${userId}:`;
   return Array.from({ length: window.localStorage.length }, (_, index) =>
     window.localStorage.key(index),
   ).filter((key): key is string => key !== null && key.startsWith(prefix));
@@ -79,7 +79,7 @@ describe("app-local display receipts", () => {
     }
 
     const exactPrefix =
-      "traycer-gui-app:app-local-notification-display-receipt:user-1:recurring:";
+      "hukum-gui-app:app-local-notification-display-receipt:user-1:recurring:";
     const exactKeys = receiptKeysForUser("user-1").filter((key) =>
       key.startsWith(exactPrefix),
     );

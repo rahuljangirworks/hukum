@@ -3,7 +3,7 @@ import {
   DEFAULT_AGENT_MODE,
   agentModeSchema,
   type AgentMode,
-} from "@traycer/protocol/common/schemas";
+} from "@hukum/protocol/common/schemas";
 
 export { DEFAULT_AGENT_MODE, agentModeSchema, type AgentMode };
 
@@ -60,7 +60,7 @@ export const guiHarnessIdSchema = z.enum([
   "claude",
   "codex",
   "opencode",
-  "traycer",
+  "hukum",
   "cursor",
   "grok",
   "qwen",

@@ -24,8 +24,8 @@ import {
   useEpicUpdateArtifactStatus,
   useEpicRenameArtifact,
 } from "@/hooks/epic/use-epic-node-mutations";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { RpcErrorCode } from "@traycer/protocol/framework/index";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { RpcErrorCode } from "@hukum/protocol/framework/index";
 import { Analytics, AnalyticsEvent } from "@/lib/analytics";
 
 function makeError(code: RpcErrorCode): HostRpcError {

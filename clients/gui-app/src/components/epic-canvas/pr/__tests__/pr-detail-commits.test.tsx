@@ -10,7 +10,7 @@ import type {
   PrCommit,
   PrCommitsSection,
   PrDetailCore,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { PrDetailCommits } from "@/components/epic-canvas/pr/pr-detail-commits";
 
 const writeText = vi.hoisted(() =>
@@ -62,7 +62,7 @@ const FULL_OID = "e346a92c1d4f5b6a7890123456789abcdef01234";
 function commit(overrides: Partial<PrCommit>): PrCommit {
   return {
     oid: FULL_OID,
-    messageHeadline: "Update traycer submodule",
+    messageHeadline: "Update hukum submodule",
     author: { login: "hdkshingala", avatarUrl: null },
     authorName: "Hardik",
     committedAt: 1_000,

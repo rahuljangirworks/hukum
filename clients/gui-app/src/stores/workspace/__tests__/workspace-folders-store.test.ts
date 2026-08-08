@@ -4,7 +4,7 @@ import {
   type WorkspaceFolderInfo,
 } from "../workspace-folders-store";
 
-const STORAGE_KEY = "traycer-gui-app:workspace-folders";
+const STORAGE_KEY = "hukum-gui-app:workspace-folders";
 
 function folderInfo(path: string): WorkspaceFolderInfo {
   return {

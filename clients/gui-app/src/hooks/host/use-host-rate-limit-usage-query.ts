@@ -1,12 +1,12 @@
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { useHostClient, type HostRpcRegistry } from "@/lib/host";
-import type { AccountContext } from "@traycer/protocol/common/schemas";
+import type { AccountContext } from "@hukum/protocol/common/schemas";
 
 /**
  * Live artifact rate-limit usage for the default host. Default-host scoped, like
- * runtime capabilities. The value moves every Traycer turn, so there is no
- * `staleTime` - `useRefreshRateLimitUsageOnTraycerTurn` invalidates it on turn
- * completion. The caller supplies the account context so the Traycer popover
+ * runtime capabilities. The value moves every Hukum turn, so there is no
+ * `staleTime` - `useRefreshRateLimitUsageOnHukumTurn` invalidates it on turn
+ * completion. The caller supplies the account context so the Hukum popover
  * can render Personal and Team cards concurrently. Mounted only inside
  * `RateLimitView`, which is the implicit tier-gate (rate-limit tiers only).
  */

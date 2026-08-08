@@ -72,7 +72,7 @@ vi.mock("@/providers/use-resolved-theme", () => ({
 
 import { WorkspaceFileTile } from "../workspace-file-tile";
 import { TabHostProvider } from "../../tab-host-provider";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 
 const NODE = {
   id: "workspace-file:host-A:/work/repo:src/index.ts",
@@ -217,7 +217,7 @@ describe("<WorkspaceFileTile /> host-binding gate", () => {
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
       title: "Workspace file preview failed to load from the host",
       message:
-        "The app could not reach the Traycer host to load the file preview.",
+        "The app could not reach the Hukum host to load the file preview.",
       code: "UNAUTHORIZED",
       source: "Host",
     });
@@ -266,7 +266,7 @@ describe("<WorkspaceFileTile /> host-binding gate", () => {
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
       title: "Workspace file preview failed to load from the host",
       message:
-        "The app could not reach the Traycer host to load the file preview.",
+        "The app could not reach the Hukum host to load the file preview.",
       code: null,
       source: "Host",
     });

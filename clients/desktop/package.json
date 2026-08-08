@@ -1,10 +1,10 @@
 {
-  "name": "@traycer-clients/desktop",
-  "productName": "Traycer",
-  "desktopName": "traycer-desktop.desktop",
+  "name": "@hukum-clients/desktop",
+  "productName": "Hukum",
+  "desktopName": "hukum-desktop.desktop",
   "version": "0.0.0",
-  "description": "Traycer standalone desktop shell (Electron) hosting the gui-app renderer; host lifecycle is delegated to the Traycer CLI.",
-  "homepage": "https://traycer.ai",
+  "description": "Hukum standalone desktop shell (Electron) hosting the gui-app renderer; host lifecycle is delegated to the Hukum CLI.",
+  "homepage": "https://hukum.ai",
   "private": true,
   "main": "dist/main/index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "lint": "eslint . --cache --fix --max-warnings 0",
     "format": "bun x prettier --write .",
     "test": "vitest run",
-    "test:resolution": "VITE_DESKTOP_LOCAL_STORAGE_KEY=traycer-resolution-test-local-storage-key bun run build:app && bun scripts/resolution/run-resolution-matrix.cjs",
+    "test:resolution": "VITE_DESKTOP_LOCAL_STORAGE_KEY=hukum-resolution-test-local-storage-key bun run build:app && bun scripts/resolution/run-resolution-matrix.cjs",
     "test:packaging": "vitest run --config vitest.config.packaging.ts"
   },
   "dependencies": {
@@ -64,9 +64,9 @@
     "vitest": "catalog:"
   },
   "build": {
-    "appId": "ai.traycer.desktop",
-    "productName": "Traycer",
-    "artifactName": "traycer-desktop-${arch}.${ext}",
+    "appId": "ai.hukum.desktop",
+    "productName": "Hukum",
+    "artifactName": "hukum-desktop-${arch}.${ext}",
     "asar": true,
     "electronFuses": {
       "runAsNode": false,
@@ -132,27 +132,27 @@
     ],
     "protocols": [
       {
-        "name": "Traycer",
+        "name": "Hukum",
         "schemes": [
-          "traycer"
+          "hukum"
         ]
       }
     ],
     "publish": [
       {
         "provider": "github",
-        "owner": "traycerai",
-        "repo": "traycer"
+        "owner": "hukumai",
+        "repo": "hukum"
       }
     ],
     "mac": {
-      "artifactName": "traycer-desktop-macos-${arch}.${ext}",
+      "artifactName": "hukum-desktop-macos-${arch}.${ext}",
       "category": "public.app-category.developer-tools",
       "minimumSystemVersion": "12.0",
       "entitlements": "resources/bundle/entitlements.mac.plist",
       "entitlementsInherit": "resources/bundle/entitlements.mac.plist",
       "extendInfo": {
-        "NSMicrophoneUsageDescription": "Traycer uses the microphone for voice dictation in the composer."
+        "NSMicrophoneUsageDescription": "Hukum uses the microphone for voice dictation in the composer."
       },
       "target": [
         {
@@ -174,7 +174,7 @@
       "gatekeeperAssess": false
     },
     "win": {
-      "artifactName": "traycer-desktop-windows-${arch}.${ext}",
+      "artifactName": "hukum-desktop-windows-${arch}.${ext}",
       "icon": "icon.ico",
       "signtoolOptions": {
         "signingHashAlgorithms": [
@@ -197,11 +197,11 @@
       ]
     },
     "linux": {
-      "artifactName": "traycer-desktop-linux-${arch}.${ext}",
-      "executableName": "traycer-desktop",
+      "artifactName": "hukum-desktop-linux-${arch}.${ext}",
+      "executableName": "hukum-desktop",
       "icon": "icons",
       "syncDesktopName": true,
-      "maintainer": "Traycer AI <support@traycer.ai>",
+      "maintainer": "Hukum AI <support@hukum.ai>",
       "target": [
         {
           "target": "AppImage",
@@ -232,8 +232,8 @@
     }
   },
   "author": {
-    "name": "Traycer AI",
-    "email": "support@traycer.ai"
+    "name": "Hukum AI",
+    "email": "support@hukum.ai"
   },
   "license": "MIT"
 }

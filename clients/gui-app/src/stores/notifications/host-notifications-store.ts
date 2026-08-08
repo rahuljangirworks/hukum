@@ -5,8 +5,8 @@ import type {
   IStreamSession,
   StreamCloseReason,
   StreamConnectionStatus,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
 import {
   hostNotificationsSubscribeClientFrameSchema,
   hostNotificationsSubscribeServerFrameSchemaV11,
@@ -15,8 +15,8 @@ import {
   type HostNotificationsChronologicalCursor,
   type HostNotificationsSubscribeServerFrameV11,
   type HostNotificationsSummary,
-} from "@traycer/protocol/host/notifications/contracts";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/notifications/contracts";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import {
   readHostNotificationPresenceFrame,
   subscribeHostNotificationPresence,

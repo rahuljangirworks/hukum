@@ -1,4 +1,4 @@
-import type { GitSubscribeStatusEvent } from "@traycer/protocol/host/git-schemas";
+import type { GitSubscribeStatusEvent } from "@hukum/protocol/host/git-schemas";
 import { AlertCircle } from "lucide-react";
 import { ReportIssueAction } from "@/components/report-issue/report-issue-action";
 import { createReportIssueContext } from "@/lib/report-issue-context";

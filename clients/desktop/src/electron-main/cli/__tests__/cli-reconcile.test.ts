@@ -43,14 +43,14 @@ function makeDeps(overrides: {
   cliBinariesDiffer?: (installedPath: string, bundledPath: string) => boolean;
   now?: () => Date;
 }) {
-  const install = overrides.installBundledCli ?? vi.fn(() => "/stable/traycer");
+  const install = overrides.installBundledCli ?? vi.fn(() => "/stable/hukum");
   const writePending = vi.fn(
     overrides.writeCliManifestPendingUpgrade ??
       ((_pending: NonNullable<CliInstallManifest["pendingUpgrade"]>) =>
         ({
           version: "1.0.0",
           installedAt: "2026-04-01T00:00:00Z",
-          binaryPath: "/old/traycer",
+          binaryPath: "/old/hukum",
           source: "desktop",
           pendingUpgrade: _pending,
         }) as CliInstallManifest),
@@ -58,7 +58,7 @@ function makeDeps(overrides: {
   const writeState = vi.fn(overrides.writeDesktopReconcileState ?? (() => {}));
   const stage = vi.fn(
     overrides.stageBundledCliForUpgrade ??
-      (() => "/home/.traycer/cli/staging/traycer-1.4.2"),
+      (() => "/home/.hukum/cli/staging/hukum-1.4.2"),
   );
   const stagedFileExists = vi.fn(
     overrides.stagedFileExists ?? ((_path: string) => true),
@@ -78,7 +78,7 @@ function makeDeps(overrides: {
         source: CliInstallManifest["source"];
       }) => install(opts)) as never,
       stableCliBinaryPath:
-        overrides.stableCliBinaryPath ?? (() => "/stable/traycer"),
+        overrides.stableCliBinaryPath ?? (() => "/stable/hukum"),
       stageBundledCliForUpgrade: (async (opts: {
         bundledCliPath: string;
         version: string;
@@ -109,17 +109,17 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/old/traycer",
+        binaryPath: "/old/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
     });
     const result = await reconcileCli(deps);
     expect(result.kind).toBe("upgraded");
     expect(install).toHaveBeenCalledWith({
-      bundledCliPath: "/bundled/traycer",
+      bundledCliPath: "/bundled/hukum",
       version: "1.4.2",
       source: "desktop",
     });
@@ -134,18 +134,18 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.4.2",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/stable/traycer",
+        binaryPath: "/stable/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       probeCliVersion: (binaryPath: string) =>
-        binaryPath === "/stable/traycer" ? "0.0.0-local" : null,
+        binaryPath === "/stable/hukum" ? "0.0.0-local" : null,
     });
     const result = await reconcileCli(deps);
     expect(install).toHaveBeenCalledWith({
-      bundledCliPath: "/bundled/traycer",
+      bundledCliPath: "/bundled/hukum",
       version: "1.4.2",
       source: "desktop",
     });
@@ -161,11 +161,11 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/usr/local/Cellar/traycer/1.0.0/bin/traycer",
+        binaryPath: "/usr/local/Cellar/hukum/1.0.0/bin/hukum",
         source: "homebrew",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
     });
     const result = await reconcileCli(deps);
@@ -173,7 +173,7 @@ describe("reconcileCli - newest-wins", () => {
     expect(result.kind).toBe("package-manager-older");
     if (result.kind === "package-manager-older") {
       expect(result.source).toBe("homebrew");
-      expect(result.upgradeHint).toBe("brew upgrade traycer");
+      expect(result.upgradeHint).toBe("brew upgrade hukum");
       expect(result.installedVersion).toBe("1.0.0");
       expect(result.bundledVersion).toBe("1.4.2");
     }
@@ -184,11 +184,11 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/usr/local/bin/traycer",
+        binaryPath: "/usr/local/bin/hukum",
         source: "npm",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
     });
     const result = await reconcileCli(deps);
@@ -196,7 +196,7 @@ describe("reconcileCli - newest-wins", () => {
     expect(result.kind).toBe("package-manager-older");
     if (result.kind === "package-manager-older") {
       expect(result.source).toBe("npm");
-      expect(result.upgradeHint).toBe("npm install -g @traycerai/cli@latest");
+      expect(result.upgradeHint).toBe("npm install -g @hukumai/cli@latest");
     }
   });
 
@@ -205,12 +205,12 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "C:\\Users\\me\\AppData\\Local\\traycer.exe",
+        binaryPath: "C:\\Users\\me\\AppData\\Local\\hukum.exe",
         source: "winget",
         pendingUpgrade: null,
       },
       bundledPath:
-        "C:\\Program Files\\Traycer\\resources\\cli\\win32-x64\\traycer.exe",
+        "C:\\Program Files\\Hukum\\resources\\cli\\win32-x64\\hukum.exe",
       bundledVersion: "1.4.2",
     });
     const result = await reconcileCli(deps);
@@ -227,12 +227,12 @@ describe("reconcileCli - newest-wins", () => {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
         binaryPath:
-          "C:\\Users\\me\\scoop\\apps\\traycer-cli\\current\\traycer.exe",
+          "C:\\Users\\me\\scoop\\apps\\hukum-cli\\current\\hukum.exe",
         source: "scoop",
         pendingUpgrade: null,
       },
       bundledPath:
-        "C:\\Program Files\\Traycer\\resources\\cli\\win32-x64\\traycer.exe",
+        "C:\\Program Files\\Hukum\\resources\\cli\\win32-x64\\hukum.exe",
       bundledVersion: "1.4.2",
     });
     const result = await reconcileCli(deps);
@@ -240,14 +240,14 @@ describe("reconcileCli - newest-wins", () => {
     expect(result.kind).toBe("package-manager-older");
     if (result.kind === "package-manager-older") {
       expect(result.source).toBe("scoop");
-      expect(result.upgradeHint).toBe("scoop update traycer-cli");
+      expect(result.upgradeHint).toBe("scoop update hukum-cli");
       expect(result.installedVersion).toBe("1.0.0");
       expect(result.bundledVersion).toBe("1.4.2");
     }
     const [state] = writeState.mock.calls[0];
     expect(state.packageManagerUpgrade).toMatchObject({
       source: "scoop",
-      upgradeCommand: "scoop update traycer-cli",
+      upgradeCommand: "scoop update hukum-cli",
     });
   });
 
@@ -256,11 +256,11 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/usr/bin/traycer",
+        binaryPath: "/usr/bin/hukum",
         source: "apt",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
     });
     const result = await reconcileCli(deps);
@@ -269,7 +269,7 @@ describe("reconcileCli - newest-wins", () => {
     if (result.kind === "package-manager-older") {
       expect(result.source).toBe("apt");
       expect(result.upgradeHint).toBe(
-        "sudo apt update && sudo apt install --only-upgrade traycer-cli",
+        "sudo apt update && sudo apt install --only-upgrade hukum-cli",
       );
       expect(result.installedVersion).toBe("1.0.0");
       expect(result.bundledVersion).toBe("1.4.2");
@@ -278,7 +278,7 @@ describe("reconcileCli - newest-wins", () => {
     expect(state.packageManagerUpgrade).toMatchObject({
       source: "apt",
       upgradeCommand:
-        "sudo apt update && sudo apt install --only-upgrade traycer-cli",
+        "sudo apt update && sudo apt install --only-upgrade hukum-cli",
     });
   });
 
@@ -287,11 +287,11 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/usr/bin/traycer",
+        binaryPath: "/usr/bin/hukum",
         source: "rpm",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
     });
     const result = await reconcileCli(deps);
@@ -299,14 +299,14 @@ describe("reconcileCli - newest-wins", () => {
     expect(result.kind).toBe("package-manager-older");
     if (result.kind === "package-manager-older") {
       expect(result.source).toBe("rpm");
-      expect(result.upgradeHint).toBe("sudo dnf upgrade traycer-cli");
+      expect(result.upgradeHint).toBe("sudo dnf upgrade hukum-cli");
       expect(result.installedVersion).toBe("1.0.0");
       expect(result.bundledVersion).toBe("1.4.2");
     }
     const [state] = writeState.mock.calls[0];
     expect(state.packageManagerUpgrade).toMatchObject({
       source: "rpm",
-      upgradeCommand: "sudo dnf upgrade traycer-cli",
+      upgradeCommand: "sudo dnf upgrade hukum-cli",
     });
   });
 
@@ -318,11 +318,11 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "2.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/new/traycer",
+        binaryPath: "/new/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       probeCliVersion: () => "2.0.0",
     });
@@ -331,7 +331,7 @@ describe("reconcileCli - newest-wins", () => {
     expect(result.kind).toBe("trusted-equal");
     if (result.kind === "trusted-equal") {
       expect(result.installedVersion).toBe("2.0.0");
-      expect(result.binaryPath).toBe("/new/traycer");
+      expect(result.binaryPath).toBe("/new/hukum");
     }
   });
 
@@ -347,17 +347,17 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "2.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/stable/traycer",
+        binaryPath: "/stable/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       probeCliVersion: () => null,
     });
     const result = await reconcileCli(deps);
     expect(install).toHaveBeenCalledWith({
-      bundledCliPath: "/bundled/traycer",
+      bundledCliPath: "/bundled/hukum",
       version: "1.4.2",
       source: "desktop",
     });
@@ -375,7 +375,7 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "2.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/stable/traycer",
+        binaryPath: "/stable/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
@@ -394,20 +394,20 @@ describe("reconcileCli - newest-wins", () => {
   it("stages the bundled CLI into the slot when only the bundled CLI is available", async () => {
     const { deps, install } = makeDeps({
       manifest: null,
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
-      discovery: { kind: "bundled", binaryPath: "/bundled/traycer" } as const,
+      discovery: { kind: "bundled", binaryPath: "/bundled/hukum" } as const,
     });
     const result = await reconcileCli(deps);
     expect(install).toHaveBeenCalledWith({
-      bundledCliPath: "/bundled/traycer",
+      bundledCliPath: "/bundled/hukum",
       version: "1.4.2",
       source: "desktop",
     });
     expect(result.kind).toBe("installed-bundled");
     if (result.kind === "installed-bundled") {
       expect(result.version).toBe("1.4.2");
-      expect(result.binaryPath).toBe("/stable/traycer");
+      expect(result.binaryPath).toBe("/stable/hukum");
     }
   });
 
@@ -428,28 +428,28 @@ describe("reconcileCli - newest-wins", () => {
     const probe = vi.fn(() => "1.5.0");
     const { deps, install } = makeDeps({
       manifest: null,
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       discovery: {
         kind: "path",
-        binaryPath: "/usr/local/bin/traycer",
+        binaryPath: "/usr/local/bin/hukum",
         version: null,
       } as const,
       probeCliVersion: probe,
     });
     const result = await reconcileCli(deps);
-    expect(probe).toHaveBeenCalledWith("/usr/local/bin/traycer");
+    expect(probe).toHaveBeenCalledWith("/usr/local/bin/hukum");
     expect(install).not.toHaveBeenCalled();
     expect(result.kind).toBe("trusted-newer");
     if (result.kind === "trusted-newer") {
       expect(result.source).toBe("path");
-      expect(result.binaryPath).toBe("/usr/local/bin/traycer");
+      expect(result.binaryPath).toBe("/usr/local/bin/hukum");
       expect(result.installedVersion).toBe("1.5.0");
     }
   });
 
-  it("stages the bundled CLI when the PATH `traycer` fails the version probe (oss #872: name squatted by a desktop-app launcher)", async () => {
-    // Field case: an AppImage manager exposed the DESKTOP APP as `traycer`
+  it("stages the bundled CLI when the PATH `hukum` fails the version probe (oss #872: name squatted by a desktop-app launcher)", async () => {
+    // Field case: an AppImage manager exposed the DESKTOP APP as `hukum`
     // on PATH. Trusting it skipped bundled staging, so the slot binary +
     // manifest never existed, service install threw
     // SERVICE_CLI_PATH_UNRESOLVED, and every status query relaunched the
@@ -457,36 +457,36 @@ describe("reconcileCli - newest-wins", () => {
     // must route to fresh-install staging, not the trust branch.
     const { deps, install } = makeDeps({
       manifest: null,
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       discovery: {
         kind: "path",
-        binaryPath: "/home/me/.local/bin/traycer",
+        binaryPath: "/home/me/.local/bin/hukum",
         version: null,
       } as const,
       probeCliVersion: () => null,
     });
     const result = await reconcileCli(deps);
     expect(install).toHaveBeenCalledWith({
-      bundledCliPath: "/bundled/traycer",
+      bundledCliPath: "/bundled/hukum",
       version: "1.4.2",
       source: "desktop",
     });
     expect(result.kind).toBe("installed-bundled");
     if (result.kind === "installed-bundled") {
       expect(result.version).toBe("1.4.2");
-      expect(result.binaryPath).toBe("/stable/traycer");
+      expect(result.binaryPath).toBe("/stable/hukum");
     }
   });
 
   it("returns trusted-equal when the probed PATH version matches bundled", async () => {
     const { deps, install } = makeDeps({
       manifest: null,
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       discovery: {
         kind: "path",
-        binaryPath: "/usr/local/bin/traycer",
+        binaryPath: "/usr/local/bin/hukum",
         version: null,
       } as const,
       probeCliVersion: () => "1.4.2",
@@ -505,11 +505,11 @@ describe("reconcileCli - newest-wins", () => {
     // FAILED probe changes behavior.
     const { deps, install } = makeDeps({
       manifest: null,
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       discovery: {
         kind: "path",
-        binaryPath: "/usr/local/bin/traycer",
+        binaryPath: "/usr/local/bin/hukum",
         version: null,
       } as const,
       probeCliVersion: () => "1.0.0",
@@ -528,11 +528,11 @@ describe("reconcileCli - newest-wins", () => {
     const probe = vi.fn(() => "9.9.9");
     const { deps, install } = makeDeps({
       manifest: null,
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       discovery: {
         kind: "path",
-        binaryPath: "/usr/local/bin/traycer",
+        binaryPath: "/usr/local/bin/hukum",
         version: "1.5.0",
       } as const,
       probeCliVersion: probe,
@@ -552,11 +552,11 @@ describe("reconcileCli - newest-wins", () => {
     // trusted version-less.
     const { deps, install } = makeDeps({
       manifest: null,
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       discovery: {
         kind: "path",
-        binaryPath: "/usr/local/lib/node_modules/@traycerai/cli/traycer",
+        binaryPath: "/usr/local/lib/node_modules/@hukumai/cli/hukum",
         version: null,
         source: "npm",
       } as const,
@@ -564,7 +564,7 @@ describe("reconcileCli - newest-wins", () => {
     });
     const result = await reconcileCli(deps);
     expect(install).toHaveBeenCalledWith({
-      bundledCliPath: "/bundled/traycer",
+      bundledCliPath: "/bundled/hukum",
       version: "1.4.2",
       source: "desktop",
     });
@@ -578,7 +578,7 @@ describe("reconcileCli - newest-wins", () => {
       bundledVersion: "1.4.2",
       discovery: {
         kind: "path",
-        binaryPath: "/home/me/.local/bin/traycer",
+        binaryPath: "/home/me/.local/bin/hukum",
         version: null,
       } as const,
       probeCliVersion: () => null,
@@ -591,11 +591,11 @@ describe("reconcileCli - newest-wins", () => {
   it("surfaces npm upgrade instructions for an older npm-owned PATH CLI without a manifest", async () => {
     const { deps, install, writeState } = makeDeps({
       manifest: null,
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       discovery: {
         kind: "path",
-        binaryPath: "/usr/local/bin/traycer",
+        binaryPath: "/usr/local/bin/hukum",
         version: "1.0.0",
         source: "npm",
       } as const,
@@ -607,25 +607,25 @@ describe("reconcileCli - newest-wins", () => {
       expect(result.source).toBe("npm");
       expect(result.installedVersion).toBe("1.0.0");
       expect(result.bundledVersion).toBe("1.4.2");
-      expect(result.upgradeHint).toBe("npm install -g @traycerai/cli@latest");
+      expect(result.upgradeHint).toBe("npm install -g @hukumai/cli@latest");
     }
     const [state] = writeState.mock.calls[0];
     expect(state.packageManagerUpgrade).toMatchObject({
       source: "npm",
-      upgradeCommand: "npm install -g @traycerai/cli@latest",
+      upgradeCommand: "npm install -g @hukumai/cli@latest",
     });
   });
 
   it("recognizes npm package paths across POSIX and Windows separators", () => {
     expect(
-      isNpmCliPackagePath("/usr/local/lib/node_modules/@traycerai/cli/traycer"),
+      isNpmCliPackagePath("/usr/local/lib/node_modules/@hukumai/cli/hukum"),
     ).toBe(true);
     expect(
       isNpmCliPackagePath(
-        "C:\\Users\\me\\AppData\\Roaming\\npm\\node_modules\\@traycerai\\cli\\traycer",
+        "C:\\Users\\me\\AppData\\Roaming\\npm\\node_modules\\@hukumai\\cli\\hukum",
       ),
     ).toBe(true);
-    expect(isNpmCliPackagePath("/usr/local/bin/traycer")).toBe(false);
+    expect(isNpmCliPackagePath("/usr/local/bin/hukum")).toBe(false);
   });
 
   // POSIX counterpart to the Windows EBUSY test: on Linux/macOS,
@@ -638,17 +638,17 @@ describe("reconcileCli - newest-wins", () => {
     "routes POSIX EACCES to manifest-rewrite-failed (not binary-locked)",
     async () => {
       const eaccesInstaller = () => {
-        throw new Error("EACCES: permission denied, rename '/old/traycer'");
+        throw new Error("EACCES: permission denied, rename '/old/hukum'");
       };
       const { deps } = makeDeps({
         manifest: {
           version: "1.0.0",
           installedAt: "2026-04-01T00:00:00Z",
-          binaryPath: "/old/traycer",
+          binaryPath: "/old/hukum",
           source: "desktop",
           pendingUpgrade: null,
         },
-        bundledPath: "/bundled/traycer",
+        bundledPath: "/bundled/hukum",
         bundledVersion: "1.4.2",
         installBundledCli: eaccesInstaller,
       });
@@ -665,18 +665,18 @@ describe("reconcileCli - newest-wins", () => {
     async () => {
       const epermInstaller = () => {
         throw new Error(
-          "EPERM: operation not permitted, rename '/old/traycer'",
+          "EPERM: operation not permitted, rename '/old/hukum'",
         );
       };
       const { deps } = makeDeps({
         manifest: {
           version: "1.0.0",
           installedAt: "2026-04-01T00:00:00Z",
-          binaryPath: "/old/traycer",
+          binaryPath: "/old/hukum",
           source: "desktop",
           pendingUpgrade: null,
         },
-        bundledPath: "/bundled/traycer",
+        bundledPath: "/bundled/hukum",
         bundledVersion: "1.4.2",
         installBundledCli: epermInstaller,
       });
@@ -697,12 +697,12 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "C:\\Users\\me\\.traycer\\cli\\bin\\traycer.exe",
+        binaryPath: "C:\\Users\\me\\.hukum\\cli\\bin\\hukum.exe",
         source: "desktop",
         pendingUpgrade: null,
       },
       bundledPath:
-        "C:\\Program Files\\Traycer\\resources\\cli\\win32-x64\\traycer.exe",
+        "C:\\Program Files\\Hukum\\resources\\cli\\win32-x64\\hukum.exe",
       bundledVersion: "1.4.2",
       installBundledCli: lockedInstaller,
     });
@@ -720,7 +720,7 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/old/traycer",
+        binaryPath: "/old/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
@@ -739,12 +739,12 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "C:\\Users\\me\\.traycer\\cli\\bin\\traycer.exe",
+        binaryPath: "C:\\Users\\me\\.hukum\\cli\\bin\\hukum.exe",
         source: "desktop",
         pendingUpgrade: null,
       },
       bundledPath:
-        "C:\\Program Files\\Traycer\\resources\\cli\\win32-x64\\traycer.exe",
+        "C:\\Program Files\\Hukum\\resources\\cli\\win32-x64\\hukum.exe",
       bundledVersion: "1.4.2",
     });
     const result = await reconcileCli(deps);
@@ -757,11 +757,11 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.4.2",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/stable/traycer",
+        binaryPath: "/stable/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       probeCliVersion: () => "1.4.2",
     });
@@ -771,7 +771,7 @@ describe("reconcileCli - newest-wins", () => {
   });
 
   it("re-stages the bundled CLI when the manifest points at a missing slot symlink (heals after uninstall)", async () => {
-    // An uninstall removed `~/.traycer/cli/<slot>/bin/traycer` but left a
+    // An uninstall removed `~/.hukum/cli/<slot>/bin/hukum` but left a
     // stale manifest behind (same version as bundled, so the version compare
     // would short-circuit to trusted-equal at a dead path). The reconciler
     // must notice the slot symlink is gone and recreate it.
@@ -779,24 +779,24 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.4.2",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/stable/traycer",
+        binaryPath: "/stable/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
-      stableCliBinaryPath: () => "/stable/traycer",
-      stagedFileExists: (path: string) => path !== "/stable/traycer",
+      stableCliBinaryPath: () => "/stable/hukum",
+      stagedFileExists: (path: string) => path !== "/stable/hukum",
     });
     const result = await reconcileCli(deps);
     expect(install).toHaveBeenCalledWith({
-      bundledCliPath: "/bundled/traycer",
+      bundledCliPath: "/bundled/hukum",
       version: "1.4.2",
       source: "desktop",
     });
     expect(result.kind).toBe("installed-bundled");
     if (result.kind === "installed-bundled") {
-      expect(result.binaryPath).toBe("/stable/traycer");
+      expect(result.binaryPath).toBe("/stable/hukum");
       expect(result.version).toBe("1.4.2");
     }
   });
@@ -809,13 +809,13 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/usr/local/Cellar/traycer/1.0.0/bin/traycer",
+        binaryPath: "/usr/local/Cellar/hukum/1.0.0/bin/hukum",
         source: "homebrew",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
-      stableCliBinaryPath: () => "/stable/traycer",
+      stableCliBinaryPath: () => "/stable/hukum",
       stagedFileExists: () => false,
     });
     const result = await reconcileCli(deps);
@@ -827,18 +827,18 @@ describe("reconcileCli - newest-wins", () => {
     const lockedInstaller = () => {
       throw new Error("EBUSY: resource busy or locked");
     };
-    const stagedPath = "/home/.traycer/cli/staging/traycer-1.4.2";
+    const stagedPath = "/home/.hukum/cli/staging/hukum-1.4.2";
     const stage = vi.fn(() => stagedPath);
     const { deps, writePending } = makeDeps({
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "C:\\Users\\me\\.traycer\\cli\\bin\\traycer.exe",
+        binaryPath: "C:\\Users\\me\\.hukum\\cli\\bin\\hukum.exe",
         source: "desktop",
         pendingUpgrade: null,
       },
       bundledPath:
-        "C:\\Program Files\\Traycer\\resources\\cli\\win32-x64\\traycer.exe",
+        "C:\\Program Files\\Hukum\\resources\\cli\\win32-x64\\hukum.exe",
       bundledVersion: "1.4.2",
       installBundledCli: lockedInstaller,
       stageBundledCliForUpgrade: stage,
@@ -848,7 +848,7 @@ describe("reconcileCli - newest-wins", () => {
     expect(result.kind).toBe("upgrade-blocked");
     expect(stage).toHaveBeenCalledWith({
       bundledCliPath:
-        "C:\\Program Files\\Traycer\\resources\\cli\\win32-x64\\traycer.exe",
+        "C:\\Program Files\\Hukum\\resources\\cli\\win32-x64\\hukum.exe",
       version: "1.4.2",
     });
     expect(writePending).toHaveBeenCalledTimes(1);
@@ -863,10 +863,10 @@ describe("reconcileCli - newest-wins", () => {
     // manifest binary path - both would cause renames/unlinks to clobber
     // packaged app resources or the running binary.
     expect(pending.stagedBinaryPath).not.toBe(
-      "C:\\Program Files\\Traycer\\resources\\cli\\win32-x64\\traycer.exe",
+      "C:\\Program Files\\Hukum\\resources\\cli\\win32-x64\\hukum.exe",
     );
     expect(pending.stagedBinaryPath).not.toBe(
-      "C:\\Users\\me\\.traycer\\cli\\bin\\traycer.exe",
+      "C:\\Users\\me\\.hukum\\cli\\bin\\hukum.exe",
     );
   });
 
@@ -875,7 +875,7 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/old/traycer",
+        binaryPath: "/old/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
@@ -902,11 +902,11 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/old/traycer",
+        binaryPath: "/old/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
       installBundledCli: lockedInstaller,
       stageBundledCliForUpgrade: failingStage,
@@ -921,11 +921,11 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/usr/local/Cellar/traycer/1.0.0/bin/traycer",
+        binaryPath: "/usr/local/Cellar/hukum/1.0.0/bin/hukum",
         source: "homebrew",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
     });
     const result = await reconcileCli(deps);
@@ -936,7 +936,7 @@ describe("reconcileCli - newest-wins", () => {
       source: "homebrew",
       installedVersion: "1.0.0",
       bundledVersion: "1.4.2",
-      upgradeCommand: "brew upgrade traycer",
+      upgradeCommand: "brew upgrade hukum",
     });
     expect(typeof state.packageManagerUpgrade?.recordedAt).toBe("string");
   });
@@ -946,11 +946,11 @@ describe("reconcileCli - newest-wins", () => {
       manifest: {
         version: "1.5.0",
         installedAt: "2026-05-01T00:00:00Z",
-        binaryPath: "/usr/local/Cellar/traycer/1.5.0/bin/traycer",
+        binaryPath: "/usr/local/Cellar/hukum/1.5.0/bin/hukum",
         source: "homebrew",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
     });
     await reconcileCli(deps);
@@ -964,7 +964,7 @@ describe("reconcileCli - newest-wins", () => {
     const localDesktopManifest: CliInstallManifest = {
       version: "0.0.0-local",
       installedAt: "2026-04-01T00:00:00Z",
-      binaryPath: "/stable/traycer",
+      binaryPath: "/stable/hukum",
       source: "desktop",
       pendingUpgrade: null,
     };
@@ -972,7 +972,7 @@ describe("reconcileCli - newest-wins", () => {
     it("refreshes a desktop-owned slot when sentinel versions tie but binaries differ", async () => {
       const { deps, install } = makeDeps({
         manifest: localDesktopManifest,
-        bundledPath: "/bundled/traycer",
+        bundledPath: "/bundled/hukum",
         bundledVersion: "0.0.0-local",
         probeCliVersion: () => "0.0.0-local",
         cliBinariesDiffer: () => true,
@@ -980,7 +980,7 @@ describe("reconcileCli - newest-wins", () => {
       const result = await reconcileCli(deps);
       expect(result.kind).toBe("upgraded");
       expect(install).toHaveBeenCalledWith({
-        bundledCliPath: "/bundled/traycer",
+        bundledCliPath: "/bundled/hukum",
         version: "0.0.0-local",
         source: "desktop",
       });
@@ -989,7 +989,7 @@ describe("reconcileCli - newest-wins", () => {
     it("trusts the slot when sentinel versions tie and binaries are identical", async () => {
       const { deps, install } = makeDeps({
         manifest: localDesktopManifest,
-        bundledPath: "/bundled/traycer",
+        bundledPath: "/bundled/hukum",
         bundledVersion: "0.0.0-local",
         probeCliVersion: () => "0.0.0-local",
         cliBinariesDiffer: () => false,
@@ -1002,7 +1002,7 @@ describe("reconcileCli - newest-wins", () => {
     it("never overwrites a package-manager-owned CLI on a sentinel tie", async () => {
       const { deps, install } = makeDeps({
         manifest: { ...localDesktopManifest, source: "npm" },
-        bundledPath: "/bundled/traycer",
+        bundledPath: "/bundled/hukum",
         bundledVersion: "0.0.0-local",
         cliBinariesDiffer: () => true,
       });
@@ -1014,7 +1014,7 @@ describe("reconcileCli - newest-wins", () => {
     it("keeps trusting the slot when the binary comparison fails", async () => {
       const { deps, install } = makeDeps({
         manifest: localDesktopManifest,
-        bundledPath: "/bundled/traycer",
+        bundledPath: "/bundled/hukum",
         bundledVersion: "0.0.0-local",
         probeCliVersion: () => "0.0.0-local",
         cliBinariesDiffer: () => {
@@ -1030,7 +1030,7 @@ describe("reconcileCli - newest-wins", () => {
       const differ = vi.fn(() => true);
       const { deps } = makeDeps({
         manifest: { ...localDesktopManifest, version: "1.5.0" },
-        bundledPath: "/bundled/traycer",
+        bundledPath: "/bundled/hukum",
         bundledVersion: "1.4.2",
         probeCliVersion: () => "1.5.0",
         cliBinariesDiffer: differ,
@@ -1044,7 +1044,7 @@ describe("reconcileCli - newest-wins", () => {
 
 // Launch-time gate around reconcileCli. Dev / unpackaged Desktop
 // (`make dev-desktop`, unpackaged Electron) must not read, write,
-// clear, or stage state under `~/.traycer/cli/` at boot - the dev
+// clear, or stage state under `~/.hukum/cli/` at boot - the dev
 // orchestrator stages its own dev CLI wrapper. Production packaged
 // Desktop must continue to reconcile against production state.
 describe("runLaunchTimeCliReconciliation - dev isolation", () => {
@@ -1055,16 +1055,16 @@ describe("runLaunchTimeCliReconciliation - dev isolation", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/old/traycer",
+        binaryPath: "/old/hukum",
         source: "desktop",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
     });
   }
 
-  it("skips reconciliation entirely when isDevDesktop is true (no reads, no writes against production ~/.traycer/cli)", async () => {
+  it("skips reconciliation entirely when isDevDesktop is true (no reads, no writes against production ~/.hukum/cli)", async () => {
     // Build a fully-mocked deps so every read/write surface is a vi.fn
     // and we can assert nothing on the production CLI tree is touched.
     const readManifest = vi.fn();
@@ -1104,7 +1104,7 @@ describe("runLaunchTimeCliReconciliation - dev isolation", () => {
     expect(outcome).toEqual({ kind: "skipped-dev-desktop" });
     // Read-side: dev Desktop must not probe production manifest/
     // bundled paths or run discovery - preserves the "no production
-    // ~/.traycer/cli reads" half of the acceptance criteria.
+    // ~/.hukum/cli reads" half of the acceptance criteria.
     expect(readManifest).not.toHaveBeenCalled();
     expect(resolveBundled).not.toHaveBeenCalled();
     expect(readBundledVersion).not.toHaveBeenCalled();
@@ -1127,7 +1127,7 @@ describe("runLaunchTimeCliReconciliation - dev isolation", () => {
     });
     expect(outcome.kind).toBe("upgraded");
     expect(install).toHaveBeenCalledWith({
-      bundledCliPath: "/bundled/traycer",
+      bundledCliPath: "/bundled/hukum",
       version: "1.4.2",
       source: "desktop",
     });
@@ -1138,11 +1138,11 @@ describe("runLaunchTimeCliReconciliation - dev isolation", () => {
       manifest: {
         version: "1.0.0",
         installedAt: "2026-04-01T00:00:00Z",
-        binaryPath: "/usr/local/Cellar/traycer/1.0.0/bin/traycer",
+        binaryPath: "/usr/local/Cellar/hukum/1.0.0/bin/hukum",
         source: "homebrew",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
     });
     const outcome = await runLaunchTimeCliReconciliation({
@@ -1159,11 +1159,11 @@ describe("runLaunchTimeCliReconciliation - dev isolation", () => {
       manifest: {
         version: "1.5.0",
         installedAt: "2026-05-01T00:00:00Z",
-        binaryPath: "/usr/local/Cellar/traycer/1.5.0/bin/traycer",
+        binaryPath: "/usr/local/Cellar/hukum/1.5.0/bin/hukum",
         source: "homebrew",
         pendingUpgrade: null,
       },
-      bundledPath: "/bundled/traycer",
+      bundledPath: "/bundled/hukum",
       bundledVersion: "1.4.2",
     });
     await runLaunchTimeCliReconciliation({ isDevDesktop: true, deps });

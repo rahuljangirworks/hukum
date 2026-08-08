@@ -3,17 +3,17 @@ import type {
   SchemaVersion,
   SplitConnectionManifest,
   VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   downgradeRequestAcrossMajors,
   isRpcErrorCode,
   mergeConnectionManifests,
   splitConnectionManifest,
   upgradeResponseToVersion,
-} from "@traycer/protocol/framework/index";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
-import { CredentialLeaseReleasedError } from "@traycer/protocol/auth/request-context";
-import type { OpenFrameBearerSource } from "@traycer-clients/shared/auth/bearer-source";
+} from "@hukum/protocol/framework/index";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
+import { CredentialLeaseReleasedError } from "@hukum/protocol/auth/request-context";
+import type { OpenFrameBearerSource } from "@hukum-clients/shared/auth/bearer-source";
 import {
   HostRequestAbortedError,
   HostRpcError,
@@ -43,7 +43,7 @@ import {
   type HostFatalErrorFrame,
   type IncompatibleMethodDetails,
   type FatalErrorDetails,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import type { TimerHandle } from "./timer-handle";
 import { recordNegotiatedHostMethods } from "./negotiated-manifest-registry";
 import { resolveUnavailableMethodDegrade } from "./unavailable-method-degrade";

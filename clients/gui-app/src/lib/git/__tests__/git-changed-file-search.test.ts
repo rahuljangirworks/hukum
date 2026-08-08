@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { GitChangedFile } from "@traycer/protocol/host";
+import type { GitChangedFile } from "@hukum/protocol/host";
 import {
   createGitChangedFileSearchIndex,
   filterGitChangedFiles,

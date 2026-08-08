@@ -2,7 +2,7 @@ import "../../../../../__tests__/test-browser-apis";
 import { afterEach, describe, expect, it } from "vitest";
 import { getSchema } from "@tiptap/core";
 import { DOMParser, DOMSerializer } from "@tiptap/pm/model";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { buildComposerExtensions } from "@/components/chat/composer/editor/editor-config";
 import { createComposerPickerStore } from "@/components/chat/composer/picker/composer-picker-store";

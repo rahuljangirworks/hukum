@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 
 export const worktreeChangedOpenRequestSchema = z.object({});
 export type WorktreeChangedOpenRequest = z.infer<

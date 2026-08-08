@@ -12,7 +12,7 @@ const CLEAR = {
 } as const;
 
 describe("resolveTileFindOwnerBlocker", () => {
-  // The regression from traycerai/traycer#592: `TopLevelTabHost` mounts the
+  // The regression from hukumai/hukum#592: `TopLevelTabHost` mounts the
   // restored Epic surface from the tabs store, and the router is only navigated
   // when a tab is ACTIVATED. A restored window therefore sits at `/` with a
   // focused Epic surface and an open file tile, and the old epic-path allow-list

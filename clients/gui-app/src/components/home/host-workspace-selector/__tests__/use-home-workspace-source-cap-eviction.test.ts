@@ -47,7 +47,7 @@ function stagedWorktreeEntry(
     isPrimary: false,
     branch: {
       type: "new" as const,
-      name: "traycer/feature",
+      name: "hukum/feature",
       source: "main",
       carryUncommittedChanges: false,
     },

@@ -3,7 +3,7 @@ import { z } from "zod";
 import {
   defineRpcContract,
   defineVersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   MockHostMessenger,
   type MockPhaseEvent,

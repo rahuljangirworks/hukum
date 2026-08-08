@@ -16,20 +16,20 @@ import {
   type QueryClient,
 } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
 import React from "react";
 import type {
   GitListChangedFilesResponseV11,
   SubmoduleChangeset,
   SubmodulePointer,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
-import { WsStreamClient } from "@traycer-clients/shared/host-transport/ws-stream-client";
-import { HostRequestControlFlowError } from "@traycer-clients/shared/host-client/host-request-coordinator";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host/registry";
+import { WsStreamClient } from "@hukum-clients/shared/host-transport/ws-stream-client";
+import { HostRequestControlFlowError } from "@hukum-clients/shared/host-client/host-request-coordinator";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   hasDirtySubmodulesForRefresh,
   useGitListChangedFilesWithSubmodules,

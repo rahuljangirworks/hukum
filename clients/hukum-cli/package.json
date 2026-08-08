@@ -1,0 +1,53 @@
+{
+  "name": "@hukum-clients/hukum-cli",
+  "version": "0.1.0",
+  "description": "Hukum CLI - host supervisor, auth, and config surface",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "hukum": "./src/index.ts"
+  },
+  "engines": {
+    "node": ">=20.18.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hukumai/hukum.git",
+    "directory": "clients/hukum-cli"
+  },
+  "license": "MIT",
+  "scripts": {
+    "hukum": "bun run src/index.ts",
+    "compile": "tsc --noEmit",
+    "format": "bun x prettier --write .",
+    "lint": "eslint . --cache --fix --max-warnings 0",
+    "test": "vitest run --config vitest.config.ts",
+    "build": "node scripts/build-cli-npm.cjs",
+    "prepack": "bun run build",
+    "build:sea": "node scripts/build-cli-sea.cjs",
+    "smoke:sea": "node scripts/smoke-cli-sea.cjs",
+    "smoke:ndjson": "node scripts/smoke-cli-ndjson.cjs",
+    "smoke:exit-code": "node scripts/smoke-cli-exit-code.cjs"
+  },
+  "dependencies": {
+    "@sentry/node": "catalog:",
+    "commander": "catalog:",
+    "node-stream-zip": "catalog:",
+    "tar": "^7.5.22",
+    "undici": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@sentry/esbuild-plugin": "catalog:",
+    "@hukum/protocol": "workspace:*",
+    "@hukum-clients/shared": "workspace:*",
+    "@types/node": "catalog:",
+    "@typescript-eslint/eslint-plugin": "catalog:",
+    "@typescript-eslint/parser": "catalog:",
+    "esbuild": "catalog:",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

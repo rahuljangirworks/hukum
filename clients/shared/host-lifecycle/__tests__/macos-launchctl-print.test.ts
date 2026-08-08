@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { traycerLabelIdsForBase } from "../identity";
-import type { TraycerLabelIds } from "../identity";
+import { hukumLabelIdsForBase } from "../identity";
+import type { HukumLabelIds } from "../identity";
 import type { ProbeCommandResult } from "../shared/command";
 import {
   classifyLabelOwnership,
@@ -16,14 +16,14 @@ import {
 import { deriveWedgeVerdict } from "../macos/wedge";
 import { SMAPPSERVICE_PATH_UNKNOWN } from "../macos/types";
 import {
-  HEALTHY_TRAYCER_AGENT_PRINT,
+  HEALTHY_HUKUM_AGENT_PRINT,
   PRINT_BAD_DOMAIN_STDERR,
   PRINT_SERVICE_NOT_FOUND_STDERR,
   SYSTEM_AGENT_BARE_ARGUMENTS_PRINT,
   THIRD_PARTY_HAS_LWCR_PRINT,
 } from "./fixtures/launchctl";
 
-const KNOWN: TraycerLabelIds = traycerLabelIdsForBase("ai.traycer.host");
+const KNOWN: HukumLabelIds = hukumLabelIdsForBase("ai.hukum.host");
 
 function commandResult(
   overrides: Partial<ProbeCommandResult>,
@@ -43,14 +43,14 @@ describe("parseLaunchctlPrintFields", () => {
   it("collects top-level key = value pairs, first occurrence winning", () => {
     const fields = parseLaunchctlPrintFields(
       [
-        "path = /Users/x/Library/LaunchAgents/ai.traycer.host.plist",
+        "path = /Users/x/Library/LaunchAgents/ai.hukum.host.plist",
         "state = running",
         "state = duplicate-ignored",
         "last exit code = 78",
       ].join("\n"),
     );
     expect(fields.get("path")).toBe(
-      "/Users/x/Library/LaunchAgents/ai.traycer.host.plist",
+      "/Users/x/Library/LaunchAgents/ai.hukum.host.plist",
     );
     expect(fields.get("state")).toBe("running");
     expect(fields.get("last exit code")).toBe("78");
@@ -98,7 +98,7 @@ describe("parseLaunchctlPrintFields", () => {
   });
 
   it("drops block-opening lines instead of mapping the key to a literal '{'", () => {
-    const fields = parseLaunchctlPrintFields(HEALTHY_TRAYCER_AGENT_PRINT);
+    const fields = parseLaunchctlPrintFields(HEALTHY_HUKUM_AGENT_PRINT);
     expect(fields.get("arguments")).toBeUndefined();
     expect(fields.get("environment")).toBeUndefined();
   });
@@ -108,7 +108,7 @@ describe("isSmAppServiceLaunchAgentPath", () => {
   it("matches an in-bundle LaunchAgents path (pre-#657 style)", () => {
     expect(
       isSmAppServiceLaunchAgentPath(
-        "/Applications/Traycer.app/Contents/Library/LaunchAgents/ai.traycer.host.plist",
+        "/Applications/Hukum.app/Contents/Library/LaunchAgents/ai.hukum.host.plist",
       ),
     ).toBe(true);
   });
@@ -116,7 +116,7 @@ describe("isSmAppServiceLaunchAgentPath", () => {
   it("does not match a user-domain LaunchAgents path", () => {
     expect(
       isSmAppServiceLaunchAgentPath(
-        "/Users/x/Library/LaunchAgents/ai.traycer.host.plist",
+        "/Users/x/Library/LaunchAgents/ai.hukum.host.plist",
       ),
     ).toBe(false);
   });
@@ -125,14 +125,14 @@ describe("isSmAppServiceLaunchAgentPath", () => {
 describe("classifyLabelOwnership", () => {
   it("classifies pre-#657 style in-bundle LaunchAgents path as smappservice", () => {
     const raw = [
-      "path = /Applications/Traycer.app/Contents/Library/LaunchAgents/ai.traycer.host.plist",
+      "path = /Applications/Hukum.app/Contents/Library/LaunchAgents/ai.hukum.host.plist",
       "state = running",
     ].join("\n");
     const fields = parseLaunchctlPrintFields(raw);
     const ownership = classifyLabelOwnership(fields, raw, KNOWN, KNOWN.agent);
     expect(ownership).toEqual({
       kind: "smappservice",
-      path: "/Applications/Traycer.app/Contents/Library/LaunchAgents/ai.traycer.host.plist",
+      path: "/Applications/Hukum.app/Contents/Library/LaunchAgents/ai.hukum.host.plist",
       signals: {
         managedByServiceManagement: false,
         typeSubmitted: false,
@@ -142,10 +142,10 @@ describe("classifyLabelOwnership", () => {
   });
 
   it("classifies the real modern smd-submitted agent as smappservice via managed_by + type", () => {
-    const fields = parseLaunchctlPrintFields(HEALTHY_TRAYCER_AGENT_PRINT);
+    const fields = parseLaunchctlPrintFields(HEALTHY_HUKUM_AGENT_PRINT);
     const ownership = classifyLabelOwnership(
       fields,
-      HEALTHY_TRAYCER_AGENT_PRINT,
+      HEALTHY_HUKUM_AGENT_PRINT,
       KNOWN,
       KNOWN.agent,
     );
@@ -178,11 +178,11 @@ describe("classifyLabelOwnership", () => {
 
   it("classifies a CLI LaunchAgent with a user-domain path and host-start args as cli-or-other with attested identity", () => {
     const raw = [
-      "path = /Users/x/Library/LaunchAgents/ai.traycer.host.plist",
+      "path = /Users/x/Library/LaunchAgents/ai.hukum.host.plist",
       "type = LaunchAgent",
       "state = running",
       "arguments = {",
-      "\t/opt/traycer/bin/traycer",
+      "\t/opt/hukum/bin/hukum",
       "\thost",
       "\tstart",
       "}",
@@ -192,7 +192,7 @@ describe("classifyLabelOwnership", () => {
     expect(ownership.kind).toBe("cli-or-other");
     if (ownership.kind === "cli-or-other") {
       expect(ownership.path).toBe(
-        "/Users/x/Library/LaunchAgents/ai.traycer.host.plist",
+        "/Users/x/Library/LaunchAgents/ai.hukum.host.plist",
       );
       expect(ownership.identity.kind).toBe("attested");
     }
@@ -223,9 +223,9 @@ describe("extractProgramArgumentsFromPrint", () => {
   // attestation to label matching alone.
   it("reads the bare one-per-line arguments launchd actually emits", () => {
     expect(
-      extractProgramArgumentsFromPrint(HEALTHY_TRAYCER_AGENT_PRINT),
+      extractProgramArgumentsFromPrint(HEALTHY_HUKUM_AGENT_PRINT),
     ).toEqual([
-      "Contents/Library/LaunchAgents/Traycer Host.app/Contents/MacOS/traycer",
+      "Contents/Library/LaunchAgents/Hukum Host.app/Contents/MacOS/hukum",
       "host",
       "start",
     ]);
@@ -233,10 +233,10 @@ describe("extractProgramArgumentsFromPrint", () => {
 
   it("keeps a bare argument containing spaces as ONE token", () => {
     const tokens = extractProgramArgumentsFromPrint(
-      HEALTHY_TRAYCER_AGENT_PRINT,
+      HEALTHY_HUKUM_AGENT_PRINT,
     );
     expect(tokens).not.toBeNull();
-    expect(tokens?.[0]).toContain("Traycer Host.app");
+    expect(tokens?.[0]).toContain("Hukum Host.app");
     expect(tokens).toHaveLength(3);
   });
 
@@ -272,8 +272,8 @@ describe("extractProgramArgumentsFromPrint", () => {
 describe("parseLwcrEvidence", () => {
   // BLOCKER C-B1. `has LWCR` is the healthy signed state, and both real
   // captures below carry it.
-  it("is absent for the live, healthy Traycer agent that prints `has LWCR`", () => {
-    expect(parseLwcrEvidence(HEALTHY_TRAYCER_AGENT_PRINT)).toEqual({
+  it("is absent for the live, healthy Hukum agent that prints `has LWCR`", () => {
+    expect(parseLwcrEvidence(HEALTHY_HUKUM_AGENT_PRINT)).toEqual({
       kind: "absent",
     });
   });
@@ -285,7 +285,7 @@ describe("parseLwcrEvidence", () => {
   });
 
   it("observes `needs LWCR update` — the only real mismatch marker", () => {
-    const wedged = HEALTHY_TRAYCER_AGENT_PRINT.replace(
+    const wedged = HEALTHY_HUKUM_AGENT_PRINT.replace(
       "properties = partial import | runatload | resolve program | has LWCR",
       "properties = partial import | runatload | resolve program | needs LWCR update",
     );
@@ -332,8 +332,8 @@ describe("wedge verdict over real launchd bytes", () => {
   // healthy signed agent must never derive a wedge, because the planner turns
   // `wedged` into `transition-to-fallback` — provision raw fallback, boot out
   // the agent, i.e. tear down its own working registration.
-  it("does not wedge the live, healthy Traycer agent", () => {
-    expect(wedgeFor(HEALTHY_TRAYCER_AGENT_PRINT).kind).toBe(
+  it("does not wedge the live, healthy Hukum agent", () => {
+    expect(wedgeFor(HEALTHY_HUKUM_AGENT_PRINT).kind).toBe(
       "healthy-or-unknown",
     );
   });
@@ -346,7 +346,7 @@ describe("wedge verdict over real launchd bytes", () => {
 
   it("does wedge the same agent once its properties say `needs LWCR update`", () => {
     const verdict = wedgeFor(
-      HEALTHY_TRAYCER_AGENT_PRINT.replace("has LWCR", "needs LWCR update"),
+      HEALTHY_HUKUM_AGENT_PRINT.replace("has LWCR", "needs LWCR update"),
     );
     expect(verdict.kind).toBe("wedged");
     if (verdict.kind === "wedged") {
@@ -357,7 +357,7 @@ describe("wedge verdict over real launchd bytes", () => {
 
 describe("parseLaunchdRunState", () => {
   it("parses run state from the real healthy agent print", () => {
-    const runState = parseLaunchdRunState(HEALTHY_TRAYCER_AGENT_PRINT);
+    const runState = parseLaunchdRunState(HEALTHY_HUKUM_AGENT_PRINT);
     expect(runState.jobState).toEqual({ kind: "observed", value: "running" });
     expect(runState.pid).toEqual({ kind: "observed", value: 98634 });
     expect(runState.runs).toEqual({ kind: "observed", value: 1 });
@@ -459,7 +459,7 @@ describe("classifyLaunchctlPrintResult", () => {
 
   it("is observed with ownership and run-state on the real healthy agent print", () => {
     const result = classifyLaunchctlPrintResult(
-      commandResult({ exitCode: 0, stdout: HEALTHY_TRAYCER_AGENT_PRINT }),
+      commandResult({ exitCode: 0, stdout: HEALTHY_HUKUM_AGENT_PRINT }),
       KNOWN,
       KNOWN.agent,
     );

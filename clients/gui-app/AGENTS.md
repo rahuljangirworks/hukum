@@ -1,6 +1,6 @@
 # AGENTS.md — clients/gui-app
 
-GUI renderer for Traycer. Read with repo-root `AGENTS.md`. Treat as a normal
+GUI renderer for Hukum. Read with repo-root `AGENTS.md`. Treat as a normal
 browser React app unless the task needs native/desktop integration.
 
 **Stack:** Vite, React, TS, TanStack Router (file-based) + Query, Zustand,

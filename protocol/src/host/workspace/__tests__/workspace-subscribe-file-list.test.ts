@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   workspaceSubscribeFileListClientFrameSchema,
   workspaceSubscribeFileListServerFrameSchema,
   workspaceSubscribeFileListV10,
-} from "@traycer/protocol/host/workspace/subscribe";
+} from "@hukum/protocol/host/workspace/subscribe";
 
 /**
  * `workspace.subscribeFileList@1.0` contract fixtures + registry membership.

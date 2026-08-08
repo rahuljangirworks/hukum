@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { RunnerHostContext } from "@/providers/runner-host-context";
@@ -15,13 +15,13 @@ vi.mock("@/lib/runner-error-toast", () => ({
 
 function createRunnerHost(): MockRunnerHost {
   return new MockRunnerHost({
-    signInUrl: "https://auth.traycer.test/sign-in",
-    authnBaseUrl: "https://auth.traycer.test",
+    signInUrl: "https://auth.hukum.test/sign-in",
+    authnBaseUrl: "https://auth.hukum.test",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 

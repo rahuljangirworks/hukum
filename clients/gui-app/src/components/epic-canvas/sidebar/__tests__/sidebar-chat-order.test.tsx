@@ -3,8 +3,8 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { useMemo } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import * as Y from "yjs";
-import type { EpicStreamCallbacks } from "@traycer-clients/shared/host-transport/epic-stream-client";
-import type { SnapshotMetaEpic } from "@traycer/protocol/host/epic/snapshot-meta";
+import type { EpicStreamCallbacks } from "@hukum-clients/shared/host-transport/epic-stream-client";
+import type { SnapshotMetaEpic } from "@hukum/protocol/host/epic/snapshot-meta";
 import {
   CHATS_TREE_FILTER,
   collectVisibleSidebarTreeIds,

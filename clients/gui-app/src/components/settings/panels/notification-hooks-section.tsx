@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import type { NotificationHookConfig } from "@traycer/protocol/host/notifications/host-notifications";
+import type { NotificationHookConfig } from "@hukum/protocol/host/notifications/host-notifications";
 import { AlertCircle, CheckCircle2, Copy, Plus, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import {

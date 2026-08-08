@@ -1,28 +1,28 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, renderHook, act } from "@testing-library/react";
 import { StrictMode, type ReactNode } from "react";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import { WsStreamClient } from "@traycer-clients/shared/host-transport/ws-stream-client";
-import type { RemoteHostDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import { WsStreamClient } from "@hukum-clients/shared/host-transport/ws-stream-client";
+import type { RemoteHostDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
 import {
   RemoteHostMessenger,
   RemoteStreamClient,
   type IRemoteSession,
-} from "@traycer-clients/shared/host-transport/remote/index";
+} from "@hukum-clients/shared/host-transport/remote/index";
 import {
   acquireRemoteSession,
   remoteSessionRefCountForTest,
   type RemoteSessionIdentity,
-} from "@traycer-clients/shared/host-transport/remote/active-remote-sessions";
-import { REMOTE_SESSION_LINGER_MS } from "@traycer-clients/shared/host-transport/remote/config";
+} from "@hukum-clients/shared/host-transport/remote/active-remote-sessions";
+import { REMOTE_SESSION_LINGER_MS } from "@hukum-clients/shared/host-transport/remote/config";
 import {
   hostRpcRegistry,
   type HostRpcRegistry,
-} from "@traycer/protocol/host/index";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/index";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 
 const bindingRef = vi.hoisted(() => ({
   value: null as {
@@ -74,11 +74,11 @@ const mocks = vi.hoisted(() => ({
 }));
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/remote/index",
+  "@hukum-clients/shared/host-transport/remote/index",
   async (importOriginal) => {
     const actual =
       await importOriginal<
-        typeof import("@traycer-clients/shared/host-transport/remote/index")
+        typeof import("@hukum-clients/shared/host-transport/remote/index")
       >();
     return {
       ...actual,

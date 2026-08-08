@@ -1,7 +1,7 @@
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import { providerCliIdForHarness } from "@/lib/provider-ordering";
 
 export interface ResolvedClonedChatSettings {

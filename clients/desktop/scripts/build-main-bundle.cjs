@@ -5,8 +5,8 @@
 /**
  * Builds the Electron main process and preload bridge into self-contained
  * CommonJS bundles via esbuild. Inlines every dependency (electron-log,
- * electron-updater, the @traycer-clients/shared barrel, etc.) so the
- * packaged Traycer.app does not need to ship `node_modules/` inside the
+ * electron-updater, the @hukum-clients/shared barrel, etc.) so the
+ * packaged Hukum.app does not need to ship `node_modules/` inside the
  * asar - the only external is `electron` itself, which is provided by
  * the Electron runtime.
  *
@@ -57,11 +57,11 @@ const preloadEntry = path.resolve(
 const mainOutFile = path.resolve(distDir, "main", "index.js");
 const preloadOutFile = path.resolve(distDir, "preload", "index.js");
 const envDefines = {
-  "process.env.VITE_TRAYCER_DESKTOP_UPDATE_REPO": JSON.stringify(
-    process.env.VITE_TRAYCER_DESKTOP_UPDATE_REPO ?? "",
+  "process.env.VITE_HUKUM_DESKTOP_UPDATE_REPO": JSON.stringify(
+    process.env.VITE_HUKUM_DESKTOP_UPDATE_REPO ?? "",
   ),
-  "process.env.VITE_TRAYCER_DESKTOP_UPDATE_TOKEN": JSON.stringify(
-    process.env.VITE_TRAYCER_DESKTOP_UPDATE_TOKEN ?? "",
+  "process.env.VITE_HUKUM_DESKTOP_UPDATE_TOKEN": JSON.stringify(
+    process.env.VITE_HUKUM_DESKTOP_UPDATE_TOKEN ?? "",
   ),
 };
 

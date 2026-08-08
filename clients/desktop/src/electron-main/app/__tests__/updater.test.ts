@@ -44,16 +44,16 @@ function setPlatform(value: string): void {
   Object.defineProperty(process, "platform", { configurable: true, value });
 }
 
-const originalPrivateUpdateRepo = process.env.VITE_TRAYCER_DESKTOP_UPDATE_REPO;
+const originalPrivateUpdateRepo = process.env.VITE_HUKUM_DESKTOP_UPDATE_REPO;
 const originalPrivateUpdateToken =
-  process.env.VITE_TRAYCER_DESKTOP_UPDATE_TOKEN;
+  process.env.VITE_HUKUM_DESKTOP_UPDATE_TOKEN;
 
 beforeEach(() => {
-  Reflect.deleteProperty(process.env, "VITE_TRAYCER_DESKTOP_UPDATE_REPO");
-  Reflect.deleteProperty(process.env, "VITE_TRAYCER_DESKTOP_UPDATE_TOKEN");
+  Reflect.deleteProperty(process.env, "VITE_HUKUM_DESKTOP_UPDATE_REPO");
+  Reflect.deleteProperty(process.env, "VITE_HUKUM_DESKTOP_UPDATE_TOKEN");
   Object.defineProperty(process, "resourcesPath", {
     configurable: true,
-    value: "/tmp/traycer-test-resources",
+    value: "/tmp/hukum-test-resources",
     writable: true,
   });
   // Default to macOS so the read-only-volume message mapping is exercised;
@@ -83,11 +83,11 @@ afterEach(() => {
   vi.doUnmock("../logger");
   vi.doUnmock("../linux-update-guidance");
   restoreEnvValue(
-    "VITE_TRAYCER_DESKTOP_UPDATE_REPO",
+    "VITE_HUKUM_DESKTOP_UPDATE_REPO",
     originalPrivateUpdateRepo,
   );
   restoreEnvValue(
-    "VITE_TRAYCER_DESKTOP_UPDATE_TOKEN",
+    "VITE_HUKUM_DESKTOP_UPDATE_TOKEN",
     originalPrivateUpdateToken,
   );
   // Only the architecture-selection test sets this; clean up unconditionally
@@ -105,16 +105,16 @@ describe("desktop app updater", () => {
   });
 
   it("configures a private GitHub feed when the testing token is baked", async () => {
-    process.env.VITE_TRAYCER_DESKTOP_UPDATE_REPO = "traycerai/private-traycer";
-    process.env.VITE_TRAYCER_DESKTOP_UPDATE_TOKEN = "test-token";
+    process.env.VITE_HUKUM_DESKTOP_UPDATE_REPO = "hukumai/private-hukum";
+    process.env.VITE_HUKUM_DESKTOP_UPDATE_TOKEN = "test-token";
     const { autoUpdater, updater } = await loadUpdater(NOT_LINUX_GUIDANCE);
 
     await updater.installAutoUpdater(true, makeDeps(true));
 
     expect(autoUpdater.setFeedURL).toHaveBeenCalledWith({
       provider: "github",
-      owner: "traycerai",
-      repo: "private-traycer",
+      owner: "hukumai",
+      repo: "private-hukum",
       private: true,
       token: "test-token",
     });
@@ -141,7 +141,7 @@ describe("desktop app updater", () => {
       status: "error",
       downloadProgress: null,
       errorMessage:
-        "Traycer ran into a problem while updating. Please try again in a little while.",
+        "Hukum ran into a problem while updating. Please try again in a little while.",
       // The download was user-initiated, so its failure is manual-intent.
       lastCheckIntent: "manual",
     });
@@ -312,7 +312,7 @@ describe("desktop app updater", () => {
     expect(updater.getAppUpdateSnapshot()).toMatchObject({
       status: "error",
       errorMessage:
-        "Move Traycer to your Applications folder to install updates.",
+        "Move Hukum to your Applications folder to install updates.",
       installInFlight: false,
     });
     expect(updater.isInstallingUpdate()).toBe(false);
@@ -341,7 +341,7 @@ describe("desktop app updater", () => {
     expect(updater.getAppUpdateSnapshot()).toMatchObject({
       status: "error",
       errorMessage:
-        "Move Traycer to your Applications folder to install updates.",
+        "Move Hukum to your Applications folder to install updates.",
       installInFlight: false,
     });
     expect(updater.isInstallingUpdate()).toBe(false);
@@ -405,7 +405,7 @@ describe("desktop app updater", () => {
   it("does not expose raw GitHub feed 404 details in manual-check feedback", async () => {
     const { autoUpdater, updater } = await loadUpdater(NOT_LINUX_GUIDANCE);
     const rawGitHubError =
-      '404 "method: GET url: https://github.com/traycerai/traycer/releases.atom\\n\\nPlease double check that your authentication token is correct." Headers: { "set-cookie": [ "_gh_sess=secret" ] }';
+      '404 "method: GET url: https://github.com/hukumai/hukum/releases.atom\\n\\nPlease double check that your authentication token is correct." Headers: { "set-cookie": [ "_gh_sess=secret" ] }';
     autoUpdater.checkForUpdates.mockRejectedValue(new Error(rawGitHubError));
     await updater.installAutoUpdater(true, makeDeps(true));
 
@@ -414,7 +414,7 @@ describe("desktop app updater", () => {
     expect(updater.getAppUpdateSnapshot()).toMatchObject({
       status: "error",
       errorMessage:
-        "Traycer couldn't reach the update service right now. Please try again in a little while.",
+        "Hukum couldn't reach the update service right now. Please try again in a little while.",
       lastCheckIntent: "manual",
     });
     const leakedMessage = updater.getAppUpdateSnapshot().errorMessage ?? "";
@@ -436,7 +436,7 @@ describe("desktop app updater", () => {
     expect(updater.getAppUpdateSnapshot()).toMatchObject({
       status: "error",
       errorMessage:
-        "Traycer couldn't connect to check for updates. Please check your internet connection and try again.",
+        "Hukum couldn't connect to check for updates. Please check your internet connection and try again.",
       lastCheckIntent: "manual",
     });
   });
@@ -451,7 +451,7 @@ describe("desktop app updater", () => {
     await updater.checkForUpdatesNow(false, "manual");
 
     expect(updater.getAppUpdateSnapshot().errorMessage).toBe(
-      "Traycer couldn't reach the update service right now. Please try again in a little while.",
+      "Hukum couldn't reach the update service right now. Please try again in a little while.",
     );
   });
 
@@ -474,7 +474,7 @@ describe("desktop app updater", () => {
     expect(updater.getAppUpdateSnapshot()).toMatchObject({
       status: "error",
       errorMessage:
-        "Traycer couldn't download and install the latest update. Please try again in a little while.",
+        "Hukum couldn't download and install the latest update. Please try again in a little while.",
     });
   });
 
@@ -488,7 +488,7 @@ describe("desktop app updater", () => {
     await updater.checkForUpdatesNow(false, "manual");
 
     expect(updater.getAppUpdateSnapshot().errorMessage).toBe(
-      "Traycer ran into a problem while updating. Please try again in a little while.",
+      "Hukum ran into a problem while updating. Please try again in a little while.",
     );
   });
 
@@ -531,7 +531,7 @@ describe("desktop app updater", () => {
     expect(autoUpdater.allowPrerelease).toBe(true);
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.3.0-rc.2/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.3.0-rc.2/",
     });
   });
 
@@ -596,12 +596,12 @@ describe("desktop app updater", () => {
     await updater.installAutoUpdater(true, {
       isAnyWindowFocused: () => true,
       focusPrimaryWindow: vi.fn(),
-      installBlockedReason: () => "Move Traycer to your Applications folder.",
+      installBlockedReason: () => "Move Hukum to your Applications folder.",
     });
     await updater.checkForUpdatesNow(false, "automatic");
     expect(updater.getAppUpdateSnapshot()).toMatchObject({
       status: "available",
-      installBlockedReason: "Move Traycer to your Applications folder.",
+      installBlockedReason: "Move Hukum to your Applications folder.",
     });
 
     updater.startUpdateDownload();
@@ -649,8 +649,8 @@ describe("desktop app updater", () => {
 
     expect(notify).toHaveBeenCalledTimes(1);
     expect(notify).toHaveBeenCalledWith(
-      "Traycer update available",
-      "Open Traycer to download v2.0.0.",
+      "Hukum update available",
+      "Open Hukum to download v2.0.0.",
       expect.any(Function),
     );
   });
@@ -803,7 +803,7 @@ describe("RC release discovery and channel safety", () => {
 
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.5.0-rc.1/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.5.0-rc.1/",
     });
   });
 
@@ -854,7 +854,7 @@ describe("RC release discovery and channel safety", () => {
     expect(paginationCalls).toBe(2);
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.5.0-rc.1/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.5.0-rc.1/",
     });
   });
 
@@ -909,13 +909,13 @@ describe("RC release discovery and channel safety", () => {
 
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.4.0-rc.1/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.4.0-rc.1/",
     });
   });
 
   it("routes a private RC feed through the authenticated custom provider, never the public generic feed", async () => {
-    process.env.VITE_TRAYCER_DESKTOP_UPDATE_REPO = "traycerai/private-traycer";
-    process.env.VITE_TRAYCER_DESKTOP_UPDATE_TOKEN = "test-token";
+    process.env.VITE_HUKUM_DESKTOP_UPDATE_REPO = "hukumai/private-hukum";
+    process.env.VITE_HUKUM_DESKTOP_UPDATE_TOKEN = "test-token";
     const { autoUpdater, updater } = await loadUpdater(NOT_LINUX_GUIDANCE);
     vi.stubGlobal(
       "fetch",
@@ -945,8 +945,8 @@ describe("RC release discovery and channel safety", () => {
   });
 
   it("fails closed and never falls back to the public feed when the private repo coordinate is malformed", async () => {
-    process.env.VITE_TRAYCER_DESKTOP_UPDATE_REPO = "not-a-coordinate";
-    process.env.VITE_TRAYCER_DESKTOP_UPDATE_TOKEN = "test-token";
+    process.env.VITE_HUKUM_DESKTOP_UPDATE_REPO = "not-a-coordinate";
+    process.env.VITE_HUKUM_DESKTOP_UPDATE_TOKEN = "test-token";
     const { autoUpdater, updater } = await loadUpdater(NOT_LINUX_GUIDANCE);
     await updater.installAutoUpdater(true, makeDeps(true));
 
@@ -1031,8 +1031,8 @@ describe("RC release discovery and channel safety", () => {
     );
     expect(autoUpdater.setFeedURL).toHaveBeenCalledWith({
       provider: "github",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
     });
     expect(
       snapshots.some(
@@ -1174,8 +1174,8 @@ describe("RC release discovery and channel safety", () => {
   });
 
   it("fails closed on the stable channel when the private repo coordinate is malformed (no network, no public fallback)", async () => {
-    process.env.VITE_TRAYCER_DESKTOP_UPDATE_REPO = "not-a-coordinate";
-    process.env.VITE_TRAYCER_DESKTOP_UPDATE_TOKEN = "test-token";
+    process.env.VITE_HUKUM_DESKTOP_UPDATE_REPO = "not-a-coordinate";
+    process.env.VITE_HUKUM_DESKTOP_UPDATE_TOKEN = "test-token";
     const fetchMock = vi.fn(() =>
       Promise.resolve(new Response("[]", { status: 200 })),
     );
@@ -1221,7 +1221,7 @@ describe("RC release discovery and channel safety", () => {
 
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.6.0-rc.1/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.6.0-rc.1/",
     });
   });
 
@@ -1294,7 +1294,7 @@ describe("RC release discovery and channel safety", () => {
 
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.6.0-rc.1/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.6.0-rc.1/",
     });
   });
 
@@ -1328,7 +1328,7 @@ describe("RC release discovery and channel safety", () => {
 
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.7.0-rc.1/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.7.0-rc.1/",
     });
   });
 
@@ -1358,7 +1358,7 @@ describe("RC release discovery and channel safety", () => {
 
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.9.0-rc.1/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.9.0-rc.1/",
     });
   });
 
@@ -1423,13 +1423,13 @@ describe("architecture-specific channel manifest selection", () => {
       "desktop-v1.9.0-rc.2",
       true,
       "latest-linux.yml",
-      "traycer-1.9.0-rc.2-x86_64.appimage",
+      "hukum-1.9.0-rc.2-x86_64.appimage",
     );
     const arm64 = linuxReleaseFixture(
       "desktop-v1.9.0-rc.1",
       true,
       "latest-linux-arm64.yml",
-      "traycer-1.9.0-rc.1-arm64.appimage",
+      "hukum-1.9.0-rc.1-arm64.appimage",
     );
     vi.stubGlobal(
       "fetch",
@@ -1440,10 +1440,10 @@ describe("architecture-specific channel manifest selection", () => {
         "desktop-v1.9.0-rc.1": [
           "version: 1.9.0-rc.1",
           "files:",
-          "  - url: traycer-1.9.0-rc.1-arm64.appimage",
+          "  - url: hukum-1.9.0-rc.1-arm64.appimage",
           "    sha512: aGVsbG8=",
           "    size: 1024",
-          "path: traycer-1.9.0-rc.1-arm64.appimage",
+          "path: hukum-1.9.0-rc.1-arm64.appimage",
           "sha512: aGVsbG8=",
           "releaseDate: '2026-01-01T00:00:00.000Z'",
         ].join("\n"),
@@ -1456,7 +1456,7 @@ describe("architecture-specific channel manifest selection", () => {
 
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.9.0-rc.1/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.9.0-rc.1/",
     });
   });
 
@@ -1492,7 +1492,7 @@ describe("architecture-specific channel manifest selection", () => {
     // ZIP_FILE_NOT_FOUND, so discovery rejects the newest and falls back.
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.9.0-rc.1/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.9.0-rc.1/",
     });
   });
 
@@ -1522,7 +1522,7 @@ describe("architecture-specific channel manifest selection", () => {
 
     expect(autoUpdater.setFeedURL).toHaveBeenLastCalledWith({
       provider: "generic",
-      url: "https://github.com/traycerai/traycer/releases/download/desktop-v1.9.0-rc.2/",
+      url: "https://github.com/hukumai/hukum/releases/download/desktop-v1.9.0-rc.2/",
     });
   });
 });
@@ -1570,8 +1570,8 @@ describe("channel-change queue ordering", () => {
     expect(autoUpdater.allowPrerelease).toBe(false);
     expect(autoUpdater.setFeedURL).toHaveBeenCalledWith({
       provider: "github",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
     });
     expect(updater.getAppUpdateSnapshot().status).not.toBe("downloading");
 
@@ -1643,13 +1643,13 @@ describe("Linux deb/rpm silent-install gating", () => {
 
     autoUpdater.emit("update-downloaded", {
       version: "2.0.0",
-      downloadedFile: "/home/user/.cache/updater/pending/traycer.deb",
+      downloadedFile: "/home/user/.cache/updater/pending/hukum.deb",
     });
 
     const snapshot = updater.getAppUpdateSnapshot();
     expect(snapshot.status).toBe("ready");
     expect(snapshot.installGuidance).toMatchObject({
-      command: 'sudo dpkg -i "/home/user/.cache/updater/pending/traycer.deb"',
+      command: 'sudo dpkg -i "/home/user/.cache/updater/pending/hukum.deb"',
     });
   });
 
@@ -1669,7 +1669,7 @@ describe("Linux deb/rpm silent-install gating", () => {
 
     autoUpdater.emit("update-downloaded", {
       version: "2.0.0",
-      downloadedFile: "/home/user/.cache/updater/pending/traycer.deb",
+      downloadedFile: "/home/user/.cache/updater/pending/hukum.deb",
     });
 
     expect(updater.getAppUpdateSnapshot().installGuidance).toBeNull();
@@ -1690,7 +1690,7 @@ describe("Linux deb/rpm silent-install gating", () => {
     await updater.checkForUpdatesNow(false, "automatic");
     autoUpdater.emit("update-downloaded", {
       version: "2.0.0",
-      downloadedFile: "/home/user/.cache/updater/pending/traycer.deb",
+      downloadedFile: "/home/user/.cache/updater/pending/hukum.deb",
     });
     // Pre-flight said this should work (installGuidance is null here) - the
     // one-click path is offered, matching a normal desktop Linux session.
@@ -1702,10 +1702,10 @@ describe("Linux deb/rpm silent-install gating", () => {
     const snapshot = updater.getAppUpdateSnapshot();
     expect(snapshot.status).toBe("error");
     expect(snapshot.errorMessage).toBe(
-      "Traycer couldn't finish installing the update automatically. Follow the instructions below to finish it manually.",
+      "Hukum couldn't finish installing the update automatically. Follow the instructions below to finish it manually.",
     );
     expect(snapshot.installGuidance).toMatchObject({
-      command: 'sudo dpkg -i "/home/user/.cache/updater/pending/traycer.deb"',
+      command: 'sudo dpkg -i "/home/user/.cache/updater/pending/hukum.deb"',
     });
   });
 
@@ -1724,7 +1724,7 @@ describe("Linux deb/rpm silent-install gating", () => {
     await updater.checkForUpdatesNow(false, "automatic");
     autoUpdater.emit("update-downloaded", {
       version: "2.0.0",
-      downloadedFile: "/home/user/.cache/updater/pending/traycer.deb",
+      downloadedFile: "/home/user/.cache/updater/pending/hukum.deb",
     });
 
     updater.installDownloadedUpdate();
@@ -1733,7 +1733,7 @@ describe("Linux deb/rpm silent-install gating", () => {
     const snapshot = updater.getAppUpdateSnapshot();
     expect(snapshot.installGuidance).toBeNull();
     expect(snapshot.errorMessage).toBe(
-      "Traycer couldn't download and install the latest update. Please try again in a little while.",
+      "Hukum couldn't download and install the latest update. Please try again in a little while.",
     );
   });
 });
@@ -1883,7 +1883,7 @@ async function loadUpdaterWithControls(
         downloadedFile: string | null,
       ) => ({
         summary: `guidance for ${packageType} (${latestVersion ?? "unknown"})`,
-        steps: ["Open a terminal.", "Run the command.", "Restart Traycer."],
+        steps: ["Open a terminal.", "Run the command.", "Restart Hukum."],
         command:
           downloadedFile === null
             ? null
@@ -1924,17 +1924,17 @@ function macReleaseFixture(
     assets: [
       {
         name: "latest-mac.yml",
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-manifest`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-manifest`,
       },
       // macOS updates apply from the ZIP; the DMG is install-only. Discovery
       // requires the ZIP, so it must be present for the release to be eligible.
       {
-        name: `Traycer-${version}-mac.zip`,
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-zip`,
+        name: `Hukum-${version}-mac.zip`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-zip`,
       },
       {
-        name: `Traycer-${version}-mac.dmg`,
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-dmg`,
+        name: `Hukum-${version}-mac.dmg`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-dmg`,
       },
     ],
   };
@@ -1962,11 +1962,11 @@ function macDmgOnlyReleaseFixture(
     assets: [
       {
         name: "latest-mac.yml",
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-manifest`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-manifest`,
       },
       {
-        name: `Traycer-${version}-mac.dmg`,
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-dmg`,
+        name: `Hukum-${version}-mac.dmg`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-dmg`,
       },
     ],
   };
@@ -1975,7 +1975,7 @@ function macDmgOnlyReleaseFixture(
 // The GitHub asset name for a mac release's arm64 Squirrel.Mac ZIP.
 function macArm64ZipAssetName(tag: string): string {
   const version = tag.replace(/^desktop-v/, "");
-  return `Traycer-${version}-arm64-mac.zip`;
+  return `Hukum-${version}-arm64-mac.zip`;
 }
 
 // A macOS release publishing ONLY the arm64 ZIP (no x64/universal ZIP), so
@@ -2002,11 +2002,11 @@ function macArm64OnlyReleaseFixture(
     assets: [
       {
         name: "latest-mac.yml",
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-manifest`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-manifest`,
       },
       {
         name: macArm64ZipAssetName(tag),
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-arm64-zip`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-arm64-zip`,
       },
     ],
   };
@@ -2052,11 +2052,11 @@ function windowsReleaseFixture(
     assets: [
       {
         name: "latest.yml",
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-manifest`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-manifest`,
       },
       {
-        name: `Traycer-Setup-${version}.exe`,
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-exe`,
+        name: `Hukum-Setup-${version}.exe`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-exe`,
       },
     ],
   };
@@ -2067,7 +2067,7 @@ function windowsReleaseFixture(
 // must reference for the release to validate.
 function macZipAssetName(tag: string): string {
   const version = tag.replace(/^desktop-v/, "");
-  return `Traycer-${version}-mac.zip`;
+  return `Hukum-${version}-mac.zip`;
 }
 
 // Builds a minimal, fully valid electron-updater channel manifest (the same
@@ -2148,11 +2148,11 @@ function linuxReleaseFixture(
     assets: [
       {
         name: channelFile,
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-manifest`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-manifest`,
       },
       {
         name: installerName,
-        url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-appimage`,
+        url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-appimage`,
       },
     ],
   };

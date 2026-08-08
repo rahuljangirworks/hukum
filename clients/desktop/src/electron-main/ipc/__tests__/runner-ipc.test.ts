@@ -27,7 +27,7 @@ import type {
   InstallVersionOk,
   MutationOutcome,
   MutationProgress,
-  RemoveTraycerOk,
+  RemoveHukumOk,
   ServiceRegistrationOk,
   UninstallOk,
 } from "../../host/host-controller-types";
@@ -46,7 +46,7 @@ import type {
   PerWindowStateUpdateAcknowledgement,
   WindowSummary,
 } from "../../../ipc-contracts/window-types";
-import { createAuthenticatedUserFixture } from "@traycer-clients/shared/test-fixtures/authenticated-user";
+import { createAuthenticatedUserFixture } from "@hukum-clients/shared/test-fixtures/authenticated-user";
 
 const featureSettings = vi.hoisted(() => ({ agentRoles: false }));
 const readFeatureSettingsMock = vi.hoisted(() =>
@@ -57,8 +57,8 @@ const setAgentRolesEnabledMock = vi.hoisted(() =>
     featureSettings.agentRoles = enabled;
   }),
 );
-vi.mock("@traycer/protocol/config/store", async (importOriginal) => ({
-  ...(await importOriginal<typeof import("@traycer/protocol/config/store")>()),
+vi.mock("@hukum/protocol/config/store", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@hukum/protocol/config/store")>()),
   readFeatureSettings: readFeatureSettingsMock,
   setAgentRolesEnabled: setAgentRolesEnabledMock,
 }));
@@ -107,7 +107,7 @@ vi.mock("@sentry/electron/main", () => ({
 vi.mock("electron", () => ({
   app: {
     getVersion: (): string => "1.0.0",
-    getPath: (_key: string): string => "/tmp/traycer-desktop-test",
+    getPath: (_key: string): string => "/tmp/hukum-desktop-test",
   },
   safeStorage: {
     isEncryptionAvailable: (): boolean => false,
@@ -175,8 +175,8 @@ class FakeHost extends EventEmitter implements IpcHostLifecycle {
   // Mutable so the identity-seed suite can point them at real files in a temp
   // dir. Everything else keeps the unwritable defaults, which is what makes a
   // handler that reads them without being asked to fail loudly.
-  pidMetadataFile = "/tmp/fake-traycer-host/pid.json";
-  identityEnrollmentFile = "/tmp/fake-traycer-host/identity/enrollment.json";
+  pidMetadataFile = "/tmp/fake-hukum-host/pid.json";
+  identityEnrollmentFile = "/tmp/fake-hukum-host/identity/enrollment.json";
   isDisposed = false;
 
   getSnapshot(): DesktopPublishedHostSnapshot | null {
@@ -300,7 +300,7 @@ class FakeHostController implements IpcHostController {
       value: { removedInstallDir: true, deregisteredService: true },
     };
   }
-  async removeTraycer(): Promise<MutationOutcome<RemoveTraycerOk>> {
+  async removeHukum(): Promise<MutationOutcome<RemoveHukumOk>> {
     return {
       kind: "ok",
       value: {
@@ -693,47 +693,47 @@ describe("RunnerIpcBridge", () => {
         RunnerHostInvoke.powerSetSleepBlocked,
         // Legacy `runnerHost:service:*` install/uninstall/start/stop/restart/
         // upgrade/enableLinger/status/getLogTail channels have been removed
-        // in favor of the `traycer-cli`-driven host-management handlers
-        // (`traycerHost*`). The bridge no longer registers them.
-        RunnerHostInvoke.traycerHostStatus,
-        RunnerHostInvoke.traycerConfigShellGet,
-        RunnerHostInvoke.traycerConfigShellList,
-        RunnerHostInvoke.traycerConfigShellSet,
-        RunnerHostInvoke.traycerConfigShellReset,
-        RunnerHostInvoke.traycerConfigShellAdd,
-        RunnerHostInvoke.traycerConfigShellRemove,
-        RunnerHostInvoke.traycerConfigShellProbe,
-        RunnerHostInvoke.traycerConfigShellPickProgramFile,
-        RunnerHostInvoke.traycerConfigShellRevertArgs,
-        RunnerHostInvoke.traycerConfigEnvList,
-        RunnerHostInvoke.traycerConfigEnvSet,
-        RunnerHostInvoke.traycerConfigEnvDelete,
+        // in favor of the `hukum-cli`-driven host-management handlers
+        // (`hukumHost*`). The bridge no longer registers them.
+        RunnerHostInvoke.hukumHostStatus,
+        RunnerHostInvoke.hukumConfigShellGet,
+        RunnerHostInvoke.hukumConfigShellList,
+        RunnerHostInvoke.hukumConfigShellSet,
+        RunnerHostInvoke.hukumConfigShellReset,
+        RunnerHostInvoke.hukumConfigShellAdd,
+        RunnerHostInvoke.hukumConfigShellRemove,
+        RunnerHostInvoke.hukumConfigShellProbe,
+        RunnerHostInvoke.hukumConfigShellPickProgramFile,
+        RunnerHostInvoke.hukumConfigShellRevertArgs,
+        RunnerHostInvoke.hukumConfigEnvList,
+        RunnerHostInvoke.hukumConfigEnvSet,
+        RunnerHostInvoke.hukumConfigEnvDelete,
         RunnerHostInvoke.migrationAnnounceRunning,
         RunnerHostInvoke.migrationGetRunningSnapshot,
         // Native-packaging host-management bridge (Flow 4 / Flow 6).
         // These channels are registered by `registerHostManagementIpc`
         // which the bridge invokes during `install()`.
-        RunnerHostInvoke.traycerHostControllerStatusGet,
-        RunnerHostInvoke.traycerHostConvergeReady,
-        RunnerHostInvoke.traycerHostApplyStaged,
-        RunnerHostInvoke.traycerHostActivateInstalled,
-        RunnerHostInvoke.traycerHostInstallVersion,
-        RunnerHostInvoke.traycerHostUninstall,
-        RunnerHostInvoke.traycerAppUninstall,
-        RunnerHostInvoke.traycerHostRemovalGet,
-        RunnerHostInvoke.traycerHostRemovalClear,
-        RunnerHostInvoke.traycerHostRestart,
-        RunnerHostInvoke.traycerHostLogs,
-        RunnerHostInvoke.traycerHostDoctor,
-        RunnerHostInvoke.traycerHostAvailable,
-        RunnerHostInvoke.traycerHostInstalled,
-        RunnerHostInvoke.traycerHostNameGet,
-        RunnerHostInvoke.traycerHostNameSet,
-        RunnerHostInvoke.traycerServiceRegister,
-        RunnerHostInvoke.traycerServiceDeregister,
-        RunnerHostInvoke.traycerRegistryCheck,
-        RunnerHostInvoke.traycerFreePortAndRestart,
-        RunnerHostInvoke.traycerCliManifestRead,
+        RunnerHostInvoke.hukumHostControllerStatusGet,
+        RunnerHostInvoke.hukumHostConvergeReady,
+        RunnerHostInvoke.hukumHostApplyStaged,
+        RunnerHostInvoke.hukumHostActivateInstalled,
+        RunnerHostInvoke.hukumHostInstallVersion,
+        RunnerHostInvoke.hukumHostUninstall,
+        RunnerHostInvoke.hukumAppUninstall,
+        RunnerHostInvoke.hukumHostRemovalGet,
+        RunnerHostInvoke.hukumHostRemovalClear,
+        RunnerHostInvoke.hukumHostRestart,
+        RunnerHostInvoke.hukumHostLogs,
+        RunnerHostInvoke.hukumHostDoctor,
+        RunnerHostInvoke.hukumHostAvailable,
+        RunnerHostInvoke.hukumHostInstalled,
+        RunnerHostInvoke.hukumHostNameGet,
+        RunnerHostInvoke.hukumHostNameSet,
+        RunnerHostInvoke.hukumServiceRegister,
+        RunnerHostInvoke.hukumServiceDeregister,
+        RunnerHostInvoke.hukumRegistryCheck,
+        RunnerHostInvoke.hukumFreePortAndRestart,
+        RunnerHostInvoke.hukumCliManifestRead,
         // Platform IPC channels installed by `registerPlatformIpc(bridge)`,
         // which is now invoked from `RunnerIpcBridge.install()` rather than
         // wired by the host. They cover recent docs, window effects, GPU,
@@ -918,7 +918,7 @@ describe("RunnerIpcBridge", () => {
   it("saves renderer-provided bytes through the native save dialog", async () => {
     const mod = await import("../register-runner-ipc");
     const electron = await import("electron");
-    const dir = await mkdtemp(join(tmpdir(), "traycer-file-save-"));
+    const dir = await mkdtemp(join(tmpdir(), "hukum-file-save-"));
     const target = join(dir, "diagram.png");
     const showSaveDialog = vi.mocked(electron.dialog.showSaveDialog);
     showSaveDialog.mockResolvedValue({
@@ -2875,7 +2875,7 @@ describe("RunnerIpcBridge", () => {
     const hostController = new FakeHostController();
     hostController.respawn = async () => ({
       kind: "failed",
-      message: "Traycer needs approval in System Settings.",
+      message: "Hukum needs approval in System Settings.",
     });
     const bridge = new mod.RunnerIpcBridge({
       host: new FakeHost(),
@@ -2896,7 +2896,7 @@ describe("RunnerIpcBridge", () => {
       throw new Error("requestHostRespawn handler missing");
     }
     await expect(respawnHandler(bareEvent())).rejects.toThrow(
-      "Traycer needs approval in System Settings.",
+      "Hukum needs approval in System Settings.",
     );
     bridge.dispose();
   });
@@ -2911,7 +2911,7 @@ describe("RunnerIpcBridge", () => {
       readonly enrollment: string | null;
       readonly pid: string | null;
     }): Promise<string | null> {
-      const dir = await mkdtemp(join(tmpdir(), "traycer-identity-seed-"));
+      const dir = await mkdtemp(join(tmpdir(), "hukum-identity-seed-"));
       try {
         const host = new FakeHost();
         host.identityEnrollmentFile = join(dir, "identity", "enrollment.json");
@@ -3197,7 +3197,7 @@ describe("RunnerIpcBridge", () => {
       quitState: undefined,
     });
     const display = {
-      title: "Traycer",
+      title: "Hukum",
       body: "Background agent failed",
       payload: null,
       replaceKey: "app-local:host.error:failure-1",

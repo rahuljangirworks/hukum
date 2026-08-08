@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
-import type { GitWatcherStatus } from "@traycer/protocol/host/git-schemas";
+import type { GitWatcherStatus } from "@hukum/protocol/host/git-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { GitWatcherStatusNotice } from "../git-watcher-status-notice";
 

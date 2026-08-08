@@ -7,7 +7,7 @@ import type {
   RoleAwarenessDelivery,
   RoleAwarenessDeliveryV11,
   RoleClaimWire,
-} from "@traycer/protocol/host/agent/roles";
+} from "@hukum/protocol/host/agent/roles";
 
 /**
  * ONE rendering for role operations, shared verbatim by the host's GUI tool

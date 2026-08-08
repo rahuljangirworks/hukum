@@ -3,7 +3,7 @@ import { act, cleanup, render } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { buildNotificationActivationEnvelope } from "@/lib/notifications/notification-activation-envelope";
 import type { NotificationActivationInput } from "@/hooks/notifications/use-notification-activation";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
 
 const navigateSpy = vi.fn();
 const activate = vi.hoisted(() =>
@@ -87,7 +87,7 @@ import { useNotificationEventsStore } from "@/stores/notifications/notification-
 import { useCloudNotificationsStore } from "@/stores/notifications/cloud-notifications-store";
 import { useNotificationsPopoverStore } from "@/stores/notifications/notifications-popover-store";
 import { __resetTabNavigationControllerForTesting } from "@/lib/tab-navigation";
-import type { HostNotificationEntry } from "@traycer/protocol/host/notifications/contracts";
+import type { HostNotificationEntry } from "@hukum/protocol/host/notifications/contracts";
 
 function createTestQueryClient(): QueryClient {
   return new QueryClient({

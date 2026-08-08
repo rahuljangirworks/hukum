@@ -2,8 +2,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { WorktreeIntent } from "@traycer/protocol/host/worktree-schemas";
-import type { TuiHarnessId } from "@traycer/protocol/persistence/epic/schemas";
+import type { WorktreeIntent } from "@hukum/protocol/host/worktree-schemas";
+import type { TuiHarnessId } from "@hukum/protocol/persistence/epic/schemas";
 
 const hookMocks = vi.hoisted(() => ({
   request: vi.fn<(method: string, payload: unknown) => Promise<unknown>>(),
@@ -215,11 +215,11 @@ describe("useCreateTuiAgent", () => {
           kind: "worktree",
           scripts: null,
           workspacePath: WORKSPACE_PATH,
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           isPrimary: true,
           branch: {
             type: "new",
-            name: "traycer/fix-x",
+            name: "hukum/fix-x",
             source: "main",
             carryUncommittedChanges: false,
           },
@@ -306,11 +306,11 @@ describe("useCreateTuiAgent", () => {
       kind: "worktree",
       scripts: null,
       workspacePath,
-      repoIdentifier: { owner: "traycerai", repo: "traycer" },
+      repoIdentifier: { owner: "hukumai", repo: "hukum" },
       isPrimary: workspacePath === WORKSPACE_PATH,
       branch: {
         type: "new",
-        name: "traycer/fix-x",
+        name: "hukum/fix-x",
         source: "main",
         carryUncommittedChanges: false,
       },
@@ -365,11 +365,11 @@ describe("useCreateTuiAgent", () => {
           kind: "worktree",
           scripts: null,
           workspacePath: WORKSPACE_PATH,
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           isPrimary: true,
           branch: {
             type: "new",
-            name: "traycer/fix-x",
+            name: "hukum/fix-x",
             source: "main",
             carryUncommittedChanges: false,
           },
@@ -444,7 +444,7 @@ describe("useCreateTuiAgent", () => {
           isPrimary: true,
           branch: {
             type: "new",
-            name: "traycer/args-x",
+            name: "hukum/args-x",
             source: "main",
             carryUncommittedChanges: false,
           },
@@ -691,7 +691,7 @@ describe("useCreateTuiAgent", () => {
           isPrimary: true,
           branch: {
             type: "new",
-            name: "traycer/cross-profile-fork",
+            name: "hukum/cross-profile-fork",
             source: "main",
             carryUncommittedChanges: false,
           },
@@ -1044,7 +1044,7 @@ describe("useCreateTuiAgent", () => {
           isPrimary: true,
           branch: {
             type: "new",
-            name: "traycer/fix-x",
+            name: "hukum/fix-x",
             source: "main",
             carryUncommittedChanges: false,
           },
@@ -1130,7 +1130,7 @@ describe("useCreateTuiAgent", () => {
         {
           kind: "import",
           workspacePath: WORKSPACE_PATH,
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           isPrimary: true,
           worktreePath: "/tmp/worktrees/feature-x",
         },
@@ -1206,7 +1206,7 @@ describe("useCreateTuiAgent", () => {
           isPrimary: true,
           branch: {
             type: "new",
-            name: "traycer/fix-x",
+            name: "hukum/fix-x",
             source: "main",
             carryUncommittedChanges: false,
           },
@@ -1471,11 +1471,11 @@ describe("useCreateTuiAgent", () => {
           kind: "worktree",
           scripts: null,
           workspacePath: "/workspace/app",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           isPrimary: true,
           branch: {
             type: "new",
-            name: "traycer/mixed-x",
+            name: "hukum/mixed-x",
             source: "main",
             carryUncommittedChanges: false,
           },
@@ -1489,7 +1489,7 @@ describe("useCreateTuiAgent", () => {
         {
           kind: "import",
           workspacePath: "/workspace/lib",
-          repoIdentifier: { owner: "traycerai", repo: "lib" },
+          repoIdentifier: { owner: "hukumai", repo: "lib" },
           isPrimary: false,
           worktreePath: "/tmp/worktrees/lib-x",
         },
@@ -1638,7 +1638,7 @@ describe("useCreateTuiAgent", () => {
           isPrimary: true,
           branch: {
             type: "new",
-            name: "traycer/launch-x",
+            name: "hukum/launch-x",
             source: "main",
             carryUncommittedChanges: false,
           },

@@ -20,7 +20,7 @@ const CREDS: StoredCredentials = {
   token: "access-token",
   refreshToken: "refresh-token",
   savedAt: "2026-01-01T00:00:00.000Z",
-  user: { id: "u1", email: "ada@traycer.ai", name: "Ada" },
+  user: { id: "u1", email: "ada@hukum.ai", name: "Ada" },
 };
 
 const isWindows = process.platform === "win32";
@@ -30,7 +30,7 @@ describe("credentials primitives (real filesystem)", () => {
   let credPath: string;
 
   beforeEach(() => {
-    workDir = mkdtempSync(join(tmpdir(), "traycer-credentials-test-"));
+    workDir = mkdtempSync(join(tmpdir(), "hukum-credentials-test-"));
     // A not-yet-created subdir so the write primitive owns the mkdir.
     credPath = join(workDir, "cli", "dev", "credentials");
   });

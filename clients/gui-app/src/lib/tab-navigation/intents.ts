@@ -9,7 +9,7 @@
  */
 import type { SettingsSectionId } from "@/lib/settings-sections";
 import type { NestedFocusTarget } from "@/lib/epic-nested-focus-route";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 import type { EpicCanvasTileRef } from "@/stores/epics/canvas/types";
 
 export interface EpicRouteFocus {

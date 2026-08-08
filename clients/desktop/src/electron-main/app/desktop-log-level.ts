@@ -6,7 +6,7 @@ import {
   DEFAULT_LOG_LEVEL,
   isLogLevel,
   type LogLevel,
-} from "@traycer/protocol/config/log-level";
+} from "@hukum/protocol/config/log-level";
 import { createJsonFileStore } from "./json-file-store";
 
 const STORE_FILE_NAME = "desktop-log-level.json";
@@ -55,7 +55,7 @@ const ELECTRON_LOG_LEVEL: Record<LogLevel, ElectronLogLevel> = {
 /**
  * Applies the desktop threshold to electron-log's file transport — the sink
  * that persists both the main process's own logs and the renderer's forwarded
- * console logs into `traycer-desktop.log`. Raising it to `debug` is what support
+ * console logs into `hukum-desktop.log`. Raising it to `debug` is what support
  * asks for when collecting a repro.
  */
 export function applyDesktopLogLevel(level: LogLevel): void {

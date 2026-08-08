@@ -10,7 +10,7 @@ import {
 import { Bug, X } from "lucide-react";
 import { toast } from "sonner";
 import { queryOptions, useMutation, useQuery } from "@tanstack/react-query";
-import { MAX_REPORT_IMAGES } from "@traycer-clients/shared/support/image-attachment-guards";
+import { MAX_REPORT_IMAGES } from "@hukum-clients/shared/support/image-attachment-guards";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -35,7 +35,7 @@ import {
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { CopyTextButton } from "@/components/copy-text-button";
 import { cn } from "@/lib/utils";
-import { buildGitHubIssueUrl } from "@traycer-clients/shared/support/issue-reporter";
+import { buildGitHubIssueUrl } from "@hukum-clients/shared/support/issue-reporter";
 import {
   runnerMutationKeys,
   runnerQueryKeys,
@@ -1338,7 +1338,7 @@ function captureDescriptionCopy(
   if (hasErrorEnvelope) {
     return "The details below were captured automatically. Add what you were doing and send.";
   }
-  return "Sent privately to the Traycer team so we can look into it.";
+  return "Sent privately to the Hukum team so we can look into it.";
 }
 
 function intentLabel(
@@ -1799,7 +1799,7 @@ function ConsentPanel(props: {
   // only a private-report reference, and only when one exists).
   const summary = props.deliveryUnavailable
     ? "Included in your diagnostic bundle: your words, type/frequency, and any log tails still toggled on below. Screenshots stay on this device - attach them manually if you post a GitHub issue."
-    : "Sent privately to the Traycer team: adds your words, screenshots and logs to the crash data we already receive.";
+    : "Sent privately to the Hukum team: adds your words, screenshots and logs to the crash data we already receive.";
 
   if (!props.expanded) {
     const logsState = logsToggleSummary(
@@ -1978,7 +1978,7 @@ function ConfirmationScreen({
   return (
     <div className="grid gap-2 rounded-md border border-emerald-800/40 bg-emerald-950/10 px-3 py-3 text-ui-sm">
       <p className="font-medium text-emerald-600 dark:text-emerald-400">
-        Sent privately to the Traycer team.
+        Sent privately to the Hukum team.
       </p>
       <p className="flex items-center gap-2 font-mono text-code-xs text-muted-foreground">
         Report ID {reportId}

@@ -6,7 +6,7 @@ import {
   type SurfaceMethodDegrade,
   type SurfaceOptionalMethod,
   type SurfaceVersion,
-} from "@traycer/protocol/framework/surface-build";
+} from "@hukum/protocol/framework/surface-build";
 
 /**
  * Released-peer compatibility oracle over dumped protocol surfaces.

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   guiHarnessIdSchema,
   type GuiHarnessId,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 import {
   guiHarnessIdToProviderId,
   providerCliIdForHarness,
@@ -17,17 +17,17 @@ describe("providerCliIdForHarness", () => {
     expect(ALL_HARNESS_IDS.length).toBeGreaterThan(0);
   });
 
-  it("returns null for traycer - the one harness with no provider-CLI login concept", () => {
-    expect(providerCliIdForHarness("traycer")).toBeNull();
+  it("returns null for hukum - the one harness with no provider-CLI login concept", () => {
+    expect(providerCliIdForHarness("hukum")).toBeNull();
   });
 
-  it("diverges from guiHarnessIdToProviderId only on traycer - the exact divergence this consolidation exists to keep explicit", () => {
-    expect(guiHarnessIdToProviderId("traycer")).toBe("traycer");
-    expect(providerCliIdForHarness("traycer")).toBeNull();
+  it("diverges from guiHarnessIdToProviderId only on hukum - the exact divergence this consolidation exists to keep explicit", () => {
+    expect(guiHarnessIdToProviderId("hukum")).toBe("hukum");
+    expect(providerCliIdForHarness("hukum")).toBeNull();
   });
 
-  it("matches guiHarnessIdToProviderId for every harness id other than traycer", () => {
-    ALL_HARNESS_IDS.filter((harnessId) => harnessId !== "traycer").forEach(
+  it("matches guiHarnessIdToProviderId for every harness id other than hukum", () => {
+    ALL_HARNESS_IDS.filter((harnessId) => harnessId !== "hukum").forEach(
       (harnessId) => {
         expect(providerCliIdForHarness(harnessId)).toBe(
           guiHarnessIdToProviderId(harnessId),

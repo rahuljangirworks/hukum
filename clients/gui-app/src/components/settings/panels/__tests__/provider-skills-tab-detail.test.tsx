@@ -2,8 +2,8 @@ import type {
   ProviderNativeScope,
   ProviderSkill,
   ProvidersSkillsMutateAction,
-} from "@traycer/protocol/host/provider-native-schemas";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import {
   cleanup,
   fireEvent,
@@ -225,7 +225,7 @@ describe("<ProviderSkillsTab /> skill detail", () => {
       {
         name: "release-notes",
         description: "Write release notes from a changeset.",
-        path: "/Users/dev/.traycer/managed-skills/release-notes",
+        path: "/Users/dev/.hukum/managed-skills/release-notes",
         source: "managed",
       },
     ];

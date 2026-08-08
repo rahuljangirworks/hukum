@@ -2,7 +2,7 @@ import { ArrowUp, Square } from "lucide-react";
 import { memo, useCallback, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
-import type { ChatActiveTurn } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { ChatActiveTurn } from "@hukum/protocol/host/agent/gui/subscribe";
 import { cn } from "@/lib/utils";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 

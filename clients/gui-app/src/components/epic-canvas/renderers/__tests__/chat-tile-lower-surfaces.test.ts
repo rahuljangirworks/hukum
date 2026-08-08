@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import type { ChatApprovalState } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { ChatApprovalState } from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   composerHasBlockingApprovals,
   visibleComposerApprovals,

@@ -48,15 +48,15 @@ function macReleaseAsset(tag: string): readonly DesktopReleaseAsset[] {
   return [
     {
       name: "latest-mac.yml",
-      url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-manifest`,
+      url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-manifest`,
     },
     {
-      name: `Traycer-${version}-mac.zip`,
-      url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-zip`,
+      name: `Hukum-${version}-mac.zip`,
+      url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-zip`,
     },
     {
-      name: `Traycer-${version}-mac.dmg`,
-      url: `https://api.github.com/repos/traycerai/traycer/releases/assets/${tag}-dmg`,
+      name: `Hukum-${version}-mac.dmg`,
+      url: `https://api.github.com/repos/hukumai/hukum/releases/assets/${tag}-dmg`,
     },
   ];
 }
@@ -255,7 +255,7 @@ describe("isPlatformCompatibleRelease", () => {
     setPlatform("win32");
     const assets: readonly DesktopReleaseAsset[] = [
       { name: "latest.yml", url: "https://api.github.com/x/manifest" },
-      { name: "Traycer-Setup-1.4.0.exe", url: "https://api.github.com/x/exe" },
+      { name: "Hukum-Setup-1.4.0.exe", url: "https://api.github.com/x/exe" },
     ];
     expect(isPlatformCompatibleRelease(candidate(assets), null)).toBe(true);
   });
@@ -276,7 +276,7 @@ describe("isPlatformCompatibleRelease", () => {
     const assets: readonly DesktopReleaseAsset[] = [
       { name: "latest-linux.yml", url: "https://api.github.com/x/manifest" },
       {
-        name: "traycer-1.4.0.appimage",
+        name: "hukum-1.4.0.appimage",
         url: "https://api.github.com/x/appimage",
       },
     ];
@@ -288,7 +288,7 @@ describe("isPlatformCompatibleRelease", () => {
     process.env.TEST_UPDATER_ARCH = "x64";
     const rpmOnly: readonly DesktopReleaseAsset[] = [
       { name: "latest-linux.yml", url: "https://api.github.com/x/manifest" },
-      { name: "traycer-1.4.0.rpm", url: "https://api.github.com/x/rpm" },
+      { name: "hukum-1.4.0.rpm", url: "https://api.github.com/x/rpm" },
     ];
     expect(isPlatformCompatibleRelease(candidate(rpmOnly), "deb")).toBe(false);
     expect(isPlatformCompatibleRelease(candidate(rpmOnly), "rpm")).toBe(true);
@@ -302,14 +302,14 @@ describe("validateDesktopReleaseManifest", () => {
     assets: macReleaseAsset("desktop-v1.4.0"),
   };
   const manifestUrl =
-    "https://github.com/traycerai/traycer/releases/download/desktop-v1.4.0/latest-mac.yml";
+    "https://github.com/hukumai/hukum/releases/download/desktop-v1.4.0/latest-mac.yml";
   const validManifest = [
     "version: 1.4.0",
     "files:",
-    "  - url: Traycer-1.4.0-mac.zip",
+    "  - url: Hukum-1.4.0-mac.zip",
     "    sha512: aGVsbG8=",
     "    size: 1024",
-    "path: Traycer-1.4.0-mac.zip",
+    "path: Hukum-1.4.0-mac.zip",
     "sha512: aGVsbG8=",
     "releaseDate: '2026-01-01T00:00:00.000Z'",
   ].join("\n");
@@ -348,9 +348,9 @@ describe("validateDesktopReleaseManifest", () => {
     const manifest = [
       "version: 1.4.0",
       "files:",
-      "  - url: Traycer-1.4.0-mac-missing.zip",
+      "  - url: Hukum-1.4.0-mac-missing.zip",
       "    sha512: aGVsbG8=",
-      "path: Traycer-1.4.0-mac-missing.zip",
+      "path: Hukum-1.4.0-mac-missing.zip",
       "sha512: aGVsbG8=",
     ].join("\n");
 
@@ -371,9 +371,9 @@ describe("validateDesktopReleaseManifest", () => {
     const manifest = [
       "version: 1.4.0",
       "files:",
-      "  - url: Traycer-1.4.0-mac.zip",
+      "  - url: Hukum-1.4.0-mac.zip",
       "    size: 1024",
-      "path: Traycer-1.4.0-mac.zip",
+      "path: Hukum-1.4.0-mac.zip",
     ].join("\n");
 
     const result = validateDesktopReleaseManifest(
@@ -393,9 +393,9 @@ describe("validateDesktopReleaseManifest", () => {
     const manifest = [
       "version: 1.4.0",
       "files:",
-      "  - url: Traycer-1.4.0-mac.dmg",
+      "  - url: Hukum-1.4.0-mac.dmg",
       "    sha512: aGVsbG8=",
-      "path: Traycer-1.4.0-mac.dmg",
+      "path: Hukum-1.4.0-mac.dmg",
       "sha512: aGVsbG8=",
     ].join("\n");
 
@@ -475,20 +475,20 @@ describe("validateDesktopReleaseManifest", () => {
 
 describe("validateDesktopReleaseManifest macOS architecture filtering", () => {
   const manifestUrl =
-    "https://github.com/traycerai/traycer/releases/download/desktop-v1.5.0/latest-mac.yml";
-  const arm64ZipName = "Traycer-1.5.0-arm64-mac.zip";
-  const x64ZipName = "Traycer-1.5.0-mac.zip";
+    "https://github.com/hukumai/hukum/releases/download/desktop-v1.5.0/latest-mac.yml";
+  const arm64ZipName = "Hukum-1.5.0-arm64-mac.zip";
+  const x64ZipName = "Hukum-1.5.0-mac.zip";
   const manifestAsset: DesktopReleaseAsset = {
     name: "latest-mac.yml",
-    url: "https://api.github.com/repos/traycerai/traycer/releases/assets/desktop-v1.5.0-manifest",
+    url: "https://api.github.com/repos/hukumai/hukum/releases/assets/desktop-v1.5.0-manifest",
   };
   const arm64ZipAsset: DesktopReleaseAsset = {
     name: arm64ZipName,
-    url: "https://api.github.com/repos/traycerai/traycer/releases/assets/desktop-v1.5.0-arm64-zip",
+    url: "https://api.github.com/repos/hukumai/hukum/releases/assets/desktop-v1.5.0-arm64-zip",
   };
   const x64ZipAsset: DesktopReleaseAsset = {
     name: x64ZipName,
-    url: "https://api.github.com/repos/traycerai/traycer/releases/assets/desktop-v1.5.0-zip",
+    url: "https://api.github.com/repos/hukumai/hukum/releases/assets/desktop-v1.5.0-zip",
   };
 
   function manifestFor(zipNames: readonly string[]): string {
@@ -570,8 +570,8 @@ describe("validateDesktopReleaseManifest macOS architecture filtering", () => {
 });
 
 describe("filterMacFilesForArch", () => {
-  const arm64Zip = "Traycer-1.5.0-arm64-mac.zip";
-  const x64Zip = "Traycer-1.5.0-mac.zip";
+  const arm64Zip = "Hukum-1.5.0-arm64-mac.zip";
+  const x64Zip = "Hukum-1.5.0-mac.zip";
 
   it("drops arm64 files on an x64 Mac", () => {
     expect(filterMacFilesForArch([arm64Zip, x64Zip], false)).toEqual([x64Zip]);
@@ -618,18 +618,18 @@ describe("buildDesktopReleaseFeed", () => {
   };
 
   it("builds a generic exact-release URL when no token is configured", () => {
-    const feed = buildDesktopReleaseFeed("traycerai", "traycer", release, "");
+    const feed = buildDesktopReleaseFeed("hukumai", "hukum", release, "");
 
     expect(feed).toEqual({
       provider: "generic",
-      url: `https://github.com/traycerai/traycer/releases/download/${encodeURIComponent(release.tag)}/`,
+      url: `https://github.com/hukumai/hukum/releases/download/${encodeURIComponent(release.tag)}/`,
     });
   });
 
   it("builds the authenticated custom provider config when a token is configured", () => {
     const feed = buildDesktopReleaseFeed(
-      "traycerai",
-      "private-traycer",
+      "hukumai",
+      "private-hukum",
       release,
       "secret-token",
     );
@@ -668,16 +668,16 @@ function buildRuntimeOptions(
 
 describe("ExactReleaseAssetProvider", () => {
   const manifestAssetUrl =
-    "https://api.github.com/repos/traycerai/private-traycer/releases/assets/1001";
+    "https://api.github.com/repos/hukumai/private-hukum/releases/assets/1001";
   const installerAssetUrl =
-    "https://api.github.com/repos/traycerai/private-traycer/releases/assets/1002";
+    "https://api.github.com/repos/hukumai/private-hukum/releases/assets/1002";
   const manifestYaml = [
     "version: 1.6.0-rc.3",
     "files:",
-    "  - url: Traycer-1.6.0-rc.3-mac.zip",
+    "  - url: Hukum-1.6.0-rc.3-mac.zip",
     "    sha512: abcDEF123==",
     "    size: 12345",
-    "path: Traycer-1.6.0-rc.3-mac.zip",
+    "path: Hukum-1.6.0-rc.3-mac.zip",
     "sha512: abcDEF123==",
     "releaseDate: '2026-07-01T00:00:00.000Z'",
     "",
@@ -704,7 +704,7 @@ describe("ExactReleaseAssetProvider", () => {
   it("resolves the platform manifest asset with authenticated, non-following headers", async () => {
     const { executor, provider } = buildProvider([
       { name: "latest-mac.yml", url: manifestAssetUrl },
-      { name: "Traycer-1.6.0-rc.3-mac.zip", url: installerAssetUrl },
+      { name: "Hukum-1.6.0-rc.3-mac.zip", url: installerAssetUrl },
     ]);
     executor.response = manifestYaml;
 
@@ -727,7 +727,7 @@ describe("ExactReleaseAssetProvider", () => {
   it("resolves each manifest file to its matching asset's api URL", async () => {
     const { executor, provider } = buildProvider([
       { name: "latest-mac.yml", url: manifestAssetUrl },
-      { name: "Traycer-1.6.0-rc.3-mac.zip", url: installerAssetUrl },
+      { name: "Hukum-1.6.0-rc.3-mac.zip", url: installerAssetUrl },
     ]);
     executor.response = manifestYaml;
     const info = await provider.getLatestVersion();
@@ -736,12 +736,12 @@ describe("ExactReleaseAssetProvider", () => {
 
     expect(files).toHaveLength(1);
     expect(files[0].url.toString()).toBe(installerAssetUrl);
-    expect(files[0].info.url).toBe("Traycer-1.6.0-rc.3-mac.zip");
+    expect(files[0].info.url).toBe("Hukum-1.6.0-rc.3-mac.zip");
   });
 
   it("throws when the platform manifest asset is absent from the release", async () => {
     const { provider } = buildProvider([
-      { name: "Traycer-1.6.0-rc.3-mac.zip", url: installerAssetUrl },
+      { name: "Hukum-1.6.0-rc.3-mac.zip", url: installerAssetUrl },
     ]);
 
     await expect(provider.getLatestVersion()).rejects.toThrow(
@@ -755,14 +755,14 @@ describe("ExactReleaseAssetProvider", () => {
     ]);
     const updateInfo: UpdateInfo = {
       version: "1.6.0-rc.3",
-      files: [{ url: "Traycer-1.6.0-rc.3-mac.zip", sha512: "abcDEF123==" }],
-      path: "Traycer-1.6.0-rc.3-mac.zip",
+      files: [{ url: "Hukum-1.6.0-rc.3-mac.zip", sha512: "abcDEF123==" }],
+      path: "Hukum-1.6.0-rc.3-mac.zip",
       sha512: "abcDEF123==",
       releaseDate: "2026-07-01T00:00:00.000Z",
     };
 
     expect(() => provider.resolveFiles(updateInfo)).toThrow(
-      /Traycer-1\.6\.0-rc\.3-mac\.zip/,
+      /Hukum-1\.6\.0-rc\.3-mac\.zip/,
     );
   });
 });

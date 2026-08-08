@@ -2,18 +2,18 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { useStore } from "zustand";
 import { vi } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
 import {
   hostRpcRegistry,
   type HostRpcRegistry,
-} from "@traycer/protocol/host/index";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/index";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 import type {
   ProviderCliState,
   ProviderId,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 /**
  * Banner-flash bug: switching chat tabs (a real ChatTile remount past the

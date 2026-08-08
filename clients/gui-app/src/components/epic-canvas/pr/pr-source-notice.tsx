@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Info } from "lucide-react";
-import type { PrSourceNotice } from "@traycer/protocol/host/pr-schemas";
+import type { PrSourceNotice } from "@hukum/protocol/host/pr-schemas";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
 import { useResetCountdown } from "@/lib/relative-time";
 import {

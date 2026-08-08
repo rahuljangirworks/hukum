@@ -1,5 +1,5 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
 import type {
   IStreamSession,
   ServerFrameHandler,
@@ -8,7 +8,7 @@ import type {
   StreamConnectionStatus,
   StreamFrameEnvelope,
 } from "../i-stream-session";
-import type { QosClassValue } from "@traycer/protocol/host-transport/mux";
+import type { QosClassValue } from "@hukum/protocol/host-transport/mux";
 
 /**
  * A single logical subscribe stream multiplexed over the shared session — the

@@ -1,6 +1,6 @@
 export type ThemePreset =
   | "neutral"
-  | "traycer-green"
+  | "hukum-green"
   | "amoled"
   | "dracula"
   | "catppuccin"
@@ -34,8 +34,8 @@ export const THEME_PRESETS: ReadonlyArray<ThemePresetOption> = [
     accent: "oklch(0.205 0 0)",
   },
   {
-    id: "traycer-green",
-    label: "Traycer Green",
+    id: "hukum-green",
+    label: "Hukum Green",
     swatch: "#1A2421",
     fg: "#FFFFFF",
     accent: "#257174",
@@ -147,7 +147,7 @@ export const THEME_PRESETS: ReadonlyArray<ThemePresetOption> = [
   },
 ];
 
-export const DEFAULT_THEME_PRESET: ThemePreset = "traycer-green";
+export const DEFAULT_THEME_PRESET: ThemePreset = "hukum-green";
 
 const PRESET_BY_ID: ReadonlyMap<ThemePreset, ThemePresetOption> = new Map(
   THEME_PRESETS.map((preset) => [preset.id, preset]),

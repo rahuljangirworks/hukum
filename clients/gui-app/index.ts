@@ -1,4 +1,4 @@
-export { TraycerApp, type TraycerAppProps } from "@/traycer-app";
+export { HukumApp, type HukumAppProps } from "@/hukum-app";
 export {
   hostRpcRegistry,
   type HostRpcRegistry,

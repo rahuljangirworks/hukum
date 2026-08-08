@@ -5,17 +5,17 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: "@traycer-clients/shared",
+        find: "@hukum-clients/shared",
         replacement: path.resolve(__dirname, "../shared"),
       },
       {
-        find: "@traycer-clients/desktop",
+        find: "@hukum-clients/desktop",
         replacement: path.resolve(__dirname, "./src"),
       },
       // Match gui-app: resolve the protocol source directly (vitest doesn't use
       // tsconfig paths). `utils/*` lives outside `src/`, so it must come first.
       {
-        find: /^@traycer\/protocol\/utils\/(.*)$/,
+        find: /^@hukum\/protocol\/utils\/(.*)$/,
         replacement: path.resolve(
           __dirname,
           "..",
@@ -26,7 +26,7 @@ export default defineConfig({
         ),
       },
       {
-        find: /^@traycer\/protocol\/(.*)$/,
+        find: /^@hukum\/protocol\/(.*)$/,
         replacement: path.resolve(
           __dirname,
           "..",

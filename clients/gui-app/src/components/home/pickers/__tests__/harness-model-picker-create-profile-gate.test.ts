@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { resolveCreateProfileGate } from "@/components/home/pickers/harness-model-picker-create-profile-gate";
 
 const OAUTH_CAP: ProviderCliState["loginCapability"] = {

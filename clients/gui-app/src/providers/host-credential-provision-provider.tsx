@@ -2,8 +2,8 @@ import { useEffect, useRef, type ReactNode } from "react";
 import type {
   HostCredentialMintOutcome,
   HostCredentialMintRequest,
-} from "@traycer-clients/shared/host-transport/host-credential-mint-flow";
-import type { MintHostCredentialFetchResult } from "@traycer-clients/shared/auth/devices-sessions-fetcher";
+} from "@hukum-clients/shared/host-transport/host-credential-mint-flow";
+import type { MintHostCredentialFetchResult } from "@hukum-clients/shared/auth/devices-sessions-fetcher";
 import { useHostBinding, useHostDirectory } from "@/lib/host";
 import {
   resetHostCredentialProvisioning,

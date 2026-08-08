@@ -32,10 +32,10 @@ const MAX_LOG_OBJECT_KEYS = 40;
  * Configures `electron-log` so the desktop shell, the renderer, and any
  * spawned host-lifecycle diagnostics flow through a single sink.
  *
- * The host itself writes to `~/.traycer/host/host.log` in production and
- * `~/.traycer/host/dev/host.log` in dev - see `host-paths.ts`. Our own
+ * The host itself writes to `~/.hukum/host/host.log` in production and
+ * `~/.hukum/host/dev/host.log` in dev - see `host-paths.ts`. Our own
  * main-process log is kept separate at
- * `userData/traycer-desktop.log` so the two are easy to differentiate in
+ * `userData/hukum-desktop.log` so the two are easy to differentiate in
  * support bundles.
  */
 export function initLogger(): void {
@@ -43,7 +43,7 @@ export function initLogger(): void {
   log.transports.file.resolvePathFn = () => logPath;
   // The file transport — which persists both our own logs and the renderer's
   // forwarded console logs — follows the configured desktop level (default
-  // info), so Settings → log level controls what lands in traycer-desktop.log.
+  // info), so Settings → log level controls what lands in hukum-desktop.log.
   applyDesktopLogLevel(readDesktopLogLevelSync());
   // Console transport is noisy by design (every IPC + lifecycle log).
   // Shipped builds get the same `info` level the file transport does so
@@ -54,7 +54,7 @@ export function initLogger(): void {
 }
 
 export function resolveDesktopLogPath(): string {
-  return join(app.getPath("userData"), "traycer-desktop.log");
+  return join(app.getPath("userData"), "hukum-desktop.log");
 }
 
 export function redactLogText(value: string): string {

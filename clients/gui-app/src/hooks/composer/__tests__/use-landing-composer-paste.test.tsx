@@ -11,7 +11,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { toast } from "sonner";
 
 import type { ImageAttachmentAttrs } from "@/components/chat/composer/editor/extensions/image-attachment-extension";
-import type { IFileDropHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IFileDropHost } from "@hukum-clients/shared/platform/runner-host";
 import type { ComposerPasteEditorHandle } from "@/hooks/composer/use-composer-paste";
 import { useLandingComposerPaste } from "@/hooks/composer/use-landing-composer-paste";
 import { Analytics, AnalyticsEvent } from "@/lib/analytics";
@@ -568,7 +568,7 @@ describe("useLandingComposerPaste - onPaste path-span parity", () => {
       {},
       // `fileUriToPath` strips the `file://` scheme before this is called,
       // so the fake keys off the resolved filesystem path, not the URI.
-      { "/repo/external/report.pdf": ["/tmp/traycer-copy/report.pdf"] },
+      { "/repo/external/report.pdf": ["/tmp/hukum-copy/report.pdf"] },
     );
     renderLandingHarness(editorRef, fileDrops, ["/repo"]);
 
@@ -579,7 +579,7 @@ describe("useLandingComposerPaste - onPaste path-span parity", () => {
 
     await waitFor(() => expect(insertedPaths).toHaveLength(1));
     // Outside every mention root (copied to an app-managed temp dir) -> absolute.
-    expect(insertedPaths[0]).toEqual(["/tmp/traycer-copy/report.pdf"]);
+    expect(insertedPaths[0]).toEqual(["/tmp/hukum-copy/report.pdf"]);
     expect(inserted).toHaveLength(0);
   });
 
@@ -665,7 +665,7 @@ describe("useLandingComposerPaste - onDrop path-span parity", () => {
     const editorRef = { current: handle };
     const fileDrops = makeFileDrops(
       {},
-      { "/repo/screenshot.png": ["/tmp/traycer-copy/screenshot.png"] },
+      { "/repo/screenshot.png": ["/tmp/hukum-copy/screenshot.png"] },
     );
     renderLandingHarness(editorRef, fileDrops, ["/repo"]);
 
@@ -675,7 +675,7 @@ describe("useLandingComposerPaste - onDrop path-span parity", () => {
     });
 
     await waitFor(() => expect(insertedPaths).toHaveLength(1));
-    expect(insertedPaths[0]).toEqual(["/tmp/traycer-copy/screenshot.png"]);
+    expect(insertedPaths[0]).toEqual(["/tmp/hukum-copy/screenshot.png"]);
     expect(inserted).toHaveLength(0);
   });
 

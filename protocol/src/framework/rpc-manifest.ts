@@ -2,8 +2,8 @@ import type {
   ConnectionManifest,
   SchemaVersion,
   VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
-import { canonicalForMethodVersionLine } from "@traycer/protocol/framework/compat-helpers";
+} from "@hukum/protocol/framework/index";
+import { canonicalForMethodVersionLine } from "@hukum/protocol/framework/compat-helpers";
 
 /**
  * Canonical manifest for a unary `VersionedRpcRegistry` - one `{ major,

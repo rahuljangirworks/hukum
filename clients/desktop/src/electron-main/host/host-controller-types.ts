@@ -14,7 +14,7 @@ export type MutationKind =
   | "recoverIfDown"
   | "freePortAndRestart"
   | "uninstallHost"
-  | "removeTraycer";
+  | "removeHukum";
 
 export interface MutationProgress {
   readonly stage: string | null;
@@ -84,7 +84,7 @@ export type MutationOutcome<TOk> =
       readonly message: string;
     }
   // Lock-contention terminal contract (bounded CLI_LOCK_BUSY retry
-  // exhausted): manual intents resolve this "deferred - another Traycer
+  // exhausted): manual intents resolve this "deferred - another Hukum
   // process is managing the host" outcome, rendered by whichever surface
   // invoked them.
   | { readonly kind: "deferred"; readonly message: string }
@@ -124,7 +124,7 @@ export interface UninstallOk {
   readonly deregisteredService: boolean;
 }
 
-export interface RemoveTraycerOk {
+export interface RemoveHukumOk {
   readonly removedHost: boolean;
   readonly deregisteredService: boolean;
   readonly removedLoginItem: boolean;
@@ -156,4 +156,4 @@ export type HostControllerIntent =
       readonly port: number | null;
     }
   | { readonly type: "uninstallHost"; readonly all: boolean }
-  | { readonly type: "removeTraycer" };
+  | { readonly type: "removeHukum" };

@@ -4,7 +4,7 @@ import type {
   PrActivitySection,
   PrDetailCore,
   PrOwnerRef,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import type { PrAttentionQueue } from "@/lib/pr/pr-attention-queue";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PrDetailCard } from "@/components/epic-canvas/pr/pr-detail-card";

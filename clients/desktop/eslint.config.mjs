@@ -4,8 +4,8 @@ import {
   commonIgnores,
   linterOptionsConfig,
 } from "../../eslint/flat-base.mjs";
-import { traycerTypeSafetyRestrictions } from "../../eslint/traycer-type-safety-rules.mjs";
-import { traycerClientsImportBoundaryRestrictions } from "../../eslint/traycer-clients-import-boundary-rules.mjs";
+import { hukumTypeSafetyRestrictions } from "../../eslint/hukum-type-safety-rules.mjs";
+import { hukumClientsImportBoundaryRestrictions } from "../../eslint/hukum-clients-import-boundary-rules.mjs";
 
 export default tseslint.config(
   {
@@ -29,10 +29,10 @@ export default tseslint.config(
     },
     plugins: { "@typescript-eslint": tseslint.plugin },
     rules: {
-      "no-restricted-syntax": ["error", ...traycerTypeSafetyRestrictions],
+      "no-restricted-syntax": ["error", ...hukumTypeSafetyRestrictions],
       "@typescript-eslint/no-restricted-imports": [
         "error",
-        traycerClientsImportBoundaryRestrictions,
+        hukumClientsImportBoundaryRestrictions,
       ],
     },
   },

@@ -6,7 +6,7 @@ import {
   screen,
   within,
 } from "@testing-library/react";
-import type { ProviderRateLimits } from "@traycer/protocol/host";
+import type { ProviderRateLimits } from "@hukum/protocol/host";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { formatResetFullDateTime } from "@/lib/relative-time";
 import {

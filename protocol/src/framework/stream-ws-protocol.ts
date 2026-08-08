@@ -5,9 +5,9 @@ import {
   fatalErrorDetailsSchema,
   type ConnectionManifest,
   type FatalErrorDetails,
-} from "@traycer/protocol/framework/ws-protocol";
-import type { SchemaVersion } from "@traycer/protocol/framework/index";
-import { isoMillisecondTimestampSchema } from "@traycer/protocol/common/schemas";
+} from "@hukum/protocol/framework/ws-protocol";
+import type { SchemaVersion } from "@hukum/protocol/framework/index";
+import { isoMillisecondTimestampSchema } from "@hukum/protocol/common/schemas";
 
 /**
  * Control frames exchanged on the `/stream` WS before (and alongside) the

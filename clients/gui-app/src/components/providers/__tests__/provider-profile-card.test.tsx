@@ -2,7 +2,7 @@ import {
   PROVIDER_PROFILE_ACCENT_COLORS,
   type ProviderProfile,
   type ProviderProfileAccentColor,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ProviderProfileCard } from "@/components/providers/provider-profile-card";

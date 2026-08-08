@@ -2,7 +2,7 @@ import type {
   ChatQueuedItem,
   ChatQueuedManagedCommandItem,
   ChatQueuedPromptItem,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 
 export type ReceivedAgentQueueItem = ChatQueuedPromptItem & {
   readonly sender: Extract<ChatQueuedPromptItem["sender"], { type: "agent" }>;

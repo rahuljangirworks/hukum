@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from "react";
 import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { QueryClient } from "@tanstack/react-query";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
-import type { StreamCloseReason } from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
+import type { StreamCloseReason } from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import {
   prSubscribeDetailServerFrameSchema,
   type PrActivitySection,
@@ -16,7 +16,7 @@ import {
   type PrSourceNotice,
   type PrSourceStatus,
   type PrSubscribeDetailServerFrame,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { prQueryKeys } from "@/lib/query-keys/pr-query-keys";
 import { useTabHostId } from "@/components/epic-canvas/hooks/use-tab-host-id";
 import { useHostDirectoryEntry } from "@/hooks/host/use-host-directory-entry";

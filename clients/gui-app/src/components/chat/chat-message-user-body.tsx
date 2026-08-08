@@ -21,7 +21,7 @@ import {
   type ReactNode,
 } from "react";
 import type { KeyboardEvent } from "react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import {
   ComposerPromptEditor,
   type ComposerPromptEditorHandle,

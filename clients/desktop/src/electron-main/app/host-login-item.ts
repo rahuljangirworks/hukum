@@ -4,7 +4,7 @@ import {
   classifyLaunchctlPrintResult,
   deriveWedgeVerdict,
   type ProbeCommandResult,
-} from "@traycer-clients/shared/host-lifecycle";
+} from "@hukum-clients/shared/host-lifecycle";
 import { access, rm, stat } from "node:fs/promises";
 import { constants } from "node:fs";
 import { dirname, join } from "node:path";
@@ -22,17 +22,17 @@ import { log } from "./logger";
 // macOS Login Items / Background Activity attribution for the host.
 //
 // Only `SMAppService` (callable from inside the .app bundle) produces a
-// polished "Traycer" + icon row attributed to the app. So the desktop owns
+// polished "Hukum" + icon row attributed to the app. So the desktop owns
 // this one piece: it registers the in-bundle LaunchAgent plist via
 // SMAppService, which both attributes the Login Items row to the app and
 // loads + starts the agent. The host's install + lifecycle (and all
 // launchd interaction) remain CLI-owned; the desktop installs the host
-// bytes via `traycer host ensure --no-service-register`, then registers
+// bytes via `hukum host ensure --no-service-register`, then registers
 // the login item here.
 //
 // This runs POST sign-in (auth-first boot), not at launch.
 
-// The CLI-owned label for this environment (`ai.traycer.host[.env]`) - the
+// The CLI-owned label for this environment (`ai.hukum.host[.env]`) - the
 // label raw `launchctl` installs (and every pre-label-split registration)
 // live under. The desktop never registers this label: it only cleans it up
 // (legacy plist removal, bootout, old-serviceName unregister) inside the
@@ -226,7 +226,7 @@ const REGISTER_STATUS_POLL_INTERVAL_MS = 100;
  * LWCR` in `launchctl print gui/<uid>/<label>`. launchd then SIGKILLs
  * every spawn inside dyld init with `last exit code = 78: EX_CONFIG`
  * and a `Launch Constraint Violation` crash report. The symptom user-
- * side is empty `~/.traycer/host/<env>/host.log`, the 60s host-
+ * side is empty `~/.hukum/host/<env>/host.log`, the 60s host-
  * ensure readiness wait timing out, and "pid metadata not yet
  * published" in the renderer.
  *
@@ -276,7 +276,7 @@ async function registerHostLoginItemUnserialized(
   // uninstall's `unregisterHostLoginItem()` (which persists the removed-by-
   // user sentinel before taking the lock). Without this check that queued
   // register would re-create the BTM login item right after "Remove
-  // Traycer", and BTM would silently respawn the host at the next login.
+  // Hukum", and BTM would silently respawn the host at the next login.
   if (await isHostRemovedByUser()) {
     log.info(
       "[host-login-item] register skipped - host removed by user on this device",

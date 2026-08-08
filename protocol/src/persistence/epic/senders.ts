@@ -1,5 +1,5 @@
-import { sessionWorkspaceSnapshotSchema } from "@traycer/protocol/common/workspace-association";
-import { guiHarnessIdSchema } from "@traycer/protocol/persistence/epic/foundation";
+import { sessionWorkspaceSnapshotSchema } from "@hukum/protocol/common/workspace-association";
+import { guiHarnessIdSchema } from "@hukum/protocol/persistence/epic/foundation";
 import { z } from "zod";
 
 /**
@@ -29,7 +29,7 @@ export const agentSenderSchema = z.object({
    * final replies that close a thread, and assistant turns use
    * `{ expectsReply: false }` — the field is only meaningful on user
    * messages with `type: "agent"`. The receiving GUI surfaces reply-expected
-   * messages in the "how to reply" footer (`traycer agent send …
+   * messages in the "how to reply" footer (`hukum agent send …
    * --response-id <id>` closes the thread when replying with
    * `expectReply=false`).
    */
@@ -137,7 +137,7 @@ export type ActiveChain = z.infer<typeof activeSessionChainSchema>;
 // profile (subscription) owned it, captured at write time so history renders
 // correctly even after a profile is later renamed or removed (tombstoned) -
 // never re-read live. `profileId: null` means the session ran on the
-// ambient/host login, not a Traycer-managed profile - also the value old
+// ambient/host login, not a Hukum-managed profile - also the value old
 // anchors persisted before profiles existed parse to. `accountUuid` is the
 // provider's identity id, deliberately NOT email - anchors are Y.Doc
 // artifacts that replicate cross-host/cross-collaborator, and email is kept
@@ -211,8 +211,8 @@ export type CursorChatSessionAnchor = z.infer<
   typeof cursorChatSessionAnchorSchema
 >;
 
-export const traycerChatSessionAnchorSchema = z.object({
-  harnessId: z.literal("traycer"),
+export const hukumChatSessionAnchorSchema = z.object({
+  harnessId: z.literal("hukum"),
   hostId: z.string(),
   sessionId: z.string(),
   sessionWorkspaceSnapshot: sessionWorkspaceSnapshotSchema,
@@ -221,8 +221,8 @@ export const traycerChatSessionAnchorSchema = z.object({
   coveredUntilMessageId: z.string().nullable().default(null),
   ...profileSnapshotFields,
 });
-export type TraycerChatSessionAnchor = z.infer<
-  typeof traycerChatSessionAnchorSchema
+export type HukumChatSessionAnchor = z.infer<
+  typeof hukumChatSessionAnchorSchema
 >;
 
 export const openRouterChatSessionAnchorSchema = z.object({
@@ -434,7 +434,7 @@ export const chatSessionAnchorSchema = z.discriminatedUnion("harnessId", [
   codexChatSessionAnchorSchema,
   openCodeChatSessionAnchorSchema,
   cursorChatSessionAnchorSchema,
-  traycerChatSessionAnchorSchema,
+  hukumChatSessionAnchorSchema,
   openRouterChatSessionAnchorSchema,
   grokChatSessionAnchorSchema,
   qwenChatSessionAnchorSchema,

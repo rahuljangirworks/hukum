@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import type {
   ProviderId,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import {
   projectComparisonEntry,
   scopeProfileUsageRefreshStatus,

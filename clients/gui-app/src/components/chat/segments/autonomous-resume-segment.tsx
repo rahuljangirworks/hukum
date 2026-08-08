@@ -1,6 +1,6 @@
 import { Activity, AlarmClockCheck, CheckCheck, XCircle } from "lucide-react";
 import { useState, type ReactNode } from "react";
-import type { AutonomousResumeTrigger } from "@traycer/protocol/persistence/epic/content-blocks";
+import type { AutonomousResumeTrigger } from "@hukum/protocol/persistence/epic/content-blocks";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import { managedCommandNoun } from "@/lib/managed-commands/managed-command-copy";

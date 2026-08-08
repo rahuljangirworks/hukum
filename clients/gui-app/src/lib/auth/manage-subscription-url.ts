@@ -8,7 +8,7 @@ import { appLogger, describeLogError } from "@/lib/logger";
  * introducing a parallel hardcoded constant. Falls back to the production
  * platform URL if the host pattern doesn't parse.
  *
- * Shared by the user menu and the Settings → Providers → Traycer subscription
+ * Shared by the user menu and the Settings → Providers → Hukum subscription
  * panel; kept out of any component file so both can import it without tripping
  * the react-refresh "components-only export" rule.
  */
@@ -28,5 +28,5 @@ export function resolveManageSubscriptionUrl(authnBaseUrl: string): string {
     // Falls through to the production default.
   }
   appLogger.debug("[auth] using default manage subscription URL", {});
-  return "https://platform.traycer.ai";
+  return "https://platform.hukum.ai";
 }

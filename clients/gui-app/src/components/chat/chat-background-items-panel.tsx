@@ -10,7 +10,7 @@ import {
   TerminalSquare,
   Workflow,
 } from "lucide-react";
-import type { BackgroundItem } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { BackgroundItem } from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   Collapsible,
   CollapsibleContent,
@@ -36,7 +36,7 @@ import {
 } from "@/components/epic-canvas/dnd/dnd";
 import { makeManagedCommandOutputTileRef } from "@/stores/epics/canvas/tile-schema/managed-command-output-tile";
 import { useRunningManagedCommandsForChat } from "@/stores/managed-commands/managed-commands-for-chat";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import { cn } from "@/lib/utils";
 import {
   BASE_PAD_LEFT,

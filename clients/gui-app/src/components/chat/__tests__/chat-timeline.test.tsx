@@ -1044,7 +1044,7 @@ describe("ChatTimeline", () => {
   });
 
   describe("panel-resize freeze (ticket 23 D20 port)", () => {
-    const PANEL_RESIZING_CLASS = "traycer-panel-resizing";
+    const PANEL_RESIZING_CLASS = "hukum-panel-resizing";
 
     afterEach(() => {
       // Defensive: a test that throws before its own stop() must not leak
@@ -1064,7 +1064,7 @@ describe("ChatTimeline", () => {
         '[data-message-id="message-0"]',
       );
       expect(row?.className).toContain(
-        "[.traycer-panel-resizing_&:not([data-panel-resize-visible])]:[content-visibility:hidden]",
+        "[.hukum-panel-resizing_&:not([data-panel-resize-visible])]:[content-visibility:hidden]",
       );
     });
 

@@ -1,10 +1,10 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ChatSessionAnchor } from "@traycer/protocol/persistence/epic/schemas";
+import type { ChatSessionAnchor } from "@hukum/protocol/persistence/epic/schemas";
 import type {
   ProviderCliState,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { resolveProfileAccentColor } from "@/lib/providers/profile-accent-color";
 import { ChatExpansionTestProviders } from "@/components/chat/__tests__/chat-expansion-test-providers";
 import { UserMessageBody } from "@/components/chat/chat-message-user-body";

@@ -233,7 +233,7 @@ function provisionOfficialNode() {
     REPO_ROOT,
     "node_modules",
     ".cache",
-    "traycer-sea-node",
+    "hukum-sea-node",
   );
   const extractRoot = path.join(cacheRoot, `${version}-${platform}-${arch}`);
   const nodeBin = path.join(extractRoot, distName, "bin", "node");
@@ -395,7 +395,7 @@ function injectSeaBlob({ binary, blob }) {
 
 // Re-sign the injected binary so macOS Gatekeeper can launch it. Local
 // builds use ad-hoc (`-`) signing; release workflows will swap in a
-// Developer ID identity via `TRAYCER_MACOS_SIGN_IDENTITY`.
+// Developer ID identity via `HUKUM_MACOS_SIGN_IDENTITY`.
 //
 // When a real Developer ID identity is provided we add
 // `--options runtime --timestamp` - hardened runtime is required for
@@ -421,14 +421,14 @@ const SEA_ENTITLEMENTS_PLIST = path.join(
 
 function macosSignAdHoc(target) {
   if (process.platform !== "darwin") return;
-  const identity = process.env.TRAYCER_MACOS_SIGN_IDENTITY || "-";
+  const identity = process.env.HUKUM_MACOS_SIGN_IDENTITY || "-";
   const args = ["--sign", identity];
   if (identity !== "-") {
     // hardened runtime required for Apple notarization
     args.push("--options", "runtime", "--timestamp");
     // JIT entitlements required for the hardened V8 binary to launch.
     const entitlements =
-      process.env.TRAYCER_MACOS_ENTITLEMENTS || SEA_ENTITLEMENTS_PLIST;
+      process.env.HUKUM_MACOS_ENTITLEMENTS || SEA_ENTITLEMENTS_PLIST;
     if (!fs.existsSync(entitlements)) {
       throw new Error(
         `Hardened-runtime SEA sign requires an entitlements plist, but none ` +
@@ -452,16 +452,16 @@ function macosSignAdHoc(target) {
 
 // Stub for the platform signing/notarization hook used by release
 // workflows. Local SEA builds always end with `macosSignAdHoc` (or no-op
-// on linux/win32). Release pipelines will override `TRAYCER_SEA_SIGN_HOOK`
+// on linux/win32). Release pipelines will override `HUKUM_SEA_SIGN_HOOK`
 // with a script that performs hardware-key signing + notarization. We
 // invoke it after injection so the hook sees the final binary.
 function runPlatformSignHook(target) {
-  const hook = process.env.TRAYCER_SEA_SIGN_HOOK;
+  const hook = process.env.HUKUM_SEA_SIGN_HOOK;
   if (!hook) return;
   const res = spawnSync(hook, [target], { stdio: "inherit" });
   if (res.status !== 0) {
     throw new Error(
-      `TRAYCER_SEA_SIGN_HOOK (${hook}) failed for ${target} with status=${res.status}`,
+      `HUKUM_SEA_SIGN_HOOK (${hook}) failed for ${target} with status=${res.status}`,
     );
   }
 }
@@ -474,7 +474,7 @@ function runPlatformSignHook(target) {
 //   5. strip existing signature on macOS
 //   6. postject blob into binary
 //   7. sign:
-//      - When `TRAYCER_SEA_SIGN_HOOK` is set, that hook owns the
+//      - When `HUKUM_SEA_SIGN_HOOK` is set, that hook owns the
 //        final signing (hardware identity + notarization). We skip
 //        the in-toolchain `macosSignAdHoc` step so the binary is
 //        not signed twice - first ad-hoc, then over-signed by the
@@ -482,7 +482,7 @@ function runPlatformSignHook(target) {
 //        codesign timestamping cost.
 //      - When the hook is unset (local builds / unit tests), we
 //        ad-hoc sign so the freshly injected Mach-O can launch on
-//        macOS without Gatekeeper complaining. `TRAYCER_MACOS_SIGN_IDENTITY`
+//        macOS without Gatekeeper complaining. `HUKUM_MACOS_SIGN_IDENTITY`
 //        (read by `macosSignAdHoc`) can still be used to do a
 //        single-pass hardware sign in local-but-not-CI flows.
 //
@@ -515,7 +515,7 @@ function buildSingleSeaExecutable({
   macosRemoveSignature(outputBinary);
   windowsRemoveSignature(outputBinary);
   injectSeaBlob({ binary: outputBinary, blob: blobFile });
-  const signHook = process.env.TRAYCER_SEA_SIGN_HOOK;
+  const signHook = process.env.HUKUM_SEA_SIGN_HOOK;
   if (typeof signHook === "string" && signHook.length > 0) {
     // Hook owns signing - pass the freshly-injected binary directly.
     runPlatformSignHook(outputBinary);

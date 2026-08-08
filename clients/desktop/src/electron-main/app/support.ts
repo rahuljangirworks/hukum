@@ -5,7 +5,7 @@ import { arch, platform } from "node:process";
 import { dirname, join } from "node:path";
 import { tmpdir } from "node:os";
 import * as Sentry from "@sentry/electron/main";
-import type { Layer0UnavailableCause } from "@traycer/protocol/host/lifecycle/layer0-frame";
+import type { Layer0UnavailableCause } from "@hukum/protocol/host/lifecycle/layer0-frame";
 import type { HostFsLayout } from "../host/host-paths";
 import { readHostLayer0Record } from "../host/host-state";
 import { log, resolveDesktopLogPath } from "./logger";
@@ -25,7 +25,7 @@ import type {
   SupportSubmitReportRequest,
   SupportSubmitReportResult,
 } from "../../ipc-contracts/window-types";
-import { buildSupportLinks, TRAYCER_SUPPORT_EMAIL } from "./support-links";
+import { buildSupportLinks, HUKUM_SUPPORT_EMAIL } from "./support-links";
 import {
   getFingerprintOccurrence,
   recordFiledReport,
@@ -37,7 +37,7 @@ import { deepScrubSupportValue, scrubSupportText } from "./support-scrubber";
 import {
   REPORT_LOG_TAIL_MAX_BYTES,
   reportImageMediaTypeForMimeType,
-} from "@traycer-clients/shared/support/image-attachment-guards";
+} from "@hukum-clients/shared/support/image-attachment-guards";
 
 const LOG_TAIL_LINES = 500;
 // Per attachment. Two logs stay well inside Sentry's envelope limits, and the
@@ -172,7 +172,7 @@ export class DesktopSupportService {
         },
       ],
       links: buildSupportLinks(),
-      supportEmail: TRAYCER_SUPPORT_EMAIL,
+      supportEmail: HUKUM_SUPPORT_EMAIL,
       privateDeliveryAvailable: Sentry.isInitialized(),
     };
   }
@@ -457,7 +457,7 @@ export class DesktopSupportService {
                   ? {
                       appVersion: snapshot.appVersion,
                       platform: `${snapshot.platform}/${snapshot.arch}`,
-                      // "local" because it names the traycer-host this
+                      // "local" because it names the hukum-host this
                       // Electron process supervises, not necessarily the
                       // (possibly remote) host a failing tab is bound to -
                       // see the `registry` context.
@@ -491,7 +491,7 @@ export class DesktopSupportService {
               ...(form.includeDesktopLog && frozen.desktop.content
                 ? [{ filename: "desktop.log", data: frozen.desktop.content }]
                 : []),
-              // Named for the local traycer-host this Electron process
+              // Named for the local hukum-host this Electron process
               // supervises (D10) - a tab can be bound to a different host,
               // so this must never be read as "the log for that host".
               ...(form.includeHostLog && frozen.host.content
@@ -617,7 +617,7 @@ export class DesktopSupportService {
         host: form.includeHostLog ? (frozen?.host.content ?? "") : "",
       },
     };
-    const dir = await mkdtemp(join(tmpdir(), "traycer-diagnostic-bundle-"));
+    const dir = await mkdtemp(join(tmpdir(), "hukum-diagnostic-bundle-"));
     const path = join(dir, `${frozen?.reportId ?? "report"}.json`);
     await writeFile(path, JSON.stringify(bundle, null, 2), "utf8");
     log.info("[support] diagnostic bundle written", { path });

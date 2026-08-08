@@ -16,7 +16,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { useCallback, useState, type ReactNode } from "react";
-import type { EpicArtifactKind } from "@traycer/protocol/common/registry";
+import type { EpicArtifactKind } from "@hukum/protocol/common/registry";
 import {
   EPIC_NODE_ICONS,
   EPIC_NODE_LABELS,

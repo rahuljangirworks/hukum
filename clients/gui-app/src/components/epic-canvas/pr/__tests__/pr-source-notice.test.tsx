@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
-import type { PrSourceNotice } from "@traycer/protocol/host/pr-schemas";
+import type { PrSourceNotice } from "@hukum/protocol/host/pr-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PrSourceNoticeHint } from "@/components/epic-canvas/pr/pr-source-notice";
 import { prSourceNoticeMessageFor } from "@/lib/pr/pr-source-notice-message";

@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import type { ComponentType, ReactNode } from "react";
-import { TraycerMarkdown } from "@/markdown/traycer-markdown";
+import { HukumMarkdown } from "@/markdown/hukum-markdown";
 
 // Count renders of a product-level component instead of mocking
 // `react-markdown`. Tailmark loads react-markdown from its package graph;
@@ -41,7 +41,7 @@ afterEach(() => {
 
 function StreamHarness({ content }: { content: string }) {
   return (
-    <TraycerMarkdown
+    <HukumMarkdown
       className={null}
       proseSize="normal"
       components={countingComponents}
@@ -51,7 +51,7 @@ function StreamHarness({ content }: { content: string }) {
       isStreaming
     >
       {content}
-    </TraycerMarkdown>
+    </HukumMarkdown>
   );
 }
 

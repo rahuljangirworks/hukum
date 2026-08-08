@@ -31,7 +31,7 @@
  * draft-derived read below is empty/zero: safe and deterministic, never a
  * crash or a read against a partially-initialized store.
  */
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { collectImageAtoms } from "@/lib/composer/image-atoms";
 import type { LandingDraftTab } from "@/stores/home/landing-draft-store";

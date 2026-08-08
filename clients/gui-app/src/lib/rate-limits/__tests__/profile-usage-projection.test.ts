@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type {
   ProviderRateLimits,
   ProviderRateLimitWindow,
-} from "@traycer/protocol/host/rate-limit";
+} from "@hukum/protocol/host/rate-limit";
 import type { ProviderRateLimitEnvelope } from "@/lib/rate-limits/rate-limit-envelope";
 import { projectProfileUsage } from "@/lib/rate-limits/profile-usage-projection";
 

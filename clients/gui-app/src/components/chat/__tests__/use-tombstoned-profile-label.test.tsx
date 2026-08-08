@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import type { ChatSessionAnchor } from "@traycer/protocol/persistence/epic/schemas";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { ChatSessionAnchor } from "@hukum/protocol/persistence/epic/schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { useTombstonedProfileLabel } from "../use-tombstoned-profile-label";
 import { TombstonedProfileProvider } from "../tombstoned-profile-provider";
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_ACCOUNT_CONTEXT } from "@traycer/protocol/common/schemas";
-import { downgradeResponseAcrossMajors } from "@traycer/protocol/framework/index";
+import { DEFAULT_ACCOUNT_CONTEXT } from "@hukum/protocol/common/schemas";
+import { downgradeResponseAcrossMajors } from "@hukum/protocol/framework/index";
 import {
   hostGetRateLimitUsageDowngradeV2ToV1,
   hostGetRateLimitUsageDowngradeV3ToV1,
@@ -11,8 +11,8 @@ import {
   hostGetRateLimitUsageDowngradeV4ToV3,
   hostGetRateLimitUsageUpgradeV21ToV30,
   hostGetRateLimitUsageUpgradeV30ToV40,
-} from "@traycer/protocol/host/rate-limit/contracts";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/rate-limit/contracts";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   providerRateLimitsSchema,
   providersConsumeRateLimitResetCreditRequestSchema,
@@ -25,7 +25,7 @@ import {
   rateLimitUsageResponseSchemaV21,
   rateLimitUsageResponseSchemaV30,
   rateLimitUsageResponseSchemaV40,
-} from "@traycer/protocol/host/rate-limit/schemas";
+} from "@hukum/protocol/host/rate-limit/schemas";
 
 describe("providers.consumeRateLimitResetCredit schemas", () => {
   it("accepts a profile-scoped idempotent Codex reset request and every upstream outcome", () => {

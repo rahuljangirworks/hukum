@@ -2,7 +2,7 @@ import {
   DEFAULT_LOG_LEVEL,
   logLevelAllows,
   type LogLevel,
-} from "@traycer/protocol/config/log-level";
+} from "@hukum/protocol/config/log-level";
 
 export type AppLogLevel = "debug" | "info" | "warn" | "error";
 
@@ -16,7 +16,7 @@ export type AppLogValue =
 
 export type AppLogFields = Readonly<Record<string, AppLogValue>>;
 
-const STRUCTURED_LOG_PREFIX = "[traycer-gui]";
+const STRUCTURED_LOG_PREFIX = "[hukum-gui]";
 const MAX_LOG_STRING_LENGTH = 1_000;
 const MAX_LOG_DEPTH = 4;
 const MAX_LOG_ARRAY_ITEMS = 20;
@@ -230,7 +230,7 @@ function emitLog(
   }
   // Desktop production forwards renderer warning/error console messages only.
   // The structured payload preserves the logical level; desktop remaps it back
-  // to info/warn/error when writing traycer-desktop.log.
+  // to info/warn/error when writing hukum-desktop.log.
   console.warn(line);
 }
 

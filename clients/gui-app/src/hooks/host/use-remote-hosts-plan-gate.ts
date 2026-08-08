@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/stores/auth/auth-store";
-import { isPaidTier } from "@traycer/protocol/auth/user";
+import { isPaidTier } from "@hukum/protocol/auth/user";
 
 /**
  * Client-side mirror of CS's attach-grant paid-plan gate: remote host

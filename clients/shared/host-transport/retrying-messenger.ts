@@ -1,4 +1,4 @@
-import type { VersionedRpcRegistry } from "@traycer/protocol/framework/index";
+import type { VersionedRpcRegistry } from "@hukum/protocol/framework/index";
 import {
   HostRequestAbortedError,
   RetryableTransportError,

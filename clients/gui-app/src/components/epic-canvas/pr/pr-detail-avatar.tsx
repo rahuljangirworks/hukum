@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { PrActor } from "@traycer/protocol/host/pr-schemas";
+import type { PrActor } from "@hukum/protocol/host/pr-schemas";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 

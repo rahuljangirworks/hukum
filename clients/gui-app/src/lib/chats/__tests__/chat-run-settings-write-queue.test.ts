@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   UpdateChatRunSettingsRequest,
   UpdateChatRunSettingsResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import { appLogger } from "@/lib/logger";
 import {
   __chainCountForTests,

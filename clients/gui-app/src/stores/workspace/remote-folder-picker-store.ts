@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 
 interface RemoteFolderPickerState {

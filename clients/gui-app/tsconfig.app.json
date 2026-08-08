@@ -21,9 +21,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@traycer-clients/shared/*": ["../shared/*"],
-      "@traycer/protocol/utils/*": ["../../protocol/utils/*"],
-      "@traycer/protocol/*": ["../../protocol/src/*"]
+      "@hukum-clients/shared/*": ["../shared/*"],
+      "@hukum/protocol/utils/*": ["../../protocol/utils/*"],
+      "@hukum/protocol/*": ["../../protocol/src/*"]
     },
     "noUnusedLocals": true,
     "noUnusedParameters": true,

@@ -4,8 +4,8 @@ import type {
   ProviderCliState,
   ProviderManagedInstallErrorReason,
   ProviderManagedInstallState,
-} from "@traycer/protocol/host/provider-schemas";
-import { providerManagedInstallErrorReasonSchema } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
+import { providerManagedInstallErrorReasonSchema } from "@hukum/protocol/host/provider-schemas";
 import {
   providerPackBlocksExecution,
   providerPackPreparingByHarnessId,
@@ -465,7 +465,7 @@ describe("the terminal `unrepairable` reason", () => {
 });
 
 /**
- * The other pole. `live-owner-stalled` means a SIBLING Traycer process on this
+ * The other pole. `live-owner-stalled` means a SIBLING Hukum process on this
  * machine holds the pack's download lease and stopped advancing its progress
  * token, so this host stopped waiting behind it. It is fully retryable, with a
  * real `retryAtMs` - the exact opposite of `unrepairable`, and the two arrived
@@ -489,7 +489,7 @@ describe("the retryable `live-owner-stalled` reason", () => {
     // STORE rather than the machine, because the lease record carries no
     // machine identity and "on this device" is false in the one topology that
     // makes this reason common.
-    expect(copy).toContain("another Traycer process using this Traycer folder");
+    expect(copy).toContain("another Hukum process using this Hukum folder");
     expect(copy).not.toContain("on this device");
     // Still the failed line, not a progress phrase.
     expect(copy).toContain("Claude Code setup failed");

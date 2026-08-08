@@ -3,7 +3,7 @@
  * Mock mechanics (vi.mock, hoisted maps) stay in each test module.
  */
 import type { ImageAttachmentAttrs } from "@/components/chat/composer/editor/extensions/image-attachment-extension";
-import type { IFileDropHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IFileDropHost } from "@hukum-clients/shared/platform/runner-host";
 import type { ComposerPasteEditorHandle } from "@/hooks/composer/use-composer-paste";
 
 // Default fixture for tests that don't care about file-path resolution at

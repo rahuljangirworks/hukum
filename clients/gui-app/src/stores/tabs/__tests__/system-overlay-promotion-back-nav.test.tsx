@@ -111,7 +111,7 @@ function seedPersisted(
   index: number,
 ) {
   window.localStorage.setItem(
-    `traycer-gui-app:last-route:${windowId}`,
+    `hukum-gui-app:last-route:${windowId}`,
     JSON.stringify({ entries, index }),
   );
 }

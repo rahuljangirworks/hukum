@@ -13,12 +13,12 @@ import { sandboxHome } from "../../__tests__/sandbox-home";
 import devWrapperPaths from "../dev-wrapper-paths.json";
 import { DEV_DESKTOP_SLOT_ENV } from "../../host/dev-desktop-slot";
 
-// The desktop's `~/.traycer/cli/` paths are environment-scoped (matching the
+// The desktop's `~/.hukum/cli/` paths are environment-scoped (matching the
 // CLI package's store/paths.ts): the dev slot lives under
-// `~/.traycer/cli/dev/`, or `~/.traycer/cli/dev-runs/<slot>/` when a
+// `~/.hukum/cli/dev/`, or `~/.hukum/cli/dev-runs/<slot>/` when a
 // multi-run dev slot is active. CLI discovery resolves: (1) dev-slot manifest,
 // then (2) the staged dev wrapper. The PATH lookup step is intentionally
-// SKIPPED in dev - a dev workspace inevitably has `node_modules/.bin/traycer`
+// SKIPPED in dev - a dev workspace inevitably has `node_modules/.bin/hukum`
 // on PATH (bun's bin hoisting), and falling through PATH first would pick the
 // package symlink ahead of the wrapper `make dev-desktop` staged. These tests
 // pin both halves plus the PATH regression.
@@ -32,7 +32,7 @@ function devWrapperPath(slot: string | null): string {
       ? devWrapperPaths.filenameWin32
       : devWrapperPaths.filenamePosix;
   if (slot !== null) {
-    return join(homeDir, ".traycer", "cli", "dev-runs", slot, "bin", filename);
+    return join(homeDir, ".hukum", "cli", "dev-runs", slot, "bin", filename);
   }
   return join(homeDir, ...devWrapperPaths.segments, filename);
 }
@@ -67,7 +67,7 @@ vi.mock("../../app/logger", () => ({
   },
 }));
 
-// Pin the dev slot so the env-scoped CLI home resolves to `~/.traycer/cli/dev`.
+// Pin the dev slot so the env-scoped CLI home resolves to `~/.hukum/cli/dev`.
 vi.mock("../../../config", async (importActual) => {
   const actual = await importActual<typeof import("../../../config")>();
   return {
@@ -88,7 +88,7 @@ const ORIGINAL_USERPROFILE = process.env.USERPROFILE;
 const ORIGINAL_DEV_DESKTOP_SLOT = process.env[DEV_DESKTOP_SLOT_ENV];
 
 beforeEach(() => {
-  work = mkdtempSync(join(tmpdir(), "traycer-cli-discovery-dev-"));
+  work = mkdtempSync(join(tmpdir(), "hukum-cli-discovery-dev-"));
   homeDir = join(work, "home");
   mkdirSync(homeDir, { recursive: true });
   sandboxHome(homeDir);
@@ -119,23 +119,23 @@ afterEach(() => {
   }
 });
 
-describe("resolveTraycerCliInvocation (dev slot) - env-scoped resolution", () => {
+describe("resolveHukumCliInvocation (dev slot) - env-scoped resolution", () => {
   it("resolves the dev-slot manifest, never the prod slot's", async () => {
-    // A leftover prod install wrote `~/.traycer/cli/manifest.json`; the dev
-    // slot must read `~/.traycer/cli/dev/manifest.json` instead.
-    const prodBin = join(homeDir, ".traycer", "cli", "bin", "traycer");
+    // A leftover prod install wrote `~/.hukum/cli/manifest.json`; the dev
+    // slot must read `~/.hukum/cli/dev/manifest.json` instead.
+    const prodBin = join(homeDir, ".hukum", "cli", "bin", "hukum");
     writeExecutable(prodBin);
-    writeManifestAt(join(homeDir, ".traycer", "cli", "manifest.json"), prodBin);
+    writeManifestAt(join(homeDir, ".hukum", "cli", "manifest.json"), prodBin);
 
-    const devBin = devWrapperPath(null); // ~/.traycer/cli/dev/bin/traycer
+    const devBin = devWrapperPath(null); // ~/.hukum/cli/dev/bin/hukum
     writeExecutable(devBin);
     writeManifestAt(
-      join(homeDir, ".traycer", "cli", "dev", "manifest.json"),
+      join(homeDir, ".hukum", "cli", "dev", "manifest.json"),
       devBin,
     );
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(devBin);
     expect(inv.args).toEqual([]);
   });
@@ -143,19 +143,19 @@ describe("resolveTraycerCliInvocation (dev slot) - env-scoped resolution", () =>
   it("falls back to the staged dev wrapper when the dev manifest is absent", async () => {
     // The dev slot ships no manifest: only the wrapper is staged by
     // `make dev-desktop`. PATH is wiped so we don't depend on the host's
-    // workspace `node_modules/.bin/traycer` being absent - the staged
+    // workspace `node_modules/.bin/hukum` being absent - the staged
     // wrapper is the only candidate and resolves directly.
     process.env.PATH = "";
     const wrapper = devWrapperPath(null);
     writeExecutable(wrapper);
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(wrapper);
   });
 
-  it("prefers the staged dev wrapper over a `traycer` on PATH (the workspace symlink case)", async () => {
-    // Regression: a dev workspace has `node_modules/.bin/traycer` on PATH
+  it("prefers the staged dev wrapper over a `hukum` on PATH (the workspace symlink case)", async () => {
+    // Regression: a dev workspace has `node_modules/.bin/hukum` on PATH
     // because bun hoists package bins for `bun run` scripts. Before the
     // dev-skip in `discoverCli`, that symlink hijacked discovery and the
     // desktop ended up invoking it instead of the wrapper `make
@@ -165,7 +165,7 @@ describe("resolveTraycerCliInvocation (dev slot) - env-scoped resolution", () =>
     const fakePathBinDir = join(work, "fake-node-modules-bin");
     const fakePathBin = join(
       fakePathBinDir,
-      process.platform === "win32" ? "traycer.exe" : "traycer",
+      process.platform === "win32" ? "hukum.exe" : "hukum",
     );
     writeExecutable(fakePathBin);
     process.env.PATH = fakePathBinDir;
@@ -173,8 +173,8 @@ describe("resolveTraycerCliInvocation (dev slot) - env-scoped resolution", () =>
     const wrapper = devWrapperPath(null);
     writeExecutable(wrapper);
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(wrapper);
     expect(inv.command).not.toBe(fakePathBin);
   });
@@ -185,7 +185,7 @@ describe("resolveTraycerCliInvocation (dev slot) - env-scoped resolution", () =>
     const sharedDevBin = devWrapperPath(null);
     writeExecutable(sharedDevBin);
     writeManifestAt(
-      join(homeDir, ".traycer", "cli", "dev", "manifest.json"),
+      join(homeDir, ".hukum", "cli", "dev", "manifest.json"),
       sharedDevBin,
     );
 
@@ -194,7 +194,7 @@ describe("resolveTraycerCliInvocation (dev slot) - env-scoped resolution", () =>
     writeManifestAt(
       join(
         homeDir,
-        ".traycer",
+        ".hukum",
         "cli",
         "dev-runs",
         "worktree-slot",
@@ -203,8 +203,8 @@ describe("resolveTraycerCliInvocation (dev slot) - env-scoped resolution", () =>
       slotBin,
     );
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(slotBin);
     expect(inv.command).not.toBe(sharedDevBin);
   });
@@ -215,8 +215,8 @@ describe("resolveTraycerCliInvocation (dev slot) - env-scoped resolution", () =>
     const wrapper = devWrapperPath("worktree-slot");
     writeExecutable(wrapper);
 
-    const { resolveTraycerCliInvocation } = await import("../traycer-cli");
-    const inv = await resolveTraycerCliInvocation();
+    const { resolveHukumCliInvocation } = await import("../hukum-cli");
+    const inv = await resolveHukumCliInvocation();
     expect(inv.command).toBe(wrapper);
   });
 });

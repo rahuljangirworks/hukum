@@ -10,7 +10,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { useState } from "react";
 import type { TuiAgentProjection } from "@/stores/epics/open-epic/types";
 import type { ForkWorkspaceSeed } from "@/lib/worktree/fork-workspace-seed";
-import type { WorktreeFolderIntent } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeFolderIntent } from "@hukum/protocol/host/worktree-schemas";
 import type { WorkspaceFolderInfo } from "@/stores/workspace/workspace-folders-store";
 import {
   pendingForkTerminalAgentStagingKey,
@@ -199,9 +199,9 @@ vi.mock("@/hooks/harnesses/use-gui-harness-catalog", () => ({
   }),
 }));
 
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
-import type { TuiForkProfileAdmissionSubcode } from "@traycer/protocol/host/agent/tui/unary-schemas";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
+import type { TuiForkProfileAdmissionSubcode } from "@hukum/protocol/host/agent/tui/unary-schemas";
 import { TuiForkProfileRejectedError } from "@/lib/tui-fork-profile-rejection";
 import { TerminalAgentForkDialog } from "../terminal-agent-fork-dialog";
 

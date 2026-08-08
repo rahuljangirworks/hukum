@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 import { releaseOpenEpicSessionIfUnused } from "@/lib/registries/epic-session-registry";
 import { evictChatTabPersistenceForEpics } from "@/stores/chats/chat-tab-persistence-eviction";
 import {

@@ -8,21 +8,21 @@
  * `"dev"` - for staging/production builds the lookup is dead code, so a
  * hostile or stray runtime environment cannot repoint a shipped build.
  * Within dev builds the value is restricted to a loopback http origin
- * (same posture as the desktop's `TRAYCER_DESKTOP_DEV_URL`), so even a
+ * (same posture as the desktop's `HUKUM_DESKTOP_DEV_URL`), so even a
  * stray env var can only point a dev build at the local machine.
  *
  * Kept free of `electron`/`node:*` imports so preload bundles can pull it
  * in via `config.ts` without importing anything main-process-owned.
  */
 
-export const DEV_AUTHN_BASE_URL_ENV = "TRAYCER_DEV_AUTHN_BASE_URL";
-export const DEV_CLOUD_UI_BASE_URL_ENV = "TRAYCER_DEV_CLOUD_UI_BASE_URL";
+export const DEV_AUTHN_BASE_URL_ENV = "HUKUM_DEV_AUTHN_BASE_URL";
+export const DEV_CLOUD_UI_BASE_URL_ENV = "HUKUM_DEV_CLOUD_UI_BASE_URL";
 // Remote Host Support (ticket T14): the relay worker's local WebSocket
 // attach endpoint, only read by the desktop build (the CLI never dials the
 // relay itself). Separate from `devBackendUrlFromEnv` below because the
 // relay URL is `ws:`, not `http:`, and carries a real path (`/attach`), not
 // just an origin.
-export const DEV_RELAY_BASE_URL_ENV = "TRAYCER_DEV_RELAY_BASE_URL";
+export const DEV_RELAY_BASE_URL_ENV = "HUKUM_DEV_RELAY_BASE_URL";
 
 const ALLOWED_DEV_BACKEND_HOSTS: ReadonlySet<string> = new Set([
   "localhost",

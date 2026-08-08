@@ -11,8 +11,8 @@ import {
   defineDowngradePath,
   defineRpcContract,
   defineUpgradePath,
-} from "@traycer/protocol/framework/index";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+} from "@hukum/protocol/framework/index";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 
 const textFrameFields = {
   hasBinaryPayload: z.literal(false),

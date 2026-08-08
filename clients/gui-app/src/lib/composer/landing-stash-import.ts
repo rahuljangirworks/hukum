@@ -8,7 +8,7 @@
  * image is exposed to the landing draft until its bytes are durably written
  * here.
  */
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import {
   collectImageAtoms,

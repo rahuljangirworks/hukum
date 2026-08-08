@@ -1,6 +1,6 @@
 # `resources/cli/` - bundled CLI staging directory
 
-This directory is the staging location for the bundled Traycer CLI binary that
+This directory is the staging location for the bundled Hukum CLI binary that
 ships inside a packaged Electron build.
 
 ## Contract
@@ -8,8 +8,8 @@ ships inside a packaged Electron build.
 At packaging time the desktop release pipeline stages the CLI artifact into an
 arch-scoped subdirectory:
 
-- `resources/cli/<platform>-<arch>/traycer` (macOS / Linux)
-- `resources/cli/<platform>-<arch>/traycer.exe` (Windows)
+- `resources/cli/<platform>-<arch>/hukum` (macOS / Linux)
+- `resources/cli/<platform>-<arch>/hukum.exe` (Windows)
 - `resources/cli/<platform>-<arch>/version.json` - bundled CLI version metadata
   consumed by Desktop's `readBundledCliVersion()`.
 
@@ -22,8 +22,8 @@ in `src/electron-main/cli/cli-discovery.ts`.
 ## First-launch self-heal
 
 On a clean machine, the bundled CLI is silently copied into the per-user stable
-path (`~/.traycer/cli/bin/<binary>`) by the first-launch setup splash. The CLI
-manifest at `~/.traycer/cli/manifest.json` is written by the same step.
+path (`~/.hukum/cli/bin/<binary>`) by the first-launch setup splash. The CLI
+manifest at `~/.hukum/cli/manifest.json` is written by the same step.
 
 If the manifest later points at a missing or non-executable binary AND the
 bundled CLI is still present, the discovery layer silently re-stages the bundled
@@ -36,14 +36,14 @@ Tech Plan (Decision 6).
 `app.isPackaged` branch - the discovery layer resolves the bundled CLI from
 `process.resourcesPath/cli/<platform>-<arch>/` in every build. Dev orchestrators
 (`make dev-desktop` → `scripts/dev-desktop.js`) inject a
-`TRAYCER_CLI_BUNDLED_BIN` env var pointing at a wrapper under
-`~/.traycer/cli/dev/bin/traycer`. The discovery layer reads that override
+`HUKUM_CLI_BUNDLED_BIN` env var pointing at a wrapper under
+`~/.hukum/cli/dev/bin/hukum`. The discovery layer reads that override
 transparently and falls back to the arch-scoped resources tree when the override
 is unset or empty.
 
 If you need to point the desktop at an alternate CLI build during development
-(e.g. a custom branch of `clients/traycer-cli/`), set
-`TRAYCER_CLI_BUNDLED_BIN=<absolute path>` on the shell that launches Electron.
+(e.g. a custom branch of `clients/hukum-cli/`), set
+`HUKUM_CLI_BUNDLED_BIN=<absolute path>` on the shell that launches Electron.
 There is no separate "dev vs prod" code path to maintain.
 
 ## Missing-binary behavior

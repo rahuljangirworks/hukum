@@ -1,6 +1,6 @@
 import type { ClipboardEventHandler, DragEventHandler, Ref } from "react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { JsonContent } from "@hukum/protocol/common/registry";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 
 import type { ChatComposerSubmitSource } from "@/lib/chats/resolve-steer-submit";
 import { isMac, modLabel } from "@/lib/keybindings/platform";

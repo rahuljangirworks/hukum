@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ManagedCommandOutputStreamClient } from "@traycer-clients/shared/host-transport/managed-command-output-stream-client";
+import { ManagedCommandOutputStreamClient } from "@hukum-clients/shared/host-transport/managed-command-output-stream-client";
 import { openOwnedDurableStreamClient } from "@/lib/host/owned-durable-stream-client";
 import { useDurableStreamTransportFactory } from "@/lib/host/use-durable-stream-transport";
 import { getManagedCommandOutputStreamClientFactoryOverride } from "@/providers/managed-command-output-stream-factory-override";

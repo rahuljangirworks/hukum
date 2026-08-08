@@ -5,6 +5,6 @@ All notable changes to this project are documented here. This project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Per-release notes and signed binaries are published on the
-[Releases](https://github.com/traycerai/traycer/releases) page.
+[Releases](https://github.com/hukumai/hukum/releases) page.
 
 ## [Unreleased]

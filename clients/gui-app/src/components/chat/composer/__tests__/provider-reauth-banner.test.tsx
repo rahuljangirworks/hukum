@@ -11,7 +11,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type {
   ProviderCliState,
   ProviderLoginCapability,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 // The banner shows only for web-login providers; it receives live provider
 // `state` as a prop (from the composer's re-auth gate). Reconnect methods are
@@ -257,7 +257,7 @@ const COPILOT_TERMINAL_CAP: ProviderLoginCapability = {
 // (`registry.ts`) fills it to `null` on that exact hop. What DOES leave
 // `providerSupportsTerminalLogin` reading "not a terminal-login provider" for
 // a real reason is the provider's whole `loginCapability` being `null`
-// (Cursor, Traycer) - the case below.
+// (Cursor, Hukum) - the case below.
 
 function copilotState(
   loginCapability: ProviderLoginCapability | null,
@@ -457,7 +457,7 @@ describe("<ProviderReauthBanner />", () => {
   });
 
   // Row 2: a provider whose whole `loginCapability` is `null` (Cursor,
-  // Traycer, or any CLI with no OAuth session to reconnect) makes the
+  // Hukum, or any CLI with no OAuth session to reconnect) makes the
   // helper's optional chain yield `undefined` for `terminalLogin` -
   // `providerSupportsTerminalLogin` must read that as "not a terminal-login
   // provider" the same as an explicit `null`. copilotState's own capability

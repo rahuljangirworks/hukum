@@ -20,10 +20,10 @@ import type { ReactNode } from "react";
 import {
   HostRpcError,
   type IHostMessenger,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import type { LocalHostSnapshot } from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import type { LocalHostSnapshot } from "@hukum-clients/shared/platform/runner-host";
 import {
   hostRpcRegistry,
   HostRuntimeProvider,
@@ -39,11 +39,11 @@ import { useAuthStore, type AuthStatus } from "@/stores/auth/auth-store";
 import type {
   ListTasksRequest,
   ListTasksResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   CURRENT_EPIC_VERSION,
   CURRENT_PHASE_VERSION,
-} from "@traycer-clients/shared/epic/epic-version";
+} from "@hukum-clients/shared/epic/epic-version";
 import { toast } from "sonner";
 
 vi.mock("sonner", () => ({
@@ -113,13 +113,13 @@ function buildMessengerFactory(
 
 function mountEpicsList(opts: MountOptions): MountResult {
   const host = new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: localSnapshot,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   if (opts.storedToken !== null) {
     void host.tokenStore.signIn(
@@ -625,7 +625,7 @@ describe("<EpicsList />", () => {
 
     const errorBlock = await screen.findByTestId("epics-list-error");
     expect(errorBlock).not.toBeNull();
-    expect(screen.getByText("Couldn't reach Traycer Cloud")).not.toBeNull();
+    expect(screen.getByText("Couldn't reach Hukum Cloud")).not.toBeNull();
     expect(screen.getByTestId("epics-list-error-retry")).not.toBeNull();
     const toggle = screen.getByTestId("epics-list-error-toggle-details");
     fireEvent.click(toggle);

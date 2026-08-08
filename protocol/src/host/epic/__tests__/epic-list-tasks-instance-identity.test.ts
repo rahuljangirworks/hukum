@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { hostRpcRegistry } from "@traycer/protocol/host/registry";
-import { epicListTasksUpgradeV10ToV11 } from "@traycer/protocol/host/epic/contracts";
+import { hostRpcRegistry } from "@hukum/protocol/host/registry";
+import { epicListTasksUpgradeV10ToV11 } from "@hukum/protocol/host/epic/contracts";
 import {
   listTasksRequestSchema,
   listTasksRequestSchemaV11,
   listTasksResponseSchema,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 
 /**
  * Hard invariant for the partial CloudData → protocol migration:
@@ -20,7 +20,7 @@ import {
  *
  * The cloud-side (`cloudDataRpcRegistry["task.list"]`) reuse of these same
  * instances is guaranteed by construction - the cloud registry imports them
- * directly from `@traycer/protocol/host/epic/unary-schemas` - and is
+ * directly from `@hukum/protocol/host/epic/unary-schemas` - and is
  * covered on the consumer side, so protocol's own tests stay within the
  * protocol package.
  */
@@ -55,7 +55,7 @@ describe("epic.listTasks instance identity", () => {
         limit: 20,
         filters: {
           query: "api",
-          repoIdentifiers: [{ owner: "traycer", repo: "gui-app" }],
+          repoIdentifiers: [{ owner: "hukum", repo: "gui-app" }],
           repoMatchMode: "all",
           workspaceIdentifiers: [
             { hostId: "host-1", workspacePath: "/repo/gui-app" },
@@ -82,7 +82,7 @@ describe("epic.listTasks instance identity", () => {
         facets: {
           repos: [
             {
-              repoIdentifier: { owner: "traycer", repo: "gui-app" },
+              repoIdentifier: { owner: "hukum", repo: "gui-app" },
               count: 1,
             },
           ],

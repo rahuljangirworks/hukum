@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import type { ModelOption } from "@/components/home/data/landing-options";
 import {
   assessProfileRateLimit,

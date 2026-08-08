@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { PrState } from "@traycer/protocol/host/pr-schemas";
+import type { PrState } from "@hukum/protocol/host/pr-schemas";
 import { Badge } from "@/components/ui/badge";
 import { formatPrStateLabel } from "@/lib/pr/pr-list-projection";
 import { cn } from "@/lib/utils";

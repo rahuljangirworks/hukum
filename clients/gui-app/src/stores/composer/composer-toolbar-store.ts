@@ -1,10 +1,10 @@
 import { createStore, type StoreApi } from "zustand/vanilla";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   modelMatchIsCovered,
   modelsForHarness,
   resolveModelBySlug,
-} from "@traycer/protocol/host/agent/gui/model-slug-resolution";
+} from "@hukum/protocol/host/agent/gui/model-slug-resolution";
 
 import {
   findDefaultModel,

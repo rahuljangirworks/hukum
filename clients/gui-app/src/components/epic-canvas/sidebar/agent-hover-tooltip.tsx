@@ -23,8 +23,8 @@
  * can hand it a different truth.
  */
 import type { ReactElement, ReactNode } from "react";
-import type { RoleClaim } from "@traycer/protocol/persistence/epic/role-claims";
-import type { WorktreeBindingOwnerKind } from "@traycer/protocol/host/worktree-schemas";
+import type { RoleClaim } from "@hukum/protocol/persistence/epic/role-claims";
+import type { WorktreeBindingOwnerKind } from "@hukum/protocol/host/worktree-schemas";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
 import { WorktreeOwnerMetadataTooltip } from "@/components/worktree/worktree-owner-metadata";
 import { AgentRoleHoverContent } from "@/components/epic-canvas/sidebar/agent-role-badges";

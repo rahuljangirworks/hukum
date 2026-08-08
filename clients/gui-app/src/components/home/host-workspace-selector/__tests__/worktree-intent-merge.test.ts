@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type {
   WorktreeEntryScripts,
   WorktreeFolderIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   mergeWorktreeIntent,
   mergeWorktreeIntentEntry,
@@ -41,12 +41,12 @@ describe("worktree intent merge", () => {
   it("preserves previous workspace intent entries when scoped create capture adds another workspace", () => {
     const first = createEntry({
       workspacePath: "/workspace/first",
-      newBranch: "traycer/first",
+      newBranch: "hukum/first",
       isPrimary: true,
     });
     const second = createEntry({
       workspacePath: "/workspace/second",
-      newBranch: "traycer/second",
+      newBranch: "hukum/second",
       isPrimary: true,
     });
 
@@ -60,17 +60,17 @@ describe("worktree intent merge", () => {
   it("replaces an existing entry for the same workspace path", () => {
     const first = createEntry({
       workspacePath: "/workspace/first",
-      newBranch: "traycer/first",
+      newBranch: "hukum/first",
       isPrimary: true,
     });
     const second = createEntry({
       workspacePath: "/workspace/second",
-      newBranch: "traycer/second",
+      newBranch: "hukum/second",
       isPrimary: false,
     });
     const changedFirst = createEntry({
       workspacePath: "/workspace/first",
-      newBranch: "traycer/changed",
+      newBranch: "hukum/changed",
       isPrimary: false,
     });
 
@@ -84,12 +84,12 @@ describe("worktree intent merge", () => {
   it("removes entries by workspace path and returns null when none remain", () => {
     const first = createEntry({
       workspacePath: "/workspace/first",
-      newBranch: "traycer/first",
+      newBranch: "hukum/first",
       isPrimary: true,
     });
     const second = createEntry({
       workspacePath: "/workspace/second",
-      newBranch: "traycer/second",
+      newBranch: "hukum/second",
       isPrimary: false,
     });
 
@@ -107,7 +107,7 @@ describe("worktree intent merge", () => {
   it("sets the scripts override on a worktree entry, preserving its branch", () => {
     const entry = createEntry({
       workspacePath: "/workspace/first",
-      newBranch: "traycer/first",
+      newBranch: "hukum/first",
       isPrimary: true,
     });
     const next = setWorktreeIntentEntryScripts(
@@ -123,7 +123,7 @@ describe("worktree intent merge", () => {
       SCRIPTS,
     );
     expect(updated?.kind === "worktree" ? updated.branch.name : null).toBe(
-      "traycer/first",
+      "hukum/first",
     );
   });
 
@@ -226,14 +226,14 @@ describe("worktree intent merge", () => {
       const first = {
         ...createEntry({
           workspacePath: "/workspace/first",
-          newBranch: "traycer/first",
+          newBranch: "hukum/first",
           isPrimary: true,
         }),
         scripts: SCRIPTS,
       };
       const second = createEntry({
         workspacePath: "/workspace/second",
-        newBranch: "traycer/second",
+        newBranch: "hukum/second",
         isPrimary: false,
       });
 
@@ -259,12 +259,12 @@ describe("worktree intent merge", () => {
     it("preserves entry identity (reference equality) for entries whose isPrimary bit doesn't change", () => {
       const first = createEntry({
         workspacePath: "/workspace/first",
-        newBranch: "traycer/first",
+        newBranch: "hukum/first",
         isPrimary: true,
       });
       const second = createEntry({
         workspacePath: "/workspace/second",
-        newBranch: "traycer/second",
+        newBranch: "hukum/second",
         isPrimary: false,
       });
 
@@ -284,12 +284,12 @@ describe("worktree intent merge", () => {
     it("never removes or reorders entries - a target with no staged entry only demotes others", () => {
       const first = createEntry({
         workspacePath: "/workspace/first",
-        newBranch: "traycer/first",
+        newBranch: "hukum/first",
         isPrimary: true,
       });
       const second = createEntry({
         workspacePath: "/workspace/second",
-        newBranch: "traycer/second",
+        newBranch: "hukum/second",
         isPrimary: false,
       });
 

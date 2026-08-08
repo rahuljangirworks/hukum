@@ -6,13 +6,13 @@ import { describeLogError, log } from "../app/logger";
 /**
  * Dedicated, append-only sink for renderer performance telemetry.
  *
- * Perf events (prefixed `[traycer-perf]` in the renderer console, see
+ * Perf events (prefixed `[hukum-perf]` in the renderer console, see
  * `gui-app/src/lib/perf/perf-telemetry.ts`) are routed here by the window
  * factory's `console-message` handler INSTEAD of electron-log, so they land in
  * one machine-parseable NDJSON file separate from the human log.
  *
- *   File:   <userData>/traycer-perf.ndjson  (one JSON object per line)
- *   Rotate: when the file exceeds ~5 MB, rename to `traycer-perf.ndjson.1`
+ *   File:   <userData>/hukum-perf.ndjson  (one JSON object per line)
+ *   Rotate: when the file exceeds ~5 MB, rename to `hukum-perf.ndjson.1`
  *           (single backup kept) and start fresh.
  *
  * Writes are QUEUED sequentially onto a serialized append chain (mirroring the
@@ -21,8 +21,8 @@ import { describeLogError, log } from "../app/logger";
  * once and swallowed - it must never throw into the app.
  */
 
-const PERF_FILE_NAME = "traycer-perf.ndjson";
-const PERF_BACKUP_FILE_NAME = "traycer-perf.ndjson.1";
+const PERF_FILE_NAME = "hukum-perf.ndjson";
+const PERF_BACKUP_FILE_NAME = "hukum-perf.ndjson.1";
 const MAX_PERF_FILE_BYTES = 5 * 1024 * 1024;
 
 export type PerfFieldValue = number | string | boolean | null;

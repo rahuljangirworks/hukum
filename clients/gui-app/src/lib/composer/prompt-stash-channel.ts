@@ -1,4 +1,4 @@
-export const PROMPT_STASH_CHANNEL = "traycer-gui-app:prompt-stash:v1";
+export const PROMPT_STASH_CHANNEL = "hukum-gui-app:prompt-stash:v1";
 
 /** Notify every other app window that the shared stash database was wiped. */
 export function publishPromptStashReset(): void {

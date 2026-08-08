@@ -11,8 +11,8 @@
  *   bun run protocol/scripts/snapshot-epic-schema-surface.ts > \
  *     protocol/src/persistence/epic/__tests__/__fixtures__/epic-schema-surface.ts
  */
-import { getRecordSchema } from "@traycer/protocol/framework/index";
-import { persistenceRecordRegistry } from "@traycer/protocol/persistence/registry";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
+import { persistenceRecordRegistry } from "@hukum/protocol/persistence/registry";
 import { z } from "zod";
 
 const epicSchema = getRecordSchema(persistenceRecordRegistry, "epic", "latest");

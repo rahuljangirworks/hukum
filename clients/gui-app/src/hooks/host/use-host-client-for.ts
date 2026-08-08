@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { useHostClient } from "@/lib/host/runtime";
 
 /**

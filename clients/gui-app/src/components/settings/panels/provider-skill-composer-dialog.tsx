@@ -1,5 +1,5 @@
 import { useMemo, useState, type ReactNode } from "react";
-import type { ProvidersSkillsMutateAction } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProvidersSkillsMutateAction } from "@hukum/protocol/host/provider-native-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import {

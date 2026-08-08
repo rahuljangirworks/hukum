@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { Zap } from "lucide-react";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { WorktreeBindingOwnerKind } from "@traycer/protocol/host/worktree-schemas";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { WorktreeBindingOwnerKind } from "@hukum/protocol/host/worktree-schemas";
 import { ProfileBadgedHarnessIcon } from "@/components/providers/profile-badged-harness-icon";
 import {
   findPermissionOption,

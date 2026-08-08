@@ -1,7 +1,7 @@
 import type {
   WorktreeBinding,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   buildForkWorkspaceSeed,
   buildForkWorkspaceSeedFromWorkspaceFolders,

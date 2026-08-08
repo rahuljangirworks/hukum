@@ -10,7 +10,7 @@ import { useMemo, useState } from "react";
 import type {
   WorktreeBindingOwnerKind,
   WorktreeFolderIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import {

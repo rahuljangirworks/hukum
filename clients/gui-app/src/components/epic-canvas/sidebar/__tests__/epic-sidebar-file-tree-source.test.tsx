@@ -1,4 +1,4 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   act,
@@ -14,27 +14,27 @@ import type {
   IStreamSession,
   ServerFrameHandler,
   StatusChangeHandler,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   WsStreamClient,
   type ParamsOf,
   type StreamMethodSupport,
-} from "@traycer-clients/shared/host-transport/ws-stream-client";
-import type { WorkspaceSubscribeFileListServerFrame } from "@traycer/protocol/host/workspace/subscribe";
+} from "@hukum-clients/shared/host-transport/ws-stream-client";
+import type { WorkspaceSubscribeFileListServerFrame } from "@hukum/protocol/host/workspace/subscribe";
 import type {
   WorkspaceSearchPathResult,
   WorkspaceSearchPathsOutcome,
   WorkspaceSearchPathsRequest,
-} from "@traycer/protocol/host/workspace/unary-schemas";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import { createRequestContext } from "@traycer/protocol/auth/request-context";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/workspace/unary-schemas";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import { createRequestContext } from "@hukum/protocol/auth/request-context";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import type { HostRpcRegistry } from "@/lib/host";
 import { StreamRuntimeContext } from "@/lib/host/stream-runtime-context";
 import {

@@ -31,5 +31,5 @@ Fresh profiles usually start at the signed-out or host gate. Tab-width cap
 assertions run when a header tab is present and are recorded as skipped when the
 profile has no rendered tab.
 
-Set `TRAYCER_RESOLUTION_KEEP_PROFILES=1` to keep the temporary profile
+Set `HUKUM_RESOLUTION_KEEP_PROFILES=1` to keep the temporary profile
 directories for inspection.

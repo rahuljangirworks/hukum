@@ -1,5 +1,5 @@
-import type { CheckpointFileOperation } from "@traycer/protocol/persistence/epic/checkpoint-manifests";
-import type { ArtifactOperationAction } from "@traycer/protocol/persistence/epic/content-blocks";
+import type { CheckpointFileOperation } from "@hukum/protocol/persistence/epic/checkpoint-manifests";
+import type { ArtifactOperationAction } from "@hukum/protocol/persistence/epic/content-blocks";
 
 type ArtifactOperationVerbKey =
   CheckpointFileOperation | ArtifactOperationAction;

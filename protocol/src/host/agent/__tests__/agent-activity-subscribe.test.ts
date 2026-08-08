@@ -3,8 +3,8 @@ import {
   agentActivitySubscribeClientFrameSchema,
   agentActivitySubscribeServerFrameSchema,
   agentActivitySubscribeV10,
-} from "@traycer/protocol/host/agent/activity";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/agent/activity";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 
 describe("agent.activity.subscribe@1.0", () => {
   it("accepts a full replacement state from either host-selected plane", () => {

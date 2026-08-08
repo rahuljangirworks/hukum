@@ -1,7 +1,7 @@
 import type {
   ChatActiveTurn,
   ChatQueueDeliveryPolicy,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 
 /**
  * Which composer key produced a submit. Plain `Enter` keeps queueing; `Mod-Enter`

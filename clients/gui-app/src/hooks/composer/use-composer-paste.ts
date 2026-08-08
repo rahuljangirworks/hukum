@@ -10,7 +10,7 @@ import {
 import type { Editor } from "@tiptap/core";
 import { closeHistory } from "@tiptap/pm/history";
 import { v4 as uuidv4 } from "uuid";
-import type { IFileDropHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IFileDropHost } from "@hukum-clients/shared/platform/runner-host";
 
 import type { ImageAttachmentAttrs } from "@/components/chat/composer/editor/extensions/image-attachment-extension";
 import { reportableErrorToast } from "@/lib/reportable-error-toast";

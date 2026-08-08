@@ -1,11 +1,11 @@
-# `@traycer-clients/shared/host-lifecycle` — World probe + conditional actuators
+# `@hukum-clients/shared/host-lifecycle` — World probe + conditional actuators
 
 Read-only **evidence-bearing world probe** for the host lifecycle layer.
 
 ## Boundary
 
 - **In scope:** evidence algebra, per-platform registration probes, durable-record
-  decoders, reachability / login-item / CLI-slot evidence, positive Traycer
+  decoders, reachability / login-item / CLI-slot evidence, positive Hukum
   identity attestation for eviction targets.
 - **Also in scope:** pure planner output and conditional actuator primitives.
   A primitive takes a captured world precondition, obtains the caller's
@@ -27,7 +27,7 @@ function, and ESLint keeps this directory independent of those controllers
 | Path          | Role                                                                                   |
 | ------------- | -------------------------------------------------------------------------------------- |
 | `evidence.ts` | `Evidence<T, Cause>`, `DurableRecord<T>`                                               |
-| `identity.ts` | Positive Traycer identity attestation / eviction gate                                  |
+| `identity.ts` | Positive Hukum identity attestation / eviction gate                                  |
 | `durable/`    | Versioned decoders (`valid \| absent \| corrupt \| unreadable \| unsupported-version`) |
 | `shared/`     | Reachability, pid.json, CLI-slot, injectable command runner                            |
 | `macos/`      | `launchctl print` split, multi-signal ownership, run-state/LWCR, wedge, login-item     |

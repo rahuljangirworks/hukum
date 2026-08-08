@@ -2,13 +2,13 @@ import { describe, expect, it } from "vitest";
 import type {
   AgentSelectionGuideResponse,
   AgentSelectionGuideResponseSource,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import {
   A2A_PERMISSION_MODE_INSTRUCTION,
   formatAgentSelectionGuideResponse,
 } from "../agent-selection-guide-format";
 
-const GLOBAL_PATH = "/Users/me/.traycer/agent-selection-guide.md";
+const GLOBAL_PATH = "/Users/me/.hukum/agent-selection-guide.md";
 const APP_DIR = "/Users/me/repos/app";
 
 describe("formatAgentSelectionGuideResponse", () => {
@@ -72,7 +72,7 @@ function workspaceSource(
   return {
     kind: "workspace",
     workspacePath,
-    path: `${workspacePath}/.traycer/agent-selection-guide.md`,
+    path: `${workspacePath}/.hukum/agent-selection-guide.md`,
     priority,
     content,
   };

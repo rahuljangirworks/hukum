@@ -36,8 +36,8 @@ describe("<BundleOpenButton />", () => {
         runningDir="/repo"
         group="changes"
         repositoryContext={{
-          workspaceLabel: "traycer-internal",
-          repositoryLabel: "traycer",
+          workspaceLabel: "hukum-internal",
+          repositoryLabel: "hukum",
         }}
         disabled={false}
       />,
@@ -63,10 +63,10 @@ describe("<BundleOpenButton />", () => {
       bundleGroup: "changes",
     });
     expect(tile.hostId).toBe("host-1");
-    expect(tile.name).toBe("traycer-internal › traycer · Changes");
+    expect(tile.name).toBe("hukum-internal › hukum · Changes");
     expect(tile.repositoryContext).toEqual({
-      workspaceLabel: "traycer-internal",
-      repositoryLabel: "traycer",
+      workspaceLabel: "hukum-internal",
+      repositoryLabel: "hukum",
     });
   });
 

@@ -91,8 +91,8 @@
  * not to an empty tree.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
-import { workspaceDirectoryEntryKindSchema } from "@traycer/protocol/host/workspace/unary-schemas";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
+import { workspaceDirectoryEntryKindSchema } from "@hukum/protocol/host/workspace/unary-schemas";
 
 export const workspaceSubscribeFileListOpenRequestV10Schema = z.object({
   // Canonicalized by the host. The server immediately covers this root's first

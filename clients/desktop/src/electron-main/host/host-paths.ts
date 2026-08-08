@@ -13,7 +13,7 @@ export type { Environment } from "../../config";
  * `host-lifecycle`) don't need to depend on the deleted `service/` subtree.
  */
 export interface ServiceLabel {
-  /** Reverse-DNS service identifier (e.g. `ai.traycer.host`). */
+  /** Reverse-DNS service identifier (e.g. `ai.hukum.host`). */
   readonly id: string;
   /** Human-readable display name for service-manager UIs. */
   readonly displayName: string;
@@ -22,40 +22,40 @@ export interface ServiceLabel {
 }
 
 export const PRODUCTION_LABEL: ServiceLabel = {
-  id: "ai.traycer.host",
-  displayName: "Traycer Host",
-  appSupportDirName: "Traycer",
+  id: "ai.hukum.host",
+  displayName: "Hukum Host",
+  appSupportDirName: "Hukum",
 };
 
 export const DEV_LABEL: ServiceLabel = {
-  id: "ai.traycer.host.dev",
-  displayName: "Traycer Host (Dev)",
-  appSupportDirName: "Traycer-Dev",
+  id: "ai.hukum.host.dev",
+  displayName: "Hukum Host (Dev)",
+  appSupportDirName: "Hukum-Dev",
 };
 
 // The label for an environment/slot. Mirrors the CLI's `serviceLabelFor`:
-// production keeps the bare `ai.traycer.host`; every other slot nests under its
-// own name (`ai.traycer.host.<environment>`) so a staging/dev install owns an
+// production keeps the bare `ai.hukum.host`; every other slot nests under its
+// own name (`ai.hukum.host.<environment>`) so a staging/dev install owns an
 // isolated LaunchAgent + app-support dir and never collides with prod. A
 // hardcoded dev-only fallback silently mapped internal `staging` builds onto the
-// dev slot (`ai.traycer.host.dev`), mismatching the `ai.traycer.host.staging`
+// dev slot (`ai.hukum.host.dev`), mismatching the `ai.hukum.host.staging`
 // plist the installer ships - derive from `environment` so new slots can't drift.
 export function labelForEnvironment(environment: Environment): ServiceLabel {
   if (environment === "production") return PRODUCTION_LABEL;
   const devSlot = devDesktopSlotForEnvironment(environment, process.env);
   if (devSlot !== null) {
     return {
-      id: `ai.traycer.host.dev.${devSlot}`,
-      displayName: `Traycer Host (Dev ${devSlot})`,
-      appSupportDirName: `Traycer-Dev-${devSlot}`,
+      id: `ai.hukum.host.dev.${devSlot}`,
+      displayName: `Hukum Host (Dev ${devSlot})`,
+      appSupportDirName: `Hukum-Dev-${devSlot}`,
     };
   }
   if (environment === "dev") return DEV_LABEL;
   const titled = capitalizeEnvironment(environment);
   return {
-    id: `ai.traycer.host.${environment}`,
-    displayName: `Traycer Host (${titled})`,
-    appSupportDirName: `Traycer-${titled}`,
+    id: `ai.hukum.host.${environment}`,
+    displayName: `Hukum Host (${titled})`,
+    appSupportDirName: `Hukum-${titled}`,
   };
 }
 
@@ -76,7 +76,7 @@ function capitalizeEnvironment(environment: Environment): string {
 //
 // DO NOT change this derivation without updating the three sites that must
 // stay in lockstep and cannot import this module:
-//   - `clients/traycer-cli/src/service/label.ts` (`smAppServiceAgentLabelId`)
+//   - `clients/hukum-cli/src/service/label.ts` (`smAppServiceAgentLabelId`)
 //   - `clients/desktop/scripts/prepack/inject-host-launch-agent.cjs`
 //   - the internal repo's `scripts/desktop-install-cloud.js` (`hostAgentLabel`)
 export function smAppServiceAgentLabelId(cliLabelId: string): string {
@@ -100,17 +100,17 @@ export function userLaunchAgentPlistPath(labelId: string): string {
  * ### Cross-workspace contract
  *
  * `pidMetadataFile` is the on-disk coordination point with the host.
- * For the prod environment the canonical path is `~/.traycer/host/pid.json`;
- * for the dev environment it is `~/.traycer/host/dev/pid.json`, or
- * `~/.traycer/host/dev-runs/<slot>/pid.json` when `DEV_DESKTOP_SLOT` is set.
+ * For the prod environment the canonical path is `~/.hukum/host/pid.json`;
+ * for the dev environment it is `~/.hukum/host/dev/pid.json`, or
+ * `~/.hukum/host/dev-runs/<slot>/pid.json` when `DEV_DESKTOP_SLOT` is set.
  * The path is a JSON document matching `HostPidMetadata`, written by the host
- * (the external Traycer Host). The host writes it on bind and unlinks it on
+ * (the external Hukum Host). The host writes it on bind and unlinks it on
  * graceful shutdown; this runner reads it to discover a live local host and
  * its localhost `websocketUrl`.
  *
  * The dev/prod split mirrors the CLI's
- * `clients/traycer-cli/src/store/paths.ts` and the layout used by the host
- * (the external Traycer Host). CLI service status, Doctor,
+ * `clients/hukum-cli/src/store/paths.ts` and the layout used by the host
+ * (the external Hukum Host). CLI service status, Doctor,
  * Desktop dev flow, and the host runtime all agree on the same
  * environment-scoped layout so a `make dev-desktop` session never reads a
  * production host's pid metadata (or vice-versa).
@@ -120,7 +120,7 @@ export function userLaunchAgentPlistPath(labelId: string): string {
  * silently breaks local host discovery for every packaged build.
  *
  * `pendingLoginItemRevisionFile` is a second cross-repo coordination point,
- * this time with the *internal* `traycer-internal` repository's
+ * this time with the *internal* `hukum-internal` repository's
  * `scripts/desktop-install-cloud.js` (a separate repo from this one - see
  * that repo's CLAUDE.md for the submodule boundary). That installer writes
  * this marker when it deliberately preserves a busy/indeterminate running
@@ -172,7 +172,7 @@ function hostSlotRoot(base: string, environment: Environment): string {
 }
 
 export function getHostFsLayout(environment: Environment): HostFsLayout {
-  const base = join(homedir(), ".traycer", "host");
+  const base = join(homedir(), ".hukum", "host");
   const rootDir = hostSlotRoot(base, environment);
   const installDir = join(rootDir, "install");
   const stagedDir = join(rootDir, "staged");
@@ -194,20 +194,20 @@ export function getHostFsLayout(environment: Environment): HostFsLayout {
 }
 
 /**
- * The CLI's own home root (`~/.traycer/cli[/dev|/dev-runs/<slot>]/`), the
+ * The CLI's own home root (`~/.hukum/cli[/dev|/dev-runs/<slot>]/`), the
  * same dev-slot rule as `hostSlotRoot` above but rooted at `cli/` instead of
  * `host/` - mirrors `cliInstallHomeDir` in
- * `clients/traycer-cli/src/store/paths.ts` (separate bundle, can't be
+ * `clients/hukum-cli/src/store/paths.ts` (separate bundle, can't be
  * imported here; same duplication precedent as `environmentSubdir`).
  */
 export function cliSlotRootForEnvironment(environment: Environment): string {
-  const cliRoot = join(homedir(), ".traycer", "cli");
+  const cliRoot = join(homedir(), ".hukum", "cli");
   return hostSlotRoot(cliRoot, environment);
 }
 
 /**
  * Path to the CLI's cross-process `cli-lock` file
- * (`clients/traycer-cli/src/store/paths.ts:cliLockPath`). The desktop-held
+ * (`clients/hukum-cli/src/store/paths.ts:cliLockPath`). The desktop-held
  * lock sections (Host Update Layer Redesign Tech Plan, "cli-lock" rule 3)
  * acquire the SAME file via `desktop-cli-lock.ts`, so this must resolve
  * byte-for-byte identically to the CLI's own resolution.

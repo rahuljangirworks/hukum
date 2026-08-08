@@ -1,7 +1,7 @@
 import {
   isProcessStartIdentity,
   type ProcessStartIdentity,
-} from "@traycer/protocol/host/lifecycle";
+} from "@hukum/protocol/host/lifecycle";
 import type { Evidence } from "../evidence";
 import type { Reachability } from "./reachability";
 

@@ -2,8 +2,8 @@ import {
   defineDowngradePath,
   defineRpcContract,
   defineUpgradePath,
-} from "@traycer/protocol/framework/index";
-import { DEFAULT_ACCOUNT_CONTEXT } from "@traycer/protocol/common/schemas";
+} from "@hukum/protocol/framework/index";
+import { DEFAULT_ACCOUNT_CONTEXT } from "@hukum/protocol/common/schemas";
 import {
   providersConsumeRateLimitResetCreditRequestSchema,
   providersConsumeRateLimitResetCreditResponseSchema,
@@ -19,7 +19,7 @@ import {
   mapGrokAvailableToUnavailable,
   mapHuggingFaceAvailableToUnavailable,
   type ProviderRateLimits,
-} from "@traycer/protocol/host/rate-limit/schemas";
+} from "@hukum/protocol/host/rate-limit/schemas";
 
 // The v2-only `usage_fetch_failed` reason maps to `rate_limits_not_available`
 // so a v1.2 client's frozen 8-value reason enum keeps parsing. Every other

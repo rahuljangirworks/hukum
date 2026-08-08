@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { RoleClaim } from "@traycer/protocol/persistence/epic/role-claims";
+import type { RoleClaim } from "@hukum/protocol/persistence/epic/role-claims";
 
 const worktreeTooltipSpy = vi.hoisted(() => vi.fn());
 vi.mock("@/components/worktree/worktree-owner-metadata", () => ({

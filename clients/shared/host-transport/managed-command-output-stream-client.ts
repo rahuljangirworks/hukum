@@ -4,9 +4,9 @@ import {
   type ManagedCommandLogPosition,
   type ManagedCommandSubscribeOutputClientFrame,
   type ManagedCommandSubscribeOutputServerFrame,
-} from "@traycer/protocol/host/managed-command/subscribe";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/managed-command/subscribe";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type {
   IStreamSession,
   StreamCloseReason,

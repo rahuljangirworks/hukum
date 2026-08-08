@@ -3,8 +3,8 @@ import type {
   ListTaskLight,
   TaskOwnershipScope,
   TaskWorkspaceIdentifier,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import type { WorktreeHostEntryV12 } from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import type { WorktreeHostEntryV12 } from "@hukum/protocol/host/worktree-schemas";
 import { formatDistanceToNow } from "date-fns";
 import { displayTitle } from "@/lib/display-title";
 import { isEditableRole } from "@/lib/epic-permissions";

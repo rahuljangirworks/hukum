@@ -9,7 +9,7 @@ import {
 import type {
   WorktreeBindingSelectorDisabledReason,
   WorktreeBindingSelectorRowV12,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import { NewTerminalPicker } from "../new-terminal-picker";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
@@ -50,8 +50,8 @@ function stubLoadedBindings(): void {
   bindingsQuery.current = {
     data: {
       rows: [
-        makeRow("host-1", "/work/traycer", "main", null),
-        makeRow("host-2", "/work/traycer-wt/feature-x", "feature-x", null),
+        makeRow("host-1", "/work/hukum", "main", null),
+        makeRow("host-2", "/work/hukum-wt/feature-x", "feature-x", null),
       ],
       folderlessCwd: "/Users/tgill",
     },
@@ -94,13 +94,13 @@ function makeRow(
   return {
     hostId,
     runningDir,
-    workspacePath: "/work/traycer",
+    workspacePath: "/work/hukum",
     worktreePath: runningDir,
     mode: "worktree",
     isGitRepo: true,
-    repoIdentifier: { owner: "traycer", repo: "traycer" },
+    repoIdentifier: { owner: "hukum", repo: "hukum" },
     branch,
-    isPrimary: runningDir.endsWith("traycer"),
+    isPrimary: runningDir.endsWith("hukum"),
     isImported: false,
     setupState: "not_required",
     disabledReason,
@@ -167,12 +167,12 @@ describe("<NewTerminalPicker />", () => {
         Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
     const primaryOption = screen.getByRole("option", {
-      name: /traycer.*main/i,
+      name: /hukum.*main/i,
     });
     expect(primaryOption).toBeDefined();
     expect(primaryOption.className).toContain("cursor-pointer");
     expect(screen.getByRole("option", { name: /feature-x/i })).toBeDefined();
-    expect(screen.getByText("/work/traycer-wt/feature-x")).toBeDefined();
+    expect(screen.getByText("/work/hukum-wt/feature-x")).toBeDefined();
     // The primary workspace is auto-selected on open, so Launch is ready.
     expect(
       screen.getByRole("button", { name: "Launch" }).hasAttribute("disabled"),
@@ -207,8 +207,8 @@ describe("<NewTerminalPicker />", () => {
     bindingsQuery.current = {
       data: {
         rows: [
-          makeRow("host-2", "/work/traycer-wt/feature-x", "feature-x", null),
-          makeRow("host-1", "/work/traycer", "main", null),
+          makeRow("host-2", "/work/hukum-wt/feature-x", "feature-x", null),
+          makeRow("host-1", "/work/hukum", "main", null),
         ],
         folderlessCwd: "/Users/tgill",
       },
@@ -218,7 +218,7 @@ describe("<NewTerminalPicker />", () => {
     openPicker();
 
     expect(
-      screen.getByRole("option", { name: /traycer.*main/i }).dataset.checked,
+      screen.getByRole("option", { name: /hukum.*main/i }).dataset.checked,
     ).toBe("true");
     expect(
       screen.getByRole("option", { name: /feature-x/i }).dataset.checked,
@@ -232,8 +232,8 @@ describe("<NewTerminalPicker />", () => {
     bindingsQuery.current = {
       data: {
         rows: [
-          makeRow("host-1", "/work/traycer", "main", "missing_worktree_path"),
-          makeRow("host-2", "/work/traycer-wt/feature-x", "feature-x", null),
+          makeRow("host-1", "/work/hukum", "main", "missing_worktree_path"),
+          makeRow("host-2", "/work/hukum-wt/feature-x", "feature-x", null),
         ],
         folderlessCwd: "/Users/tgill",
       },
@@ -256,8 +256,8 @@ describe("<NewTerminalPicker />", () => {
     bindingsQuery.current = {
       data: {
         rows: [
-          makeRow("host-1", "/work/traycer", "main", "missing_worktree_path"),
-          makeRow("host-2", "/work/traycer-wt/feature-x", "feature-x", null),
+          makeRow("host-1", "/work/hukum", "main", "missing_worktree_path"),
+          makeRow("host-2", "/work/hukum-wt/feature-x", "feature-x", null),
         ],
         folderlessCwd: "/Users/tgill",
       },
@@ -273,7 +273,7 @@ describe("<NewTerminalPicker />", () => {
     );
     expect(terminals).toHaveLength(1);
     expect(terminals[0].hostId).toBe("host-2");
-    expect(terminals[0].cwd).toBe("/work/traycer-wt/feature-x");
+    expect(terminals[0].cwd).toBe("/work/hukum-wt/feature-x");
   });
 
   it("launches the selected terminal with Cmd+Enter", () => {
@@ -290,17 +290,17 @@ describe("<NewTerminalPicker />", () => {
     );
     expect(terminals).toHaveLength(1);
     expect(terminals[0].hostId).toBe("host-1");
-    expect(terminals[0].cwd).toBe("/work/traycer");
+    expect(terminals[0].cwd).toBe("/work/hukum");
   });
 
   it("selects nothing and keeps Launch disabled when every row is disabled", () => {
     bindingsQuery.current = {
       data: {
         rows: [
-          makeRow("host-1", "/work/traycer", "main", "missing_worktree_path"),
+          makeRow("host-1", "/work/hukum", "main", "missing_worktree_path"),
           makeRow(
             "host-2",
-            "/work/traycer-wt/feature-x",
+            "/work/hukum-wt/feature-x",
             "feature-x",
             "setup_failed",
           ),
@@ -420,7 +420,7 @@ describe("<NewTerminalPicker />", () => {
     expect(screen.queryByTestId("new-terminal-picker-popover")).not.toBeNull();
     const worktreeOption = screen.getByRole("option", { name: /feature-x/i });
     const primaryOption = screen.getByRole("option", {
-      name: /traycer.*main/i,
+      name: /hukum.*main/i,
     });
     expect(worktreeOption.dataset.checked).toBe("true");
     expect(primaryOption.dataset.checked).toBeUndefined();
@@ -439,7 +439,7 @@ describe("<NewTerminalPicker />", () => {
     const terminals = tiles.filter((tile) => tile.type === "terminal");
     expect(terminals).toHaveLength(1);
     expect(terminals[0].hostId).toBe("host-2");
-    expect(terminals[0].cwd).toBe("/work/traycer-wt/feature-x");
+    expect(terminals[0].cwd).toBe("/work/hukum-wt/feature-x");
     expect(terminals[0].name).toBe("New Terminal");
     expect(screen.queryByTestId("new-terminal-picker-popover")).toBeNull();
   });
@@ -491,7 +491,7 @@ describe("<NewTerminalPicker />", () => {
       screen.getByRole("option", { name: /feature-x/i }).dataset.checked,
     ).toBe("true");
     expect(
-      screen.getByRole("option", { name: /traycer.*main/i }).dataset.checked,
+      screen.getByRole("option", { name: /hukum.*main/i }).dataset.checked,
     ).toBeUndefined();
     expect(document.activeElement).toBe(input);
   });

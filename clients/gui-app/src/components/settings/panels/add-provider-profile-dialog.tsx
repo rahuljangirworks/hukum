@@ -10,14 +10,14 @@ import {
   ExternalLink,
   Link2,
 } from "lucide-react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import {
   PROVIDER_DISPLAY_NAMES,
   PROVIDER_PROFILE_ACCENT_COLORS,
   type ProviderCliState,
   type ProviderProfile,
   type ProviderProfileAccentColor,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type { HostRpcRegistry } from "@/lib/host";
 import { ProviderProfileCard } from "@/components/providers/provider-profile-card";
 import { ReportIssueAction } from "@/components/report-issue/report-issue-action";
@@ -84,7 +84,7 @@ const PROVIDER_SHARES_SKILLS_AND_PLUGINS: Record<
   codex: false,
   opencode: false,
   cursor: false,
-  traycer: false,
+  hukum: false,
   openrouter: false,
   huggingface: false,
   grok: false,

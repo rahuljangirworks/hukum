@@ -9,7 +9,7 @@
  * the trailing-slash directory token the rest of the file-tree code - and the
  * tree adapter - treats as "this row is a directory".
  */
-import type { WorkspaceSearchPathResult } from "@traycer/protocol/host/workspace/unary-schemas";
+import type { WorkspaceSearchPathResult } from "@hukum/protocol/host/workspace/unary-schemas";
 import { ancestorDirectoryPathsOf } from "@/lib/workspace/workspace-file-list-tree";
 
 export interface WorkspaceSearchPathsProjection {

@@ -1,7 +1,7 @@
-import { hostCommunicationGraphCloudFeedSubscribeServerFrameSchemaV10 } from "@traycer/protocol/host/epic/communication-graph";
+import { hostCommunicationGraphCloudFeedSubscribeServerFrameSchemaV10 } from "@hukum/protocol/host/epic/communication-graph";
 import type { DurableStreamTransport } from "@/lib/host/durable-stream-transport";
-import type { StreamCloseReason } from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { StreamMethodSupport } from "@traycer-clients/shared/host-transport/ws-stream-client";
+import type { StreamCloseReason } from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { StreamMethodSupport } from "@hukum-clients/shared/host-transport/ws-stream-client";
 import { appLogger } from "@/lib/logger";
 import type {
   CommGraphCloudSubscriptionHandle,

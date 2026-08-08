@@ -6,7 +6,7 @@
  * terminal / workspace-file are not.
  */
 import type { DesktopJsonValue } from "@/lib/windows/types";
-import { providerIdSchema } from "@traycer/protocol/host/provider-schemas";
+import { providerIdSchema } from "@hukum/protocol/host/provider-schemas";
 import { DEFAULT_TERMINAL_TITLE } from "@/lib/terminals/terminal-title";
 import {
   WORKSPACE_FILE_TAB_KIND,

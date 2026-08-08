@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type {
   WorktreeBinding,
   WorktreeBindingEntry,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   CHECKING_WORKSPACE_FOLDER_HINT,
   NO_BOUND_WORKSPACE_FOLDER_HINT,

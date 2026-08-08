@@ -6,7 +6,7 @@ import {
   FolderPlus,
   Globe,
 } from "lucide-react";
-import type { ProviderNativeScope } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderNativeScope } from "@hukum/protocol/host/provider-native-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { Badge } from "@/components/ui/badge";
 import {

@@ -1,7 +1,7 @@
 import type {
   SchemaVersion,
   VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import type {
   ConnectionManifest,
   IncompatibleMethodDetails,

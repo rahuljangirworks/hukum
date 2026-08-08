@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
-import { getRecordSchema } from "@traycer/protocol/framework/index";
-import { persistenceRecordRegistry } from "@traycer/protocol/persistence/registry";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
+import { persistenceRecordRegistry } from "@hukum/protocol/persistence/registry";
 import { epicSchemaSurfaceBaseline } from "./__fixtures__/epic-schema-surface";
 
 /**

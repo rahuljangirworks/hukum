@@ -1,4 +1,4 @@
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import { createElement } from "react";
 import { CodexResetCreditAction } from "@/components/settings/panels/codex-reset-credit-action";
 import type { CodexResetCreditActionRenderer } from "@/components/settings/panels/codex-reset-credit-model";

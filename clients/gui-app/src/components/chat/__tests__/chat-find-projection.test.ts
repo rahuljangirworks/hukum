@@ -14,7 +14,7 @@ import {
   deriveActivityGroupRenderId,
   derivePromotedSubagentRenderId,
 } from "@/components/chat/chat-collapsible-key";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   ApprovalSegment,
   ChatMessage as ChatMessageModel,
@@ -28,7 +28,7 @@ describe("chat find projection", () => {
   it("projects markdown links and code as rendered text, not markdown syntax", () => {
     const text = markdownToChatSearchText(
       [
-        "Read [Traycer docs](https://example.test/docs) and `inlineCode`.",
+        "Read [Hukum docs](https://example.test/docs) and `inlineCode`.",
         "",
         "```ts",
         "const answer = 42;",
@@ -36,12 +36,12 @@ describe("chat find projection", () => {
       ].join("\n"),
     );
 
-    expect(text).toContain("Traycer docs");
+    expect(text).toContain("Hukum docs");
     expect(text).toContain("inlineCode");
     expect(text).toContain("const answer = 42;");
     expect(text).not.toContain("https://example.test/docs");
     expect(text).not.toContain("```");
-    expect(text).not.toContain("[Traycer docs]");
+    expect(text).not.toContain("[Hukum docs]");
   });
 
   it("indexes user structured text, assistant prose, and excludes next-step controls", () => {
@@ -71,11 +71,11 @@ describe("chat find projection", () => {
           markdown: [
             "Visible assistant answer.",
             "",
-            "<TRAYCER_NEXT_STEPS>",
+            "<HUKUM_NEXT_STEPS>",
             "Choose one of these next steps.",
             "",
             "- [] : Hidden button prompt",
-            "</TRAYCER_NEXT_STEPS>",
+            "</HUKUM_NEXT_STEPS>",
           ].join("\n"),
           isStreaming: false,
         },
@@ -114,7 +114,7 @@ describe("chat find projection", () => {
             content: [
               {
                 type: "slashCommand",
-                attrs: { commandName: "traycer-implement", trigger: "$" },
+                attrs: { commandName: "hukum-implement", trigger: "$" },
               },
               { type: "text", text: " the runtime ticket" },
             ],
@@ -127,8 +127,8 @@ describe("chat find projection", () => {
       .map((row) => rowSearchText(row))
       .join("\n");
 
-    expect(joined).toContain("$traycer-implement the runtime ticket");
-    expect(joined).not.toContain("/traycer-implement");
+    expect(joined).toContain("$hukum-implement the runtime ticket");
+    expect(joined).not.toContain("/hukum-implement");
   });
 
   it("indexes collapsed activity group summaries and child headers only", () => {

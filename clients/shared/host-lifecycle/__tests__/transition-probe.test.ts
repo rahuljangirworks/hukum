@@ -40,7 +40,7 @@ const ALL_LAYER0_FRAMES: readonly Layer0Frame[] = [
   },
   // Every cause the host can attach to a degraded start. There is no
   // `layer0: "unavailable"` arm here because the host has none: the union is
-  // imported from `@traycer/protocol` now, so writing one would not compile
+  // imported from `@hukum/protocol` now, so writing one would not compile
   // rather than sitting in a fixture list pretending to be covered.
   {
     attemptId: "attempt-degraded-addon",
@@ -175,10 +175,10 @@ function marker(overrides: Partial<ProbeMarker>): ProbeMarker {
     v: 1,
     transitionId: "t-1",
     probeNonce: "nonce-1",
-    serviceLabel: "ai.traycer.host.fallback",
+    serviceLabel: "ai.hukum.host.fallback",
     supervisorPid: 5001,
     attestation: {
-      serviceLabel: "ai.traycer.host.fallback",
+      serviceLabel: "ai.hukum.host.fallback",
       supervisorPid: 5001,
       capturedAt: "2026-07-27T00:00:01.000Z",
     },
@@ -204,7 +204,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
       marker: null,
       transitionId: "t-1",
       probeNonce: "nonce-1",
-      expectedServiceLabel: "ai.traycer.host.fallback",
+      expectedServiceLabel: "ai.hukum.host.fallback",
       readiness: NOT_READY_READINESS,
     });
     expect(verdict).toEqual({ kind: "indeterminate", reason: "marker-absent" });
@@ -215,7 +215,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
       marker: marker({ transitionId: "t-previous" }),
       transitionId: "t-current",
       probeNonce: "nonce-1",
-      expectedServiceLabel: "ai.traycer.host.fallback",
+      expectedServiceLabel: "ai.hukum.host.fallback",
       readiness: NOT_READY_READINESS,
     });
     expect(verdict).toEqual({
@@ -229,7 +229,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
       marker: marker({ probeNonce: "wrong-nonce" }),
       transitionId: "t-1",
       probeNonce: "nonce-1",
-      expectedServiceLabel: "ai.traycer.host.fallback",
+      expectedServiceLabel: "ai.hukum.host.fallback",
       readiness: NOT_READY_READINESS,
     });
     expect(verdict).toEqual({
@@ -240,10 +240,10 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
 
   it("a marker written under the wrong serviceLabel (e.g. the agent's journal seeing a fallback-produced marker) is rejected", () => {
     const verdict = interpretProbeMarker({
-      marker: marker({ serviceLabel: "ai.traycer.host.fallback" }),
+      marker: marker({ serviceLabel: "ai.hukum.host.fallback" }),
       transitionId: "t-1",
       probeNonce: "nonce-1",
-      expectedServiceLabel: "ai.traycer.host.agent",
+      expectedServiceLabel: "ai.hukum.host.agent",
       readiness: NOT_READY_READINESS,
     });
     expect(verdict).toEqual({
@@ -256,14 +256,14 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
     const verdict = interpretProbeMarker({
       marker: marker({
         attestation: {
-          serviceLabel: "ai.traycer.host.fallback",
+          serviceLabel: "ai.hukum.host.fallback",
           supervisorPid: 9999, // does not match marker.supervisorPid (5001)
           capturedAt: "2026-07-27T00:00:01.000Z",
         },
       }),
       transitionId: "t-1",
       probeNonce: "nonce-1",
-      expectedServiceLabel: "ai.traycer.host.fallback",
+      expectedServiceLabel: "ai.hukum.host.fallback",
       readiness: NOT_READY_READINESS,
     });
     expect(verdict).toEqual({
@@ -276,14 +276,14 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
     const verdict = interpretProbeMarker({
       marker: marker({
         attestation: {
-          serviceLabel: "ai.traycer.host.fallback",
+          serviceLabel: "ai.hukum.host.fallback",
           supervisorPid: 5001,
           capturedAt: "",
         },
       }),
       transitionId: "t-1",
       probeNonce: "nonce-1",
-      expectedServiceLabel: "ai.traycer.host.fallback",
+      expectedServiceLabel: "ai.hukum.host.fallback",
       readiness: NOT_READY_READINESS,
     });
     expect(verdict).toEqual({
@@ -297,7 +297,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
       marker: marker({}),
       transitionId: "t-1",
       probeNonce: "nonce-1",
-      expectedServiceLabel: "ai.traycer.host.fallback",
+      expectedServiceLabel: "ai.hukum.host.fallback",
       readiness: NOT_READY_READINESS,
     });
     expect(verdict).toEqual({ kind: "lock-declined" });
@@ -312,14 +312,14 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
     const verdict = interpretProbeMarker({
       marker: marker({
         attestation: {
-          serviceLabel: "ai.traycer.host.fallback",
+          serviceLabel: "ai.hukum.host.fallback",
           supervisorPid: 5001,
           capturedAt: "2026-07-27T00:00:00.010Z", // captured 10ms after spawn
         },
       }),
       transitionId: "t-1",
       probeNonce: "nonce-1",
-      expectedServiceLabel: "ai.traycer.host.fallback",
+      expectedServiceLabel: "ai.hukum.host.fallback",
       readiness: NOT_READY_READINESS,
     });
     expect(verdict).toEqual({ kind: "lock-declined" });
@@ -332,7 +332,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
       }),
       transitionId: "t-1",
       probeNonce: "nonce-1",
-      expectedServiceLabel: "ai.traycer.host.fallback",
+      expectedServiceLabel: "ai.hukum.host.fallback",
       readiness: NOT_READY_READINESS,
     });
     expect(verdict).toEqual({ kind: "terminal", reason: "probe-spawn-failed" });
@@ -355,7 +355,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
       }),
       transitionId: "t-1",
       probeNonce: "nonce-1",
-      expectedServiceLabel: "ai.traycer.host.fallback",
+      expectedServiceLabel: "ai.hukum.host.fallback",
       readiness: NOT_READY_READINESS,
     });
     expect(verdict).toEqual({
@@ -382,7 +382,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
         }),
         transitionId: "t-1",
         probeNonce: "nonce-1",
-        expectedServiceLabel: "ai.traycer.host.fallback",
+        expectedServiceLabel: "ai.hukum.host.fallback",
         readiness: { kind: "ready", attemptId: "attempt-1" },
       });
       expect(verdict).toEqual({ kind: "became-ready" });
@@ -399,7 +399,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
         }),
         transitionId: "t-1",
         probeNonce: "nonce-1",
-        expectedServiceLabel: "ai.traycer.host.fallback",
+        expectedServiceLabel: "ai.hukum.host.fallback",
         readiness: { kind: "ready", attemptId: "attempt-OTHER" },
       });
       expect(verdict).toEqual({
@@ -419,7 +419,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
         }),
         transitionId: "t-1",
         probeNonce: "nonce-1",
-        expectedServiceLabel: "ai.traycer.host.fallback",
+        expectedServiceLabel: "ai.hukum.host.fallback",
         readiness: { kind: "indeterminate", attemptId: null },
       });
       expect(verdict).toEqual({
@@ -439,7 +439,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
         }),
         transitionId: "t-1",
         probeNonce: "nonce-1",
-        expectedServiceLabel: "ai.traycer.host.fallback",
+        expectedServiceLabel: "ai.hukum.host.fallback",
         readiness: NOT_READY_READINESS,
       });
       expect(verdict).toEqual({
@@ -463,7 +463,7 @@ describe("interpretProbeMarker — correlation, attestation, and never-evict ind
         marker: marker({ transitionId: "other" }),
         transitionId: "t-1",
         probeNonce: "nonce-1",
-        expectedServiceLabel: "ai.traycer.host.fallback",
+        expectedServiceLabel: "ai.hukum.host.fallback",
         readiness: NOT_READY_READINESS,
       }),
     ];

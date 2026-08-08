@@ -2114,7 +2114,7 @@ function SidebarBulkSelectionActions() {
       artifacts: selectedArtifacts,
       format,
       archive: true,
-      archiveTitle: meta?.epicLight?.title ?? "Traycer",
+      archiveTitle: meta?.epicLight?.title ?? "Hukum",
     });
   };
   return (

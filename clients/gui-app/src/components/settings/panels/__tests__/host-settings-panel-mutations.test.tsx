@@ -25,9 +25,9 @@ import type {
   IRunnerHost,
   LocalHostSnapshot,
   MutationOutcome,
-} from "@traycer-clients/shared/platform/runner-host";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum-clients/shared/platform/runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import type { HostScope } from "@/components/settings/host-scope/use-host-scope";
 
@@ -911,7 +911,7 @@ function makeManagement(
     restartHost:
       overrides.restartHost ??
       vi.fn(() => Promise.resolve({ kind: "restarted" as const })),
-    uninstallTraycer: vi.fn(notImplemented("uninstallTraycer")),
+    uninstallHukum: vi.fn(notImplemented("uninstallHukum")),
     getRemovalState: vi.fn(() => Promise.resolve({ removedByUser: false })),
     clearRemoval: vi.fn(() => Promise.resolve()),
     getHostLogs: vi.fn(() => Promise.resolve({ path: null, tail: "" })),
@@ -1024,7 +1024,7 @@ function makeInstalledRecord(version: string): HostInstalledRecord {
   return {
     version,
     installedAt: "2026-05-10T00:00:00Z",
-    executablePath: `/tmp/traycer/${version}/host`,
+    executablePath: `/tmp/hukum/${version}/host`,
     source: { kind: "registry", value: version },
     archiveSha256: "abc",
     signatureKeyId: "key",
@@ -1046,7 +1046,7 @@ function makeHost(
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const proto = Object.getPrototypeOf(host) as object;
   return Object.assign(Object.create(proto) as IRunnerHost, host, {

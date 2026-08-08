@@ -2,7 +2,7 @@ import type {
   WorkspaceFileMentionSuggestion,
   WorkspaceFolderMentionSuggestion,
   WorkspaceSearchPathResult,
-} from "@traycer/protocol/host/workspace/unary-schemas";
+} from "@hukum/protocol/host/workspace/unary-schemas";
 import { dirnameOfPath } from "@/lib/path";
 
 /**

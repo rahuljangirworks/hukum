@@ -146,7 +146,7 @@ export function registerWindowsIpc(bridge: RunnerIpcBridge): void {
  * durable per-window restore snapshot (open epic tabs, pane layout, drafts).
  *
  * Preserve when the close is really a quit/leave gesture:
- *  - `quitting` - the shell has begun quitting (Cmd+Q / "Quit Traycer" / the
+ *  - `quitting` - the shell has begun quitting (Cmd+Q / "Quit Hukum" / the
  *    auto-update install re-quit). During quit no close should destroy state,
  *    so ALL closing windows are preserved regardless of how many remain.
  *  - `remainingWindowCount === 0` - this was the last remaining window. On

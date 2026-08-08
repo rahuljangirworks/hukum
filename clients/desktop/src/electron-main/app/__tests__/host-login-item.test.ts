@@ -43,7 +43,7 @@ beforeAll(() => {
     "resourcesPath",
   );
   Object.defineProperty(process, "resourcesPath", {
-    value: "/tmp/traycer-test/Contents/Resources",
+    value: "/tmp/hukum-test/Contents/Resources",
     writable: true,
     configurable: true,
   });
@@ -116,11 +116,11 @@ vi.mock("../../host/host-removal-state", () => ({
 // `process.env.HOME` override, which only holds when the runtime consults
 // $HOME - node's `os.homedir()` does, Bun's does NOT - so a Bun-driven run
 // of this suite would have pointed `registerHostLoginItem`'s real `rm` at
-// the developer's actual `~/.traycer` marker. Mock the layout seam itself
+// the developer's actual `~/.hukum` marker. Mock the layout seam itself
 // so no runtime's homedir semantics are in the trust chain at all.
 // `userLaunchAgentPlistPath` gets the same treatment for the same reason:
 // the register cycle's legacy-manifest cleanup would otherwise `rm` the
-// invoking user's REAL `~/Library/LaunchAgents/ai.traycer.host.plist`.
+// invoking user's REAL `~/Library/LaunchAgents/ai.hukum.host.plist`.
 // `labelForEnvironment` / `smAppServiceAgentLabelId` (module-init time)
 // stay real.
 vi.mock("../../host/host-paths", async (importOriginal) => {
@@ -179,22 +179,22 @@ const {
 // above). The layout is mocked (see the `host-paths` vi.mock rationale) to
 // resolve under this per-test temp dir, so the real marker-file assertions
 // below (and `registerHostLoginItem`'s real `rm` call) can never touch the
-// invoking user's actual `~/.traycer` under ANY runtime.
+// invoking user's actual `~/.hukum` under ANY runtime.
 let workHome: string;
 
 function pendingRevisionMarkerPath(): string {
-  return join(workHome, ".traycer", "host", "pending-login-item-revision.json");
+  return join(workHome, ".hukum", "host", "pending-login-item-revision.json");
 }
 
 // Sandboxed stand-in for `userLaunchAgentPlistPath` (see the host-paths
 // vi.mock rationale). The register cycle's legacy cleanup targets the CLI
-// label (`ai.traycer.host` under the mocked "production" config).
+// label (`ai.hukum.host` under the mocked "production" config).
 function testUserLaunchAgentPlistPath(labelId: string): string {
   return join(workHome, "Library", "LaunchAgents", `${labelId}.plist`);
 }
 
 function legacyCliManifestPath(): string {
-  return testUserLaunchAgentPlistPath("ai.traycer.host");
+  return testUserLaunchAgentPlistPath("ai.hukum.host");
 }
 
 function writeLegacyCliManifest(): void {
@@ -211,7 +211,7 @@ function buildTestHostFsLayout(environment: string): {
   pendingLoginItemRevisionFile: string;
   environment: string;
 } {
-  const rootDir = join(workHome, ".traycer", "host");
+  const rootDir = join(workHome, ".hukum", "host");
   return {
     rootDir,
     pidMetadataFile: join(rootDir, "pid.json"),
@@ -224,7 +224,7 @@ function buildTestHostFsLayout(environment: string): {
 }
 
 function writePendingRevisionMarker(): void {
-  const dir = join(workHome, ".traycer", "host");
+  const dir = join(workHome, ".hukum", "host");
   mkdirSync(dir, { recursive: true });
   writeFileSync(
     pendingRevisionMarkerPath(),
@@ -243,7 +243,7 @@ beforeEach(() => {
   setLoginItemSettings.mockReset();
   getLoginItemSettings.mockReset();
   isHostRemovedByUserMock.mockReset().mockResolvedValue(false);
-  workHome = mkdtempSync(join(tmpdir(), "traycer-host-login-item-"));
+  workHome = mkdtempSync(join(tmpdir(), "hukum-host-login-item-"));
 });
 
 afterEach(() => {
@@ -266,16 +266,16 @@ describe("registerHostLoginItem", () => {
     // records on upgraded machines.
     expect(setLoginItemSettings.mock.calls[0]?.[0]).toMatchObject({
       openAtLogin: false,
-      serviceName: "ai.traycer.host.plist",
+      serviceName: "ai.hukum.host.plist",
     });
     // Step 5: unregister → register pair, agent serviceName only.
     expect(setLoginItemSettings.mock.calls[1]?.[0]).toMatchObject({
       openAtLogin: false,
-      serviceName: "ai.traycer.host.agent.plist",
+      serviceName: "ai.hukum.host.agent.plist",
     });
     expect(setLoginItemSettings.mock.calls[2]?.[0]).toMatchObject({
       openAtLogin: true,
-      serviceName: "ai.traycer.host.agent.plist",
+      serviceName: "ai.hukum.host.agent.plist",
     });
     expect(status).toBe("enabled");
   });
@@ -348,7 +348,7 @@ describe("registerHostLoginItem", () => {
   it("refuses the whole cycle with `removed-by-user` when the removal sentinel is set - no SMAppService mutation runs and the legacy manifest stays intact", async () => {
     // The sentinel is re-read inside the locked section, so a register that
     // queued behind an uninstall's unregister sees the removal and cannot
-    // re-create the BTM login item ("Remove Traycer" must stay removed).
+    // re-create the BTM login item ("Remove Hukum" must stay removed).
     writeLegacyCliManifest();
     isHostRemovedByUserMock.mockResolvedValue(true);
 
@@ -411,13 +411,13 @@ describe("runLaunchctlBootout", () => {
       fake.fireExit();
     });
 
-    await runLaunchctlBootout("gui/501/ai.traycer.host.staging", spawnFn);
+    await runLaunchctlBootout("gui/501/ai.hukum.host.staging", spawnFn);
 
     expect(spawnFn).toHaveBeenCalledOnce();
     expect(spawnFn.mock.calls[0]?.[0]).toBe("/bin/launchctl");
     expect(spawnFn.mock.calls[0]?.[1]).toEqual([
       "bootout",
-      "gui/501/ai.traycer.host.staging",
+      "gui/501/ai.hukum.host.staging",
     ]);
     expect(spawnFn.mock.calls[0]?.[2]).toEqual({ stdio: "ignore" });
   });
@@ -593,7 +593,7 @@ describe("hasUnappliedPendingLoginItemRevision (M-B)", () => {
 
   it("treats a marker whose clear FAILED as already-applied, but re-arms for a newer revision", async () => {
     writePendingRevisionMarker();
-    const markerDir = join(workHome, ".traycer", "host");
+    const markerDir = join(workHome, ".hukum", "host");
     // A read-only parent dir makes the marker's `rm` (and only that) fail, so
     // the register cycle applies the revision but leaves the marker on disk -
     // the exact best-effort-clear-failed condition M-B guards.
@@ -637,7 +637,7 @@ describe("retireCompetingCliRegistrationAtLaunch", () => {
     overrideAgentPrintRunnerForTests(async () => ({
       exitCode: 0,
       stdout: [
-        "gui/501/ai.traycer.host.agent = {",
+        "gui/501/ai.hukum.host.agent = {",
         "\tactive count = 1",
         "\tpath = (submitted by smd.516)",
         "\ttype = Submitted",
@@ -661,20 +661,20 @@ describe("retireCompetingCliRegistrationAtLaunch", () => {
     // fixed path, so `hostManagesHostLoginItem`'s in-bundle plist probe is
     // hermetic per test.
     Object.defineProperty(process, "resourcesPath", {
-      value: join(workHome, "Traycer.app", "Contents", "Resources"),
+      value: join(workHome, "Hukum.app", "Contents", "Resources"),
       writable: true,
       configurable: true,
     });
     const bundleAgents = join(
       workHome,
-      "Traycer.app",
+      "Hukum.app",
       "Contents",
       "Library",
       "LaunchAgents",
     );
     mkdirSync(bundleAgents, { recursive: true });
     writeFileSync(
-      join(bundleAgents, "ai.traycer.host.agent.plist"),
+      join(bundleAgents, "ai.hukum.host.agent.plist"),
       "<plist/>",
       "utf8",
     );
@@ -734,7 +734,7 @@ describe("retireCompetingCliRegistrationAtLaunch", () => {
     overrideAgentPrintRunnerForTests(async () => ({
       exitCode: 0,
       stdout: [
-        "gui/501/ai.traycer.host.agent = {",
+        "gui/501/ai.hukum.host.agent = {",
         "\tactive count = 0",
         "\tpath = (submitted by smd.516)",
         "\ttype = Submitted",
@@ -823,7 +823,7 @@ describe("retireCompetingCliRegistrationAtLaunch", () => {
   // The gate that keeps this off every non-packaged build. Without it a dev
   // build - or any run outside an .app bundle, including this very test
   // suite - would delete the developer's REAL
-  // `~/Library/LaunchAgents/ai.traycer.host.plist` and deregister their
+  // `~/Library/LaunchAgents/ai.hukum.host.plist` and deregister their
   // running host. Every other test here stages a valid bundle, so this is
   // the only place the gate is exercised.
   it("never runs on a build that does not own registration", async () => {
@@ -831,11 +831,11 @@ describe("retireCompetingCliRegistrationAtLaunch", () => {
     rmSync(
       join(
         workHome,
-        "Traycer.app",
+        "Hukum.app",
         "Contents",
         "Library",
         "LaunchAgents",
-        "ai.traycer.host.agent.plist",
+        "ai.hukum.host.agent.plist",
       ),
       { force: true },
     );

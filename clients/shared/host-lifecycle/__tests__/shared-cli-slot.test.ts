@@ -5,8 +5,8 @@ import type { CliSlotProbeInput } from "../shared/cli-slot";
 const BASE: CliSlotProbeInput = {
   slotExists: true,
   isLinkOrFile: true,
-  resolvedTarget: "/opt/traycer/bin/host",
-  expectedTarget: "/opt/traycer/bin/host",
+  resolvedTarget: "/opt/hukum/bin/host",
+  expectedTarget: "/opt/hukum/bin/host",
   executable: true,
   invocationAttested: true,
   probeError: null,

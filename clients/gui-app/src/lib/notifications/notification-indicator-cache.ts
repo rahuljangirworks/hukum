@@ -1,6 +1,6 @@
 import type { QueryClient, QueryFilters } from "@tanstack/react-query";
-import type { HostNotificationsEntityRef } from "@traycer/protocol/host/notifications/contracts";
-import type { HostNotificationsIndicatorStateRequest } from "@traycer/protocol/host/notifications/contracts";
+import type { HostNotificationsEntityRef } from "@hukum/protocol/host/notifications/contracts";
+import type { HostNotificationsIndicatorStateRequest } from "@hukum/protocol/host/notifications/contracts";
 import { notificationsQueryKeys } from "@/lib/query-keys";
 
 export interface NotificationIndicatorReadCanceller {

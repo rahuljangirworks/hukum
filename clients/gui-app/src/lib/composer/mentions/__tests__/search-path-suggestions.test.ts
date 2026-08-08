@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { WorkspaceSearchPathResult } from "@traycer/protocol/host/workspace/unary-schemas";
+import type { WorkspaceSearchPathResult } from "@hukum/protocol/host/workspace/unary-schemas";
 import {
   fileSuggestionFromSearchResult,
   folderSuggestionFromSearchResult,

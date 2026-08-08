@@ -62,10 +62,10 @@
  * change and would need a new major.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 
-import { getRecordSchema } from "@traycer/protocol/framework/index";
-import { commonRecordRegistry } from "@traycer/protocol/common/registry";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
+import { commonRecordRegistry } from "@hukum/protocol/common/registry";
 
 const permissionRoleSchema = getRecordSchema(
   commonRecordRegistry,
@@ -75,7 +75,7 @@ const permissionRoleSchema = getRecordSchema(
 import {
   earlyMetaEpicSchema,
   snapshotMetaEpicSchema,
-} from "@traycer/protocol/host/epic/snapshot-meta";
+} from "@hukum/protocol/host/epic/snapshot-meta";
 
 export const epicSubscribeOpenRequestSchema = z.object({
   epicId: z.string(),
@@ -292,7 +292,7 @@ const epicSubscribeSharedServerFrameSchemasV10 = [
     kind: z.literal("epicDeleted"),
     epicId: z.string(),
     deletedByDisplayName: z.string().nullable(),
-    deletedByTraycerUserId: z.string().nullable(),
+    deletedByHukumUserId: z.string().nullable(),
     hasBinaryPayload: z.literal(false),
   }),
 ] as const;

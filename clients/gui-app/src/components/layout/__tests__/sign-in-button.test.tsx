@@ -8,9 +8,9 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import type { IHostMessenger } from "@traycer-clients/shared/host-transport/host-messenger";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import type { IHostMessenger } from "@hukum-clients/shared/host-transport/host-messenger";
 import { useEffect } from "react";
 
 vi.mock("sonner", () => ({
@@ -36,13 +36,13 @@ import { useDesktopDialogStore } from "@/stores/dialogs/desktop-dialog-store";
 
 function buildHost(): MockRunnerHost {
   return new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 
@@ -216,9 +216,9 @@ function mountDeviceCodeProgress(host: MockRunnerHost): () => void {
             isHero
             progress={{
               userCode: "ABCDE-FGHIJ",
-              verificationUri: "https://app.traycer.ai/device",
+              verificationUri: "https://app.hukum.ai/device",
               verificationUriComplete:
-                "https://app.traycer.ai/device?user_code=ABCDE-FGHIJ",
+                "https://app.hukum.ai/device?user_code=ABCDE-FGHIJ",
               expiresAtMs: 0,
               phase: "waiting-approval",
             }}
@@ -353,7 +353,7 @@ describe("<SignInButton />", () => {
       expect(result.host.deviceFlow.startCalls).toBe(startCallsBeforeRetry + 1);
       expect(
         result.host.openedExternalLinks.some((url) =>
-          url.startsWith("https://app.traycer.ai/device"),
+          url.startsWith("https://app.hukum.ai/device"),
         ),
       ).toBe(true);
     });
@@ -487,8 +487,8 @@ describe("<SignInButton />", () => {
     ).toBe("true");
     const code = await screen.findByText("ABCDE-FGHIJ");
     expect(code.textContent).toBe("ABCDE-FGHIJ");
-    expect(screen.getByText("https://app.traycer.ai/device").textContent).toBe(
-      "https://app.traycer.ai/device",
+    expect(screen.getByText("https://app.hukum.ai/device").textContent).toBe(
+      "https://app.hukum.ai/device",
     );
     const writeText = vi.fn(() => Promise.resolve());
     const previousClipboard = Object.getOwnPropertyDescriptor(
@@ -507,7 +507,7 @@ describe("<SignInButton />", () => {
       );
       await waitFor(() => {
         expect(writeText).toHaveBeenCalledWith("ABCDE-FGHIJ");
-        expect(writeText).toHaveBeenCalledWith("https://app.traycer.ai/device");
+        expect(writeText).toHaveBeenCalledWith("https://app.hukum.ai/device");
       });
       expect(screen.getAllByText("Copied")).toHaveLength(2);
       // There is no device-code fallback link anymore.

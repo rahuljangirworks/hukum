@@ -1,4 +1,4 @@
-import type { PermissionRole } from "@traycer/protocol/host/epic/unary-schemas";
+import type { PermissionRole } from "@hukum/protocol/host/epic/unary-schemas";
 import {
   epicSubscribeServerFrameSchema,
   type EpicArtifactRoomAvailability,
@@ -6,7 +6,7 @@ import {
   type EpicMigrationPhase,
   type EpicSubscribeClientFrame,
   type EpicSubscribeServerFrame,
-} from "@traycer/protocol/host/epic/subscribe";
+} from "@hukum/protocol/host/epic/subscribe";
 
 /**
  * Attribution carried by an `epicDeleted` server frame: who deleted the epic.
@@ -15,7 +15,7 @@ import {
  */
 export interface EpicDeletedAttribution {
   readonly deletedByDisplayName: string | null;
-  readonly deletedByTraycerUserId: string | null;
+  readonly deletedByHukumUserId: string | null;
 }
 
 /**
@@ -29,8 +29,8 @@ export interface EpicArtifactRoomDirtySnapshot {
 import type {
   EarlyMetaEpic,
   SnapshotMetaEpic,
-} from "@traycer/protocol/host/epic/snapshot-meta";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/epic/snapshot-meta";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type {
   IStreamSession,
   StreamCloseReason,
@@ -400,7 +400,7 @@ export class EpicStreamClient {
       case "epicDeleted": {
         this.callbacks.onEpicDeleted({
           deletedByDisplayName: frame.deletedByDisplayName,
-          deletedByTraycerUserId: frame.deletedByTraycerUserId,
+          deletedByHukumUserId: frame.deletedByHukumUserId,
         });
         return;
       }

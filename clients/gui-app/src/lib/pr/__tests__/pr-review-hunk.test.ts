@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import type { PrReviewThread } from "@traycer/protocol/host/pr-schemas";
+import type { PrReviewThread } from "@hukum/protocol/host/pr-schemas";
 import { buildPrReviewHunkPatch } from "@/lib/pr/pr-review-hunk";
 
 /**
@@ -53,20 +53,20 @@ describe("buildPrReviewHunkPatch", () => {
   it("wraps the hunk in the file headers the parser needs", () => {
     const result = buildPrReviewHunkPatch(
       thread({
-        path: "traycer-host/src/domain/pr-detail/gh-sweep-runner.ts",
+        path: "hukum-host/src/domain/pr-detail/gh-sweep-runner.ts",
         diffHunk: "@@ -1,1 +1,2 @@\n ctx\n+added",
       }),
     );
     const patch = result?.patch ?? "";
 
     expect(hunkLine(patch, 0)).toBe(
-      "diff --git a/traycer-host/src/domain/pr-detail/gh-sweep-runner.ts b/traycer-host/src/domain/pr-detail/gh-sweep-runner.ts",
+      "diff --git a/hukum-host/src/domain/pr-detail/gh-sweep-runner.ts b/hukum-host/src/domain/pr-detail/gh-sweep-runner.ts",
     );
     expect(hunkLine(patch, 1)).toBe(
-      "--- a/traycer-host/src/domain/pr-detail/gh-sweep-runner.ts",
+      "--- a/hukum-host/src/domain/pr-detail/gh-sweep-runner.ts",
     );
     expect(hunkLine(patch, 2)).toBe(
-      "+++ b/traycer-host/src/domain/pr-detail/gh-sweep-runner.ts",
+      "+++ b/hukum-host/src/domain/pr-detail/gh-sweep-runner.ts",
     );
     expect(patch.endsWith("+added\n")).toBe(true);
   });

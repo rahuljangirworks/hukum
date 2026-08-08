@@ -206,7 +206,7 @@ describe("startHostHealthMonitor", () => {
     const respawn = vi.fn(async () => {});
     let stopped = false;
     const reload = vi.fn(async () => {
-      stopped = true; // the `traycer host stop` unlink completes here
+      stopped = true; // the `hukum host stop` unlink completes here
       return null;
     });
     const readMetadata = vi.fn(async () => (stopped ? null : SNAPSHOT));
@@ -397,7 +397,7 @@ describe("startHostHealthMonitor", () => {
       respawn,
     });
 
-    // The first attempt is lock-deferred: another Traycer process held the
+    // The first attempt is lock-deferred: another Hukum process held the
     // lock, so the host was never touched and the budget must be refunded -
     // the retry that follows is immediate rather than paced behind a backoff
     // it did not earn.

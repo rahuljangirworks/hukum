@@ -15,7 +15,7 @@
 import { displayTitle } from "@/lib/display-title";
 import { buildArtifactPathIndex } from "@/lib/commands/sources/open/artifact-path-resolver";
 import type { ArtifactsSlice, TreeSlice } from "@/stores/epics/open-epic/types";
-import type { EpicArtifactKind } from "@traycer/protocol/common/registry";
+import type { EpicArtifactKind } from "@hukum/protocol/common/registry";
 
 export interface ArtifactPathEntry {
   readonly id: string;

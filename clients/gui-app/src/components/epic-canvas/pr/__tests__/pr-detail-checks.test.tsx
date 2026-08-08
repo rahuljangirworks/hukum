@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import type {
   PrCheckContext,
   PrChecksSection,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { PrDetailChecks } from "@/components/epic-canvas/pr/pr-detail-sections";
 import { tooltipTextFor } from "@/components/ui/__tests__/tooltip-probe";
 

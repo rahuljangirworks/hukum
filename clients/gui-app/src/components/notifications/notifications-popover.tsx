@@ -15,7 +15,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { BellOff, CheckCheck, Settings, Trash2 } from "lucide-react";
-import type { StreamMethodSupport } from "@traycer-clients/shared/host-transport/ws-stream-client";
+import type { StreamMethodSupport } from "@hukum-clients/shared/host-transport/ws-stream-client";
 import { Button } from "@/components/ui/button";
 import { ConfirmDestructiveDialog } from "@/components/ui/confirm-destructive-dialog";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
@@ -730,7 +730,7 @@ function notificationFeedStatus(input: {
   if (input.feedMode === "upgrade-required") {
     return {
       title: "Notifications unavailable",
-      detail: "Update Traycer to reconnect to your notification feed.",
+      detail: "Update Hukum to reconnect to your notification feed.",
       isPending: false,
     };
   }

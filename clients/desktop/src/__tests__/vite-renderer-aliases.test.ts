@@ -6,10 +6,10 @@ import { fileURLToPath } from "node:url";
 /**
  * Regression guard for `make dev-desktop` startup.
  *
- * The desktop renderer's vite config consumes `@traycer-clients/gui-app` as a
+ * The desktop renderer's vite config consumes `@hukum-clients/gui-app` as a
  * workspace library. `gui-app` reaches into sibling workspaces via bare
- * specifiers (`@traycer/protocol/*`,
- * `@traycer-clients/shared/*`, `@traycer-clients/gui-app/*`) and into its own
+ * specifiers (`@hukum/protocol/*`,
+ * `@hukum-clients/shared/*`, `@hukum-clients/gui-app/*`) and into its own
  * `src/` via the `@/` alias. Vite only resolves these when a matching entry
  * lives in the renderer config's `resolve.alias` block. A missing alias
  * surfaces at dev-server startup as `Failed to run dependency scan ... could
@@ -41,9 +41,9 @@ const VITE_RENDERER_CONFIG = path.resolve(
  */
 const WORKSPACE_SCOPE_PREFIXES = [
   "@/",
-  "@traycerai/",
-  "@traycer/",
-  "@traycer-clients/",
+  "@hukumai/",
+  "@hukum/",
+  "@hukum-clients/",
 ] as const;
 
 async function readText(filePath: string): Promise<string> {
@@ -117,8 +117,8 @@ function extractAliasKeys(viteConfigSource: string): string[] {
 /**
  * Vite matches a string alias against a specifier when
  * `specifier === alias || specifier.startsWith(alias + "/")`. We deliberately
- * sort longest-first so a more specific alias like `@traycer-clients/gui-app`
- * wins over a shorter one like `@traycer-clients/shared` even if both were
+ * sort longest-first so a more specific alias like `@hukum-clients/gui-app`
+ * wins over a shorter one like `@hukum-clients/shared` even if both were
  * viable prefixes.
  */
 function findMatchingAlias(
@@ -142,10 +142,10 @@ describe("vite renderer alias coverage", () => {
     expect(viteConfigSource).toContain('"VITE_APP_"');
     expect(viteConfigSource).toContain('"VITE_DESKTOP_"');
     expect(viteConfigSource).toContain('"VITE_POSTHOG_KEY"');
-    expect(viteConfigSource).toContain('"VITE_TRAYCER_OSS_REPO"');
+    expect(viteConfigSource).toContain('"VITE_HUKUM_OSS_REPO"');
     expect(viteConfigSource).not.toMatch(/["']VITE_["']/);
-    expect(viteConfigSource).not.toContain("VITE_TRAYCER_DESKTOP_UPDATE_REPO");
-    expect(viteConfigSource).not.toContain("VITE_TRAYCER_DESKTOP_UPDATE_TOKEN");
+    expect(viteConfigSource).not.toContain("VITE_HUKUM_DESKTOP_UPDATE_REPO");
+    expect(viteConfigSource).not.toContain("VITE_HUKUM_DESKTOP_UPDATE_TOKEN");
   });
 
   it("aliases every workspace-prefixed specifier reachable from gui-app", async () => {

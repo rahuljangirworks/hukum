@@ -9,11 +9,11 @@ import { z } from "zod";
 import {
   preparedWorkspaceFolderSchema,
   taskRepoIdentifierSchema,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   SEARCH_TEXT_PREVIEW_MAX_BYTES,
   searchTextPreviewRangeSchema,
-} from "@traycer/protocol/host/search-text-preview-schema";
+} from "@hukum/protocol/host/search-text-preview-schema";
 
 export const workspaceMentionGitTypeSchema = z.enum([
   "against_uncommitted_changes",

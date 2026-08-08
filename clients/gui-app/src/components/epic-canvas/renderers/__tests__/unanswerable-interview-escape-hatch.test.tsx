@@ -14,7 +14,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { domAnimation, LazyMotion } from "motion/react";
 import type { ReactElement } from "react";
-import type { InterviewQuestion } from "@traycer/protocol/persistence/epic/schemas";
+import type { InterviewQuestion } from "@hukum/protocol/persistence/epic/schemas";
 
 vi.mock("@/components/chat/composer/chat-composer", () => ({
   ChatComposer: () => <div data-testid="composer-stub" />,

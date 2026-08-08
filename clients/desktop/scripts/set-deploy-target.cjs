@@ -10,7 +10,7 @@
 // script stamps `environment`, `version`, the per-environment app identity
 // (app name / OAuth scheme / AppUserModelId), and the Sentry DSNs - the
 // per-build crash-reporting secrets sourced from the CI env
-// (TRAYCER_DESKTOP_SENTRY_DSN) so they never live in committed source (empty in
+// (HUKUM_DESKTOP_SENTRY_DSN) so they never live in committed source (empty in
 // source / on --restore).
 
 const path = require("node:path");
@@ -18,8 +18,8 @@ const {
   runConfigTargetCli,
 } = require("../../scripts/rewrite-config-target.cjs");
 
-const sentryDsn = process.env.TRAYCER_DESKTOP_SENTRY_DSN ?? "";
-const sentryRendererDsn = process.env.TRAYCER_DESKTOP_SENTRY_RENDERER_DSN ?? "";
+const sentryDsn = process.env.HUKUM_DESKTOP_SENTRY_DSN ?? "";
+const sentryRendererDsn = process.env.HUKUM_DESKTOP_SENTRY_RENDERER_DSN ?? "";
 
 runConfigTargetCli({
   sourcePath: path.resolve(__dirname, "..", "src", "config.ts"),
@@ -28,16 +28,16 @@ runConfigTargetCli({
     // lock, the OAuth scheme, and the Windows AppUserModelId). Source holds the
     // dev values; a production build stamps the shipped identity.
     appName: {
-      dev: "Traycer Dev",
-      production: "Traycer",
+      dev: "Hukum Dev",
+      production: "Hukum",
     },
     protocolScheme: {
-      dev: "traycer-dev",
-      production: "traycer",
+      dev: "hukum-dev",
+      production: "hukum",
     },
     appId: {
-      dev: "ai.traycer.desktop",
-      production: "ai.traycer.desktop",
+      dev: "ai.hukum.desktop",
+      production: "ai.hukum.desktop",
     },
     sentryDsn: {
       dev: "",

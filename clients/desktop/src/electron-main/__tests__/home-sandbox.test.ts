@@ -7,8 +7,8 @@ import { sandboxHome } from "./sandbox-home";
 // Pins the contract of vitest.setup.ts + sandboxHome(): the suite's notion
 // of "home" must be impossible to point at the real `~` - on ANY runtime.
 // The escape this closes wrote the `cli-bytes-v2` fixture into the real
-// `~/.traycer/cli/bin/traycer` (a dead CLI in the field on v1.1.9-rc.3)
-// and "Studio Mac" into the real `~/.traycer/host/host-name.json`, because
+// `~/.hukum/cli/bin/hukum` (a dead CLI in the field on v1.1.9-rc.3)
+// and "Studio Mac" into the real `~/.hukum/host/host-name.json`, because
 // Bun's `os.homedir()` ignores a mid-process `process.env.HOME` mutation
 // while Node's follows it.
 
@@ -33,7 +33,7 @@ describe("home sandbox (vitest.setup.ts + sandboxHome)", () => {
     // The setup file must have redirected home before this file loaded, so
     // even a suite that never touches HOME (or writes through electron-log)
     // resolves a sandbox, never the real user home.
-    expect(homedir()).toContain("traycer-desktop-tests-home-");
+    expect(homedir()).toContain("hukum-desktop-tests-home-");
   });
 
   it("homedir() follows a mid-test sandboxHome() redirect on every runtime", () => {
@@ -67,12 +67,12 @@ describe("home sandbox (vitest.setup.ts + sandboxHome)", () => {
 
   it("electron-log's file transport resolves under the sandbox, not the real user log", async () => {
     // The Jul 2026 pollution vector: suites importing the real electron-log
-    // appended their error stacks to the REAL ~/Library/Logs/Traycer/
+    // appended their error stacks to the REAL ~/Library/Logs/Hukum/
     // main.log, because its file transport finds "home" via require("os")
     // .homedir(). With the setup baseline in place it must land in the
     // sandbox.
     const log = (await import("electron-log")).default;
     const file = log.transports.file.getFile();
-    expect(file.path).toContain("traycer-desktop-tests-home-");
+    expect(file.path).toContain("hukum-desktop-tests-home-");
   });
 });

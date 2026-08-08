@@ -3,9 +3,9 @@ import type {
   EpicMentionSuggestion,
   WorkspaceMentionGitType,
   WorkspaceMentionSuggestion,
-} from "@traycer/protocol/host/index";
-import type { EpicArtifactKind } from "@traycer/protocol/common/registry";
-import type { TuiHarnessId } from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/host/index";
+import type { EpicArtifactKind } from "@hukum/protocol/common/registry";
+import type { TuiHarnessId } from "@hukum/protocol/persistence/epic/schemas";
 import type { MentionPathTree } from "@/lib/path";
 
 export type PathKind = "file" | "folder";

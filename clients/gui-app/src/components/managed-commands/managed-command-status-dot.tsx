@@ -2,7 +2,7 @@ import {
   managedCommandStatusLabel,
   managedCommandStatusTone,
 } from "@/lib/managed-commands/managed-command-copy";
-import type { ManagedCommandStatus } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommandStatus } from "@hukum/protocol/host/managed-command/unary-schemas";
 import { cn } from "@/lib/utils";
 
 const TONE_CLASS = {

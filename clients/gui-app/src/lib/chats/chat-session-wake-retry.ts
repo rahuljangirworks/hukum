@@ -5,7 +5,7 @@ import {
   type WakeSignalReason,
 } from "@/lib/host/stream-wake-reconnect";
 import { onWakeReconnect } from "@/lib/host/wake-reconnect";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import { appLogger, describeLogError } from "@/lib/logger";
 
 /**

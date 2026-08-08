@@ -14,7 +14,7 @@
  * `launchTarget` unifies both paths so callers only ever handle one shape.
  */
 import { useCallback, useMemo, useRef, useState, type ReactNode } from "react";
-import type { WorktreeBindingSelectorRowV12 } from "@traycer/protocol/host";
+import type { WorktreeBindingSelectorRowV12 } from "@hukum/protocol/host";
 import { Button } from "@/components/ui/button";
 import { ReportIssueAction } from "@/components/report-issue/report-issue-action";
 import { createReportIssueContext } from "@/lib/report-issue-context";

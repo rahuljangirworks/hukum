@@ -158,11 +158,11 @@ describe("buildLinuxUpdateGuidance", () => {
     const result = guidance.buildLinuxUpdateGuidance(
       "deb",
       "1.2.0",
-      "/home/user/.cache/traycer-updater/pending/traycer.deb",
+      "/home/user/.cache/hukum-updater/pending/hukum.deb",
     );
 
     expect(result.command).toBe(
-      'sudo dpkg -i "/home/user/.cache/traycer-updater/pending/traycer.deb"',
+      'sudo dpkg -i "/home/user/.cache/hukum-updater/pending/hukum.deb"',
     );
     expect(result.summary).toContain("v1.2.0");
   });
@@ -176,11 +176,11 @@ describe("buildLinuxUpdateGuidance", () => {
     const result = guidance.buildLinuxUpdateGuidance(
       "rpm",
       "1.2.0",
-      "/home/user/.cache/traycer-updater/pending/traycer.rpm",
+      "/home/user/.cache/hukum-updater/pending/hukum.rpm",
     );
 
     expect(result.command).toBe(
-      'sudo rpm -U "/home/user/.cache/traycer-updater/pending/traycer.rpm"',
+      'sudo rpm -U "/home/user/.cache/hukum-updater/pending/hukum.rpm"',
     );
   });
 
@@ -250,7 +250,7 @@ async function loadGuidance(opts: {
   vi.resetModules();
   Object.defineProperty(process, "resourcesPath", {
     configurable: true,
-    value: "/tmp/traycer-test-resources",
+    value: "/tmp/hukum-test-resources",
     writable: true,
   });
 

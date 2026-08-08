@@ -22,7 +22,7 @@ function readAppLifecycleQuit(): (() => Promise<void>) | null {
 }
 
 /**
- * Quit the desktop app (the removed surface's "Quit Traycer" button). Routes
+ * Quit the desktop app (the removed surface's "Quit Hukum" button). Routes
  * through Electron's normal `before-quit` flow. Falls back to closing the
  * current window outside the desktop shell.
  */

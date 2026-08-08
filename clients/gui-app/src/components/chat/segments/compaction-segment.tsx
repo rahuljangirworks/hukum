@@ -2,7 +2,7 @@ import { ChevronDown, ChevronRight, FoldVertical } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
-import { TraycerMarkdown } from "@/markdown";
+import { HukumMarkdown } from "@/markdown";
 
 interface CompactionSegmentProps {
   status: "streaming" | "completed" | "errored";
@@ -140,7 +140,7 @@ export function CompactionSegment(props: CompactionSegmentProps) {
             "rounded-md border border-border/60 bg-muted/30 p-3",
           )}
         >
-          <TraycerMarkdown
+          <HukumMarkdown
             className={null}
             proseSize="compact"
             components={null}
@@ -150,7 +150,7 @@ export function CompactionSegment(props: CompactionSegmentProps) {
             isStreaming={false}
           >
             {summary}
-          </TraycerMarkdown>
+          </HukumMarkdown>
         </div>
       ) : null}
       {error !== null && error.length > 0 ? (

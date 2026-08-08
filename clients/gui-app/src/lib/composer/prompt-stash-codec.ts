@@ -6,7 +6,7 @@
  * module to interpret what a transaction reads; this module never opens a
  * database or a transaction itself.
  */
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { isJsonContent } from "@/lib/editor/prosemirror-json";
 

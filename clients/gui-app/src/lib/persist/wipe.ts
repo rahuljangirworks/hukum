@@ -10,9 +10,9 @@
 //      to clear), then run the authoritative host `clear` RPC. On a shell
 //      without the RPC the drain IS the degraded fallback; in web mode the
 //      caller passes `null` and the flush no-ops.
-//   2. Blanket-prefix sweep    — remove every `traycer-gui-app:`-prefixed key
-//      from BOTH localStorage and sessionStorage. Auth (`traycer.`) and any
-//      non-`traycer-gui-app:` key survive.
+//   2. Blanket-prefix sweep    — remove every `hukum-gui-app:`-prefixed key
+//      from BOTH localStorage and sessionStorage. Auth (`hukum.`) and any
+//      non-`hukum-gui-app:` key survive.
 //   3. Drop renderer dbs       — delete every per-window IndexedDB partition
 //      for pasted image bytes and file-edit recovery drafts, plus the
 //      app-global prompt-stash database, so wiped state doesn't leak stash or
@@ -30,15 +30,15 @@ import { PROMPT_STASH_DB_NAME } from "@/lib/composer/prompt-stash-repository";
 import { publishPromptStashReset } from "@/lib/composer/prompt-stash-channel";
 
 // The `:` boundary is load-bearing: a bare `startsWith(PERSIST_PREFIX)` would
-// also sweep a hypothetical `traycer-gui-appX:foo` key. Anchoring on the colon
-// keeps the sweep to exactly the `traycer-gui-app:` namespace.
+// also sweep a hypothetical `hukum-gui-appX:foo` key. Anchoring on the colon
+// keeps the sweep to exactly the `hukum-gui-app:` namespace.
 const PERSIST_KEY_BOUNDARY = `${PERSIST_PREFIX}:`;
 
 // Landing-image IndexedDB databases are named
-// `traycer-gui-app:<partition>:landing-images` (one per runtime partition —
+// `hukum-gui-app:<partition>:landing-images` (one per runtime partition —
 // `landingImagePartition()` in `lib/composer/landing-image-store.ts`). The
 // suffix below pins the db namespace so the wipe only drops image partitions,
-// never any other future `traycer-gui-app:`-prefixed db.
+// never any other future `hukum-gui-app:`-prefixed db.
 const LANDING_IMAGE_DB_SUFFIX = ":landing-images";
 const PROMPT_STASH_DB_SUFFIX = ":prompt-stash";
 const RENDERER_DB_SUFFIXES = [

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { fileEditReasonSchema } from "@traycer/protocol/persistence/epic/content-blocks";
+import { fileEditReasonSchema } from "@hukum/protocol/persistence/epic/content-blocks";
 
 export const snapshotsGetLocalStorageSizeRequestSchema = z.object({});
 export const snapshotsGetLocalStorageSizeResponseSchema = z.object({

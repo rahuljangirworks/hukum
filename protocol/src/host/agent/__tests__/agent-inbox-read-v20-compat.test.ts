@@ -6,7 +6,7 @@ import {
   agentInboxReadResponseSchemaV20,
   agentInboxReadDowngradeV20ToV10,
   agentInboxReadUpgradeV10ToV20,
-} from "@traycer/protocol/host/agent/inbox";
+} from "@hukum/protocol/host/agent/inbox";
 
 describe("agent.inbox.read v2.0 compatibility", () => {
   it("keeps the released v1.0 request and response shapes frozen", () => {

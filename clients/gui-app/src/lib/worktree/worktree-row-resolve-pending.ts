@@ -1,4 +1,4 @@
-import type { WorktreeBindingSelectorRowV12 } from "@traycer/protocol/host";
+import type { WorktreeBindingSelectorRowV12 } from "@hukum/protocol/host";
 
 /**
  * Whether a binding row's git-eligibility is an unverified placeholder the

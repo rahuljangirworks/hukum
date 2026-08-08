@@ -1,6 +1,6 @@
 import { useStore } from "zustand";
 import { useEffect, useRef } from "react";
-import type { TerminalSessionExitReason } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { TerminalSessionExitReason } from "@hukum/protocol/host/terminal/unary-schemas";
 import type {
   TerminalLifecycleStatus,
   TerminalSessionStoreHandle,

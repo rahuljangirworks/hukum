@@ -196,7 +196,7 @@ const SPEC_B: EpicNodeRef = {
 };
 
 function storageKey(windowId: string): string {
-  return `traycer-gui-app:last-route:${windowId}`;
+  return `hukum-gui-app:last-route:${windowId}`;
 }
 
 // Seed a multi-entry persistent (branded) stack via localStorage so the history

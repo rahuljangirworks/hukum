@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { FileWarning, Trash2 } from "lucide-react";
-import type { ProviderSkill } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderSkill } from "@hukum/protocol/host/provider-native-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +14,7 @@ import {
 import { StartTruncatedText } from "@/components/ui/start-truncated-text";
 import { useWorkspaceReadFile } from "@/hooks/workspace/use-read-file-query";
 import { useHostClient } from "@/lib/host";
-import { TraycerMarkdown } from "@/markdown";
+import { HukumMarkdown } from "@/markdown";
 import { cn } from "@/lib/utils";
 import {
   SKILL_ENTRY_FILE,
@@ -203,7 +203,7 @@ function SkillBody(props: {
           This skill has frontmatter but no instructions.
         </p>
       ) : (
-        <TraycerMarkdown
+        <HukumMarkdown
           className={null}
           proseSize="normal"
           components={null}
@@ -213,7 +213,7 @@ function SkillBody(props: {
           isStreaming={false}
         >
           {body}
-        </TraycerMarkdown>
+        </HukumMarkdown>
       )}
     </>
   );

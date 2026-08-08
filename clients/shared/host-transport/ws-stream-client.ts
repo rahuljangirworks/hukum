@@ -2,26 +2,26 @@ import type {
   SchemaVersion,
   StreamMethodVersionRegistry,
   VersionedStreamRpcRegistry,
-} from "@traycer/protocol/framework/versioned-stream-rpc";
+} from "@hukum/protocol/framework/versioned-stream-rpc";
 import {
   buildStreamManifest,
   checkStreamMethodCompatibility,
-} from "@traycer/protocol/framework/stream-compat";
+} from "@hukum/protocol/framework/stream-compat";
 import {
   extractBearerForOpenFrame,
   MissingBearerTokenForOpenFrameError,
   type HostEndpointProvider,
 } from "./ws-rpc-client";
-import type { BearerSourceProvider } from "@traycer-clients/shared/auth/bearer-source";
-import { readAccessTokenExpiryMs } from "@traycer-clients/shared/auth/jwt-exp";
+import type { BearerSourceProvider } from "@hukum-clients/shared/auth/bearer-source";
+import { readAccessTokenExpiryMs } from "@hukum-clients/shared/auth/jwt-exp";
 import type {
   RevalidateOutcome,
   StreamAuthRevalidator,
-} from "@traycer-clients/shared/auth/bearer-revalidator";
+} from "@hukum-clients/shared/auth/bearer-revalidator";
 import type {
   ConnectionManifest,
   FatalErrorDetails,
-} from "@traycer/protocol/framework/ws-protocol";
+} from "@hukum/protocol/framework/ws-protocol";
 import {
   hostStreamOpenAckFrameSchema,
   hostStreamFatalErrorFrameSchema,
@@ -35,7 +35,7 @@ import {
   type ClientStreamCredentialUpdateFrame,
   type ClientStreamHostCredentialProvisionFrame,
   type HostCredentialState,
-} from "@traycer/protocol/framework/stream-ws-protocol";
+} from "@hukum/protocol/framework/stream-ws-protocol";
 import type {
   HostCredentialMintFlow,
   HostCredentialMintOutcome,
@@ -1449,7 +1449,7 @@ class StreamSession<
     // AFTER it as fatalError frames, and resetting the loop counters on every
     // ack made both the reconnect backoff and the UNAUTHORIZED give-up bound
     // unreachable for a host that acks then fails - an unbounded floor-delay
-    // loop that hammers authn each lap (int #4781, field: traycer#892). The
+    // loop that hammers authn each lap (int #4781, field: hukum#892). The
     // counters reset on the first delivered APPLICATION frame instead - the
     // proof the stream is actually usable (see `emitServerFrame`) - or after
     // a sustained-subscription dwell for streams with nothing to say (see

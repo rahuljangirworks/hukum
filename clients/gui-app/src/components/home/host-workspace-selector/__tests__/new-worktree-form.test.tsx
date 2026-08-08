@@ -11,7 +11,7 @@ import { StrictMode, useState, type Key, type ReactNode } from "react";
 import type {
   WorktreeFolderIntent,
   WorktreeWorkspaceSummary,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import * as worktreeBranchSearch from "@/components/home/data/worktree-branch-search";
 import * as worktreeBranchPickerOptions from "@/components/home/worktree/worktree-branch-picker-options";
@@ -283,7 +283,7 @@ function renderFormWithSummary(
         isPrimary
         summary={summary}
         currentIntent={stagedIntent}
-        defaultNewBranchName="traycer/swift-otter"
+        defaultNewBranchName="hukum/swift-otter"
         onEmit={(intent) => {
           onEmit(intent);
           setStagedIntent(intent);
@@ -534,7 +534,7 @@ describe("NewWorktreeForm — new-branch name", () => {
     renderForm((intent) => emitted.push(intent), null);
     // Working tree is the default source → name prefilled with the generated
     // default and the placeholder reads "required".
-    expect(screen.getByDisplayValue("traycer/swift-otter")).toBeTruthy();
+    expect(screen.getByDisplayValue("hukum/swift-otter")).toBeTruthy();
     expect(
       screen
         .getByTestId("new-worktree-branch-name")
@@ -557,7 +557,7 @@ describe("NewWorktreeForm — new-branch name", () => {
         isPrimary: true,
         branch: {
           type: "new",
-          name: "traycer/swift-otter",
+          name: "hukum/swift-otter",
           source: "development",
           carryUncommittedChanges: false,
           collision: "random",
@@ -688,7 +688,7 @@ describe("NewWorktreeForm — new-branch name", () => {
     renderForm((intent) => emitted.push(intent), null);
     // A dirty tree exposes "Working tree · development" above the clean fork.
     await selectSource("Working tree · development");
-    expect(screen.getByDisplayValue("traycer/swift-otter")).toBeTruthy();
+    expect(screen.getByDisplayValue("hukum/swift-otter")).toBeTruthy();
     flushAutosave();
     expect(emitted).toEqual([
       {
@@ -699,7 +699,7 @@ describe("NewWorktreeForm — new-branch name", () => {
         isPrimary: true,
         branch: {
           type: "new",
-          name: "traycer/swift-otter",
+          name: "hukum/swift-otter",
           source: "development",
           carryUncommittedChanges: true,
           collision: "random",
@@ -727,7 +727,7 @@ describe("NewWorktreeForm — new-branch name", () => {
         isPrimary: true,
         branch: {
           type: "new",
-          name: "traycer/swift-otter",
+          name: "hukum/swift-otter",
           source: "development",
           carryUncommittedChanges: false,
           collision: "random",
@@ -750,7 +750,7 @@ describe("NewWorktreeForm — new-branch name", () => {
     await selectSource("origin/release-9");
     const name = screen.getByTestId("new-worktree-branch-name");
     expect((name as HTMLInputElement).value).toBe("release-9");
-    expect(screen.queryByDisplayValue("traycer/swift-otter")).toBeNull();
+    expect(screen.queryByDisplayValue("hukum/swift-otter")).toBeNull();
 
     flushAutosave();
     expect(emitted).toEqual([
@@ -882,7 +882,7 @@ describe("NewWorktreeForm — new-branch name", () => {
     renderForm((intent) => emitted.push(intent), null);
     await selectSource("chore/cleanup");
     const name = screen.getByTestId("new-worktree-branch-name");
-    expect((name as HTMLInputElement).value).toBe("traycer/swift-otter");
+    expect((name as HTMLInputElement).value).toBe("hukum/swift-otter");
     expect(name.getAttribute("placeholder")).toBe("New branch name (required)");
     expect(screen.getByTestId("new-worktree-save-status").textContent).toBe(
       "Saving…",
@@ -897,7 +897,7 @@ describe("NewWorktreeForm — new-branch name", () => {
         isPrimary: true,
         branch: {
           type: "new",
-          name: "traycer/swift-otter",
+          name: "hukum/swift-otter",
           source: "chore/cleanup",
           carryUncommittedChanges: false,
           collision: "random",
@@ -995,7 +995,7 @@ describe("NewWorktreeForm — new-branch name", () => {
         isPrimary: true,
         branch: {
           type: "new",
-          name: "traycer/swift-otter",
+          name: "hukum/swift-otter",
           source: "existing_branch_1",
           carryUncommittedChanges: false,
           collision: "random",
@@ -1030,7 +1030,7 @@ describe("NewWorktreeForm — new-branch name", () => {
         isPrimary: true,
         branch: {
           type: "new",
-          name: "traycer/swift-otter",
+          name: "hukum/swift-otter",
           source: "chore/cleanup",
           carryUncommittedChanges: false,
           collision: "random",
@@ -1094,7 +1094,7 @@ describe("NewWorktreeForm — new-branch name", () => {
     expect(onEmit.mock.calls[0][0]).toMatchObject({
       branch: {
         type: "new",
-        name: "traycer/swift-otter",
+        name: "hukum/swift-otter",
         source: "chore/cleanup",
         carryUncommittedChanges: false,
       },
@@ -1148,7 +1148,7 @@ describe("NewWorktreeForm — new-branch name", () => {
           isPrimary
           summary={SUMMARY}
           currentIntent={currentIntent}
-          defaultNewBranchName="traycer/swift-otter"
+          defaultNewBranchName="hukum/swift-otter"
           onEmit={onEmit}
         />
       </TooltipProvider>
@@ -1225,7 +1225,7 @@ describe("NewWorktreeForm — new-branch name", () => {
           isPrimary
           summary={SUMMARY}
           currentIntent={currentIntent}
-          defaultNewBranchName="traycer/swift-otter"
+          defaultNewBranchName="hukum/swift-otter"
           onEmit={onEmit}
         />
       </TooltipProvider>
@@ -1312,7 +1312,7 @@ describe("NewWorktreeForm — new-branch name", () => {
           isPrimary
           summary={SUMMARY}
           currentIntent={currentIntent}
-          defaultNewBranchName="traycer/swift-otter"
+          defaultNewBranchName="hukum/swift-otter"
           onEmit={onEmit}
         />
       </TooltipProvider>
@@ -1378,7 +1378,7 @@ describe("NewWorktreeForm — new-branch name", () => {
           isPrimary
           summary={SUMMARY}
           currentIntent={currentIntent}
-          defaultNewBranchName="traycer/swift-otter"
+          defaultNewBranchName="hukum/swift-otter"
           onEmit={onEmit}
         />
       </TooltipProvider>
@@ -1444,7 +1444,7 @@ describe("NewWorktreeForm — new-branch name", () => {
       },
     });
     expect(screen.getByDisplayValue("feat/keep-me")).toBeTruthy();
-    expect(screen.queryByDisplayValue("traycer/swift-otter")).toBeNull();
+    expect(screen.queryByDisplayValue("hukum/swift-otter")).toBeNull();
   });
 
   it("shows Saved when staged and Saving after an edit", () => {
@@ -1600,7 +1600,7 @@ describe("NewWorktreeForm — autosave lifecycle", () => {
               carryUncommittedChanges: false,
             },
           }}
-          defaultNewBranchName="traycer/swift-otter"
+          defaultNewBranchName="hukum/swift-otter"
           onEmit={onEmit}
         />
       </TooltipProvider>,
@@ -1645,7 +1645,7 @@ describe("NewWorktreeForm — autosave lifecycle", () => {
             isPrimary
             summary={SUMMARY}
             currentIntent={null}
-            defaultNewBranchName="traycer/swift-otter"
+            defaultNewBranchName="hukum/swift-otter"
             onEmit={onEmit}
           />
         </TooltipProvider>
@@ -1810,7 +1810,7 @@ describe("NewWorktreeForm — autosave lifecycle", () => {
           isPrimary
           summary={SUMMARY}
           currentIntent={null}
-          defaultNewBranchName="traycer/swift-otter"
+          defaultNewBranchName="hukum/swift-otter"
           onEmit={onEmit}
         />
       </TooltipProvider>,

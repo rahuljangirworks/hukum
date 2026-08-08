@@ -1,8 +1,8 @@
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import type {
   ProviderCliState,
   ProviderManagedInstallState,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { providerIdToGuiHarnessId } from "@/lib/provider-ordering";
 
 /**
@@ -266,7 +266,7 @@ export function providerPackErrorDetail(
     case "verification":
       return "the downloaded files failed verification. Retry to fetch them again.";
     case "live-owner-stalled":
-      // Not a network failure and not the user's to fix: another Traycer
+      // Not a network failure and not the user's to fix: another Hukum
       // process sharing this store owns the download and stopped making
       // progress, so this one stopped waiting behind it. Naming the sibling is
       // the whole value of the reason - "check your connection" would send the
@@ -275,23 +275,23 @@ export function providerPackErrorDetail(
       // a moment: the backoff makes an automatic attempt eligible again, it
       // does not schedule one.
       //
-      // "using this Traycer folder", not "on this device". The lease record
+      // "using this Hukum folder", not "on this device". The lease record
       // carries pid and process-start identity and NO machine identity, so
       // nothing here knows where the sibling runs - and in the one topology
-      // that makes this reason common (a `~/.traycer` shared across machines)
+      // that makes this reason common (a `~/.hukum` shared across machines)
       // "on this device" is flatly false. See the host's matching arm and
       // docs/provider-pack-store-support-boundary.md.
-      return "another Traycer process using this Traycer folder stopped making progress on the download. Retry to pick it up here.";
+      return "another Hukum process using this Hukum folder stopped making progress on the download. Retry to pick it up here.";
     case "unrepairable":
       // The one terminal reason. Re-downloading fetches the byte-identical
       // blob and fails in the same place, fleet-wide, so this copy must not
       // send the user back to an action that cannot work - it names the one
       // thing that can (a new release) and the one move they own (a PATH or
-      // custom install they point Traycer at).
+      // custom install they point Hukum at).
       return "this build is defective and reinstalling cannot fix it. A corrected version has to be published - until then, install the CLI yourself and select it in Settings → Providers.";
     case "local-storage-mismatch":
       // The third non-retryable reason, and the only one that is about the
-      // user's machine rather than about Traycer. An archive that passed its
+      // user's machine rather than about Hukum. An archive that passed its
       // signed digest on arrival read back different, twice, the second time
       // against a freshly downloaded copy - so the host has stopped refetching
       // and this copy must not offer the click that would resume it. Named as
@@ -317,7 +317,7 @@ export function providerPackErrorDetail(
       //
       // What it names now is what exists, and it still never says "retry",
       // because the allow-list deliberately draws no button here.
-      return "this device could not verify the provider registry's signing keys, so managed downloads are unavailable here. Traycer re-checks periodically; restarting Traycer checks straight away. A CLI you install yourself keeps working in the meantime.";
+      return "this device could not verify the provider registry's signing keys, so managed downloads are unavailable here. Hukum re-checks periodically; restarting Hukum checks straight away. A CLI you install yourself keeps working in the meantime.";
     default:
       return "retry to try again.";
   }

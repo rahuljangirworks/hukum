@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { toAccelerator } from "@traycer-clients/shared/keybindings/chord-core";
+import { toAccelerator } from "@hukum-clients/shared/keybindings/chord-core";
 import type { GlobalShortcutIntent } from "../../../ipc-contracts/global-shortcuts-types";
 import {
   WindowRegistry,

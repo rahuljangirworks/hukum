@@ -1,11 +1,11 @@
 import type { UseMutationResult } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   HostRpcError,
   RequestOfMethod,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostRpcRegistry } from "@traycer/protocol/host";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostRpcRegistry } from "@hukum/protocol/host";
 import { useHostMutation } from "@/hooks/host/use-host-query";
 import { workspaceMutationKeys } from "@/lib/query-keys";
 

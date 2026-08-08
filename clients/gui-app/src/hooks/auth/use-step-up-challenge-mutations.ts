@@ -1,10 +1,10 @@
 import { useMutation, type UseMutationResult } from "@tanstack/react-query";
-import type { StepUpChallengeResponse } from "@traycer/protocol/auth/devices-sessions";
+import type { StepUpChallengeResponse } from "@hukum/protocol/auth/devices-sessions";
 import type {
   RetainedStepUpVerifyResponse,
   StepUpChallengeFetchResult,
   RetainedStepUpVerifyFetchResult,
-} from "@traycer-clients/shared/auth/devices-sessions-fetcher";
+} from "@hukum-clients/shared/auth/devices-sessions-fetcher";
 import { useHostBinding } from "@/lib/host";
 import { authMutationKeys } from "@/lib/query-keys";
 

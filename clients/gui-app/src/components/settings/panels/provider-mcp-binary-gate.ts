@@ -1,4 +1,4 @@
-import type { ProviderMcpCapabilities } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderMcpCapabilities } from "@hukum/protocol/host/provider-native-schemas";
 
 /**
  * The sentence a user is owed when the host could not resolve this provider's
@@ -9,7 +9,7 @@ import type { ProviderMcpCapabilities } from "@traycer/protocol/host/provider-na
  * `addServer` and `removeServer` through the CLI, so a machine with no `amp`
  * binary gets an MCP tab that lists servers, offers no Add button, no Delete
  * and no auth actions, and explains none of it. Chat keeps working the whole
- * time (amp's SDK spawns its own private copy, invisible to Traycer's
+ * time (amp's SDK spawns its own private copy, invisible to Hukum's
  * resolver), so nothing else on screen hints that anything is missing.
  *
  * Enumerates ONLY what the wire can prove was subtracted: a `"cli"`-routed verb
@@ -51,5 +51,5 @@ export function mcpBinaryAbsentNotice(
     lost.length === 1
       ? lost[0]
       : `${lost.slice(0, -1).join(", ")} and ${lost[lost.length - 1]}`;
-  return `Traycer couldn't find the ${providerLabel} CLI on this machine, so ${verbs} MCP servers is unavailable here. Point Traycer at a binary under CLI & Args, or install ${providerLabel}.`;
+  return `Hukum couldn't find the ${providerLabel} CLI on this machine, so ${verbs} MCP servers is unavailable here. Point Hukum at a binary under CLI & Args, or install ${providerLabel}.`;
 }

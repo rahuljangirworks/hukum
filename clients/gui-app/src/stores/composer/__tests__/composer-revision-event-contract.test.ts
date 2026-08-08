@@ -1,6 +1,6 @@
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { createFakeComposerPromptEditorHandle } from "@/components/chat/composer/__tests__/composer-prompt-editor-handle-fixtures";
 import { useChatComposerDraft } from "@/components/chat/composer/use-chat-composer-draft";

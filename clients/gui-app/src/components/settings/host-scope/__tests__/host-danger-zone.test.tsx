@@ -14,9 +14,9 @@ import {
   screen,
   within,
 } from "@testing-library/react";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import type { HostScopeOption } from "@/components/settings/host-scope/host-scope-model";
 import {
@@ -83,7 +83,7 @@ vi.mock("@/hooks/host/use-host-query", () => ({
   useHostMutation: () => ({ mutate: mutateSpy, isPending: false }),
 }));
 
-// Mutable so a test can put this shell on the desktop branch. `RemoveTraycerRow`
+// Mutable so a test can put this shell on the desktop branch. `RemoveHukumRow`
 // returns null without the bridge, so with a fixed `null` here the local
 // half of this component could never render and its gating went unexercised.
 const runnerHostMock: { hostManagement: object | null } = vi.hoisted(() => ({
@@ -93,12 +93,12 @@ const runnerHostMock: { hostManagement: object | null } = vi.hoisted(() => ({
 vi.mock("@/providers/use-runner-host", () => ({
   useRunnerHost: () => ({
     hostManagement: runnerHostMock.hostManagement,
-    traycerCli: null,
+    hukumCli: null,
   }),
 }));
 
-vi.mock("@/hooks/runner/use-runner-uninstall-traycer-mutation", () => ({
-  useRunnerUninstallTraycer: () => ({ mutate: vi.fn(), isPending: false }),
+vi.mock("@/hooks/runner/use-runner-uninstall-hukum-mutation", () => ({
+  useRunnerUninstallHukum: () => ({ mutate: vi.fn(), isPending: false }),
 }));
 
 vi.mock("@tanstack/react-query", async (importOriginal) => ({
@@ -179,13 +179,13 @@ describe("HostDangerZone", () => {
     expect(capturedQueryClients).toHaveLength(0);
   });
 
-  it("keeps Remove Traycer reachable while this computer's host is down", () => {
-    // The regression, and the one that mattered most: `RemoveTraycerRow` calls
-    // `hostManagement.uninstallTraycer()` over the LOCAL CLI bridge, not host
+  it("keeps Remove Hukum reachable while this computer's host is down", () => {
+    // The regression, and the one that mattered most: `RemoveHukumRow` calls
+    // `hostManagement.uninstallHukum()` over the LOCAL CLI bridge, not host
     // RPC. Gating the whole zone on a dialable route took the only way to
     // remove a broken install out of the app precisely when the host is
     // stopped or wedged — the sole state anyone reaches for it in.
-    runnerHostMock.hostManagement = { uninstallTraycer: vi.fn() };
+    runnerHostMock.hostManagement = { uninstallHukum: vi.fn() };
     render(
       <HostDangerZone
         scope={hostScopeFixture({
@@ -201,7 +201,7 @@ describe("HostDangerZone", () => {
       />,
     );
 
-    const removeRow = screen.getByTestId("settings-remove-traycer");
+    const removeRow = screen.getByTestId("settings-remove-hukum");
     expect(isConcealed(removeRow)).toBe(false);
     // ...while the genuinely RPC-backed row stays behind the gate — concealed
     // (the gate preserves it hidden through the outage) or absent — and the
@@ -218,7 +218,7 @@ describe("HostDangerZone", () => {
     // The counterweight to loosening the gate: a host with no route and no
     // local bridge must not silently drop the region — that reads as "there is
     // nothing to do here" rather than "this host cannot be reached".
-    runnerHostMock.hostManagement = { uninstallTraycer: vi.fn() };
+    runnerHostMock.hostManagement = { uninstallHukum: vi.fn() };
     render(
       <HostDangerZone
         scope={hostScopeFixture({
@@ -231,7 +231,7 @@ describe("HostDangerZone", () => {
     expect(screen.getByTestId("host-scope-unreachable")).not.toBeNull();
     const clearRow = screen.queryByTestId("settings-clear-file-edit-snapshots");
     expect(clearRow === null || isConcealed(clearRow)).toBe(true);
-    expect(screen.queryByTestId("settings-remove-traycer")).toBeNull();
+    expect(screen.queryByTestId("settings-remove-hukum")).toBeNull();
   });
 
   it("destroys the armed confirmation when the scope moves to another host", () => {
@@ -328,10 +328,10 @@ describe("HostDangerZone", () => {
     // machine with nothing in the account — and this page is the only
     // uninstall surface. The recovery variant renders the local-bridge row
     // without any host in hand.
-    runnerHostMock.hostManagement = { uninstallTraycer: vi.fn() };
+    runnerHostMock.hostManagement = { uninstallHukum: vi.fn() };
     render(<LocalRecoveryDangerZone />);
     expect(screen.getByTestId("host-danger-zone")).not.toBeNull();
-    expect(screen.getByTestId("settings-remove-traycer")).not.toBeNull();
+    expect(screen.getByTestId("settings-remove-hukum")).not.toBeNull();
     // No host means no RPC row — nothing to clear, and nothing that could
     // read through an ambient client.
     expect(
@@ -347,10 +347,10 @@ describe("HostDangerZone", () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it("offers Remove Traycer only for this computer's host", () => {
+  it("offers Remove Hukum only for this computer's host", () => {
     // The bridge must be present: without it the row is withheld for a reason
     // unrelated to locality, and this absence assertion would pass vacuously.
-    runnerHostMock.hostManagement = { uninstallTraycer: vi.fn() };
+    runnerHostMock.hostManagement = { uninstallHukum: vi.fn() };
     render(
       <HostDangerZone
         scope={hostScopeFixture({
@@ -360,7 +360,7 @@ describe("HostDangerZone", () => {
         })}
       />,
     );
-    expect(screen.queryByText(/Remove Traycer/)).toBeNull();
+    expect(screen.queryByText(/Remove Hukum/)).toBeNull();
   });
 
   it("offers Remove from account for a remote host, and never the word deregister", () => {

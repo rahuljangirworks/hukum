@@ -160,7 +160,7 @@ describe("decodeTransitionJournal", () => {
     to: "smappservice",
     phase: "started",
     startedAt: "2026-01-01T00:00:00.000Z",
-    expectedIdentities: ["ai.traycer.host.agent"],
+    expectedIdentities: ["ai.hukum.host.agent"],
   };
 
   it("decodes a valid record with governor and compensation both null", () => {

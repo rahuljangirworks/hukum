@@ -43,7 +43,7 @@ export interface FreshUnsyncedSnapshotResponse {
   readonly snapshot: UnsyncedEditsSnapshot;
 }
 
-import type { Disposable } from "@traycer-clients/shared/platform/uri-callback";
+import type { Disposable } from "@hukum-clients/shared/platform/uri-callback";
 
 export interface AppLifecycleBridge {
   quit(): Promise<void>;

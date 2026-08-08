@@ -10,10 +10,10 @@ import { useSurfaceActivity } from "@/components/home/composer/surface-activity-
 import { useProvidersList } from "@/hooks/providers/use-providers-list-query";
 import type { TerminalAgentLaunch } from "@/components/home/hooks/use-landing-composer-actions";
 import type { ComposerToolbarStore } from "@/stores/composer/composer-toolbar-store";
-import { TUI_HARNESS_ID_TO_PROVIDER_ID } from "@traycer/protocol/host/provider-schemas";
+import { TUI_HARNESS_ID_TO_PROVIDER_ID } from "@hukum/protocol/host/provider-schemas";
 import { isTuiHarnessId } from "@/components/home/data/landing-options";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import {
   providerPackBlocksExecution,
   providerPackPreparingForProvider,
@@ -221,7 +221,7 @@ function StartButton(props: StartButtonProps) {
       variant="secondary"
       // Match the chat composer's `size-8` (h-8) send button so the terminal
       // toolbar row is the same height as the chat toolbar (no switch flicker).
-      // Traycer Green gives popovers and secondary buttons the same color, so
+      // Hukum Green gives popovers and secondary buttons the same color, so
       // add dialog-local contrast without changing the landing-page treatment.
       className="h-8 in-data-[slot=dialog-content]:bg-input/60 in-data-[slot=dialog-content]:hover:bg-input/80"
       aria-label="Start agent"

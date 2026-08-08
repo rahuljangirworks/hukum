@@ -7,10 +7,10 @@
  * lets every client supply a bearer "similarly": the renderer passes its
  * `RequestContext.credentials` (a `CredentialLease`, which satisfies this shape
  * structurally), and the CLI passes a `MutableBearerLease` over the token it
- * read from `~/.traycer/cli/credentials` - without fabricating an
+ * read from `~/.hukum/cli/credentials` - without fabricating an
  * `AuthenticatedUser`.
  */
-import { CredentialLeaseReleasedError } from "@traycer/protocol/auth/request-context";
+import { CredentialLeaseReleasedError } from "@hukum/protocol/auth/request-context";
 
 /**
  * Read side of the bearer seam used by the transport open frame.

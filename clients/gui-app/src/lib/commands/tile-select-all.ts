@@ -19,7 +19,7 @@ const TILE_SELECTION_ROOT_ATTRIBUTE = "data-selection-root";
  *
  * Without this, Ctrl/Cmd+A outside a text field falls through to Chromium's
  * document-wide select-all, which sweeps up the sidebar, the tab strip and every
- * other tile (traycerai/traycer#592).
+ * other tile (hukumai/hukum#592).
  *
  * Returns false when no tile owns the key or the owner declares no selection
  * root, so the caller can let the browser default through untouched - that is

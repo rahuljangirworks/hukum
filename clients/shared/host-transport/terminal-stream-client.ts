@@ -6,8 +6,8 @@ import {
   type TerminalSubscribeServerFrame,
   type TerminalSubscribeServerFrameV14,
   type TerminalSubscribeServerFrameV15,
-} from "@traycer/protocol/host/terminal/subscribe";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/terminal/subscribe";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type {
   IStreamSession,
   StreamCloseReason,

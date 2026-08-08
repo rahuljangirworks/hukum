@@ -1,5 +1,5 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/index";
-import type { VersionedStreamRpcRegistry } from "@traycer/protocol/framework/versioned-stream-rpc";
+import type { SchemaVersion } from "@hukum/protocol/framework/index";
+import type { VersionedStreamRpcRegistry } from "@hukum/protocol/framework/versioned-stream-rpc";
 import type { IStreamSession } from "./i-stream-session";
 import type { ParamsOf } from "./ws-stream-client";
 

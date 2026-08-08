@@ -1,7 +1,7 @@
 import type {
   HostNotificationSeverity,
   NotificationHookConfig,
-} from "@traycer/protocol/host/notifications/host-notifications";
+} from "@hukum/protocol/host/notifications/host-notifications";
 
 /**
  * The severities a notification can actually carry, in the same order and

@@ -3,7 +3,7 @@ import {
   deriveHostNotificationStoppedReason,
   parseKnownHostNotificationPayload,
   parseKnownHostNotificationPayloadForKind,
-} from "@traycer/protocol/host/notifications/payloads";
+} from "@hukum/protocol/host/notifications/payloads";
 
 const CHAT_STOPPED = {
   kind: "chat",

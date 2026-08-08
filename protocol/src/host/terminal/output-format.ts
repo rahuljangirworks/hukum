@@ -3,8 +3,8 @@
  *
  * The wire contract carries a fact - `{ path }` and nothing else. The sentence
  * an agent is shown lives here instead, because BOTH fronts over the same host
- * operation must say the same thing: the injected `traycer_read_terminal` tool
- * (host) and the `traycer terminal output` command (CLI) each render their
+ * operation must say the same thing: the injected `hukum_read_terminal` tool
+ * (host) and the `hukum terminal output` command (CLI) each render their
  * result line through this one function. Same reason `formatAgentMessage`
  * (`../../agent/a2a-message-format`) is shared rather than duplicated per
  * front - a sentence copied into two call sites is a sentence that drifts, and

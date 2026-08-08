@@ -3,13 +3,13 @@ import { cleanup, renderHook } from "@testing-library/react";
 import type {
   GitChangedFile,
   WorktreeBindingSelectorRowV12,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import type {
   WorkspaceSearchPathResult,
   WorkspaceSearchPathsOutcome,
   WorkspaceSearchPathsResponse,
   WorkspaceSearchSource,
-} from "@traycer/protocol/host/workspace/unary-schemas";
+} from "@hukum/protocol/host/workspace/unary-schemas";
 import type { CommandContext, CommandItem } from "@/lib/commands/types";
 import type { KeybindingRouter } from "@/lib/keybindings/dispatch";
 import type { OpenTileIntoTargetGroupArgs } from "@/lib/commands/actions/open-into-target";

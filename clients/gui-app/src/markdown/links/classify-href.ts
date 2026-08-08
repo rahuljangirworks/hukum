@@ -2,7 +2,7 @@
  * Surface-agnostic classification of a rendered markdown anchor's `href`.
  *
  * This only understands URL *scheme* plus a trailing editor-style
- * `:line[:col]` location. All Traycer-domain knowledge (workspace resolution,
+ * `:line[:col]` location. All Hukum-domain knowledge (workspace resolution,
  * artifact paths, navigation) lives in the host surface's link policy, so this
  * stays reusable across every markdown surface.
  */
@@ -95,7 +95,7 @@ function fileUrlToPath(href: string): string {
 /**
  * Every href reaching this module is percent-encoded - the markdown parser
  * normalizes a link destination on the way to the DOM, so a path with a space
- * or a Windows separator arrives as `…Traycer%20Dev%5Crepo…`. The surface
+ * or a Windows separator arrives as `…Hukum%20Dev%5Crepo…`. The surface
  * policies resolve against a real filesystem, so they need the native form.
  *
  * This is the ONE decode on a file path's way to a surface policy - consumers

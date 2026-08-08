@@ -10,9 +10,9 @@ import {
   mergeConnectionManifests,
   splitConnectionManifest,
   validateVersionedRpcRegistryDegrades,
-} from "@traycer/protocol/framework/index";
-import { releasedMethodNames } from "@traycer/protocol/host/__tests__/__fixtures__/released-method-names";
-import { hostRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/framework/index";
+import { releasedMethodNames } from "@hukum/protocol/host/__tests__/__fixtures__/released-method-names";
+import { hostRpcRegistry } from "@hukum/protocol/host/registry";
 
 const FLOOR_METHOD_V10 = defineRpcContract({
   method: "floor.method",

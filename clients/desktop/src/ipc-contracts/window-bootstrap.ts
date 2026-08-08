@@ -1,4 +1,4 @@
-const INITIAL_ROUTE_ARG_PREFIX = "--traycer-initial-route=";
+const INITIAL_ROUTE_ARG_PREFIX = "--hukum-initial-route=";
 
 export function createInitialRouteArg(initialRoute: string): string {
   return `${INITIAL_ROUTE_ARG_PREFIX}${encodeURIComponent(

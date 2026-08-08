@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import {
   WORKTREE_TIER_ORDER,
   type WorktreeTier,
-} from "@traycer-clients/shared/worktree/classify-worktree";
+} from "@hukum-clients/shared/worktree/classify-worktree";
 import { basePersistOptions, persistKey, STORE_KEYS } from "@/lib/persist";
 
 export type WorktreeSortMode = "newest" | "oldest";

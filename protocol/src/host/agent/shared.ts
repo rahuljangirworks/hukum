@@ -1,18 +1,18 @@
 import { z } from "zod";
-import { commonRecordRegistry } from "@traycer/protocol/common/registry";
+import { commonRecordRegistry } from "@hukum/protocol/common/registry";
 import {
   DEFAULT_AGENT_MODE,
   agentModeSchema,
   type AgentMode,
-} from "@traycer/protocol/common/schemas";
-import { getRecordSchema } from "@traycer/protocol/framework/index";
-import { permissionModeSchema } from "@traycer/protocol/persistence/epic/foundation";
+} from "@hukum/protocol/common/schemas";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
+import { permissionModeSchema } from "@hukum/protocol/persistence/epic/foundation";
 
 export { DEFAULT_AGENT_MODE, agentModeSchema, type AgentMode };
 
 // ─── Harness identity ─────────────────────────────────────────────────────
 //
-// A "harness" is a coding-agent CLI that Traycer drives - Claude Code, Codex
+// A "harness" is a coding-agent CLI that Hukum drives - Claude Code, Codex
 // CLI, OpenCode, etc. The same vendor is addressed by both surfaces:
 //
 //   - **GUI** agents render in a chat tab. The host drives the harness via
@@ -52,7 +52,7 @@ export const guiHarnessIdSchema = harnessIdSchema.extract([
   "claude",
   "codex",
   "opencode",
-  "traycer",
+  "hukum",
   "cursor",
   "grok",
   "qwen",
@@ -83,7 +83,7 @@ export const guiHarnessIdSchemaV10 = harnessIdSchema.extract([
   "claude",
   "codex",
   "opencode",
-  "traycer",
+  "hukum",
   "cursor",
 ]);
 export type GuiHarnessIdV10 = z.infer<typeof guiHarnessIdSchemaV10>;
@@ -99,7 +99,7 @@ export const guiHarnessIdSchemaV20 = harnessIdSchema.extract([
   "claude",
   "codex",
   "opencode",
-  "traycer",
+  "hukum",
   "cursor",
   "grok",
   "qwen",
@@ -123,7 +123,7 @@ export const guiHarnessIdSchemaV30 = harnessIdSchema.extract([
   "claude",
   "codex",
   "opencode",
-  "traycer",
+  "hukum",
   "cursor",
   "grok",
   "qwen",
@@ -148,7 +148,7 @@ export const guiHarnessIdSchemaV40 = harnessIdSchema.extract([
   "claude",
   "codex",
   "opencode",
-  "traycer",
+  "hukum",
   "cursor",
   "grok",
   "qwen",
@@ -177,7 +177,7 @@ export const guiHarnessIdSchemaV50 = harnessIdSchema.extract([
   "claude",
   "codex",
   "opencode",
-  "traycer",
+  "hukum",
   "cursor",
   "grok",
   "qwen",
@@ -208,7 +208,7 @@ export const guiHarnessIdSchemaV60 = harnessIdSchema.extract([
   "claude",
   "codex",
   "opencode",
-  "traycer",
+  "hukum",
   "cursor",
   "grok",
   "qwen",
@@ -296,7 +296,7 @@ export const AGENT_FACING_HARNESS_IDS = [
   "claude",
   "codex",
   "opencode",
-  "traycer",
+  "hukum",
   "cursor",
   "grok",
   "qwen",
@@ -518,9 +518,9 @@ export type AgentSelectionGuideRequest = z.infer<
 >;
 
 // A single contributing guide file. Current hosts emit exactly one `global`
-// source (`~/.traycer/agent-selection-guide.md`, `priority` fixed at 1, `path`
+// source (`~/.hukum/agent-selection-guide.md`, `priority` fixed at 1, `path`
 // kept for attribution). The `workspace` variant is legacy wire shape: older
-// hosts still emit per-workspace `.traycer/agent-selection-guide.md` sources,
+// hosts still emit per-workspace `.hukum/agent-selection-guide.md` sources,
 // and released 1.0 responses must keep parsing, but current clients ignore
 // workspace entries instead of layering them over the global guide.
 export const agentSelectionGuideSourceSchema = z.discriminatedUnion("kind", [
@@ -559,7 +559,7 @@ export type AgentSelectionGuideResponse = z.infer<
   typeof agentSelectionGuideResponseSchema
 >;
 
-// Settings/onboarding surface for the global guide file (~/.traycer/...).
+// Settings/onboarding surface for the global guide file (~/.hukum/...).
 // Distinct from `agent.selectionGuide`, which serves the guide to an agent.
 // These are default-host scoped and carry no epic. Provider choices are
 // already host state, so the host computes the generated default from its
@@ -748,13 +748,13 @@ export type ListAgentsResponse = z.infer<typeof listAgentsResponseSchema>;
 
 // ── Frozen protocol-v1.0 agent.list response ───────────────────────────────
 // `agent.list` enumerates every agent in the epic - including ACP GUI harness
-// chats a newer client created - and the `traycer` CLI inlines the protocol at
+// chats a newer client created - and the `hukum` CLI inlines the protocol at
 // build time, so an old CLI would hit a strict enum on those rows. v1.0 is
 // frozen; the v2.0 line carries them and a v2→v1 bridge drops them for v1.0
 // callers. Do not add new harnesses here - use the existing v2 bridge.
 export const agentSummarySchemaV10 = releasedAgentSummarySchema.extend({
   harnessId: harnessIdSchema
-    .extract(["claude", "codex", "opencode", "traycer", "cursor"])
+    .extract(["claude", "codex", "opencode", "hukum", "cursor"])
     .nullable(),
 });
 export const listAgentsResponseSchemaV10 = listAgentsResponseSchema.extend({

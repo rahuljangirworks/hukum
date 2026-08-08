@@ -1,8 +1,8 @@
 import { createContext, use, useCallback, useSyncExternalStore } from "react";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
-import type { StreamMethodSupport } from "@traycer-clients/shared/host-transport/ws-stream-client";
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
+import type { StreamMethodSupport } from "@hukum-clients/shared/host-transport/ws-stream-client";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 
 /**
  * Streaming-transport seam. The single `IHostStreamClient<HostStreamRpcRegistry>`

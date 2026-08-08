@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import * as Y from "yjs";
-import type { NotificationsStreamCallbacks } from "@traycer-clients/shared/host-transport/notifications-stream-client";
-import type { StreamCloseReason } from "@traycer-clients/shared/host-transport/i-stream-session";
-import { NOTIFICATION_EVENT_TYPES } from "@traycer/protocol/notifications/notification-entry";
+import type { NotificationsStreamCallbacks } from "@hukum-clients/shared/host-transport/notifications-stream-client";
+import type { StreamCloseReason } from "@hukum-clients/shared/host-transport/i-stream-session";
+import { NOTIFICATION_EVENT_TYPES } from "@hukum/protocol/notifications/notification-entry";
 import {
   NOTIFICATIONS_ARRAY_KEY,
   createNotificationRoomEntryMap,
   type NotificationRoomEntryMap,
-} from "@traycer/protocol/notifications/notification-room";
+} from "@hukum/protocol/notifications/notification-room";
 import {
   HOST_STREAM_REOPEN_INITIAL_BACKOFF_MS,
   HOST_STREAM_REOPEN_MAX_BACKOFF_MS,

@@ -3,13 +3,13 @@ import {
   createHostRuntimeState,
   type HostRuntimeState,
 } from "@/providers/host-runtime-provider";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { hostRpcSchedulingPolicy } from "@/lib/host-rpc-policy/host-method-policy-table";
 
 type AppHostRuntimeState = HostRuntimeState<HostRpcRegistry>;
 
 interface HostRuntimeDevGlobals {
-  __TRAYCER_HOST_RUNTIME_STATE__: AppHostRuntimeState | undefined;
+  __HUKUM_HOST_RUNTIME_STATE__: AppHostRuntimeState | undefined;
 }
 
 function createStableHostRuntimeState(): AppHostRuntimeState {
@@ -23,13 +23,13 @@ function createStableHostRuntimeState(): AppHostRuntimeState {
   }
 
   const devGlobals = globalThis as typeof globalThis & HostRuntimeDevGlobals;
-  const existing = devGlobals.__TRAYCER_HOST_RUNTIME_STATE__;
+  const existing = devGlobals.__HUKUM_HOST_RUNTIME_STATE__;
   if (existing !== undefined) {
     return existing;
   }
 
   const state = createHostRuntimeState<HostRpcRegistry>();
-  devGlobals.__TRAYCER_HOST_RUNTIME_STATE__ = state;
+  devGlobals.__HUKUM_HOST_RUNTIME_STATE__ = state;
   return state;
 }
 

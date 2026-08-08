@@ -1,26 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { WsStreamClient } from "@traycer-clients/shared/host-transport/ws-stream-client";
-import { DEFAULT_DIAL_TIMEOUT_MS } from "@traycer-clients/shared/host-transport/transport-config";
-import { createWhatwgStreamWebSocketFactory } from "@traycer-clients/shared/host-transport/whatwg-stream-ws-factory";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import { WsStreamClient } from "@hukum-clients/shared/host-transport/ws-stream-client";
+import { DEFAULT_DIAL_TIMEOUT_MS } from "@hukum-clients/shared/host-transport/transport-config";
+import { createWhatwgStreamWebSocketFactory } from "@hukum-clients/shared/host-transport/whatwg-stream-ws-factory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   isRemoteHostDirectoryEntry,
   type RemoteHostDirectoryEntry,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
-import { createRemoteHostTransport } from "@traycer-clients/shared/host-transport/remote/index";
-import type { HostStatusDTO } from "@traycer/protocol/host/host-status";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
+import { createRemoteHostTransport } from "@hukum-clients/shared/host-transport/remote/index";
+import type { HostStatusDTO } from "@hukum/protocol/host/host-status";
 import {
   hostRpcRegistry,
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
-import type { StreamAuthRevalidator } from "@traycer-clients/shared/auth/bearer-revalidator";
-import type { BearerSourceProvider } from "@traycer-clients/shared/auth/bearer-source";
-import type { HostEndpointProvider } from "@traycer-clients/shared/host-transport/ws-rpc-client";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/registry";
+import type { StreamAuthRevalidator } from "@hukum-clients/shared/auth/bearer-revalidator";
+import type { BearerSourceProvider } from "@hukum-clients/shared/auth/bearer-source";
+import type { HostEndpointProvider } from "@hukum-clients/shared/host-transport/ws-rpc-client";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { appHostCredentialMintFlow } from "@/lib/auth/host-credential-provisioning";
 import { useHostClient } from "@/lib/host/runtime";
 import { useRunnerHost } from "@/providers/use-runner-host";

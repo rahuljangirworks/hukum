@@ -4,7 +4,7 @@ import {
   findBreakingChange,
   toUnknownKeyTree,
   toJsonSchemaFingerprint,
-} from "@traycer/protocol/framework/json-schema-fingerprint";
+} from "@hukum/protocol/framework/json-schema-fingerprint";
 import {
   hostNotificationAgentStalledPayloadSchema,
   hostNotificationApprovalPayloadSchema,
@@ -15,7 +15,7 @@ import {
   hostNotificationWorkspaceOperationFailedPayloadSchema,
   hostNotificationWorktreeDeletionPayloadSchema,
   type HostNotificationKnownPayloadKind,
-} from "@traycer/protocol/host/notifications/payloads";
+} from "@hukum/protocol/host/notifications/payloads";
 import { PAYLOAD_FINGERPRINT_BASELINE } from "./payload-additivity-baseline";
 
 /**

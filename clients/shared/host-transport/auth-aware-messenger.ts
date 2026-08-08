@@ -1,9 +1,9 @@
 import type {
   AuthorityBoundAuthRevalidator,
   RevalidateOutcome,
-} from "@traycer-clients/shared/auth/bearer-revalidator";
-import type { OpenFrameBearerSource } from "@traycer-clients/shared/auth/bearer-source";
-import type { VersionedRpcRegistry } from "@traycer/protocol/framework/index";
+} from "@hukum-clients/shared/auth/bearer-revalidator";
+import type { OpenFrameBearerSource } from "@hukum-clients/shared/auth/bearer-source";
+import type { VersionedRpcRegistry } from "@hukum/protocol/framework/index";
 import {
   HostRpcError,
   HostAuthoritySupersededError,

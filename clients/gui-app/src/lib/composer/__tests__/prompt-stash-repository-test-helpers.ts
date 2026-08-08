@@ -2,7 +2,7 @@
  * Shared fixtures and IDB helpers for prompt-stash repository split suites.
  */
 import { expect } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import type {
   PromptStashEntry,
@@ -17,7 +17,7 @@ import { installFreshIndexedDb } from "./prompt-stash-fake-idb";
 export { installFreshIndexedDb };
 export type { PromptStashEntry, PromptStashManifest, PromptStashSnapshot };
 
-export const DB_NAME = "traycer-gui-app:prompt-stash";
+export const DB_NAME = "hukum-gui-app:prompt-stash";
 
 export type RepoModule =
   typeof import("@/lib/composer/prompt-stash-repository");

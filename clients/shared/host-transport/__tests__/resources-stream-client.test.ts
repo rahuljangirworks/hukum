@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import {
   createRequestContext,
   identityFromAuthenticatedUser,
   type RequestContext,
-} from "@traycer/protocol/auth/request-context";
+} from "@hukum/protocol/auth/request-context";
 import { mockLocalHostEntry } from "../../host-client/mock/mock-host-directory";
 import { createAuthenticatedUserFixture } from "../../test-fixtures/authenticated-user";
 import type {
@@ -162,8 +162,8 @@ const APP = {
     pid: 10,
     parentPid: null,
     rootPid: 10,
-    name: "traycer-host",
-    command: "traycer-host",
+    name: "hukum-host",
+    command: "hukum-host",
     cpuPercent: 1,
     rssBytes: 2_000,
   },
@@ -250,7 +250,7 @@ describe("ResourcesStreamClient", () => {
     });
 
     expect(snapshots).toHaveLength(1);
-    expect(snapshots[0].app?.process?.name).toBe("traycer-host");
+    expect(snapshots[0].app?.process?.name).toBe("hukum-host");
     expect(snapshots[0].owners[0].owner.ownerId).toBe("s1");
     expect(snapshots[0].owners[0].harnessId).toBeNull();
     expect(snapshots[0].owners[0].processes[0].command).toBe("/bin/bash");

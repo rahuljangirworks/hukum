@@ -4,7 +4,7 @@ import {
   hostNotificationEntrySchemaV21,
   hostOperationKnownCopy,
   parseKnownHostNotificationPayloadForKind,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 
 describe("worktree deletion host-operation presentation", () => {
   it("matches only host operation rows and preserves the host-composed copy", () => {

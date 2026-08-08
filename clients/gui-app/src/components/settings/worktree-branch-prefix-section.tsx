@@ -238,7 +238,7 @@ export function WorktreeBranchPrefixSection(): ReactNode {
             aria-label="Branch prefix"
             aria-invalid={error !== null}
             aria-describedby={error !== null ? errorId : undefined}
-            placeholder="traycer/"
+            placeholder="hukum/"
             className="h-8 w-[min(45vw,11rem)] font-mono text-ui-sm"
             onChange={(event) => {
               const next = event.target.value;

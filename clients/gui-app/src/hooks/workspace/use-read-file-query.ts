@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcRegistry } from "@hukum/protocol/host";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 
 const WORKSPACE_FILE_PREVIEW_MAX_BYTES = 500_000;

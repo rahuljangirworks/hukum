@@ -7,7 +7,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { GitErrorBlock } from "../git-error-block";
 
 /**

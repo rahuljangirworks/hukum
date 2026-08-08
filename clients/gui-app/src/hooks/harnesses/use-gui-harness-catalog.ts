@@ -1,7 +1,7 @@
 import { useQueryClient, type UseQueryResult } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { hostQueryKeys } from "@/lib/query-keys";
 import { useHostClient } from "@/lib/host";
 import type {
@@ -10,7 +10,7 @@ import type {
   ListGuiAgentCommandsResponse,
   ListGuiAgentModelsResponse,
   ListGuiHarnessesResponse,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useHostBinding } from "@/lib/host/runtime";
 import {
@@ -63,7 +63,7 @@ import { getConditionPollEpisodeCoordinator } from "@/lib/query/condition-poll-e
 // recovery sweep (`invalidateHostScope` with an active refetch) would beat
 // `staleTime: Infinity` and re-probe every harness at once - a provider CLI
 // spawn burst that stalls a slow host, flaps stream health, and triggers the
-// next sweep (traycer#912). `query-invalidator.ts` therefore exempts
+// next sweep (hukum#912). `query-invalidator.ts` therefore exempts
 // `agent.gui.listModels` / `agent.gui.listCommands` from the recovery sweep
 // ENTIRELY - not refetched, and not marked stale either. Marking them would
 // only defer the burst: an invalidated query is stale regardless of

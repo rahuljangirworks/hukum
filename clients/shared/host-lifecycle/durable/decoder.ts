@@ -106,7 +106,7 @@ export function decodeSubstrateRecord(
  * decides on exactly those three fields, so "just use the shared decoder" is
  * wrong there and would silently delete the `probeDeadlineAt` bound — it
  * reuses this module's total decoder and version gate with its own richer
- * parser instead (`traycer-cli/src/host/lifecycle-probe.ts`).
+ * parser instead (`hukum-cli/src/host/lifecycle-probe.ts`).
  *
  * Two shapes, one name: see also `transition/types.ts:LifecycleTransitionJournal`.
  * Widen this projection only if the world probe genuinely needs the field.

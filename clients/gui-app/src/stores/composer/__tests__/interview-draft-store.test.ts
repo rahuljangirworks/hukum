@@ -7,7 +7,7 @@ import {
   useInterviewDraftStore,
 } from "../interview-draft-store";
 
-const LEGACY_SINGLE_KEY = "traycer-gui-app:interview-drafts";
+const LEGACY_SINGLE_KEY = "hukum-gui-app:interview-drafts";
 
 const sampleDraft = {
   pageIndex: 1,
@@ -153,7 +153,7 @@ describe("interview draft store", () => {
     window.localStorage.clear();
 
     window.dispatchEvent(
-      new StorageEvent("storage", { key: "traycer-gui-app:settings" }),
+      new StorageEvent("storage", { key: "hukum-gui-app:settings" }),
     );
 
     expect(

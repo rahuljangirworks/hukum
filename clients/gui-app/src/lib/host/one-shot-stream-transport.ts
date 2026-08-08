@@ -1,6 +1,6 @@
-import type { BearerSourceProvider } from "@traycer-clients/shared/auth/bearer-source";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { HostEndpointProvider } from "@traycer-clients/shared/host-transport/ws-rpc-client";
+import type { BearerSourceProvider } from "@hukum-clients/shared/auth/bearer-source";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { HostEndpointProvider } from "@hukum-clients/shared/host-transport/ws-rpc-client";
 import { buildHostStreamClient } from "@/hooks/host/use-host-stream-client-for";
 import type { DurableStreamTransport } from "@/lib/host/durable-stream-transport";
 import { appLogger } from "@/lib/logger";

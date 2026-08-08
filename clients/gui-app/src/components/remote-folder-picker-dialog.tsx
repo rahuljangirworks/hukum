@@ -7,13 +7,13 @@ import {
   type ReactNode,
 } from "react";
 import { ArrowLeft, CornerLeftUp, Folder } from "lucide-react";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   WorkspaceBrowseFolderEntry,
   WorkspaceBrowseFoldersResponse,
   WorkspacePrepareFoldersResponseV11,
   WorkspaceRecentEntry,
-} from "@traycer/protocol/host/workspace/unary-schemas";
+} from "@hukum/protocol/host/workspace/unary-schemas";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -537,7 +537,7 @@ function RemoteFolderPickerListingStatus(props: {
           data-testid="remote-folder-picker-error"
           role="alert"
         >
-          This host app is too old for remote browsing - update Traycer on the
+          This host app is too old for remote browsing - update Hukum on the
           host machine.
         </p>
       );

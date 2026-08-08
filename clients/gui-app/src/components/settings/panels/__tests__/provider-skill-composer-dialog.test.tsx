@@ -1,4 +1,4 @@
-import type { ProvidersSkillsMutateAction } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProvidersSkillsMutateAction } from "@hukum/protocol/host/provider-native-schemas";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ProviderSkillComposerDialog } from "@/components/settings/panels/provider-skill-composer-dialog";

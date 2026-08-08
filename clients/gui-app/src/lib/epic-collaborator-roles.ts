@@ -1,7 +1,7 @@
 import {
   LatestPermissionRoleSchema,
   type PermissionRole,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 
 export type { PermissionRole };
 

@@ -34,7 +34,7 @@ import type { HostProcessLiveness } from "./host-recovery-governor";
  * instead. A `CLOCK_REALTIME` step between publication and this read made
  * that comparison answer `"mismatch"` for a perfectly healthy process, which
  * this function turned into `"dead"` - dropping the shield on exactly the
- * hosts it exists to protect (traycerai/traycer#740).
+ * hosts it exists to protect (hukumai/hukum#740).
  */
 export async function readPublishedHostProcessLiveness(
   pidMetadataFile: string,

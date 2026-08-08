@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import { createElement } from "react";
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { GitGetCapabilitiesResponse } from "@traycer/protocol/host";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { GitGetCapabilitiesResponse } from "@hukum/protocol/host";
 import { useGitCapabilitiesQuery } from "../use-git-capabilities-query";
 
 const request = vi.fn();

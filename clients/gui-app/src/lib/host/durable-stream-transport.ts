@@ -1,10 +1,10 @@
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import type { BearerSourceProvider } from "@traycer-clients/shared/auth/bearer-source";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { HostEndpointProvider } from "@traycer-clients/shared/host-transport/ws-rpc-client";
-import type { StreamAuthRevalidator } from "@traycer-clients/shared/auth/bearer-revalidator";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import type { BearerSourceProvider } from "@hukum-clients/shared/auth/bearer-source";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { HostEndpointProvider } from "@hukum-clients/shared/host-transport/ws-rpc-client";
+import type { StreamAuthRevalidator } from "@hukum-clients/shared/auth/bearer-revalidator";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import { buildHostStreamClient } from "@/hooks/host/use-host-stream-client-for";
 import { subscribeStreamWakeReconnect } from "@/lib/host/stream-wake-reconnect";
 import {

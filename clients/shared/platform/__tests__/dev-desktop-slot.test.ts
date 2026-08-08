@@ -14,7 +14,7 @@ export const SLOT_SANITIZE_VECTORS: ReadonlyArray<
   readonly [raw: string, expected: string]
 > = [
   [" My Slot!! ", "my-slot"],
-  ["Traycer Internal Worktree", "traycer-internal-worktree"],
+  ["Hukum Internal Worktree", "hukum-internal-worktree"],
   ["a___b", "a-b"],
   ["-leading-and-trailing-", "leading-and-trailing"],
   ["a".repeat(80), "a".repeat(64)],
@@ -61,14 +61,14 @@ describe("devDesktopSlotForEnvironment", () => {
 
 describe("devDesktopSlotProtocolScheme", () => {
   it("keeps the base scheme when no slot is active", () => {
-    expect(devDesktopSlotProtocolScheme("traycer-dev", null)).toBe(
-      "traycer-dev",
+    expect(devDesktopSlotProtocolScheme("hukum-dev", null)).toBe(
+      "hukum-dev",
     );
   });
 
   it("suffixes the base scheme with the slot", () => {
-    expect(devDesktopSlotProtocolScheme("traycer-dev", "my-worktree")).toBe(
-      "traycer-dev-my-worktree",
+    expect(devDesktopSlotProtocolScheme("hukum-dev", "my-worktree")).toBe(
+      "hukum-dev-my-worktree",
     );
   });
 
@@ -76,7 +76,7 @@ describe("devDesktopSlotProtocolScheme", () => {
     "produces a valid URI scheme for sanitize vector %j",
     (raw) => {
       const scheme = devDesktopSlotProtocolScheme(
-        "traycer-dev",
+        "hukum-dev",
         sanitizeDevDesktopSlot(raw),
       );
       expect(scheme).toMatch(/^[a-z][a-z0-9+\-.]*$/);

@@ -1,7 +1,7 @@
 /** usePromptStash command/menu state */
 import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import { toast } from "sonner";
 
 import { usePromptStash } from "@/hooks/composer/use-prompt-stash";

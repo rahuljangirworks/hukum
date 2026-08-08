@@ -4,7 +4,7 @@ import {
   type QueryClient,
   type QueryKey,
 } from "@tanstack/react-query";
-import { backoffFor } from "@traycer-clients/shared/host-transport/backoff";
+import { backoffFor } from "@hukum-clients/shared/host-transport/backoff";
 import {
   HOST_METHOD_POLL_TABLE,
   type ConditionPollLane,

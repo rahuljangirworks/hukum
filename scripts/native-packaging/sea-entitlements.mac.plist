@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
     <!--
-      Hardened-runtime entitlements for the SEA Mach-O (traycer CLI /
-      traycer-host). V8 JIT-compiles into executable memory at isolate
+      Hardened-runtime entitlements for the SEA Mach-O (hukum CLI /
+      hukum-host). V8 JIT-compiles into executable memory at isolate
       init, so under hardened runtime the binary MUST carry the JIT /
       unsigned-executable-memory entitlements or it dies before any JS
       runs with "Fatal process out of memory: Failed to reserve virtual

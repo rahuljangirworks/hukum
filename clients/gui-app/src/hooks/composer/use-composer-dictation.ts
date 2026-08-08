@@ -57,7 +57,7 @@ export function useComposerDictation(
       dictationPermissionDenied
         ? {
             description:
-              "Enable microphone access for Traycer, then try again.",
+              "Enable microphone access for Hukum, then try again.",
             action: {
               label: "Open Settings",
               onClick: () => {

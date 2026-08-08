@@ -9,7 +9,7 @@ import { findPaneById } from "@/stores/epics/canvas/tile-tree";
 import type {
   HostNotificationsPresenceEntity,
   HostNotificationsSubscribeClientFrame,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 
 export interface HostNotificationPresenceInput {
   readonly windowId: string;

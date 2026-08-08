@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   SEARCH_ARTIFACT_SNIPPET_MAX_BYTES,
   searchArtifactSnippetSchema,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   WORKSPACE_SEARCH_TEXT_PREVIEW_MAX_BYTES,
   workspaceSearchPathsRequestSchema,

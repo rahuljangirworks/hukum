@@ -1,5 +1,5 @@
 import { memo, type ReactNode } from "react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import { ComposerContentRenderer } from "@/components/chat/composer/content-renderer";
 import { cn } from "@/lib/utils";

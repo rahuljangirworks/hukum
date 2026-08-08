@@ -95,7 +95,7 @@ describe("acquireCredentialsLock", () => {
   });
 
   beforeEach(() => {
-    workDir = mkdtempSync(join(tmpdir(), "traycer-cred-lock-test-"));
+    workDir = mkdtempSync(join(tmpdir(), "hukum-cred-lock-test-"));
     lockPath = join(workDir, "credentials.lock");
   });
 
@@ -263,7 +263,7 @@ describe("withCredentialsLock", () => {
   let lockPath: string;
 
   beforeEach(() => {
-    workDir = mkdtempSync(join(tmpdir(), "traycer-cred-withlock-test-"));
+    workDir = mkdtempSync(join(tmpdir(), "hukum-cred-withlock-test-"));
     lockPath = join(workDir, "credentials.lock");
   });
 
@@ -304,7 +304,7 @@ describe("breakStaleLock", () => {
   let lockPath: string;
 
   beforeEach(() => {
-    workDir = mkdtempSync(join(tmpdir(), "traycer-cred-break-test-"));
+    workDir = mkdtempSync(join(tmpdir(), "hukum-cred-break-test-"));
     lockPath = join(workDir, "credentials.lock");
   });
 

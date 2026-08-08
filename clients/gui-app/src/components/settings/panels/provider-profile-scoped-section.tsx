@@ -16,7 +16,7 @@ import {
   type ProviderCliState,
   type ProviderProfile,
   type ProviderProfileAccentColor,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

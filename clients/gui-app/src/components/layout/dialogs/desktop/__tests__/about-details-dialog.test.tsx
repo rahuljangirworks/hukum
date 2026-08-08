@@ -141,7 +141,7 @@ describe("<AboutDetailsDialog />", () => {
         title: "Couldn't load desktop details",
         message: null,
         code: null,
-        source: "About Traycer",
+        source: "About Hukum",
       },
     });
   });
@@ -167,7 +167,7 @@ describe("<AboutDetailsDialog />", () => {
       title: "Couldn't load desktop details",
       message: null,
       code: null,
-      source: "About Traycer",
+      source: "About Hukum",
     });
   });
 });

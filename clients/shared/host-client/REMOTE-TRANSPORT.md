@@ -30,7 +30,7 @@ flowchart LR
 | Layer                      | Owner                            | Bytes on the client leg                                                        | Who sees it   |
 | -------------------------- | -------------------------------- | ------------------------------------------------------------------------------ | ------------- |
 | Relay frame (T10)          | relay                            | `[ciphertext]` (binary WS) — **no `sid`**; the relay knows this socket's `sid` | relay + peers |
-| Noise transport frame (T8) | `@traycer/protocol/crypto/noise` | `[v:1][counter:8 BE][AES-GCM ct‖tag]`                                          | peers only    |
+| Noise transport frame (T8) | `@hukum/protocol/crypto/noise` | `[v:1][counter:8 BE][AES-GCM ct‖tag]`                                          | peers only    |
 | Mux frame (T12, this doc)  | client + host                    | `{v,type,streamId,seq,flags}` + `[jsonLen][json][binary]`                      | peers only    |
 
 The architecture's `{v, sid, streamId, seq}` conflates layers 1 and 3: **`sid`
@@ -52,7 +52,7 @@ Suite `Noise_NK_25519_AESGCM_SHA256` (T8). The client is the **initiator**
 its registry-published static X25519 key.
 
 - **Prologue** (mixed into both sides' handshake hash, MUST match byte-for-byte):
-  `NOISE_PROLOGUE = utf8("traycer-remote-host/mux/v1")`.
+  `NOISE_PROLOGUE = utf8("hukum-remote-host/mux/v1")`.
 - **Host static key**: the client reads it from the `GET /hosts` DTO
   `publicKey` field and decodes hex **or** base64/base64url to 32 bytes
   (`decodeHostPublicKey`). **⚠️ reconcile** the exact publish encoding with

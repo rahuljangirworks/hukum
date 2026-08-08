@@ -2,7 +2,7 @@ import { useEffect, useRef, type ReactNode, type RefObject } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Dialog as DialogPrimitive } from "radix-ui";
 import { Check } from "lucide-react";
-import type { EpicMigrationPhase } from "@traycer/protocol/host/epic/subscribe";
+import type { EpicMigrationPhase } from "@hukum/protocol/host/epic/subscribe";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import { ReportIssueAction } from "@/components/report-issue/report-issue-action";

@@ -8,8 +8,8 @@ import {
   useState,
 } from "react";
 import { ChevronDown, GitFork, Users } from "lucide-react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   useActivePaneEffect,
   usePaneVisible,
@@ -783,7 +783,7 @@ function continueUnderProfileDisabledReasonFor(
   forkDisabled: boolean,
 ): string | undefined {
   if (!continueUnderProfileSupported) {
-    return "Update Traycer host to continue this session under another profile.";
+    return "Update Hukum host to continue this session under another profile.";
   }
   if (forkDisabled) {
     return "Fork is available after the terminal agent session and workspace binding are ready.";

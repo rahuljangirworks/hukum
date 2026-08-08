@@ -2,11 +2,11 @@ import { describe, expect, it } from "vitest";
 import type {
   HostNotificationEntry,
   HostNotificationsCloudFeedRow,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import {
   type NotificationEntry,
   NOTIFICATION_EVENT_TYPES,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 import {
   appLocalFeedId,
   mergedUnreadCount,
@@ -527,7 +527,7 @@ describe("merged notifications feed", () => {
       createdAt: 10,
       readAt: null,
       title: "Agent stream closed unexpectedly",
-      body: "Traycer notification",
+      body: "Hukum notification",
       payload: { kind: "chat", epicId: "epic-1", chatId: "chat-1" },
       hostKind: null,
       appLocalKind: "stream.transport.error",

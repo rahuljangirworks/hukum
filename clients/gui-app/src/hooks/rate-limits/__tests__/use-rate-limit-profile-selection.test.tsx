@@ -1,7 +1,7 @@
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import { __getChatSessionRegistryForTests } from "@/lib/registries/chat-session-registry";
 import {
   resolveRateLimitProfileId,

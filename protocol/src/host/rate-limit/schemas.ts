@@ -2,13 +2,13 @@ import { z } from "zod";
 import {
   DEFAULT_ACCOUNT_CONTEXT,
   accountContextSchema,
-} from "@traycer/protocol/common/schemas";
+} from "@hukum/protocol/common/schemas";
 import {
   providerIdSchema,
   providerIdSchemaV40,
   providerIdSchemaV50,
   providerIdSchemaV60,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 // `host.getRateLimitUsage` v1.0 request: no fields. Non-strict on purpose so a
 // v1.1 client can Zod-strip its `accountContext` away when projecting the request
@@ -34,7 +34,7 @@ export type RateLimitUsageRequestV11 = z.infer<
 >;
 
 // Mirrors the aperture rate-limit shape defined in an internal shared package
-// (not in this repo) - the aperture gRPC return shape the Traycer cloud
+// (not in this repo) - the aperture gRPC return shape the Hukum cloud
 // backend maps straight onto this wire contract. Unchanged across v1.0 / v1.1.
 export const rateLimitUsageResponseSchema = z.object({
   totalTokens: z.number(),
@@ -46,7 +46,7 @@ export type RateLimitUsageResponse = z.infer<
 >;
 
 // v1.2 adds provider-account rate limits (Codex / Claude Code CLI), pulled
-// on-demand for a specific provider rather than the Traycer-inference
+// on-demand for a specific provider rather than the Hukum-inference
 // aperture the v1.0/v1.1 fields describe. Added as a minor (NOT an in-place
 // edit to v1.1) so a shipped v1.1 host still negotiates: `providerId` is
 // optional, so an unset field leaves today's aperture behavior unchanged.
@@ -236,7 +236,7 @@ const claudeCodeRateLimitsSchema = z.object({
 });
 
 // Grok arm - ephemeral-CLI-class provider (usage is read over the vendored
-// grok CLI's own `_x.ai/billing` ACP extension, so Traycer never touches the
+// grok CLI's own `_x.ai/billing` ACP extension, so Hukum never touches the
 // grok OAuth token), but the payload is billing-period/credit-shaped rather
 // than rolling-window-shaped. Hybrid: a synthesized `period` window (so
 // severity rollups, a2a `rateLimitStatus`, and GUI status logic reuse the
@@ -278,10 +278,10 @@ const grokRateLimitsSchema = z
     }
   });
 
-// Closed, Traycer-owned set of reasons a provider pull can fail to report
+// Closed, Hukum-owned set of reasons a provider pull can fail to report
 // rate limits - unlike a provider's own plan/reached-type tokens (owned by
 // that provider, legitimately forward-compat as a bare string), every one of
-// these is emitted by `traycer-host` itself and ships atomically with this
+// these is emitted by `hukum-host` itself and ships atomically with this
 // schema, so there's no cross-version drift risk in constraining it. Enforces
 // the host's `unavailableRateLimits` call sites and the GUI's display-label
 // map stay exhaustive at compile time instead of silently drifting.

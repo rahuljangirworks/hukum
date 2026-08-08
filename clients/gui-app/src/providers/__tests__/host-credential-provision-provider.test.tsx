@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render } from "@testing-library/react";
-import type { MintHostCredentialFetchResult } from "@traycer-clients/shared/auth/devices-sessions-fetcher";
+import type { MintHostCredentialFetchResult } from "@hukum-clients/shared/auth/devices-sessions-fetcher";
 import {
   appHostCredentialMintFlow,
   resetHostCredentialProvisioning,

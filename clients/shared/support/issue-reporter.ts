@@ -1,7 +1,7 @@
-// Source of truth: `VITE_TRAYCER_OSS_REPO` baked at build time. Keep the
+// Source of truth: `VITE_HUKUM_OSS_REPO` baked at build time. Keep the
 // fallback empty so a missing build var fails loudly (broken link) instead of
 // silently routing user reports at a placeholder repo.
-const TRAYCER_OSS_REPO: string = import.meta.env.VITE_TRAYCER_OSS_REPO ?? "";
+const HUKUM_OSS_REPO: string = import.meta.env.VITE_HUKUM_OSS_REPO ?? "";
 
 /**
  * Per-field values for the GitHub issue form, matching each template's field
@@ -58,7 +58,7 @@ export type PublicIssueDraft =
  */
 export function buildGitHubIssueUrl(draft: PublicIssueDraft): string {
   const params = new URLSearchParams(issueFormParams(draft));
-  return `${TRAYCER_OSS_REPO}/issues/new?${params.toString()}`;
+  return `${HUKUM_OSS_REPO}/issues/new?${params.toString()}`;
 }
 
 function issueFormParams(draft: PublicIssueDraft): Record<string, string> {

@@ -1,4 +1,4 @@
-import type { IFileDropHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IFileDropHost } from "@hukum-clients/shared/platform/runner-host";
 
 export interface FileTransferEntries {
   readonly files: readonly File[];
@@ -31,8 +31,8 @@ const USABLE_CLIPBOARD_TEXT_FLAVORS = [
   "public.file-url",
   "text/html",
   "text/plain",
-  "application/x-traycer-composer+json",
-  "web application/x-traycer-composer+json",
+  "application/x-hukum-composer+json",
+  "web application/x-hukum-composer+json",
 ] as const;
 
 /**

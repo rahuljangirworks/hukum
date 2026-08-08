@@ -12,8 +12,8 @@ import type {
   AgentSender,
   ChatEvent,
   Message,
-} from "@traycer/protocol/persistence/epic/schemas";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+} from "@hukum/protocol/persistence/epic/schemas";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import { ChatExpansionTestProviders } from "@/components/chat/__tests__/chat-expansion-test-providers";
 import {
   ChatMessage,

@@ -14,7 +14,7 @@ const electronBinary = require("../electron-binary.cjs") as {
 };
 
 const bundleStateOptions = {
-  devBundleId: "ai.traycer.desktop.dev.12345678",
+  devBundleId: "ai.hukum.desktop.dev.12345678",
   electronVersion: "42.0.0",
   sourceInfoPlistMtimeMs: 1,
   sourceExecutableMtimeMs: 2,
@@ -25,16 +25,16 @@ describe("dev Electron bundle state", () => {
   it("includes the display name so a renamed slot rebuilds its bundle", () => {
     const spryPandaState = electronBinary.createDevBundleState({
       ...bundleStateOptions,
-      bundleDisplayName: "Traycer Dev — spry-panda",
+      bundleDisplayName: "Hukum Dev — spry-panda",
     });
     const amberLionState = electronBinary.createDevBundleState({
       ...bundleStateOptions,
-      bundleDisplayName: "Traycer Dev — amber-lion",
+      bundleDisplayName: "Hukum Dev — amber-lion",
     });
 
     expect(spryPandaState).not.toBe(amberLionState);
     expect(JSON.parse(spryPandaState)).toMatchObject({
-      bundleDisplayName: "Traycer Dev — spry-panda",
+      bundleDisplayName: "Hukum Dev — spry-panda",
     });
   });
 });

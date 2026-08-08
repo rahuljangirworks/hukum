@@ -1,5 +1,5 @@
-import type { StreamCloseReason } from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { TimerHandle } from "@traycer-clients/shared/host-transport/timer-handle";
+import type { StreamCloseReason } from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { TimerHandle } from "@hukum-clients/shared/host-transport/timer-handle";
 
 /**
  * Backoff for reopening a host stream after a TERMINAL close (the

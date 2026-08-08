@@ -2,8 +2,8 @@ import { cleanup, render, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { Editor } from "@tiptap/core";
 import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
-import { jsonContentToMarkdown } from "@traycer/protocol/common/json-content-serializer";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import { jsonContentToMarkdown } from "@hukum/protocol/common/json-content-serializer";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import {
   buildSubmittedChatJSONContent,

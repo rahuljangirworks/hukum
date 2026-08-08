@@ -4,7 +4,7 @@ import type {
   WorktreeBinding,
   WorktreeBindingEntry,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   mentionRootsFromWorktreeIntent,
   mentionRootsFromWorktreeBinding,
@@ -192,12 +192,12 @@ describe("mentionRootsFromWorktreeBinding", () => {
     const roots = mentionRootsFromWorktreeBinding(
       binding([
         bindingEntry({
-          workspacePath: "/Users/me/Work/traycer",
+          workspacePath: "/Users/me/Work/hukum",
           mode: "local",
         }),
       ]),
     );
-    expect(roots).toEqual(["/Users/me/Work/traycer"]);
+    expect(roots).toEqual(["/Users/me/Work/hukum"]);
   });
 
   it("uses the worktree path for worktree-mode entries", () => {

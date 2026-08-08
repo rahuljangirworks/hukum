@@ -1,6 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { WorktreeChangedStreamClient } from "@traycer-clients/shared/host-transport/worktree-changed-stream-client";
+import { WorktreeChangedStreamClient } from "@hukum-clients/shared/host-transport/worktree-changed-stream-client";
 import {
   useStreamMethodSupport,
   useWsStreamClient,

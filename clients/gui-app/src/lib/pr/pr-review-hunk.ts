@@ -13,7 +13,7 @@
  * than filled with a plausible-looking count from 1 - a wrong line number is
  * worse than no line number when the point of the panel is to say WHERE.
  */
-import type { PrReviewThread } from "@traycer/protocol/host/pr-schemas";
+import type { PrReviewThread } from "@hukum/protocol/host/pr-schemas";
 
 /** `@@ -oldStart,oldCount +newStart,newCount @@ optional section heading` */
 const HUNK_HEADER_PATTERN = /^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@/u;

@@ -11,7 +11,7 @@ import {
   type ChordKey,
   type ChordParts,
   type ChordString,
-} from "@traycer-clients/shared/keybindings/chord-core";
+} from "@hukum-clients/shared/keybindings/chord-core";
 
 /**
  * Canonical chord string: `mod+ctrl+shift+alt+key` where modifiers appear in
@@ -28,7 +28,7 @@ import {
  * (e.g. the dictation hotkey).
  *
  * The parse/format core (`formatChord`/`parseChordString` and their types)
- * lives in `@traycer-clients/shared/keybindings/chord-core` - it has no
+ * lives in `@hukum-clients/shared/keybindings/chord-core` - it has no
  * `navigator`/DOM dependency, so it's also importable from the Electron main
  * process (global-shortcut registration). Everything below that touches
  * `KeyboardEvent` or platform display labels stays here.

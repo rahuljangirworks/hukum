@@ -4,8 +4,8 @@ import {
   downgradeResponseAcrossMajors,
   upgradeRequestToVersion,
   upgradeResponseToVersion,
-} from "@traycer/protocol/framework/index";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/framework/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   providersListResponseSchemaV70,
   downgradeProviderCliStateToV10,
@@ -18,7 +18,7 @@ import {
   providersListResponseSchemaV20,
   providersListResponseSchemaV30,
   providersSetEnabledRequestSchemaV21,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 // Importing from the registry runs `defineVersionedRpcRegistry` (full
 // structural + schema-compatibility validation) at module load, so this
 // import alone asserts the new `providers.startLogin@1.1` /
@@ -26,14 +26,14 @@ import {
 import {
   providersAwaitLoginDowngradeV21ToV10,
   providersSetEnabledDowngradeV2ToV1,
-} from "@traycer/protocol/host/registry";
-import { prepareTuiLaunchRequestSchema } from "@traycer/protocol/host/agent/tui/unary-schemas";
-import { chatRunSettingsSchema } from "@traycer/protocol/persistence/epic/foundation";
+} from "@hukum/protocol/host/registry";
+import { prepareTuiLaunchRequestSchema } from "@hukum/protocol/host/agent/tui/unary-schemas";
+import { chatRunSettingsSchema } from "@hukum/protocol/persistence/epic/foundation";
 import {
   grokChatSessionAnchorSchema,
   claudeChatSessionAnchorSchema,
-} from "@traycer/protocol/persistence/epic/senders";
-import { claudeTuiAgentSchema } from "@traycer/protocol/persistence/epic/tui-agents";
+} from "@hukum/protocol/persistence/epic/senders";
+import { claudeTuiAgentSchema } from "@hukum/protocol/persistence/epic/tui-agents";
 
 /**
  * Multi-profile protocol ticket coverage: every additive field parses old

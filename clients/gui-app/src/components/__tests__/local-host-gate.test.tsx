@@ -24,15 +24,15 @@ import type {
   LocalHostSnapshot,
   MutationOutcome,
   MutationProgress,
-} from "@traycer-clients/shared/platform/runner-host";
-import type { Disposable } from "@traycer-clients/shared/platform/uri-callback";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
+} from "@hukum-clients/shared/platform/runner-host";
+import type { Disposable } from "@hukum-clients/shared/platform/uri-callback";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
 import {
   HostRpcError,
   type ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   GATE_BYPASS_PATH_PREFIX,
   HostProvisioningController,
@@ -55,7 +55,7 @@ import { useHostQuery } from "@/hooks/host/use-host-query";
 import {
   CURRENT_EPIC_VERSION,
   CURRENT_PHASE_VERSION,
-} from "@traycer-clients/shared/epic/epic-version";
+} from "@hukum-clients/shared/epic/epic-version";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   createPersistentMemoryHistory,
@@ -119,13 +119,13 @@ let restoreFetch: () => void = () => undefined;
 
 function makeHost(snapshot: LocalHostSnapshot | null): MockRunnerHost {
   return new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: snapshot,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 
@@ -157,7 +157,7 @@ function makeHostManagement(
     installVersion: notImplemented("installVersion"),
     uninstallHost: notImplemented("uninstallHost"),
     restartHost: notImplemented("restartHost"),
-    uninstallTraycer: notImplemented("uninstallTraycer"),
+    uninstallHukum: notImplemented("uninstallHukum"),
     getRemovalState: () => Promise.resolve({ removedByUser: false }),
     clearRemoval: () => Promise.resolve(),
     getHostLogs: notImplemented("getHostLogs"),
@@ -192,13 +192,13 @@ class DeferredInitialSnapshotHost extends MockRunnerHost {
 
   constructor(snapshot: LocalHostSnapshot | null, management: IHostManagement) {
     super({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: snapshot,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
       hostManagement: management,
     });
     this.deferredSnapshot = snapshot;
@@ -277,7 +277,7 @@ function mountGate(
           bypass={false}
           selectedEntry={selectedEntry}
           loading={
-            <div data-testid="gate-loading">Starting local Traycer Host…</div>
+            <div data-testid="gate-loading">Starting local Hukum Host…</div>
           }
           provisioningLoading={null}
           unavailable={<div data-testid="gate-unavailable">unavailable</div>}
@@ -318,7 +318,7 @@ function mountGateWithRuntime(
                 selectedEntry={selectedEntry}
                 loading={
                   <div data-testid="gate-loading">
-                    Starting local Traycer Host…
+                    Starting local Hukum Host…
                   </div>
                 }
                 provisioningLoading={null}
@@ -365,7 +365,7 @@ function mountGateWithRealUnavailable(
           bypass={false}
           selectedEntry={selectedEntry}
           loading={
-            <div data-testid="gate-loading">Starting local Traycer Host…</div>
+            <div data-testid="gate-loading">Starting local Hukum Host…</div>
           }
           provisioningLoading={null}
           unavailable={
@@ -501,7 +501,7 @@ describe("LocalHostGate", () => {
 
     expect(screen.queryByTestId("gate-loading")).not.toBeNull();
     expect(screen.queryByTestId("gate-loading")?.textContent).toContain(
-      "Starting local Traycer Host…",
+      "Starting local Hukum Host…",
     );
     expect(screen.queryByTestId("local-host-retry")).toBeNull();
     expect(screen.queryByTestId("local-host-unavailable")).toBeNull();
@@ -778,13 +778,13 @@ describe("LocalHostGate", () => {
     );
     mountGateWithRuntime(
       new MockRunnerHost({
-        signInUrl: "https://auth.traycer.invalid/sign-in",
+        signInUrl: "https://auth.hukum.invalid/sign-in",
         authnBaseUrl: "http://localhost:5005",
         localHost: validSnapshot,
         hosts: [],
         workspaceFolderPickerPaths: undefined,
         hasLocalHost: undefined,
-        traycerCli: undefined,
+        hukumCli: undefined,
         hostManagement: makeHostManagement(convergeReady),
       }),
       localEntry,
@@ -834,13 +834,13 @@ describe("LocalHostGate", () => {
       },
     );
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
       hostManagement: makeHostManagement(convergeReady),
     });
     hostRef.current = host;
@@ -1059,13 +1059,13 @@ describe("LocalHostGate", () => {
       [],
     );
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in?shell=mobile",
+      signInUrl: "https://auth.hukum.invalid/sign-in?shell=mobile",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       hasLocalHost: false,
       workspaceFolderPickerPaths: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
     mountGate(host, null);
 
@@ -1260,7 +1260,7 @@ describe("LocalHostGate + system tab modal guard integration", () => {
 
     const windowId = "real-gate-promote-back";
     window.localStorage.setItem(
-      `traycer-gui-app:last-route:${windowId}`,
+      `hukum-gui-app:last-route:${windowId}`,
       JSON.stringify({ entries: ["/draft/d0", "/draft/d1"], index: 1 }),
     );
 
@@ -1379,7 +1379,7 @@ describe("LocalHostGate + system tab modal guard integration", () => {
 });
 
 // Producer-level coverage for `useHostProvisioning`'s retained progress
-// (traycer#862 / #4747). Live progress is sourced from the shared
+// (hukum#862 / #4747). Live progress is sourced from the shared
 // HostControllerStatus mutation lane (pushed the same way production's
 // HostControllerStatusListener does). lastProgress is retained only for the
 // current attempt and exposed only after that attempt FAILS.
@@ -1487,13 +1487,13 @@ describe("useHostProvisioning lastProgress producer", () => {
     );
     const management = makeHostManagement(convergeReady);
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
       hostManagement: management,
     });
     const { queryClient, readLifecycle } = mountProvisioningLifecycle(host);
@@ -1538,13 +1538,13 @@ describe("useHostProvisioning lastProgress producer", () => {
     );
     const management = makeHostManagement(convergeReady);
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
       hostManagement: management,
     });
     const { queryClient, readLifecycle } = mountProvisioningLifecycle(host);
@@ -1593,13 +1593,13 @@ describe("useHostProvisioning lastProgress producer", () => {
     );
     const management = makeHostManagement(convergeReady);
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
       hostManagement: management,
     });
     const { queryClient, readLifecycle } = mountProvisioningLifecycle(host);
@@ -1678,13 +1678,13 @@ describe("useHostProvisioning lastProgress producer", () => {
     );
     const management = makeHostManagement(convergeReady);
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
       hostManagement: management,
     });
     const { queryClient, readLifecycle } = mountProvisioningLifecycle(host);
@@ -1736,13 +1736,13 @@ describe("useHostProvisioning lastProgress producer", () => {
     );
     const management = makeHostManagement(convergeReady);
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: null,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
       hostManagement: management,
     });
     const { queryClient, readLifecycle } = mountProvisioningLifecycle(host);

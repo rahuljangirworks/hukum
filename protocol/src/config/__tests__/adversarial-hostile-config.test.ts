@@ -30,7 +30,7 @@ import {
 } from "../store";
 
 beforeEach(async () => {
-  h.home = await mkdtemp(join(tmpdir(), "traycer-hostile-config-"));
+  h.home = await mkdtemp(join(tmpdir(), "hukum-hostile-config-"));
   h.passwdShell = "/bin/zsh";
 });
 

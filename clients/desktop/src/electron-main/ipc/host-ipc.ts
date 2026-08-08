@@ -12,7 +12,7 @@ import { readPidMetadata } from "../host/host-lifecycle";
 import type { RunnerIpcBridge } from "./runner-ipc-bridge";
 
 // Collapses a restart-intent outcome to the wire result both restart
-// surfaces resolve (this handler and `traycerHostRestart`). `busy` and
+// surfaces resolve (this handler and `hukumHostRestart`). `busy` and
 // `deferred` become a resolved `declined` - the host was deliberately NOT
 // restarted (in-progress work denied the shutdown claim, removed-by-user,
 // lock contention), a state that clears on its own or on a later retry -

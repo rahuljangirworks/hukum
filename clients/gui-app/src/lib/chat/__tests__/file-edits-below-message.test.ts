@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   TurnCheckpointManifest,
   TurnCheckpointManifestEntry,
-} from "@traycer/protocol/persistence/epic/checkpoint-manifests";
+} from "@hukum/protocol/persistence/epic/checkpoint-manifests";
 import type {
   ChatEvent,
   Message,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import {
   hasUndoableFileEditsFromMessage,
   scopedArtifactCountFromMessage,

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export const AGENT_SELECTION_GUIDE_TITLE = "Agent selection guide";
 export const AGENT_SELECTION_GUIDE_DESCRIPTION =
-  "Instructions for how Traycer agents choose child-agent harnesses, models, and reasoning effort.";
+  "Instructions for how Hukum agents choose child-agent harnesses, models, and reasoning effort.";
 
 const MARKDOWN_EDITOR_EXTENSIONS = [
   markdown(),

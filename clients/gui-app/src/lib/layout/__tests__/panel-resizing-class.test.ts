@@ -4,7 +4,7 @@ import {
   registerPanelResizeParticipant,
 } from "@/lib/layout/panel-resizing-class";
 
-const PANEL_RESIZING_CLASS = "traycer-panel-resizing";
+const PANEL_RESIZING_CLASS = "hukum-panel-resizing";
 
 type VoidMock = Mock<() => void>;
 

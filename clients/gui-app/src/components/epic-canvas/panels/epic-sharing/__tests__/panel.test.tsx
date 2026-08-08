@@ -204,7 +204,7 @@ const DIRECT_EDITOR: EpicCollaboratorView = {
 const SHARED_TEAM: EpicTeamCollaboratorView = {
   key: "team-team-1",
   teamId: "team-1",
-  teamName: "traycerai",
+  teamName: "hukumai",
   role: "viewer",
   members: [
     {
@@ -215,7 +215,7 @@ const SHARED_TEAM: EpicTeamCollaboratorView = {
       avatarUrl: null,
       key: "team-team-1-user-2",
       teamId: "team-1",
-      teamName: "traycerai",
+      teamName: "hukumai",
       role: "viewer",
       userId: "user-2",
     },
@@ -367,7 +367,7 @@ describe("<SharingPanel />", () => {
       flatRows: [DIRECT_USER, ...SHARED_TEAM.members],
     };
     testState.shareableTeams = [
-      { teamId: "team-1", slug: "traycerai", avatarUrl: null },
+      { teamId: "team-1", slug: "hukumai", avatarUrl: null },
       { teamId: "team-2", slug: "platform", avatarUrl: null },
     ];
 
@@ -377,7 +377,7 @@ describe("<SharingPanel />", () => {
       screen.getByTestId("epic-sharing-people-list").textContent,
     ).toContain("Anurag Sharma");
     expect(screen.getByTestId("epic-sharing-teams-list").textContent).toContain(
-      "traycerai",
+      "hukumai",
     );
     expect(screen.getByTestId("epic-sharing-teams-list").textContent).toContain(
       "platform",
@@ -394,7 +394,7 @@ describe("<SharingPanel />", () => {
       flatRows: [DIRECT_USER, ...SHARED_TEAM.members],
     };
     testState.shareableTeams = [
-      { teamId: "team-1", slug: "traycerai", avatarUrl: null },
+      { teamId: "team-1", slug: "hukumai", avatarUrl: null },
       { teamId: "team-2", slug: "platform", avatarUrl: null },
     ];
 
@@ -503,7 +503,7 @@ describe("<SharingPanel />", () => {
       flatRows: [DIRECT_USER, DIRECT_EDITOR, ...SHARED_TEAM.members],
     };
     testState.shareableTeams = [
-      { teamId: "team-1", slug: "traycerai", avatarUrl: null },
+      { teamId: "team-1", slug: "hukumai", avatarUrl: null },
     ];
 
     renderSharingPanel();

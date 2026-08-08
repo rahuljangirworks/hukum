@@ -32,8 +32,8 @@ import type {
   OtherResourceSnapshotWire,
   ResourceOwnerKindWireV14,
   ResourceProcessSnapshotWire,
-} from "@traycer/protocol/host/resources/subscribe";
-import type { TaskLight } from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/resources/subscribe";
+import type { TaskLight } from "@hukum/protocol/host/epic/unary-schemas";
 import type { EpicNodeRecord } from "@/lib/artifacts/node-display";
 import { displayTitle } from "@/lib/display-title";
 import { useRegisteredEpicLiveArtifactTitles } from "@/lib/epic-selectors";
@@ -1124,7 +1124,7 @@ function DesktopAppResourceSection(props: {
       ...(showOther ? [{ label: "Other", usage: props.app.other }] : []),
     ].filter((group) =>
       matchesResourceSearch(props.searchQuery, [
-        "Traycer Desktop",
+        "Hukum Desktop",
         group.label,
       ]),
     ),
@@ -1142,7 +1142,7 @@ function DesktopAppResourceSection(props: {
         <div className="flex min-w-0 items-center gap-1.5">
           <Monitor className="size-3.5 shrink-0 text-muted-foreground/80" />
           <span className="min-w-0 truncate text-ui-sm font-medium text-foreground">
-            Traycer Desktop
+            Hukum Desktop
           </span>
         </div>
         <div className="flex items-center">
@@ -1195,7 +1195,7 @@ function HostAppResourceSection(props: { readonly app: AppResourceUsage }) {
         <div className="flex min-w-0 items-center gap-1.5">
           <Server className="size-3.5 shrink-0 text-muted-foreground/80" />
           <span className="min-w-0 truncate text-ui-sm font-medium text-foreground">
-            Traycer Host
+            Hukum Host
           </span>
         </div>
         <div className="flex items-center">
@@ -3043,8 +3043,8 @@ function desktopAppMatchesSearch(
   searchQuery: string,
 ): boolean {
   if (
-    matchesResourceSearch(searchQuery, ["Traycer Desktop", "Main"]) ||
-    matchesResourceSearch(searchQuery, ["Traycer Desktop", "Renderer"])
+    matchesResourceSearch(searchQuery, ["Hukum Desktop", "Main"]) ||
+    matchesResourceSearch(searchQuery, ["Hukum Desktop", "Renderer"])
   ) {
     return true;
   }
@@ -3054,7 +3054,7 @@ function desktopAppMatchesSearch(
     app.other.processCount > 0;
   return (
     showOther &&
-    matchesResourceSearch(searchQuery, ["Traycer Desktop", "Other"])
+    matchesResourceSearch(searchQuery, ["Hukum Desktop", "Other"])
   );
 }
 
@@ -3062,11 +3062,11 @@ function hostAppMatchesSearch(
   app: AppResourceUsage,
   searchQuery: string,
 ): boolean {
-  if (matchesResourceSearch(searchQuery, ["Traycer Host"])) return true;
+  if (matchesResourceSearch(searchQuery, ["Hukum Host"])) return true;
   return (
     app.process !== null &&
     matchesResourceSearch(searchQuery, [
-      "Traycer Host",
+      "Hukum Host",
       ...processSearchTerms(app.process),
     ])
   );

@@ -7,25 +7,25 @@ import type {
   StoredCredentialsIdentity,
   TokenRotateResult,
   TokenStoreChange,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import {
   refreshOnceAbortable,
   validateAuthTokenIdentityAccessOnceAbortable,
-} from "@traycer-clients/shared/auth/auth-validation";
-import type { Environment } from "@traycer/protocol/config/paths";
-import { cliCredentialsPath } from "@traycer/protocol/config/paths";
-import { readCredentialsFile } from "@traycer/protocol/config/credentials";
+} from "@hukum-clients/shared/auth/auth-validation";
+import type { Environment } from "@hukum/protocol/config/paths";
+import { cliCredentialsPath } from "@hukum/protocol/config/paths";
+import { readCredentialsFile } from "@hukum/protocol/config/credentials";
 import {
   createCredentialsMutationStore,
   type CredentialsMutationStore,
-} from "@traycer/protocol/config/credentials-mutation";
-import { runInitGate } from "@traycer/protocol/config/credentials-wal";
+} from "@hukum/protocol/config/credentials-mutation";
+import { runInitGate } from "@hukum/protocol/config/credentials-wal";
 import { runLegacyCredentialsMigration } from "./credentials-migration";
 import { describeLogError, log } from "../app/logger";
 
 /**
  * Main-process owner of the single machine-local credentials file
- * (`~/.traycer/cli/<env>/credentials`), the store half of the credentials-file
+ * (`~/.hukum/cli/<env>/credentials`), the store half of the credentials-file
  * token-store tech plan (§3 + §4). It wraps the cross-process mutation store
  * (§2) — lock + WAL + typed outcomes — and injects the one-shot abortable
  * refresh, so every token *spend* runs inside the file lock, immediately
@@ -437,7 +437,7 @@ export class FileTokenStore {
   }
 
   /**
-   * Sign-out delete. Reachable only from `AuthService.signOut()` / `traycer
+   * Sign-out delete. Reachable only from `AuthService.signOut()` / `hukum
    * logout` per the governing principle (only explicit user intent destroys the
    * shared file). Rejects if the delete cannot land, so a failed sign-out stays
    * signed in rather than falsely reporting success.

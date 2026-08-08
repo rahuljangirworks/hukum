@@ -2,7 +2,7 @@ import { useSyncExternalStore } from "react";
 import {
   getNegotiatedHostMethods,
   subscribeNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
 
 /**
  * Whether `hostId` advertised `method` in its last handshake.

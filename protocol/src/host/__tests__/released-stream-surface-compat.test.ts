@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/index";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/index";
 import { releasedStreamMethodNames } from "./__fixtures__/released-stream-method-names";
 
 /**

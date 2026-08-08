@@ -9,7 +9,7 @@ interface InMemoryCredential {
 /**
  * Session-scoped proxy credential cache. Keyed on `host:port|realm` so
  * different proxies on the same host can be stored independently. The
- * store is intentionally in-memory only - Traycer's auth tokens use
+ * store is intentionally in-memory only - Hukum's auth tokens use
  * `encrypt-storage` (AES in `localStorage`) in the renderer specifically
  * to avoid an OS-keychain dependency, and proxy credentials should follow
  * the same posture. Users re-enter once per launch through Electron's

@@ -2,7 +2,7 @@ import Fuse, { type IFuseOptions } from "fuse.js";
 import {
   readableModelMatch,
   resolveModelBySlug,
-} from "@traycer/protocol/host/agent/gui/model-slug-resolution";
+} from "@hukum/protocol/host/agent/gui/model-slug-resolution";
 import {
   type HarnessModelSelection,
   type HarnessOption,
@@ -47,8 +47,8 @@ export interface HarnessModelRow {
   readonly capacityLabel: string | null;
   /**
    * Human-readable sunset notice when the host's catalog flags this model as
-   * deprecated (currently only the Traycer harness does). `null` for every
-   * actively-recommended model, including every non-Traycer harness (the
+   * deprecated (currently only the Hukum harness does). `null` for every
+   * actively-recommended model, including every non-Hukum harness (the
    * field is optional on the wire - see `deprecationNotice` on
    * `GuiAgentModelOption`).
    */

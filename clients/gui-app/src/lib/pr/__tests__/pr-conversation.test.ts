@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import type {
   PrActivityItem,
   PrReviewThread,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import {
   countPrConversationCards,
   groupPrConversation,

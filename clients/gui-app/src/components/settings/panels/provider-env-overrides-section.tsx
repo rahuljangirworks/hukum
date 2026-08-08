@@ -1,5 +1,5 @@
-import { PROVIDER_DISPLAY_NAMES } from "@traycer/protocol/host/provider-schemas";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import { PROVIDER_DISPLAY_NAMES } from "@hukum/protocol/host/provider-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { useProvidersSetEnvOverride } from "@/hooks/providers/use-providers-set-env-override-mutation";
 import { useProvidersDeleteEnvOverride } from "@/hooks/providers/use-providers-delete-env-override-mutation";
@@ -59,7 +59,7 @@ export function ProviderEnvOverridesSection({
             </p>
           ) : (
             <p className="text-ui-xs text-muted-foreground">
-              Applied when Traycer spawns the {providerName} harness. Use Unset
+              Applied when Hukum spawns the {providerName} harness. Use Unset
               to drop a variable inherited from your shell.
             </p>
           )}

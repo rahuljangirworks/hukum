@@ -9,7 +9,7 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { isValidElement, type ReactNode } from "react";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { NotificationEmissionController } from "@/components/layout/bridges/notification-emission-controller";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { AppLocalNotificationsPersistLifecycleBridge } from "@/providers/app-local-notifications-persist-lifecycle-bridge";
@@ -21,7 +21,7 @@ import {
   useAppLocalNotificationsStore,
   type AppLocalNotificationEntry,
 } from "@/stores/notifications/app-local-notifications-store";
-import type { HostNotificationEntry } from "@traycer/protocol/host/notifications/contracts";
+import type { HostNotificationEntry } from "@hukum/protocol/host/notifications/contracts";
 import type { MergedNotificationRow } from "@/stores/notifications/merged-notifications";
 import { useAuthStore } from "@/stores/auth/auth-store";
 import { appLocalNotificationsKey } from "@/lib/persist";
@@ -86,7 +86,7 @@ function createRunnerHost(): MockRunnerHost {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 

@@ -53,10 +53,10 @@ let work: string;
 let homeDir: string;
 
 const CLI_BINARY_NAME =
-  process.platform === "win32" ? "traycer.exe" : "traycer";
+  process.platform === "win32" ? "hukum.exe" : "hukum";
 
 beforeEach(() => {
-  work = mkdtempSync(join(tmpdir(), "traycer-install-bundled-cli-"));
+  work = mkdtempSync(join(tmpdir(), "hukum-install-bundled-cli-"));
   homeDir = join(work, "home");
   mkdirSync(homeDir, { recursive: true });
   sandboxHome(homeDir);
@@ -71,7 +71,7 @@ afterEach(() => {
 function stageBundled(content: string): string {
   const bundleCliDir = join(
     work,
-    "Traycer.app",
+    "Hukum.app",
     "Contents",
     "Resources",
     "cli",
@@ -99,7 +99,7 @@ describe("installBundledCli stages a copy that outlives the bundle", () => {
       expect(statSync(stable).mode & 0o111).not.toBe(0);
     }
     const manifest: { binaryPath: string; version: string } = JSON.parse(
-      readFileSync(join(homeDir, ".traycer", "cli", "manifest.json"), "utf8"),
+      readFileSync(join(homeDir, ".hukum", "cli", "manifest.json"), "utf8"),
     );
     expect(manifest.binaryPath).toBe(stable);
     expect(manifest.version).toBe("1.0.0");
@@ -114,7 +114,7 @@ describe("installBundledCli stages a copy that outlives the bundle", () => {
       source: "desktop",
     });
 
-    rmSync(join(work, "Traycer.app"), { recursive: true, force: true });
+    rmSync(join(work, "Hukum.app"), { recursive: true, force: true });
 
     // `stat` FOLLOWS links: with the old symlink staging this is exactly
     // where ENOENT surfaced while lstat (and `ls`) kept succeeding.
@@ -126,9 +126,9 @@ describe("installBundledCli stages a copy that outlives the bundle", () => {
     "replaces a legacy dangling symlink from the pre-copy era with a real copy",
     async () => {
       const bundled = stageBundled("cli-bytes-v2");
-      const binDir = join(homeDir, ".traycer", "cli", "bin");
+      const binDir = join(homeDir, ".hukum", "cli", "bin");
       mkdirSync(binDir, { recursive: true });
-      const legacySlot = join(binDir, "traycer");
+      const legacySlot = join(binDir, "hukum");
       symlinkSync(join(work, "removed-bundle-target"), legacySlot);
 
       const { installBundledCli } = await import("../cli-discovery");

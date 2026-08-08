@@ -1,4 +1,4 @@
-import type { BootstrapMarkerEntry } from "@traycer-clients/shared/platform/runner-host";
+import type { BootstrapMarkerEntry } from "@hukum-clients/shared/platform/runner-host";
 
 /**
  * Pure reduction of the bootstrap marker file, kept out of

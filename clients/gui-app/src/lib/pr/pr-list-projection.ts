@@ -8,7 +8,7 @@ import type {
   PrBaseCoordinates,
   PrLightItem,
   PrRepoIdentifier,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 
 export interface PrRepoGroup {
   readonly repoIdentifier: PrRepoIdentifier;

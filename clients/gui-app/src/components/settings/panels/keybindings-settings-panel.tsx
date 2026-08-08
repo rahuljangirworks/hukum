@@ -15,7 +15,7 @@ import { findConflict } from "@/lib/keybindings/conflicts";
 import { useKeybindingStore } from "@/stores/settings/keybinding-store";
 import { Kbd } from "@/components/ui/kbd";
 import { useSummonHotkey } from "@/hooks/runner/use-summon-hotkey";
-import { GLOBAL_SHORTCUT_DEFAULT_CHORDS } from "@traycer-clients/shared/keybindings/global-shortcuts";
+import { GLOBAL_SHORTCUT_DEFAULT_CHORDS } from "@hukum-clients/shared/keybindings/global-shortcuts";
 import { runnerMutationKeys } from "@/lib/query-keys";
 import { toastFromRunnerError } from "@/lib/runner-error-toast";
 import { trackSettingChanged } from "@/lib/analytics";
@@ -246,7 +246,7 @@ function GlobalShortcutsSection(props: GlobalShortcutsSectionProps) {
           Global shortcuts
         </h2>
         <p className="mt-1 text-ui-xs text-muted-foreground">
-          Registered system-wide - fires from anywhere, even when Traycer isn't
+          Registered system-wide - fires from anywhere, even when Hukum isn't
           focused.
         </p>
       </header>
@@ -279,7 +279,7 @@ function SummonHotkeyRow(props: SummonHotkeyRowProps) {
     return (
       <li className="flex items-center justify-between gap-6 px-5 py-3">
         <span className="truncate text-ui-sm text-foreground">
-          Summon Traycer
+          Summon Hukum
         </span>
       </li>
     );
@@ -299,10 +299,10 @@ function SummonHotkeyRow(props: SummonHotkeyRowProps) {
     <li className="flex items-center justify-between gap-6 px-5 py-3">
       <div className="flex flex-col gap-0.5">
         <span className="truncate text-ui-sm text-foreground">
-          Summon Traycer
+          Summon Hukum
         </span>
         <span className="text-ui-xs text-muted-foreground">
-          Shows and focuses Traycer from anywhere.
+          Shows and focuses Hukum from anywhere.
         </span>
       </div>
       <div className="flex flex-col items-end gap-1">

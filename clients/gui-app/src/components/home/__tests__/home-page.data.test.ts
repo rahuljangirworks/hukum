@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { ListTaskLight } from "@traycer/protocol/host/epic/unary-schemas";
-import type { WorktreeHostEntryV12 } from "@traycer/protocol/host/worktree-schemas";
+import type { ListTaskLight } from "@hukum/protocol/host/epic/unary-schemas";
+import type { WorktreeHostEntryV12 } from "@hukum/protocol/host/worktree-schemas";
 import {
   buildHistoryItemsFromTasks,
   collectHistoryRepos,
@@ -271,13 +271,13 @@ describe("home-page history helpers", () => {
           repos: [
             {
               task: null,
-              repoIdentifier: { owner: "traycerai", repo: "gui-app" },
+              repoIdentifier: { owner: "hukumai", repo: "gui-app" },
               createdAt: 0,
               createdBy: "user-1",
             },
             {
               task: null,
-              repoIdentifier: { owner: "traycerai", repo: "host" },
+              repoIdentifier: { owner: "hukumai", repo: "host" },
               createdAt: 0,
               createdBy: "user-1",
             },
@@ -306,7 +306,7 @@ describe("home-page history helpers", () => {
           repos: [
             {
               task: null,
-              repoIdentifier: { owner: "traycerai", repo: "gui-app" },
+              repoIdentifier: { owner: "hukumai", repo: "gui-app" },
               createdAt: 0,
               createdBy: "user-1",
             },
@@ -336,7 +336,7 @@ describe("home-page history helpers", () => {
       // empty-title fallback from it.
       initialUserPrompt: "Ship it",
       updatedBucket: "today",
-      linkedRepos: ["traycerai/gui-app", "traycerai/host"],
+      linkedRepos: ["hukumai/gui-app", "hukumai/host"],
       ownership: "mine",
       permissionRole: "owner",
       isPinned: true,
@@ -349,7 +349,7 @@ describe("home-page history helpers", () => {
       // Phases have no user prompt.
       initialUserPrompt: "",
       updatedBucket: "today",
-      linkedRepos: ["traycerai/gui-app"],
+      linkedRepos: ["hukumai/gui-app"],
       isPinned: false,
     });
   });
@@ -365,8 +365,8 @@ function worktreeWithPullRequests(args: {
 }): WorktreeHostEntryV12 {
   return {
     worktreePath: `/worktrees/${args.prNumber ?? "none"}`,
-    repoLabel: "traycer/gui-app",
-    repoIdentifier: { owner: "traycer", repo: "gui-app" },
+    repoLabel: "hukum/gui-app",
+    repoIdentifier: { owner: "hukum", repo: "gui-app" },
     branch: "task-history",
     inUse: false,
     uncommittedCount: 0,
@@ -381,17 +381,17 @@ function worktreeWithPullRequests(args: {
     prUrl:
       args.prNumber === null
         ? null
-        : `https://github.com/traycer/gui-app/pull/${args.prNumber}`,
+        : `https://github.com/hukum/gui-app/pull/${args.prNumber}`,
     mergedHeadShaMatches: false,
     submodules: args.submodulePrNumbers.map((prNumber, index) => ({
-      repoIdentifier: { owner: "traycer", repo: `submodule-${index}` },
+      repoIdentifier: { owner: "hukum", repo: `submodule-${index}` },
       branch: `submodule-${index}`,
       prState: prNumber === null ? "none" : "open",
       prNumber,
       prUrl:
         prNumber === null
           ? null
-          : `https://github.com/traycer/submodule-${index}/pull/${prNumber}`,
+          : `https://github.com/hukum/submodule-${index}/pull/${prNumber}`,
       mergedHeadShaMatches: false,
       mergedIntoDefault: false,
       atPinnedCommit: false,

@@ -3,7 +3,7 @@ import type {
   WorktreeCreateResponse,
   WorktreeImportResponse,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { Analytics, AnalyticsEvent } from "@/lib/analytics";
 
 type WorktreeIntentEntry = WorktreeIntent["entries"][number];

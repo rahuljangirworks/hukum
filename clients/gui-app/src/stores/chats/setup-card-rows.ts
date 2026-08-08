@@ -1,9 +1,9 @@
-import type { ChatEvent } from "@traycer/protocol/persistence/epic/schemas";
+import type { ChatEvent } from "@hukum/protocol/persistence/epic/schemas";
 import {
   worktreeFolderIntentSchema,
   type WorktreeBindingOwnerKind,
   type WorktreeFolderIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   readMetadataNumber,
   readMetadataString,

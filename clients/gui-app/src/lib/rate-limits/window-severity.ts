@@ -1,4 +1,4 @@
-import type { LiveProviderRateLimitSeverity } from "@traycer/protocol/host/rate-limit";
+import type { LiveProviderRateLimitSeverity } from "@hukum/protocol/host/rate-limit";
 
 export type RateLimitWindowSeverity = LiveProviderRateLimitSeverity;
 

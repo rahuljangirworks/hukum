@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { HostNotificationsCloudFeedRow } from "@traycer/protocol/host/notifications/contracts";
+import type { HostNotificationsCloudFeedRow } from "@hukum/protocol/host/notifications/contracts";
 import {
   mergeHostPendingForkIntoCloudIndicators,
   selectCloudNotificationIndicatorProjection,

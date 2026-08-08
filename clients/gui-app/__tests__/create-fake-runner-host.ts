@@ -1,4 +1,4 @@
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 
 /**
  * Shared `IRunnerHost` stub base for renderer/bridge-provider tests that need
@@ -87,7 +87,7 @@ export function createFakeRunnerHost(
     requestHostRespawn: () => Promise.resolve({ kind: "restarted" as const }),
     getLastKnownLocalHostId: () => Promise.resolve(null),
     service: null,
-    traycerCli: null,
+    hukumCli: null,
     migration: null,
     hostManagement: null,
     hostTray: null,

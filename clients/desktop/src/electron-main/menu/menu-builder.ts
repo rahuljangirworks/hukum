@@ -8,8 +8,8 @@ import {
   type MenuCommandId,
 } from "../../ipc-contracts/window-types";
 import {
-  TRAYCER_DOCUMENTATION_URL,
-  TRAYCER_RELEASE_NOTES_URL,
+  HUKUM_DOCUMENTATION_URL,
+  HUKUM_RELEASE_NOTES_URL,
 } from "../app/support-links";
 import type { MenuState } from "./menu-state";
 
@@ -271,11 +271,11 @@ function buildHelpMenu(
     submenu: [
       {
         label: "Documentation",
-        click: () => actions.openExternal(TRAYCER_DOCUMENTATION_URL),
+        click: () => actions.openExternal(HUKUM_DOCUMENTATION_URL),
       },
       {
         label: "Release Notes",
-        click: () => actions.openExternal(TRAYCER_RELEASE_NOTES_URL),
+        click: () => actions.openExternal(HUKUM_RELEASE_NOTES_URL),
       },
       {
         label: "Report Issue",
@@ -300,7 +300,7 @@ function buildHelpMenu(
       checkForUpdatesItem(state, actions),
       { type: "separator" },
       {
-        label: "About Traycer",
+        label: "About Hukum",
         click: (_item, browserWindow) =>
           actions.command("app.aboutDetails", browserWindow ?? null),
       },

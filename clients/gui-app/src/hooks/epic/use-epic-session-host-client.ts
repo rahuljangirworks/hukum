@@ -1,6 +1,6 @@
 import { use } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { EpicSessionHostClientContext } from "@/lib/registries/epic-session-registry";
 
 /** The RPC client owned by the surrounding Epic session. */

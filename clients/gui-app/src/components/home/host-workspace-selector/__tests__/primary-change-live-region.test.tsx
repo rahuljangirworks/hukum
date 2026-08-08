@@ -32,9 +32,9 @@ describe("PrimaryChangeLiveRegion", () => {
     expect(region.getAttribute("role")).toBe("status");
     expect(region.textContent).toBe("");
 
-    act(() => announceRef?.("traycer"));
+    act(() => announceRef?.("hukum"));
 
-    expect(region.textContent).toBe("traycer is now primary");
+    expect(region.textContent).toBe("hukum is now primary");
   });
 
   it("announces a removal-fallback reassignment after a prior switch", () => {

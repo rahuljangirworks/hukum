@@ -1,5 +1,5 @@
 import { Fragment, type ReactNode } from "react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import { numberValue } from "@/lib/composer/tiptap-json-content";
 import { cn } from "@/lib/utils";
 

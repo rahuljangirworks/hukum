@@ -16,9 +16,9 @@ import type {
   TerminalAgentsSlice,
   TuiAgentProjection,
 } from "@/stores/epics/open-epic/types";
-import type { TuiHarnessId } from "@traycer/protocol/persistence/epic/schemas";
+import type { TuiHarnessId } from "@hukum/protocol/persistence/epic/schemas";
 import type { EpicMentionEntry } from "@/lib/composer/types";
-import type { EpicMentionArtifactSuggestion } from "@traycer/protocol/host/epic/unary-schemas";
+import type { EpicMentionArtifactSuggestion } from "@hukum/protocol/host/epic/unary-schemas";
 
 function chat(
   id: string,

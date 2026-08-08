@@ -3,13 +3,13 @@ import {
   useQuery,
   type UseQueryResult,
 } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   PrDetailCore,
   PrGetLocalDiffRequest,
   PrGetLocalDiffResponse,
-} from "@traycer/protocol/host/pr-schemas";
-import { DEFAULT_PR_LOCAL_DIFF_BYTE_BUDGET } from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
+import { DEFAULT_PR_LOCAL_DIFF_BYTE_BUDGET } from "@hukum/protocol/host/pr-schemas";
 import { useTabHostId } from "@/components/epic-canvas/hooks/use-tab-host-id";
 import { hostClientUnavailableError } from "@/hooks/host/use-host-query";
 import { useTabHostClient } from "@/hooks/host/use-tab-host-client";

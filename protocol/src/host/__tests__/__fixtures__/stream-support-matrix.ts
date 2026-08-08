@@ -1,4 +1,4 @@
-import type { ConnectionManifest } from "@traycer/protocol/framework/index";
+import type { ConnectionManifest } from "@hukum/protocol/framework/index";
 
 /**
  * One historically-released, still-supported app/host version's frozen

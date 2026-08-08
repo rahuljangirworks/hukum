@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { TerminalStreamCallbacks } from "@traycer-clients/shared/host-transport/terminal-stream-client";
-import type { TerminalSessionKind } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { TerminalStreamCallbacks } from "@hukum-clients/shared/host-transport/terminal-stream-client";
+import type { TerminalSessionKind } from "@hukum/protocol/host/terminal/unary-schemas";
 import {
   createTerminalSessionStore,
   type TerminalSessionStoreHandle,

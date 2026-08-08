@@ -5,9 +5,9 @@ import {
   defineRpcContract,
   defineUpgradePath,
   defineVersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
-import { check } from "@traycer/protocol/framework/compatibility-checker";
-import type { ConnectionManifest } from "@traycer/protocol/framework/ws-protocol";
+} from "@hukum/protocol/framework/index";
+import { check } from "@hukum/protocol/framework/compatibility-checker";
+import type { ConnectionManifest } from "@hukum/protocol/framework/ws-protocol";
 
 const echoV10 = defineRpcContract({
   method: "echo",

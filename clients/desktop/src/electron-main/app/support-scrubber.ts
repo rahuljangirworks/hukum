@@ -20,7 +20,7 @@ import {
  * patterns.ts`) so detection never drifts between the two call sites, then
  * adds a pass `redactLogText` has never had: absolute-path pseudonymization.
  * `host.log` is written with zero redaction at source
- * (`traycer-host/src/bootstrap/host-logger.ts`), so this module is its only
+ * (`hukum-host/src/bootstrap/host-logger.ts`), so this module is its only
  * line of defense, and paths - workspace directories, usernames, install
  * locations - are the dominant leak vector in that file and in stack traces.
  */

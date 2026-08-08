@@ -33,7 +33,7 @@ const CREDS: StoredCredentials = {
   token: "access-token",
   refreshToken: "refresh-token",
   savedAt: "2026-01-01T00:00:00.000Z",
-  user: { id: "u1", email: "ada@traycer.ai", name: "Ada" },
+  user: { id: "u1", email: "ada@hukum.ai", name: "Ada" },
 };
 
 function committed(out: CommitOutcome): {
@@ -52,7 +52,7 @@ describe("credentials WAL", () => {
   let lockPath: string;
 
   beforeEach(() => {
-    workDir = mkdtempSync(join(tmpdir(), "traycer-cred-wal-test-"));
+    workDir = mkdtempSync(join(tmpdir(), "hukum-cred-wal-test-"));
     paths = {
       credentialsPath: join(workDir, "credentials"),
       metaPath: join(workDir, "credentials.meta.json"),

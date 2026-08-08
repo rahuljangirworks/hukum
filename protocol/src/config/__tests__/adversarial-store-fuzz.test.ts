@@ -53,7 +53,7 @@ import {
 const DEFAULT_PATH = "/bin/zsh"; // == passwdShell, so defaultShellPath() returns it.
 
 beforeEach(async () => {
-  h.home = await mkdtemp(join(tmpdir(), "traycer-fuzz-config-"));
+  h.home = await mkdtemp(join(tmpdir(), "hukum-fuzz-config-"));
   h.passwdShell = "/bin/zsh";
 });
 

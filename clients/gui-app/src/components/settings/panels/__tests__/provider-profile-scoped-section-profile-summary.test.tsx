@@ -1,4 +1,4 @@
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -38,7 +38,7 @@ vi.mock("@/hooks/providers/use-refresh-providers", () => ({
 }));
 
 import { ProviderProfileScopedSection } from "@/components/settings/panels/provider-profile-scoped-section";
-import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@traycer/protocol/host/provider-native-schemas";
+import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@hukum/protocol/host/provider-native-schemas";
 
 const RAW_EMAIL = "worker@example.com";
 // Matches `redactEmail`'s format: first local-part char + fixed mask + the

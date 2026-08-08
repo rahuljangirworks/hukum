@@ -566,7 +566,7 @@ function removeStoragePrefix(prefix: string): void {
 
 function pruneStorage(): void {
   if (typeof window === "undefined" || activeAccountId === null) return;
-  // Avoid a prefix scan on ordinary settled scroll writes. Other Traycer keys
+  // Avoid a prefix scan on ordinary settled scroll writes. Other Hukum keys
   // can make this threshold conservative (scan early), never unsafe.
   if (window.localStorage.length <= MAX_STORED_RECORDS) return;
   const prefix = accountPrefix(activeAccountId);

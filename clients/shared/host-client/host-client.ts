@@ -1,5 +1,5 @@
-import type { VersionedRpcRegistry } from "@traycer/protocol/framework/index";
-import type { RequestContext } from "@traycer/protocol/auth/request-context";
+import type { VersionedRpcRegistry } from "@hukum/protocol/framework/index";
+import type { RequestContext } from "@hukum/protocol/auth/request-context";
 import type {
   HostRpcError,
   HostRequestAuthority,
@@ -272,7 +272,7 @@ export class HostClient<Registry extends VersionedRpcRegistry> {
           // moves the burst. They recover at the picker's own intent edges
           // instead: a transport flap is exactly what a busy-host storm
           // produces, and refetching catalogs here would fan provider probes
-          // back out mid-storm (traycer#912).
+          // back out mid-storm (hukum#912).
           this.invalidator.invalidateHostScope(entry.hostId, {
             refetchActive: true,
           });

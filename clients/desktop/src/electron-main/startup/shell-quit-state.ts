@@ -1,7 +1,7 @@
 /**
  * Tracks whether the desktop shell has begun quitting.
  *
- * Set once `before-quit` fires - on ANY quit path: Cmd+Q / "Quit Traycer",
+ * Set once `before-quit` fires - on ANY quit path: Cmd+Q / "Quit Hukum",
  * the auto-update install re-quit, and the Win/Linux `window-all-closed` ->
  * `app.quit()` cascade. Read by the windows IPC registry-change listener so a
  * window `closed` event that is part of a quit never destroys the per-window

@@ -1,9 +1,9 @@
 import type { QueryClient } from "@tanstack/react-query";
 import type { UseNavigateResult } from "@tanstack/react-router";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { ResolveArtifactByPathResult } from "@traycer/protocol/host/epic/unary-schemas";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
-import { EPIC_ARTIFACT_INDEX_FILENAME } from "@traycer/protocol/common/artifact-path";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { ResolveArtifactByPathResult } from "@hukum/protocol/host/epic/unary-schemas";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
+import { EPIC_ARTIFACT_INDEX_FILENAME } from "@hukum/protocol/common/artifact-path";
 import {
   candidateWorkspaceFileRefsForAbsoluteLinkPath,
   candidateWorkspaceFileRefsForRelativeLinkPath,
@@ -117,7 +117,7 @@ export type ChatLinkHandler = (
  *   target epic when it points elsewhere. A `null` resolve (deleted / not yet
  *   minted / unresolved chain) or a transport rejection degrades through
  *   `openChatWorkspaceFilePreview` with out-of-root synthesis DISABLED, so an
- *   artifact `index.md` (which normally lives under `~/.traycer`, outside the
+ *   artifact `index.md` (which normally lives under `~/.hukum`, outside the
  *   chat's roots) stays a safe no-op rather than opening a raw / error tile
  *   (D5 / CL-1).
  * - **Plain file links** resolve against the chat's working directories and
@@ -570,7 +570,7 @@ function resolveAndOpenRelativeWorkspaceFile(
  * `activeHostId` isn't set, the resolve comes back `null`, or it rejects.
  *
  * Exists because a foreign-prefix artifact directory (a collaborator's
- * home, a different device's `~/.traycer`) can never win the local
+ * home, a different device's `~/.hukum`) can never win the local
  * existence-probe race - `workspace.readFile` only sees THIS machine's
  * filesystem - even though the RPC would resolve it correctly, since it
  * matches the `epics/<id>/artifacts/<chain>/index.md` marker as a

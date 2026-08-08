@@ -5,7 +5,7 @@ import { SvgViewToggleButton } from "@/components/epic-canvas/renderers/svg-view
 import type {
   GitChangedFile,
   GitGetFileDiffResponse,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import { useEditorOpen } from "@/hooks/editor/use-editor-open-mutation";
 import { useEditorOpenFeedback } from "@/hooks/editor/use-editor-open-feedback";
 import { useGitRefreshWorktreeStatus } from "@/hooks/git/use-git-refresh-worktree-status";

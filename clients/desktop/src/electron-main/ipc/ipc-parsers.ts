@@ -25,7 +25,7 @@ import type {
   StoredAuthTokens,
   StoredCredentialsIdentity,
 } from "../../ipc-contracts/auth-types";
-import type { MintHostCredentialRequest } from "@traycer/protocol/auth/devices-sessions";
+import type { MintHostCredentialRequest } from "@hukum/protocol/auth/devices-sessions";
 
 export {
   parseJsonRecord,
@@ -34,7 +34,7 @@ export {
   parseLandingDrafts,
 } from "../../ipc-contracts/window-state-parsers";
 import { normalizeDesktopAuthSession } from "../auth/desktop-auth-session";
-import type { UpdateHostVersionPolicyInput } from "@traycer-clients/shared/host-client/host-version-policy-fetcher";
+import type { UpdateHostVersionPolicyInput } from "@hukum-clients/shared/host-client/host-version-policy-fetcher";
 
 export function assertString(
   value: unknown,

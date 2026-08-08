@@ -1,19 +1,19 @@
 import {
   type HostNotificationEntryV21,
   type HostNotificationOutcome,
-} from "@traycer/protocol/host/notifications/host-notifications";
+} from "@hukum/protocol/host/notifications/host-notifications";
 import {
   deriveHostNotificationStoppedReason,
   parseHostOperationCommonPayload,
   parseKnownHostNotificationPayloadForKind,
   type HostNotificationKnownPayload,
-} from "@traycer/protocol/host/notifications/payloads";
-import { providerSignedOutMessage } from "@traycer/protocol/host/provider-display";
+} from "@hukum/protocol/host/notifications/payloads";
+import { providerSignedOutMessage } from "@hukum/protocol/host/provider-display";
 import {
   PROVIDER_DISPLAY_NAMES,
   providerIdSchema,
   type ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 export interface HostNotificationPresentation {
   readonly title: string;

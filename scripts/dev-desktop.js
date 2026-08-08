@@ -53,12 +53,12 @@ const REPO_ROOT = path.resolve(__dirname, "..");
 const CLI_ENTRY = path.join(
   REPO_ROOT,
   "clients",
-  "traycer-cli",
+  "hukum-cli",
   "src",
   "index.ts",
 );
 const DESKTOP_WORKSPACE = path.join(REPO_ROOT, "clients", "desktop");
-const TRAYCER_HOME = path.join(os.homedir(), ".traycer");
+const TRAYCER_HOME = path.join(os.homedir(), ".hukum");
 // Local, version-keyed cache of downloaded host archives so repeated
 // `make dev-desktop` runs (the Ctrl-C teardown uninstalls the dev host) don't
 // re-download the same release. Outside the repo tree, so `git clean` never
@@ -319,7 +319,7 @@ function resolveBinary(tool) {
 // per-slot install/log paths when it execs the CLI entry.
 async function stageDevCliWrapper(cliBinDir, slot) {
   await fsp.mkdir(cliBinDir, { recursive: true });
-  const bunBin = resolveBinary("bun");
+  const bunBin = path.join(os.homedir(), ".bun", "bin", "bun");
   const bunBinDir = path.dirname(bunBin);
   if (process.platform === "win32") {
     const wrapperPath = path.join(cliBinDir, DEV_WRAPPER_PATHS.filenameWin32);
@@ -424,65 +424,21 @@ function findCachedArchive(version) {
   return archive === undefined ? null : path.join(dir, archive);
 }
 
-// Resolve a verified host archive for the target version from the local cache,
-// downloading + caching it first on a miss. Reuses the CLI's registry client
-// (bun imports the TS directly) so a freshly downloaded archive goes through the
-// exact same sha256 + minisign verification as the normal `host install
-// <version>` path - the cache only avoids re-downloading. Returns the archive
-// path, or null to fall back to the plain network install (offline + uncached,
-// an unknown version, or any resolution error - the cache must never break the
-// dev flow).
-async function resolveCachedHostArchive(release) {
-  try {
-    // Offline fast path: a pinned --release that's already cached needs no
-    // network and no registry import at all.
-    if (release) {
-      const hit = findCachedArchive(release);
-      if (hit !== null) {
-        log(`using cached host ${release}`);
-        return hit;
-      }
-    }
-
-    const registry = await import(
-      path.join(REPO_ROOT, "clients", "traycer-cli", "src", "registry", "index.ts")
-    );
-    const { config } = await import(
-      path.join(REPO_ROOT, "clients", "traycer-cli", "src", "config.ts")
-    );
-    const client = await registry.createDefaultRegistryClient(
-      config.environment,
-    );
-    const { entry, asset } = await client.resolveAsset(
-      release ?? "latest",
-      registry.currentHostPlatformKey(),
-    );
-    const version = entry.version;
-
-    const hit = findCachedArchive(version);
-    if (hit !== null) {
-      log(`using cached host ${version}`);
-      return hit;
-    }
-
-    log(`downloading host ${version} (not cached)…`);
-    const { archivePath } = await client.downloadAndVerify(
-      entry,
-      asset,
-      () => {},
-    );
-    const destDir = path.join(HOST_ARCHIVE_CACHE_DIR, version);
-    fs.mkdirSync(destDir, { recursive: true });
-    const dest = path.join(destDir, path.basename(archivePath));
-    fs.copyFileSync(archivePath, dest);
-    log(`cached host ${version} at ${dest}`);
-    return dest;
-  } catch (err) {
-    log(
-      `host archive cache unavailable (${err && err.message ? err.message : err}); using network install`,
-    );
-    return null;
+// Compiles the local `hukum-host` into a standalone binary and returns its path.
+async function compileLocalHostBinary() {
+  const hostDir = path.join(os.homedir(), "work", "personal-projacts", "hukum-host");
+  log(`compiling local host binary...`);
+  const result = spawnSync(path.join(os.homedir(), ".bun", "bin", "bun"), ["run", "build"], {
+    cwd: hostDir,
+    stdio: "inherit",
+    env: process.env,
+  });
+  if (result.status !== 0) {
+    throw new Error(`bun run build failed in hukum-host (exit ${result.status})`);
   }
+  const binaryPath = path.join(hostDir, "dist", "hukum-host");
+  log(`compiled host binary to ${binaryPath}`);
+  return binaryPath;
 }
 
 function buildHostUninstallArgs() {
@@ -490,7 +446,7 @@ function buildHostUninstallArgs() {
 }
 
 function runCli(args, env) {
-  const result = spawnSync("bun", args, {
+  const result = spawnSync(path.join(os.homedir(), ".bun", "bin", "bun"), args, {
     stdio: "inherit",
     cwd: REPO_ROOT,
     env,
@@ -531,16 +487,16 @@ function resolveConcurrentlyBin() {
 // `resolveDesktopRuntimeIdentity` — this orchestrator only needs to hand it
 // the slot and the renderer's allocated port (`clients/desktop/scripts/dev/
 // dev-stack.cjs` derives `TRAYCER_DESKTOP_DEV_URL` from `PORT` itself).
-function buildDevDesktopEntries(hostLogPath, slot, port) {
+function buildDevDesktopEntries(hostLogPath, slot, port, hostUrl) {
   return [
     {
       name: "electron",
       color: "green",
-      command: `DEV_DESKTOP_SLOT=${shellEscape(slot)} PORT=${shellEscape(String(port))} bun run --cwd clients/desktop dev`,
+      command: `HUKUM_DEV_AUTHN_BASE_URL=${shellEscape(hostUrl)} DEV_DESKTOP_SLOT=${shellEscape(slot)} PORT=${shellEscape(String(port))} ~/.bun/bin/bun run --cwd clients/desktop dev`,
     },
     {
       name: "host",
-      color: "gray",
+      color: "blue",
       command: `tail -n 0 -F ${shellEscape(hostLogPath)}`,
     },
   ];
@@ -642,10 +598,10 @@ async function main() {
   log(`run slot: ${slot}`);
 
   const { config } = await import(
-    path.join(REPO_ROOT, "clients", "traycer-cli", "src", "config.ts")
+    path.join(REPO_ROOT, "clients", "hukum-cli", "src", "config.ts")
   );
   const { cliInstallHomeDir, hostLogPath } = await import(
-    path.join(REPO_ROOT, "clients", "traycer-cli", "src", "store", "paths.ts")
+    path.join(REPO_ROOT, "clients", "hukum-cli", "src", "store", "paths.ts")
   );
   const cliBinDir = path.join(cliInstallHomeDir(config.environment), "bin");
   const hostLog = hostLogPath(config.environment);
@@ -655,6 +611,7 @@ async function main() {
 
   const port = await findAvailablePort(preferredPortForSlot(slot));
   log(`renderer port: ${port}`);
+  
 
   // Stage the bun wrapper at this run's slot-scoped bin path. The CLI's
   // service registration and the desktop's CLI discovery both find it via
@@ -664,52 +621,51 @@ async function main() {
 
   const slotEnv = buildDevDesktopSlotEnv(slot);
 
-  // Prefer a locally-cached (or freshly downloaded + cached) archive so
-  // re-runs don't re-download the same release; fall back to the plain
-  // registry install when the cache can't be resolved.
-  const cachedArchive = await resolveCachedHostArchive(release);
-  const args =
-    cachedArchive !== null
-      ? buildHostInstallFromArgs(cachedArchive)
-      : buildHostInstallArgs({ release });
-  log(
-    cachedArchive !== null
-      ? `installing host from cache: bun ${args.join(" ")}`
-      : release
-        ? `installing host release ${release}: bun ${args.join(" ")}`
-        : `installing latest host release: bun ${args.join(" ")}`,
-  );
+  const pidFile = path.join(hostHome, "pid.json");
+  try {
+    require("fs").unlinkSync(pidFile);
+  } catch (e) {
+    if (e.code !== 'ENOENT') throw e;
+  }
+
+  // Compile the host into a standalone binary and install it
+  const compiledBinary = await compileLocalHostBinary();
+  const args = buildHostInstallFromArgs(compiledBinary);
+  log(`installing compiled host binary: bun ${args.join(" ")}`);
+  
   const status = runCli(args, slotEnv);
   if (status !== 0) {
-    console.error(
-      [
-        ``,
-        `[dev-desktop] traycer host install failed (exit ${status}).`,
-        ``,
-        `If it failed verifying the host signature, the downloaded release is`,
-        `not signed by the trust root committed in`,
-        `clients/traycer-cli/src/config.ts (host signing key id`,
-        `847ef539119a1961). Confirm the published host release is signed with`,
-        `the current key.`,
-        ``,
-      ].join("\n"),
-    );
+    console.error(`[dev-desktop] hukum host install failed (exit ${status}).`);
     process.exit(1);
     return;
   }
   log("dev host installed + service registered via CLI");
 
+
+  let pidData;
+  for (let i = 0; i < 30; i++) {
+    try {
+      pidData = JSON.parse(require("fs").readFileSync(pidFile, "utf8"));
+      break;
+    } catch {
+      await new Promise(r => setTimeout(r, 100));
+    }
+  }
+  if (!pidData) {
+    console.error("[dev-desktop] failed to read pid.json from OS service");
+    process.exit(1);
+  }
+  const hostUrl = `http://${new URL(pidData.websocketUrl).host}`;
+  log(`resolved dev host base url from pid.json: ${hostUrl}`);
+
   runConcurrentStack({
-    entries: buildDevDesktopEntries(hostLog, slot, port),
+    entries: buildDevDesktopEntries(hostLog, slot, port, hostUrl),
     cwd: REPO_ROOT,
     onTeardown: async () => {
-      // Deregister the dev host + service. Leaves ~/.traycer/ user data
-      // (credentials, config) intact; the production slot was never touched.
+      // Deregister the dev host + service.
       const code = runCli(buildHostUninstallArgs(), slotEnv);
       if (code !== 0) {
-        console.warn(
-          `[dev-desktop] traycer host uninstall --all failed (exit ${code})`,
-        );
+        console.warn(`[dev-desktop] hukum host uninstall --all failed (exit ${code})`);
       } else {
         log("dev host + service deregistered via CLI");
       }

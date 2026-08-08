@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import type { CommGraphEvent } from "@/lib/comm-graph/comm-graph-events";
 import { isCommGraphOriginAvailable } from "@/lib/comm-graph/comm-graph-origin-availability";
 

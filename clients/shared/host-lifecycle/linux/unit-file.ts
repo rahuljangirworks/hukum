@@ -1,14 +1,14 @@
-import { attestTraycerRegistration, type TraycerLabelIds } from "../identity";
+import { attestHukumRegistration, type HukumLabelIds } from "../identity";
 import type { LingerState, UnitFileState } from "./types";
 
 /**
- * Classify a systemd user unit file on disk with Traycer identity
+ * Classify a systemd user unit file on disk with Hukum identity
  * attestation over ExecStart tokens.
  */
 export function classifyUnitFile(input: {
   readonly path: string;
   readonly labelId: string;
-  readonly knownLabels: TraycerLabelIds | null;
+  readonly knownLabels: HukumLabelIds | null;
   readonly exists: boolean;
   readonly text: string | null;
   readonly readError: string | null;
@@ -23,7 +23,7 @@ export function classifyUnitFile(input: {
   if (tokens === null) {
     return { kind: "indeterminate", cause: "parse-error" };
   }
-  const identity = attestTraycerRegistration({
+  const identity = attestHukumRegistration({
     labelId: input.labelId,
     knownLabels: input.knownLabels,
     programArguments: tokens,

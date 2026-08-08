@@ -1,7 +1,7 @@
 import { Bot } from "lucide-react";
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
-import type { RoleClaim } from "@traycer/protocol/persistence/epic/role-claims";
+import type { RoleClaim } from "@hukum/protocol/persistence/epic/role-claims";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
 import { HarnessIcon } from "@/components/home/pickers/harness-icon";
 import { useEpicTileNavigation } from "@/hooks/epic/use-epic-tile-navigation";

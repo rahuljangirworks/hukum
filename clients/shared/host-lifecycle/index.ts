@@ -12,18 +12,18 @@ export type { Evidence, DurableRecord } from "./evidence";
 export { observed, absent, indeterminate, assertNever } from "./evidence";
 
 export type {
-  TraycerIdentityAttestation,
-  TraycerLabelIds,
+  HukumIdentityAttestation,
+  HukumLabelIds,
   IdentitySignal,
 } from "./identity";
 export {
-  attestTraycerRegistration,
-  isEvictableTraycerIdentity,
-  isTraycerLabelShape,
-  traycerLabelIdsForBase,
+  attestHukumRegistration,
+  isEvictableHukumIdentity,
+  isHukumLabelShape,
+  hukumLabelIdsForBase,
   COMPATIBLE_HOST_START_SCRIPT_PREFIX,
   HOST_START_LAUNCHER_BASENAME,
-  TRAYCER_HOST_CONTENT_TAG,
+  HUKUM_HOST_CONTENT_TAG,
 } from "./identity";
 
 export type {

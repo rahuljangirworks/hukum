@@ -38,7 +38,7 @@ describe("registerDeepLinkHandling (demoted return-signal handler)", () => {
     vi.clearAllMocks();
   });
 
-  it("registers the traycer:// protocol scheme", async () => {
+  it("registers the hukum:// protocol scheme", async () => {
     const electron = await import("electron");
     const mod = await import("../deep-link");
     mod.registerDeepLinkHandling(() => undefined);
@@ -50,7 +50,7 @@ describe("registerDeepLinkHandling (demoted return-signal handler)", () => {
     const handler = vi.fn();
     mod.registerDeepLinkHandling(handler);
 
-    fireOpenUrl("traycer-dev://auth/callback");
+    fireOpenUrl("hukum-dev://auth/callback");
 
     expect(handler).toHaveBeenCalledTimes(1);
     // The handler takes no arguments - it is a pure nudge.
@@ -62,7 +62,7 @@ describe("registerDeepLinkHandling (demoted return-signal handler)", () => {
     const handler = vi.fn();
     mod.registerDeepLinkHandling(handler);
 
-    fireOpenUrl("traycer-dev://auth/callback?code=legacy-code&error=ignored");
+    fireOpenUrl("hukum-dev://auth/callback?code=legacy-code&error=ignored");
 
     expect(handler).toHaveBeenCalledTimes(1);
     expect(handler).toHaveBeenNthCalledWith(1);
@@ -73,22 +73,22 @@ describe("registerDeepLinkHandling (demoted return-signal handler)", () => {
     const handler = vi.fn();
     mod.registerDeepLinkHandling(handler);
 
-    fireOpenUrl("traycer-dev://auth/callback/");
+    fireOpenUrl("hukum-dev://auth/callback/");
 
     expect(handler).toHaveBeenCalledTimes(1);
   });
 
-  it("ignores non-auth traycer deep links", async () => {
+  it("ignores non-auth hukum deep links", async () => {
     const mod = await import("../deep-link");
     const handler = vi.fn();
     mod.registerDeepLinkHandling(handler);
 
-    fireOpenUrl("traycer-dev://session/xyz");
+    fireOpenUrl("hukum-dev://session/xyz");
 
     expect(handler).not.toHaveBeenCalled();
   });
 
-  it("ignores non-traycer URIs", async () => {
+  it("ignores non-hukum URIs", async () => {
     const mod = await import("../deep-link");
     const handler = vi.fn();
     mod.registerDeepLinkHandling(handler);
@@ -120,14 +120,14 @@ describe("registerDeepLinkHandling under a dev-desktop slot", () => {
     mod.registerDeepLinkHandling(handler);
 
     expect(electron.app.setAsDefaultProtocolClient).toHaveBeenCalledWith(
-      "traycer-dev-my-worktree",
+      "hukum-dev-my-worktree",
     );
 
-    fireOpenUrl("traycer-dev-my-worktree://auth/callback");
+    fireOpenUrl("hukum-dev-my-worktree://auth/callback");
     expect(handler).toHaveBeenCalledTimes(1);
 
     // A sibling run's (or the bare dev) callback is not ours.
-    fireOpenUrl("traycer-dev://auth/callback");
+    fireOpenUrl("hukum-dev://auth/callback");
     expect(handler).toHaveBeenCalledTimes(1);
   });
 });

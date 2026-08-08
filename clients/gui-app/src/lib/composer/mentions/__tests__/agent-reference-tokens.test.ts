@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { ContextType } from "@traycer/protocol/common/json-content-serializer";
+import { ContextType } from "@hukum/protocol/common/json-content-serializer";
 import { createLegacyMentionAttachment } from "../legacy";
 import { splitPromptIntoComposerSegments } from "@/lib/composer/segments";
 import {

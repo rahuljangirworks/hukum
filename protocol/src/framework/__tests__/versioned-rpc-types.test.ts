@@ -18,7 +18,7 @@ import {
   type RpcSuccessFor,
   type UncheckedVersionedRpcRegistry,
   type VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 
 const echoV10 = defineRpcContract({
   method: "echo",

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import { releasedMethodNames } from "./__fixtures__/released-method-names";
 
 /**

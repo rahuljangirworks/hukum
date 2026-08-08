@@ -6,21 +6,21 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
 import {
   hostRpcRegistry,
   type HostRpcRegistry,
-} from "@traycer/protocol/host/index";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/index";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 import type {
   ProviderCliState,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type {
   WorktreeBindingWorkspaceMode,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 
 /**
  * D4 (durability audit), end-to-end for `chat-fork-dialog.tsx`: "Fork dialog
@@ -379,7 +379,7 @@ describe("D4: ChatForkDialog seeded from a tombstoned profile", () => {
       isPrimary: true,
       branch: {
         type: "new" as const,
-        name: "traycer/retry",
+        name: "hukum/retry",
         source: "main",
         carryUncommittedChanges: false,
       },

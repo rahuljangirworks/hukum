@@ -7,7 +7,7 @@ import {
 import { afterEach, describe, expect, it, vi, type Mock } from "vitest";
 import { createStore } from "zustand/vanilla";
 import type { ReactNode } from "react";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import type { ModelOption } from "@/components/home/data/landing-options";
 import type {
   ProfileRateLimitDestination,

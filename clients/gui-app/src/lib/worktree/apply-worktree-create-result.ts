@@ -1,7 +1,7 @@
 import type {
   WorktreeCreateResponse,
   WorktreeIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { workspaceFolderName } from "@/lib/worktree/workspace-folder-name";
 
 type WorktreeIntentEntry = WorktreeIntent["entries"][number];

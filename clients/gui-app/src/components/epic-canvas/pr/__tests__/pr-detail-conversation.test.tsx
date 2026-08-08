@@ -6,7 +6,7 @@ import type {
   PrDetailCore,
   PrReviewThread,
   PrReviewThreadsSection,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { PrDetailConversation } from "@/components/epic-canvas/pr/pr-detail-conversation";
 
 /**
@@ -19,8 +19,8 @@ import { PrDetailConversation } from "@/components/epic-canvas/pr/pr-detail-conv
  * bearing on which branch was taken - but it still proves the body text
  * reached a renderer.
  */
-vi.mock("@/markdown/traycer-markdown", () => ({
-  TraycerMarkdown: (props: { readonly children: string }) => (
+vi.mock("@/markdown/hukum-markdown", () => ({
+  HukumMarkdown: (props: { readonly children: string }) => (
     <div data-testid="markdown">{props.children}</div>
   ),
 }));

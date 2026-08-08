@@ -56,7 +56,7 @@ export const DEFAULT_AGENT_MODE: AgentMode = "regular";
  * account, or one specific team they belong to. This is the client's native
  * model (Personal + Teams; no Org) and mirrors the `account-context-store`
  * selection in the gui-app. It rides on `chatRunSettings` so a queued turn
- * bills the context it was sent with, and is carried to the Traycer cloud
+ * bills the context it was sent with, and is carried to the Hukum cloud
  * backend's inference boundary (see `ACCOUNT_CONTEXT_HEADER`) where it maps to
  * the credit-handler `{ accountContextType, organizationId }` shape (TEAM -> ORG).
  */
@@ -68,12 +68,12 @@ export type AccountContext = z.infer<typeof accountContextSchema>;
 export const DEFAULT_ACCOUNT_CONTEXT: AccountContext = { type: "PERSONAL" };
 
 /**
- * HTTP header carrying the serialized `AccountContext` from the Traycer Host's
- * per-user OpenCode server to the Traycer cloud backend's `/inference` route. OpenCode
+ * HTTP header carrying the serialized `AccountContext` from the Hukum Host's
+ * per-user OpenCode server to the Hukum cloud backend's `/inference` route. OpenCode
  * owns the provider HTTP calls, so the only injectable per-call signal is a
  * static provider-config header baked into the per-user server spawn.
  */
-export const ACCOUNT_CONTEXT_HEADER = "x-traycer-account-context";
+export const ACCOUNT_CONTEXT_HEADER = "x-hukum-account-context";
 
 const ACCOUNT_CONTEXT_TEAM_PREFIX = "TEAM:";
 

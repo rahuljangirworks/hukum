@@ -53,7 +53,7 @@ import { scopedChatOpenId } from "@/stores/chats/open-store-scope";
 import { deriveActivityGroupRenderId } from "@/components/chat/chat-collapsible-key";
 import { useSettingsStore } from "@/stores/settings/settings-store";
 import type { ChatMessage as ChatMessageModel } from "@/stores/composer/chat-store";
-import type { BackgroundItem } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { BackgroundItem } from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   makeAssistantMessage,
   makeMessage,

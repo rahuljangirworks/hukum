@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { DEFAULT_ACCOUNT_CONTEXT } from "@traycer/protocol/common/schemas";
+import { DEFAULT_ACCOUNT_CONTEXT } from "@hukum/protocol/common/schemas";
 import type { ReactNode } from "react";
 
 type MockState = {
@@ -167,7 +167,7 @@ describe("<RateLimitQueueProvider />", () => {
     render(tree());
     enqueueSpy.mockClear();
 
-    // OS focus moves elsewhere (e.g. Traycer visible on a second monitor). The
+    // OS focus moves elsewhere (e.g. Hukum visible on a second monitor). The
     // document stays "visible", so nothing must pause.
     act(() => {
       window.dispatchEvent(new Event("blur"));

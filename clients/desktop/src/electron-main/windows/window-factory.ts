@@ -32,7 +32,7 @@ import {
 } from "./resolution-test-env";
 import { windowsTitleBarOverlayHeight } from "./windows-title-bar-overlay";
 
-const STRUCTURED_RENDERER_LOG_PREFIX = "[traycer-gui]";
+const STRUCTURED_RENDERER_LOG_PREFIX = "[hukum-gui]";
 
 export interface MainWindowOptions {
   readonly devWindowTitle: string | null;
@@ -48,7 +48,7 @@ export interface MainWindowOptions {
  *
  * Loading strategy is configuration-driven (derived from `config.isDevBuild`):
  *   - On the dev slot, load the Vite dev server at the loopback
- *     `TRAYCER_DESKTOP_DEV_URL` so HMR-enabled renderer assets are served.
+ *     `HUKUM_DESKTOP_DEV_URL` so HMR-enabled renderer assets are served.
  *   - Otherwise, load the renderer through the privileged `app://` scheme
  *     registered in `app-protocol.ts`. The protocol handler serves files
  *     from `<process.resourcesPath>/renderer` (packaged builds).

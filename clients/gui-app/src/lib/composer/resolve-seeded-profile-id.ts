@@ -1,4 +1,4 @@
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 
 // The wire array's ambient row keys itself by the literal "ambient" sentinel;
 // every run/session-level profileId (a seeded fork target included) uses

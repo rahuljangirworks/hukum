@@ -3,7 +3,7 @@ import { AlertTriangle } from "lucide-react";
 import type {
   ProviderProfile,
   ProviderProfileAccentColor,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { Input } from "@/components/ui/input";
 import { profileDisplayLabel } from "@/components/providers/provider-profile-model";
 import { AccentColorSwatchGrid } from "@/components/providers/accent-color-swatch-grid";

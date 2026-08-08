@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/index";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/index";
 import {
   buildStreamManifest,
   checkStreamMethodCompatibility,
-} from "@traycer/protocol/framework/stream-compat";
+} from "@hukum/protocol/framework/stream-compat";
 import { streamSupportMatrix } from "./__fixtures__/stream-support-matrix";
 
 /**

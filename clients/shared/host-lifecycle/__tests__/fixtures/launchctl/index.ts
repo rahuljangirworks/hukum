@@ -23,7 +23,7 @@ function read(name: string): string {
 }
 
 /**
- * The **live, healthy Traycer SMAppService agent** on the capture machine:
+ * The **live, healthy Hukum SMAppService agent** on the capture machine:
  * `type = Submitted`, `managed_by = com.apple.xpc.ServiceManagement`,
  * `state = running`, a live `pid`, `last exit code = (never exited)` — and
  * `properties = partial import | runatload | resolve program | has LWCR`.
@@ -32,7 +32,7 @@ function read(name: string): string {
  * a job that is unambiguously fine, and a bare three-token `arguments` block
  * ending in `host start`.
  */
-export const HEALTHY_TRAYCER_AGENT_PRINT = read(
+export const HEALTHY_HUKUM_AGENT_PRINT = read(
   "agent-healthy-smappservice.print.txt",
 );
 
@@ -51,7 +51,7 @@ export const THIRD_PARTY_HAS_LWCR_PRINT = read(
 
 /**
  * A system LaunchAgent with a single bare argument whose program is
- * `/usr/libexec/enhancedloggingd` — i.e. provably not Traycer. Used to show
+ * `/usr/libexec/enhancedloggingd` — i.e. provably not Hukum. Used to show
  * that a real, parseable argument list can *refute* identity.
  */
 export const SYSTEM_AGENT_BARE_ARGUMENTS_PRINT = read(

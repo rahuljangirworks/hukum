@@ -5,7 +5,7 @@ import {
   REPORT_IMAGE_READ_TIMEOUT_MS,
   reportImageMediaTypeForMimeType,
   reportImagesExceedBudget,
-} from "@traycer-clients/shared/support/image-attachment-guards";
+} from "@hukum-clients/shared/support/image-attachment-guards";
 
 /**
  * Renderer-side ingest for the report-issue dialog's attachment target

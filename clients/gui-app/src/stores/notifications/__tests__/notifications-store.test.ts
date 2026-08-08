@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import * as Y from "yjs";
-import type { NotificationsStreamCallbacks } from "@traycer-clients/shared/host-transport/notifications-stream-client";
+import type { NotificationsStreamCallbacks } from "@hukum-clients/shared/host-transport/notifications-stream-client";
 import {
   NOTIFICATION_EVENT_TYPES,
   type NotificationEntry,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 import {
   NOTIFICATIONS_ARRAY_KEY,
   createNotificationRoomEntryMap,
   type NotificationRoomEntryMap,
-} from "@traycer/protocol/notifications/notification-room";
+} from "@hukum/protocol/notifications/notification-room";
 import {
   __resetNotificationsStoreForTests,
   openNotificationsStream,

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
-import { PROVIDER_DISPLAY_NAMES } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
+import { PROVIDER_DISPLAY_NAMES } from "@hukum/protocol/host/provider-schemas";
 import { useTabHostClient } from "@/hooks/host/use-tab-host-client";
 import { useTabHostId } from "@/components/epic-canvas/hooks/use-tab-host-id";
 import { useProvidersStartTerminalLoginForClient } from "@/hooks/providers/use-providers-start-terminal-login-mutation";

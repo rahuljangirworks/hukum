@@ -1,5 +1,5 @@
-import type { TimerHandle } from "@traycer-clients/shared/host-transport/timer-handle";
-import type { HostNotificationsEntityRef } from "@traycer/protocol/host/notifications/contracts";
+import type { TimerHandle } from "@hukum-clients/shared/host-transport/timer-handle";
+import type { HostNotificationsEntityRef } from "@hukum/protocol/host/notifications/contracts";
 import {
   selectCloudEntityReadRetries,
   selectCloudEntityReadTargets,

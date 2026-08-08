@@ -1,4 +1,4 @@
-import { PROVIDER_PROFILE_ACCENT_COLORS } from "@traycer/protocol/host/provider-schemas";
+import { PROVIDER_PROFILE_ACCENT_COLORS } from "@hukum/protocol/host/provider-schemas";
 
 /**
  * Deterministic accent palette for provider profile badges - the same

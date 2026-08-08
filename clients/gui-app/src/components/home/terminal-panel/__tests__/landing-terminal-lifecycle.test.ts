@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import type {
   CanonicalTerminalSessionInfo,
   CanonicalTerminalSessionInfoWithCurrentCwd,
-} from "@traycer/protocol/host/terminal/unary-schemas";
+} from "@hukum/protocol/host/terminal/unary-schemas";
 import {
   landingTerminalLayoutFor,
   parsePersistedLandingTerminalState,
@@ -20,7 +20,7 @@ import {
   resolveLandingTerminalLaunchCwd,
   type LandingTerminalHostContext,
 } from "@/components/home/terminal-panel/landing-terminal-host-context";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 
 const HOST_A = "host-a";
 const HOST_B = "host-b";

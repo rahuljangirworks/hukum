@@ -1,5 +1,5 @@
 import { createContext, use } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import type { HomeWorkspaceSource } from "@/components/home/host-workspace-selector/use-home-workspace-source";
 import type { LandingTerminalAvailability } from "./landing-terminal-availability";

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import type { PrCheckContext } from "@traycer/protocol/host/pr-schemas";
+import type { PrCheckContext } from "@hukum/protocol/host/pr-schemas";
 import {
   formatPrCheckName,
   groupPrChecks,

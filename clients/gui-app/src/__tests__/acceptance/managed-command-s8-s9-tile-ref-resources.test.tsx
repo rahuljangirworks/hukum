@@ -12,7 +12,7 @@
  * means "untracked" (never zero), and a pre-@1.4 host's frames — which cannot
  * carry a managed-command owner at all — degrade to no chip rather than a
  * wrong one. The old-peer fold itself and its frame invariant are proven
- * host-side in `traycer-host/.../managed-command-ui-acceptance.test.ts`
+ * host-side in `hukum-host/.../managed-command-ui-acceptance.test.ts`
  * (S9a-c).
  */
 import {
@@ -49,14 +49,14 @@ import { useSettingsStore } from "@/stores/settings/settings-store";
 import type {
   ResourcesProjectionPayload,
   ResourcesStreamCallbacks,
-} from "@traycer-clients/shared/host-transport/resources-stream-client";
-import { chatSubscribeServerFrameSchema } from "@traycer/protocol/host/agent/gui/subscribe";
-import { managedCommandSchema } from "@traycer/protocol/host/managed-command/unary-schemas";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+} from "@hukum-clients/shared/host-transport/resources-stream-client";
+import { chatSubscribeServerFrameSchema } from "@hukum/protocol/host/agent/gui/subscribe";
+import { managedCommandSchema } from "@hukum/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import {
   resourcesSubscribeServerFrameSchemaV12,
   resourcesSubscribeServerFrameSchemaV14,
-} from "@traycer/protocol/host/resources/subscribe";
+} from "@hukum/protocol/host/resources/subscribe";
 
 const mocks = vi.hoisted(() => ({
   startMutate: vi.fn(),

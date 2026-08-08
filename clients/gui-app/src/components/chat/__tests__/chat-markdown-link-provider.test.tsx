@@ -20,7 +20,7 @@ import type { MarkdownFileLink } from "@/markdown/links/markdown-link-context";
 import type { FetchResolveArtifactByPathArgs } from "@/lib/host/resolve-artifact-by-path";
 import type { FetchWorkspaceFileExistsArgs } from "@/lib/host/probe-workspace-file-exists";
 import type { ProjectedSidebarNodeOpenArgs } from "@/components/epic-canvas/sidebar/open-projected-sidebar-node";
-import type { ResolveArtifactByPathResult } from "@traycer/protocol/host/epic/unary-schemas";
+import type { ResolveArtifactByPathResult } from "@hukum/protocol/host/epic/unary-schemas";
 import { useEpicCanvasStore } from "@/stores/epics/canvas/store";
 import { collectPanes, type TilePane } from "@/stores/epics/canvas/tile-tree";
 import { useWorkspaceFileRevealStore } from "@/stores/epics/canvas/workspace-file-reveal-store";
@@ -133,9 +133,9 @@ vi.mock("@/lib/tab-navigation", async () => {
 
 // A structurally valid artifact link path under the OPEN epic and a FOREIGN
 // epic (note the foreign-home prefix to prove root-prefix-agnostic matching).
-const SAME_EPIC_ARTIFACT_PATH = `/Users/me/.traycer/epics/${OPEN_EPIC_ID}/artifacts/some-spec/index.md`;
+const SAME_EPIC_ARTIFACT_PATH = `/Users/me/.hukum/epics/${OPEN_EPIC_ID}/artifacts/some-spec/index.md`;
 const CROSS_EPIC_ARTIFACT_PATH =
-  "/Users/them/.traycer/epics/epic-other/artifacts/parent/child-ticket/index.md";
+  "/Users/them/.hukum/epics/epic-other/artifacts/parent/child-ticket/index.md";
 
 // The exact markdown a Windows agent emits when it lists an epic's artifacts:
 // a native drive path with backslash separators, wrapped in `<>` because the
@@ -146,7 +146,7 @@ const CROSS_EPIC_ARTIFACT_PATH =
 // a `${…}` directly after a backslash reads as an escaped `$`, which would
 // quietly eat the separator this case is about.
 const WINDOWS_SAME_EPIC_ARTIFACT_PATH = [
-  String.raw`C:\Users\Traycer Dev\.traycer\epics`,
+  String.raw`C:\Users\Hukum Dev\.hukum\epics`,
   OPEN_EPIC_ID,
   "artifacts",
   "dummy-alpha",
@@ -154,12 +154,12 @@ const WINDOWS_SAME_EPIC_ARTIFACT_PATH = [
 ].join("\\");
 
 // What the link policy receives once the markdown parser is done with it. The
-// `\.` before `.traycer` is a CommonMark escape and is consumed by the parser
+// `\.` before `.hukum` is a CommonMark escape and is consumed by the parser
 // (spec behaviour, unrecoverable at render time) - every other separator
 // survives, so the root-agnostic `epics/<id>/artifacts/<chain>/index.md` marker
 // the artifact resolver keys on is intact and the link still resolves.
 const WINDOWS_SAME_EPIC_RESOLVED_PATH = [
-  String.raw`C:\Users\Traycer Dev.traycer\epics`,
+  String.raw`C:\Users\Hukum Dev.hukum\epics`,
   OPEN_EPIC_ID,
   "artifacts",
   "dummy-alpha",
@@ -499,12 +499,12 @@ describe("ChatMarkdownLinkProvider", () => {
       kind: "spec",
     });
     const tabId = useEpicCanvasStore.getState().openEpicTab("epic-1", "Epic 1");
-    const decodedPath = `/Users/me/.traycer/epics/${OPEN_EPIC_ID}/artifacts/space path test/index.md`;
+    const decodedPath = `/Users/me/.hukum/epics/${OPEN_EPIC_ID}/artifacts/space path test/index.md`;
     renderProvider(
       tabId,
       <AgentReferenceMarkdown
         isStreaming={false}
-        markdown={`[Encoded](/Users/me/.traycer/epics/${OPEN_EPIC_ID}/artifacts/space%20path%20test/index.md) [Bracketed](<${decodedPath}>)`}
+        markdown={`[Encoded](/Users/me/.hukum/epics/${OPEN_EPIC_ID}/artifacts/space%20path%20test/index.md) [Bracketed](<${decodedPath}>)`}
         proseSize="compact"
         quotable={false}
         components={null}
@@ -610,7 +610,7 @@ describe("ChatMarkdownLinkProvider", () => {
   });
 
   it("makes an artifact link a no-op when it resolves to null and its index.md is outside the chat roots", async () => {
-    // SAME_EPIC_ARTIFACT_PATH lives under ~/.traycer, outside the chat's
+    // SAME_EPIC_ARTIFACT_PATH lives under ~/.hukum, outside the chat's
     // workspaceRoots (["/repo"]). Before the CL-1 boundary fix the null-resolve
     // fallback synthesized a workspace from the path's dirname and previewed the
     // raw index.md; CL-1 removed that synthesis, so an out-of-root artifact path

@@ -6,7 +6,7 @@ import {
   screen,
   within,
 } from "@testing-library/react";
-import type { PrOwnerRef } from "@traycer/protocol/host/pr-schemas";
+import type { PrOwnerRef } from "@hukum/protocol/host/pr-schemas";
 import type { EpicCanvasTileRef } from "@/stores/epics/canvas/types";
 import type { EpicTreeIndex, EpicTreeNode } from "@/lib/epic-selectors";
 import { TooltipProvider } from "@/components/ui/tooltip";

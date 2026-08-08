@@ -11,7 +11,7 @@ import type {
   ChatQueuedManagedCommandItem,
   ChatQueuedPromptItem,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   buildQueuedMessageOrderKey,
   resolveQueuedMessageDropPreview,

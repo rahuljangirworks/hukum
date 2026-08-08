@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
   userMessageSenderSchema,
   userMessageSenderSchemaPreInReplyTo,
-} from "@traycer/protocol/persistence/epic/senders";
+} from "@hukum/protocol/persistence/epic/senders";
 
 /**
  * Durable chat event log - append-only record of state transitions a

@@ -12,7 +12,7 @@ vi.mock("electron", () => ({
 }));
 
 beforeEach(() => {
-  userDataPath = mkdtempSync(join(tmpdir(), "traycer-global-shortcuts-"));
+  userDataPath = mkdtempSync(join(tmpdir(), "hukum-global-shortcuts-"));
   vi.resetModules();
 });
 

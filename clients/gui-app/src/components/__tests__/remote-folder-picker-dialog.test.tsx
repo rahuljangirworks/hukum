@@ -7,15 +7,15 @@ import {
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { QueryClient } from "@tanstack/react-query";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
 import type {
   WorkspaceBrowseFoldersResponse,
   WorkspacePrepareFoldersResponseV11,
   WorkspaceRecentEntry,
-} from "@traycer/protocol/host/workspace/unary-schemas";
+} from "@hukum/protocol/host/workspace/unary-schemas";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
 import { modLabel } from "@/lib/keybindings/platform";
 import { RemoteFolderPickerDialog } from "@/components/remote-folder-picker-dialog";
@@ -290,7 +290,7 @@ describe("<RemoteFolderPickerDialog />", () => {
     void useRemoteFolderPickerStore.getState().requestPick(makeClient());
     expect(
       (await screen.findByTestId("remote-folder-picker-error")).textContent,
-    ).toContain("update Traycer on the host");
+    ).toContain("update Hukum on the host");
     expect(screen.queryByRole("button", { name: "Retry" })).toBeNull();
   });
 

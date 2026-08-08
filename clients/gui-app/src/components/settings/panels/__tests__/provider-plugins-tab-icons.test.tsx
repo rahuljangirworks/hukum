@@ -1,5 +1,5 @@
-import type { ProviderPlugin } from "@traycer/protocol/host/provider-native-schemas";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderPlugin } from "@hukum/protocol/host/provider-native-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ProviderPluginsTab } from "@/components/settings/panels/provider-plugins-tab";
@@ -73,7 +73,7 @@ function pluginsState(): ProviderCliState {
       plugins: {
         addModes: ["read-only"],
         marketplaceBrowse: false,
-        traycerSessionToolsNotice: false,
+        hukumSessionToolsNotice: false,
         actionScopes: {
           list: ["global"],
           add: [],

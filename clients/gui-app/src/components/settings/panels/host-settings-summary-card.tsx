@@ -19,7 +19,7 @@ import type {
   HostNameSettings,
   HostRegistryUpdateState,
   ServiceStatusSnapshot,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 
 export interface HostSummaryTerminalOutcome {
   readonly message: string;

@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
 import type {
   StreamCloseReason,
   StreamConnectionStatus,
   StreamFrameEnvelope,
 } from "../../i-stream-session";
-import { QosClass } from "@traycer/protocol/host-transport/mux";
+import { QosClass } from "@hukum/protocol/host-transport/mux";
 import { LogicalStream, type LogicalStreamPort } from "../logical-stream";
 
 interface SentFrame {

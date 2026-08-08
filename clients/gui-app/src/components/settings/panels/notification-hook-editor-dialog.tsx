@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { NotificationHookConfig } from "@traycer/protocol/host/notifications/host-notifications";
+import type { NotificationHookConfig } from "@hukum/protocol/host/notifications/host-notifications";
 import {
   draftProblem,
   draftToHook,
@@ -96,7 +96,7 @@ export function NotificationHookEditorDialog(props: {
                 <Input
                   id="hook-url"
                   value={draft.url}
-                  placeholder="https://hooks.example.com/traycer"
+                  placeholder="https://hooks.example.com/hukum"
                   onChange={(event) => {
                     const url = event.target.value;
                     setDraft((previous) => ({ ...previous, url }));

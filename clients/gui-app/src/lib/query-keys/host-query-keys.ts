@@ -1,9 +1,9 @@
-import type { AccountContext } from "@traycer/protocol/common/schemas";
-import type { RequestOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { ResolveArtifactByPathRequest } from "@traycer/protocol/host/epic/unary-schemas";
-import type { WorkspaceReadFileRequest } from "@traycer/protocol/host/workspace/unary-schemas";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
-import type { VersionedRpcRegistry } from "@traycer/protocol/framework";
+import type { AccountContext } from "@hukum/protocol/common/schemas";
+import type { RequestOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { ResolveArtifactByPathRequest } from "@hukum/protocol/host/epic/unary-schemas";
+import type { WorkspaceReadFileRequest } from "@hukum/protocol/host/workspace/unary-schemas";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
+import type { VersionedRpcRegistry } from "@hukum/protocol/framework";
 
 const EPIC_TASK_CONTEXTS_METHOD = "epic.getTaskContexts" as const;
 
@@ -57,12 +57,12 @@ export const hostQueryKeys = {
       params,
     ),
   /**
-   * Named alias for the Traycer-sourced `host.getRateLimitUsage` aperture
+   * Named alias for the Hukum-sourced `host.getRateLimitUsage` aperture
    * call (`{ accountContext }`, no `providerId`) - distinct from the
    * per-provider pull's `{ accountContext, providerId }` key. Centralized so
    * the header popover and its tests can't drift on this key's shape.
    */
-  traycerRateLimitUsage: (
+  hukumRateLimitUsage: (
     hostId: string | null,
     accountContext: AccountContext,
   ) =>

@@ -8,9 +8,9 @@ import {
 } from "../cli-discovery";
 
 // PATH-candidate vetting (oss #872). `discoverCli` may only return a PATH
-// `traycer` after it answers `--version` - the name can be squatted by
+// `hukum` after it answers `--version` - the name can be squatted by
 // something that is not our CLI at all (the field case: an AppImage
-// manager exposed the DESKTOP APP itself as `traycer`, which exits 0 with
+// manager exposed the DESKTOP APP itself as `hukum`, which exits 0 with
 // console noise). These tests exec real fixture scripts through the real
 // probe, so they cover the execFile plumbing as well as the verdict.
 //
@@ -20,7 +20,7 @@ describe.skipIf(process.platform === "win32")("vetPathCliCandidate", () => {
   const tempDirs: string[] = [];
 
   async function makeTempDir(): Promise<string> {
-    const dir = await mkdtemp(join(tmpdir(), "traycer-cli-vet-"));
+    const dir = await mkdtemp(join(tmpdir(), "hukum-cli-vet-"));
     tempDirs.push(dir);
     return dir;
   }
@@ -40,7 +40,7 @@ describe.skipIf(process.platform === "win32")("vetPathCliCandidate", () => {
 
   it("returns the probed version for a candidate that answers --version", async () => {
     const dir = await makeTempDir();
-    const candidate = join(dir, "traycer");
+    const candidate = join(dir, "hukum");
     await writeScript(candidate, "printf '1.2.3\\n'");
     const vetted = await vetPathCliCandidate(candidate);
     expect(vetted).toEqual({ version: "1.2.3" });
@@ -48,7 +48,7 @@ describe.skipIf(process.platform === "win32")("vetPathCliCandidate", () => {
 
   it("rejects a candidate that exits 0 with non-version output (the #872 imposter shape)", async () => {
     const dir = await makeTempDir();
-    const candidate = join(dir, "traycer");
+    const candidate = join(dir, "hukum");
     // The imposter desktop relaunch logs two console lines and quits 0
     // (single-instance lock) - exit code alone cannot discriminate it.
     await writeScript(
@@ -60,14 +60,14 @@ describe.skipIf(process.platform === "win32")("vetPathCliCandidate", () => {
 
   it("rejects a candidate that exits non-zero", async () => {
     const dir = await makeTempDir();
-    const candidate = join(dir, "traycer");
+    const candidate = join(dir, "hukum");
     await writeScript(candidate, "exit 1");
     expect(await vetPathCliCandidate(candidate)).toBeNull();
   });
 
   it("caches the probe verdict per binary path for the process lifetime", async () => {
     const dir = await makeTempDir();
-    const candidate = join(dir, "traycer");
+    const candidate = join(dir, "hukum");
     const countFile = join(dir, "exec-count");
     await writeScript(candidate, `echo x >> '${countFile}'\nprintf '1.2.3\\n'`);
     const execCount = async (): Promise<number> =>
@@ -86,7 +86,7 @@ describe.skipIf(process.platform === "win32")("vetPathCliCandidate", () => {
 
   it("caches a NEGATIVE verdict too (an unresponsive imposter is probed once, not per status poll)", async () => {
     const dir = await makeTempDir();
-    const candidate = join(dir, "traycer");
+    const candidate = join(dir, "hukum");
     const countFile = join(dir, "exec-count");
     await writeScript(candidate, `echo x >> '${countFile}'\nexit 1`);
 
@@ -100,9 +100,9 @@ describe.skipIf(process.platform === "win32")("vetPathCliCandidate", () => {
 
   it("tags a candidate inside the npm package as npm-sourced", async () => {
     const dir = await makeTempDir();
-    const packageDir = join(dir, "node_modules", "@traycerai", "cli");
+    const packageDir = join(dir, "node_modules", "@hukumai", "cli");
     await mkdir(packageDir, { recursive: true });
-    const candidate = join(packageDir, "traycer");
+    const candidate = join(packageDir, "hukum");
     await writeScript(candidate, "printf '1.2.3\\n'");
     const vetted = await vetPathCliCandidate(candidate);
     expect(vetted).toEqual({ version: "1.2.3", source: "npm" });

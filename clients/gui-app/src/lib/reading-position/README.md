@@ -20,7 +20,7 @@ Managed-command output and xterm are deliberately renderer-live:
 - xterm keeps the actual engine and container in `xterm-host-registry`, so its
   normal-buffer viewport travels with same-window reparenting and warm-session
   rekeys. Rebuilding the renderer or moving windows starts naturally at latest
-  output. Alternate-screen state is never restored by Traycer.
+  output. Alternate-screen state is never restored by Hukum.
 
 The persistence family uses the `reading-position` entry in the central key
 catalog. Sign-out clears the active account bucket, and epic access loss

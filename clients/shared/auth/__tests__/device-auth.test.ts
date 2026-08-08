@@ -105,9 +105,9 @@ describe("startDeviceAuthorization", () => {
         {
           device_code: "dev-code",
           user_code: "ABCDE-FGHIJ",
-          verification_uri: "https://traycer.test/device",
+          verification_uri: "https://hukum.test/device",
           verification_uri_complete:
-            "https://traycer.test/device?user_code=ABCDE-FGHIJ",
+            "https://hukum.test/device?user_code=ABCDE-FGHIJ",
           expires_in: 600,
           interval: 5,
         },
@@ -128,9 +128,9 @@ describe("startDeviceAuthorization", () => {
       kind: "started",
       deviceCode: "dev-code",
       userCode: "ABCDE-FGHIJ",
-      verificationUri: "https://traycer.test/device",
+      verificationUri: "https://hukum.test/device",
       verificationUriComplete:
-        "https://traycer.test/device?user_code=ABCDE-FGHIJ",
+        "https://hukum.test/device?user_code=ABCDE-FGHIJ",
       expiresInSeconds: 600,
       intervalSeconds: 5,
     });

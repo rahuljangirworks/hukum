@@ -1,6 +1,6 @@
 import { CancelledError } from "@tanstack/react-query";
-import { isHostRequestControlFlowError } from "@traycer-clients/shared/host-client/host-request-coordinator";
-import { toHostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { isHostRequestControlFlowError } from "@hukum-clients/shared/host-client/host-request-coordinator";
+import { toHostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 
 /**
  * Normalizes GUI host-RPC query failures while preserving coordinator control

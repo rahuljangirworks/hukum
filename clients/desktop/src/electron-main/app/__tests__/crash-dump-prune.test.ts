@@ -4,7 +4,7 @@ import type { Mock } from "vitest";
 
 type PruneModule = typeof import("../crash-dump-prune");
 
-const CRASH_DUMPS_ROOT = "/tmp/traycer-test-crash-dumps";
+const CRASH_DUMPS_ROOT = "/tmp/hukum-test-crash-dumps";
 
 afterEach(() => {
   vi.resetModules();

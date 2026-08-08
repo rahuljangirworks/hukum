@@ -31,7 +31,7 @@ import type {
   MutationProgress,
   MutationKind,
   MutationLaneStatus,
-  RemoveTraycerOk,
+  RemoveHukumOk,
   ServiceRegistrationOk,
   UninstallOk,
 } from "../../host/host-controller-types";
@@ -41,8 +41,8 @@ import type {
 // tests pin:
 //
 //   - Settings → Host installed-record read paths
-//     (prod = ~/.traycer/host/install/install.json,
-//     dev   = ~/.traycer/host/dev/install/install.json).
+//     (prod = ~/.hukum/host/install/install.json,
+//     dev   = ~/.hukum/host/dev/install/install.json).
 //   - Every long-running and short-lived host/service CLI call goes out
 //     WITHOUT `--environment`; the CLI derives its slot from
 //     `config.environment`, so it touches only the active environment's
@@ -78,7 +78,7 @@ const ORIGINAL_USERPROFILE = process.env.USERPROFILE;
 let workHome: string;
 
 beforeEach(() => {
-  workHome = mkdtempSync(join(tmpdir(), "traycer-host-mgmt-environment-"));
+  workHome = mkdtempSync(join(tmpdir(), "hukum-host-mgmt-environment-"));
   sandboxHome(workHome);
   vi.resetModules();
 });
@@ -96,7 +96,7 @@ afterEach(() => {
   }
   rmSync(workHome, { recursive: true, force: true });
   vi.restoreAllMocks();
-  vi.doUnmock("../../cli/traycer-cli");
+  vi.doUnmock("../../cli/hukum-cli");
 });
 
 function writeInstallRecord(
@@ -105,8 +105,8 @@ function writeInstallRecord(
 ): string {
   const dir =
     environment === "dev"
-      ? join(workHome, ".traycer", "host", "dev", "install")
-      : join(workHome, ".traycer", "host", "install");
+      ? join(workHome, ".hukum", "host", "dev", "install")
+      : join(workHome, ".hukum", "host", "install");
   mkdirSync(dir, { recursive: true });
   const path = join(dir, "install.json");
   writeFileSync(path, JSON.stringify(body), "utf8");
@@ -129,18 +129,18 @@ function installFakeCli(opts: {
   readonly streamResult: unknown;
 }): FakeCli {
   const calls: RecordedCall[] = [];
-  vi.doMock("../../cli/traycer-cli", () => ({
-    runTraycerCliJson: vi.fn((args: readonly string[]) => {
+  vi.doMock("../../cli/hukum-cli", () => ({
+    runHukumCliJson: vi.fn((args: readonly string[]) => {
       calls.push({ kind: "run", args: [...args] });
       return Promise.resolve(opts.runResult);
     }),
-    streamTraycerCliJson: vi.fn(
+    streamHukumCliJson: vi.fn(
       ({ args }: { readonly args: readonly string[] }) => {
         calls.push({ kind: "stream", args: [...args] });
         return Promise.resolve({ data: opts.streamResult });
       },
     ),
-    TraycerCliError: class extends Error {},
+    HukumCliError: class extends Error {},
   }));
   return { calls, runResult: opts.runResult, streamResult: opts.streamResult };
 }
@@ -182,7 +182,7 @@ class FakeHostController implements IpcHostController {
     kind: "ok",
     value: { removedInstallDir: true, deregisteredService: true },
   };
-  removeTraycerResult: MutationOutcome<RemoveTraycerOk> = {
+  removeHukumResult: MutationOutcome<RemoveHukumOk> = {
     kind: "ok",
     value: {
       removedHost: true,
@@ -326,9 +326,9 @@ class FakeHostController implements IpcHostController {
     this.calls.push({ method: "uninstallHost", args: [all] });
     return this.uninstallHostResult;
   }
-  async removeTraycer(): Promise<MutationOutcome<RemoveTraycerOk>> {
-    this.calls.push({ method: "removeTraycer", args: [] });
-    return this.removeTraycerResult;
+  async removeHukum(): Promise<MutationOutcome<RemoveHukumOk>> {
+    this.calls.push({ method: "removeHukum", args: [] });
+    return this.removeHukumResult;
   }
   isPendingRevisionRefreshQuarantined(): boolean {
     return false;
@@ -401,8 +401,8 @@ describe("host-management IPC - configurable host name", () => {
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
 
-    const setHandler = bridge.handlers.get(RunnerHostInvoke.traycerHostNameSet);
-    const getHandler = bridge.handlers.get(RunnerHostInvoke.traycerHostNameGet);
+    const setHandler = bridge.handlers.get(RunnerHostInvoke.hukumHostNameSet);
+    const getHandler = bridge.handlers.get(RunnerHostInvoke.hukumHostNameGet);
     expect(setHandler).toBeDefined();
     expect(getHandler).toBeDefined();
 
@@ -415,7 +415,7 @@ describe("host-management IPC - configurable host name", () => {
     expect(bridge.options.host.reloadSnapshotFromDisk).toHaveBeenCalledTimes(1);
     const stored = JSON.parse(
       readFileSync(
-        join(workHome, ".traycer", "host", "host-name.json"),
+        join(workHome, ".hukum", "host", "host-name.json"),
         "utf8",
       ),
     ) as { customName: string | null };
@@ -431,14 +431,14 @@ describe("host-management IPC - configurable host name", () => {
 });
 
 describe("host-management IPC - installed record reads the active environment", () => {
-  it("prod environment reads ~/.traycer/host/install/install.json", async () => {
+  it("prod environment reads ~/.hukum/host/install/install.json", async () => {
     installFakeCli({ runResult: {}, streamResult: {} });
     const prodPath = writeInstallRecord("production", {
       version: "1.7.0",
       platform: process.platform,
       arch: process.arch,
       installedAt: "2026-05-15T00:00:00Z",
-      executablePath: "/opt/traycer/prod-host",
+      executablePath: "/opt/hukum/prod-host",
       source: { kind: "registry", value: "1.7.0" },
       archiveSha256: "a".repeat(64),
       signatureKeyId: "prod-key",
@@ -449,7 +449,7 @@ describe("host-management IPC - installed record reads the active environment", 
       platform: process.platform,
       arch: process.arch,
       installedAt: "2026-05-15T01:00:00Z",
-      executablePath: "/opt/traycer/dev-host",
+      executablePath: "/opt/hukum/dev-host",
       source: { kind: "registry", value: "DEV-2.0.0" },
       archiveSha256: "b".repeat(64),
       signatureKeyId: "dev-key",
@@ -461,7 +461,7 @@ describe("host-management IPC - installed record reads the active environment", 
       await import("../../../ipc-contracts/ipc-channels");
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
-    const handler = bridge.handlers.get(RunnerHostInvoke.traycerHostInstalled);
+    const handler = bridge.handlers.get(RunnerHostInvoke.hukumHostInstalled);
     expect(handler).toBeDefined();
     const record = (await handler!(null, null)) as { version: string };
     expect(record).not.toBeNull();
@@ -471,14 +471,14 @@ describe("host-management IPC - installed record reads the active environment", 
     );
   });
 
-  it("dev environment reads ~/.traycer/host/dev/install/install.json and ignores any prod record", async () => {
+  it("dev environment reads ~/.hukum/host/dev/install/install.json and ignores any prod record", async () => {
     installFakeCli({ runResult: {}, streamResult: {} });
     writeInstallRecord("production", {
       version: "PROD-1.7.0",
       platform: process.platform,
       arch: process.arch,
       installedAt: "2026-05-15T00:00:00Z",
-      executablePath: "/opt/traycer/prod-host",
+      executablePath: "/opt/hukum/prod-host",
       source: { kind: "registry", value: "PROD-1.7.0" },
       archiveSha256: "a".repeat(64),
       signatureKeyId: "prod-key",
@@ -489,7 +489,7 @@ describe("host-management IPC - installed record reads the active environment", 
       platform: process.platform,
       arch: process.arch,
       installedAt: "2026-05-15T01:00:00Z",
-      executablePath: "/opt/traycer/dev-host",
+      executablePath: "/opt/hukum/dev-host",
       source: { kind: "registry", value: "DEV-2.0.0" },
       archiveSha256: "b".repeat(64),
       signatureKeyId: "dev-key",
@@ -501,7 +501,7 @@ describe("host-management IPC - installed record reads the active environment", 
       await import("../../../ipc-contracts/ipc-channels");
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
-    const handler = bridge.handlers.get(RunnerHostInvoke.traycerHostInstalled);
+    const handler = bridge.handlers.get(RunnerHostInvoke.hukumHostInstalled);
     const record = (await handler!(null, null)) as { version: string };
     expect(record).not.toBeNull();
     expect(record.version).toBe("DEV-2.0.0");
@@ -514,7 +514,7 @@ describe("host-management IPC - installed record reads the active environment", 
       platform: process.platform,
       arch: process.arch,
       installedAt: "2026-05-15T00:00:00Z",
-      executablePath: "/opt/traycer/prod-host",
+      executablePath: "/opt/hukum/prod-host",
       source: { kind: "registry", value: "PROD-1.7.0" },
       archiveSha256: "a".repeat(64),
       signatureKeyId: "prod-key",
@@ -526,7 +526,7 @@ describe("host-management IPC - installed record reads the active environment", 
       await import("../../../ipc-contracts/ipc-channels");
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
-    const handler = bridge.handlers.get(RunnerHostInvoke.traycerHostInstalled);
+    const handler = bridge.handlers.get(RunnerHostInvoke.hukumHostInstalled);
     const record = await handler!(null, null);
     expect(record).toBeNull();
   });
@@ -557,11 +557,11 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
 
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostLogs)!(null, {
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostLogs)!(null, {
       tailLines: 50,
     });
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostDoctor)!(null, null);
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostAvailable)!(
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostDoctor)!(null, null);
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostAvailable)!(
       null,
       null,
     );
@@ -590,31 +590,31 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     mgmt.registerHostManagementIpc(bridge as never);
     const hostController = bridge.options.hostController;
 
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostInstallVersion)!(
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostInstallVersion)!(
       null,
       { pin: "1.7.0", force: true },
     );
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostApplyStaged)!(null, {
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostApplyStaged)!(null, {
       trigger: "manual",
       force: false,
     });
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostUninstall)!(null, {
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostUninstall)!(null, {
       all: true,
     });
-    await bridge.handlers.get(RunnerHostInvoke.traycerAppUninstall)!(
+    await bridge.handlers.get(RunnerHostInvoke.hukumAppUninstall)!(
       null,
       null,
     );
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostRestart)!(null, null);
-    await bridge.handlers.get(RunnerHostInvoke.traycerServiceRegister)!(
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostRestart)!(null, null);
+    await bridge.handlers.get(RunnerHostInvoke.hukumServiceRegister)!(
       null,
       null,
     );
-    await bridge.handlers.get(RunnerHostInvoke.traycerServiceDeregister)!(
+    await bridge.handlers.get(RunnerHostInvoke.hukumServiceDeregister)!(
       null,
       null,
     );
-    await bridge.handlers.get(RunnerHostInvoke.traycerFreePortAndRestart)!(
+    await bridge.handlers.get(RunnerHostInvoke.hukumFreePortAndRestart)!(
       null,
       { port: 7000, pid: 1234, processName: "rogue" },
     );
@@ -623,7 +623,7 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
       { method: "installVersion", args: ["1.7.0", true] },
       { method: "applyStaged", args: ["manual", false] },
       { method: "uninstallHost", args: [true] },
-      { method: "removeTraycer", args: [] },
+      { method: "removeHukum", args: [] },
       { method: "respawn", args: [] },
       { method: "registerService", args: [] },
       { method: "deregisterService", args: [] },
@@ -647,7 +647,7 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     mgmt.registerHostManagementIpc(bridge as never);
 
     await expect(
-      bridge.handlers.get(RunnerHostInvoke.traycerHostApplyStaged)!(null, {
+      bridge.handlers.get(RunnerHostInvoke.hukumHostApplyStaged)!(null, {
         trigger: "manual",
         force: false,
       }),
@@ -670,7 +670,7 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     mgmt.registerHostManagementIpc(bridge as never);
 
     await expect(
-      bridge.handlers.get(RunnerHostInvoke.traycerHostInstallVersion)!(null, {
+      bridge.handlers.get(RunnerHostInvoke.hukumHostInstallVersion)!(null, {
         pin: "2.0.0",
         force: false,
       }),
@@ -691,7 +691,7 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     mgmt.registerHostManagementIpc(bridge as never);
 
     await expect(
-      bridge.handlers.get(RunnerHostInvoke.traycerHostApplyStaged)!(null, {
+      bridge.handlers.get(RunnerHostInvoke.hukumHostApplyStaged)!(null, {
         trigger: "manual",
         force: false,
       }),
@@ -711,7 +711,7 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     mgmt.registerHostManagementIpc(bridge as never);
 
     await expect(
-      bridge.handlers.get(RunnerHostInvoke.traycerHostActivateInstalled)!(
+      bridge.handlers.get(RunnerHostInvoke.hukumHostActivateInstalled)!(
         null,
         {
           force: true,
@@ -733,7 +733,7 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     mgmt.registerHostManagementIpc(bridge as never);
 
     await expect(
-      bridge.handlers.get(RunnerHostInvoke.traycerHostInstallVersion)!(null, {
+      bridge.handlers.get(RunnerHostInvoke.hukumHostInstallVersion)!(null, {
         pin: "2.0.0",
         force: true,
       }),
@@ -753,7 +753,7 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     mgmt.registerHostManagementIpc(bridge as never);
 
     await expect(
-      bridge.handlers.get(RunnerHostInvoke.traycerServiceRegister)!(null, null),
+      bridge.handlers.get(RunnerHostInvoke.hukumServiceRegister)!(null, null),
     ).resolves.toEqual(bridge.options.hostController.registerServiceResult);
   });
 
@@ -776,11 +776,11 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
 
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostAvailable)!(
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostAvailable)!(
       null,
       null,
     );
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostAvailable)!(null, {
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostAvailable)!(null, {
       includePreReleases: true,
     });
 
@@ -805,7 +805,7 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
 
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostDoctor)!(null, null);
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostDoctor)!(null, null);
 
     for (const call of fake.calls) {
       expect(call.args).not.toContain("--environment");
@@ -830,19 +830,19 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     mgmt.registerHostManagementIpc(bridge as never);
     const hostController = bridge.options.hostController;
 
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostInstallVersion)!(
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostInstallVersion)!(
       null,
       { pin: "latest", force: true },
     );
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostUninstall)!(null, {
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostUninstall)!(null, {
       all: true,
     });
-    await bridge.handlers.get(RunnerHostInvoke.traycerHostRestart)!(null, null);
-    await bridge.handlers.get(RunnerHostInvoke.traycerServiceRegister)!(
+    await bridge.handlers.get(RunnerHostInvoke.hukumHostRestart)!(null, null);
+    await bridge.handlers.get(RunnerHostInvoke.hukumServiceRegister)!(
       null,
       null,
     );
-    await bridge.handlers.get(RunnerHostInvoke.traycerServiceDeregister)!(
+    await bridge.handlers.get(RunnerHostInvoke.hukumServiceDeregister)!(
       null,
       null,
     );
@@ -858,26 +858,26 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
 
   // Pin the per-environment CLI manifest path read by Settings → Host
   // (Ticket: agent-7 second-pass). The handler must read
-  //   prod → ~/.traycer/cli/manifest.json
-  //   dev  → ~/.traycer/cli/dev/manifest.json
+  //   prod → ~/.hukum/cli/manifest.json
+  //   dev  → ~/.hukum/cli/dev/manifest.json
   // and never cross-read the other environment's file. We capture the actual
   // path by spying on `fs/promises.readFile`.
-  it("traycerCliManifestRead reads ~/.traycer/cli/manifest.json on prod environment", async () => {
+  it("hukumCliManifestRead reads ~/.hukum/cli/manifest.json on prod environment", async () => {
     installFakeCli({ runResult: {}, streamResult: {} });
-    const prodDir = join(workHome, ".traycer", "cli");
-    const devDir = join(workHome, ".traycer", "cli", "dev");
+    const prodDir = join(workHome, ".hukum", "cli");
+    const devDir = join(workHome, ".hukum", "cli", "dev");
     mkdirSync(prodDir, { recursive: true });
     mkdirSync(devDir, { recursive: true });
     const prodManifest = {
       version: "1.5.0",
       installedAt: "2026-05-15T00:00:00.000Z",
-      binaryPath: "/usr/local/bin/traycer-prod",
+      binaryPath: "/usr/local/bin/hukum-prod",
       source: "manual",
     };
     const devManifest = {
       version: "9.9.9-dev",
       installedAt: "2026-05-15T00:00:00.000Z",
-      binaryPath: "/usr/local/bin/traycer-dev",
+      binaryPath: "/usr/local/bin/hukum-dev",
       source: "manual",
     };
     writeFileSync(join(prodDir, "manifest.json"), JSON.stringify(prodManifest));
@@ -889,28 +889,28 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
     const result = (await bridge.handlers.get(
-      RunnerHostInvoke.traycerCliManifestRead,
+      RunnerHostInvoke.hukumCliManifestRead,
     )!(null, null)) as { version: string; binaryPath: string } | null;
     expect(result?.version).toBe("1.5.0");
-    expect(result?.binaryPath).toBe("/usr/local/bin/traycer-prod");
+    expect(result?.binaryPath).toBe("/usr/local/bin/hukum-prod");
   });
 
-  it("traycerCliManifestRead reads ~/.traycer/cli/dev/manifest.json on dev environment", async () => {
+  it("hukumCliManifestRead reads ~/.hukum/cli/dev/manifest.json on dev environment", async () => {
     installFakeCli({ runResult: {}, streamResult: {} });
-    const prodDir = join(workHome, ".traycer", "cli");
-    const devDir = join(workHome, ".traycer", "cli", "dev");
+    const prodDir = join(workHome, ".hukum", "cli");
+    const devDir = join(workHome, ".hukum", "cli", "dev");
     mkdirSync(prodDir, { recursive: true });
     mkdirSync(devDir, { recursive: true });
     const prodManifest = {
       version: "1.5.0",
       installedAt: "2026-05-15T00:00:00.000Z",
-      binaryPath: "/usr/local/bin/traycer-prod",
+      binaryPath: "/usr/local/bin/hukum-prod",
       source: "manual",
     };
     const devManifest = {
       version: "9.9.9-dev",
       installedAt: "2026-05-15T00:00:00.000Z",
-      binaryPath: "/usr/local/bin/traycer-dev",
+      binaryPath: "/usr/local/bin/hukum-dev",
       source: "manual",
     };
     writeFileSync(join(prodDir, "manifest.json"), JSON.stringify(prodManifest));
@@ -922,10 +922,10 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
     const result = (await bridge.handlers.get(
-      RunnerHostInvoke.traycerCliManifestRead,
+      RunnerHostInvoke.hukumCliManifestRead,
     )!(null, null)) as { version: string; binaryPath: string } | null;
     expect(result?.version).toBe("9.9.9-dev");
-    expect(result?.binaryPath).toBe("/usr/local/bin/traycer-dev");
+    expect(result?.binaryPath).toBe("/usr/local/bin/hukum-dev");
   });
 
   it("echoes the confirmed port/pid/processName back after HostController.freePortAndRestart succeeds", async () => {
@@ -937,7 +937,7 @@ describe("host-management IPC - CLI subprocess argv carries NO --environment (CL
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
     const result = await bridge.handlers.get(
-      RunnerHostInvoke.traycerFreePortAndRestart,
+      RunnerHostInvoke.hukumFreePortAndRestart,
     )!(null, { port: 7000, pid: 1234, processName: "rogue" });
     expect(result).toEqual({ port: 7000, pid: 1234, processName: "rogue" });
     expect(bridge.options.hostController.calls).toContainEqual({
@@ -960,36 +960,36 @@ function installFakeCliRejectingWithVerifyFailed(): {
   readonly calls: RecordedCall[];
 } {
   const calls: RecordedCall[] = [];
-  class FakeTraycerCliError extends Error {
+  class FakeHukumCliError extends Error {
     readonly code: string;
     constructor(code: string, message: string) {
       super(message);
       this.code = code;
     }
   }
-  vi.doMock("../../cli/traycer-cli", () => ({
-    runTraycerCliJson: vi.fn((args: readonly string[]) => {
+  vi.doMock("../../cli/hukum-cli", () => ({
+    runHukumCliJson: vi.fn((args: readonly string[]) => {
       calls.push({ kind: "run", args: [...args] });
       return Promise.reject(
-        new FakeTraycerCliError(
+        new FakeHukumCliError(
           "E_HOST_VERIFY_FAILED",
           "host registry: no trusted signing keys are configured for this build",
         ),
       );
     }),
-    streamTraycerCliJson: vi.fn(
+    streamHukumCliJson: vi.fn(
       ({ args }: { readonly args: readonly string[] }) => {
         calls.push({ kind: "stream", args: [...args] });
         return Promise.resolve({ data: {} });
       },
     ),
-    TraycerCliError: FakeTraycerCliError,
+    HukumCliError: FakeHukumCliError,
   }));
   return { calls };
 }
 
 describe("host-management IPC - verify-disabled normalisation for dev builds", () => {
-  it("traycerHostAvailable returns an empty snapshot when the CLI rejects with E_HOST_VERIFY_FAILED in dev", async () => {
+  it("hukumHostAvailable returns an empty snapshot when the CLI rejects with E_HOST_VERIFY_FAILED in dev", async () => {
     installFakeCliRejectingWithVerifyFailed();
     const mgmt = await import("../host-management-ipc");
     mgmt.setActiveEnvironment("dev");
@@ -998,7 +998,7 @@ describe("host-management IPC - verify-disabled normalisation for dev builds", (
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
     const result = await bridge.handlers.get(
-      RunnerHostInvoke.traycerHostAvailable,
+      RunnerHostInvoke.hukumHostAvailable,
     )!(null, null);
     expect(result).toMatchObject({
       latest: "",
@@ -1006,7 +1006,7 @@ describe("host-management IPC - verify-disabled normalisation for dev builds", (
     });
   });
 
-  it("traycerHostAvailable normalises E_HOST_VERIFY_FAILED to an empty snapshot in production too - end user can't act on a missing-pubkeys release-engineering bug from the UI", async () => {
+  it("hukumHostAvailable normalises E_HOST_VERIFY_FAILED to an empty snapshot in production too - end user can't act on a missing-pubkeys release-engineering bug from the UI", async () => {
     installFakeCliRejectingWithVerifyFailed();
     const mgmt = await import("../host-management-ipc");
     mgmt.setActiveEnvironment("production");
@@ -1015,19 +1015,19 @@ describe("host-management IPC - verify-disabled normalisation for dev builds", (
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
     const result = await bridge.handlers.get(
-      RunnerHostInvoke.traycerHostAvailable,
+      RunnerHostInvoke.hukumHostAvailable,
     )!(null, null);
     expect(result).toMatchObject({ latest: "", versions: [] });
   });
 
-  it("traycerRegistryCheck reports `reachable: true` with `updateAvailable: false` when verify is disabled in dev", async () => {
+  it("hukumRegistryCheck reports `reachable: true` with `updateAvailable: false` when verify is disabled in dev", async () => {
     installFakeCliRejectingWithVerifyFailed();
     writeInstallRecord("dev", {
       version: "DEV-1.0.0",
       platform: process.platform,
       arch: process.arch,
       installedAt: "2026-05-15T00:00:00Z",
-      executablePath: "/opt/traycer/dev-host",
+      executablePath: "/opt/hukum/dev-host",
       source: { kind: "registry", value: "DEV-1.0.0" },
       archiveSha256: "a".repeat(64),
       signatureKeyId: "k",
@@ -1040,7 +1040,7 @@ describe("host-management IPC - verify-disabled normalisation for dev builds", (
     const bridge = makeBridge();
     mgmt.registerHostManagementIpc(bridge as never);
     const result = (await bridge.handlers.get(
-      RunnerHostInvoke.traycerRegistryCheck,
+      RunnerHostInvoke.hukumRegistryCheck,
     )!(null, { force: true })) as {
       readonly reachable: boolean;
       readonly updateAvailable: boolean;
@@ -1059,11 +1059,11 @@ describe("host-management IPC - verify-disabled normalisation for dev builds", (
 });
 
 // Renderer surfaces cutover (Host Update Layer Redesign Tech Plan): the old
-// `traycerHostEnsure` handler (collapsed in from the deleted
+// `hukumHostEnsure` handler (collapsed in from the deleted
 // `host-ensure-ipc.ts`) re-shaped `HostController.convergeReady`'s outcome
 // into a bespoke `HostEnsureResult` union (`action: "provisioned" |
 // "removed" | "host-busy"`) and rejected the invoke on a deferred/failed
-// outcome. `traycerHostConvergeReady` replaces it with a raw pass-through of
+// outcome. `hukumHostConvergeReady` replaces it with a raw pass-through of
 // `MutationOutcome<ConvergeReadyOk>` - every renderer surface branches on
 // `kind` itself now, so there is no re-shaping left to pin, and "wait-never-
 // reject" means a failed/deferred outcome resolves rather than rejects. The
@@ -1074,7 +1074,7 @@ describe("host-management IPC - verify-disabled normalisation for dev builds", (
 // still owned by `HostController.convergeReady` itself (reachability,
 // SMAppService registration, busy detection, readiness polling) does is
 // covered by `host-controller.test.ts`.
-describe("host-management IPC - traycerHostConvergeReady delegates to HostController.convergeReady", () => {
+describe("host-management IPC - hukumHostConvergeReady delegates to HostController.convergeReady", () => {
   it("forwards force and returns the raw ok outcome unchanged", async () => {
     installFakeCli({ runResult: {}, streamResult: {} });
     const mgmt = await import("../host-management-ipc");
@@ -1088,7 +1088,7 @@ describe("host-management IPC - traycerHostConvergeReady delegates to HostContro
     };
 
     const result = await bridge.handlers.get(
-      RunnerHostInvoke.traycerHostConvergeReady,
+      RunnerHostInvoke.hukumHostConvergeReady,
     )!(null, { force: true });
 
     expect(result).toEqual({
@@ -1114,7 +1114,7 @@ describe("host-management IPC - traycerHostConvergeReady delegates to HostContro
     };
 
     const result = await bridge.handlers.get(
-      RunnerHostInvoke.traycerHostConvergeReady,
+      RunnerHostInvoke.hukumHostConvergeReady,
     )!(null, null);
 
     expect(result).toEqual({
@@ -1141,7 +1141,7 @@ describe("host-management IPC - traycerHostConvergeReady delegates to HostContro
     };
 
     const result = await bridge.handlers.get(
-      RunnerHostInvoke.traycerHostConvergeReady,
+      RunnerHostInvoke.hukumHostConvergeReady,
     )!(null, null);
 
     expect(result).toEqual({
@@ -1165,7 +1165,7 @@ describe("host-management IPC - traycerHostConvergeReady delegates to HostContro
     };
 
     const result = await bridge.handlers.get(
-      RunnerHostInvoke.traycerHostConvergeReady,
+      RunnerHostInvoke.hukumHostConvergeReady,
     )!(null, null);
 
     expect(result).toEqual({
@@ -1179,7 +1179,7 @@ describe("host-management IPC - traycerHostConvergeReady delegates to HostContro
 // whole describe block ("legacy progress broadcast over HostController's
 // mutation lane") pinned the caller-supplied-`operationId` attribution layer
 // - `cliOperationProgress`/`hostOperationStatusChange` events,
-// `getHostOperationStatus()`/`traycerHostOperationStatusGet`, and the
+// `getHostOperationStatus()`/`hukumHostOperationStatusGet`, and the
 // `*ForOperation` fake-controller overloads that carried a renderer-chosen id
 // through to progress ticks. None of it exists in production
 // `host-management-ipc.ts` anymore (`registerHostManagementIpc` no longer

@@ -1,5 +1,5 @@
 /**
- * Regression coverage for traycerai/traycer#466 (and the click half of #446):
+ * Regression coverage for hukumai/hukum#466 (and the click half of #446):
  * a label-only tooltip swallowing clicks meant for whatever it covers.
  *
  * `TooltipContent`'s `pointer-events-none` is not enough on its own - Radix

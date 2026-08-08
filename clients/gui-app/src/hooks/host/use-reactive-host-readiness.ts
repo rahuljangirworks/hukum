@@ -1,6 +1,6 @@
 import { useCallback, useSyncExternalStore } from "react";
-import type { HostRequester } from "@traycer-clients/shared/host-client/host-client";
-import type { VersionedRpcRegistry } from "@traycer/protocol/framework/index";
+import type { HostRequester } from "@hukum-clients/shared/host-client/host-client";
+import type { VersionedRpcRegistry } from "@hukum/protocol/framework/index";
 
 export interface ReactiveHostReadiness {
   readonly hostId: string | null;

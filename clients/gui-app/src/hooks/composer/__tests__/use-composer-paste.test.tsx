@@ -20,7 +20,7 @@ import {
   type UseComposerPasteResult,
 } from "@/hooks/composer/use-composer-paste";
 import type { ImageAttachmentAttrs } from "@/components/chat/composer/editor/extensions/image-attachment-extension";
-import type { IFileDropHost } from "@traycer-clients/shared/platform/runner-host";
+import type { IFileDropHost } from "@hukum-clients/shared/platform/runner-host";
 import { Analytics, AnalyticsEvent } from "@/lib/analytics";
 
 vi.mock("sonner", () => ({
@@ -503,7 +503,7 @@ describe("useComposerPasteAdapter - onPaste", () => {
         {},
         // `fileUriToPath` strips the `file://` scheme before this is called,
         // so the fake keys off the resolved filesystem path, not the URI.
-        { "/repo/external/report.pdf": ["/tmp/traycer-copy/report.pdf"] },
+        { "/repo/external/report.pdf": ["/tmp/hukum-copy/report.pdf"] },
       ),
       mentionRoots: ["/repo"],
       beginPathInsertion: () => (paths) => {
@@ -520,7 +520,7 @@ describe("useComposerPasteAdapter - onPaste", () => {
 
     await waitFor(() => expect(insertPaths).toHaveBeenCalledOnce());
     // Outside every mention root (copied to an app-managed temp dir) -> absolute.
-    expect(insertPaths).toHaveBeenCalledWith(["/tmp/traycer-copy/report.pdf"]);
+    expect(insertPaths).toHaveBeenCalledWith(["/tmp/hukum-copy/report.pdf"]);
     expect(inserted).toHaveLength(0);
   });
 
@@ -697,7 +697,7 @@ describe("useComposerPasteAdapter - onPaste", () => {
       Promise.resolve(["/repo/shot.png"]),
     );
     const copyDroppedFilePaths = vi.fn((_paths: readonly string[]) =>
-      Promise.resolve(["/tmp/traycer-copy/shot-xyz.png"]),
+      Promise.resolve(["/tmp/hukum-copy/shot-xyz.png"]),
     );
     const filePaths: ComposerFilePathIngestArgs = {
       fileDrops: {
@@ -936,7 +936,7 @@ describe("useComposerPasteAdapter - drag-and-drop", () => {
         {},
         {
           "/var/folders/x/TemporaryItems/screencaptureui_1/Screenshot.png": [
-            "/tmp/traycer-copy/screenshot.png",
+            "/tmp/hukum-copy/screenshot.png",
           ],
         },
       ),
@@ -957,7 +957,7 @@ describe("useComposerPasteAdapter - drag-and-drop", () => {
 
     await waitFor(() => expect(insertPaths).toHaveBeenCalledOnce());
     expect(insertPaths).toHaveBeenCalledWith([
-      "/tmp/traycer-copy/screenshot.png",
+      "/tmp/hukum-copy/screenshot.png",
     ]);
     expect(inserted).toHaveLength(0);
   });

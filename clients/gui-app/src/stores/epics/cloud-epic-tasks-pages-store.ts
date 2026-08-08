@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ListTasksResponse } from "@traycer/protocol/host/epic/unary-schemas";
+import type { ListTasksResponse } from "@hukum/protocol/host/epic/unary-schemas";
 import { setEpicPinnedInCloudTasksResponse } from "@/lib/cloud-epic-tasks-query/cache";
 
 /**

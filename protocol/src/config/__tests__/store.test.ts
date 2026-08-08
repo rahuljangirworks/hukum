@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-// Redirect `~/.traycer/cli/config.json` to a per-test temp home by mocking
+// Redirect `~/.hukum/cli/config.json` to a per-test temp home by mocking
 // `os.homedir()` (paths.ts derives the config path from it). `os.platform()`
 // stays real so the OS-default shell logic is exercised honestly. `userInfo`
 // is mockable so the passwd-vs-$SHELL precedence in `defaultShellPath` can be
@@ -57,7 +57,7 @@ import {
 import { CLI_CONFIG_VERSION } from "../schema";
 
 beforeEach(async () => {
-  h.home = await mkdtemp(join(tmpdir(), "traycer-cli-config-"));
+  h.home = await mkdtemp(join(tmpdir(), "hukum-cli-config-"));
   h.passwdShell = undefined;
   h.passwdThrows = false;
 });

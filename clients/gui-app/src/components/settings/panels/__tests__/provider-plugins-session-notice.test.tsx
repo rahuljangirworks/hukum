@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { ProviderPluginsTab } from "@/components/settings/panels/provider-plugins-tab";
 import {
   nativeScopeFolderActionMocks,
@@ -86,11 +86,11 @@ vi.mock("@/hooks/providers/use-providers-plugin-icon-query", () => ({
 }));
 
 const SESSION_NOTICE =
-  "Plugin tools may not appear in Traycer-launched sessions. They load for this provider's own CLI, but not for the session stream Traycer drives.";
+  "Plugin tools may not appear in Hukum-launched sessions. They load for this provider's own CLI, but not for the session stream Hukum drives.";
 
 function pluginsState(
   providerId: ProviderCliState["providerId"],
-  traycerSessionToolsNotice: boolean,
+  hukumSessionToolsNotice: boolean,
 ): ProviderCliState {
   return {
     providerId,
@@ -102,7 +102,7 @@ function pluginsState(
       plugins: {
         addModes: ["read-only"],
         marketplaceBrowse: false,
-        traycerSessionToolsNotice,
+        hukumSessionToolsNotice,
         actionScopes: {
           list: ["global"],
           add: [],
@@ -132,12 +132,12 @@ afterEach(() => {
 });
 
 describe("ProviderPluginsTab session-tools notice", () => {
-  it("renders the notice when caps.traycerSessionToolsNotice is true", () => {
+  it("renders the notice when caps.hukumSessionToolsNotice is true", () => {
     render(<ProviderPluginsTab state={pluginsState("cursor", true)} />);
     expect(screen.getByText(SESSION_NOTICE)).toBeDefined();
   });
 
-  it("renders no notice when caps.traycerSessionToolsNotice is false", () => {
+  it("renders no notice when caps.hukumSessionToolsNotice is false", () => {
     render(<ProviderPluginsTab state={pluginsState("cursor", false)} />);
     expect(screen.queryByText(SESSION_NOTICE)).toBeNull();
   });

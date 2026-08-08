@@ -9,7 +9,7 @@ import type { UseNavigateResult } from "@tanstack/react-router";
 import {
   NOTIFICATION_EVENT_TYPES,
   type NotificationEvent,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 import {
   existingEpicTabIntentWithNestedFocus,
   navigateToTabIntent,

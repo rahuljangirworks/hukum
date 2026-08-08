@@ -34,7 +34,7 @@ if (
 
 // Single-instance lock applies uniformly so deep links and dock relaunches
 // target the primary process. With the dev userData split above, a
-// `make dev-desktop` shell and a packaged Traycer.app hold separate locks.
+// `make dev-desktop` shell and a packaged Hukum.app hold separate locks.
 //
 // All boot logic lives in the phased orchestrator (`startup/desktop-startup`):
 // pre-ready → on-ready → window (auth-first) → deferred. The desktop performs

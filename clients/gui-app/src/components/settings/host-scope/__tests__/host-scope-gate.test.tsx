@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import { useEffect, useState, type ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { HostScopeGate } from "@/components/settings/host-scope/host-scope-gate";
 import {
   hostScopeFixture,
@@ -65,7 +65,7 @@ describe("<HostScopeGate /> empty and failed states", () => {
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
     const queryClient = new QueryClient({
       defaultOptions: { mutations: { retry: false } },

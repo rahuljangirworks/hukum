@@ -5,7 +5,7 @@
  *
  * Owns the generic mechanics every handle would otherwise duplicate:
  * primary-button + pointer-capture bookkeeping with pointerId matching, the
- * global `traycer-panel-resizing` freeze (see
+ * global `hukum-panel-resizing` freeze (see
  * `lib/layout/panel-resizing-class.ts`), per-frame axis deltas,
  * commit-on-pointer-up vs restore-on-pointer-cancel, double-click reset,
  * and the axis-aware arrow-key nudge.
@@ -23,7 +23,7 @@
  * is under the cursor, but a live divider drag under a stacked-plane layout
  * (a later DOM-order sibling with its own `pointer-events:auto` content
  * abutting the handle's seam) showed `onDragStart` succeeding (capture
- * engaged, the `traycer-panel-resizing` class active) while every
+ * engaged, the `hukum-panel-resizing` class active) while every
  * subsequent move/up event silently failed to reach the handle's own
  * listeners for the duration of the drag - not reproducible in jsdom, since
  * this repo's test setup stubs both `setPointerCapture` and

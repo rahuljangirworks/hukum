@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { tuiAgentSchema } from "@traycer/protocol/persistence/epic/tui-agents";
+import { tuiAgentSchema } from "@hukum/protocol/persistence/epic/tui-agents";
 
 /**
  * `archivedAt` back-compat guard on `baseTuiAgentFields`, shared by all four

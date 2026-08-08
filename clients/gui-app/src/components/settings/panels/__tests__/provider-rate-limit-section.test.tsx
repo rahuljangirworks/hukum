@@ -14,8 +14,8 @@ import {
   vi,
   type Mock,
 } from "vitest";
-import { DEFAULT_ACCOUNT_CONTEXT } from "@traycer/protocol/common/schemas";
-import type { ProviderRateLimits } from "@traycer/protocol/host";
+import { DEFAULT_ACCOUNT_CONTEXT } from "@hukum/protocol/common/schemas";
+import type { ProviderRateLimits } from "@hukum/protocol/host";
 import type { ProviderRateLimitEnvelope } from "@/lib/rate-limits/rate-limit-envelope";
 import { envelopeFromRateLimits } from "@/lib/rate-limits/__tests__/rate-limit-envelope-fixtures";
 import { formatResetFullDateTime } from "@/lib/relative-time";
@@ -214,7 +214,7 @@ describe("ProviderRateLimitForProvider", () => {
   it("renders nothing for a provider without native usage limits", () => {
     const { container } = render(
       <ProviderRateLimitForProvider
-        providerId="traycer"
+        providerId="hukum"
         profileId={null}
         usageUpdatedAt={null}
         fetchEligible

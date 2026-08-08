@@ -34,7 +34,7 @@ vi.mock("@/hooks/host/use-remote-hosts-plan-gate", () => ({
 
 vi.mock("@/providers/use-runner-host", () => ({
   useRunnerHost: () => ({
-    authnBaseUrl: "https://authn.traycer.ai",
+    authnBaseUrl: "https://authn.hukum.ai",
     openExternalLink: mocks.openExternalLink,
     hostPicker: {
       isOpen: true,
@@ -146,7 +146,7 @@ describe("HostPicker paid-plan gating", () => {
     expect(screen.getByTestId("host-picker-remote-upsell")).toBeDefined();
     fireEvent.click(screen.getByTestId("host-picker-remote-upsell-upgrade"));
     expect(mocks.openExternalLink).toHaveBeenCalledWith(
-      "https://platform.traycer.ai",
+      "https://platform.hukum.ai",
     );
   });
 

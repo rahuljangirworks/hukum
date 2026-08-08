@@ -1,4 +1,4 @@
-import { LEGACY_HOST_RESOLVED_AT } from "@traycer/protocol/host/worktree-schemas";
+import { LEGACY_HOST_RESOLVED_AT } from "@hukum/protocol/host/worktree-schemas";
 
 /**
  * The host's derive time for whatever is on screen, or `null` when nothing has

@@ -12,7 +12,7 @@ vi.mock("electron", () => ({
 }));
 
 beforeEach(() => {
-  userDataPath = mkdtempSync(join(tmpdir(), "traycer-update-preferences-"));
+  userDataPath = mkdtempSync(join(tmpdir(), "hukum-update-preferences-"));
   vi.resetModules();
 });
 

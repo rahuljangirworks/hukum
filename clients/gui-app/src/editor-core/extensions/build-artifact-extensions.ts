@@ -71,7 +71,7 @@ export function resolveArtifactPlaceholderText(params: {
 }
 
 /**
- * Opinionated Tiptap extension bundle for Traycer artifact editors
+ * Opinionated Tiptap extension bundle for Hukum artifact editors
  * (specs, ticket reviews, stories). Opinionated means: collaboration is
  * required - there is no non-collab variant; the Yjs undo manager replaces
  * Tiptap's history; markdown is the canonical serialization; and the node

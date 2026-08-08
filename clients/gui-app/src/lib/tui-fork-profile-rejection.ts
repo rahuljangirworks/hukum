@@ -1,5 +1,5 @@
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { TuiForkProfileAdmissionSubcode } from "@traycer/protocol/host/agent/tui/unary-schemas";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { TuiForkProfileAdmissionSubcode } from "@hukum/protocol/host/agent/tui/unary-schemas";
 
 /**
  * Thrown when the cross-profile fork-admission preflight rejects a launch,

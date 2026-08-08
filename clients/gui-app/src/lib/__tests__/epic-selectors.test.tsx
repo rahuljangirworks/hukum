@@ -5,7 +5,7 @@ import type {
   ChatRunSettings,
   GuiHarnessId,
   TuiHarnessId,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import {
   __getOpenEpicRegistryForTests,
   EpicSessionContext,

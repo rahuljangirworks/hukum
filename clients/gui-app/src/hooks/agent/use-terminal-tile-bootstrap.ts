@@ -38,8 +38,8 @@ import type {
   TerminalReattachMode,
   TerminalSessionStoreHandle,
 } from "@/stores/terminals/terminal-session-store";
-import type { TuiHarnessId } from "@traycer/protocol/host/agent/shared";
-import type { TerminalScope } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { TuiHarnessId } from "@hukum/protocol/host/agent/shared";
+import type { TerminalScope } from "@hukum/protocol/host/terminal/unary-schemas";
 // Last-resort opening grid when the measurement probe never reported (its
 // chunk failed to load within the timeout, or the tile never mounted one) and
 // no kept-alive engine exists to peek. Everything downstream can still heal

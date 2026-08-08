@@ -15,7 +15,7 @@
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { Radar } from "lucide-react";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 
 import { Button } from "@/components/ui/button";
 import {

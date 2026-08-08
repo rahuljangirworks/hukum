@@ -3,7 +3,7 @@ import { cleanup, render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
- * `TraycerMarkdown` keys its parse `useMemo` - and `MarkdownBlock` its memo
+ * `HukumMarkdown` keys its parse `useMemo` - and `MarkdownBlock` its memo
  * comparator - on the `components` object's IDENTITY. Capturing that identity
  * across renders is the observable for "does an unrelated rerender reparse every
  * markdown block on the surface".
@@ -13,7 +13,7 @@ const captured = vi.hoisted(() => {
   return seen;
 });
 vi.mock("@/markdown", () => ({
-  TraycerMarkdown: (props: {
+  HukumMarkdown: (props: {
     readonly components: unknown;
     readonly children: ReactNode;
   }) => {

@@ -379,7 +379,7 @@ export const CURRENT_MUX_VERSION = MUX_PROTOCOL_VERSION;
 
 /** Fixed Noise-NK prologue, mixed into the handshake hash by both endpoints. */
 export const NOISE_PROLOGUE: Uint8Array = new TextEncoder().encode(
-  "traycer-remote-host/mux/v1",
+  "hukum-remote-host/mux/v1",
 );
 
 // -----------------------------------------------------------------------------

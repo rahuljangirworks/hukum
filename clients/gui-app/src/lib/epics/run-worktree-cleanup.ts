@@ -1,6 +1,6 @@
-import { WorktreeDeleteStreamClient } from "@traycer-clients/shared/host-transport/worktree-delete-stream-client";
-import { WorktreeDeleteBatchStreamClient } from "@traycer-clients/shared/host-transport/worktree-delete-batch-stream-client";
-import type { WorktreeDeletionSource } from "@traycer/protocol/host/worktree-delete-batch-stream";
+import { WorktreeDeleteStreamClient } from "@hukum-clients/shared/host-transport/worktree-delete-stream-client";
+import { WorktreeDeleteBatchStreamClient } from "@hukum-clients/shared/host-transport/worktree-delete-batch-stream-client";
+import type { WorktreeDeletionSource } from "@hukum/protocol/host/worktree-delete-batch-stream";
 import type { DurableStreamTransport } from "@/lib/host/durable-stream-transport";
 import { openOwnedDurableStreamClient } from "@/lib/host/owned-durable-stream-client";
 import { appLogger } from "@/lib/logger";

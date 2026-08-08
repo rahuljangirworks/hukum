@@ -2,13 +2,13 @@ import { focusManager, QueryClientProvider } from "@tanstack/react-query";
 import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { RetryableTransportError } from "@traycer-clients/shared/host-transport/host-messenger";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import type { WorkspaceResolvePathsByRepoIdentifiersResponse } from "@traycer/protocol/host/workspace/unary-schemas";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { RetryableTransportError } from "@hukum-clients/shared/host-transport/host-messenger";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import type { WorkspaceResolvePathsByRepoIdentifiersResponse } from "@hukum/protocol/host/workspace/unary-schemas";
 import { useResolvedWorkspaceFolders } from "@/hooks/workspace/use-resolved-workspace-folders-query";
 import { useWorkspaceFolderActionsForClient } from "@/hooks/workspace/use-workspace-folder-actions";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
@@ -224,7 +224,7 @@ function workspaceSource(fixture: WorkspaceFixture) {
     folderInfoByPath: {
       [fixture.workspacePath]: {
         path: fixture.workspacePath,
-        name: "traycer",
+        name: "hukum",
         repoIdentifier: fixture.repoIdentifier,
         hostId: null,
       },
@@ -243,8 +243,8 @@ function createFixture(options: WorkspaceFixtureOptions): WorkspaceFixture {
     ),
     { retry: false },
   );
-  const repoIdentifier = { owner: "traycerai", repo: "traycer" };
-  const workspacePath = "/workspace/traycer";
+  const repoIdentifier = { owner: "hukumai", repo: "hukum" };
+  const workspacePath = "/workspace/hukum";
   const firstResolution =
     Promise.withResolvers<WorkspaceResolvePathsByRepoIdentifiersResponse>();
   let prepared = false;
@@ -281,9 +281,9 @@ function createFixture(options: WorkspaceFixtureOptions): WorkspaceFixture {
           folders: [
             {
               workspacePath,
-              workspaceName: "traycer",
+              workspaceName: "hukum",
               repoIdentifier,
-              repoUrl: "https://github.com/traycerai/traycer.git",
+              repoUrl: "https://github.com/hukumai/hukum.git",
             },
           ],
           repoIdentifiers: [repoIdentifier],
@@ -304,13 +304,13 @@ function createFixture(options: WorkspaceFixtureOptions): WorkspaceFixture {
     createRequestContextFixture({ origin: "renderer", bearerToken: "tok-1" }),
   );
   const runnerHost = new MockRunnerHost({
-    signInUrl: "https://traycer.invalid/sign-in",
-    authnBaseUrl: "https://traycer.invalid/auth",
+    signInUrl: "https://hukum.invalid/sign-in",
+    authnBaseUrl: "https://hukum.invalid/auth",
     localHost: null,
     hosts: [mockLocalHostEntry],
     workspaceFolderPickerPaths: [],
     hasLocalHost: true,
-    traycerCli: null,
+    hukumCli: null,
   });
   const Wrapper = (props: { readonly children: ReactNode }): ReactNode => (
     <QueryClientProvider client={queryClient}>

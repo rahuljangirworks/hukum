@@ -2,7 +2,7 @@ import { EncryptStorage } from "encrypt-storage";
 
 /**
  * Renderer-side replacement for the keychain-backed `safeStorage` token
- * store. Mirrors how the Traycer web UI persists credentials: AES on
+ * store. Mirrors how the Hukum web UI persists credentials: AES on
  * top of `window.localStorage`, with the encryption key bundled into the
  * shipped renderer JS at build time via Vite's `import.meta.env`.
  *
@@ -21,9 +21,9 @@ import { EncryptStorage } from "encrypt-storage";
  *   - No keychain prompts, on any OS.
  *   - No Electron `safeStorage` / IPC dance for credential I/O - the
  *     renderer reads/writes its own `localStorage` directly.
- *   - Parity with how the Traycer web UI persists its credentials.
+ *   - Parity with how the Hukum web UI persists its credentials.
  */
-const FALLBACK_KEY = "traycer-desktop-default-secret";
+const FALLBACK_KEY = "hukum-desktop-default-secret";
 
 function resolveEncryptionKey(): string {
   const configured =

@@ -18,7 +18,7 @@ import {
   type ProfileDropdownShortcutHint,
 } from "@/components/providers/profile-dropdown";
 import type { ProfileRowAdmission } from "@/components/providers/provider-profile-model";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 
 const PROFILES: ReadonlyArray<ProviderProfile> = [
   {

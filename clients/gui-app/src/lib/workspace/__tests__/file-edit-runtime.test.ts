@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type {
   WorkspaceWriteFileRequest,
   WorkspaceWriteFileResponse,
-} from "@traycer/protocol/host/workspace/unary-schemas";
+} from "@hukum/protocol/host/workspace/unary-schemas";
 
 import { fileContentRevision } from "@/lib/workspace/file-content-revision";
 import {

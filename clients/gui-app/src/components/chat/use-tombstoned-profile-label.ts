@@ -1,5 +1,5 @@
 import { createContext, use } from "react";
-import type { ChatSessionAnchor } from "@traycer/protocol/persistence/epic/schemas";
+import type { ChatSessionAnchor } from "@hukum/protocol/persistence/epic/schemas";
 
 export type TombstonedProfileResolver = (
   anchor: ChatSessionAnchor,

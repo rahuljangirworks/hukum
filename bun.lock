@@ -33,7 +33,7 @@
       },
     },
     "clients/desktop": {
-      "name": "@traycer-clients/desktop",
+      "name": "@hukum-clients/desktop",
       "version": "0.0.0",
       "dependencies": {
         "@sentry/browser": "catalog:",
@@ -71,7 +71,7 @@
       },
     },
     "clients/gui-app": {
-      "name": "@traycer-clients/gui-app",
+      "name": "@hukum-clients/gui-app",
       "version": "0.0.0",
       "dependencies": {
         "@codemirror/lang-markdown": "catalog:",
@@ -201,8 +201,36 @@
         "vitest": "catalog:",
       },
     },
+    "clients/hukum-cli": {
+      "name": "@hukum-clients/hukum-cli",
+      "version": "0.1.0",
+      "bin": {
+        "hukum": "./src/index.ts",
+      },
+      "dependencies": {
+        "@sentry/node": "catalog:",
+        "commander": "catalog:",
+        "node-stream-zip": "catalog:",
+        "tar": "^7.5.22",
+        "undici": "catalog:",
+        "zod": "catalog:",
+      },
+      "devDependencies": {
+        "@hukum-clients/shared": "workspace:*",
+        "@hukum/protocol": "workspace:*",
+        "@sentry/esbuild-plugin": "catalog:",
+        "@types/node": "catalog:",
+        "@typescript-eslint/eslint-plugin": "catalog:",
+        "@typescript-eslint/parser": "catalog:",
+        "esbuild": "catalog:",
+        "eslint": "catalog:",
+        "prettier": "catalog:",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
+    },
     "clients/shared": {
-      "name": "@traycer-clients/shared",
+      "name": "@hukum-clients/shared",
       "dependencies": {
         "zod": "catalog:",
       },
@@ -214,36 +242,8 @@
         "yaml": "catalog:",
       },
     },
-    "clients/traycer-cli": {
-      "name": "@traycer-clients/traycer-cli",
-      "version": "0.1.0",
-      "bin": {
-        "traycer": "./src/index.ts",
-      },
-      "dependencies": {
-        "@sentry/node": "catalog:",
-        "commander": "catalog:",
-        "node-stream-zip": "catalog:",
-        "tar": "^7.5.22",
-        "undici": "catalog:",
-        "zod": "catalog:",
-      },
-      "devDependencies": {
-        "@sentry/esbuild-plugin": "catalog:",
-        "@traycer-clients/shared": "workspace:*",
-        "@traycer/protocol": "workspace:*",
-        "@types/node": "catalog:",
-        "@typescript-eslint/eslint-plugin": "catalog:",
-        "@typescript-eslint/parser": "catalog:",
-        "esbuild": "catalog:",
-        "eslint": "catalog:",
-        "prettier": "catalog:",
-        "typescript": "catalog:",
-        "vitest": "catalog:",
-      },
-    },
     "protocol": {
-      "name": "@traycer/protocol",
+      "name": "@hukum/protocol",
       "version": "0.1.0",
       "dependencies": {
         "@noble/curves": "^2.3.0",
@@ -736,6 +736,16 @@
     "@hapi/topo": ["@hapi/topo@6.0.2", "", { "dependencies": { "@hapi/hoek": "^11.0.2" } }, "sha512-KR3rD5inZbGMrHmgPxsJ9dbi6zEK+C3ZwUwTa+eMwWLz7oijWUTWD2pMSNNYJAU6Qq+65NkxXjqHr/7LM2Xkqg=="],
 
     "@hono/node-server": ["@hono/node-server@2.0.12", "", { "peerDependencies": { "hono": "^4" } }, "sha512-eWpQYr67tqJLeaSUl0Q+TquuYfUdTibpOJlUMV2FfUP7+KqCC5TufnwnlXL6mobZBJbGAYRd7ZvEBDCbLInjhg=="],
+
+    "@hukum-clients/desktop": ["@hukum-clients/desktop@workspace:clients/desktop"],
+
+    "@hukum-clients/gui-app": ["@hukum-clients/gui-app@workspace:clients/gui-app"],
+
+    "@hukum-clients/hukum-cli": ["@hukum-clients/hukum-cli@workspace:clients/hukum-cli"],
+
+    "@hukum-clients/shared": ["@hukum-clients/shared@workspace:clients/shared"],
+
+    "@hukum/protocol": ["@hukum/protocol@workspace:protocol"],
 
     "@humanfs/core": ["@humanfs/core@0.19.2", "", { "dependencies": { "@humanfs/types": "^0.15.0" } }, "sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA=="],
 
@@ -1368,16 +1378,6 @@
     "@tiptap/suggestion": ["@tiptap/suggestion@3.30.1", "", { "peerDependencies": { "@floating-ui/dom": "^1.0.0", "@tiptap/core": "3.30.1", "@tiptap/pm": "3.30.1" } }, "sha512-jhzZGR+6SCCHCdfsAi8g5DRo+lvcTfsw/71s4IEki+SFL8ykpOAF4tpV+G51IcGLOhxvB6xfkWDvm4B4eACqjw=="],
 
     "@tiptap/y-tiptap": ["@tiptap/y-tiptap@3.0.8", "", { "dependencies": { "lib0": "^0.2.100" }, "peerDependencies": { "prosemirror-model": "^1.7.1", "prosemirror-state": "^1.2.3", "prosemirror-view": "^1.9.10", "y-protocols": "^1.0.1", "yjs": "^13.5.38" } }, "sha512-+kndlSuoUK9sKVRuxbAHXNrbDvyydnG/Y0NFU9XXqaSkI9IRcrjpOf1RGd7NrC9jJXquDqZS96wOQf6eUpP9Dg=="],
-
-    "@traycer-clients/desktop": ["@traycer-clients/desktop@workspace:clients/desktop"],
-
-    "@traycer-clients/gui-app": ["@traycer-clients/gui-app@workspace:clients/gui-app"],
-
-    "@traycer-clients/shared": ["@traycer-clients/shared@workspace:clients/shared"],
-
-    "@traycer-clients/traycer-cli": ["@traycer-clients/traycer-cli@workspace:clients/traycer-cli"],
-
-    "@traycer/protocol": ["@traycer/protocol@workspace:protocol"],
 
     "@ts-morph/common": ["@ts-morph/common@0.27.0", "", { "dependencies": { "fast-glob": "^3.3.3", "minimatch": "^10.0.1", "path-browserify": "^1.0.1" } }, "sha512-Wf29UqxWDpc+i61k3oIOzcUfQt79PIT9y/MWfAGlrkjg6lBC1hwDECLXPVJAhWjiGbfBCxZd65F/LIZF3+jeJQ=="],
 

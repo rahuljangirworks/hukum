@@ -4,7 +4,7 @@ import { worktreeBranchPrefixError } from "@/lib/worktree/worktree-branch-prefix
 describe("worktreeBranchPrefixError", () => {
   it.each([
     ["", "empty string (no prefix)"],
-    ["traycer/", "default traycer/ prefix"],
+    ["hukum/", "default hukum/ prefix"],
     ["feat-", "dash-terminated prefix"],
     ["anurag/", "user slash prefix"],
     ["feature/foo-", "nested path-like prefix"],
@@ -16,8 +16,8 @@ describe("worktreeBranchPrefixError", () => {
 
   // Regression: trailing empty component after `/` must not false-positive the
   // leading-dot / trailing-.lock component checks on the default prefix.
-  it('accepts the default "traycer/" (trailing empty component is skipped)', () => {
-    expect(worktreeBranchPrefixError("traycer/")).toBeNull();
+  it('accepts the default "hukum/" (trailing empty component is skipped)', () => {
+    expect(worktreeBranchPrefixError("hukum/")).toBeNull();
   });
 
   it("rejects prefixes longer than 40 characters", () => {
@@ -149,7 +149,7 @@ describe("worktreeBranchPrefixError", () => {
   });
 
   it.each([
-    ["traycer/", "default traycer/ prefix still accepted"],
+    ["hukum/", "default hukum/ prefix still accepted"],
     ["feat-", "mid/trailing dash still accepted"],
   ])("still accepts %s (%s)", (value) => {
     expect(worktreeBranchPrefixError(value)).toBeNull();

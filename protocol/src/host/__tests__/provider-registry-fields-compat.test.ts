@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
   downgradeResponseAcrossMajors,
   upgradeResponseToVersion,
-} from "@traycer/protocol/framework/index";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+} from "@hukum/protocol/framework/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   providersListResponseSchemaV70,
   downgradeProviderCliStateToV10,
@@ -32,7 +32,7 @@ import {
   providersSetEnabledResponseSchema,
   providersStartTerminalLoginRequestSchema,
   providersStartTerminalLoginResponseSchema,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 /**
  * Provider pack registry protocol ticket coverage (T3): the managed-install

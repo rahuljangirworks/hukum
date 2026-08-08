@@ -6,10 +6,10 @@ import {
   type ProviderCliState,
   type ProviderLoginCapability,
   type ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
-import { providerSignedOutMessage } from "@traycer/protocol/host/provider-display";
+} from "@hukum/protocol/host/provider-schemas";
+import { providerSignedOutMessage } from "@hukum/protocol/host/provider-display";
 import type { ProviderReauthReason } from "./use-provider-reauth-gate";
-import type { ResponseOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { ResponseOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import { hostQueryKeys } from "@/lib/query-keys";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
@@ -525,7 +525,7 @@ function OAuthReauthForm({
     mode: "reauth",
     providerId,
     // No profile picker yet - re-auth always targets the ambient login, not
-    // a Traycer-managed profile.
+    // a Hukum-managed profile.
     existingProfileId: null,
     loginCapability,
     startLogin,

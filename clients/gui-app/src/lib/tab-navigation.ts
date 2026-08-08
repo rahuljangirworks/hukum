@@ -181,7 +181,7 @@ interface CorrectionRequest {
   readonly correctionKey: string;
 }
 
-const HISTORY_ENVELOPE_KEY = "__traycerTabNavigation";
+const HISTORY_ENVELOPE_KEY = "__hukumTabNavigation";
 const DEFAULT_HISTORY_TAB_NAME = "History";
 const DEFAULT_SETTINGS_TAB_NAME = "Settings";
 const SETTINGS_PATH_PREFIX = "/settings";

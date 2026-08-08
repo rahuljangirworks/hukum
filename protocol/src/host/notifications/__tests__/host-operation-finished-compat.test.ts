@@ -3,7 +3,7 @@ import { z } from "zod";
 import {
   hostRpcRegistry,
   hostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   ALL_HOST_NOTIFICATION_KINDS,
   RELEASED_HOST_NOTIFICATION_KINDS,
@@ -30,7 +30,7 @@ import {
   streamCarriesChannelEmissionFrame,
   visibleHostNotificationKinds,
   type HostNotificationEntryV21,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 
 /**
  * The one-time compatibility cutover for `host.operation.finished`.

@@ -41,12 +41,12 @@ describe("useSettingsStore", () => {
 
   it("persists and rehydrates the chat turn minimap side", async () => {
     useSettingsStore.getState().setChatTurnMinimapSide("left");
-    const persisted = window.localStorage.getItem("traycer-gui-app:settings");
+    const persisted = window.localStorage.getItem("hukum-gui-app:settings");
     expect(persisted ?? "").toContain('"chatTurnMinimapSide":"left"');
 
     useSettingsStore.setState({ chatTurnMinimapSide: "right" });
     if (persisted === null) throw new Error("expected persisted settings");
-    window.localStorage.setItem("traycer-gui-app:settings", persisted);
+    window.localStorage.setItem("hukum-gui-app:settings", persisted);
     await useSettingsStore.persist.rehydrate();
 
     expect(useSettingsStore.getState().chatTurnMinimapSide).toBe("left");
@@ -54,12 +54,12 @@ describe("useSettingsStore", () => {
 
   it("persists and rehydrates a hidden chat turn minimap", async () => {
     useSettingsStore.getState().setChatTurnMinimapSide("hide");
-    const persisted = window.localStorage.getItem("traycer-gui-app:settings");
+    const persisted = window.localStorage.getItem("hukum-gui-app:settings");
     expect(persisted ?? "").toContain('"chatTurnMinimapSide":"hide"');
 
     useSettingsStore.setState({ chatTurnMinimapSide: "right" });
     if (persisted === null) throw new Error("expected persisted settings");
-    window.localStorage.setItem("traycer-gui-app:settings", persisted);
+    window.localStorage.setItem("hukum-gui-app:settings", persisted);
     await useSettingsStore.persist.rehydrate();
 
     expect(useSettingsStore.getState().chatTurnMinimapSide).toBe("hide");
@@ -68,7 +68,7 @@ describe("useSettingsStore", () => {
   it("repairs an invalid persisted chat turn minimap side to right", async () => {
     useSettingsStore.setState({ chatTurnMinimapSide: "left" });
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { chatTurnMinimapSide: "top" },
         version: 1,
@@ -105,7 +105,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates persisted artifact icon settings via default hydration", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: {
           artifactIconColorMode: "none",
@@ -155,7 +155,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates a persisted defaultEditor via default hydration", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { defaultEditor: "cursor" },
         version: 1,
@@ -169,7 +169,7 @@ describe("useSettingsStore", () => {
 
   it("keeps the initial defaultEditor when none is persisted", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { artifactIconColorMode: "none" },
         version: 1,
@@ -187,7 +187,7 @@ describe("useSettingsStore", () => {
 
   it("toggles and persists the global resource monitor button preference", () => {
     useSettingsStore.getState().setShowGlobalResourceMonitor(false);
-    const persisted = window.localStorage.getItem("traycer-gui-app:settings");
+    const persisted = window.localStorage.getItem("hukum-gui-app:settings");
 
     expect(useSettingsStore.getState().showGlobalResourceMonitor).toBe(false);
     expect(persisted ?? "").toContain('"showGlobalResourceMonitor":false');
@@ -195,7 +195,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates the global resource monitor button preference", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { showGlobalResourceMonitor: false },
         version: 1,
@@ -213,7 +213,7 @@ describe("useSettingsStore", () => {
 
   it("toggles and persists navigator resource stats", () => {
     useSettingsStore.getState().setShowNavigatorResourceStats(true);
-    const persisted = window.localStorage.getItem("traycer-gui-app:settings");
+    const persisted = window.localStorage.getItem("hukum-gui-app:settings");
 
     expect(useSettingsStore.getState().showNavigatorResourceStats).toBe(true);
     expect(persisted ?? "").toContain('"showNavigatorResourceStats":true');
@@ -221,7 +221,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates navigator resource stats from persisted settings", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { showNavigatorResourceStats: true },
         version: 1,
@@ -245,14 +245,14 @@ describe("useSettingsStore", () => {
 
   it("persists the pinned context usage breakdown preference", () => {
     useSettingsStore.getState().setPinContextUsageBreakdown(true);
-    const persisted = window.localStorage.getItem("traycer-gui-app:settings");
+    const persisted = window.localStorage.getItem("hukum-gui-app:settings");
 
     expect(persisted ?? "").toContain('"pinContextUsageBreakdown":true');
   });
 
   it("rehydrates the pinned context usage breakdown from persisted settings", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { pinContextUsageBreakdown: true },
         version: 1,
@@ -266,7 +266,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates old settings without the field to the default off", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { artifactIconColorMode: "none" },
         version: 1,
@@ -290,14 +290,14 @@ describe("useSettingsStore", () => {
 
   it("persists the quote reply preference", () => {
     useSettingsStore.getState().setQuoteReplyEnabled(false);
-    const persisted = window.localStorage.getItem("traycer-gui-app:settings");
+    const persisted = window.localStorage.getItem("hukum-gui-app:settings");
 
     expect(persisted ?? "").toContain('"quoteReplyEnabled":false');
   });
 
   it("rehydrates the quote reply preference from persisted settings", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { quoteReplyEnabled: false },
         version: 1,
@@ -311,7 +311,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates old settings without quoteReplyEnabled to the default on", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { artifactIconColorMode: "none" },
         version: 1,
@@ -329,7 +329,7 @@ describe("useSettingsStore", () => {
 
   it("accepts valid persisted default permissions", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: {
           defaultPermission: "auto_accept_edits",
@@ -395,7 +395,7 @@ describe("useSettingsStore", () => {
       mode: "unified",
       ignoreWhitespace: true,
     });
-    const persisted = window.localStorage.getItem("traycer-gui-app:settings");
+    const persisted = window.localStorage.getItem("hukum-gui-app:settings");
 
     expect(persisted ?? "").toContain('"mode":"unified"');
     expect(persisted ?? "").toContain('"ignoreWhitespace":true');
@@ -403,7 +403,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates valid persisted diff viewer preferences", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: {
           diffViewerPreferences: {
@@ -431,11 +431,11 @@ describe("useSettingsStore", () => {
     });
   });
 
-  it("defaults the worktree branch prefix to traycer/", () => {
+  it("defaults the worktree branch prefix to hukum/", () => {
     expect(useSettingsStore.getState().worktreeBranchPrefix).toBe(
       DEFAULT_WORKTREE_BRANCH_PREFIX,
     );
-    expect(DEFAULT_WORKTREE_BRANCH_PREFIX).toBe("traycer/");
+    expect(DEFAULT_WORKTREE_BRANCH_PREFIX).toBe("hukum/");
   });
 
   it("updates the worktree branch prefix via the setter", () => {
@@ -452,14 +452,14 @@ describe("useSettingsStore", () => {
 
   it("persists the worktree branch prefix", () => {
     useSettingsStore.getState().setWorktreeBranchPrefix("anurag/");
-    const persisted = window.localStorage.getItem("traycer-gui-app:settings");
+    const persisted = window.localStorage.getItem("hukum-gui-app:settings");
 
     expect(persisted ?? "").toContain('"worktreeBranchPrefix":"anurag/"');
   });
 
   it("rehydrates a persisted worktree branch prefix", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { worktreeBranchPrefix: "feat-" },
         version: 1,
@@ -474,7 +474,7 @@ describe("useSettingsStore", () => {
   it("rehydrates an invalid persisted worktree branch prefix to the default", async () => {
     // Leading-dash and control-char values must not rehydrate verbatim.
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { worktreeBranchPrefix: "-wip/" },
         version: 1,
@@ -490,7 +490,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates a control-character worktree branch prefix to the default", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { worktreeBranchPrefix: "a\x01b" },
         version: 1,
@@ -506,7 +506,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates a non-string worktree branch prefix to the default", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { worktreeBranchPrefix: 42 },
         version: 1,
@@ -522,7 +522,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates a null worktree branch prefix to the default", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { worktreeBranchPrefix: null },
         version: 1,
@@ -540,7 +540,7 @@ describe("useSettingsStore", () => {
     // Custom merge only special-cases worktreeBranchPrefix; other fields must
     // still rehydrate via the normal shallow spread path.
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: {
           worktreeBranchPrefix: "feat-",
@@ -558,7 +558,7 @@ describe("useSettingsStore", () => {
 
   it("rehydrates old settings without worktreeBranchPrefix to the default", async () => {
     window.localStorage.setItem(
-      "traycer-gui-app:settings",
+      "hukum-gui-app:settings",
       JSON.stringify({
         state: { artifactIconColorMode: "none" },
         version: 1,

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { GitChangedFile } from "@traycer/protocol/host";
+import type { GitChangedFile } from "@hukum/protocol/host";
 import {
   buildGitFileRowMetadata,
   type GitFileRowMetadata,

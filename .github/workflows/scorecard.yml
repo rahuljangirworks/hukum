@@ -15,9 +15,9 @@ jobs:
   analysis:
     name: Scorecard analysis
     # Scorecard publishes results + the README badge only for the public repo
-    # (github.com/traycerai/traycer) and cannot publish from a private repo, so
+    # (github.com/hukumai/hukum) and cannot publish from a private repo, so
     # skip it on the private staging mirror.
-    if: ${{ github.repository == 'traycerai/traycer' }}
+    if: ${{ github.repository == 'hukumai/hukum' }}
     runs-on: ubuntu-latest
     permissions:
       security-events: write # upload SARIF to code scanning

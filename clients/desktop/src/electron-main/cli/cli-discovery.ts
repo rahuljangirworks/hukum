@@ -26,22 +26,22 @@ import devWrapperPaths from "./dev-wrapper-paths.json";
  * Stable per-user CLI install layout (Tech Plan Decision 6 / Data Model),
  * environment-scoped to match the CLI package's `store/paths.ts`:
  *
- *   production → ~/.traycer/cli/         (no suffix)
- *   dev        → ~/.traycer/cli/dev/
- *   dev run    → ~/.traycer/cli/dev-runs/<slot>/ when DEV_DESKTOP_SLOT is set
- *   staging    → ~/.traycer/cli/staging/
+ *   production → ~/.hukum/cli/         (no suffix)
+ *   dev        → ~/.hukum/cli/dev/
+ *   dev run    → ~/.hukum/cli/dev-runs/<slot>/ when DEV_DESKTOP_SLOT is set
+ *   staging    → ~/.hukum/cli/staging/
  *
  *   <slot>/manifest.json   - install record written by Desktop / CLI / package manager
- *   <slot>/bin/traycer     - stable per-user CLI binary the service manifest points at
+ *   <slot>/bin/hukum     - stable per-user CLI binary the service manifest points at
  *
  * Both Desktop and the CLI install commands resolve the SAME install paths, so
- * the Desktop's view of `~/.traycer/cli/` stays in lockstep with the CLI's own
+ * the Desktop's view of `~/.hukum/cli/` stays in lockstep with the CLI's own
  * and a dev Desktop never reads the prod slot's manifest. In multi-run dev,
  * the env-propagated run slot selects the per-run install surface while shared
  * CLI config/credentials remain in the normal dev home.
  */
-const TRAYCER_HOME = join(homedir(), ".traycer");
-const CLI_HOME = join(TRAYCER_HOME, "cli");
+const HUKUM_HOME = join(homedir(), ".hukum");
+const CLI_HOME = join(HUKUM_HOME, "cli");
 
 // Resolved on every call (not cached at module load) so a value read before
 // `DEV_DESKTOP_SLOT` is set in a test - or, in principle, before Electron's
@@ -106,7 +106,7 @@ export function cliStagingDir(): string {
 
 /**
  * Copy the bundled CLI binary into a writable Desktop-owned staging area
- * (`~/.traycer/cli/staging/traycer-<version>(.exe)`) so the launch-time
+ * (`~/.hukum/cli/staging/hukum-<version>(.exe)`) so the launch-time
  * reconcile can record a real `pendingUpgrade.stagedBinaryPath` that does
  * not point at packaged app resources or the live (locked) binary. Throws
  * if either the copy itself or the chmod step fails - callers fall back to
@@ -121,7 +121,7 @@ export async function stageBundledCliForUpgrade(opts: {
   const ext = platform() === "win32" ? ".exe" : "";
   const sanitized = opts.version.replace(/[^A-Za-z0-9._-]/g, "_");
   // Embed platform/arch in the staged filename so two staged binaries for
-  // different runtimes never collide in `~/.traycer/cli/staging/`. The
+  // different runtimes never collide in `~/.hukum/cli/staging/`. The
   // upgrade rename target (`stableCliBinaryPath`) is platform-native, so
   // the staged copy must be too - `<name>-<version>-<platform>-<arch>[.exe]`.
   const fileName = `${parse(base).name}-${sanitized}-${process.platform}-${process.arch}${ext}`;
@@ -134,13 +134,13 @@ export async function stageBundledCliForUpgrade(opts: {
 }
 
 export function cliBinaryName(): string {
-  return platform() === "win32" ? "traycer.exe" : "traycer";
+  return platform() === "win32" ? "hukum.exe" : "hukum";
 }
 
 /**
  * Platform/arch directory name used by the bundled-CLI staging layout
  * (`resources/cli/<platform>-<arch>/`). NP-7 publishes per-arch binaries
- * (`traycer-darwin-arm64`, `traycer-win32-x64.exe`, ...) and the desktop
+ * (`hukum-darwin-arm64`, `hukum-win32-x64.exe`, ...) and the desktop
  * release workflows rename + stage each one into its arch directory so a
  * universal/multi-arch desktop bundle still has the right binary to run
  * for the current process.
@@ -198,7 +198,7 @@ async function parseBundledVersionFile(path: string): Promise<string | null> {
 }
 
 /**
- * Shape of `~/.traycer/cli/manifest.json` per the Tech Plan data model.
+ * Shape of `~/.hukum/cli/manifest.json` per the Tech Plan data model.
  * Desktop only reads `version` and `binaryPath`; the rest is preserved
  * verbatim when the manifest is rewritten so external installers
  * (Homebrew / npm / winget / scoop / apt / rpm) can keep their own
@@ -427,7 +427,7 @@ export async function writeDesktopReconcileState(
 }
 
 /**
- * Locate every `traycer` executable on the user's PATH, in PATH order.
+ * Locate every `hukum` executable on the user's PATH, in PATH order.
  *
  * All matches, not just the first: the name can be squatted, and a
  * squatter sitting ahead of a real CLI must not hide it. The caller vets
@@ -456,7 +456,7 @@ export async function findCliCandidatesOnPath(): Promise<string[]> {
 
 export function isNpmCliPackagePath(path: string): boolean {
   const normalized = path.replace(/\\/g, "/").toLowerCase();
-  return normalized.includes("/node_modules/@traycerai/cli/");
+  return normalized.includes("/node_modules/@hukumai/cli/");
 }
 
 async function inferNpmPathSource(
@@ -515,7 +515,7 @@ export function resetCliProbeCacheForTests(): void {
 }
 
 /**
- * Vet a `traycer` found on PATH before discovery may return it: it must
+ * Vet a `hukum` found on PATH before discovery may return it: it must
  * answer `--version` (cached probe). Merely *existing* under the right name
  * is not enough - the name can be squatted by something that is not our
  * CLI at all (oss #872: an AppImage-manager launcher for the desktop app
@@ -530,7 +530,7 @@ export async function vetPathCliCandidate(
   const version = await cachedProbeCliVersion(binaryPath);
   if (version === null) {
     log.warn(
-      "[cli] `traycer` on PATH failed the version probe - ignoring it for discovery",
+      "[cli] `hukum` on PATH failed the version probe - ignoring it for discovery",
       { binaryPath },
     );
     return null;
@@ -543,8 +543,8 @@ export async function vetPathCliCandidate(
  * Absolute path to the CLI binary bundled inside the desktop app's
  * `extraResources/cli/`. NP-7 publishes per-platform/arch binaries; the
  * desktop release workflows stage each one into a matching
- * `cli/<platform>-<arch>/` directory (e.g. `cli/darwin-arm64/traycer`,
- * `cli/win32-x64/traycer.exe`), so a universal/multi-arch desktop bundle
+ * `cli/<platform>-<arch>/` directory (e.g. `cli/darwin-arm64/hukum`,
+ * `cli/win32-x64/hukum.exe`), so a universal/multi-arch desktop bundle
  * can still resolve the correct binary for the current process.
  *
  * Resolution:
@@ -580,7 +580,7 @@ function devCliWrapperPath(): string {
  *
  * Order in packaged builds:
  *   1. CLI manifest (`<slot>/manifest.json`).
- *   2. `traycer` on PATH.
+ *   2. `hukum` on PATH.
  *   3. Bundled CLI (`extraResources/cli/<platform>-<arch>/`).
  *   4. None - caller surfaces the first-launch / Doctor recovery path.
  *
@@ -589,14 +589,14 @@ function devCliWrapperPath(): string {
  * bin dir that execs the source-tree CLI entry through bun, and that wrapper
  * is what every dev surface (OS service registration, manual CLI invocations
  * from the desktop) is expected to call. A dev workspace inevitably has
- * `node_modules/.bin/traycer` on PATH (bun's bin hoisting), and falling
+ * `node_modules/.bin/hukum` on PATH (bun's bin hoisting), and falling
  * through PATH first would pick the package symlink ahead of the staged
  * wrapper - not what `make dev-desktop` set up, and not the path the service
  * manifest registers. Skipping PATH in dev keeps every CLI call in lockstep
  * with the orchestrator's staging.
  *
  * The paths above are install-surface scoped (`CLI_SLOT_HOME`), so a
- * multi-run dev shell reads its own `~/.traycer/cli/dev-runs/<slot>/...`
+ * multi-run dev shell reads its own `~/.hukum/cli/dev-runs/<slot>/...`
  * manifest while keeping shared dev credentials/config outside the run slot.
  *
  * A PATH candidate is only returned after it passes the `--version` vet
@@ -621,11 +621,11 @@ export async function discoverCli(): Promise<CliDiscoveryResult> {
     }
     return { kind: "none" };
   }
-  // PATH trust is production-only. A `traycer` on PATH carries its OWN baked
+  // PATH trust is production-only. A `hukum` on PATH carries its OWN baked
   // deploy slot (`config.environment`), so adopting a PATH binary for a
   // non-production build lets a released/prod CLI on the user's PATH (Homebrew,
-  // `~/.traycer/cli/bin`) hijack a staging install onto the PRODUCTION host slot
-  // (prod cloud, `~/.traycer/host/install`, `ai.traycer.host`). Non-production
+  // `~/.hukum/cli/bin`) hijack a staging install onto the PRODUCTION host slot
+  // (prod cloud, `~/.hukum/host/install`, `ai.hukum.host`). Non-production
   // non-dev slots (e.g. internal `staging`) use their bundled/slot CLI - the
   // same reason the dev slot skips PATH above.
   if (config.environment === "production") {
@@ -652,7 +652,7 @@ export async function discoverCli(): Promise<CliDiscoveryResult> {
  * manifest pointing at it. Used both during first-launch setup and as a
  * silent self-heal step when the installed CLI is missing or corrupt.
  *
- * On every platform the stable path (`~/.traycer/cli[/<slot>]/bin/traycer`)
+ * On every platform the stable path (`~/.hukum/cli[/<slot>]/bin/hukum`)
  * is now a **copy** of the bundled CLI, not a symlink into the .app.
  *
  * It used to be a symlink on POSIX (one binary, nothing to drift or go
@@ -680,7 +680,7 @@ export async function installBundledCli(opts: {
   const stablePath = stableCliBinaryPath();
   if (platform() === "win32") {
     // The slot binary is essentially ALWAYS running on Windows - the host's
-    // Scheduled Task launcher (`traycer host start`) executes from this exact
+    // Scheduled Task launcher (`hukum host start`) executes from this exact
     // path and restarts at every logon, so `rm` would hit the running-image
     // delete lock and permanently wedge the upgrade in the `pendingUpgrade
     // (binary-locked)` loop. Windows does allow RENAMING a running image, so

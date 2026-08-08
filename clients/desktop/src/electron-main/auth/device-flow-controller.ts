@@ -10,7 +10,7 @@ import {
   startDeviceAuthorization,
   type DeviceAuthorizationResult,
   type DevicePollSchedule,
-} from "@traycer-clients/shared/auth/device-auth";
+} from "@hukum-clients/shared/auth/device-auth";
 import { log } from "../app/logger";
 
 /**
@@ -124,9 +124,9 @@ interface AttemptHandle {
 /**
  * Appends this build's registered deep-link scheme to the browser verification
  * URL as `return_scheme`, so the cloud's /device approval page can deep-link
- * back to THE APP THAT ASKED - per-environment (`traycer` / `traycer-dev`) and
+ * back to THE APP THAT ASKED - per-environment (`hukum` / `hukum-dev`) and
  * slot-suffixed under multi-run dev - instead of a hardcoded production scheme
- * (which launches an installed prod Traycer when a dev build signs in). The
+ * (which launches an installed prod Hukum when a dev build signs in). The
  * page validates the value against a strict allowlist and fires nothing when
  * it is absent or malformed, so a manually typed verification URL simply gets
  * no return deep link. Defensive: an unparseable URL passes through untouched.
@@ -406,5 +406,5 @@ function pollRequestTimeoutMs(intervalMs: number): number {
  */
 function deviceHostLabel(): string {
   const hostname = os.hostname();
-  return hostname.length > 0 ? hostname : "Traycer Desktop";
+  return hostname.length > 0 ? hostname : "Hukum Desktop";
 }

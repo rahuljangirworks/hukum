@@ -2,7 +2,7 @@ import type {
   ProviderNativeScope,
   ProviderSkill,
   ProviderSkillsCapabilities,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 
 /**
  * Pure decision layer for the Skills authoring surface.

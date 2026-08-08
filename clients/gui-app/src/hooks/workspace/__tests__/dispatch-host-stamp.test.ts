@@ -3,7 +3,7 @@ import {
   preparedWorkspaceFolderToWorkspaceFolderInfo,
   stampPreparedFoldersWithDispatchHost,
 } from "@/hooks/workspace/use-workspace-folder-actions";
-import type { PreparedWorkspaceFolder } from "@traycer/protocol/host/epic/unary-schemas";
+import type { PreparedWorkspaceFolder } from "@hukum/protocol/host/epic/unary-schemas";
 
 const PREPARED: PreparedWorkspaceFolder = {
   workspacePath: "/Users/a/scratch",

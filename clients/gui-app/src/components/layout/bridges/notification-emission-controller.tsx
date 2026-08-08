@@ -18,7 +18,7 @@ import {
   useAppLocalNotificationsStore,
 } from "@/stores/notifications/app-local-notifications-store";
 import { useNotificationEventsStore } from "@/stores/notifications/notification-events-store";
-import type { NotificationForegroundDisplay } from "@traycer-clients/shared/platform/runner-host";
+import type { NotificationForegroundDisplay } from "@hukum-clients/shared/platform/runner-host";
 import {
   appLocalDisplayDeliveryKey,
   captureAppLocalDisplayReceiptSession,

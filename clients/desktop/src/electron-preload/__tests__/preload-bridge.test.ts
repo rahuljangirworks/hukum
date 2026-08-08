@@ -4,7 +4,7 @@ import {
   RunnerHostInvoke,
   RunnerHostSync,
 } from "../../ipc-contracts/ipc-channels";
-import type { AuthIdentityValidationResult } from "@traycer-clients/shared/auth/auth-validation-types";
+import type { AuthIdentityValidationResult } from "@hukum-clients/shared/auth/auth-validation-types";
 import type { DesktopNotificationForegroundDisplay } from "../../ipc-contracts/notification-types";
 
 /**
@@ -224,12 +224,12 @@ async function loadPreload(
     fakeElectron.sendSyncFn = options.sendSyncFn;
   }
   const previousAuthnApiUrl = process.env.AUTHN_API_URL;
-  const previousDesktopDev = process.env.TRAYCER_DESKTOP_DEV;
+  const previousDesktopDev = process.env.HUKUM_DESKTOP_DEV;
   const previousArgv = process.argv;
   process.argv =
     options.initialRouteArg === undefined
       ? previousArgv.filter(
-          (arg) => !arg.startsWith("--traycer-initial-route="),
+          (arg) => !arg.startsWith("--hukum-initial-route="),
         )
       : [...previousArgv, options.initialRouteArg];
   if (options.authnApiUrl === undefined) {
@@ -238,9 +238,9 @@ async function loadPreload(
     process.env.AUTHN_API_URL = options.authnApiUrl;
   }
   if (options.desktopDev === undefined) {
-    delete process.env.TRAYCER_DESKTOP_DEV;
+    delete process.env.HUKUM_DESKTOP_DEV;
   } else {
-    process.env.TRAYCER_DESKTOP_DEV = options.desktopDev;
+    process.env.HUKUM_DESKTOP_DEV = options.desktopDev;
   }
   await import("../preload-bridge");
   if (previousAuthnApiUrl === undefined) {
@@ -249,9 +249,9 @@ async function loadPreload(
     process.env.AUTHN_API_URL = previousAuthnApiUrl;
   }
   if (previousDesktopDev === undefined) {
-    delete process.env.TRAYCER_DESKTOP_DEV;
+    delete process.env.HUKUM_DESKTOP_DEV;
   } else {
-    process.env.TRAYCER_DESKTOP_DEV = previousDesktopDev;
+    process.env.HUKUM_DESKTOP_DEV = previousDesktopDev;
   }
   process.argv = previousArgv;
   const bridge = fakeElectron.exposed.get("runnerHost");
@@ -356,7 +356,7 @@ describe("preload foreground-notification buffering", () => {
       sendSyncFn: undefined,
     });
     const display: DesktopNotificationForegroundDisplay = {
-      title: "Traycer",
+      title: "Hukum",
       body: "Background agent failed",
       payload: null,
       replaceKey: "app-local:host.error:failure-1",
@@ -399,7 +399,7 @@ describe("preload foreground-notification buffering", () => {
 
     for (let index = 0; index < 21; index++) {
       fakeElectron.emit(RunnerHostEvent.notificationForegroundDisplay, {
-        title: "Traycer",
+        title: "Hukum",
         body: `Background agent ${index} failed`,
         payload: null,
         replaceKey: null,
@@ -455,22 +455,22 @@ describe("preload host-management mutation invokes", () => {
 
     expect(calls).toEqual([
       {
-        channel: RunnerHostInvoke.traycerHostConvergeReady,
+        channel: RunnerHostInvoke.hukumHostConvergeReady,
         args: [{ force: true }],
       },
       {
-        channel: RunnerHostInvoke.traycerHostApplyStaged,
+        channel: RunnerHostInvoke.hukumHostApplyStaged,
         args: [{ trigger: "launch", force: false }],
       },
       {
-        channel: RunnerHostInvoke.traycerHostActivateInstalled,
+        channel: RunnerHostInvoke.hukumHostActivateInstalled,
         args: [{ force: true }],
       },
       {
-        channel: RunnerHostInvoke.traycerHostInstallVersion,
+        channel: RunnerHostInvoke.hukumHostInstallVersion,
         args: [{ pin: "2.0.0", force: false }],
       },
-      { channel: RunnerHostInvoke.traycerServiceRegister, args: [] },
+      { channel: RunnerHostInvoke.hukumServiceRegister, args: [] },
     ]);
   });
 });
@@ -489,7 +489,7 @@ describe("preload new-capability wiring", () => {
     const bridge = await loadPreload({
       authnApiUrl: undefined,
       desktopDev: undefined,
-      initialRouteArg: "--traycer-initial-route=%2Fepics%2Fepic-a%2Ftab-a",
+      initialRouteArg: "--hukum-initial-route=%2Fepics%2Fepic-a%2Ftab-a",
       invokeFn: undefined,
       sendSyncFn: undefined,
     });
@@ -602,7 +602,7 @@ describe("preload new-capability wiring", () => {
     });
     // The OSS build ships production endpoints in source, so this is the
     // production authn URL. No env-var override path exists anymore.
-    expect(bridge.authnBaseUrl).toBe("https://authn.traycer.ai");
+    expect(bridge.authnBaseUrl).toBe("https://authn.hukum.ai");
   });
 
   it("forwards requestHostRespawn through ipcRenderer.invoke", async () => {
@@ -682,7 +682,7 @@ describe("preload new-capability wiring", () => {
   it("exposes menu-command and support bridges", async () => {
     const invokeFn = vi.fn(async (channel: string, ...args: unknown[]) => {
       if (channel === RunnerHostInvoke.supportSnapshotGet) {
-        return { appName: "Traycer", logs: [] };
+        return { appName: "Hukum", logs: [] };
       }
       if (channel === RunnerHostInvoke.supportRevealLog) {
         return { target: args[0], path: "/tmp/log" };
@@ -720,7 +720,7 @@ describe("preload new-capability wiring", () => {
     });
 
     await expect(bridge.support.getSnapshot()).resolves.toEqual({
-      appName: "Traycer",
+      appName: "Hukum",
       logs: [],
     });
     await expect(bridge.support.revealLog("host")).resolves.toEqual({
@@ -752,7 +752,7 @@ describe("preload new-capability wiring", () => {
   it("exposes desktop windows, ownership, per-window state, and auth-session bridge calls", async () => {
     const invokeFn = vi.fn(async (channel: string) => {
       if (channel === RunnerHostInvoke.windowsList) {
-        return [{ windowId: "preload-window", title: "Traycer" }];
+        return [{ windowId: "preload-window", title: "Hukum" }];
       }
       if (channel === RunnerHostInvoke.ownershipSnapshot) {
         return [
@@ -789,7 +789,7 @@ describe("preload new-capability wiring", () => {
 
     expect(bridge.windows.windowId).toBe("preload-window");
     await expect(bridge.windows.list()).resolves.toEqual([
-      { windowId: "preload-window", title: "Traycer" },
+      { windowId: "preload-window", title: "Hukum" },
     ]);
     await bridge.windows.requestFocus("other-window");
     await expect(

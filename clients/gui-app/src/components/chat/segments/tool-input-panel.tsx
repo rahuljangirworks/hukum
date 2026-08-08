@@ -1,4 +1,4 @@
-import type { ToolInputDetail } from "@traycer/protocol/host/agent/gui/tool-input-detail";
+import type { ToolInputDetail } from "@hukum/protocol/host/agent/gui/tool-input-detail";
 import { SegmentPanel } from "./segment-panel";
 
 /**

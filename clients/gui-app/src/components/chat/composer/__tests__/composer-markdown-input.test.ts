@@ -1,7 +1,7 @@
 import { fireEvent, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { Editor } from "@tiptap/core";
-import { jsonContentToMarkdown } from "@traycer/protocol/common/json-content-serializer";
+import { jsonContentToMarkdown } from "@hukum/protocol/common/json-content-serializer";
 
 import { buildSubmittedChatJSONContent } from "@/lib/composer/tiptap-json-content";
 import { buildComposerExtensions } from "../editor/editor-config";

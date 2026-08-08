@@ -7,7 +7,7 @@ import type {
   MutationKind,
   MutationLaneStatus,
   ServiceStatusSnapshot,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 
 export const VERSION_LIST_PREVIEW = 10;
 
@@ -286,8 +286,8 @@ export function formatProgressKind(kind: MutationKind): string {
       return "Freeing port";
     case "uninstallHost":
       return "Uninstalling host";
-    case "removeTraycer":
-      return "Removing Traycer";
+    case "removeHukum":
+      return "Removing Hukum";
   }
 }
 

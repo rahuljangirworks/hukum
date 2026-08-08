@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { CommentThreadWire } from "@traycer/protocol/host/epic/unary-schemas";
+import type { CommentThreadWire } from "@hukum/protocol/host/epic/unary-schemas";
 import {
   countOpenThreads,
   filterThreadsByStatus,

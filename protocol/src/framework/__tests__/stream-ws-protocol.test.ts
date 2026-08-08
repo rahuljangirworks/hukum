@@ -7,7 +7,7 @@ import {
   clientStreamHostCredentialProvisionFrameSchema,
   STREAM_CAPABILITY_CREDENTIAL_UPDATE,
   STREAM_CAPABILITY_HOST_CREDENTIAL_PROVISION,
-} from "@traycer/protocol/framework/stream-ws-protocol";
+} from "@hukum/protocol/framework/stream-ws-protocol";
 
 /**
  * Cross-version compatibility contract for the `/stream` control frames.

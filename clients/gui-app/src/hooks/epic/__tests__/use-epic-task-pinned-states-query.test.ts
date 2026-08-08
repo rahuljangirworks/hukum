@@ -3,7 +3,7 @@ import {
   GET_TASK_CONTEXTS_MAX_IDS,
   type GetTaskContextsResponse,
   type ListTaskLight,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   chunkTaskIds,
   combineTaskPinnedStateResults,

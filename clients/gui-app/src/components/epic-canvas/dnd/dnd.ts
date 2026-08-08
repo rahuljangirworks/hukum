@@ -10,9 +10,9 @@ import {
   isManagedCommandOutputTileRef,
   isWorkspaceFileRef,
 } from "@/stores/epics/canvas/types";
-import type { EpicArtifactKind } from "@traycer/protocol/common/registry";
-import { tuiHarnessIdSchema } from "@traycer/protocol/host/index";
-import type { TuiHarnessId } from "@traycer/protocol/persistence/epic/schemas";
+import type { EpicArtifactKind } from "@hukum/protocol/common/registry";
+import { tuiHarnessIdSchema } from "@hukum/protocol/host/index";
+import type { TuiHarnessId } from "@hukum/protocol/persistence/epic/schemas";
 import { isEpicArtifactKind } from "@/lib/artifacts/node-display";
 import { parseTileRef } from "@/stores/epics/canvas/tile-schema";
 import { resolveSplitDropPosition } from "@/components/epic-canvas/dnd/pane-drop-geometry";

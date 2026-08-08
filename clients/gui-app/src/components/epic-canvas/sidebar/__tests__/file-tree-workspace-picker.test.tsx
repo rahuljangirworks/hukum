@@ -6,7 +6,7 @@ import {
   screen,
   within,
 } from "@testing-library/react";
-import type { WorktreeBindingSelectorRowV12 } from "@traycer/protocol/host";
+import type { WorktreeBindingSelectorRowV12 } from "@hukum/protocol/host";
 import { FileTreeWorkspacePicker } from "../file-tree-workspace-picker";
 
 const selectById = vi.fn();
@@ -56,12 +56,12 @@ function makeRows(): WorktreeBindingSelectorRowV12[] {
   return [
     {
       hostId: "host-1",
-      runningDir: "/work/traycer",
-      workspacePath: "/work/traycer",
+      runningDir: "/work/hukum",
+      workspacePath: "/work/hukum",
       worktreePath: null,
       mode: "local",
       isGitRepo: true,
-      repoIdentifier: { owner: "traycer", repo: "traycer" },
+      repoIdentifier: { owner: "hukum", repo: "hukum" },
       branch: "redesign",
       isPrimary: true,
       isImported: false,
@@ -72,12 +72,12 @@ function makeRows(): WorktreeBindingSelectorRowV12[] {
     },
     {
       hostId: "host-1",
-      runningDir: "/work/traycer-wt/feature-x",
-      workspacePath: "/work/traycer",
-      worktreePath: "/work/traycer-wt/feature-x",
+      runningDir: "/work/hukum-wt/feature-x",
+      workspacePath: "/work/hukum",
+      worktreePath: "/work/hukum-wt/feature-x",
       mode: "worktree",
       isGitRepo: true,
-      repoIdentifier: { owner: "traycer", repo: "traycer" },
+      repoIdentifier: { owner: "hukum", repo: "hukum" },
       branch: "feature-x",
       isPrimary: false,
       isImported: false,
@@ -152,7 +152,7 @@ describe("<FileTreeWorkspacePicker />", () => {
   });
 
   it("opens a popover with the host section and flat workspace rows", () => {
-    openPicker("/work/traycer", () => undefined);
+    openPicker("/work/hukum", () => undefined);
 
     expect(refreshDirectory).toHaveBeenCalledTimes(1);
     expect(
@@ -169,7 +169,7 @@ describe("<FileTreeWorkspacePicker />", () => {
         Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
     expect(
-      screen.getByRole("option", { name: /traycer.*redesign/i }),
+      screen.getByRole("option", { name: /hukum.*redesign/i }),
     ).toBeDefined();
     expect(screen.getByRole("option", { name: /feature-x/i })).toBeDefined();
   });
@@ -179,7 +179,7 @@ describe("<FileTreeWorkspacePicker />", () => {
       <FileTreeWorkspacePicker
         epicId="epic-1"
         hostId="host-1"
-        selectedPath="/work/traycer"
+        selectedPath="/work/hukum"
         onSelectPath={() => undefined}
       />,
     );
@@ -205,14 +205,14 @@ describe("<FileTreeWorkspacePicker />", () => {
       <FileTreeWorkspacePicker
         epicId="epic-1"
         hostId="host-1"
-        selectedPath="/work/traycer"
+        selectedPath="/work/hukum"
         onSelectPath={() => undefined}
       />,
     );
 
     const trigger = screen.getByTestId("file-tree-workspace-picker-trigger");
-    expect(trigger.textContent).toContain("traycer · redesign");
-    expect(trigger.textContent).toContain("/work/traycer");
+    expect(trigger.textContent).toContain("hukum · redesign");
+    expect(trigger.textContent).toContain("/work/hukum");
     expect(trigger.textContent).not.toContain("changed");
   });
 
@@ -221,14 +221,14 @@ describe("<FileTreeWorkspacePicker />", () => {
       <FileTreeWorkspacePicker
         epicId="epic-1"
         hostId="host-1"
-        selectedPath="/work/traycer"
+        selectedPath="/work/hukum"
         onSelectPath={() => undefined}
       />,
     );
 
     const pathText = within(
       screen.getByTestId("file-tree-workspace-picker-trigger"),
-    ).getByText("/work/traycer");
+    ).getByText("/work/hukum");
     expect(pathText.parentElement?.style.direction).toBe("rtl");
     expect(pathText.getAttribute("dir")).toBe("ltr");
   });
@@ -241,11 +241,11 @@ describe("<FileTreeWorkspacePicker />", () => {
         scrolledElements.push(this);
       });
 
-    openPicker("/work/traycer-wt/feature-x", () => undefined);
+    openPicker("/work/hukum-wt/feature-x", () => undefined);
 
     const worktreeOption = screen.getByRole("option", { name: /feature-x/i });
     const localOption = screen.getByRole("option", {
-      name: /traycer.*redesign/i,
+      name: /hukum.*redesign/i,
     });
     expect(worktreeOption.dataset.checked).toBe("true");
     expect(localOption.dataset.checked).toBeUndefined();
@@ -260,12 +260,12 @@ describe("<FileTreeWorkspacePicker />", () => {
 
   it("selects a worktree path on a single click and closes the popover", () => {
     const onSelectPath = vi.fn();
-    openPicker("/work/traycer", onSelectPath);
+    openPicker("/work/hukum", onSelectPath);
 
     fireEvent.click(screen.getByRole("option", { name: /feature-x/i }));
 
     expect(onSelectPath).toHaveBeenCalledTimes(1);
-    expect(onSelectPath).toHaveBeenCalledWith("/work/traycer-wt/feature-x");
+    expect(onSelectPath).toHaveBeenCalledWith("/work/hukum-wt/feature-x");
     expect(
       screen.queryByTestId("file-tree-workspace-picker-popover"),
     ).toBeNull();
@@ -357,7 +357,7 @@ describe("<FileTreeWorkspacePicker />", () => {
 
   it("swaps the bound host without selecting a folder when a host row is clicked", () => {
     const onSelectPath = vi.fn();
-    openPicker("/work/traycer", onSelectPath);
+    openPicker("/work/hukum", onSelectPath);
 
     fireEvent.click(
       screen.getByTestId("host-workspace-selector-host-row-host-1"),

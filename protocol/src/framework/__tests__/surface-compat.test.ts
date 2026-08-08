@@ -7,19 +7,19 @@ import {
   defineRpcContract,
   defineUpgradePath,
   defineVersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
-import { check } from "@traycer/protocol/framework/compatibility-checker";
+} from "@hukum/protocol/framework/index";
+import { check } from "@hukum/protocol/framework/compatibility-checker";
 import {
   defineStreamRpcContract,
   defineVersionedStreamRpcRegistry,
-} from "@traycer/protocol/framework/versioned-stream-rpc";
-import { checkStreamCompatibility } from "@traycer/protocol/framework/stream-compat";
+} from "@hukum/protocol/framework/versioned-stream-rpc";
+import { checkStreamCompatibility } from "@hukum/protocol/framework/stream-compat";
 import {
   hostRpcRegistry,
   hostStreamRpcRegistry,
-} from "@traycer/protocol/host/index";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
-import { buildProtocolSurface } from "@traycer/protocol/framework/surface-build";
+} from "@hukum/protocol/host/index";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
+import { buildProtocolSurface } from "@hukum/protocol/framework/surface-build";
 import {
   checkSurfaceCompatibility,
   matchMethodGlob,
@@ -29,9 +29,9 @@ import {
   manifestFromSurface,
   protocolSurfaceSchema,
   type CompatException,
-} from "@traycer/protocol/framework/surface-compat";
-import type { UncheckedVersionedRpcRegistry } from "@traycer/protocol/framework/versioned-rpc-types";
-import type { UncheckedVersionedStreamRpcRegistry } from "@traycer/protocol/framework/versioned-stream-rpc";
+} from "@hukum/protocol/framework/surface-compat";
+import type { UncheckedVersionedRpcRegistry } from "@hukum/protocol/framework/versioned-rpc-types";
+import type { UncheckedVersionedStreamRpcRegistry } from "@hukum/protocol/framework/versioned-stream-rpc";
 
 const EMPTY_STREAM: UncheckedVersionedStreamRpcRegistry = {};
 

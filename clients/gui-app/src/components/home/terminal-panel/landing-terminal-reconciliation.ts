@@ -1,7 +1,7 @@
 import type {
   CanonicalTerminalSessionInfo,
   CanonicalTerminalSessionInfoWithCurrentCwd,
-} from "@traycer/protocol/host/terminal/unary-schemas";
+} from "@hukum/protocol/host/terminal/unary-schemas";
 import { terminalSessionTitle } from "@/lib/terminals/terminal-title";
 import {
   terminalSessionKey,

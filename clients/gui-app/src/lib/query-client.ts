@@ -4,7 +4,7 @@ import {
   QueryClient,
   type QueryKey,
 } from "@tanstack/react-query";
-import { RetryableTransportError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { RetryableTransportError } from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   appLogger,
   describeLogErrorSummary,

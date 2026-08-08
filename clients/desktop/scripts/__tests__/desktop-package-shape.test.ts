@@ -6,7 +6,7 @@
  * Pins the `electron-builder` `extraResources` declarations in
  * `clients/desktop/package.json` so:
  *
- *   - Desktop **does not** stage `../../traycer-host/resources` (or
+ *   - Desktop **does not** stage `../../hukum-host/resources` (or
  *     anything else) under `host/client-assets`. Host-side client
  *     assets travel with the native host SEA / runtime archive cut
  *     by the host release workflows, not Desktop.
@@ -87,19 +87,19 @@ describe("desktop package.json - extraResources shape", () => {
     );
   });
 
-  it("does not pull from the traycer-host source tree at all", () => {
-    const fromTraycerHost = pkg.extraResources.filter((entry) =>
-      entry.from.includes("traycer-host"),
+  it("does not pull from the hukum-host source tree at all", () => {
+    const fromHukumHost = pkg.extraResources.filter((entry) =>
+      entry.from.includes("hukum-host"),
     );
-    expect(fromTraycerHost).toEqual([]);
+    expect(fromHukumHost).toEqual([]);
   });
 
   it("does not reintroduce a bundled host executable, runtime, dev Node binary, host wrapper, or service plist", () => {
     const forbiddenSources = [
-      /traycer-host\/dist/,
-      /traycer-host\/sea/,
-      /traycer-host\/runtime/,
-      /traycer-host\/.*\/(node|bun)$/,
+      /hukum-host\/dist/,
+      /hukum-host\/sea/,
+      /hukum-host\/runtime/,
+      /hukum-host\/.*\/(node|bun)$/,
       /host-wrapper/i,
       /\.plist$/,
     ];

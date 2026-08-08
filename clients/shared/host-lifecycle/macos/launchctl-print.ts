@@ -1,4 +1,4 @@
-import { attestTraycerRegistration, type TraycerLabelIds } from "../identity";
+import { attestHukumRegistration, type HukumLabelIds } from "../identity";
 import type { ProbeCommandResult } from "../shared/command";
 import { combinedOutput } from "../shared/command";
 import {
@@ -81,7 +81,7 @@ export function isSmAppServiceLaunchAgentPath(plistPath: string): boolean {
 export function classifyLabelOwnership(
   fields: ReadonlyMap<string, string>,
   raw: string,
-  knownLabels: TraycerLabelIds | null,
+  knownLabels: HukumLabelIds | null,
   labelId: string | null,
 ): LabelOwnership {
   const pathRaw = fields.get("path") ?? null;
@@ -125,7 +125,7 @@ export function classifyLabelOwnership(
   }
 
   const programArgs = extractProgramArgumentsFromPrint(raw);
-  const identity = attestTraycerRegistration({
+  const identity = attestHukumRegistration({
     labelId,
     knownLabels,
     programArguments: programArgs,
@@ -147,7 +147,7 @@ export function classifyLabelOwnership(
  *
  * ```
  * 	arguments = {
- * 		Contents/Library/LaunchAgents/Traycer Host.app/Contents/MacOS/traycer
+ * 		Contents/Library/LaunchAgents/Hukum Host.app/Contents/MacOS/hukum
  * 		host
  * 		start
  * 	}
@@ -157,7 +157,7 @@ export function classifyLabelOwnership(
  * and a `null` here does not fail loudly — it silently reduces launchd-derived
  * attestation to label matching alone, which is precisely what `identity.ts`'s
  * header and the annex's eviction rule forbid. Arguments are one per line, and
- * an argument may legally contain spaces (the real Traycer agent's program
+ * an argument may legally contain spaces (the real Hukum agent's program
  * path does), so the line is the token: no whitespace splitting.
  *
  * Surrounding double quotes are stripped when present so a quoted generation
@@ -216,7 +216,7 @@ function stripSurroundingQuotes(value: string): string {
  * Exactly one token, and it is the only one that means anything is wrong.
  * `has LWCR` was in this list and is the *healthy* state: launchd prints it in
  * `properties` for any job with a Lightweight Code Requirement attached, which
- * is the normal state of a code-signed SMAppService agent. The live Traycer
+ * is the normal state of a code-signed SMAppService agent. The live Hukum
  * agent on a working install prints
  * `properties = partial import | runatload | resolve program | has LWCR`.
  * Treating that as wedge evidence made the steady-state plan for a healthy
@@ -309,7 +309,7 @@ export function parseLwcrEvidence(raw: string): LwcrEvidence {
  */
 export function classifyLaunchctlPrintResult(
   result: ProbeCommandResult,
-  knownLabels: TraycerLabelIds | null,
+  knownLabels: HukumLabelIds | null,
   labelId: string | null,
 ): LaunchctlPrintProbe {
   if (result.spawnFailed) {

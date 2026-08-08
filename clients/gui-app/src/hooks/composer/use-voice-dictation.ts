@@ -3,10 +3,10 @@
    need CSP `script-src` widening for `file://`); migrating to AudioWorklet is a
    follow-up. */
 import { useCallback, useEffect, useRef, useState } from "react";
-import { SPEECH_INPUT_SAMPLE_RATE } from "@traycer/protocol/host/speech/schemas";
-import { SpeechStreamClient } from "@traycer-clients/shared/host-transport/speech-stream-client";
-import type { StreamConnectionStatus } from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { MicrophoneAccessStatus } from "@traycer-clients/shared/platform/runner-host";
+import { SPEECH_INPUT_SAMPLE_RATE } from "@hukum/protocol/host/speech/schemas";
+import { SpeechStreamClient } from "@hukum-clients/shared/host-transport/speech-stream-client";
+import type { StreamConnectionStatus } from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { MicrophoneAccessStatus } from "@hukum-clients/shared/platform/runner-host";
 import { useWsStreamClient } from "@/lib/host/stream-runtime-context";
 import { appLogger, describeLogError, type AppLogFields } from "@/lib/logger";
 import { useRunnerHost } from "@/providers/use-runner-host";
@@ -103,7 +103,7 @@ function classifyMicOpenFailure(error: unknown): {
     return {
       denied: true,
       failureClass: "permission_denied_browser",
-      message: "Microphone access is blocked for Traycer.",
+      message: "Microphone access is blocked for Hukum.",
     };
   }
   return {
@@ -365,8 +365,8 @@ export function useVoiceDictation(
         fail(
           "permission_denied_os",
           {},
-          "Microphone access is blocked for Traycer.",
-          "Microphone access is blocked for Traycer.",
+          "Microphone access is blocked for Hukum.",
+          "Microphone access is blocked for Hukum.",
         );
         return null;
       }

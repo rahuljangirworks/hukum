@@ -1,9 +1,9 @@
 import {
   canonicalForMethodVersionLine,
   type MajorKeyedLineRegistry,
-} from "@traycer/protocol/framework/compat-helpers";
-import type { ConnectionManifest } from "@traycer/protocol/framework/ws-protocol";
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-rpc-types";
+} from "@hukum/protocol/framework/compat-helpers";
+import type { ConnectionManifest } from "@hukum/protocol/framework/ws-protocol";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-rpc-types";
 
 export type ManifestRegistry = Readonly<Record<string, MajorKeyedLineRegistry>>;
 

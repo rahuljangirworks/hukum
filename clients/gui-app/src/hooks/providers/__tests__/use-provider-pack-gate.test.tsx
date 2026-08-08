@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import type {
   ProviderCliState,
   ProviderManagedInstallState,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 const testState = vi.hoisted(() => ({
   providers: undefined as ReadonlyArray<ProviderCliState> | undefined,
@@ -90,7 +90,7 @@ function runnableProviderState(
     candidates: [
       {
         kind: "bundled",
-        path: "/opt/traycer/bin/claude",
+        path: "/opt/hukum/bin/claude",
         version: "1.0.0",
         available: true,
         versionPending: false,

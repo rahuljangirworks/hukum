@@ -6,7 +6,7 @@ import type {
   TransitionJournal,
 } from "../durable/records";
 import type { SentinelIndeterminateCause } from "../durable/sentinel";
-import type { TraycerIdentityAttestation } from "../identity";
+import type { HukumIdentityAttestation } from "../identity";
 import type { AttemptReadiness, HostPidMetadata } from "../shared/host-process";
 import type { CliSlotValidity } from "../shared/cli-slot";
 import type { Reachability } from "../shared/reachability";
@@ -41,7 +41,7 @@ export type LabelOwnership =
   | {
       readonly kind: "cli-or-other";
       readonly path: string | null;
-      readonly identity: TraycerIdentityAttestation;
+      readonly identity: HukumIdentityAttestation;
     }
   | {
       readonly kind: "indeterminate";
@@ -82,7 +82,7 @@ export type ManifestProbe =
   | {
       readonly kind: "present";
       readonly path: string;
-      readonly identity: TraycerIdentityAttestation;
+      readonly identity: HukumIdentityAttestation;
     }
   | { readonly kind: "absent" }
   | { readonly kind: "unreadable"; readonly cause: string };

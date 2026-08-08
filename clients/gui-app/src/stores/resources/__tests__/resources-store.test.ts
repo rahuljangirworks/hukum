@@ -7,11 +7,11 @@ import type {
   OwnerResourceSnapshotWireV14,
   ResourceProcessSnapshotWire,
   ResourceOwnerKindWire,
-} from "@traycer/protocol/host/resources/subscribe";
+} from "@hukum/protocol/host/resources/subscribe";
 import type {
   ResourcesProjectionPayload,
   ResourcesStreamCallbacks,
-} from "@traycer-clients/shared/host-transport/resources-stream-client";
+} from "@hukum-clients/shared/host-transport/resources-stream-client";
 import {
   createResourcesStore,
   resourceOwnerKey,
@@ -78,8 +78,8 @@ function makeApp(
     process: makeProcess({
       pid: 10,
       rootPid: 10,
-      name: "traycer-host",
-      command: "traycer-host",
+      name: "hukum-host",
+      command: "hukum-host",
       cpuPercent: 2,
       rssBytes: 500,
     }),
@@ -228,7 +228,7 @@ describe("createResourcesStore", () => {
       }),
     );
 
-    expect(handle.store.getState().app?.process?.name).toBe("traycer-host");
+    expect(handle.store.getState().app?.process?.name).toBe("hukum-host");
     handle.dispose();
   });
 

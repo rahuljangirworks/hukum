@@ -4,8 +4,8 @@ import {
   commonIgnores,
   linterOptionsConfig,
 } from "../../eslint/flat-base.mjs";
-import { traycerTypeSafetyRestrictions } from "../../eslint/traycer-type-safety-rules.mjs";
-import { traycerClientsImportBoundaryRestrictions } from "../../eslint/traycer-clients-import-boundary-rules.mjs";
+import { hukumTypeSafetyRestrictions } from "../../eslint/hukum-type-safety-rules.mjs";
+import { hukumClientsImportBoundaryRestrictions } from "../../eslint/hukum-clients-import-boundary-rules.mjs";
 
 // Modules the host-lifecycle probe must not reach, by request path.
 //
@@ -25,7 +25,7 @@ import { traycerClientsImportBoundaryRestrictions } from "../../eslint/traycer-c
 // reaching through `host-lock` — the ban is on the spawn hop, not the
 // arithmetic.
 const FORBIDDEN_MODULE_PATH_GROUPS = [
-  "**/traycer-cli/**",
+  "**/hukum-cli/**",
   "**/service/platforms/**",
   "**/installer/**",
   "**/host-login-item*",
@@ -48,7 +48,7 @@ const CHILD_PROCESS_MESSAGE =
 // must not contain a literal slash — `service/platforms` is matched as
 // `platforms`, which is equally specific inside host-lifecycle/**.
 const dynamicModuleSource = String.raw`^(node:)?child_process$`;
-const forbiddenPathSource = String.raw`(traycer-cli|platforms|installer|host-login-item|desktop|host-lock)`;
+const forbiddenPathSource = String.raw`(hukum-cli|platforms|installer|host-login-item|desktop|host-lock)`;
 
 const hostLifecycleDynamicImportRestrictions = [
   {
@@ -82,10 +82,10 @@ export default tseslint.config(
     },
     plugins: { "@typescript-eslint": tseslint.plugin },
     rules: {
-      "no-restricted-syntax": ["error", ...traycerTypeSafetyRestrictions],
+      "no-restricted-syntax": ["error", ...hukumTypeSafetyRestrictions],
       "@typescript-eslint/no-restricted-imports": [
         "error",
-        traycerClientsImportBoundaryRestrictions,
+        hukumClientsImportBoundaryRestrictions,
       ],
     },
   },
@@ -101,7 +101,7 @@ export default tseslint.config(
       // `as any` / optional-parameter / default-argument enforcement.
       "no-restricted-syntax": [
         "error",
-        ...traycerTypeSafetyRestrictions,
+        ...hukumTypeSafetyRestrictions,
         ...hostLifecycleDynamicImportRestrictions,
       ],
       "no-restricted-imports": [
@@ -136,7 +136,7 @@ export default tseslint.config(
   {
     files: ["host-lifecycle/__tests__/real-supervisor-*.ts"],
     rules: {
-      "no-restricted-syntax": ["error", ...traycerTypeSafetyRestrictions],
+      "no-restricted-syntax": ["error", ...hukumTypeSafetyRestrictions],
       "no-restricted-imports": "off",
     },
   },

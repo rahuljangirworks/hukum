@@ -1,5 +1,5 @@
 import type { ComponentProps, ReactNode, UIEvent } from "react";
-import type { GitGetFileDiffResponse } from "@traycer/protocol/host";
+import type { GitGetFileDiffResponse } from "@hukum/protocol/host";
 import {
   DiffContentFrame,
   DiffContentPrimitive,

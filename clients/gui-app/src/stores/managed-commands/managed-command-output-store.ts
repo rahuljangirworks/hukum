@@ -3,17 +3,17 @@ import { create, type StoreApi, type UseBoundStore } from "zustand";
 import type {
   StreamCloseReason,
   StreamConnectionStatus,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
 import type {
   ManagedCommandOutputStreamCallbacks,
   ManagedCommandOutputStreamClient,
-} from "@traycer-clients/shared/host-transport/managed-command-output-stream-client";
+} from "@hukum-clients/shared/host-transport/managed-command-output-stream-client";
 import type {
   ManagedCommandLogLine,
   ManagedCommandLogPosition,
-} from "@traycer/protocol/host/managed-command/subscribe";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+} from "@hukum/protocol/host/managed-command/subscribe";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 
 /**
  * The renderer side of `managedCommand.subscribeOutput@1.0`: one store per open

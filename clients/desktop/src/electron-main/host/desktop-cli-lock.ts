@@ -4,7 +4,7 @@
 // PID + start-time identity)"). The protocol itself - open with
 // O_CREAT|O_EXCL, holder identity, only-positive-evidence breaking, the
 // `.break` arbitration sub-lock - lives in
-// `@traycer-clients/shared/host-lock/cross-process-lock`, the SAME module
+// `@hukum-clients/shared/host-lock/cross-process-lock`, the SAME module
 // the CLI's own `store/cli-lock.ts` wraps, so a CLI-owned mutation and a
 // desktop-held section exclude each other via ordinary O_CREAT|O_EXCL
 // contention on one file with zero risk of the two implementations
@@ -19,8 +19,8 @@ export type {
   AcquireLockOptions as AcquireDesktopCliLockOptions,
   AcquireLockOutcome as AcquireDesktopCliLockOutcome,
   WithLockOutcome as WithDesktopCliLockOutcome,
-} from "@traycer-clients/shared/host-lock/cross-process-lock";
+} from "@hukum-clients/shared/host-lock/cross-process-lock";
 export {
   acquireLock as acquireDesktopCliLock,
   withLock as withDesktopCliLock,
-} from "@traycer-clients/shared/host-lock/cross-process-lock";
+} from "@hukum-clients/shared/host-lock/cross-process-lock";

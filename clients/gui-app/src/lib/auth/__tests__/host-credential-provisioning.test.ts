@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { HostCredentialMintOutcome } from "@traycer-clients/shared/host-transport/host-credential-mint-flow";
+import type { HostCredentialMintOutcome } from "@hukum-clients/shared/host-transport/host-credential-mint-flow";
 import {
   appHostCredentialMintFlow,
   resetHostCredentialProvisioning,

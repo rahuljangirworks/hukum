@@ -10,10 +10,10 @@ import {
   vi,
   type Mock,
 } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
 import { useWorkspaceFolderActionsForClient } from "@/hooks/workspace/use-workspace-folder-actions";
 import { useRemoteFolderPickerStore } from "@/stores/workspace/remote-folder-picker-store";

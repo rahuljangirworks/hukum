@@ -1,4 +1,4 @@
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import type { ModelOption } from "@/components/home/data/landing-options";
 
 export type ProfileRateLimitSeverity = "near_limit" | "hard_limit";

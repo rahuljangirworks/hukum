@@ -1,10 +1,10 @@
 import {
-  TRAYCER_AGENT_TAG,
-  TRAYCER_CHAT_TAG,
-  TRAYCER_EPIC_TAG,
-  TRAYCER_MERMAID_TAG,
-  TRAYCER_SPEC_TAG,
-  TRAYCER_TICKET_TAG,
+  HUKUM_AGENT_TAG,
+  HUKUM_CHAT_TAG,
+  HUKUM_EPIC_TAG,
+  HUKUM_MERMAID_TAG,
+  HUKUM_SPEC_TAG,
+  HUKUM_TICKET_TAG,
 } from "./const";
 import type { Schema } from "hast-util-sanitize";
 import { defaultSchema } from "rehype-sanitize";
@@ -21,36 +21,36 @@ const DRIVE_LETTER_SCHEMES = Array.from({ length: 26 }, (_, index) => [
   String.fromCharCode(97 + index),
 ]).flat();
 
-const TRAYCER_TAG_NAMES = [
-  TRAYCER_CHAT_TAG,
-  TRAYCER_AGENT_TAG,
-  TRAYCER_EPIC_TAG,
-  TRAYCER_SPEC_TAG,
-  TRAYCER_TICKET_TAG,
-  TRAYCER_MERMAID_TAG,
+const HUKUM_TAG_NAMES = [
+  HUKUM_CHAT_TAG,
+  HUKUM_AGENT_TAG,
+  HUKUM_EPIC_TAG,
+  HUKUM_SPEC_TAG,
+  HUKUM_TICKET_TAG,
+  HUKUM_MERMAID_TAG,
 ] as const;
 
-const TRAYCER_TAG_ATTRIBUTES: Schema["attributes"] = {
-  [TRAYCER_CHAT_TAG]: ["data-epic-id", "data-chat-id", "data-title"],
-  [TRAYCER_AGENT_TAG]: ["data-agent-id", "data-display"],
-  [TRAYCER_EPIC_TAG]: ["data-epic-id", "data-title"],
-  [TRAYCER_SPEC_TAG]: ["data-epic-id", "data-spec-id", "data-title"],
-  [TRAYCER_TICKET_TAG]: ["data-epic-id", "data-ticket-id", "data-title"],
-  [TRAYCER_MERMAID_TAG]: ["data-code"],
+const HUKUM_TAG_ATTRIBUTES: Schema["attributes"] = {
+  [HUKUM_CHAT_TAG]: ["data-epic-id", "data-chat-id", "data-title"],
+  [HUKUM_AGENT_TAG]: ["data-agent-id", "data-display"],
+  [HUKUM_EPIC_TAG]: ["data-epic-id", "data-title"],
+  [HUKUM_SPEC_TAG]: ["data-epic-id", "data-spec-id", "data-title"],
+  [HUKUM_TICKET_TAG]: ["data-epic-id", "data-ticket-id", "data-title"],
+  [HUKUM_MERMAID_TAG]: ["data-code"],
 };
 
 /**
  * Merge product attribute allowlists onto a base schema without dropping
  * caller-supplied attributes for the same tag (spread overwrite would).
  */
-function mergeTraycerTagAttributes(
+function mergeHukumTagAttributes(
   baseAttributes: Schema["attributes"],
 ): Schema["attributes"] {
   const base = baseAttributes ?? {};
-  const traycerAttrs = TRAYCER_TAG_ATTRIBUTES ?? {};
+  const hukumAttrs = HUKUM_TAG_ATTRIBUTES ?? {};
   const merged: NonNullable<Schema["attributes"]> = { ...base };
-  for (const tag of TRAYCER_TAG_NAMES) {
-    const required = traycerAttrs[tag];
+  for (const tag of HUKUM_TAG_NAMES) {
+    const required = hukumAttrs[tag];
     if (!Array.isArray(required)) continue;
     if (!Object.hasOwn(base, tag)) {
       merged[tag] = [...required];
@@ -64,11 +64,11 @@ function mergeTraycerTagAttributes(
 }
 
 /**
- * Extend Tailmark's (or any base) sanitize schema with Traycer product tags and
+ * Extend Tailmark's (or any base) sanitize schema with Hukum product tags and
  * file-link protocols. Used as `StreamingMarkdown`'s `sanitizeSchema` so the
  * base `streamdown:` incomplete-link protocol is preserved.
  */
-export function extendTraycerSanitizeSchema(schema: Schema): Schema {
+export function extendHukumSanitizeSchema(schema: Schema): Schema {
   return {
     ...schema,
     protocols: {
@@ -79,8 +79,8 @@ export function extendTraycerSanitizeSchema(schema: Schema): Schema {
         ...DRIVE_LETTER_SCHEMES,
       ],
     },
-    tagNames: [...(schema.tagNames ?? []), ...TRAYCER_TAG_NAMES],
-    attributes: mergeTraycerTagAttributes(schema.attributes),
+    tagNames: [...(schema.tagNames ?? []), ...HUKUM_TAG_NAMES],
+    attributes: mergeHukumTagAttributes(schema.attributes),
   };
 }
 
@@ -104,7 +104,7 @@ export function extendAssistantImageSanitizeSchema(schema: Schema): Schema {
 
 /**
  * Standalone product schema (tests / docs). Prefer
- * {@link extendTraycerSanitizeSchema} when composing with Tailmark's base.
+ * {@link extendHukumSanitizeSchema} when composing with Tailmark's base.
  */
-export const TRAYCER_SANITIZE_SCHEMA: Schema =
-  extendTraycerSanitizeSchema(defaultSchema);
+export const HUKUM_SANITIZE_SCHEMA: Schema =
+  extendHukumSanitizeSchema(defaultSchema);

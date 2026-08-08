@@ -1,10 +1,10 @@
 import { useQueryClient, type UseMutationResult } from "@tanstack/react-query";
-import { DEFAULT_ACCOUNT_CONTEXT } from "@traycer/protocol/common/schemas";
+import { DEFAULT_ACCOUNT_CONTEXT } from "@hukum/protocol/common/schemas";
 import type {
   ProvidersConsumeRateLimitResetCreditRequest,
   ProvidersConsumeRateLimitResetCreditResponse,
-} from "@traycer/protocol/host/rate-limit";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host/rate-limit";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { toast } from "sonner";
 import { useHostMutation } from "@/hooks/host/use-host-query";
 import { useRateLimitQueueScope } from "@/hooks/rate-limits/use-rate-limit-queue-scope";

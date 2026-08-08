@@ -4,7 +4,7 @@ import type {
   ProviderAuthStatus,
   ProviderCliState,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type {
   AvailableProviderRateLimits,
   ProviderRateLimitEnvelope,

@@ -31,7 +31,7 @@ const CREDS: StoredCredentials = {
   token: "tok-0",
   refreshToken: "rt-0",
   savedAt: "2026-01-01T00:00:00.000Z",
-  user: { id: "u1", email: "ada@traycer.ai", name: "Ada" },
+  user: { id: "u1", email: "ada@hukum.ai", name: "Ada" },
 };
 
 const isWindows = process.platform === "win32";
@@ -82,7 +82,7 @@ describe("credentials mutation store", () => {
   });
 
   beforeEach(() => {
-    workDir = mkdtempSync(join(tmpdir(), "traycer-cred-mut-test-"));
+    workDir = mkdtempSync(join(tmpdir(), "hukum-cred-mut-test-"));
     credentialsPath = join(workDir, "credentials");
     metaPath = join(workDir, "credentials.meta.json");
     // The lock lives in its own subdir so the commit-failure tests can freeze
@@ -311,7 +311,7 @@ describe("credentials mutation store", () => {
           ...CREDS,
           token: "tok-2",
           refreshToken: "",
-          user: { id: "u2", email: "bo@traycer.ai", name: "Bo" },
+          user: { id: "u2", email: "bo@hukum.ai", name: "Bo" },
         },
         true,
         null,
@@ -420,7 +420,7 @@ describe("credentials mutation store", () => {
   describe("migrateFirstWrite (spend + guarded first-write)", () => {
     const MIGRATED_IDENTITY = {
       id: "u2",
-      email: "grace@traycer.ai",
+      email: "grace@hukum.ai",
       name: "Grace",
     };
     const CANDIDATE = {

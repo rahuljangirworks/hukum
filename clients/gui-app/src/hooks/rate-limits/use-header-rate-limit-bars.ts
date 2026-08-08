@@ -1,8 +1,8 @@
 import type {
   ProviderRateLimits,
   ProviderRateLimitWindow,
-} from "@traycer/protocol/host";
-import { classifyProviderRateLimitWindow } from "@traycer/protocol/host/rate-limit";
+} from "@hukum/protocol/host";
+import { classifyProviderRateLimitWindow } from "@hukum/protocol/host/rate-limit";
 import { useHostQueriesWithResponseMap } from "@/hooks/host/use-host-queries";
 import {
   providerRateLimitQueryOptions,

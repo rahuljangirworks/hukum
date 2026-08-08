@@ -17,7 +17,7 @@ import {
   IdentityMismatchError,
   createRequestContext,
   identityFromAuthenticatedUser,
-} from "@traycer/protocol/auth/request-context";
+} from "@hukum/protocol/auth/request-context";
 import { createAuthenticatedUserFixture } from "../../test-fixtures/authenticated-user";
 import {
   createHostRpcContextFixture,

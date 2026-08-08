@@ -17,7 +17,7 @@ import { HistoryPruneProvider } from "@/providers/history-prune-provider";
 const WINDOW_ID = "history-prune-test-window";
 
 function storageKey(windowId: string): string {
-  return `traycer-gui-app:last-route:${windowId}`;
+  return `hukum-gui-app:last-route:${windowId}`;
 }
 
 function makeRouter(history: RouterHistory): AppRouter {

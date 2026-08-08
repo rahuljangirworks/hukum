@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import type {
   ListTaskLight,
   ListTasksResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   LIST_CLOUD_TASKS_REQUEST,
   cloudEpicTasksQueryKey,

@@ -2,8 +2,8 @@ import { useCallback, useMemo, useState } from "react";
 import type {
   ProviderCliState,
   ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum/protocol/host/provider-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useAcknowledgeAmbientDriftForClient } from "@/hooks/providers/use-acknowledge-ambient-drift-mutation";
 

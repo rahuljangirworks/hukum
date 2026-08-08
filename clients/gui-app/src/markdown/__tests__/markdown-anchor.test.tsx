@@ -1,10 +1,10 @@
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import type { ExternalToast } from "sonner";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { RunnerHostContext } from "@/providers/runner-host-context";
-import { TraycerMarkdown } from "@/markdown";
+import { HukumMarkdown } from "@/markdown";
 import { classifyHref } from "@/markdown/links/classify-href";
 import { markdownUrlTransform } from "@/markdown/links/markdown-url-transform";
 import { MarkdownLinkContext } from "@/markdown/links/markdown-link-context";
@@ -36,14 +36,14 @@ function createRunnerHost(): MockRunnerHost {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 
 function renderMarkdown(markdown: string, host: MockRunnerHost) {
   return render(
     <RunnerHostContext.Provider value={host}>
-      <TraycerMarkdown
+      <HukumMarkdown
         className={null}
         proseSize="normal"
         components={null}
@@ -53,7 +53,7 @@ function renderMarkdown(markdown: string, host: MockRunnerHost) {
         isStreaming={false}
       >
         {markdown}
-      </TraycerMarkdown>
+      </HukumMarkdown>
     </RunnerHostContext.Provider>,
   );
 }
@@ -96,7 +96,7 @@ describe("MarkdownAnchor", () => {
         <MarkdownLinkContext.Provider
           value={{ openFileLink, supersedePendingFileLink: () => undefined }}
         >
-          <TraycerMarkdown
+          <HukumMarkdown
             className={null}
             proseSize="normal"
             components={null}
@@ -106,7 +106,7 @@ describe("MarkdownAnchor", () => {
             isStreaming={false}
           >
             {"[App](src/app.ts)"}
-          </TraycerMarkdown>
+          </HukumMarkdown>
         </MarkdownLinkContext.Provider>
       </RunnerHostContext.Provider>,
     );
@@ -131,7 +131,7 @@ describe("MarkdownAnchor", () => {
         <MarkdownLinkContext.Provider
           value={{ openFileLink, supersedePendingFileLink: () => undefined }}
         >
-          <TraycerMarkdown
+          <HukumMarkdown
             className={null}
             proseSize="normal"
             components={null}
@@ -141,7 +141,7 @@ describe("MarkdownAnchor", () => {
             isStreaming={false}
           >
             {"[Private file](/Users/me/private/api-key.txt)"}
-          </TraycerMarkdown>
+          </HukumMarkdown>
         </MarkdownLinkContext.Provider>
       </RunnerHostContext.Provider>,
     );
@@ -197,7 +197,7 @@ describe("MarkdownAnchor", () => {
         <MarkdownLinkContext.Provider
           value={{ openFileLink, supersedePendingFileLink: () => undefined }}
         >
-          <TraycerMarkdown
+          <HukumMarkdown
             className={null}
             proseSize="normal"
             components={null}
@@ -207,7 +207,7 @@ describe("MarkdownAnchor", () => {
             isStreaming={false}
           >
             {"[App](file:///Users/me/My%20Project/src/app.ts)"}
-          </TraycerMarkdown>
+          </HukumMarkdown>
         </MarkdownLinkContext.Provider>
       </RunnerHostContext.Provider>,
     );
@@ -230,7 +230,7 @@ describe("MarkdownAnchor", () => {
         <MarkdownLinkContext.Provider
           value={{ openFileLink, supersedePendingFileLink: () => undefined }}
         >
-          <TraycerMarkdown
+          <HukumMarkdown
             className={null}
             proseSize="normal"
             components={null}
@@ -240,7 +240,7 @@ describe("MarkdownAnchor", () => {
             isStreaming={false}
           >
             {"[App](/a/b.ts:1177)"}
-          </TraycerMarkdown>
+          </HukumMarkdown>
         </MarkdownLinkContext.Provider>
       </RunnerHostContext.Provider>,
     );
@@ -268,7 +268,7 @@ describe("MarkdownAnchor", () => {
         <MarkdownLinkContext.Provider
           value={{ openFileLink, supersedePendingFileLink: () => undefined }}
         >
-          <TraycerMarkdown
+          <HukumMarkdown
             className={null}
             proseSize="normal"
             components={null}
@@ -278,7 +278,7 @@ describe("MarkdownAnchor", () => {
             isStreaming={false}
           >
             {"[App](C:/Users/x/app.ts:1177)"}
-          </TraycerMarkdown>
+          </HukumMarkdown>
         </MarkdownLinkContext.Provider>
       </RunnerHostContext.Provider>,
     );
@@ -315,7 +315,7 @@ describe("MarkdownAnchor", () => {
         <MarkdownLinkContext.Provider
           value={{ openFileLink, supersedePendingFileLink: () => undefined }}
         >
-          <TraycerMarkdown
+          <HukumMarkdown
             className={null}
             proseSize="normal"
             components={null}
@@ -324,8 +324,8 @@ describe("MarkdownAnchor", () => {
             quotable={false}
             isStreaming={false}
           >
-            {String.raw`[App](<C:\Users\Traycer Dev\repo\app.ts>)`}
-          </TraycerMarkdown>
+            {String.raw`[App](<C:\Users\Hukum Dev\repo\app.ts>)`}
+          </HukumMarkdown>
         </MarkdownLinkContext.Provider>
       </RunnerHostContext.Provider>,
     );
@@ -344,7 +344,7 @@ describe("MarkdownAnchor", () => {
     expect(fireEvent.click(link)).toBe(false);
 
     expect(openFileLink).toHaveBeenCalledWith({
-      path: String.raw`C:\Users\Traycer Dev\repo\app.ts`,
+      path: String.raw`C:\Users\Hukum Dev\repo\app.ts`,
       line: null,
       col: null,
       isDirectory: false,
@@ -370,7 +370,7 @@ describe("MarkdownAnchor", () => {
         <MarkdownLinkContext.Provider
           value={{ openFileLink, supersedePendingFileLink: () => undefined }}
         >
-          <TraycerMarkdown
+          <HukumMarkdown
             className={null}
             proseSize="normal"
             components={null}
@@ -380,7 +380,7 @@ describe("MarkdownAnchor", () => {
             isStreaming={false}
           >
             {"[Blocked](z:notapath)"}
-          </TraycerMarkdown>
+          </HukumMarkdown>
         </MarkdownLinkContext.Provider>
       </RunnerHostContext.Provider>,
     );
@@ -516,10 +516,10 @@ describe("classifyHref", () => {
     // remark percent-encodes the link destination before the anchor sees it, so
     // a native Windows path arrives as `C:%5C…%20…`. The surface policy resolves
     // against a real filesystem and needs the decoded form.
-    expect(classifyRenderedHref("C:%5CUsers%5CTraycer%20Dev%5Capp.ts")).toEqual(
+    expect(classifyRenderedHref("C:%5CUsers%5CHukum%20Dev%5Capp.ts")).toEqual(
       {
         kind: "file",
-        path: String.raw`C:\Users\Traycer Dev\app.ts`,
+        path: String.raw`C:\Users\Hukum Dev\app.ts`,
         line: null,
         col: null,
       },

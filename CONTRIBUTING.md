@@ -1,6 +1,6 @@
-# Contributing to Traycer
+# Contributing to Hukum
 
-Thanks for helping improve Traycer! This repo holds the open-source clients, CLI, and protocol.
+Thanks for helping improve Hukum! This repo holds the open-source clients, CLI, and protocol.
 
 ## Prerequisites
 
@@ -10,8 +10,8 @@ Thanks for helping improve Traycer! This repo holds the open-source clients, CLI
 ## Setup
 
 ```sh
-git clone https://github.com/traycerai/traycer.git
-cd traycer
+git clone https://github.com/hukumai/hukum.git
+cd hukum
 bun install
 ```
 
@@ -27,15 +27,15 @@ bun install
 Nx caches and only rebuilds what changed. To target one package:
 
 ```sh
-bunx nx run @traycer-clients/traycer-cli:build
+bunx nx run @hukum-clients/hukum-cli:build
 ```
 
 ## Repo layout
 
 | Path                   | Package                                         |
 | ---------------------- | ----------------------------------------------- |
-| `protocol/`            | `@traycer/protocol` — client⇄host wire contract |
-| `clients/traycer-cli/` | the `traycer` CLI                               |
+| `protocol/`            | `@hukum/protocol` — client⇄host wire contract |
+| `clients/hukum-cli/` | the `hukum` CLI                               |
 | `clients/shared/`      | shared transport / auth / formatting            |
 | `clients/gui-app/`     | GUI renderer                                    |
 | `clients/desktop/`     | Electron shell                                  |

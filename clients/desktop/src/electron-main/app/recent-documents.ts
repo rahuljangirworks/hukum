@@ -30,7 +30,7 @@ export function installWindowsJumplistTasks(): void {
       iconPath: exe,
       iconIndex: 0,
       title: "New Epic",
-      description: "Open a new Traycer epic window",
+      description: "Open a new Hukum epic window",
     },
     {
       program: exe,
@@ -38,7 +38,7 @@ export function installWindowsJumplistTasks(): void {
       iconPath: exe,
       iconIndex: 0,
       title: "Settings",
-      description: "Open Traycer settings",
+      description: "Open Hukum settings",
     },
   ]);
   log.info("[recent-documents] windows jumplist installed");

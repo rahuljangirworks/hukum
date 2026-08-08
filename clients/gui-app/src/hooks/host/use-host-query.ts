@@ -11,14 +11,14 @@ import {
   type UseQueryOptions,
   type UseQueryResult,
 } from "@tanstack/react-query";
-import type { HostRequester } from "@traycer-clients/shared/host-client/host-client";
+import type { HostRequester } from "@hukum-clients/shared/host-client/host-client";
 import {
   HostRpcError,
   toHostRpcError,
   type RequestOfMethod,
   type ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { VersionedRpcRegistry } from "@traycer/protocol/framework/index";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { VersionedRpcRegistry } from "@hukum/protocol/framework/index";
 import type { HostRpcRegistry } from "@/lib/host";
 import { queryKeys } from "@/lib/query-keys";
 import { withHostQueryErrorBoundary } from "@/lib/query/host-query-error-boundary";

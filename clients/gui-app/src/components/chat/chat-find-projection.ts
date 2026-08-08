@@ -18,7 +18,7 @@ import {
   cleanSubagentNotificationText,
 } from "@/components/chat/segments/subagent-display";
 import { singleSpecialSegment } from "@/components/chat/chat-special-segment";
-import { parseTraycerNextStepsMarkdown } from "@/markdown/traycer-next-steps";
+import { parseHukumNextStepsMarkdown } from "@/markdown/hukum-next-steps";
 import { composerDisplayPlainText } from "@/lib/composer/composer-clipboard";
 import { artifactOperationVerb } from "@/lib/chat/artifact-operation-verb";
 import { segmentStepLabel } from "@/lib/chat/todo-status-tones";
@@ -366,7 +366,7 @@ function segmentSearchUnits(
 function segmentSearchText(segment: MessageSegment): ReadonlyArray<string> {
   switch (segment.kind) {
     case "text":
-      return parseTraycerNextStepsMarkdown(
+      return parseHukumNextStepsMarkdown(
         segment.markdown,
         segment.isStreaming,
       ).flatMap((part) => {

@@ -1,14 +1,14 @@
 # AGENTS.md — clients/desktop
 
-Electron shell around `@traycer-clients/gui-app`. Read with repo-root
+Electron shell around `@hukum-clients/gui-app`. Read with repo-root
 `AGENTS.md`.
 
 ## Role
 
 1. Load the `gui-app` renderer.
-2. Delegate host lifecycle to the **Traycer CLI** — Desktop never spawns the
-   host. Discover WS URL from `~/.traycer/host[/dev]/pid.json`; tail
-   `~/.traycer/host[/dev]/host.log`.
+2. Delegate host lifecycle to the **Hukum CLI** — Desktop never spawns the
+   host. Discover WS URL from `~/.hukum/host[/dev]/pid.json`; tail
+   `~/.hukum/host[/dev]/host.log`.
 3. Expose `IRunnerHost` via `contextBridge` / `ipcMain.handle`.
 
 Transport-agnostic: do **not** proxy host RPC. `gui-app` talks to the host's
@@ -46,13 +46,13 @@ failures.
 | `src/renderer-shell/`   | Thin React host; UI is `gui-app` via vite aliases                                                                      |
 | `src/ipc-contracts/`    | Plain-data types shared across main/preload/renderer                                                                   |
 | `scripts/`              | `dev/`, `prepack/`, `assets/`                                                                                          |
-| `resources/cli/`        | Staged CLI SEA (`<platform>-<arch>/traycer`) → `process.resourcesPath/cli/`                                            |
+| `resources/cli/`        | Staged CLI SEA (`<platform>-<arch>/hukum`) → `process.resourcesPath/cli/`                                            |
 | `resources/tray/`       | Tray icons (regenerate via `scripts/assets/generate-tray-icons.cjs`)                                                   |
 | `resources/host/`       | Placeholder only — **never** ship a host binary here                                                                   |
 
 ## Invariants
 
-- Bundle CLI only, not the host. Host lives under `~/.traycer/host/` via CLI.
+- Bundle CLI only, not the host. Host lives under `~/.hukum/host/` via CLI.
 - Main entry: `dist/main/index.js`.
 - Preload stays CommonJS and imports only from `src/ipc-contracts/`.
 - Never build `Tray` from `nativeImage.createEmpty()` (invisible tray).

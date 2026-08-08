@@ -6,7 +6,7 @@ import {
 import type {
   HostControllerStatus,
   IHostManagement,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import { useRunnerHost } from "@/providers/use-runner-host";
 import { runnerQueryKeys } from "@/lib/query-keys/runner-mutation-keys";
 

@@ -2,10 +2,10 @@ import { v4 as uuidv4 } from "uuid";
 import type {
   BearerSourceProvider,
   OpenFrameBearerSource,
-} from "@traycer-clients/shared/auth/bearer-source";
-import type { StreamAuthRevalidator } from "@traycer-clients/shared/auth/bearer-revalidator";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import { isRemoteHostDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum-clients/shared/auth/bearer-source";
+import type { StreamAuthRevalidator } from "@hukum-clients/shared/auth/bearer-revalidator";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import { isRemoteHostDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
 import {
   HostRequestAbortedError,
   HostRpcError,
@@ -14,28 +14,28 @@ import {
   type IHostMessenger,
   type RequestOfMethod,
   type ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   createRemoteHostTransport,
   type IRemoteSession,
   type RemoteHostTransport,
-} from "@traycer-clients/shared/host-transport/remote/index";
-import { DEFAULT_DIAL_TIMEOUT_MS } from "@traycer-clients/shared/host-transport/transport-config";
-import { createWhatwgStreamWebSocketFactory } from "@traycer-clients/shared/host-transport/whatwg-stream-ws-factory";
-import { createWhatwgWebSocketFactory } from "@traycer-clients/shared/host-transport/whatwg-ws-factory";
+} from "@hukum-clients/shared/host-transport/remote/index";
+import { DEFAULT_DIAL_TIMEOUT_MS } from "@hukum-clients/shared/host-transport/transport-config";
+import { createWhatwgStreamWebSocketFactory } from "@hukum-clients/shared/host-transport/whatwg-stream-ws-factory";
+import { createWhatwgWebSocketFactory } from "@hukum-clients/shared/host-transport/whatwg-ws-factory";
 import {
   HOST_POST_OPEN_ATTESTATION_WINDOW_MS,
   WsRpcClient,
   type RequestIdProvider,
-} from "@traycer-clients/shared/host-transport/ws-rpc-client";
+} from "@hukum-clients/shared/host-transport/ws-rpc-client";
 import type {
   FatalErrorDetails,
   VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 
 const DEFAULT_HOST_RPC_FRAME_TIMEOUT_MS = 30_000;
 const TRANSPORT_KEY_SEPARATOR = "\u0000";

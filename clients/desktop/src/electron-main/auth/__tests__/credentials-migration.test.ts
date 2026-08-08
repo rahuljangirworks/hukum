@@ -13,12 +13,12 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { sandboxHome } from "../../__tests__/sandbox-home";
-import { cliCredentialsPath } from "@traycer/protocol/config/paths";
+import { cliCredentialsPath } from "@hukum/protocol/config/paths";
 import {
   readCredentialsFile,
   writeCredentialsFile,
   type StoredCredentials,
-} from "@traycer/protocol/config/credentials";
+} from "@hukum/protocol/config/credentials";
 
 const AUTHN_BASE_URL = "http://authn.credentials-migration.test";
 const ENVIRONMENT = "development";
@@ -28,7 +28,7 @@ const REFRESH_URL = `${AUTHN_BASE_URL}/api/v3/auth/refresh`;
 vi.mock("electron", () => ({
   app: {
     getPath: (): string =>
-      join(tmpdir(), "traycer-credentials-migration-userdata"),
+      join(tmpdir(), "hukum-credentials-migration-userdata"),
   },
 }));
 
@@ -212,7 +212,7 @@ describe("FileTokenStore.migrateLegacyCredentials (real fs + lock/WAL)", () => {
   }
 
   beforeEach(async () => {
-    homeDir = mkdtempSync(join(tmpdir(), "traycer-credentials-migration-"));
+    homeDir = mkdtempSync(join(tmpdir(), "hukum-credentials-migration-"));
     previousHome = process.env.HOME;
     sandboxHome(homeDir);
     vi.resetModules();

@@ -11,7 +11,7 @@ import type {
   ProviderMcpTool,
   ProviderPlugin,
   ProviderSkill,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 
 // Match the app's other Fuse indexes: a hit anywhere in the relevant text is
 // useful, and a moderate threshold accepts ordinary misspellings without

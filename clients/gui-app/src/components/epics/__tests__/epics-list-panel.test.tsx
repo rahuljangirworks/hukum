@@ -37,7 +37,7 @@ import { DEFAULT_HISTORY_SEARCH } from "@/lib/history-search";
 import { WindowsBridgeContext } from "@/providers/windows-bridge-context";
 import { setDesktopEpicOwnershipBridge } from "@/lib/windows/desktop-epic-ownership";
 import type { DesktopWindowsBridge } from "@/lib/windows/types";
-import type { WorktreeHostEntryV12 } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeHostEntryV12 } from "@hukum/protocol/host/worktree-schemas";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { __resetTabNavigationControllerForTesting } from "@/lib/tab-navigation";
 
@@ -1280,12 +1280,12 @@ describe("<EpicsListPanel />", () => {
   });
 
   it("opens the filter popover and live-applies selections to typed route search", async () => {
-    testState.availableRepos = ["traycer/gui-app"];
+    testState.availableRepos = ["hukum/gui-app"];
     testState.availableWorkspaces = [
       { hostId: "host-test", workspacePath: "/Users/me/gui-app" },
     ];
     testState.facets = {
-      repos: [{ label: "traycer/gui-app", count: 2 }],
+      repos: [{ label: "hukum/gui-app", count: 2 }],
       workspaces: [
         {
           workspace: {
@@ -1313,12 +1313,12 @@ describe("<EpicsListPanel />", () => {
     });
 
     fireEvent.click(
-      screen.getByRole("checkbox", { name: /traycer\/gui-app/i }),
+      screen.getByRole("checkbox", { name: /hukum\/gui-app/i }),
     );
     await waitFor(() => {
       expect(useHistorySearchStore.getState().search).toMatchObject({
         ownershipScopes: ["shared"],
-        repos: ["traycer/gui-app"],
+        repos: ["hukum/gui-app"],
       });
     });
 
@@ -1328,7 +1328,7 @@ describe("<EpicsListPanel />", () => {
     await waitFor(() => {
       expect(useHistorySearchStore.getState().search).toMatchObject({
         ownershipScopes: ["shared"],
-        repos: ["traycer/gui-app"],
+        repos: ["hukum/gui-app"],
         workspaces: [
           { hostId: "host-test", workspacePath: "/Users/me/gui-app" },
         ],
@@ -1337,7 +1337,7 @@ describe("<EpicsListPanel />", () => {
   });
 
   it("disambiguates same-path workspace filters by host identity", async () => {
-    const workspacePath = "/Users/me/traycer";
+    const workspacePath = "/Users/me/hukum";
     testState.availableWorkspaces = [
       { hostId: "host-a", workspacePath },
       { hostId: "host-b", workspacePath },

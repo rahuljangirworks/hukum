@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 
 import { useSlashCommands } from "@/hooks/composer/use-slash-commands";
 import type { HostRpcRegistry } from "@/lib/host";

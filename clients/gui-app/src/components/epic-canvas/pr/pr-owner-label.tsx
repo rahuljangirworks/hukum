@@ -7,7 +7,7 @@ import {
 } from "react";
 import { v4 as uuidv4 } from "uuid";
 import type { LucideIcon } from "lucide-react";
-import type { PrOwnerRef } from "@traycer/protocol/host/pr-schemas";
+import type { PrOwnerRef } from "@hukum/protocol/host/pr-schemas";
 import { Badge } from "@/components/ui/badge";
 import {
   Popover,

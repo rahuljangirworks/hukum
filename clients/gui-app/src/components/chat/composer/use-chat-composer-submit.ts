@@ -4,7 +4,7 @@ import type {
   ChatActiveTurn,
   ChatQueueDeliveryPolicy,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 
 import { useChatStore } from "@/stores/composer/chat-store";
 import { useComposerDraftStore } from "@/stores/composer/composer-draft-store";
@@ -23,7 +23,7 @@ import {
 import type { ComposerPickerStore } from "@/components/chat/composer/picker/composer-picker-store";
 import type { ComposerToolbarStore } from "@/stores/composer/composer-toolbar-store";
 import type { Attachment } from "@/lib/composer/types";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 
 import type { ComposerPromptEditorHandle } from "./composer-prompt-editor";
 

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import type { ChatSessionAnchor } from "@traycer/protocol/persistence/epic/schemas";
-import type { ProviderCliState } from "@traycer/protocol/host/provider-schemas";
+import type { ChatSessionAnchor } from "@hukum/protocol/persistence/epic/schemas";
+import type { ProviderCliState } from "@hukum/protocol/host/provider-schemas";
 import { providerCliIdForHarness } from "@/lib/provider-ordering";
 import { TombstonedProfileContext } from "@/components/chat/use-tombstoned-profile-label";
 

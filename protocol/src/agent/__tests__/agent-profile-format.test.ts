@@ -9,7 +9,7 @@ import type {
   AgentConfigureSettings,
   AgentGetProviderProfileRateLimitsResponse,
   AgentListProviderProfilesResponse,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 
 const CAPTURED_AT = Date.UTC(2026, 6, 13, 9, 30, 0);
 

@@ -2,11 +2,11 @@ import { z } from "zod";
 import {
   defineRpcContract,
   defineUpgradePath,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   roleNameSchema,
   roleScopeSchema,
-} from "@traycer/protocol/persistence/epic/role-claims";
+} from "@hukum/protocol/persistence/epic/role-claims";
 
 // ─── Agent role claims ────────────────────────────────────────────────────
 //
@@ -60,10 +60,10 @@ export type ClaimAgentRoleRequest = z.infer<typeof claimAgentRoleRequestSchema>;
  * agent could be named this, every system notice the platform sends would be
  * forgeable.
  */
-export const TRAYCER_SYSTEM_SENDER_AGENT_ID = "traycer:system";
+export const HUKUM_SYSTEM_SENDER_AGENT_ID = "hukum:system";
 
 export function isReservedAgentId(id: string): boolean {
-  return id === TRAYCER_SYSTEM_SENDER_AGENT_ID;
+  return id === HUKUM_SYSTEM_SENDER_AGENT_ID;
 }
 
 export const roleAwarenessEventSchema = z.object({

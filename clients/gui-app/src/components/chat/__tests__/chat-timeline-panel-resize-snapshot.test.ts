@@ -9,7 +9,7 @@ import {
   registerPanelResizeParticipant,
 } from "@/lib/layout/panel-resizing-class";
 
-const PANEL_RESIZING_CLASS = "traycer-panel-resizing";
+const PANEL_RESIZING_CLASS = "hukum-panel-resizing";
 
 /** Pure DOM, no LegendList/React involved - deliberately sidesteps the
  *  shared `installLegendListViewportMetrics()` shim, which stubs every

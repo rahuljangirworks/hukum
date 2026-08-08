@@ -5,15 +5,15 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: "@traycer-clients/shared",
+        find: "@hukum-clients/shared",
         replacement: path.resolve(__dirname, "."),
       },
       {
-        find: /^@traycer\/protocol\/utils\/(.*)$/,
+        find: /^@hukum\/protocol\/utils\/(.*)$/,
         replacement: path.resolve(__dirname, "../../protocol/utils/$1"),
       },
       {
-        find: /^@traycer\/protocol\/(.*)$/,
+        find: /^@hukum\/protocol\/(.*)$/,
         replacement: path.resolve(__dirname, "../../protocol/src/$1"),
       },
     ],
@@ -22,7 +22,7 @@ export default defineConfig({
     include: ["**/__tests__/**/*.test.ts"],
     globals: false,
     env: {
-      VITE_TRAYCER_OSS_REPO: "https://github.com/traycerai/traycer",
+      VITE_HUKUM_OSS_REPO: "https://github.com/hukumai/hukum",
     },
   },
 });

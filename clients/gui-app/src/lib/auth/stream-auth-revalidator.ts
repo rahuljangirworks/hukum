@@ -1,7 +1,7 @@
 import type {
   RevalidateOutcome,
   StreamAuthRevalidator,
-} from "@traycer-clients/shared/auth/bearer-revalidator";
+} from "@hukum-clients/shared/auth/bearer-revalidator";
 import type { AuthService } from "@/lib/auth/auth-service";
 import { appLogger } from "@/lib/logger";
 

@@ -8,8 +8,8 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { AppUpdateToastController } from "@/components/layout/bridges/app-update-toast-controller";
 import { AppUpdateHeaderButton } from "@/components/layout/header/app-update-button";
 import { InstallGuidanceDialog } from "@/components/layout/dialogs/install-guidance-dialog";
@@ -81,14 +81,14 @@ const IDLE_SNAPSHOT: DesktopAppUpdateSnapshot = {
 };
 
 const READY_GUIDANCE: DesktopAppUpdateGuidance = {
-  summary: "Traycer downloaded v1.2.3, but this install needs one manual step.",
+  summary: "Hukum downloaded v1.2.3, but this install needs one manual step.",
   steps: [
     "Open a terminal.",
     "Run the command below to install the update.",
-    "Restart Traycer once it completes.",
+    "Restart Hukum once it completes.",
   ],
-  command: 'sudo dpkg -i "/home/user/.cache/updater/pending/traycer.deb"',
-  releaseUrl: "https://github.com/traycerai/traycer/releases",
+  command: 'sudo dpkg -i "/home/user/.cache/updater/pending/hukum.deb"',
+  releaseUrl: "https://github.com/hukumai/hukum/releases",
 };
 
 class FakeAppUpdatesBridge implements DesktopAppUpdatesBridge {
@@ -191,7 +191,7 @@ function errorSnapshot(sequence: number): DesktopAppUpdateSnapshot {
   return {
     ...manualSnapshot(sequence, "error"),
     errorMessage:
-      "Traycer couldn't reach the update service right now. Please try again in a little while.",
+      "Hukum couldn't reach the update service right now. Please try again in a little while.",
   };
 }
 
@@ -203,7 +203,7 @@ function makeHost(appUpdates: DesktopAppUpdatesBridge): IRunnerHost {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const proto = Object.getPrototypeOf(host) as object;
   return Object.assign(Object.create(proto) as IRunnerHost, host, {
@@ -278,12 +278,12 @@ describe("desktop app update UI", () => {
     const bridge = new FakeAppUpdatesBridge({
       ...availableSnapshot(1),
       installBlockedReason:
-        "Move Traycer to your Applications folder to install updates.",
+        "Move Hukum to your Applications folder to install updates.",
     });
     renderWithHost(<AppUpdateHeaderButton />, bridge);
 
     const button = await screen.findByRole("button", {
-      name: /Move Traycer to your Applications folder/i,
+      name: /Move Hukum to your Applications folder/i,
     });
     expect(button.hasAttribute("disabled")).toBe(true);
 
@@ -295,12 +295,12 @@ describe("desktop app update UI", () => {
     const bridge = new FakeAppUpdatesBridge({
       ...readySnapshot(1),
       installBlockedReason:
-        "Move Traycer to your Applications folder to install updates.",
+        "Move Hukum to your Applications folder to install updates.",
     });
     renderWithHost(<AppUpdateHeaderButton />, bridge);
 
     const button = await screen.findByRole("button", {
-      name: /Move Traycer to your Applications folder/i,
+      name: /Move Hukum to your Applications folder/i,
     });
     expect(button.hasAttribute("disabled")).toBe(true);
 
@@ -512,9 +512,9 @@ describe("desktop app update UI", () => {
     });
     await waitFor(() => {
       expect(toastMock.info).toHaveBeenCalledWith(
-        "Checking for Traycer updates...",
+        "Checking for Hukum updates...",
         {
-          id: "traycer-app-update",
+          id: "hukum-app-update",
           description: null,
           duration: 4000,
           cancel: null,
@@ -527,8 +527,8 @@ describe("desktop app update UI", () => {
     });
     await waitFor(() => {
       expect(toastMock.success).toHaveBeenCalledWith(
-        "Traycer is up to date",
-        expect.objectContaining({ id: "traycer-app-update" }),
+        "Hukum is up to date",
+        expect.objectContaining({ id: "hukum-app-update" }),
       );
     });
   });
@@ -546,7 +546,7 @@ describe("desktop app update UI", () => {
     await waitFor(() => {
       expect(toastMock).toHaveBeenCalledWith(
         expect.anything(),
-        expect.objectContaining({ id: "traycer-app-update" }),
+        expect.objectContaining({ id: "hukum-app-update" }),
       );
     });
 
@@ -569,7 +569,7 @@ describe("desktop app update UI", () => {
     expect(bridge.downloadUpdate).toHaveBeenCalledTimes(1);
     expect(downloadButton.hasAttribute("disabled")).toBe(true);
     fireEvent.click(laterButton);
-    expect(toastMock.dismiss).toHaveBeenCalledWith("traycer-app-update");
+    expect(toastMock.dismiss).toHaveBeenCalledWith("hukum-app-update");
   });
 
   it("explains why a blocked update can't be installed instead of offering Download", async () => {
@@ -583,16 +583,16 @@ describe("desktop app update UI", () => {
       bridge.emit({
         ...availableSnapshot(1),
         installBlockedReason:
-          "Move Traycer to your Applications folder to install updates.",
+          "Move Hukum to your Applications folder to install updates.",
       });
     });
     await waitFor(() => {
       expect(toastMock).toHaveBeenCalledWith(
         "Update available",
         expect.objectContaining({
-          id: "traycer-app-update",
+          id: "hukum-app-update",
           description:
-            "Move Traycer to your Applications folder to install updates.",
+            "Move Hukum to your Applications folder to install updates.",
         }),
       );
     });
@@ -616,7 +616,7 @@ describe("desktop app update UI", () => {
       expect(toastMock.message).toHaveBeenCalledWith(
         "Downloading update…",
         expect.objectContaining({
-          id: "traycer-app-update",
+          id: "hukum-app-update",
           description: "50% complete",
           closeButton: true,
         }),
@@ -638,7 +638,7 @@ describe("desktop app update UI", () => {
       expect(toastMock.message).toHaveBeenCalledWith(
         "Downloading update…",
         expect.objectContaining({
-          id: "traycer-app-update",
+          id: "hukum-app-update",
           description: "0% complete",
           closeButton: true,
         }),
@@ -652,7 +652,7 @@ describe("desktop app update UI", () => {
       expect(toastMock).toHaveBeenCalledWith(
         expect.anything(),
         expect.objectContaining({
-          id: "traycer-app-update",
+          id: "hukum-app-update",
           description: null,
         }),
       );
@@ -672,7 +672,7 @@ describe("desktop app update UI", () => {
     await waitFor(() => {
       expect(toastMock).toHaveBeenCalledWith(
         expect.anything(),
-        expect.objectContaining({ id: "traycer-app-update" }),
+        expect.objectContaining({ id: "hukum-app-update" }),
       );
     });
 
@@ -684,7 +684,7 @@ describe("desktop app update UI", () => {
     expect(options.cancel).toBeNull();
     render(<>{message}</>);
     screen.getByText("Update ready to install");
-    screen.getByText("Restart Traycer to finish updating.");
+    screen.getByText("Restart Hukum to finish updating.");
 
     const track = vi.spyOn(Analytics.getInstance(), "track");
     const restart = screen.getByRole("button", { name: "Restart" });
@@ -693,7 +693,7 @@ describe("desktop app update UI", () => {
     // The toast button is the confirmation - it installs once, with no modal.
     expect(bridge.installUpdate).toHaveBeenCalledTimes(1);
     expect(useDesktopDialogStore.getState().activeDialog).toBeNull();
-    expect(toastMock.dismiss).toHaveBeenCalledWith("traycer-app-update");
+    expect(toastMock.dismiss).toHaveBeenCalledWith("hukum-app-update");
     expect(track).toHaveBeenCalledWith(AnalyticsEvent.UpdateRestartRequested, {
       source: "direct_ui",
     });
@@ -716,8 +716,8 @@ describe("desktop app update UI", () => {
       expect(toastMock.message).toHaveBeenCalledWith(
         "Restarting to install update…",
         expect.objectContaining({
-          id: "traycer-app-update",
-          description: "Traycer will reopen once the update is applied.",
+          id: "hukum-app-update",
+          description: "Hukum will reopen once the update is applied.",
         }),
       );
     });
@@ -738,7 +738,7 @@ describe("desktop app update UI", () => {
     await waitFor(() => {
       expect(toastMock).toHaveBeenCalledWith(
         expect.anything(),
-        expect.objectContaining({ id: "traycer-app-update" }),
+        expect.objectContaining({ id: "hukum-app-update" }),
       );
     });
 
@@ -773,9 +773,9 @@ describe("desktop app update UI", () => {
 
     await waitFor(() => {
       expect(toastMock.error).toHaveBeenCalledWith(
-        "Couldn't update Traycer",
+        "Couldn't update Hukum",
         expect.objectContaining({
-          id: "traycer-app-update",
+          id: "hukum-app-update",
         }),
       );
     });
@@ -788,7 +788,7 @@ describe("desktop app update UI", () => {
     expect(options.cancel).toBeNull();
     render(<>{options.description}</>);
     screen.getByText(
-      "Traycer couldn't reach the update service right now. Please try again in a little while.",
+      "Hukum couldn't reach the update service right now. Please try again in a little while.",
     );
     const reportButton = screen.getByRole("button", {
       name: "Report an issue",
@@ -797,7 +797,7 @@ describe("desktop app update UI", () => {
     fireEvent.click(reportButton);
     expect(useDesktopDialogStore.getState().activeDialog).toBe("report-issue");
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
-      title: "Could not update Traycer",
+      title: "Could not update Hukum",
       message: null,
       code: null,
       source: "App update",
@@ -817,8 +817,8 @@ describe("desktop app update UI", () => {
     });
     await waitFor(() => {
       expect(toastMock.error).toHaveBeenCalledWith(
-        "Couldn't update Traycer",
-        expect.objectContaining({ id: "traycer-app-update" }),
+        "Couldn't update Hukum",
+        expect.objectContaining({ id: "hukum-app-update" }),
       );
     });
 
@@ -863,7 +863,7 @@ describe("desktop app update UI", () => {
     render(<>{options.description}</>);
 
     screen.getByText(
-      "Traycer couldn't reach the update service right now. Please try again in a little while.",
+      "Hukum couldn't reach the update service right now. Please try again in a little while.",
     );
     expect(
       screen.queryByRole("button", { name: "Report an issue" }),

@@ -8,13 +8,13 @@ import {
 } from "react";
 import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { QueryClient } from "@tanstack/react-query";
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
 import type {
   IStreamSession,
   StreamCloseReason,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import {
   gitSubscribeStatusEventSchema,
   gitSubscribeStatusEventSchemaV11,
@@ -29,7 +29,7 @@ import {
   type GitWatcherStatus,
   type RepoMode,
   type RepoState,
-} from "@traycer/protocol/host/git-schemas";
+} from "@hukum/protocol/host/git-schemas";
 import { gitQueryKeys } from "@/lib/query-keys/git-query-keys";
 import { writeGitListChangedFilesResponse } from "@/lib/git/write-list-changed-files-response";
 import {

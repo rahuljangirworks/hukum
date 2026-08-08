@@ -21,7 +21,7 @@ import {
 
 describe("findJumplistCommandInArgv", () => {
   it("maps the jump-list task flags to their commands", () => {
-    const exe = "C:\\Program Files\\Traycer\\Traycer.exe";
+    const exe = "C:\\Program Files\\Hukum\\Hukum.exe";
     expect(findJumplistCommandInArgv([exe, "--new-epic"])).toBe(
       "epic.newWindow",
     );
@@ -31,11 +31,11 @@ describe("findJumplistCommandInArgv", () => {
   });
 
   it("ignores argv without a jump-list flag", () => {
-    expect(findJumplistCommandInArgv(["Traycer.exe"])).toBeNull();
+    expect(findJumplistCommandInArgv(["Hukum.exe"])).toBeNull();
     expect(
       findJumplistCommandInArgv([
-        "Traycer.exe",
-        "traycer-staging://auth/callback",
+        "Hukum.exe",
+        "hukum-staging://auth/callback",
       ]),
     ).toBeNull();
   });
@@ -62,13 +62,13 @@ describe("registerJumplistCommandHandling", () => {
   }
 
   it("focuses the main window and dispatches a recognized flag", () => {
-    const sink = installAndFire(["Traycer.exe", "--open-settings"]);
+    const sink = installAndFire(["Hukum.exe", "--open-settings"]);
     expect(sink.focusMainWindow).toHaveBeenCalledOnce();
     expect(sink.dispatch).toHaveBeenCalledWith("app.openSettings");
   });
 
   it("still focuses the main window on a plain relaunch", () => {
-    const sink = installAndFire(["Traycer.exe"]);
+    const sink = installAndFire(["Hukum.exe"]);
     expect(sink.focusMainWindow).toHaveBeenCalledOnce();
     expect(sink.dispatch).not.toHaveBeenCalled();
   });

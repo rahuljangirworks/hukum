@@ -2,11 +2,11 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import type {
   HostRpcError,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useHostQuery } from "@/hooks/host/use-host-query";
-import type { TerminalScope } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { TerminalScope } from "@hukum/protocol/host/terminal/unary-schemas";
 
 /**
  * `terminal.list` against an EXPLICIT host client rather than the app-wide

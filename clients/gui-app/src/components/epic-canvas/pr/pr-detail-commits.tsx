@@ -4,7 +4,7 @@ import type {
   PrCommit,
   PrCommitsSection,
   PrDetailCore,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import { PrActorAvatar } from "@/components/epic-canvas/pr/pr-detail-avatar";
 import {
   PrOlderOnGitHub,

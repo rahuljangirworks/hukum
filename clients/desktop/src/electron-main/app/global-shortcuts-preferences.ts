@@ -1,12 +1,12 @@
 import { app } from "electron";
 import { join } from "node:path";
-import { isValidChordString } from "@traycer-clients/shared/keybindings/chord-core";
+import { isValidChordString } from "@hukum-clients/shared/keybindings/chord-core";
 import {
   GLOBAL_SHORTCUT_IDS,
   globalShortcutIntentSchema,
   type GlobalShortcutId,
   type GlobalShortcutIntent,
-} from "@traycer-clients/shared/keybindings/global-shortcuts";
+} from "@hukum-clients/shared/keybindings/global-shortcuts";
 import {
   createJsonFileStore,
   type StrictJsonFileStore,

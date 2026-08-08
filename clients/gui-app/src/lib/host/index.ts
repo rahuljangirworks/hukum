@@ -1,7 +1,7 @@
 export {
   hostRpcRegistry,
   type HostRpcRegistry,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 export { HostCompatibilityProvider } from "@/lib/host/compatibility-provider";
 export {
   describeHostCompatibilityError,

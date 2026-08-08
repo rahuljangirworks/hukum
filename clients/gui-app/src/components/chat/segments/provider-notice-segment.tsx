@@ -3,7 +3,7 @@ import { useState } from "react";
 import type {
   ProviderNoticeDetail,
   ProviderNoticeTone,
-} from "@traycer/protocol/persistence/epic/content-blocks";
+} from "@hukum/protocol/persistence/epic/content-blocks";
 import { LivePulse } from "@/components/ui/live-pulse";
 import { cn } from "@/lib/utils";
 

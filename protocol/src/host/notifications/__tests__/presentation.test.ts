@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { HostNotificationEntry } from "@traycer/protocol/host/notifications/host-notifications";
-import { formatHostNotificationPresentation } from "@traycer/protocol/host/notifications/presentation";
+import type { HostNotificationEntry } from "@hukum/protocol/host/notifications/host-notifications";
+import { formatHostNotificationPresentation } from "@hukum/protocol/host/notifications/presentation";
 
 const BASE = {
   id: "notification-1",

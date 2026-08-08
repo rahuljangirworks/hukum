@@ -1,4 +1,4 @@
-import { classifyHostRequestFailure } from "@traycer-clients/shared/host-transport/host-messenger";
+import { classifyHostRequestFailure } from "@hukum-clients/shared/host-transport/host-messenger";
 
 export type LandingTerminalAvailability =
   "supported" | "unsupported" | "unknown" | "no-active-host";

@@ -10,7 +10,7 @@ import {
 import type {
   HostAvailableSnapshot,
   HostAvailableVersionEntry,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 
 interface AvailableVersionsListProps {
   readonly availableSnapshot: HostAvailableSnapshot | undefined;

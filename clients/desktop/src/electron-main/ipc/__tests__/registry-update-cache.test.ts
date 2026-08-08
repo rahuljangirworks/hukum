@@ -93,7 +93,7 @@ interface RegistryPlatformAssetFixture {
 }
 
 beforeEach(() => {
-  workHome = mkdtempSync(join(tmpdir(), "traycer-registry-cache-"));
+  workHome = mkdtempSync(join(tmpdir(), "hukum-registry-cache-"));
   sandboxHome(workHome);
   vi.resetModules();
 });
@@ -111,7 +111,7 @@ afterEach(() => {
   }
   rmSync(workHome, { recursive: true, force: true });
   vi.restoreAllMocks();
-  vi.doUnmock("../../cli/traycer-cli");
+  vi.doUnmock("../../cli/hukum-cli");
 });
 
 function writeCache(opts: {
@@ -123,7 +123,7 @@ function writeCache(opts: {
   readonly environment?: "production" | "dev";
 }): void {
   const environment = opts.environment ?? "production";
-  const dir = join(workHome, ".traycer", "desktop");
+  const dir = join(workHome, ".hukum", "desktop");
   mkdirSync(dir, { recursive: true });
   // production has no suffix; dev/staging nest under their name.
   const fileName =
@@ -187,15 +187,15 @@ function writeInstallRecord(
 ): void {
   const dir =
     environment === "dev"
-      ? join(workHome, ".traycer", "host", "dev", "install")
-      : join(workHome, ".traycer", "host", "install");
+      ? join(workHome, ".hukum", "host", "dev", "install")
+      : join(workHome, ".hukum", "host", "install");
   mkdirSync(dir, { recursive: true });
   writeFileSync(
     join(dir, "install.json"),
     JSON.stringify({
       version,
       installedAt: "2026-05-15T00:00:00Z",
-      executablePath: `/tmp/traycer/${version}/host`,
+      executablePath: `/tmp/hukum/${version}/host`,
       source: { kind: "registry", value: version },
       archiveSha256: "abc",
       signatureKeyId: "test-key",
@@ -307,9 +307,9 @@ function fakeHostController(updateReady: boolean): IpcHostController & {
         "fakeHostController.uninstallHost: not used by these tests",
       );
     },
-    removeTraycer: () => {
+    removeHukum: () => {
       throw new Error(
-        "fakeHostController.removeTraycer: not used by these tests",
+        "fakeHostController.removeHukum: not used by these tests",
       );
     },
     isPendingRevisionRefreshQuarantined: () => false,
@@ -323,10 +323,10 @@ function fakeHostController(updateReady: boolean): IpcHostController & {
 describe("refreshRegistryUpdateState - launch-time probe", () => {
   it("returns cached state without probing when cache is fresh", async () => {
     const probeSpy = vi.fn();
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     writeCache({
       checkedAt: new Date().toISOString(),
@@ -362,10 +362,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
     const probeSpy = vi
       .fn()
       .mockResolvedValue(registryProbeResult("1.4.3", true, null));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     writeCache({
       checkedAt: new Date().toISOString(),
@@ -389,10 +389,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
     const probeSpy = vi
       .fn()
       .mockResolvedValue(registryProbeResult("1.4.3", true, null));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     const controller = fakeHostController(false);
     controller.stageLatest = async (): Promise<void> => {
@@ -430,10 +430,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
     const probeSpy = vi
       .fn()
       .mockResolvedValue(registryProbeResult("1.4.3", true, null));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     // 48h old
     const old = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
@@ -462,10 +462,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
     const probeSpy = vi
       .fn()
       .mockResolvedValue(registryProbeResult("1.4.3", true, null));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
     writeCache({
@@ -487,10 +487,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
 
   it("maxAgeMs still honours a fresh cache - a 2h-old cache under a 4h threshold does not re-probe", async () => {
     const probeSpy = vi.fn();
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
     writeCache({
@@ -521,10 +521,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
           "Build unavailable for this platform.",
         ),
       );
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
 
     const { refreshRegistryUpdateState } =
@@ -550,10 +550,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
         return firstProbe.promise;
       })
       .mockResolvedValueOnce(registryProbeResult("1.4.2", true, null));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     const { refreshRegistryUpdateState } =
       await import("../host-management-ipc");
@@ -579,10 +579,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
     const probeSpy = vi
       .fn()
       .mockRejectedValue(new Error("registry unreachable: network"));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     const { refreshRegistryUpdateState } =
       await import("../host-management-ipc");
@@ -607,10 +607,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
   // "up to date" reads as available once bytes are actually staged.
   it("does not advertise an update the registry detected but nothing has staged yet (quiet-until-ready)", async () => {
     const probeSpy = vi.fn();
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     writeCache({
       checkedAt: new Date().toISOString(),
@@ -632,10 +632,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
 
   it("advertises an update once bytes are staged, even for a pair the raw registry comparison alone would call up to date", async () => {
     const probeSpy = vi.fn();
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     writeCache({
       checkedAt: new Date().toISOString(),
@@ -657,10 +657,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
     const probeSpy = vi
       .fn()
       .mockResolvedValue(registryProbeResult("1.4.3", true, null));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     writeCache({
       checkedAt: new Date().toISOString(),
@@ -686,12 +686,12 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
   // advertise "Update host" (under the old registry-only detection) while
   // never background-downloading the bytes that advertisement implied.
   it("stages the eligible update in the background on a successful fresh probe, but not on a cache hit", async () => {
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: vi
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: vi
         .fn()
         .mockResolvedValue(registryProbeResult("1.4.3", true, null)),
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     const { refreshRegistryUpdateState } =
       await import("../host-management-ipc");
@@ -732,12 +732,12 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
   // since-deleted IPC-layer push.
 
   it("does not stage anything after a failed registry probe", async () => {
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: vi
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: vi
         .fn()
         .mockRejectedValue(new Error("registry unreachable: network")),
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     const { refreshRegistryUpdateState } =
       await import("../host-management-ipc");
@@ -762,10 +762,10 @@ describe("refreshRegistryUpdateState - launch-time probe", () => {
 describe("refreshRegistryUpdateState - environment-scoped cache", () => {
   it("prod launch reads only the prod-scoped cache file", async () => {
     const probeSpy = vi.fn();
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     writeCache({
       checkedAt: new Date().toISOString(),
@@ -801,10 +801,10 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
 
   it("dev launch reads only the dev-scoped cache file", async () => {
     const probeSpy = vi.fn();
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     writeCache({
       checkedAt: new Date().toISOString(),
@@ -840,10 +840,10 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
     const probeSpy = vi
       .fn()
       .mockResolvedValue(registryProbeResult("DEV-2.0.0", true, null));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     writeCache({
       checkedAt: new Date().toISOString(),
@@ -868,7 +868,7 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
     // prod file.
     const devPath = join(
       workHome,
-      ".traycer",
+      ".hukum",
       "desktop",
       "registry-update-cache-dev.json",
     );
@@ -882,10 +882,10 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
     const probeSpy = vi
       .fn()
       .mockResolvedValue(registryProbeResult("PROD-1.4.2", true, null));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     writeCache({
       checkedAt: new Date().toISOString(),
@@ -908,7 +908,7 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
     expect(state.latestVersion).toBe("PROD-1.4.2");
     const prodPath = join(
       workHome,
-      ".traycer",
+      ".hukum",
       "desktop",
       "registry-update-cache.json",
     );
@@ -919,15 +919,15 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
     const probeSpy = vi
       .fn()
       .mockResolvedValue(registryProbeResult("PROD-1.4.2", true, null));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     // Write a file at the prod-scoped path whose body says environment=dev
     // (could only happen via manual edit / corrupted state). The probe
     // must run and overwrite with a correct prod-environment snapshot.
-    const dir = join(workHome, ".traycer", "desktop");
+    const dir = join(workHome, ".hukum", "desktop");
     mkdirSync(dir, { recursive: true });
     writeFileSync(
       join(dir, "registry-update-cache.json"),
@@ -958,10 +958,10 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
     const probeSpy = vi
       .fn()
       .mockRejectedValue(new Error("registry unreachable: network"));
-    vi.doMock("../../cli/traycer-cli", () => ({
-      runTraycerCliJson: probeSpy,
-      streamTraycerCliJson: vi.fn(),
-      TraycerCliError: class extends Error {},
+    vi.doMock("../../cli/hukum-cli", () => ({
+      runHukumCliJson: probeSpy,
+      streamHukumCliJson: vi.fn(),
+      HukumCliError: class extends Error {},
     }));
     const mgmt = await import("../host-management-ipc");
     mgmt.setActiveEnvironment("dev");
@@ -977,7 +977,7 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
     expect(state.errorMessage).toContain("registry unreachable");
     const devPath = join(
       workHome,
-      ".traycer",
+      ".hukum",
       "desktop",
       "registry-update-cache-dev.json",
     );
@@ -1003,10 +1003,10 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
       const probeA = vi
         .fn()
         .mockResolvedValue(registryProbeResult("DEV-A-2.0.0", true, null));
-      vi.doMock("../../cli/traycer-cli", () => ({
-        runTraycerCliJson: probeA,
-        streamTraycerCliJson: vi.fn(),
-        TraycerCliError: class extends Error {},
+      vi.doMock("../../cli/hukum-cli", () => ({
+        runHukumCliJson: probeA,
+        streamHukumCliJson: vi.fn(),
+        HukumCliError: class extends Error {},
       }));
       const mgmtA = await import("../host-management-ipc");
       mgmtA.setActiveEnvironment("dev");
@@ -1019,15 +1019,15 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
       // A second, independently-resolved module instance for a different
       // slot - mirrors a separate concurrent `make dev-desktop` process.
       vi.resetModules();
-      vi.doUnmock("../../cli/traycer-cli");
+      vi.doUnmock("../../cli/hukum-cli");
       process.env[DEV_DESKTOP_SLOT_ENV] = "worktree-b";
       const probeB = vi
         .fn()
         .mockResolvedValue(registryProbeResult("DEV-B-3.0.0", true, null));
-      vi.doMock("../../cli/traycer-cli", () => ({
-        runTraycerCliJson: probeB,
-        streamTraycerCliJson: vi.fn(),
-        TraycerCliError: class extends Error {},
+      vi.doMock("../../cli/hukum-cli", () => ({
+        runHukumCliJson: probeB,
+        streamHukumCliJson: vi.fn(),
+        HukumCliError: class extends Error {},
       }));
       const mgmtB = await import("../host-management-ipc");
       mgmtB.setActiveEnvironment("dev");
@@ -1039,13 +1039,13 @@ describe("refreshRegistryUpdateState - environment-scoped cache", () => {
 
       const pathA = join(
         workHome,
-        ".traycer",
+        ".hukum",
         "desktop",
         "registry-update-cache-dev-worktree-a.json",
       );
       const pathB = join(
         workHome,
-        ".traycer",
+        ".hukum",
         "desktop",
         "registry-update-cache-dev-worktree-b.json",
       );

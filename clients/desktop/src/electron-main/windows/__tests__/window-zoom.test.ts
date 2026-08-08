@@ -15,7 +15,7 @@ import { initialWindowSize, minimumWindowSize } from "../window-layout";
 
 vi.mock("electron", () => ({
   app: {
-    getPath: (): string => "/tmp/traycer-user-data",
+    getPath: (): string => "/tmp/hukum-user-data",
   },
 }));
 
@@ -99,7 +99,7 @@ function testDisplay(width: number, scaleFactor: number): ZoomHeuristicDisplay {
 }
 
 function withZoomPreferenceFile(run: (filePath: string) => void): void {
-  const dir = mkdtempSync(join(tmpdir(), "traycer-window-zoom-"));
+  const dir = mkdtempSync(join(tmpdir(), "hukum-window-zoom-"));
   try {
     run(join(dir, "window-zoom.json"));
   } finally {

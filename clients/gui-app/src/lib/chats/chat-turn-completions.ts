@@ -1,4 +1,4 @@
-import type { GuiHarnessId } from "@traycer/protocol/host/index";
+import type { GuiHarnessId } from "@hukum/protocol/host/index";
 import {
   type ChatSessionState,
   type ChatSessionStoreHandle,

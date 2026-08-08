@@ -9,13 +9,13 @@ const resolutionHarness = require("../run-resolution-matrix.cjs") as {
 describe("resolution child environment", () => {
   it("removes slotted dev identity before launching the no-slot harness", () => {
     const childEnv = resolutionHarness.createResolutionChildEnv({
-      DEV_DESKTOP_SLOT: "traycer-spry-panda-a2acaa5e",
-      TRAYCER_DESKTOP_DEV_DISPLAY_NAME: "Traycer Dev — spry-panda",
+      DEV_DESKTOP_SLOT: "hukum-spry-panda-a2acaa5e",
+      HUKUM_DESKTOP_DEV_DISPLAY_NAME: "Hukum Dev — spry-panda",
       PATH: "/usr/bin",
     });
 
     expect(childEnv.DEV_DESKTOP_SLOT).toBeUndefined();
-    expect(childEnv.TRAYCER_DESKTOP_DEV_DISPLAY_NAME).toBeUndefined();
+    expect(childEnv.HUKUM_DESKTOP_DEV_DISPLAY_NAME).toBeUndefined();
     expect(childEnv.PATH).toBe("/usr/bin");
   });
 });

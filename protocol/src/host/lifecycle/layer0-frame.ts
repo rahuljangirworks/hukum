@@ -3,11 +3,11 @@
  *
  * It lives here because that is what it is. The host emits these frames on its
  * status fd during startup and the CLI's probe reads them, which makes the
- * shape a client<->host contract and `@traycer/protocol` its owner by the
+ * shape a client<->host contract and `@hukum/protocol` its owner by the
  * repo's own rule.
  *
  * It did not start here. The host declared the union in
- * `traycer-host/src/lifecycle/layer0-lock.ts` and the OSS client carried a
+ * `hukum-host/src/lifecycle/layer0-lock.ts` and the OSS client carried a
  * hand-written "wire-level copy" in `host-lifecycle/transition/probe.ts`,
  * with a comment explaining that duplication kept the internal package out of
  * the client tree. The copy had already drifted: it carried a fourth
@@ -32,7 +32,7 @@ export type Layer0UnavailableCause =
   // nothing else in the system takes an flock on this path. The Windows
   // acquire is a share-mode-0 `CreateFileW`, where `ERROR_SHARING_VIOLATION`
   // means *anyone has the file open at all* - Defender's real-time filter,
-  // the Search indexer, a VSS/backup agent, or OneDrive when `~/.traycer`
+  // the Search indexer, a VSS/backup agent, or OneDrive when `~/.hukum`
   // sits in a synced folder. Treating that as a held lock would decline
   // startup against an incumbent that does not exist, which is the one place
   // a lock problem could block a start that should proceed.

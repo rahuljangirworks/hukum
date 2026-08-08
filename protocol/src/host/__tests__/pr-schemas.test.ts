@@ -33,22 +33,22 @@ import {
   prLinkGroupKeySchema,
   prRepoIdentifierSchema,
   DEFAULT_PR_LOCAL_DIFF_BYTE_BUDGET,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 import {
   prSubscribeListForEpicV10,
   prSubscribeDetailV10,
   prGetLocalDiffV10,
-} from "@traycer/protocol/host/pr-contracts";
+} from "@hukum/protocol/host/pr-contracts";
 
 const BASE_COORDINATES_FIXTURE = {
-  owner: "traycerai",
-  repo: "traycer-internal",
+  owner: "hukumai",
+  repo: "hukum-internal",
   prNumber: 4465,
 };
 
 const REPO_IDENTIFIER_FIXTURE = {
-  owner: "traycerai",
-  repo: "traycer-internal",
+  owner: "hukumai",
+  repo: "hukum-internal",
 };
 
 const OWNER_REF_FIXTURE = {
@@ -77,7 +77,7 @@ const REVIEW_REQUEST_FIXTURE = {
 const LIGHT_ITEM_POPULATED_FIXTURE = {
   githubHost: "github.com",
   base: BASE_COORDINATES_FIXTURE,
-  prUrl: "https://github.com/traycerai/traycer-internal/pull/4465",
+  prUrl: "https://github.com/hukumai/hukum-internal/pull/4465",
   state: "open" as const,
   liveness: "live" as const,
   observedAt: 1_700_000_000_000,
@@ -93,7 +93,7 @@ const LIGHT_ITEM_POPULATED_FIXTURE = {
   updatedAt: 1_700_000_100_000,
   repoIdentifier: REPO_IDENTIFIER_FIXTURE,
   repoRole: "superproject" as const,
-  linkGroupKey: "/Users/dev/worktrees/traycer-jolly-fox",
+  linkGroupKey: "/Users/dev/worktrees/hukum-jolly-fox",
   owners: [OWNER_REF_FIXTURE],
 };
 
@@ -311,8 +311,8 @@ describe("prSubscribeDetailOpenRequestSchema", () => {
     const fixture = {
       epicId: "epic-1",
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer-internal",
+      owner: "hukumai",
+      repo: "hukum-internal",
       prNumber: 4465,
     };
     const parsed1 = prSubscribeDetailOpenRequestSchema.parse(fixture);
@@ -324,8 +324,8 @@ describe("prSubscribeDetailOpenRequestSchema", () => {
     const fixture = {
       epicId: "epic-1",
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer-internal",
+      owner: "hukumai",
+      repo: "hukum-internal",
       prNumber: 4465,
     };
     expect(() =>
@@ -355,7 +355,7 @@ describe("prCheckContextSchema", () => {
         description: null,
         status,
         conclusion: null,
-        detailsUrl: "https://github.com/traycerai/traycer-internal/actions",
+        detailsUrl: "https://github.com/hukumai/hukum-internal/actions",
       };
       const parsed1 = prCheckContextSchema.parse(fixture);
       const parsed2 = prCheckContextSchema.parse(parsed1);
@@ -729,7 +729,7 @@ const DETAIL_CORE_POPULATED_FIXTURE = {
   observedAt: 1_700_000_000_000,
   githubHost: "github.com",
   base: BASE_COORDINATES_FIXTURE,
-  prUrl: "https://github.com/traycerai/traycer-internal/pull/4465",
+  prUrl: "https://github.com/hukumai/hukum-internal/pull/4465",
   state: "open" as const,
   isDraft: false,
   title: "feat(host): add notification hooks",
@@ -748,7 +748,7 @@ const DETAIL_CORE_POPULATED_FIXTURE = {
   mergedAt: null,
   repoIdentifier: REPO_IDENTIFIER_FIXTURE,
   repoRole: "superproject" as const,
-  linkGroupKey: "/Users/dev/worktrees/traycer-jolly-fox",
+  linkGroupKey: "/Users/dev/worktrees/hukum-jolly-fox",
   owners: [OWNER_REF_FIXTURE],
 };
 
@@ -1095,7 +1095,7 @@ describe("prSubscribeClientFrameSchema", () => {
 
 const LOCAL_DIFF_REQUEST_FIXTURE = {
   epicId: "epic-1",
-  linkGroupKey: "/Users/dev/worktrees/traycer-jolly-fox",
+  linkGroupKey: "/Users/dev/worktrees/hukum-jolly-fox",
   repoIdentifier: REPO_IDENTIFIER_FIXTURE,
   repoRole: "superproject" as const,
   baseRefName: "development",
@@ -1106,7 +1106,7 @@ const LOCAL_DIFF_REQUEST_FIXTURE = {
 };
 
 const LOCAL_DIFF_FILE_FIXTURE = {
-  path: "traycer-host/src/domain/git/git-service.ts",
+  path: "hukum-host/src/domain/git/git-service.ts",
   previousPath: null,
   status: "modified" as const,
   insertions: 157,
@@ -1226,7 +1226,7 @@ describe("prGetLocalDiffResponseSchema", () => {
   it("parses and reparses a diff response unchanged", () => {
     const fixture = {
       kind: "diff" as const,
-      runningDir: "/Users/dev/worktrees/traycer-jolly-fox",
+      runningDir: "/Users/dev/worktrees/hukum-jolly-fox",
       resolvedBaseRef: "origin/development",
       baseOid: "b".repeat(40),
       mergeBaseOid: "c".repeat(40),

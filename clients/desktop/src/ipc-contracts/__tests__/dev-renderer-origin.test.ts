@@ -3,7 +3,7 @@ import {
   DEFAULT_DEV_RENDERER_URL,
   devRendererOriginFromEnv,
   devRendererUrlFromEnv,
-  TRAYCER_DESKTOP_DEV_URL_ENV,
+  HUKUM_DESKTOP_DEV_URL_ENV,
 } from "../dev-renderer-origin";
 
 describe("dev renderer origin helpers", () => {
@@ -15,12 +15,12 @@ describe("dev renderer origin helpers", () => {
   it("accepts dynamic loopback renderer origins", () => {
     expect(
       devRendererUrlFromEnv({
-        [TRAYCER_DESKTOP_DEV_URL_ENV]: "http://localhost:21005",
+        [HUKUM_DESKTOP_DEV_URL_ENV]: "http://localhost:21005",
       }),
     ).toBe("http://localhost:21005");
     expect(
       devRendererUrlFromEnv({
-        [TRAYCER_DESKTOP_DEV_URL_ENV]: "http://127.0.0.1:21005/",
+        [HUKUM_DESKTOP_DEV_URL_ENV]: "http://127.0.0.1:21005/",
       }),
     ).toBe("http://127.0.0.1:21005");
   });
@@ -28,17 +28,17 @@ describe("dev renderer origin helpers", () => {
   it("rejects non-loopback or non-origin renderer URLs", () => {
     expect(() =>
       devRendererUrlFromEnv({
-        [TRAYCER_DESKTOP_DEV_URL_ENV]: "https://localhost:21005",
+        [HUKUM_DESKTOP_DEV_URL_ENV]: "https://localhost:21005",
       }),
     ).toThrow(/must use http/);
     expect(() =>
       devRendererUrlFromEnv({
-        [TRAYCER_DESKTOP_DEV_URL_ENV]: "http://example.com:21005",
+        [HUKUM_DESKTOP_DEV_URL_ENV]: "http://example.com:21005",
       }),
     ).toThrow(/loopback/);
     expect(() =>
       devRendererUrlFromEnv({
-        [TRAYCER_DESKTOP_DEV_URL_ENV]: "http://localhost:21005/path",
+        [HUKUM_DESKTOP_DEV_URL_ENV]: "http://localhost:21005/path",
       }),
     ).toThrow(/origin URL/);
   });

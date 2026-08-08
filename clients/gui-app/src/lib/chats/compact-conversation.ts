@@ -1,8 +1,8 @@
-import type { GuiAgentCommandOption } from "@traycer/protocol/host/index";
+import type { GuiAgentCommandOption } from "@hukum/protocol/host/index";
 import type {
   ChatQueuedItem,
   ChatQueueState,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 
 import { isOptimisticQueuedItem } from "@/stores/chats/optimistic-queue";
 
@@ -11,7 +11,7 @@ import { isOptimisticQueuedItem } from "@/stores/chats/optimistic-queue";
  * harness only ever compacting on its own.
  *
  * `providerKind: "compaction"` is the marker every adapter stamps on its native
- * compaction command - hardcoded for codex/opencode/traycer/openrouter/
+ * compaction command - hardcoded for codex/opencode/hukum/openrouter/
  * huggingface/omp/pi,
  * derived from the ACP handshake list for grok/kimi/kiro/qwen/kilocode/hermes/
  * devin, and from the SDK command catalog for claude.

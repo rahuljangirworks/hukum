@@ -15,27 +15,27 @@
  * Allowed dependencies: `zod` and other protocol modules only - this file
  * must stay browser-safe.
  */
-import type { EpicArtifactKind } from "@traycer/protocol/common/registry";
-import { commonRecordRegistry } from "@traycer/protocol/common/registry";
-import { accountContextSchema } from "@traycer/protocol/common/schemas";
+import type { EpicArtifactKind } from "@hukum/protocol/common/registry";
+import { commonRecordRegistry } from "@hukum/protocol/common/registry";
+import { accountContextSchema } from "@hukum/protocol/common/schemas";
 import {
   agentModeSchema,
   tuiHarnessIdSchema,
-} from "@traycer/protocol/host/agent/shared";
-import { getRecordSchema } from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/host/agent/shared";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
 import {
   worktreeBindingWorkspaceModeSchema,
   worktreeIntentSchema,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   SEARCH_TEXT_PREVIEW_MAX_BYTES,
   searchTextPreviewRangeSchema,
-} from "@traycer/protocol/host/search-text-preview-schema";
+} from "@hukum/protocol/host/search-text-preview-schema";
 import {
   chatRunSettingsSchema,
   chatRunSettingsStrictSchema,
   userMessageSenderSchema,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import { z } from "zod";
 import {
   imageSha256HexSchema,
@@ -1594,7 +1594,7 @@ export type DeleteCommentThreadResponse = z.infer<
 // Mirror of `clients/shared/collaboration/comment.ts` types - kept in
 // the protocol layer so the host read RPC and gui-app deserialize through
 // the same zod instances. The shared TS interfaces re-export this type so
-// consumers continue to import from `@traycer/host/collaboration`.
+// consumers continue to import from `@hukum/host/collaboration`.
 
 export const commentUserSchema = z.object({
   userId: z.string(),

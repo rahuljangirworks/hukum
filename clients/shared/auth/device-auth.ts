@@ -292,7 +292,7 @@ export function applySlowDown(
  * the user waiting a padded interval for the rest of the attempt.
  *
  * DELIBERATE deviation from RFC 8628 §3.5, which keeps a slow_down's +5s for
- * "all subsequent requests". This client only ever talks to Traycer's own
+ * "all subsequent requests". This client only ever talks to Hukum's own
  * authn, whose gate is itself a fixed one-interval penalty (never ratcheting),
  * so decaying after an accepted poll mirrors the server's actual policy - and
  * without decay one spurious slow_down (e.g. clock skew between authn

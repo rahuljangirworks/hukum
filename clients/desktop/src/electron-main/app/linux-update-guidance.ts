@@ -10,7 +10,7 @@ const execFileAsync = promisify(execFile);
 
 export type LinuxPackageType = "deb" | "rpm";
 
-const DESKTOP_RELEASES_URL = "https://github.com/traycerai/traycer/releases";
+const DESKTOP_RELEASES_URL = "https://github.com/hukumai/hukum/releases";
 
 // Bounds `dpkg -S`/`rpm -qf` in `isRegisteredAtRunningLocation`, which runs
 // unconditionally on every cold Linux launch before update listeners are
@@ -98,11 +98,11 @@ export function buildLinuxUpdateGuidance(
         ? `sudo dpkg -i "${downloadedFile}"`
         : `sudo rpm -U "${downloadedFile}"`;
   return {
-    summary: `Traycer downloaded ${versionLabel}, but this install can't apply it automatically - one manual step finishes it.`,
+    summary: `Hukum downloaded ${versionLabel}, but this install can't apply it automatically - one manual step finishes it.`,
     steps: [
       "Open a terminal.",
       "Run the command below to install the update.",
-      "Restart Traycer once it completes.",
+      "Restart Hukum once it completes.",
     ],
     command,
     releaseUrl: DESKTOP_RELEASES_URL,

@@ -1,9 +1,9 @@
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import type { EpicNodeKind } from "@/lib/artifacts/node-display";
 import { makeLiteralGuard } from "@/lib/type-guard";
 import type { SnapshotSourceBlockIds } from "@/lib/chat/snapshot-source-block-ids";
-import type { GitStage } from "@traycer/protocol/host";
-import type { TuiHarnessId } from "@traycer/protocol/persistence/epic/schemas";
+import type { GitStage } from "@hukum/protocol/host";
+import type { TuiHarnessId } from "@hukum/protocol/persistence/epic/schemas";
 import type {
   EdgeDropPosition,
   SizesByGroupId,

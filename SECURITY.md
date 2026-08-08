@@ -4,7 +4,7 @@
 
 **Please do not report security issues through public GitHub issues.**
 
-Report privately through the email **[support@traycer.ai](mailto:support@traycer.ai).**
+Report privately through the email **[support@hukum.ai](mailto:support@hukum.ai).**
 
 Please include a description, reproduction steps, the affected component and version, and the potential impact. We aim to acknowledge reports within **3 business days** and will keep you updated as we investigate and ship a fix.
 

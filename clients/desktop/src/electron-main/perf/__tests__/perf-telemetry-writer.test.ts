@@ -26,11 +26,11 @@ vi.mock("electron-log", () => ({
 
 import { appendPerfEvent, flushPerfWrites } from "../perf-telemetry-writer";
 
-const PERF_FILE = "traycer-perf.ndjson";
-const BACKUP_FILE = "traycer-perf.ndjson.1";
+const PERF_FILE = "hukum-perf.ndjson";
+const BACKUP_FILE = "hukum-perf.ndjson.1";
 
 beforeEach(async () => {
-  userDataDir.path = await mkdtemp(join(tmpdir(), "traycer-perf-"));
+  userDataDir.path = await mkdtemp(join(tmpdir(), "hukum-perf-"));
 });
 
 afterEach(async () => {

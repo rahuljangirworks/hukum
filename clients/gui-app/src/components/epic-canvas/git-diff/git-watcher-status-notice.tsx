@@ -1,5 +1,5 @@
 import { CircleAlert, TimerReset } from "lucide-react";
-import type { GitWatcherStatus } from "@traycer/protocol/host/git-schemas";
+import type { GitWatcherStatus } from "@hukum/protocol/host/git-schemas";
 import {
   Tooltip,
   TooltipContent,

@@ -17,7 +17,7 @@ import {
   OpenRouterIcon,
   PiIcon,
   QwenIcon,
-  TraycerIcon,
+  HukumIcon,
   type HarnessIcon,
 } from "@/components/home/pickers/harness-icons";
 import type { ProviderId } from "@/components/home/data/landing-options";
@@ -31,7 +31,7 @@ export const PROVIDER_ICON_CONFIG: Record<ProviderId, HarnessIconConfig> = {
   codex: { Icon: CodexIcon, className: "text-foreground" },
   claude: { Icon: ClaudeAIIcon, className: "text-foreground" },
   opencode: { Icon: OpenCodeIcon, className: "text-foreground" },
-  traycer: { Icon: TraycerIcon, className: "text-foreground" },
+  hukum: { Icon: HukumIcon, className: "text-foreground" },
   openrouter: { Icon: OpenRouterIcon, className: "text-foreground" },
   huggingface: { Icon: HuggingFaceIcon, className: "text-foreground" },
   cursor: { Icon: CursorIcon, className: "text-foreground" },

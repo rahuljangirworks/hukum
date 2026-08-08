@@ -20,12 +20,12 @@ import { describe, expect, it } from "vitest";
 import {
   hostRpcRegistry,
   hostStreamRpcRegistry,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 import {
   agentInboxSubscribeServerFrameSchemaV10,
   agentInboxSubscribeServerFrameSchemaV11,
-} from "@traycer/protocol/host/agent/inbox";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+} from "@hukum/protocol/host/agent/inbox";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   agentRolesClaimV10,
   agentRolesClaimV11,
@@ -36,7 +36,7 @@ import {
   claimAgentRoleResponseSchema,
   relinquishAgentRoleRequestSchema,
   relinquishAgentRoleResponseSchema,
-} from "@traycer/protocol/host/agent/roles";
+} from "@hukum/protocol/host/agent/roles";
 
 const ROLE_METHODS = [
   "agent.roles.claim",

@@ -22,7 +22,7 @@
  * Safety: every path this test touches - the staged fake CLI binary under
  * `resources/cli/darwin-<arch>/` (gitignored - see `.gitignore`) and the
  * packaged output under `release/` (also gitignored) - lives inside this
- * workspace only. It never touches `/Applications`, a real running Traycer
+ * workspace only. It never touches `/Applications`, a real running Hukum
  * host, or calls `launchctl`. `src/config.ts` is stamped to `"production"`
  * for the duration of the pack and unconditionally restored to `"dev"` in a
  * `finally`, exactly mirroring the real release workflow's own
@@ -122,7 +122,7 @@ describe.skipIf(process.platform !== "darwin")(
         renameSync(CLI_ARCH_DIR, CLI_ARCH_DIR_BACKUP);
       }
       mkdirSync(CLI_ARCH_DIR, { recursive: true });
-      const cliBinaryPath = path.join(CLI_ARCH_DIR, "traycer");
+      const cliBinaryPath = path.join(CLI_ARCH_DIR, "hukum");
       writeFileSync(cliBinaryPath, "#!/bin/sh\nexit 0\n", "utf8");
       chmodSync(cliBinaryPath, 0o755);
       writeFileSync(
@@ -205,7 +205,7 @@ describe.skipIf(process.platform !== "darwin")(
         helperAppPath,
         "Contents",
         "MacOS",
-        "traycer",
+        "hukum",
       );
       expect(existsSync(helperBinary)).toBe(true);
       expect(statSync(helperBinary).mode & 0o111).not.toBe(0);
@@ -227,7 +227,7 @@ describe.skipIf(process.platform !== "darwin")(
         "Contents",
         "Library",
         "LaunchAgents",
-        "ai.traycer.host.agent.plist",
+        "ai.hukum.host.agent.plist",
       );
       expect(existsSync(agentPlistPath)).toBe(true);
       expect(() =>
@@ -241,7 +241,7 @@ describe.skipIf(process.platform !== "darwin")(
         "Contents",
         "Library",
         "LaunchAgents",
-        "ai.traycer.host.plist",
+        "ai.hukum.host.plist",
       );
       expect(existsSync(inertOldPlistPath)).toBe(true);
       expect(() =>
@@ -274,7 +274,7 @@ describe.skipIf(process.platform !== "darwin")(
         "Contents",
         "Library",
         "LaunchAgents",
-        "ai.traycer.host.agent.plist",
+        "ai.hukum.host.agent.plist",
       );
       const agentPlist = readFileSync(agentPlistPath, "utf8");
       const bundleProgramMatch = agentPlist.match(

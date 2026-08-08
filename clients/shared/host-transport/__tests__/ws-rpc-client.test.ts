@@ -8,7 +8,7 @@ import {
   defineUpgradePath,
   defineVersionedRpcRegistry,
   type VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   HostRequestAbortedError,
   HostRpcError,
@@ -19,12 +19,12 @@ import {
   type RequestOfMethod,
   type ResponseOfMethod,
 } from "../host-messenger";
-import { MutableBearerLease } from "@traycer-clients/shared/auth/bearer-source";
+import { MutableBearerLease } from "@hukum-clients/shared/auth/bearer-source";
 import {
   createRequestContext,
   identityFromAuthenticatedUser,
   type RequestContext,
-} from "@traycer/protocol/auth/request-context";
+} from "@hukum/protocol/auth/request-context";
 import { mockLocalHostEntry } from "../../host-client/mock/mock-host-directory";
 import { createAuthenticatedUserFixture } from "../../test-fixtures/authenticated-user";
 import type {
@@ -51,7 +51,7 @@ import type {
   ClientRequestFrame,
   ClientFatalErrorFrame,
   HostFrame,
-} from "@traycer/protocol/framework/ws-protocol";
+} from "@hukum/protocol/framework/ws-protocol";
 
 const echoV10 = defineRpcContract({
   method: "host.echo",

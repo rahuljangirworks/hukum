@@ -5,7 +5,7 @@ import type {
   ProviderId,
   ProviderProfile,
   ProviderProfileRateLimitStatus,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type { ModelOption } from "@/components/home/data/landing-options";
 
 const mocks = vi.hoisted(() => ({

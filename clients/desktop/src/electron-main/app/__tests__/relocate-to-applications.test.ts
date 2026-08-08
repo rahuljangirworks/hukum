@@ -191,7 +191,7 @@ async function loadRelocate(opts: {
   setPlatform(opts.platform);
   Object.defineProperty(process, "resourcesPath", {
     configurable: true,
-    value: "/tmp/traycer-test-resources",
+    value: "/tmp/hukum-test-resources",
   });
   const app: FakeApp = {
     isPackaged: opts.isPackaged,
@@ -202,7 +202,7 @@ async function loadRelocate(opts: {
       }
       return opts.moveResult ?? false;
     }),
-    getPath: vi.fn(() => "/tmp/traycer-test-userdata"),
+    getPath: vi.fn(() => "/tmp/hukum-test-userdata"),
   };
   const dialog: FakeDialog = {
     showMessageBox: vi.fn(() =>

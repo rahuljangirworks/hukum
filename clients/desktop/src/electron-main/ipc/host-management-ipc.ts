@@ -3,7 +3,7 @@ import { homedir } from "node:os";
 import { readFile, stat, mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { log } from "../app/logger";
-import { runTraycerCliJson, TraycerCliError } from "../cli/traycer-cli";
+import { runHukumCliJson, HukumCliError } from "../cli/hukum-cli";
 import { RunnerHostInvoke } from "../../ipc-contracts/ipc-channels";
 import type {
   HostAvailableSnapshot,
@@ -43,7 +43,7 @@ const REGISTRY_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
  * handler threads this through so:
  *
  *   - Settings → Host reads the installed-record file from the active
- *     environment's `~/.traycer/host[/dev|/staging]/install/install.json`,
+ *     environment's `~/.hukum/host[/dev|/staging]/install/install.json`,
  *     not a hardcoded production path.
  *   - CLI subprocess calls resolve the environment-scoped CLI (its slot is
  *     baked into the build, so no slot flag is passed) and read/write the
@@ -69,7 +69,7 @@ function activeLayout(): HostFsLayout {
 }
 
 function cliSlotRootForEnvironment(environment: Environment): string {
-  const cliRoot = join(homedir(), ".traycer", "cli");
+  const cliRoot = join(homedir(), ".hukum", "cli");
   const devSlot = devDesktopSlotForEnvironment(environment, process.env);
   if (devSlot !== null) return join(cliRoot, "dev-runs", devSlot);
   return environmentSubdir(cliRoot, environment);
@@ -115,7 +115,7 @@ function okOrThrow<TOk>(outcome: MutationOutcome<TOk>): TOk {
 }
 
 /**
- * Maps `traycer host available --json` payload to the renderer-facing
+ * Maps `hukum host available --json` payload to the renderer-facing
  * `HostAvailableSnapshot`. The CLI returns the entire registry manifest
  * plus an inferred `platformKey`; we project per-platform asset state out so
  * the Settings → Host Available Versions table can render rows directly.
@@ -224,10 +224,10 @@ export function projectDoctorReport(raw: unknown): HostDoctorReport {
  * Locates the installed-host record on disk for the active environment.
  *
  * The CLI installer writes `install.json` to the environment/run-scoped host
- * install dir - `~/.traycer/host/install/install.json` for prod,
- * `~/.traycer/host/dev/install/install.json` for legacy/no-slot dev, and
- * `~/.traycer/host/dev-runs/<slot>/install/install.json` for multi-run dev
- * (see `hostInstallRecordPath` in `traycer-cli/src/store/paths.ts`).
+ * install dir - `~/.hukum/host/install/install.json` for prod,
+ * `~/.hukum/host/dev/install/install.json` for legacy/no-slot dev, and
+ * `~/.hukum/host/dev-runs/<slot>/install/install.json` for multi-run dev
+ * (see `hostInstallRecordPath` in `hukum-cli/src/store/paths.ts`).
  * Desktop reads the environment-matching record directly so:
  *
  *   - Packaged Desktop (prod environment) sees the production install
@@ -308,12 +308,12 @@ interface RegistryUpdateCacheFile {
 let registryRefreshQueue: Promise<void> = Promise.resolve();
 
 function desktopCacheDir(): string {
-  return join(homedir(), ".traycer", "desktop");
+  return join(homedir(), ".hukum", "desktop");
 }
 
 /**
  * Per-environment (and, for dev, per-slot) registry update cache (Ticket
- * 398e84f4). Each environment owns its own file under `~/.traycer/desktop/` -
+ * 398e84f4). Each environment owns its own file under `~/.hukum/desktop/` -
  * production has no suffix:
  *
  *   - production → `registry-update-cache.json`
@@ -327,7 +327,7 @@ function desktopCacheDir(): string {
  * the tray. Per-environment scoping keeps them isolated.
  *
  * Fixup B5: dev runs are per-worktree ("Dev run slots" D1-D4/D7) - every
- * other piece of dev state (`~/.traycer/{host,cli}/dev-runs/<slot>/...`, see
+ * other piece of dev state (`~/.hukum/{host,cli}/dev-runs/<slot>/...`, see
  * `devDesktopSlotForEnvironment`'s other callers in this file and in
  * `host-paths.ts`) is already slot-scoped so concurrent worktrees never
  * collide. This cache was the one piece left keyed on environment alone -
@@ -443,8 +443,8 @@ function buildUpdateState(
 // `E_HOST_VERIFY_FAILED` means the CLI couldn't find trusted registry
 // signing keys for this build. That can happen by design (dev / local
 // builds carry no keys) or as a release-engineering bug (a staging or
-// production build that should have had `TRAYCER_EMBEDDED_HOST_PUBKEYS`
-// baked in but didn't - see `traycer-cli/scripts/set-deploy-target.cjs`).
+// production build that should have had `HUKUM_EMBEDDED_HOST_PUBKEYS`
+// baked in but didn't - see `hukum-cli/scripts/set-deploy-target.cjs`).
 // Either way there's nothing the end user can do from Settings → Host,
 // so we normalise it as "no updates available" rather than leaking the
 // verbose CLI stderr into the Updates row in any environment. When the
@@ -453,7 +453,7 @@ function buildUpdateState(
 const VERIFY_DISABLED_CODE = "E_HOST_VERIFY_FAILED";
 
 function isVerifyDisabledForBuild(err: unknown): boolean {
-  if (!(err instanceof TraycerCliError)) return false;
+  if (!(err instanceof HukumCliError)) return false;
   if (err.code !== VERIFY_DISABLED_CODE) return false;
   if (activeEnvironment !== "dev") {
     log.warn(
@@ -468,7 +468,7 @@ async function probeRegistry(): Promise<RegistryUpdateCacheFile> {
   const checkedAt = new Date().toISOString();
   try {
     const snapshot = projectAvailableSnapshot(
-      await runTraycerCliJson<unknown>(["host", "available", "--json"]),
+      await runHukumCliJson<unknown>(["host", "available", "--json"]),
     );
     const installed = await readInstalledHostRecord();
     const installedVersion = installed?.version ?? null;
@@ -495,7 +495,7 @@ async function probeRegistry(): Promise<RegistryUpdateCacheFile> {
       };
     }
     const message =
-      err instanceof TraycerCliError
+      err instanceof HukumCliError
         ? err.message
         : err instanceof Error
           ? err.message
@@ -627,14 +627,14 @@ async function clearHostRemovalIfSet(): Promise<void> {
 
 export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerHostControllerStatusGet,
+    RunnerHostInvoke.hukumHostControllerStatusGet,
     async () => {
       return bridge.options.hostController.getStatus();
     },
   );
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerHostConvergeReady,
+    RunnerHostInvoke.hukumHostConvergeReady,
     async (_event, raw: unknown) => {
       const force = optionalBoolean(raw, "force");
       return bridge.options.hostController.convergeReady(force);
@@ -642,7 +642,7 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
   );
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerHostApplyStaged,
+    RunnerHostInvoke.hukumHostApplyStaged,
     async (_event, raw: unknown) => {
       await clearHostRemovalIfSet();
       const trigger =
@@ -677,7 +677,7 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
   );
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerHostActivateInstalled,
+    RunnerHostInvoke.hukumHostActivateInstalled,
     async (_event, raw: unknown) => {
       const force = optionalBoolean(raw, "force");
       return bridge.options.hostController.activateInstalled(force);
@@ -685,7 +685,7 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
   );
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerHostInstallVersion,
+    RunnerHostInvoke.hukumHostInstallVersion,
     async (_event, raw: unknown) => {
       await clearHostRemovalIfSet();
       const pin = optionalString(raw, "pin") ?? "";
@@ -695,7 +695,7 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
         force,
       );
       if (outcome.kind === "ok") {
-        // Fire-and-forget for the same reason as `traycerHostApplyStaged`
+        // Fire-and-forget for the same reason as `hukumHostApplyStaged`
         // above: the pin already committed, so this secondary probe must
         // never turn a successful outcome into a rejected invoke.
         void refreshRegistryUpdateState(bridge.options.hostController, {
@@ -713,22 +713,22 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
   );
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerHostUninstall,
+    RunnerHostInvoke.hukumHostUninstall,
     async (_event, raw: unknown) => {
       const all = optionalBoolean(raw, "all");
       return okOrThrow(await bridge.options.hostController.uninstallHost(all));
     },
   );
 
-  // In-app "Remove Traycer" (Settings → General → Danger Zone). Orchestrates
+  // In-app "Remove Hukum" (Settings → General → Danger Zone). Orchestrates
   // the full background-component teardown while preserving all user data -
   // marking removed-by-user first, dropping the macOS SMAppService/BTM login
   // item, and running `host uninstall --all` - all owned by
-  // `HostController.removeTraycer()` now. `~/.traycer` user data is never
+  // `HostController.removeHukum()` now. `~/.hukum` user data is never
   // touched (the CLI has no purge path by design).
-  bridge.handleInvoke(RunnerHostInvoke.traycerAppUninstall, async () => {
+  bridge.handleInvoke(RunnerHostInvoke.hukumAppUninstall, async () => {
     const result = okOrThrow(
-      await bridge.options.hostController.removeTraycer(),
+      await bridge.options.hostController.removeHukum(),
     );
 
     // Refresh the registry cache so `installedVersion` (now absent) drives
@@ -751,35 +751,35 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
   });
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerHostRemovalGet,
+    RunnerHostInvoke.hukumHostRemovalGet,
     async (): Promise<HostRemovalState> => {
       return { removedByUser: await isHostRemovedByUser() };
     },
   );
 
-  bridge.handleInvoke(RunnerHostInvoke.traycerHostRemovalClear, async () => {
+  bridge.handleInvoke(RunnerHostInvoke.hukumHostRemovalClear, async () => {
     await clearHostRemovedByUser();
   });
 
-  bridge.handleInvoke(RunnerHostInvoke.traycerHostInstalled, async () => {
+  bridge.handleInvoke(RunnerHostInvoke.hukumHostInstalled, async () => {
     return readInstalledHostRecord();
   });
 
   // Deliberately NOT `okOrThrow`: a busy/deferred respawn outcome resolves
   // as a `declined` result the renderer presents as information - see
   // `restartRequestResultFromOutcome`.
-  bridge.handleInvoke(RunnerHostInvoke.traycerHostRestart, async () => {
+  bridge.handleInvoke(RunnerHostInvoke.hukumHostRestart, async () => {
     return restartRequestResultFromOutcome(
       await bridge.options.hostController.respawn(),
     );
   });
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerHostLogs,
+    RunnerHostInvoke.hukumHostLogs,
     async (_event, raw: unknown) => {
       const tail = optionalNumber(raw, "tailLines") ?? 200;
       const args = ["host", "logs", "--tail", String(tail)];
-      const data = await runTraycerCliJson<unknown>([...args, "--json"]);
+      const data = await runHukumCliJson<unknown>([...args, "--json"]);
       if (!isPlainObject(data)) {
         const result: HostLogsTailResult = { path: null, tail: "" };
         return result;
@@ -792,13 +792,13 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
     },
   );
 
-  bridge.handleInvoke(RunnerHostInvoke.traycerHostDoctor, async () => {
-    const raw = await runTraycerCliJson<unknown>(["host", "doctor", "--json"]);
+  bridge.handleInvoke(RunnerHostInvoke.hukumHostDoctor, async () => {
+    const raw = await runHukumCliJson<unknown>(["host", "doctor", "--json"]);
     return projectDoctorReport(raw);
   });
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerHostAvailable,
+    RunnerHostInvoke.hukumHostAvailable,
     async (_event, raw: unknown) => {
       const includePreReleases = optionalBoolean(raw, "includePreReleases");
       const args = [
@@ -808,7 +808,7 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
         ...(includePreReleases ? ["--include-pre-releases"] : []),
       ];
       try {
-        const result = await runTraycerCliJson<unknown>(args);
+        const result = await runHukumCliJson<unknown>(args);
         return projectAvailableSnapshot(result);
       } catch (err) {
         // Dev builds reject this command with `E_HOST_VERIFY_FAILED`
@@ -825,7 +825,7 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
     },
   );
 
-  bridge.handleInvoke(RunnerHostInvoke.traycerServiceRegister, async () => {
+  bridge.handleInvoke(RunnerHostInvoke.hukumServiceRegister, async () => {
     await clearHostRemovalIfSet();
     // Dev-slot CLI argv (the staged wrapper / self-invocation flags, Ticket
     // f0ae4530) is owned by `HostController.registerService()` itself,
@@ -833,12 +833,12 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
     return bridge.options.hostController.registerService();
   });
 
-  bridge.handleInvoke(RunnerHostInvoke.traycerServiceDeregister, async () => {
+  bridge.handleInvoke(RunnerHostInvoke.hukumServiceDeregister, async () => {
     okOrThrow(await bridge.options.hostController.deregisterService());
   });
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerRegistryCheck,
+    RunnerHostInvoke.hukumRegistryCheck,
     async (_event, raw: unknown) => {
       const force = optionalBoolean(raw, "force");
       return refreshRegistryUpdateState(bridge.options.hostController, {
@@ -849,13 +849,13 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
   );
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerFreePortAndRestart,
+    RunnerHostInvoke.hukumFreePortAndRestart,
     async (_event, raw: unknown) => {
       // Flow 4 step 7: confirmation is the renderer's responsibility - by
       // the time we get here the user has already approved killing the
       // foreign process. Per the Tech Plan, Desktop maps Doctor fix
       // actions back to CLI subcommands and never invents repairs, so we
-      // delegate the kill + restart to `traycer host free-port-and-restart`
+      // delegate the kill + restart to `hukum host free-port-and-restart`
       // via NDJSON instead of calling `process.kill` from main.
       const port = optionalNumber(raw, "port");
       const pid = optionalNumber(raw, "pid");
@@ -879,14 +879,14 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
     },
   );
 
-  bridge.handleInvoke(RunnerHostInvoke.traycerCliManifestRead, async () => {
+  bridge.handleInvoke(RunnerHostInvoke.hukumCliManifestRead, async () => {
     // Environment-scope the CLI manifest + reconcile sidecar lookup so dev
     // Desktop never reads the prod manifest (and vice versa). Layout
     // mirrors `cliManifestPath()` in
-    // `clients/traycer-cli/src/store/paths.ts`:
-    //   prod    → ~/.traycer/cli/manifest.json
-    //   dev     → ~/.traycer/cli/dev/manifest.json
-    //   dev run → ~/.traycer/cli/dev-runs/<slot>/manifest.json
+    // `clients/hukum-cli/src/store/paths.ts`:
+    //   prod    → ~/.hukum/cli/manifest.json
+    //   dev     → ~/.hukum/cli/dev/manifest.json
+    //   dev run → ~/.hukum/cli/dev-runs/<slot>/manifest.json
     // The desktop-reconcile sidecar is Desktop-owned and lives next to
     // the manifest, so it follows the same environment layout.
     const cliSlotRoot = cliSlotRootForEnvironment(activeEnvironment);
@@ -899,7 +899,7 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
     } catch {
       // No per-user manifest. Mirror the CLI's prod-only Linux system
       // marker fallback (`readSystemSourceMarker` in
-      // `traycer-cli/src/manifest/cli-manifest.ts`) so Settings → Host
+      // `hukum-cli/src/manifest/cli-manifest.ts`) so Settings → Host
       // doesn't show "no install record" for an apt/rpm-installed CLI
       // that has yet to write its in-home manifest. The schema is
       // duplicated here intentionally - see `readSystemSourceMarker`
@@ -912,8 +912,8 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
       const parsed: unknown = JSON.parse(text);
       if (!isPlainObject(parsed)) return parsed;
       // Project the manifest into the renderer-facing shape, splicing in
-      // any Desktop-owned launch-time hint (e.g. "your homebrew traycer
-      // is older than the bundled CLI - `brew upgrade traycer`"). The
+      // any Desktop-owned launch-time hint (e.g. "your homebrew hukum
+      // is older than the bundled CLI - `brew upgrade hukum`"). The
       // hint is only attached when the manifest still matches the version
       // the hint was recorded against, so a stale sidecar can't shadow a
       // freshly upgraded package.
@@ -927,12 +927,12 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
     }
   });
 
-  bridge.handleInvoke(RunnerHostInvoke.traycerHostNameGet, async () => {
+  bridge.handleInvoke(RunnerHostInvoke.hukumHostNameGet, async () => {
     return readHostNameSettings(activeLayout());
   });
 
   bridge.handleInvoke(
-    RunnerHostInvoke.traycerHostNameSet,
+    RunnerHostInvoke.hukumHostNameSet,
     async (_event, raw: unknown) => {
       const settings = await writeHostNameSettings(
         activeLayout(),
@@ -947,11 +947,11 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
 /**
  * Linux-only, prod-environment-only fallback that mirrors the CLI's
  * `readSystemSourceMarker` (see
- * `clients/traycer-cli/src/manifest/cli-manifest.ts`). When no
+ * `clients/hukum-cli/src/manifest/cli-manifest.ts`). When no
  * per-user manifest exists yet (typical right after an unattended apt /
- * rpm install before the first `traycer` invocation) but a system marker
+ * rpm install before the first `hukum` invocation) but a system marker
  * is present, synthesize a partial manifest snapshot so the Settings →
- * Host CLI section stays in lockstep with what `traycer cli show`
+ * Host CLI section stays in lockstep with what `hukum cli show`
  * would report.
  *
  * The schema is intentionally duplicated rather than imported - Desktop
@@ -962,8 +962,8 @@ export function registerHostManagementIpc(bridge: RunnerIpcBridge): void {
  * a system package manager, and to `process.platform === "linux"`
  * because the marker paths are Linux-specific.
  */
-const SYSTEM_SOURCE_MARKER_APT = "/var/lib/traycer/source.apt";
-const SYSTEM_SOURCE_MARKER_RPM = "/var/lib/traycer/source.rpm";
+const SYSTEM_SOURCE_MARKER_APT = "/var/lib/hukum/source.apt";
+const SYSTEM_SOURCE_MARKER_RPM = "/var/lib/hukum/source.rpm";
 
 interface SystemMarkerSnapshot {
   readonly version: string;

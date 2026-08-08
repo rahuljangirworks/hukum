@@ -4,13 +4,13 @@ import { useShallow } from "zustand/react/shallow";
 import type {
   WorktreeDeleteOutputChannel,
   WorktreeDeletePhase,
-} from "@traycer/protocol/host/worktree-delete-stream";
-import type { WorktreeHostEntry } from "@traycer/protocol/host/index";
-import type { WorktreeEntryScripts } from "@traycer/protocol/host/worktree-schemas";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
-import { WorktreeDeleteStreamClient } from "@traycer-clients/shared/host-transport/worktree-delete-stream-client";
-import { WorktreeDeleteBatchStreamClient } from "@traycer-clients/shared/host-transport/worktree-delete-batch-stream-client";
+} from "@hukum/protocol/host/worktree-delete-stream";
+import type { WorktreeHostEntry } from "@hukum/protocol/host/index";
+import type { WorktreeEntryScripts } from "@hukum/protocol/host/worktree-schemas";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
+import { WorktreeDeleteStreamClient } from "@hukum-clients/shared/host-transport/worktree-delete-stream-client";
+import { WorktreeDeleteBatchStreamClient } from "@hukum-clients/shared/host-transport/worktree-delete-batch-stream-client";
 import type { DurableStreamTransport } from "@/lib/host/durable-stream-transport";
 import { openOwnedDurableStreamClient } from "@/lib/host/owned-durable-stream-client";
 import {

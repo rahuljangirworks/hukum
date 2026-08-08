@@ -7,7 +7,7 @@ import type {
   Message,
   UserMessage,
   UserMessageSender,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import type {
   ChatActiveTurn,
   ChatApprovalState,
@@ -16,13 +16,13 @@ import type {
   ChatQueuedItem,
   ChatQueuedPromptItem,
   ChatRunStatus,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import { chatQueuedItemSchema } from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import { chatQueuedItemSchema } from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   isNoOpCheckpointEntry,
   turnCheckpointManifestSchema,
   type TurnCheckpointManifest,
-} from "@traycer/protocol/persistence/epic/checkpoint-manifests";
+} from "@hukum/protocol/persistence/epic/checkpoint-manifests";
 import {
   buildAttachmentsFromJSONContent,
   extractPlainTextFromComposerJSONContent,
@@ -57,8 +57,8 @@ import {
   mergeSnapshotSourceBlockIds,
   singleSnapshotSourceBlockId,
 } from "@/lib/chat/snapshot-source-block-ids";
-import type { ContentBlock } from "@traycer/protocol/persistence/epic/schemas";
-import type { WorktreeBindingOwnerKind } from "@traycer/protocol/host/worktree-schemas";
+import type { ContentBlock } from "@hukum/protocol/persistence/epic/schemas";
+import type { WorktreeBindingOwnerKind } from "@hukum/protocol/host/worktree-schemas";
 import {
   buildSetupCardRows,
   type SetupCardRow,
@@ -2484,7 +2484,7 @@ function renderSteeredUserMessage(input: {
  * Surface inter-agent provenance for a `role: "user"` row whose sender
  * is another agent (via `agent.sendMessage`). The receiver GUI uses
  * this to style the row distinctly from a human-authored message and
- * to render the "from agent / reply with `traycer agent send`" footer.
+ * to render the "from agent / reply with `hukum agent send`" footer.
  * Returns `null` for human senders.
  */
 function agentSenderInfoFromSender(

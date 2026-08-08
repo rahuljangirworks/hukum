@@ -221,7 +221,7 @@ describe("TabNavigationRouteBridge restored-route replacement", () => {
 
     const rawHistorySearch =
       "?historyQuery=persistence" +
-      "&historyRepos=%5B%22traycerai%2Ftraycer%22%2C%22traycerai%2Ftraycer-internal%22%5D" +
+      "&historyRepos=%5B%22hukumai%2Fhukum%22%2C%22hukumai%2Fhukum-internal%22%5D" +
       "&historyOwnership=%5B%22mine%22%2C%22shared%22%5D";
     act(() => {
       testState.subscriber?.({
@@ -261,7 +261,7 @@ describe("TabNavigationRouteBridge restored-route replacement", () => {
     const reactivation = testState.navigate.mock.calls[0]?.[0];
     expect(reactivation.search).toEqual({
       historyQuery: "persistence",
-      historyRepos: ["traycerai/traycer", "traycerai/traycer-internal"],
+      historyRepos: ["hukumai/hukum", "hukumai/hukum-internal"],
       historyOwnership: ["mine", "shared"],
     });
   });

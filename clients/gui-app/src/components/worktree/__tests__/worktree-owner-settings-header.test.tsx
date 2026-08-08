@@ -1,5 +1,5 @@
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { WorktreeOwnerSettingsHeader } from "@/components/worktree/worktree-owner-settings-header";

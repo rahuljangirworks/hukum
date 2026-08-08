@@ -19,15 +19,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   DEFAULT_ACCOUNT_CONTEXT,
   type AccountContext,
-} from "@traycer/protocol/common/schemas";
-import type { ProviderRateLimits } from "@traycer/protocol/host";
-import type { ProvidersConsumeRateLimitResetCreditRequest } from "@traycer/protocol/host/rate-limit";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { ProviderProfile } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/common/schemas";
+import type { ProviderRateLimits } from "@hukum/protocol/host";
+import type { ProvidersConsumeRateLimitResetCreditRequest } from "@hukum/protocol/host/rate-limit";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { ProviderProfile } from "@hukum/protocol/host/provider-schemas";
 import type {
   AuthenticatedUser,
   SubscriptionStatus,
-} from "@traycer/protocol/auth";
+} from "@hukum/protocol/auth";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { useAccountContextStore } from "@/stores/auth/account-context-store";
@@ -36,7 +36,7 @@ import type {
   AvailableProviderRateLimits,
   ProviderRateLimitEnvelope,
 } from "@/lib/rate-limits/rate-limit-envelope";
-import { accountContextValue } from "@/lib/auth/traycer-subscription-content";
+import { accountContextValue } from "@/lib/auth/hukum-subscription-content";
 import { queryKeys } from "@/lib/query-keys";
 import {
   PROVIDER_RATE_LIMITS_STALE_TIME_MS,
@@ -71,8 +71,8 @@ type MockState = {
   }>;
   results: Record<string, QueryResult>;
   draining: boolean;
-  traycerUsageFetching: boolean;
-  traycerUsageUpdatedAt: Readonly<Record<string, number>>;
+  hukumUsageFetching: boolean;
+  hukumUsageUpdatedAt: Readonly<Record<string, number>>;
   openSettings: Mock<(...args: unknown[]) => void>;
   enqueue: Mock<(...args: unknown[]) => Promise<void>>;
   enqueueBatch: Mock<(...args: unknown[]) => Promise<void>>;
@@ -112,8 +112,8 @@ const mocks = vi.hoisted<MockState>(() => ({
   configured: [],
   results: {},
   draining: false,
-  traycerUsageFetching: false,
-  traycerUsageUpdatedAt: {},
+  hukumUsageFetching: false,
+  hukumUsageUpdatedAt: {},
   openSettings: vi.fn(),
   enqueue: vi.fn((..._args: unknown[]) => Promise.resolve()),
   enqueueBatch: vi.fn((..._args: unknown[]) => Promise.resolve()),
@@ -199,9 +199,9 @@ function mockUseHostQueriesImpl(args: {
     if (!("providerId" in request.params)) {
       return {
         ...readyResult(null),
-        isFetching: mocks.traycerUsageFetching,
+        isFetching: mocks.hukumUsageFetching,
         dataUpdatedAt:
-          mocks.traycerUsageUpdatedAt[
+          mocks.hukumUsageUpdatedAt[
             accountContextValue(request.params.accountContext)
           ] ?? 0,
       };
@@ -248,20 +248,20 @@ vi.mock("@/lib/rate-limits/ephemeral-fetch-queue", () => ({
 vi.mock("@/stores/tabs/use-system-tab-modal", () => ({
   useSystemTabModalActions: () => ({ openSettings: mocks.openSettings }),
 }));
-// The Traycer tab reads the signed-in user's subscription (AuthService), not a
-// host RPC. Default is a signed-out/cold user -> no Traycer tab, so the
+// The Hukum tab reads the signed-in user's subscription (AuthService), not a
+// host RPC. Default is a signed-out/cold user -> no Hukum tab, so the
 // host-RPC-provider tests below behave exactly as before.
 vi.mock("@/hooks/auth/use-auth-user-query", () => ({
   useAuthUser: () => mocks.authUser,
 }));
 // The aperture usage query + its turn-refresh only mount inside the shared
-// RateLimitView (rate-limit-based Traycer plans). Stub them so no real host
-// query fires; the Traycer tests below use a credit-based plan anyway.
+// RateLimitView (rate-limit-based Hukum plans). Stub them so no real host
+// query fires; the Hukum tests below use a credit-based plan anyway.
 vi.mock("@/hooks/host/use-host-rate-limit-usage-query", () => ({
   useHostRateLimitUsageQuery: () => ({ data: undefined }),
 }));
-vi.mock("@/hooks/host/use-refresh-rate-limit-usage-on-traycer-turn", () => ({
-  useRefreshRateLimitUsageOnTraycerTurn: () => {},
+vi.mock("@/hooks/host/use-refresh-rate-limit-usage-on-hukum-turn", () => ({
+  useRefreshRateLimitUsageOnHukumTurn: () => {},
 }));
 
 import { RateLimitPopover } from "@/components/layout/header/rate-limit-popover";
@@ -520,8 +520,8 @@ function readyAuthUser(data: AuthenticatedUser): MockAuthUser {
   };
 }
 
-function traycerUsageQueryKey(accountContext: AccountContext) {
-  return queryKeys.hostTraycerRateLimitUsage("host-1", accountContext);
+function hukumUsageQueryKey(accountContext: AccountContext) {
+  return queryKeys.hostHukumRateLimitUsage("host-1", accountContext);
 }
 
 let onClose: () => void;
@@ -730,8 +730,8 @@ beforeEach(() => {
   mocks.configured = [];
   mocks.results = {};
   mocks.draining = false;
-  mocks.traycerUsageFetching = false;
-  mocks.traycerUsageUpdatedAt = {};
+  mocks.hukumUsageFetching = false;
+  mocks.hukumUsageUpdatedAt = {};
   mocks.openSettings = vi.fn();
   mocks.enqueue = vi.fn((..._args: unknown[]) => Promise.resolve());
   mocks.enqueueBatch = vi.fn((..._args: unknown[]) => Promise.resolve());
@@ -2118,7 +2118,7 @@ describe("<RateLimitPopover /> Refresh all", () => {
     expect(mocks.enqueue).not.toHaveBeenCalled();
   });
 
-  it("refetches Traycer when the synthetic Traycer entry is eligible", () => {
+  it("refetches Hukum when the synthetic Hukum entry is eligible", () => {
     mocks.configured = [];
     const authUser = readyAuthUser(
       authUserFixture({ status: "PRO_V3", withTeam: false }),
@@ -2133,7 +2133,7 @@ describe("<RateLimitPopover /> Refresh all", () => {
     expect(invalidateSpy).not.toHaveBeenCalled();
   });
 
-  it("invalidates the unscoped Traycer usage query for rate-limit-based Traycer plans", () => {
+  it("invalidates the unscoped Hukum usage query for rate-limit-based Hukum plans", () => {
     mocks.configured = [];
     const authUser = readyAuthUser(
       authUserFixture({ status: "PRO", withTeam: false }),
@@ -2146,12 +2146,12 @@ describe("<RateLimitPopover /> Refresh all", () => {
 
     expect(authUser.refetch).toHaveBeenCalledTimes(1);
     expect(invalidateSpy).toHaveBeenCalledWith({
-      queryKey: traycerUsageQueryKey(DEFAULT_ACCOUNT_CONTEXT),
+      queryKey: hukumUsageQueryKey(DEFAULT_ACCOUNT_CONTEXT),
       exact: true,
     });
   });
 
-  it("refreshes every rendered rate-limit-based Traycer account", () => {
+  it("refreshes every rendered rate-limit-based Hukum account", () => {
     mocks.configured = [];
     const fixture = authUserFixture({ status: "PRO", withTeam: true });
     const team = fixture.teamSubscriptions[0];
@@ -2165,16 +2165,16 @@ describe("<RateLimitPopover /> Refresh all", () => {
     fireEvent.click(screen.getByRole("button", { name: "Refresh all" }));
 
     expect(invalidateSpy).toHaveBeenCalledWith({
-      queryKey: traycerUsageQueryKey(DEFAULT_ACCOUNT_CONTEXT),
+      queryKey: hukumUsageQueryKey(DEFAULT_ACCOUNT_CONTEXT),
       exact: true,
     });
     expect(invalidateSpy).toHaveBeenCalledWith({
-      queryKey: traycerUsageQueryKey({ type: "TEAM", teamId: "team-1" }),
+      queryKey: hukumUsageQueryKey({ type: "TEAM", teamId: "team-1" }),
       exact: true,
     });
   });
 
-  it("shows Refreshing and disables Refresh all while Traycer is fetching", () => {
+  it("shows Refreshing and disables Refresh all while Hukum is fetching", () => {
     mocks.configured = [];
     mocks.authUser = {
       ...readyAuthUser(authUserFixture({ status: "PRO_V3", withTeam: false })),
@@ -2190,12 +2190,12 @@ describe("<RateLimitPopover /> Refresh all", () => {
     expect(refreshAll.getAttribute("disabled")).not.toBeNull();
   });
 
-  it("keeps the Traycer card refreshing while account usage refetches", () => {
+  it("keeps the Hukum card refreshing while account usage refetches", () => {
     mocks.configured = [];
     mocks.authUser = readyAuthUser(
       authUserFixture({ status: "PRO", withTeam: false }),
     );
-    mocks.traycerUsageFetching = true;
+    mocks.hukumUsageFetching = true;
 
     renderPopover();
 
@@ -2207,7 +2207,7 @@ describe("<RateLimitPopover /> Refresh all", () => {
     ).not.toBeNull();
   });
 
-  it("keeps rate-limit usage freshness scoped to its Traycer account", () => {
+  it("keeps rate-limit usage freshness scoped to its Hukum account", () => {
     mocks.configured = [];
     const fixture = authUserFixture({ status: "PRO", withTeam: true });
     const team = fixture.teamSubscriptions[0];
@@ -2215,7 +2215,7 @@ describe("<RateLimitPopover /> Refresh all", () => {
       ...fixture,
       teamSubscriptions: [{ ...team, subscriptionStatus: "PRO" }],
     });
-    mocks.traycerUsageUpdatedAt = {
+    mocks.hukumUsageUpdatedAt = {
       [accountContextValue(DEFAULT_ACCOUNT_CONTEXT)]: NOW - 1_000,
       [accountContextValue({ type: "TEAM", teamId: "team-1" })]: 0,
     };
@@ -2481,25 +2481,25 @@ describe("<RateLimitPopover /> Overview block scoping", () => {
   });
 });
 
-describe("<RateLimitPopover /> Traycer tab", () => {
-  it("adds a Traycer tab for a paid account, even with no host-RPC providers", () => {
+describe("<RateLimitPopover /> Hukum tab", () => {
+  it("adds a Hukum tab for a paid account, even with no host-RPC providers", () => {
     mocks.configured = [];
     mocks.authUser = readyAuthUser(
       authUserFixture({ status: "PRO_V3", withTeam: false }),
     );
     renderPopover();
-    // Eligible Traycer alone keeps the rail (not the zero-provider CTA).
+    // Eligible Hukum alone keeps the rail (not the zero-provider CTA).
     expect(
       screen.queryByText("Connect Claude Code or Codex to see usage here."),
     ).toBeNull();
     const tabs = screen.getAllByRole("tab");
     expect(tabs.map((tab) => tab.getAttribute("aria-label"))).toEqual([
       "Overview",
-      "Traycer Inference",
+      "Hukum Inference",
     ]);
   });
 
-  it("omits the Traycer tab for a free, unbundled account", () => {
+  it("omits the Hukum tab for a free, unbundled account", () => {
     mocks.configured = [
       { providerId: "codex", lane: "ephemeralProcess", profiles: undefined },
     ];
@@ -2523,7 +2523,7 @@ describe("<RateLimitPopover /> Traycer tab", () => {
 
     renderPopover();
 
-    expect(screen.getByRole("tab", { name: "Traycer Inference" })).toBeTruthy();
+    expect(screen.getByRole("tab", { name: "Hukum Inference" })).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Use acme account" }));
     expect(useAccountContextStore.getState().accountContext).toEqual({
       type: "TEAM",
@@ -2531,7 +2531,7 @@ describe("<RateLimitPopover /> Traycer tab", () => {
     });
   });
 
-  it("orders the Traycer tab per PROVIDER_ID_ORDER (after Codex, before Kilo Code)", () => {
+  it("orders the Hukum tab per PROVIDER_ID_ORDER (after Codex, before Kilo Code)", () => {
     mocks.configured = [
       { providerId: "kilocode", lane: "httpFetch", profiles: undefined },
       { providerId: "codex", lane: "ephemeralProcess", profiles: undefined },
@@ -2553,18 +2553,18 @@ describe("<RateLimitPopover /> Traycer tab", () => {
     expect(tabs.map((tab) => tab.getAttribute("aria-label"))).toEqual([
       "Overview",
       "Codex",
-      "Traycer Inference",
+      "Hukum Inference",
       "Kilo Code",
     ]);
   });
 
-  it("shows one subscription card per Traycer account and marks the active one", () => {
+  it("shows one subscription card per Hukum account and marks the active one", () => {
     mocks.configured = [];
     mocks.authUser = readyAuthUser(
       authUserFixture({ status: "PRO_V3", withTeam: true }),
     );
     renderPopover();
-    fireEvent.click(screen.getByRole("tab", { name: "Traycer Inference" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Hukum Inference" }));
     // Shared subscription view: personal plan credit breakdown (30 of 100).
     expect(screen.getByText("$30.00 / $100.00")).toBeTruthy();
     expect(
@@ -2584,13 +2584,13 @@ describe("<RateLimitPopover /> Traycer tab", () => {
     expect(screen.getByText("Ultra")).toBeTruthy();
   });
 
-  it("renders Traycer account cards with active state on Overview", () => {
+  it("renders Hukum account cards with active state on Overview", () => {
     mocks.configured = [];
     mocks.authUser = readyAuthUser(
       authUserFixture({ status: "PRO_V3", withTeam: true }),
     );
     renderPopover();
-    // Overview now uses the same account-card structure as the Traycer detail tab.
+    // Overview now uses the same account-card structure as the Hukum detail tab.
     expect(screen.getByText("$30.00 / $100.00")).toBeTruthy();
     expect(screen.queryByRole("combobox", { name: "Account" })).toBeNull();
     expect(
@@ -2618,7 +2618,7 @@ describe("<RateLimitPopover /> Traycer tab", () => {
       accountContext: { type: "TEAM", teamId: "team-1" },
     });
     renderPopover();
-    fireEvent.click(screen.getByRole("tab", { name: "Traycer Inference" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Hukum Inference" }));
     const activeCards = document.querySelectorAll('[aria-current="true"]');
     expect(activeCards).toHaveLength(1);
     expect(activeCards[0].textContent).toContain("acme");
@@ -2626,13 +2626,13 @@ describe("<RateLimitPopover /> Traycer tab", () => {
     expect(screen.getByText("Pro")).toBeTruthy();
   });
 
-  it("switches the active Traycer account from its profile card", () => {
+  it("switches the active Hukum account from its profile card", () => {
     mocks.configured = [];
     mocks.authUser = readyAuthUser(
       authUserFixture({ status: "PRO_V3", withTeam: true }),
     );
     renderPopover();
-    fireEvent.click(screen.getByRole("tab", { name: "Traycer Inference" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Hukum Inference" }));
 
     fireEvent.click(screen.getByRole("button", { name: "Use acme account" }));
 
@@ -2645,16 +2645,16 @@ describe("<RateLimitPopover /> Traycer tab", () => {
     expect(activeCards[0].textContent).toContain("acme");
   });
 
-  it("refetches the subscription from the Traycer tab's refresh button", () => {
+  it("refetches the subscription from the Hukum tab's refresh button", () => {
     mocks.configured = [];
     const authUser = readyAuthUser(
       authUserFixture({ status: "PRO_V3", withTeam: false }),
     );
     mocks.authUser = authUser;
     renderPopover();
-    fireEvent.click(screen.getByRole("tab", { name: "Traycer Inference" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Hukum Inference" }));
     fireEvent.click(
-      screen.getByRole("button", { name: "Refresh Traycer Inference" }),
+      screen.getByRole("button", { name: "Refresh Hukum Inference" }),
     );
     expect(authUser.refetch).toHaveBeenCalled();
   });

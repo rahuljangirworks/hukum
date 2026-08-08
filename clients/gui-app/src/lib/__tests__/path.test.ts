@@ -58,9 +58,9 @@ describe("mentionPathTree", () => {
 
   it("preserves the leading slash on an absolute worktree path", () => {
     expect(
-      mentionPathTree("/home/u/.traycer/worktrees/o/r/feature", false),
+      mentionPathTree("/home/u/.hukum/worktrees/o/r/feature", false),
     ).toEqual({
-      rootLabel: "/home/u/.traycer/worktrees",
+      rootLabel: "/home/u/.hukum/worktrees",
       midDirs: ["o", "r"],
       leaf: "feature",
       leafIsFile: false,
