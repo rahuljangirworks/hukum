@@ -20,6 +20,8 @@ export const providerIdSchema = z.enum([
   "hermes",
   "omp",
   "huggingface",
+  "antigravity",
+  "gemini",
 ]);
 export type ProviderId = z.infer<typeof providerIdSchema>;
 

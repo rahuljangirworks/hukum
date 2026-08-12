@@ -228,6 +228,8 @@ export const PROVIDER_DISPLAY_NAMES: Record<ProviderId, string> = {
   hermes: "Hermes Agent",
   omp: "Oh My Pi",
   huggingface: "Hugging Face",
+  antigravity: "Antigravity",
+  gemini: "Gemini CLI",
 };
 
 /**
@@ -242,6 +244,8 @@ export const TUI_HARNESS_ID_TO_PROVIDER_ID: Record<TuiHarnessId, ProviderId> = {
   codex: "codex",
   opencode: "opencode",
   cursor: "cursor",
+  antigravity: "antigravity",
+  gemini: "gemini",
 };
 
 export const providerSelectionSchema = z.discriminatedUnion("kind", [
@@ -1988,6 +1992,16 @@ export type ProvidersSetEnabledRequestV21 = z.infer<
   typeof providersSetEnabledRequestSchemaV21
 >;
 
+export const providersUpdateBundledRequestSchema = z.object({
+  providerId: providerIdSchema,
+});
+export type ProvidersUpdateBundledRequest = z.infer<typeof providersUpdateBundledRequestSchema>;
+
+export const providersUpdateBundledResponseSchema = z.object({
+  success: z.boolean(),
+});
+export type ProvidersUpdateBundledResponse = z.infer<typeof providersUpdateBundledResponseSchema>;
+
 export const providersSetApiKeyRequestSchema = z.object({
   providerId: providerIdSchema,
   apiKey: z.string().min(1),
@@ -2003,6 +2017,32 @@ export type ProvidersSetApiKeyRequest = z.infer<
 export const providersSetApiKeyResponseSchema = z.object({
   state: providerMutationCliStateSchemaV21,
 });
+
+// MULTI-KEY SCHEMAS
+export const providersAddApiKeyRequestSchema = z.object({
+  providerId: providerIdSchema,
+  apiKey: z.string().min(1),
+});
+export const providersAddApiKeyResponseSchema = z.object({
+  state: providerMutationCliStateSchemaV21,
+});
+
+export const providersRemoveApiKeyRequestSchema = z.object({
+  providerId: providerIdSchema,
+  index: z.number().int().min(0),
+});
+export const providersRemoveApiKeyResponseSchema = z.object({
+  state: providerMutationCliStateSchemaV21,
+});
+
+export const providersListApiKeysRequestSchema = z.object({
+  providerId: providerIdSchema,
+});
+export const providersListApiKeysResponseSchema = z.object({
+  keys: z.array(z.object({ masked: z.string(), index: z.number() })),
+  activeIndex: z.number(),
+});
+
 export const providersSetApiKeyResponseSchemaV20 = z.object({
   state: providerMutationCliStateSchemaV20,
 });

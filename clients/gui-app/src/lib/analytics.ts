@@ -71,7 +71,7 @@ export type AnalyticsSettingsSection =
   | "usage"
   | "worktrees";
 
-export type AnalyticsArtifactKind = "review" | "spec" | "story" | "ticket";
+export type AnalyticsArtifactKind = "review" | "spec" | "story" | "ticket" | "html-preview";
 
 export type AnalyticsEditor = "cursor" | "vscode" | "windsurf" | "zed";
 
@@ -444,7 +444,8 @@ export function analyticsArtifactKindForCanvasTileType(
     case "spec":
     case "story":
     case "ticket":
-      return tileType;
+    case "html-preview":
+      return tileType as AnalyticsArtifactKind;
     default:
       return null;
   }

@@ -10,8 +10,8 @@ type ProviderId = ProviderCliState["providerId"];
 const ENV_NAME_PLACEHOLDER: Record<ProviderId, string> = {
   "claude-code": "ANTHROPIC_API_KEY",
   codex: "OPENAI_API_KEY",
-  opencode: "ANTHROPIC_API_KEY",
-  hukum: "ANTHROPIC_API_KEY",
+  opencode: "OPENCODE_API_KEY",
+  hukum: "PI_API_KEY",
   openrouter: "OPENROUTER_API_KEY",
   huggingface: "HF_TOKEN",
   cursor: "CURSOR_API_KEY",

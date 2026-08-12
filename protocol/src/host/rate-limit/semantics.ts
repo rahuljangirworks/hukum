@@ -68,6 +68,8 @@ export function providerRateLimitWindows(
     case "openrouter":
     case "kilocode":
     case "huggingface":
+    case "kiro":
+    case "antigravity":
       // Credit providers: the payload is money, not a percentage of a rolling
       // window, so there is nothing the shared window primitive can describe.
       return [];

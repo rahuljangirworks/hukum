@@ -226,6 +226,29 @@ function fakeTransport(): RegistryTransport {
 }
 
 describe("registry client", () => {
+  it("returns an explicitly unfloored dev manifest when the registry is unavailable", async () => {
+    const client = await createRegistryClient({
+      environment: "dev",
+      transport: {
+        ...fakeTransport(),
+        fetchText: async () => {
+          throw new Error("fixture registry unavailable");
+        },
+      },
+      requireTrustedKeys: false,
+      onProgress: null,
+    });
+
+    const manifest = await client.fetchManifest();
+
+    expect(manifest.latest).toBe("0.0.0-dev");
+    expect(manifest.versions).toHaveLength(1);
+    expect(manifest.versions[0]).toMatchObject({
+      version: "0.0.0-dev",
+      requiredCliVersion: null,
+    });
+  });
+
   it("fails closed after a default-transport manifest blackhole", async () => {
     vi.useFakeTimers();
     let requestReceived: (() => void) | null = null;

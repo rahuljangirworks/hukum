@@ -166,21 +166,26 @@ export async function createRegistryClient(
         });
       } catch (err) {
         if (opts.environment === "dev") {
-          logger.warn("Registry fetch failed in dev mode, returning dummy manifest", { err });
+          logger.warn("Registry fetch failed in dev mode, returning dummy manifest", {
+            err: err instanceof Error ? err.message : String(err),
+          });
           const dummyManifest: HostVersionsManifest = {
+            schemaVersion: 1,
             generatedAt: new Date().toISOString(),
             latest: "0.0.0-dev",
             versions: [
               {
                 version: "0.0.0-dev",
                 releasedAt: new Date().toISOString(),
+                releaseNotesUrl: "",
                 yanked: false,
                 deprecationReason: null,
+                requiredCliVersion: null,
                 platforms: {
-                  "linux-x64": { available: true, unavailableReason: null, sha256: "dummy", signature: "dummy", assetName: "hukum-host-linux-x64" },
-                  "darwin-arm64": { available: true, unavailableReason: null, sha256: "dummy", signature: "dummy", assetName: "hukum-host-darwin-arm64" },
-                  "darwin-x64": { available: true, unavailableReason: null, sha256: "dummy", signature: "dummy", assetName: "hukum-host-darwin-x64" },
-                  "win32-x64": { available: true, unavailableReason: null, sha256: "dummy", signature: "dummy", assetName: "hukum-host-win32-x64" },
+                  "linux-x64": dummyDevAsset(),
+                  "darwin-arm64": dummyDevAsset(),
+                  "darwin-x64": dummyDevAsset(),
+                  "win32-x64": dummyDevAsset(),
                 }
               }
             ]
@@ -517,6 +522,19 @@ export async function createRegistryClient(
         }
       }
     },
+  };
+}
+
+function dummyDevAsset(): HostPlatformAsset {
+  return {
+    available: true,
+    unavailableReason: null,
+    url: "",
+    sizeBytes: 0,
+    sha256: "dummy",
+    signatureUrl: "",
+    signatureAlgorithm: "minisign",
+    publicKeyId: "",
   };
 }
 

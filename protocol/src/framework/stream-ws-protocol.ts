@@ -199,7 +199,7 @@ export const clientStreamSubscribeFrameSchema = z.object({
   kind: z.literal("subscribe"),
   method: z.string().min(1),
   schemaVersion: schemaVersionSchema,
-  params: z.unknown(),
+  params: z.unknown().optional(),
 });
 
 export const clientStreamCredentialUpdateFrameSchema = z.object({

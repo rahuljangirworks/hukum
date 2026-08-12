@@ -1,11 +1,13 @@
 import {
   AmpIcon,
+  AntigravityIcon,
   ClaudeAIIcon,
   CodexIcon,
   CopilotIcon,
   CursorIcon,
   DevinIcon,
   DroidIcon,
+  GeminiIcon,
   GrokIcon,
   HermesIcon,
   HuggingFaceIcon,
@@ -47,4 +49,6 @@ export const PROVIDER_ICON_CONFIG: Record<ProviderId, HarnessIconConfig> = {
   pi: { Icon: PiIcon, className: "text-foreground" },
   hermes: { Icon: HermesIcon, className: "text-foreground" },
   omp: { Icon: OmpIcon, className: "text-foreground" },
+  antigravity: { Icon: AntigravityIcon, className: "text-foreground" },
+  gemini: { Icon: GeminiIcon, className: "text-foreground" },
 };

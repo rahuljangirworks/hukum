@@ -83,4 +83,14 @@ function bootstrap(): void {
   );
 }
 
+// Suppress benign ResizeObserver errors that spam the console
+window.addEventListener("error", (e) => {
+  if (
+    e.message === "ResizeObserver loop limit exceeded" ||
+    e.message === "ResizeObserver loop completed with undelivered notifications."
+  ) {
+    e.stopImmediatePropagation();
+  }
+});
+
 bootstrap();

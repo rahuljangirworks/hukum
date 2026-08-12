@@ -91,6 +91,8 @@ export const rateLimitCapableProviderIdSchema = z.enum([
   "kilocode",
   "grok",
   "huggingface",
+  "antigravity",
+  "kiro",
 ]);
 export type RateLimitCapableProviderId = z.infer<
   typeof rateLimitCapableProviderIdSchema
@@ -214,6 +216,17 @@ const kiloCodeRateLimitsSchema = z.object({
   passState: z.string().nullable(),
 });
 
+// Kiro arm — credit-based billing with monthly plan allocation.
+const kiroRateLimitsSchema = z.object({
+  provider: z.literal(rateLimitCapableProviderIdSchema.enum.kiro),
+  available: z.literal(true),
+  plan: z.string().nullable(),
+  creditsUsed: z.number().nullable(),
+  creditsTotal: z.number().nullable(),
+  usedPercent: z.number().nullable(),
+  resetsAt: z.number().nullable(),
+});
+
 const claudeCodeRateLimitsSchema = z.object({
   provider: z.literal(rateLimitCapableProviderIdSchema.enum["claude-code"]),
   available: z.literal(true),
@@ -252,6 +265,8 @@ const grokRateLimitsSchema = z
     periodStart: z.number().nullable(),
     periodEnd: z.number().nullable(),
     period: providerRateLimitWindowSchema.nullable(),
+    totalPeriodCredits: z.number().nullable(),
+    usedPeriodCredits: z.number().nullable(),
     monthlyLimit: z.number().nullable(),
     onDemandCap: z.number().nullable(),
     onDemandUsed: z.number().nullable(),
@@ -277,6 +292,28 @@ const grokRateLimitsSchema = z
       });
     }
   });
+
+const antigravityRateLimitsSchema = z.object({
+  provider: z.literal(rateLimitCapableProviderIdSchema.enum.antigravity),
+  available: z.literal(true),
+  models: z.array(
+    z.object({
+      label: z.string(),
+      modelId: z.string(),
+      remainingPercentage: z.number(),
+      isExhausted: z.boolean(),
+      resetTime: z.string(),
+      timeUntilResetMs: z.number(),
+      isAutocompleteOnly: z.boolean(),
+    })
+  ),
+  promptCredits: z.object({
+    available: z.number(),
+    monthly: z.number(),
+    usedPercentage: z.number(),
+    remainingPercentage: z.number(),
+  }),
+});
 
 // Closed, Hukum-owned set of reasons a provider pull can fail to report
 // rate limits - unlike a provider's own plan/reached-type tokens (owned by
@@ -410,6 +447,8 @@ export const providerRateLimitsSchema = z.union([
   kiloCodeRateLimitsSchema,
   grokRateLimitsSchema,
   huggingFaceRateLimitsSchema,
+  antigravityRateLimitsSchema,
+  kiroRateLimitsSchema,
   unavailableProviderRateLimitsSchemaV2,
 ]);
 export type ProviderRateLimits = z.infer<typeof providerRateLimitsSchema>;
@@ -479,6 +518,23 @@ export function mapHuggingFaceAvailableToUnavailable(
   ) {
     return {
       provider: "huggingface",
+      available: false,
+      reason: "unsupported_provider",
+    };
+  }
+  return providerRateLimits;
+}
+
+export function mapAntigravityAvailableToUnavailable(
+  providerRateLimits: ProviderRateLimits | null,
+): ProviderRateLimits | null {
+  if (
+    providerRateLimits !== null &&
+    providerRateLimits.available &&
+    providerRateLimits.provider === "antigravity"
+  ) {
+    return {
+      provider: "antigravity",
       available: false,
       reason: "unsupported_provider",
     };

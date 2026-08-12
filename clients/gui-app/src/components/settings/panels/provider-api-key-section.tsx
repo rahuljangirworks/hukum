@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, KeyRound, Trash2 } from "lucide-react";
 import {
   PROVIDER_DISPLAY_NAMES,
   type ProviderCliState,
@@ -9,26 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useProvidersSetApiKey } from "@/hooks/providers/use-providers-set-api-key-mutation";
 import { useProvidersClearApiKey } from "@/hooks/providers/use-providers-clear-api-key-mutation";
+import { useProvidersAddApiKey } from "@/hooks/providers/use-providers-add-api-key-mutation";
+import { useProvidersRemoveApiKey } from "@/hooks/providers/use-providers-remove-api-key-mutation";
+import { useProvidersListApiKeys } from "@/hooks/providers/use-providers-list-api-keys-query";
 import { useRunnerHost } from "@/providers/use-runner-host";
 import { envNamePlaceholder } from "./provider-env-name-placeholder";
 
 type ProviderId = ProviderCliState["providerId"];
 
-/**
- * Where the user gets a key, per provider. `null` means "no page to send them
- * to" and simply omits the link.
- *
- * EXHAUSTIVE on purpose. This was a `Partial<Record<…>>`, and the failure mode
- * of a partial record here is entirely silent: kiro takes a `KIRO_API_KEY`,
- * renders the whole key field, and had no entry - so its users saw an input box
- * and no way to find out where a key comes from, with nothing in the code
- * marking the omission as an omission. Every future key provider would have
- * inherited that. A total record makes the compiler ask.
- *
- * Only the five providers in the host's `API_KEY_ENV_VAR` map ever reach this
- * component (`state.apiKey.supported` is false for the rest), so the other
- * thirteen entries are `null` by construction rather than by research.
- */
 const API_KEY_DASHBOARD_URL: Record<ProviderId, string | null> = {
   "claude-code": null,
   codex: null,
@@ -39,19 +27,12 @@ const API_KEY_DASHBOARD_URL: Record<ProviderId, string | null> = {
   huggingface: "https://huggingface.co/settings/tokens",
   grok: null,
   qwen: null,
-  // Kiro keys are issued from the Kiro app / AWS console rather than a stable
-  // public key page; left null rather than shipping a guessed URL that dead-ends
-  // the user this entry exists to help. Fill it in once one is confirmed.
   kiro: null,
   droid: "https://app.factory.ai/settings/api-keys",
   kimi: null,
   copilot: null,
   kilocode: null,
   amp: "https://ampcode.com/settings",
-  // Devin is NOT an API-key provider (it is absent from the host's
-  // `API_KEY_ENV_VAR`, so `apiKey.supported` is false and this section never
-  // renders for it). The old entry - a Windsurf-key URL - was unreachable, and
-  // making this record total is what surfaced that.
   devin: null,
   pi: null,
   hermes: null,
@@ -63,16 +44,6 @@ function apiKeyStatusLabel(apiKey: ProviderCliState["apiKey"]): string {
   return apiKey.source === "stored" ? "Key set" : "From environment";
 }
 
-// API-key-authenticated providers (Cursor) render a key field in addition to
-// the binary picker. The raw key never leaves the host; `state.apiKey` only
-// reports whether one is configured and where it came from.
-//
-// The draft is OWNED BY THE CALLER rather than held here. This section renders
-// inside the `account` tab, and Radix unmounts an inactive `TabsContent` - so
-// a locally-held draft would be destroyed by an ordinary tab switch, silently
-// blanking a key the user had already pasted. `ProviderDetail` holds it
-// instead: that survives tab switches and is still discarded on a provider
-// switch, which remounts it by `key`.
 export function ProviderApiKeySection({
   state,
   draft,
@@ -85,18 +56,46 @@ export function ProviderApiKeySection({
   const inputId = useId();
   const setApiKey = useProvidersSetApiKey();
   const clearApiKey = useProvidersClearApiKey();
+  const addApiKey = useProvidersAddApiKey();
+  const removeApiKey = useProvidersRemoveApiKey();
   const runnerHost = useRunnerHost();
+
+  const providerId = state.providerId;
+  const listApiKeysQuery = useProvidersListApiKeys(providerId);
 
   if (!state.apiKey.supported) return null;
 
-  const providerId = state.providerId;
   const dashboardUrl = API_KEY_DASHBOARD_URL[providerId];
-  const onSave = (): void => {
+  const isMultiKey = providerId === "opencode" || providerId === "kiro" || providerId === "kilocode";
+
+  const onSaveSingle = (): void => {
     const trimmed = draft.trim();
     if (trimmed.length === 0 || setApiKey.isPending) return;
     setApiKey.mutate(
       { providerId, apiKey: trimmed },
       { onSuccess: () => onDraftChange("") },
+    );
+  };
+
+  const onAddMulti = (): void => {
+    const trimmed = draft.trim();
+    if (trimmed.length === 0 || addApiKey.isPending) return;
+    addApiKey.mutate(
+      { providerId, apiKey: trimmed },
+      { 
+        onSuccess: () => {
+          onDraftChange("");
+          listApiKeysQuery.refetch();
+        }
+      },
+    );
+  };
+
+  const onRemoveMulti = (index: number): void => {
+    if (removeApiKey.isPending) return;
+    removeApiKey.mutate(
+      { providerId, index },
+      { onSuccess: () => listApiKeysQuery.refetch() },
     );
   };
 
@@ -107,12 +106,13 @@ export function ProviderApiKeySection({
           htmlFor={inputId}
           className="text-ui-sm font-medium text-foreground"
         >
-          API key
+          {isMultiKey ? "API keys (Round-robin)" : "API key"}
         </label>
         <span className="text-ui-xs text-muted-foreground">
           {apiKeyStatusLabel(state.apiKey)}
         </span>
       </div>
+
       {dashboardUrl === null ? null : (
         <button
           type="button"
@@ -125,34 +125,72 @@ export function ProviderApiKeySection({
           <ExternalLink className="size-3" />
         </button>
       )}
-      <div className="flex items-center gap-2">
+
+      {/* Multi-Key List View (OpenCode only) */}
+      {isMultiKey && listApiKeysQuery.data && listApiKeysQuery.data.keys.length > 0 && (
+        <div className="flex flex-col gap-1.5 mt-2 mb-1">
+          {listApiKeysQuery.data.keys.map((key) => {
+            const isActive = key.index === listApiKeysQuery.data.activeIndex;
+            return (
+              <div key={key.index} className="flex items-center justify-between gap-3 rounded-md bg-muted/40 px-3 py-2 border border-border/40 shadow-sm transition-colors hover:bg-muted/60">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                  <KeyRound className="size-3.5 text-muted-foreground shrink-0" />
+                  <span className="font-mono text-ui-xs text-foreground truncate">{key.masked}</span>
+                  {isActive && (
+                    <span className="shrink-0 text-[10px] uppercase font-semibold text-primary tracking-wider bg-primary/10 px-1.5 py-0.5 rounded ring-1 ring-primary/20">Active Next</span>
+                  )}
+                </div>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="size-7 shrink-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                  onClick={() => onRemoveMulti(key.index)}
+                  disabled={removeApiKey.isPending}
+                >
+                  <Trash2 className="size-3.5" />
+                </Button>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Input Field */}
+      <div className="flex items-center gap-2 mt-1">
         <Input
           id={inputId}
           type="password"
           autoComplete="off"
           className="w-full font-mono text-ui-sm"
           placeholder={
-            state.apiKey.source === "stored"
-              ? "Replace stored key…"
-              : `Paste your ${PROVIDER_DISPLAY_NAMES[providerId]} API key`
+            isMultiKey 
+              ? `Add another ${PROVIDER_DISPLAY_NAMES[providerId]} API key`
+              : (state.apiKey.source === "stored"
+                  ? "Replace stored key…"
+                  : `Paste your ${PROVIDER_DISPLAY_NAMES[providerId]} API key`)
           }
           value={draft}
           onChange={(e) => onDraftChange(e.target.value)}
-          disabled={setApiKey.isPending}
+          disabled={isMultiKey ? addApiKey.isPending : setApiKey.isPending}
           onKeyDown={(e) => {
-            if (e.key === "Enter") onSave();
+            if (e.key === "Enter") {
+              isMultiKey ? onAddMulti() : onSaveSingle();
+            }
           }}
         />
         <Button
           size="sm"
           variant="secondary"
-          onClick={onSave}
-          disabled={setApiKey.isPending || draft.trim().length === 0}
+          onClick={isMultiKey ? onAddMulti : onSaveSingle}
+          disabled={isMultiKey ? (addApiKey.isPending || draft.trim().length === 0) : (setApiKey.isPending || draft.trim().length === 0)}
         >
-          {setApiKey.isPending ? <MutedAgentSpinner /> : null}
-          Save
+          {isMultiKey 
+            ? (addApiKey.isPending ? <MutedAgentSpinner /> : "Add")
+            : (setApiKey.isPending ? <MutedAgentSpinner /> : "Save")}
         </Button>
-        {state.apiKey.source === "stored" ? (
+        
+        {/* Legacy Clear Button for single-key providers */}
+        {!isMultiKey && state.apiKey.source === "stored" ? (
           <Button
             size="sm"
             variant="ghost"
@@ -166,10 +204,15 @@ export function ProviderApiKeySection({
           </Button>
         ) : null}
       </div>
+      
       <p className="text-ui-xs text-muted-foreground">
-        {state.apiKey.source === "env"
-          ? `Using ${envNamePlaceholder(providerId)} from your shell environment. Save a key here to override it.`
-          : `Stored encrypted on this device. Falls back to ${envNamePlaceholder(providerId)} from your shell when unset.`}
+        {isMultiKey 
+          ? "Keys are rotated round-robin: each new agent launch uses the next key in the list to avoid rate limits."
+          : (state.apiKey.source === "env"
+              ? `Using ${envNamePlaceholder(providerId)} from your shell environment. Save a key here to override it.`
+              : `Stored encrypted on this device. Falls back to ${envNamePlaceholder(providerId)} from your shell when unset.`
+            )
+        }
       </p>
     </div>
   );

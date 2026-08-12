@@ -36,7 +36,7 @@ interface TerminalLaunchPanelProps {
   readonly disabledHint: string | null;
   /**
    * Fires on Start with the fully-assembled launch (harness/model/effort/agent
-   * mode + CLI args). The panel owns assembly so the caller only gates the
+   * mode + initial prompt). The panel owns assembly so the caller only gates the
    * workspace and dispatches.
    */
   readonly onStart: (launch: TerminalAgentLaunch) => void;
@@ -44,12 +44,13 @@ interface TerminalLaunchPanelProps {
 
 // Body for the landing composer's "terminal" mode. Reuses the same
 // harness/model/effort picker and agent-mode toggle the chat toolbar uses (the
-// selection is shared via the toolbar store) and adds an optional CLI-args
+// selection is shared via the toolbar store) and adds an optional initial-prompt
 // field plus a Start button.
 //
 // Layout mirrors the chat composer (a `min-h-20` body over a toolbar row) so
 // the input box keeps a stable height when switching modes. The text editor is
-// intentionally absent - terminal agents launch empty.
+// intentionally absent; the compact field is sent as conversation text and
+// translated into provider-specific interactive launch syntax by the host.
 function TerminalLaunchPanelImpl(props: TerminalLaunchPanelProps) {
   const { store, pending, disabledHint, onStart } = props;
   const activityEnabled = useSurfaceActivity();
@@ -68,41 +69,12 @@ function TerminalLaunchPanelImpl(props: TerminalLaunchPanelProps) {
         ?.find((harness) => harness.id === s.selection.harnessId)
         ?.modes.includes("tui") ?? false,
   );
-  // CLI args pre-fill from the selected provider's saved Settings value. Typing
-  // marks the field `touched` (a per-launch override); leaving it untouched
-  // forwards `null` so the host resolves the current saved default itself -
-  // which also avoids sending a stale "" before `providers.list` has loaded.
   const providersQuery = useProvidersList({
     enabled: activityEnabled,
     subscribed: activityEnabled,
   });
   const { harnessId } = selection;
-  const savedArgs = isTuiHarnessId(harnessId)
-    ? (providersQuery.data?.providers.find(
-        (provider) =>
-          provider.providerId === TUI_HARNESS_ID_TO_PROVIDER_ID[harnessId],
-      )?.terminalAgentArgs ?? "")
-    : "";
-  const [argsState, setArgsState] = useState(() => ({
-    harnessId: selection.harnessId,
-    draft: savedArgs,
-    touched: false,
-  }));
-  // Re-seed on harness switch, and adopt the saved value if it arrives (async
-  // `providers.list`) before the user edits. setState-during-render is the
-  // sanctioned same-component "adjust state on prop change" pattern.
-  const needsReseed =
-    argsState.harnessId !== selection.harnessId ||
-    (!argsState.touched && argsState.draft !== savedArgs);
-  if (needsReseed) {
-    setArgsState({
-      harnessId: selection.harnessId,
-      draft: savedArgs,
-      touched: false,
-    });
-  }
-  const argsDraft = needsReseed ? savedArgs : argsState.draft;
-  const argsTouched = needsReseed ? false : argsState.touched;
+  const [initialPrompt, setInitialPrompt] = useState("");
 
   // Managed-pack gate. Derived from the `providers.list` response this panel
   // already holds, so gating costs no extra query. A terminal agent bypasses
@@ -135,13 +107,15 @@ function TerminalLaunchPanelImpl(props: TerminalLaunchPanelProps) {
       harnessId,
       model: selection.modelSlug.length > 0 ? selection.modelSlug : null,
       reasoningEffort: reasoning.length > 0 ? reasoning : null,
-      terminalAgentArgs: argsTouched ? argsDraft : null,
+      initialPrompt: initialPrompt.trim().length > 0 ? initialPrompt : null,
+      // Advanced provider flags remain a Settings concern. Prompt text must
+      // never cross this raw-argv boundary.
+      terminalAgentArgs: null,
       profileId: selection.profileId,
     });
   }, [
-    argsDraft,
-    argsTouched,
     harnessId,
+    initialPrompt,
     onStart,
     reasoning,
     selection.modelSlug,
@@ -171,24 +145,23 @@ function TerminalLaunchPanelImpl(props: TerminalLaunchPanelProps) {
           runTargetHostId={null}
           profileAdmission={null}
         />
-        <Input
-          aria-label="Terminal interface CLI arguments"
-          className="h-8 min-w-0 flex-1 font-mono text-ui-xs"
-          placeholder="CLI arguments (optional)"
-          value={argsDraft}
-          onChange={(event) =>
-            setArgsState({
-              harnessId: selection.harnessId,
-              draft: event.target.value,
-              touched: true,
-            })
-          }
-          onKeyDown={(event) => {
-            if (event.key !== "Enter") return;
-            event.preventDefault();
-            start();
-          }}
-        />
+        <div className="flex min-w-48 flex-1 items-center gap-2">
+          <span className="shrink-0 text-ui-xs text-muted-foreground">
+            Prompt
+          </span>
+          <Input
+            aria-label="Initial terminal agent prompt"
+            className="h-8 min-w-0 flex-1 text-ui-xs"
+            placeholder="What should the agent do?"
+            value={initialPrompt}
+            onChange={(event) => setInitialPrompt(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key !== "Enter") return;
+              event.preventDefault();
+              start();
+            }}
+          />
+        </div>
       </div>
       <div className="flex items-center justify-between gap-2 px-0.5 pb-2.5 pt-1">
         <StartButton

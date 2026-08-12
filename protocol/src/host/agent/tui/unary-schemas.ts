@@ -124,6 +124,21 @@ export type PrepareTuiLaunchRequestV11 = z.infer<
   typeof prepareTuiLaunchRequestSchemaV11
 >;
 
+// ─── `agent.tui.prepareLaunch@1.2` - + provider-neutral initial prompt ────
+//
+// `initialPrompt` is user-authored conversation text, not raw process argv.
+// The host translates it into each harness's supported interactive launch
+// form (`--prompt`, `--prompt-interactive`, or a positional prompt). Keeping
+// this separate from `terminalAgentArgs` prevents ordinary prompt text from
+// being reinterpreted as a project path or CLI flag by a provider.
+export const prepareTuiLaunchRequestSchemaV12 =
+  prepareTuiLaunchRequestSchemaV11.extend({
+    initialPrompt: z.string().nullable().default(null),
+  });
+export type PrepareTuiLaunchRequestV12 = z.infer<
+  typeof prepareTuiLaunchRequestSchemaV12
+>;
+
 export const prepareTuiLaunchResponseSchema = z.object({
   harnessId: tuiHarnessIdSchema,
   // `null` when the harness hasn't allocated a CLI-resumable id yet (Codex

@@ -8,6 +8,7 @@ import {
 import {
   agentSelectionGuideResponseSchema,
   createAgentRequestSchema,
+  spawnAgentRequestSchema,
   hostRpcRegistry,
   getGuiAgentPlanRequestSchema,
   getGuiAgentPlanResponseSchema,
@@ -20,6 +21,31 @@ import {
 } from "@hukum/protocol/host/index";
 
 describe("agent host schemas", () => {
+  it("requires initial work for atomic agent spawn", () => {
+    const base = {
+      senderAgentId: "agent-parent",
+      epicId: "epic-1",
+      name: null,
+      surface: "gui" as const,
+      harnessId: "opencode" as const,
+      model: null,
+      agentMode: "regular" as const,
+      reasoningEffort: null,
+      fastMode: null,
+      workspace: null,
+      profileSelection: { kind: "inherit_sender" as const },
+      permissionMode: "full_access" as const,
+    };
+    expect(spawnAgentRequestSchema.safeParse(base).success).toBe(false);
+    expect(spawnAgentRequestSchema.parse({
+      ...base,
+      initialInstruction: "Investigate the failing test",
+    })).toMatchObject({
+      initialInstruction: "Investigate the failing test",
+      expectReply: true,
+    });
+  });
+
   it("retains Cursor in the TUI wire schema as a compatibility value", () => {
     expect(guiHarnessIdSchema.safeParse("cursor").success).toBe(true);
     expect(tuiHarnessIdSchema.safeParse("cursor").success).toBe(true);
@@ -28,6 +54,8 @@ describe("agent host schemas", () => {
       "codex",
       "opencode",
       "cursor",
+      "antigravity",
+      "gemini",
     ]);
   });
 

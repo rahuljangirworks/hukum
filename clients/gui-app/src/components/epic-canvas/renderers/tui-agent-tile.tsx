@@ -347,6 +347,9 @@ function TuiAgentTileLive(
         // the resolver's strict-scan fallback (or persisted pending-fork
         // provenance) is what applies here, never this field.
         forkSourceTuiAgentId: null,
+        // Reopens resume the existing conversation; they must not replay the
+        // landing page's one-time initial prompt.
+        initialPrompt: null,
         // Raw per-agent override: `null` keeps provider Settings as the
         // fallback, while `""` and non-empty strings are durable overrides.
         terminalAgentArgs: agent.terminalAgentArgs,

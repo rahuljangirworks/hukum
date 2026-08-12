@@ -1430,8 +1430,10 @@ dialog.tsx` / `notification-hook-draft.ts`, unchanged by this pass).
   description says so. A full-height CodeMirror Markdown source editor provides syntax
   highlighting and line numbers, including for Mermaid and wireframe fences.
   It debounce-auto-saves (and flushes on blur) via
-  `agent.selectionGuide.setGlobal`; a quiet "Saving… / Saved" status sits in the
-  footer, no Save button. A **Revert to default** button (disabled while the
+  `agent.selectionGuide.setGlobal`; a quiet "Generated default / Saving… /
+  Saved" status sits in the footer, no Save button. "Generated default" means
+  the Host supplied an effective capability-derived policy but no custom guide
+  file exists yet; the first edit persists it. A **Revert to default** button (disabled while the
   content already equals the provider-based default) calls
   `agent.selectionGuide.resetGlobalToDefault` behind a `ConfirmDestructiveDialog`.
   The editor has NO host selector of its own - the sidebar switcher scopes it.
@@ -1439,7 +1441,8 @@ dialog.tsx` / `notification-hook-draft.ts`, unchanged by this pass).
   override and remounts on `scope.hostId` so one host's file never carries into
   another; the whole subtree stays unmounted until `isHostScopeUsable`, so the
   guide query cannot fire against the ambient host. Backed by
-  `agent.selectionGuide.getGlobal` (returns `{ content, generatedDefaultContent }`),
+  `agent.selectionGuide.getGlobal` (returns
+  `{ content, generatedDefaultContent, isPersisted? }`),
   `agent.selectionGuide.setGlobal`, and
   `agent.selectionGuide.resetGlobalToDefault` through the agent selection guide
   hooks. The global guide is the only scope: per-workspace

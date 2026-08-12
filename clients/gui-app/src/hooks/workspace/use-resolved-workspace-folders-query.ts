@@ -176,6 +176,24 @@ export function projectWorkspaceFolderForHost(
       repoIdentifier,
     };
   }
+  
+  // If the host backend didn't return this path in `resolvePathsByRepoIdentifiers`
+  // (because it hasn't been bound to an Epic yet), but the folder was added ON THIS HOST,
+  // we can safely assume it is resolved because the absolute path is natively valid here.
+  // The host backend's `worktree.getBinding` will still safely catch it if it goes missing on disk.
+  if (
+    boundHostId !== null &&
+    info.hostId !== null &&
+    info.hostId === boundHostId
+  ) {
+    return {
+      kind: "resolved",
+      path: info.path,
+      name: info.name,
+      repoIdentifier,
+    };
+  }
+
   return {
     kind: "unresolved",
     path: info.path,

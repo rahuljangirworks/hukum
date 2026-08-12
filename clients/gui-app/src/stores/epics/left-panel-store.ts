@@ -15,11 +15,14 @@ export const LEFT_PANEL_IDS = [
   "chats",
   "terminals",
   "artifacts",
+  "brain",
   "git-diff",
   "pull-requests",
   "file-tree",
   "sharing",
   "comments",
+  "agent-questions",
+  "background-jobs",
 ] as const;
 
 export type LeftPanelId = (typeof LEFT_PANEL_IDS)[number];
@@ -170,13 +173,15 @@ export function clampSidebarWidthPx(widthPx: number): number {
 }
 
 export const DEFAULT_LEFT_PANEL_GROUPS: ReadonlyArray<LeftPanelGroup> = [
-  { panelIds: ["chats", "artifacts"] },
+  { panelIds: ["chats", "artifacts", "brain"] },
   { panelIds: ["terminals"] },
   { panelIds: ["git-diff"] },
   { panelIds: ["pull-requests"] },
   { panelIds: ["file-tree"] },
   { panelIds: ["sharing"] },
   { panelIds: ["comments"] },
+  { panelIds: ["agent-questions"] },
+  { panelIds: ["background-jobs"] },
 ];
 
 export interface LeftPanelRootCreatePending {

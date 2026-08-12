@@ -17,6 +17,7 @@ import {
   terminalTileSchema,
   workspaceFileTileSchema,
 } from "./artifact-tile";
+import { brainNoteTileSchema } from "./brain-note-tile";
 import { gitDiffTileSchema } from "./git-diff-tile";
 import { snapshotDiffTileSchema } from "./snapshot-diff-tile";
 import { managedCommandOutputTileSchema } from "./managed-command-output-tile";
@@ -43,6 +44,8 @@ const TILE_SCHEMAS: TileSchemaRegistry = {
   ticket: recordBackedArtifactTileSchema,
   story: recordBackedArtifactTileSchema,
   review: recordBackedArtifactTileSchema,
+  "html-preview": recordBackedArtifactTileSchema,
+  "brain-note": brainNoteTileSchema,
   terminal: terminalTileSchema,
   "workspace-file": workspaceFileTileSchema,
   "git-diff": gitDiffTileSchema,

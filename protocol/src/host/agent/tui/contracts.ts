@@ -9,6 +9,7 @@ import {
   listTuiHarnessesResponseSchema,
   prepareTuiLaunchRequestSchema,
   prepareTuiLaunchRequestSchemaV11,
+  prepareTuiLaunchRequestSchemaV12,
   prepareTuiLaunchResponseSchema,
   recordTuiAgentActivityRequestSchema,
   recordTuiAgentActivityRequestSchemaV11,
@@ -64,6 +65,30 @@ export const agentTuiPrepareLaunchUpgradeV10ToV11 = defineUpgradePath<
   upgradeRequest: (request) => ({
     ...request,
     forkSourceTuiAgentId: null,
+  }),
+  upgradeResponse: (response) => response,
+});
+
+/**
+ * `agent.tui.prepareLaunch@1.2` adds provider-neutral initial prompt text.
+ * Older requests upgrade to `null`, preserving their launch behavior.
+ */
+export const agentTuiPrepareLaunchV12 = defineRpcContract({
+  method: "agent.tui.prepareLaunch",
+  schemaVersion: { major: 1, minor: 2 } as const,
+  requestSchema: prepareTuiLaunchRequestSchemaV12,
+  responseSchema: prepareTuiLaunchResponseSchema,
+});
+
+export const agentTuiPrepareLaunchUpgradeV11ToV12 = defineUpgradePath<
+  typeof agentTuiPrepareLaunchV11,
+  typeof agentTuiPrepareLaunchV12
+>({
+  from: agentTuiPrepareLaunchV11.schemaVersion,
+  to: agentTuiPrepareLaunchV12.schemaVersion,
+  upgradeRequest: (request) => ({
+    ...request,
+    initialPrompt: null,
   }),
   upgradeResponse: (response) => response,
 });

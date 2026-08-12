@@ -125,6 +125,8 @@ export interface TerminalAgentLaunch {
   readonly harnessId: TuiHarnessId;
   readonly model: string | null;
   readonly reasoningEffort: string | null;
+  /** Conversation text delivered to the newly-started interactive agent. */
+  readonly initialPrompt: string | null;
   readonly terminalAgentArgs: string | null;
   // Which of the harness's logged-in profiles (subscriptions) to launch this
   // agent on. `null` = the ambient/host login.
@@ -629,6 +631,7 @@ export function useLandingComposerActions(): LandingComposerActions {
         harnessId,
         model,
         reasoningEffort,
+        initialPrompt,
         terminalAgentArgs,
         profileId,
       } = launch;
@@ -693,7 +696,12 @@ export function useLandingComposerActions(): LandingComposerActions {
       void createLandingEpic({
         epicId,
         title: epicTitle,
-        initialUserPrompt: "",
+        // A Terminal Agent's first work is durable Task context, not transient
+        // launch configuration. The Host also stages this provider-neutral
+        // instruction on the durable agent before bootstrapping its upstream
+        // session; keeping the Task copy makes the originating request survive
+        // Host/PTY loss and available to normal Task context readers.
+        initialUserPrompt: initialPrompt ?? "",
         workspaceFolders: workspaceContext.workspaceFolders,
         workspaceFolderInfoByPath: workspaceContext.workspaceFolderInfoByPath,
         now,
@@ -719,6 +727,7 @@ export function useLandingComposerActions(): LandingComposerActions {
               onStatusChange: null,
               worktreeIntent: workspaceContext.worktreeIntent,
               workspaceMode: workspaceContext.workspaceMode,
+              initialPrompt,
               terminalAgentArgs,
               profileId,
             });

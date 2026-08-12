@@ -7,6 +7,9 @@ import {
   MessagesSquare,
   Terminal,
   UserPlus,
+  CircleHelp,
+  Activity,
+  Brain,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -89,6 +92,14 @@ export const LEFT_PANEL_DEFINITIONS: ReadonlyArray<LeftPanelMetadataDefinition> 
       supportsHeaderSearch: true,
     },
     {
+      id: "brain",
+      title: "Brain",
+      icon: Brain,
+      isAutoVisible: () => true,
+      forcedOnHint: null,
+      supportsHeaderSearch: true,
+    },
+    {
       id: "git-diff",
       title: "Git Diff",
       icon: GitBranch,
@@ -131,6 +142,22 @@ export const LEFT_PANEL_DEFINITIONS: ReadonlyArray<LeftPanelMetadataDefinition> 
       isAutoVisible: (context) =>
         context.commentsPanelRevealed && context.hasActiveCommentableArtifact,
       forcedOnHint: "Needs an open artifact",
+      supportsHeaderSearch: false,
+    },
+    {
+      id: "agent-questions",
+      title: "Agent Questions",
+      icon: CircleHelp,
+      isAutoVisible: () => true,
+      forcedOnHint: null,
+      supportsHeaderSearch: false,
+    },
+    {
+      id: "background-jobs",
+      title: "Background Jobs",
+      icon: Activity,
+      isAutoVisible: () => true,
+      forcedOnHint: null,
       supportsHeaderSearch: false,
     },
   ];

@@ -27,7 +27,7 @@ import {
  */
 export type OpenableEpicNodeKind = Extract<
   EpicNodeKind,
-  "chat" | "terminal-agent" | "spec" | "ticket" | "story" | "review"
+  "chat" | "terminal-agent" | "spec" | "ticket" | "story" | "review" | "html-preview"
 >;
 
 export const isOpenableEpicNodeKind = makeLiteralGuard<OpenableEpicNodeKind>({
@@ -37,6 +37,7 @@ export const isOpenableEpicNodeKind = makeLiteralGuard<OpenableEpicNodeKind>({
   ticket: true,
   story: true,
   review: true,
+  "html-preview": true,
 });
 
 /**
@@ -57,6 +58,7 @@ export const isRecordBackedEpicNodeKind =
     ticket: true,
     story: true,
     review: true,
+    "html-preview": true,
   });
 
 export const WORKSPACE_FILE_TAB_KIND = "workspace-file" as const;

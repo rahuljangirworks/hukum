@@ -46,6 +46,7 @@ export const epicArtifactKindSchema = z.enum([
   "ticket",
   "story",
   "review",
+  "html-preview",
 ]);
 
 export const harnessIdSchema = z.enum([
@@ -68,4 +69,6 @@ export const harnessIdSchema = z.enum([
   "hermes",
   "omp",
   "huggingface",
+  "antigravity",
+  "gemini",
 ]);

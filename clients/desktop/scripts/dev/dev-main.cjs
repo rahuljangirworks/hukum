@@ -71,7 +71,7 @@ const remoteDebuggingPort =
     ? null
     : remoteDebuggingSetting;
 
-const electronArgs = [];
+const electronArgs = ["--disable-gpu"];
 if (remoteDebuggingPort !== null) {
   electronArgs.push(`--remote-debugging-port=${remoteDebuggingPort}`);
   // Chromium rejects DevTools WebSocket upgrades whose Origin header isn't

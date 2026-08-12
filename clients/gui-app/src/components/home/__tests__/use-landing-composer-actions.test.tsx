@@ -228,6 +228,7 @@ describe("useLandingComposerActions", () => {
       (c) => c[0] === "epic.create",
     );
     expect(createEpicCall?.[1]).toMatchObject({
+      epic: { initialUserPrompt: SUBMITTED_PROMPT },
       repoIdentifiers: [],
       workspaces: [],
       chat: {
@@ -385,6 +386,7 @@ describe("useLandingComposerActions", () => {
           harnessId: "claude",
           model: null,
           reasoningEffort: null,
+          initialPrompt: "hello from landing",
           terminalAgentArgs: "",
           profileId: null,
         },
@@ -405,12 +407,14 @@ describe("useLandingComposerActions", () => {
       (c) => c[0] === "epic.create",
     );
     expect(createEpicCall?.[1]).toMatchObject({
+      epic: { initialUserPrompt: "hello from landing" },
       repoIdentifiers: [],
       workspaces: [],
       chat: null,
     });
     expect(landingMocks.createTerminalAgent).toHaveBeenCalledWith(
       expect.objectContaining({
+        initialPrompt: "hello from landing",
         workspaceMode: "folderless",
         worktreeIntent: null,
       }),
@@ -435,6 +439,7 @@ describe("useLandingComposerActions", () => {
           harnessId: "claude",
           model: null,
           reasoningEffort: null,
+          initialPrompt: null,
           terminalAgentArgs: "",
           profileId: "work-profile",
         },
@@ -1850,6 +1855,7 @@ describe("useLandingComposerActions", () => {
           harnessId: "claude",
           model: null,
           reasoningEffort: null,
+          initialPrompt: null,
           terminalAgentArgs: "",
           profileId: null,
         },

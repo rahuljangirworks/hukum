@@ -54,6 +54,22 @@ import {
   ArtifactReadLifecycleBridge,
   ArtifactTreePanelBody,
 } from "@/components/epic-canvas/sidebar/epic-sidebar-artifact-tree";
+import { BrainSidebarSection } from "@/components/epic-canvas/sidebar/brain-sidebar-section";
+import { BrainSetupWizard } from "@/components/brain/brain-setup-wizard";
+
+// Brain panel body — wraps the brain sidebar section component
+function BrainPanelBody() {
+  return (
+    <>
+      <BrainSidebarSection />
+      <BrainSetupWizard />
+    </>
+  );
+}
+
+function BrainLoadingPanelBody() {
+  return <Skeleton className="mx-3 my-2 h-24 rounded-md" />;
+}
 import { SharingPanel } from "@/components/epic-canvas/panels/epic-sharing/panel";
 import { SnapshotGate } from "@/components/epic-canvas/snapshots/snapshot-loading-context";
 import { AddNodeDropdown } from "@/components/epic-canvas/add-node-dropdown";
@@ -171,6 +187,14 @@ import { GitDiffPanelBodyLive } from "@/components/epic-canvas/git-diff/git-diff
 import { GitDiffPanelActions } from "@/components/epic-canvas/git-diff/git-diff-panel-actions";
 import { PrPanelBody } from "@/components/epic-canvas/pr/pr-panel-body";
 import { PrPanelActions } from "@/components/epic-canvas/pr/pr-panel-actions";
+import {
+  AgentQuestionsPanelBody,
+  AgentQuestionsLoadingPanelBody,
+} from "@/components/agent-questions/agent-questions-panel-body";
+import {
+  BackgroundJobsPanelBody,
+  BackgroundJobsLoadingPanelBody,
+} from "@/components/background-jobs/background-jobs-panel-body";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import { ConfirmDestructiveDialog } from "@/components/ui/confirm-destructive-dialog";
@@ -374,6 +398,14 @@ const PANEL_SLOTS_BY_ID: Readonly<Record<LeftPanelId, LeftPanelModeSlots>> = {
     },
     loading: emptyLoadingSlots(ArtifactsLoadingPanelBody),
   },
+  brain: {
+    live: {
+      Body: BrainPanelBody,
+      Actions: null,
+      Subtitle: null,
+    },
+    loading: emptyLoadingSlots(BrainLoadingPanelBody),
+  },
   "git-diff": {
     live: {
       Body: GitDiffPanelBody,
@@ -389,6 +421,22 @@ const PANEL_SLOTS_BY_ID: Readonly<Record<LeftPanelId, LeftPanelModeSlots>> = {
       Subtitle: null,
     },
     loading: emptyLoadingSlots(GenericLoadingPanelBody),
+  },
+  "agent-questions": {
+    live: {
+      Body: AgentQuestionsPanelBody,
+      Actions: null,
+      Subtitle: null,
+    },
+    loading: emptyLoadingSlots(AgentQuestionsLoadingPanelBody),
+  },
+  "background-jobs": {
+    live: {
+      Body: BackgroundJobsPanelBody,
+      Actions: null,
+      Subtitle: null,
+    },
+    loading: emptyLoadingSlots(BackgroundJobsLoadingPanelBody),
   },
   "file-tree": {
     live: {

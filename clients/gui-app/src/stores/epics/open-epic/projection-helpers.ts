@@ -176,7 +176,8 @@ export function readArtifactKind(map: Y.Map<unknown>): EpicArtifactKind | null {
     value === "spec" ||
     value === "ticket" ||
     value === "story" ||
-    value === "review"
+    value === "review" ||
+    value === "html-preview"
   ) {
     return value;
   }
@@ -185,7 +186,13 @@ export function readArtifactKind(map: Y.Map<unknown>): EpicArtifactKind | null {
 
 function readHarnessType(map: Y.Map<unknown>): TuiHarnessId | null {
   const value = map.get("harnessId");
-  if (value === "claude" || value === "codex" || value === "opencode") {
+  if (
+    value === "claude" ||
+    value === "codex" ||
+    value === "opencode" ||
+    value === "antigravity" ||
+    value === "gemini"
+  ) {
     return value;
   }
   return null;
@@ -320,9 +327,14 @@ export function projectTerminalAgent(
   const hostId = entry.get("hostId");
   if (typeof hostId !== "string") return null;
   const harnessSessionId = entry.get("harnessSessionId");
-  // Claude/OpenCode require a non-null harness session id (allocated
-  // synchronously). Codex tolerates null until `thread/started` back-fills.
-  if (typeof harnessSessionId !== "string" && harnessId !== "codex") {
+  // Claude/OpenCode/Gemini require a non-null harness session id (allocated
+  // synchronously). Codex and Antigravity tolerate null because their
+  // interactive processes allocate the upstream conversation asynchronously.
+  if (
+    typeof harnessSessionId !== "string" &&
+    harnessId !== "codex" &&
+    harnessId !== "antigravity"
+  ) {
     return null;
   }
   const model = entry.get("model");

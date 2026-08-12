@@ -9,22 +9,19 @@ import {
   CommanderError,
   Option,
   type Command as CommanderCommand,
-  type ParseOptions,
 } from "commander";
-import { A2A_PERMISSION_MODE_INSTRUCTION } from "@traycer/protocol/agent/agent-selection-guide-format";
-import { AGENT_FACING_HARNESS_ID_LIST } from "@traycer/protocol/host/agent/shared";
-import { readFeatureSettingsSync } from "@traycer/protocol/config/store";
+import { A2A_PERMISSION_MODE_INSTRUCTION } from "@hukum/protocol/agent/agent-selection-guide-format";
+import { AGENT_FACING_HARNESS_ID_LIST } from "@hukum/protocol/host/agent/shared";
+import { readFeatureSettingsSync } from "@hukum/protocol/config/store";
 import { config } from "./config";
 import { resolveCliVersion } from "./cli-version";
 import { cliFinalizeUpgradeCommand } from "./commands/cli-finalize-upgrade";
 import { buildCliMarkSourceCommand } from "./commands/cli-mark-source";
 import { buildCliReAnchorCommand } from "./commands/cli-re-anchor";
 import { buildCliUpgradeCommand } from "./commands/cli-upgrade";
-import { buildAgentArchiveCommand } from "./commands/agent-archive";
 import { buildAgentConfigureCommand } from "./commands/agent-configure";
 import { buildAgentCreateCommand } from "./commands/agent-create";
-import { buildAgentForkCommand } from "./commands/agent-fork";
-import { buildAgentStopCommand } from "./commands/agent-stop";
+import { buildAgentSpawnCommand } from "./commands/agent-spawn";
 import { buildAgentListProfilesCommand } from "./commands/agent-list-profiles";
 import { buildAgentProfileRateLimitsCommand } from "./commands/agent-profile-rate-limits";
 import { buildAgentActivityFromHookCommand } from "./commands/agent-activity-from-hook";
@@ -135,7 +132,7 @@ function expectRequiredPositional(
   if (typeof value === "string") return value;
   throw cliError({
     code: CLI_ERROR_CODES.INVALID_ARGUMENT,
-    message: `traycer: ${name} is required.`,
+    message: `hukum: ${name} is required.`,
     details: null,
     exitCode: 1,
   });
@@ -164,21 +161,21 @@ function withRunner(
 
 /**
  * Pure check used by the script-entry guard to decide whether the
- * current `process.argv[1]` looks like a Traycer CLI entrypoint we
+ * current `process.argv[1]` looks like a Hukum CLI entrypoint we
  * should auto-invoke. Lives at module scope (and is exported) so unit
  * tests can pin the matrix without spawning a subprocess.
  *
  * Matches:
- *  - the tsx dev path → `<repo>/clients/traycer-cli/src/index.ts`
- *  - the compiled SEA binary on POSIX → `<resourcesPath>/cli/traycer`
- *  - the compiled SEA binary on Windows → `<resourcesPath>\cli\traycer.exe`
+ *  - the tsx dev path → `<repo>/clients/hukum-cli/src/index.ts`
+ *  - the compiled SEA binary on POSIX → `<resourcesPath>/cli/hukum`
+ *  - the compiled SEA binary on Windows → `<resourcesPath>\cli\hukum.exe`
  *
  * Returns `false` for `undefined`, empty strings, and unrelated paths
  * (so `import { buildProgram }` from a test never auto-parses argv).
  */
-export function isTraycerCliEntrypoint(argv1: string | undefined): boolean {
+export function isHukumCliEntrypoint(argv1: string | undefined): boolean {
   if (typeof argv1 !== "string" || argv1.length === 0) return false;
-  return /(?:^|[\\/])(?:index\.ts|traycer(?:\.exe)?)$/i.test(argv1);
+  return /(?:^|[\\/])(?:index\.ts|hukum(?:\.exe)?)$/i.test(argv1);
 }
 
 // Both live in the leaf `cli-version.ts` so `registry/` can read the running
@@ -192,12 +189,12 @@ export type AgentCliSurface = "full" | "readonly";
 export function resolveAgentCliSurface(
   env: Readonly<Record<string, string | undefined>>,
 ): AgentCliSurface {
-  return env.TRAYCER_AGENT_CLI_SURFACE === "readonly" ? "readonly" : "full";
+  return env.HUKUM_AGENT_CLI_SURFACE === "readonly" ? "readonly" : "full";
 }
 
 // Construct the full commander program. Exported as a builder so tests
 // can assert command registration (subject of the
-// "Register native-packaging CLI commands in Traycer CLI entrypoint"
+// "Register native-packaging CLI commands in Hukum CLI entrypoint"
 // follow-up bug) without spawning a subprocess. The script-mode call at
 // the bottom of this file is the only place that invokes parseAsync.
 export function buildProgram(): Command {
@@ -208,18 +205,12 @@ export function buildProgramWithAgentRoles(
   agentRolesEnabled: boolean,
 ): Command {
   const program = new Command();
-  const cliVersion = resolveCliVersion(readonlyEnv());
-  // Commander resolves the root's built-in `--version` before any child
-  // option. `installHostUpdateVersionParser` below rewrites only the exact
-  // `host update --version X` spelling to a hidden local flag, preserving the
-  // root's established version output and every other command's normal
-  // positional/global-option parsing.
   program
-    .name("traycer")
-    .description("Traycer CLI - auth, host supervisor, and config surface")
-    .version(cliVersion);
+    .name("hukum")
+    .description("Hukum CLI - auth, host supervisor, and config surface")
+    .version(resolveCliVersion(readonlyEnv()));
 
-  // Global runner flags so `traycer --json <subcommand>` works even when
+  // Global runner flags so `hukum --json <subcommand>` works even when
   // the subcommand declares its own copy. Commander merges globals via
   // `optsWithGlobals()` which is what the runner-aware action handlers
   // rely on.
@@ -236,97 +227,7 @@ export function buildProgramWithAgentRoles(
   // entry can wrap it in a single `result/ok` envelope instead of leaking
   // raw prose onto an NDJSON stream.
   applyRunnerErrorRouting(program);
-  installHostUpdateVersionParser(program);
   return program;
-}
-
-/**
- * Confine Commander’s root `--version` collision workaround to the one
- * compatibility spelling that needs a version argument. This intentionally
- * leaves `host --json status`, `config --quiet env list`, and all unrelated
- * option placement under Commander’s unmodified parsing rules.
- */
-function installHostUpdateVersionParser(program: Command): void {
-  const parseAsync = program.parseAsync.bind(program);
-  program.parseAsync = (...args: unknown[]) => {
-    const argv = args[0];
-    const options = args[1];
-    const parseOptions = isParseOptions(options) ? options : null;
-    if (!Array.isArray(argv)) {
-      // Forward the options even with no argv: Commander reads `from` to decide
-      // how to interpret `process.argv`, so dropping it here silently reparses
-      // under different rules than the caller asked for.
-      return parseOptions === null
-        ? parseAsync()
-        : parseAsync(undefined, parseOptions);
-    }
-    const rewrittenArgv = rewriteHostUpdateVersion(argv, parseOptions);
-    return parseOptions === null
-      ? parseAsync(rewrittenArgv)
-      : parseAsync(rewrittenArgv, parseOptions);
-  };
-}
-
-/**
- * Where the COMMAND tokens start, per Commander's own `from` contract rather
- * than a guess.
- *
- * Comparing `argv[0]`/`argv[1]` against `process.argv` was the guess, and it is
- * wrong for any caller that supplies its own Node-style prefix: the offset came
- * out 0, the command path then read as [<exec>, <script>, "host", …], the
- * `host update` check failed, and `--version` fell through to root - printing
- * the CLI version instead of selecting a host version.
- */
-function commandOffsetFor(options: ParseOptions | null): number {
-  switch (options?.from ?? "node") {
-    case "user":
-      return 0;
-    case "electron":
-      // Commander's own rule: a packaged Electron app has no script argument.
-      // `defaultApp` is injected by Electron and absent from Node's `Process`,
-      // so it is read reflectively rather than cast onto the type.
-      return Reflect.get(process, "defaultApp") === true ? 2 : 1;
-    default:
-      return 2;
-  }
-}
-
-function rewriteHostUpdateVersion(
-  argv: readonly string[],
-  options: ParseOptions | null,
-): string[] {
-  const commandOffset = commandOffsetFor(options);
-  const commandArgs = argv.slice(commandOffset);
-  const separatorIndex = commandArgs.indexOf("--");
-  const beforeSeparator =
-    separatorIndex === -1 ? commandArgs : commandArgs.slice(0, separatorIndex);
-  const commandPath = beforeSeparator.filter((token) => !token.startsWith("-"));
-  if (commandPath[0] !== "host" || commandPath[1] !== "update") {
-    return [...argv];
-  }
-  const updateTokenIndex = beforeSeparator.indexOf("update");
-  return argv.map((token, index) => {
-    const commandIndex = index - commandOffset;
-    if (
-      commandIndex < 0 ||
-      commandIndex <= updateTokenIndex ||
-      (separatorIndex !== -1 && commandIndex >= separatorIndex)
-    ) {
-      return token;
-    }
-    if (token === "--version") return "--host-update-version";
-    return token.startsWith("--version=")
-      ? `--host-update-version=${token.slice("--version=".length)}`
-      : token;
-  });
-}
-
-function isParseOptions(value: unknown): value is ParseOptions {
-  if (value === null || typeof value !== "object" || Array.isArray(value)) {
-    return false;
-  }
-  const from = Reflect.get(value, "from");
-  return from === "node" || from === "user" || from === "electron";
 }
 
 // Commander stdout (help/version) captured under `--json` so the entry catch
@@ -415,7 +316,7 @@ function registerAuthCommands(program: Command): void {
   withRunner(
     program
       .command("login")
-      .description("Sign in to Traycer via your browser")
+      .description("Sign in to Hukum via your browser")
       .option(
         "--token <token>",
         "Internal: seed credentials from a JSON `{ token, refreshToken }` payload piped on stdin (pass '-'). Used by the desktop app after sign-in; not for interactive use.",
@@ -442,7 +343,7 @@ function registerHostCommands(program: Command): void {
 
   // `host start` is the long-running supervisor invoked by service
   // manifests (launchd / systemd-user / Windows Scheduled Task) as
-  // `traycer host start`. The deploy slot is baked into the build via
+  // `hukum host start`. The deploy slot is baked into the build via
   // `config.environment` - there is no flag to pass. It does NOT go through
   // `withRunner`/`runCommand` - it owns its own spawn lifecycle and must
   // not switch to the shared NDJSON runner. We still call `addRunnerFlags(...)`
@@ -586,10 +487,13 @@ function registerHostCommands(program: Command): void {
       .description(
         "Install a host version from the registry (defaults to latest), or a local archive with --from",
       )
-      // Keep the published installer spelling stable. The update command uses
-      // `--version` because the host's cloud/RPC spawners already use that
-      // exact contract; the entrypoint rewrites only that command path to its
-      // hidden local parser flag before Commander handles the argv.
+      // `--release <version>` rather than `--version <version>` because
+      // the latter collides with commander's top-level program
+      // `--version` (set via `program.version(...)`) - commander
+      // resolves the option name globally first, so a subcommand
+      // `--version` ends up printing the CLI version and exiting.
+      // `--release` conveys the same intent (which registry release
+      // to install) without the collision.
       .option(
         "--release <version>",
         "Registry version to install (defaults to 'latest'). Mutually exclusive with --from.",
@@ -834,36 +738,14 @@ function registerHostCommands(program: Command): void {
   withRunner(
     host
       .command("update")
-      .description(
-        "Update the installed host to a registry version (defaults to latest)",
-      )
-      .addOption(
-        new Option(
-          "--host-update-version <version>",
-          "Update to this exact registry version",
-        ).hideHelp(),
-      )
+      .description("Update the installed host to the latest registry version")
       .option(
         "--force",
         "Update the host even if it has work in progress (skips the busy check).",
-      )
-      // The option users actually type is `--version <version>`, rewritten to
-      // the hidden spelling above before Commander parses (root `--version`
-      // owns that token otherwise). Registering it for real would hand the
-      // token back to the collision, so the public syntax is documented here
-      // instead - without this the command advertises "a registry version"
-      // and gives no way to name one.
-      .addHelpText(
-        "after",
-        "\nVersion selection:\n  --version <version>  Update to this exact registry version\n",
       ),
     (opts) =>
       buildHostUpdateCommand({
         force: opts.force === true,
-        versionRequest:
-          typeof opts.hostUpdateVersion === "string"
-            ? opts.hostUpdateVersion
-            : null,
       }),
   );
 
@@ -1101,7 +983,7 @@ function registerServiceCommands(host: Command): void {
       )
       .option(
         "--takeover",
-        "macOS only: move host management from the Traycer Desktop app to the CLI (stops the Desktop-managed host cooperatively, deregisters its agent, then registers the CLI-owned service)",
+        "macOS only: move host management from the Hukum Desktop app to the CLI (stops the Desktop-managed host cooperatively, deregisters its agent, then registers the CLI-owned service)",
       ),
     (opts) =>
       buildServiceInstallCommand({
@@ -1166,9 +1048,10 @@ function registerCliCommands(program: Command): void {
         "--binary-path <path>",
         "Absolute path to the installed CLI binary",
       )
-      // Package-manager hooks retain their published `--installed-version`
-      // spelling; `host update` is the one compatibility path which takes a
-      // direct `--version` pin. Package-manager hooks must pass
+      // NOT `--version`: that collides with the program-level `program.version()`
+      // global flag (commander resolves it first, printing the CLI version and
+      // exiting 0 before this command's action runs). See the same rename on
+      // `host install` (`--release`). Package-manager hooks must pass
       // `--installed-version` (see scripts/native-packaging/publish-cli-package-managers.cjs).
       .requiredOption(
         "--installed-version <version>",
@@ -1198,7 +1081,7 @@ function registerCliCommands(program: Command): void {
     cli
       .command("re-anchor")
       .description(
-        "Point Traycer's upgrade tracking at a CLI binary you installed or moved by hand, so future 'cli upgrade' runs update the right file. Use after manually relocating or replacing the binary.",
+        "Point Hukum's upgrade tracking at a CLI binary you installed or moved by hand, so future 'cli upgrade' runs update the right file. Use after manually relocating or replacing the binary.",
       )
       .requiredOption(
         "--binary-path <path>",
@@ -1224,7 +1107,7 @@ function registerCliCommands(program: Command): void {
 function registerConfigCommands(program: Command): void {
   const config = program
     .command("config")
-    .description("Read or write Traycer's machine-local config");
+    .description("Read or write Hukum's machine-local config");
 
   const shell = config
     .command("shell")
@@ -1255,7 +1138,7 @@ function registerConfigCommands(program: Command): void {
     shell
       .command("set")
       .description(
-        "Select a shell and/or set its flags. Flags attach to a program, not the panel: `--path` alone picks a shell and materialises its default flags, while flags after `--` (e.g. `traycer config shell set --path /bin/zsh -- -i -l`) are remembered for that shell. Passing flags with no --path configures the currently-selected shell, or the login shell while still following the system default. Use --clear-args to store an explicit empty list.",
+        "Select a shell and/or set its flags. Flags attach to a program, not the panel: `--path` alone picks a shell and materialises its default flags, while flags after `--` (e.g. `hukum config shell set --path /bin/zsh -- -i -l`) are remembered for that shell. Passing flags with no --path configures the currently-selected shell, or the login shell while still following the system default. Use --clear-args to store an explicit empty list.",
       )
       .option("--path <path>", "Absolute path to the shell binary")
       .option("--clear-args", "Store an explicit empty args list for the shell")
@@ -1402,10 +1285,10 @@ function registerConfigCommands(program: Command): void {
   );
 }
 
-// Inter-agent communication surface. Every Traycer-launched session
-// carries `TRAYCER_AGENT_ID` / `TRAYCER_EPIC_ID` in its environment, so an
+// Inter-agent communication surface. Every Hukum-launched session
+// carries `HUKUM_AGENT_ID` / `HUKUM_EPIC_ID` in its environment, so an
 // agent typically runs these with no flags; the host bearer comes from
-// the stored credentials (`traycer login`).
+// the stored credentials (`hukum login`).
 function collectRepeatedOption(
   value: string,
   previous: readonly string[],
@@ -1438,7 +1321,7 @@ function registerTerminalCommands(program: Command): void {
     terminal
       .command("list")
       .description(
-        "List the interactive terminals you can read, including ones whose process has already exited but the host still remembers. To read another agent's conversation use 'traycer agent transcript' instead.",
+        "List the interactive terminals you can read, including ones whose process has already exited but the host still remembers. To read another agent's conversation use 'hukum agent transcript' instead.",
       ),
     () => buildTerminalListCommand({ epicId: null }),
   );
@@ -1451,7 +1334,7 @@ function registerTerminalCommands(program: Command): void {
       )
       .argument(
         "<terminal-id>",
-        "Terminal to read, from 'traycer terminal list' in this Task. An unambiguous id prefix of at least 4 characters is accepted.",
+        "Terminal to read, from 'hukum terminal list' in this Task. An unambiguous id prefix of at least 4 characters is accepted.",
       ),
     (_opts, args) =>
       buildTerminalOutputCommand({
@@ -1521,7 +1404,7 @@ function registerWorktreeCommands(program: Command): void {
     worktree
       .command("list")
       .description(
-        "List every Traycer-managed worktree on this host (host-wide)",
+        "List every Hukum-managed worktree on this host (host-wide)",
       )
       .option(
         "--include-activity",
@@ -1547,7 +1430,7 @@ function registerWorktreeCommands(program: Command): void {
     worktree
       .command("delete", deleteHidden)
       .description(
-        "Remove a Traycer-managed worktree by path (runs its teardown script, streams output)",
+        "Remove a Hukum-managed worktree by path (runs its teardown script, streams output)",
       )
       .requiredOption("--path <path>", "Worktree path to remove"),
     (opts) =>
@@ -1601,16 +1484,11 @@ function registerAgentCommands(
   // Deliberately spells out what OMITTING the option does: omission is its own
   // selection (the remembered last-used profile), not a synonym for 'ambient'.
   const profileHelp =
-    "Provider profile: 'ambient' for the provider's CLI login, or a managed profile id from 'traycer agent list-profiles <harness>'. Omit to use the last-used profile.";
+    "Provider profile: 'ambient' for the provider's CLI login, or a managed profile id from 'hukum agent list-profiles <harness>'. Omit to use the last-used profile.";
   // Rate-limit reads and configuration resolve no last-used fallback - they
   // act on the one profile the caller names - so `--profile` is required there.
   const profileRequiredHelp =
-    "Provider profile: 'ambient' for the provider's CLI login, or a managed profile id from 'traycer agent list-profiles <harness>'.";
-  // Fork's own omission default is 'inherit' (continue the SOURCE agent's
-  // profile byte-for-byte) - distinct from create's last-used preference
-  // lookup, so this cannot reuse `profileHelp`'s wording.
-  const forkProfileHelp =
-    "Provider profile: 'ambient' for the provider's CLI login, or a managed profile id from 'traycer agent list-profiles <harness>'. Omit to inherit the source agent's own profile.";
+    "Provider profile: 'ambient' for the provider's CLI login, or a managed profile id from 'hukum agent list-profiles <harness>'.";
   const agent = program
     .command("agent")
     .description("Agent inspection and communication for the calling agent");
@@ -1652,7 +1530,7 @@ function registerAgentCommands(
       .option("--profile <ambient|id>", profileHelp)
       .option(
         "--cwd <path>",
-        "Primary working directory for the child agent. Use this with a path returned by 'traycer worktree create'.",
+        "Primary working directory for the child agent. Use this with a path returned by 'hukum worktree create'.",
       )
       .option(
         "--workspace-path <path>",
@@ -1702,56 +1580,46 @@ function registerAgentCommands(
 
   withRunner(
     agent
-      .command("fork", readonlyHidden)
+      .command("spawn", readonlyHidden)
       .description(
-        "Clone an existing local agent (GUI chat or Claude Code terminal session) into a new agent seeded from its latest available checkpoint.",
+        "Atomically create a GUI child agent with its initial assignment.",
       )
       .requiredOption(
-        "--agent-id <id>",
-        "Source agent to fork. Accepts an unambiguous id prefix (unlike 'agent stop'/'agent archive', which take a full agent id).",
+        "--instruction <text>",
+        "Initial work the child must start immediately",
       )
-      .option("--name <name>", "Display name for the forked agent")
+      .option("--name <name>", "Display name for the child agent")
+      .option("--harness <id>", harnessHelp)
+      .option("--model <id>", "Model id for the child agent")
+      .option(
+        "--reasoning-effort <effort>",
+        "Reasoning effort for supported models",
+      )
+      .option("--fast", "Request fast mode for supported models")
       .option(
         "--permission-mode <mode>",
-        `GUI permission mode for the forked agent. ${A2A_PERMISSION_MODE_INSTRUCTION} Omit this flag to use \`full_access\`.`,
-      )
-      .option("--profile <ambient|id>", forkProfileHelp)
-      .option(
-        "--cwd <path>",
-        "Primary working directory for the forked agent. Use this with a path returned by 'traycer worktree create'. Omit --cwd/--workspace-path/--workspace-entry entirely to inherit the source agent's workspace binding.",
+        `GUI permission mode. ${A2A_PERMISSION_MODE_INSTRUCTION} Omit this flag to use \`full_access\`.`,
       )
       .option(
-        "--workspace-path <path>",
-        "Additional existing path the forked agent may access. Repeatable.",
-        collectRepeatedOption,
-        [],
-      )
-      .option(
-        "--workspace-entry <workspace=path>",
-        "Exact workspace binding. Repeatable. Use /path alone for existing/local, or /source=/run for a worktree.",
-        collectRepeatedOption,
-        [],
+        "--no-expect-reply",
+        "Queue the assignment without requesting a correlated reply",
       ),
     (opts) =>
-      buildAgentForkCommand({
+      buildAgentSpawnCommand({
         epicId: null,
         senderAgentId: null,
-        agentId: typeof opts.agentId === "string" ? opts.agentId : "",
+        instruction: String(opts.instruction),
         name: typeof opts.name === "string" ? opts.name : null,
+        harness: typeof opts.harness === "string" ? opts.harness : null,
+        model: typeof opts.model === "string" ? opts.model : null,
+        reasoningEffort:
+          typeof opts.reasoningEffort === "string"
+            ? opts.reasoningEffort
+            : null,
+        fast: opts.fast === true,
         permissionMode:
           typeof opts.permissionMode === "string" ? opts.permissionMode : null,
-        profile: typeof opts.profile === "string" ? opts.profile : null,
-        cwd: typeof opts.cwd === "string" ? opts.cwd : null,
-        workspacePaths: Array.isArray(opts.workspacePath)
-          ? opts.workspacePath.filter(
-              (entry): entry is string => typeof entry === "string",
-            )
-          : [],
-        workspaceEntries: Array.isArray(opts.workspaceEntry)
-          ? opts.workspaceEntry.filter(
-              (entry): entry is string => typeof entry === "string",
-            )
-          : [],
+        expectReply: opts.expectReply !== false,
       }),
   );
 
@@ -1862,50 +1730,6 @@ function registerAgentCommands(
 
   withRunner(
     agent
-      .command("stop", readonlyHidden)
-      .description(
-        "Stop another agent's in-progress turn. Not terminal - a later message wakes the agent again; this halts work, it does not delete anything.",
-      )
-      .requiredOption(
-        "--agent-id <id>",
-        "Full agent id to stop. No prefix resolution - the id must be exact.",
-      )
-      .option(
-        "--cascade",
-        "Also stop the active descendants the agent delegated to.",
-      ),
-    (opts) =>
-      buildAgentStopCommand({
-        epicId: null,
-        agentId: typeof opts.agentId === "string" ? opts.agentId : "",
-        cascade: opts.cascade === true,
-      }),
-  );
-
-  withRunner(
-    agent
-      .command("archive", readonlyHidden)
-      .description(
-        "Archive or unarchive a GUI chat or terminal agent. Archived agents stay addressable - any later message to them auto-unarchives the record. Archiving a still-working agent is refused; stop it first with 'traycer agent stop', or wait for it to settle. Unarchiving is never gated.",
-      )
-      .requiredOption(
-        "--agent-id <id>",
-        "Full id of the chat or terminal agent to archive/unarchive. No prefix resolution - the id must be exact.",
-      )
-      .option(
-        "--unarchive",
-        "Unarchive instead of archive. Omitted means archive.",
-      ),
-    (opts) =>
-      buildAgentArchiveCommand({
-        epicId: null,
-        agentId: typeof opts.agentId === "string" ? opts.agentId : "",
-        unarchive: opts.unarchive === true,
-      }),
-  );
-
-  withRunner(
-    agent
       .command("send", readonlyHidden)
       .description("Send a prompt to another agent")
       .requiredOption("--to <agentId>", "Receiver agent id")
@@ -1965,7 +1789,7 @@ function registerAgentCommands(
         )
         .option(
           "--agent-id <id>",
-          "Claiming agent (defaults to $TRAYCER_AGENT_ID)",
+          "Claiming agent (defaults to $HUKUM_AGENT_ID)",
         ),
       (opts) =>
         buildAgentRoleClaimCommand({
@@ -1994,11 +1818,11 @@ function registerAgentCommands(
         .description("Relinquish a role claim held by the calling agent")
         .requiredOption(
           "--claim-id <id>",
-          "Claim id to relinquish (see 'traycer agent role list')",
+          "Claim id to relinquish (see 'hukum agent role list')",
         )
         .option(
           "--agent-id <id>",
-          "Relinquishing agent (defaults to $TRAYCER_AGENT_ID)",
+          "Relinquishing agent (defaults to $HUKUM_AGENT_ID)",
         ),
       (opts) =>
         buildAgentRoleRelinquishCommand({
@@ -2017,7 +1841,7 @@ function registerAgentCommands(
       )
       .option(
         "--agent-id <id>",
-        "Agent whose inbox to read (defaults to $TRAYCER_AGENT_ID)",
+        "Agent whose inbox to read (defaults to $HUKUM_AGENT_ID)",
       )
       .option(
         "--after <createdAt:eventId>",
@@ -2043,7 +1867,7 @@ function registerAgentCommands(
       )
       .option(
         "--agent-id <id>",
-        "TUI agent id whose title to generate (defaults to $TRAYCER_AGENT_ID)",
+        "TUI agent id whose title to generate (defaults to $HUKUM_AGENT_ID)",
       )
       .option(
         "--harness-session-id <id>",
@@ -2079,7 +1903,7 @@ function registerAgentCommands(
       .requiredOption("--event <event>", "Lifecycle event: 'start' or 'stop'")
       .option(
         "--agent-id <id>",
-        "TUI agent id whose activity changed (defaults to $TRAYCER_AGENT_ID)",
+        "TUI agent id whose activity changed (defaults to $HUKUM_AGENT_ID)",
       )
       .option(
         "--harness-session-id <id>",
@@ -2110,7 +1934,7 @@ function registerAgentCommands(
       )
       .option(
         "--agent-id <id>",
-        "TUI agent id whose turn ended (defaults to $TRAYCER_AGENT_ID)",
+        "TUI agent id whose turn ended (defaults to $HUKUM_AGENT_ID)",
       ),
     (opts) =>
       buildAgentTurnEndedFromHookCommand({
@@ -2132,7 +1956,7 @@ function registerAgentCommands(
       )
       .option(
         "--agent-id <id>",
-        "TUI agent id whose session id to resync (defaults to $TRAYCER_AGENT_ID)",
+        "TUI agent id whose session id to resync (defaults to $HUKUM_AGENT_ID)",
       ),
     (opts) =>
       buildAgentSessionObservedFromHookCommand({
@@ -2156,15 +1980,15 @@ function registerMonitorCommand(program: Command): void {
       .description("Stream this agent's inter-agent inbox messages to stdout.")
       .option(
         "--agent-id <id>",
-        "Agent to monitor (defaults to $TRAYCER_AGENT_ID)",
+        "Agent to monitor (defaults to $HUKUM_AGENT_ID)",
       ),
   ).action(async (opts: Record<string, unknown>) => {
     const logger = createCliLogger(config.environment);
     logger.info("Monitor command invoked", {
       environment: config.environment,
       hasAgentIdArg: typeof opts.agentId === "string",
-      hasAgentIdEnv: typeof process.env.TRAYCER_AGENT_ID === "string",
-      hasEpicIdEnv: typeof process.env.TRAYCER_EPIC_ID === "string",
+      hasAgentIdEnv: typeof process.env.HUKUM_AGENT_ID === "string",
+      hasEpicIdEnv: typeof process.env.HUKUM_EPIC_ID === "string",
     });
     try {
       await runMonitor({
@@ -2178,7 +2002,7 @@ function registerMonitorCommand(program: Command): void {
         errorFromUnknown(err),
       );
       writeStderr(
-        `[traycer monitor] fatal: ${
+        `[hukum monitor] fatal: ${
           err instanceof Error ? err.message : String(err)
         }\n`,
       );
@@ -2192,10 +2016,10 @@ function registerMonitorCommand(program: Command): void {
 // trigger `parseAsync` against `process.argv`. The check matches
 // argv[1] against this file's basename which is robust across both the
 // tsx dev path and a bundled `bun --compile` binary where argv[1] is
-// the CLI invocation itself - including the Windows `traycer.exe`
+// the CLI invocation itself - including the Windows `hukum.exe`
 // suffix produced by `bun build --compile --target=bun-windows-x64`.
 const entryArgv = typeof process !== "undefined" ? process.argv[1] : undefined;
-if (isTraycerCliEntrypoint(entryArgv)) {
+if (isHukumCliEntrypoint(entryArgv)) {
   const entryLogger = createCliLogger(config.environment);
   installProcessFailureHandlers(entryLogger);
   const program = buildProgram();

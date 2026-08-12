@@ -143,6 +143,20 @@ export const opencodeTuiAgentSchema = z.object({
 });
 export type OpencodeTuiAgent = z.infer<typeof opencodeTuiAgentSchema>;
 
+export const antigravityTuiAgentSchema = z.object({
+  harnessId: z.literal("antigravity"),
+  ...baseTuiAgentFields,
+  harnessSessionId: z.string().nullable().catch(null),
+});
+export type AntigravityTuiAgent = z.infer<typeof antigravityTuiAgentSchema>;
+
+export const geminiTuiAgentSchema = z.object({
+  harnessId: z.literal("gemini"),
+  ...baseTuiAgentFields,
+  harnessSessionId: z.string(),
+});
+export type GeminiTuiAgent = z.infer<typeof geminiTuiAgentSchema>;
+
 // Reserved for backward compatibility with the previously released persisted
 // union and for planned Cursor TUI support. Current runtime catalogs do not
 // advertise this surface, so normal product flows do not create these records.
@@ -157,6 +171,8 @@ export const tuiAgentSchema = z.discriminatedUnion("harnessId", [
   claudeTuiAgentSchema,
   codexTuiAgentSchema,
   opencodeTuiAgentSchema,
+  antigravityTuiAgentSchema,
+  geminiTuiAgentSchema,
   cursorTuiAgentSchema,
 ]);
 export type TuiAgent = z.infer<typeof tuiAgentSchema>;

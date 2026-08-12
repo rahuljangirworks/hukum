@@ -643,6 +643,84 @@ describe("useCreateTuiAgent", () => {
     queryClient.clear();
   });
 
+  it("passes a one-time prompt to the host provider launch adapter", async () => {
+    const calls: CapturedCall[] = [];
+    const prompt = "Reply with exactly: PROMPT_HANDOFF_OK";
+    const preparedShellArgs = [
+      "--session",
+      "harness-session-1",
+      "--prompt",
+      prompt,
+    ];
+    hookMocks.request.mockImplementation((method, payload) => {
+      calls.push({ method, payload });
+      if (method === "agent.tui.prepareLaunch") {
+        return Promise.resolve({
+          ...startSessionResponse,
+          terminalShellArgs: preparedShellArgs,
+        });
+      }
+      if (method === "epic.createTuiAgent") {
+        return Promise.resolve({
+          tuiAgentId:
+            (payload as { tuiAgentId?: string | null }).tuiAgentId ??
+            "server-id",
+        });
+      }
+      return Promise.resolve(worktreeCreateOkResponse(payload));
+    });
+    const queryClient = makeQueryClient();
+    const { result } = renderHook(() => useCreateTuiAgent(), {
+      wrapper: queryClientWrapper(queryClient),
+    });
+
+    await act(async () => {
+      await result.current.create({
+        epicId: EPIC_ID,
+        tabId: TAB_ID,
+        parentId: null,
+        title: "Prompted terminal",
+        placement: { kind: "active-tile" },
+        harnessId: "claude",
+        model: null,
+        reasoningEffort: null,
+        forkSourceHarnessSessionId: null,
+        sourceTuiAgentId: null,
+        sourceProfileId: null,
+        onStatusChange: null,
+        workspaceMode: "inherit",
+        worktreeIntent: null,
+        initialPrompt: prompt,
+        terminalAgentArgs: null,
+        profileId: null,
+      });
+    });
+
+    const prepareCalls = calls.filter(
+      (call) => call.method === "agent.tui.prepareLaunch",
+    );
+    expect(prepareCalls).toHaveLength(1);
+    expect(prepareCalls[0].payload).toMatchObject({ initialPrompt: prompt });
+    const persistCall = calls.find(
+      (call) => call.method === "epic.createTuiAgent",
+    );
+    const tuiAgentId = (persistCall?.payload as { tuiAgentId?: string })
+      .tuiAgentId;
+    expect(tuiAgentId).toBeDefined();
+    if (tuiAgentId === undefined) {
+      throw new Error("prompted launch did not mint a tui-agent id");
+    }
+    expect(peekPreparedTerminalAgentLaunch(tuiAgentId)).toStrictEqual({
+      cwd: startSessionResponse.workingDirectory,
+      shellCommand: startSessionResponse.terminalShellCommand,
+      shellArgs: preparedShellArgs,
+      worktreeBusyPaths: [],
+    });
+    expect(hookMocks.openTileInTab).toHaveBeenCalledTimes(1);
+
+    queryClient.clear();
+  });
+
   it("cross-profile fork preflight rejection dispatches NOTHING - no worktree.create, no prepareLaunch, no createTuiAgent, no placeholder", async () => {
     const calls: CapturedCall[] = [];
     hookMocks.request.mockImplementation((method, payload) => {
@@ -1332,6 +1410,7 @@ describe("useCreateTuiAgent", () => {
         onStatusChange: null,
         workspaceMode: "inherit",
         worktreeIntent: null,
+        initialPrompt: "inspect the provider adapter",
         terminalAgentArgs: null,
         profileId: "work-profile",
       });
@@ -1347,6 +1426,7 @@ describe("useCreateTuiAgent", () => {
     // persists the record, so the resolver has nothing to look up yet -
     // the selected profile must ride on the prepareLaunch wire request itself.
     expect(prepareLaunchCall?.payload).toMatchObject({
+      initialPrompt: "inspect the provider adapter",
       profileId: "work-profile",
     });
     expect(createCall?.payload).toMatchObject({ profileId: "work-profile" });

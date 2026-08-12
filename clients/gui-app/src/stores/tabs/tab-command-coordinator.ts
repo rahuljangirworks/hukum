@@ -1318,12 +1318,15 @@ export class TabCommandCoordinator {
     // inside this same batch, before the sweep ever reaches epic 0.
     evictChatTabPersistenceForEpics(epicIds);
     const canvas = useEpicCanvasStore.getState();
-    const affected = flattenLayoutRefs(currentLayout()).flatMap<TabRef>(
-      (ref) => {
-        if (ref.kind !== "epic") return [];
-        const tab = canvas.tabsById[ref.id];
-        return tab !== undefined && ids.has(tab.epicId) ? [ref] : [];
-      },
+    // Canvas sources hydrate before the desktop tab-strip layout. Derive the
+    // removal ledger from those authoritative sources so an access-loss frame
+    // arriving in that gap can still delete the stale tab durably; the later
+    // layout hydration will then discard its now-source-less persisted ref.
+    // This also covers hidden preserved tabs that have no current layout ref.
+    const affected = Object.values(canvas.tabsById).flatMap<TabRef>((tab) =>
+      tab !== undefined && ids.has(tab.epicId)
+        ? [{ kind: "epic", id: tab.tabId }]
+        : [],
     );
     if (affected.length === 0) return;
     const refs = refsToLedger(affected);

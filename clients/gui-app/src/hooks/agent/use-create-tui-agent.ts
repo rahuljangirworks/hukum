@@ -201,6 +201,12 @@ export interface CreateTuiAgentInput {
   readonly worktreeIntent: WorktreeIntent | null;
   readonly workspaceMode: WorktreeBindingWorkspaceMode;
   /**
+   * Optional first user prompt for a new interactive session. This remains
+   * conversation data through the client/host contract; only the host's
+   * provider adapter may translate it to provider-specific argv.
+   */
+  readonly initialPrompt?: string | null;
+  /**
    * Launch-time CLI args for this terminal agent. A string (pre-filled from the
    * provider's Settings default in the picker, editable per launch) is the
    * explicit override forwarded to `agent.tui.prepareLaunch`; `null` means "no
@@ -264,7 +270,11 @@ export function useCreateTuiAgentForClient(
 
       const opensAfterSessionPrepared =
         input.forkSourceHarnessSessionId !== null;
-
+      // Forks and prompted launches both depend on the exact command returned
+      // by this prepare call. Reuse it in the optimistic tile so the tile does
+      // not issue a second, prompt-less prepare before terminal.create.
+      const mustReusePreparedLaunch =
+        opensAfterSessionPrepared || input.initialPrompt != null;
       // Object holder, not a bare `let`: `opened` is flipped inside the
       // `openPlaceholder` closure, and a closure-mutated `let` narrows to its
       // `false` initializer at the `finally` check (no-unnecessary-condition
@@ -374,12 +384,16 @@ export function useCreateTuiAgentForClient(
           harnessSessionId: null,
           forkSourceHarnessSessionId: input.forkSourceHarnessSessionId,
           forkSourceTuiAgentId: input.sourceTuiAgentId,
+          // Conversation text stays provider-neutral in the frontend. The host
+          // launch adapter translates it into this harness's supported
+          // interactive CLI syntax without parsing it as advanced args.
+          initialPrompt: input.initialPrompt ?? null,
           terminalAgentArgs: input.terminalAgentArgs,
           workspaceMode: input.workspaceMode,
           profileId: input.profileId,
         });
         if (
-          opensAfterSessionPrepared &&
+          mustReusePreparedLaunch &&
           session.terminalShellCommand !== null &&
           session.terminalShellArgs !== null
         ) {

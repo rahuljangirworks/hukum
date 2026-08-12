@@ -5,10 +5,12 @@ import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor
 import { releasedMethodNames } from "@hukum/protocol/host/__tests__/__fixtures__/released-method-names";
 import {
   agentTuiPrepareLaunchUpgradeV10ToV11,
+  agentTuiPrepareLaunchUpgradeV11ToV12,
   agentTuiValidateForkProfileV10,
 } from "@hukum/protocol/host/agent/tui/contracts";
 import {
   prepareTuiLaunchRequestSchemaV11,
+  prepareTuiLaunchRequestSchemaV12,
   validateTuiForkProfileRequestSchema,
   validateTuiForkProfileResponseSchema,
 } from "@hukum/protocol/host/agent/tui/unary-schemas";
@@ -94,6 +96,44 @@ describe("prepareTuiLaunchRequestSchemaV11 forkSourceTuiAgentId default", () => 
       profileId: null,
     });
     expect(upgraded.forkSourceTuiAgentId).toBeNull();
+  });
+});
+
+describe("prepareTuiLaunchRequestSchemaV12 initialPrompt", () => {
+  const baseV11Payload = {
+    harnessId: "opencode" as const,
+    epicId: "epic-1",
+    model: null,
+    agentMode: "regular" as const,
+    tuiAgentId: "agent-1",
+    harnessSessionId: null,
+    forkSourceTuiAgentId: null,
+  };
+
+  it("defaults initialPrompt to null on a v1.1-shaped payload", () => {
+    const parsed = prepareTuiLaunchRequestSchemaV12.parse(baseV11Payload);
+    expect(parsed.initialPrompt).toBeNull();
+  });
+
+  it("preserves prompt text as data", () => {
+    const parsed = prepareTuiLaunchRequestSchemaV12.parse({
+      ...baseV11Payload,
+      initialPrompt: "Fix the terminal without treating this as argv",
+    });
+    expect(parsed.initialPrompt).toBe(
+      "Fix the terminal without treating this as argv",
+    );
+  });
+
+  it("upgrades v1.1 requests with a null prompt", () => {
+    const upgraded = agentTuiPrepareLaunchUpgradeV11ToV12.upgradeRequest({
+      ...baseV11Payload,
+      reasoningEffort: null,
+      terminalAgentArgs: null,
+      forkSourceHarnessSessionId: null,
+      profileId: null,
+    });
+    expect(upgraded.initialPrompt).toBeNull();
   });
 });
 

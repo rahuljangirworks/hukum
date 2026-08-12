@@ -38,6 +38,7 @@ export function resolveOwnerWorkspaceInheritanceSeed(input: {
   readonly binding: WorktreeBinding | null;
   readonly stagedIntent: WorktreeIntent | null;
   readonly fallbackWorkspaceFolders: readonly string[];
+  readonly hostId?: string | null;
 }): ForkWorkspaceSeed | null {
   if (!input.enabled) return null;
   if (input.bindingReadEnabled && !input.bindingResultReady) {
@@ -47,6 +48,7 @@ export function resolveOwnerWorkspaceInheritanceSeed(input: {
     binding: input.binding,
     stagedIntent: input.stagedIntent,
     fallbackWorkspaceFolders: input.fallbackWorkspaceFolders,
+    hostId: input.hostId,
   });
 }
 
@@ -102,6 +104,7 @@ export function useOwnerWorkspaceInheritanceSeed(args: {
         binding: bindingQuery.data?.binding ?? null,
         stagedIntent,
         fallbackWorkspaceFolders: args.fallbackWorkspaceFolders,
+        hostId: args.client?.getActiveHostId() ?? null,
       }),
     [
       args.enabled,

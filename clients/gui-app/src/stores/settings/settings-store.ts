@@ -27,6 +27,7 @@ import {
 } from "@/lib/diff/diff-viewer-preferences";
 import { type EditorId } from "@hukum/protocol/host";
 import { worktreeBranchPrefixError } from "@/lib/worktree/worktree-branch-prefix-validation";
+import { type ProviderRailStatus, PROVIDER_RAIL_STATUS } from "@/components/settings/panels/provider-rail-filter";
 
 export type ThemeMode = "system" | "light" | "dark";
 export type EpicNodeIconColorMode = "byType" | "none";
@@ -143,6 +144,10 @@ export interface SettingsState {
    * is not part of this shape - it stays on the diff tile payload.
    */
   diffViewerPreferences: DiffViewerPreferences;
+
+  /** Stored view status filter for the Settings ▸ Providers rail */
+  providerRailStatus: ProviderRailStatus;
+
   setTheme: (theme: ThemeMode) => void;
   setThemePreset: (preset: ThemePreset) => void;
   setComposerMode: (mode: ComposerMode) => void;
@@ -171,6 +176,7 @@ export interface SettingsState {
   setSteerOnModEnterEnabled: (value: boolean) => void;
   setDiffViewerPreferences: (preferences: DiffViewerPreferences) => void;
   patchDiffViewerPreferences: (patch: DiffViewerPreferencesPatch) => void;
+  setProviderRailStatus: (status: ProviderRailStatus) => void;
 }
 
 type PersistedSettingsState = Pick<
@@ -205,6 +211,7 @@ type PersistedSettingsState = Pick<
   | "quoteReplyEnabled"
   | "steerOnModEnterEnabled"
   | "diffViewerPreferences"
+  | "providerRailStatus"
 >;
 
 type SetFn = (
@@ -309,6 +316,7 @@ export const useSettingsStore = create<SettingsState>()(
       quoteReplyEnabled: true,
       steerOnModEnterEnabled: true,
       diffViewerPreferences: DEFAULT_DIFF_VIEWER_PREFERENCES,
+      providerRailStatus: PROVIDER_RAIL_STATUS.Enabled,
       setTheme: makeSetter(set, "theme"),
       setThemePreset: makeSetter(set, "themePreset"),
       setComposerMode: makeSetter(set, "composerMode"),
@@ -376,6 +384,7 @@ export const useSettingsStore = create<SettingsState>()(
       setQuoteReplyEnabled: makeSetter(set, "quoteReplyEnabled"),
       setSteerOnModEnterEnabled: makeSetter(set, "steerOnModEnterEnabled"),
       setDiffViewerPreferences: makeSetter(set, "diffViewerPreferences"),
+      setProviderRailStatus: makeSetter(set, "providerRailStatus"),
       patchDiffViewerPreferences: (patch) => {
         set((s) => ({
           diffViewerPreferences: {

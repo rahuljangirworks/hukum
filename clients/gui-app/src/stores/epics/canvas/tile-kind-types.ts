@@ -11,6 +11,7 @@ import type {
   SnapshotDiffTileRef,
   WorkspaceFileRef,
 } from "./types";
+import type { BrainNoteTileRef } from "./tile-schema/brain-note-tile";
 import type { TileKindId } from "./tile-kinds";
 
 /**
@@ -28,6 +29,8 @@ export interface TileKindToRefMap {
   readonly ticket: EpicArtifactRef;
   readonly story: EpicArtifactRef;
   readonly review: EpicArtifactRef;
+  readonly "html-preview": EpicArtifactRef;
+  readonly "brain-note": BrainNoteTileRef;
   readonly terminal: EpicTerminalRef;
   readonly "workspace-file": WorkspaceFileRef;
   readonly "git-diff": GitDiffTileRef;

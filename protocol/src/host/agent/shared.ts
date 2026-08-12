@@ -68,6 +68,8 @@ export const guiHarnessIdSchema = harnessIdSchema.extract([
   "hermes",
   "omp",
   "huggingface",
+  "antigravity",
+  "gemini",
 ]);
 export type GuiHarnessId = z.infer<typeof guiHarnessIdSchema>;
 
@@ -231,6 +233,8 @@ export const tuiHarnessIdSchema = harnessIdSchema.extract([
   "codex",
   "opencode",
   "cursor",
+  "antigravity",
+  "gemini",
 ]);
 export type TuiHarnessId = z.infer<typeof tuiHarnessIdSchema>;
 
@@ -312,6 +316,8 @@ export const AGENT_FACING_HARNESS_IDS = [
   "hermes",
   "omp",
   "huggingface",
+  "antigravity",
+  "gemini",
 ] as const;
 
 export const AGENT_FACING_HARNESS_ID_LIST = AGENT_FACING_HARNESS_IDS.join(", ");
@@ -509,6 +515,28 @@ export const createAgentRequestSchemaV30 = createAgentRequestSchemaV20.extend({
 });
 export type CreateAgentRequestV30 = z.infer<typeof createAgentRequestSchemaV30>;
 
+/**
+ * Atomic child-agent handoff. Unlike the released `agent.create` primitive,
+ * spawn always carries the child's first unit of work so a successful call
+ * can never leave an unexplained empty agent in the UI.
+ *
+ * TUI admission is capability-dependent and may be rejected by a Host that
+ * cannot initialize a provider session without a client-owned terminal.
+ */
+export const spawnAgentRequestSchema = createAgentRequestSchemaV30.extend({
+  initialInstruction: z.string().trim().min(1),
+  expectReply: z.boolean().default(true),
+});
+export type SpawnAgentRequest = z.infer<typeof spawnAgentRequestSchema>;
+
+export const spawnAgentResponseSchema = z.object({
+  agentId: z.string(),
+  responseId: z.string().nullable(),
+  warnings: z.array(z.string()),
+  launchState: z.enum(["queued"]),
+});
+export type SpawnAgentResponse = z.infer<typeof spawnAgentResponseSchema>;
+
 export const agentSelectionGuideRequestSchema = z.object({
   epicId: z.string(),
   senderAgentId: z.string(),
@@ -572,6 +600,8 @@ export type AgentSelectionGuideGlobalGetRequest = z.infer<
 export const agentSelectionGuideGlobalGetResponseSchema = z.object({
   content: z.string(),
   generatedDefaultContent: z.string(),
+  /** False means `content` is the effective generated policy, not a saved file. */
+  isPersisted: z.boolean().optional(),
 });
 export type AgentSelectionGuideGlobalGetResponse = z.infer<
   typeof agentSelectionGuideGlobalGetResponseSchema

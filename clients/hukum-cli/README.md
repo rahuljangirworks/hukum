@@ -79,6 +79,7 @@ Hukum-launched agent sessions receive environment variables such as `HUKUM_AGENT
 ```sh
 hukum agent list
 hukum agent inbox
+hukum agent spawn --instruction "Investigate the failing tests and report back"
 hukum agent send --to <agent-id> --message "Can you review this change?"
 hukum workspace list
 hukum worktree create --workspace /path/to/repo --branch my-feature

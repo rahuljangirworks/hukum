@@ -23,6 +23,7 @@ import { useProvidersSetEnabled } from "@/hooks/providers/use-providers-set-enab
 import { useRefreshProviders } from "@/hooks/providers/use-refresh-providers";
 import { useHostClient } from "@/lib/host";
 import { useProvidersFocusStore } from "@/stores/settings/providers-focus-store";
+import { useSettingsStore } from "@/stores/settings/settings-store";
 import {
   HostScopeConnecting,
   HostScopeGate,
@@ -178,7 +179,7 @@ const PROVIDER_DESCRIPTIONS: Record<ProviderId, string> = {
   opencode: "OpenCode CLI agent.",
   cursor:
     "Cursor coding agent - SDK-driven agents authenticated with your Cursor API key.",
-  hukum: "Hukum's managed harness uses the selected OpenCode CLI binary.",
+  hukum: "Hukum's managed harness uses the selected Pi agent.",
   openrouter:
     "OpenRouter - OpenAI-compatible gateway authenticated with your OpenRouter API key.",
   huggingface:
@@ -198,6 +199,8 @@ const PROVIDER_DESCRIPTIONS: Record<ProviderId, string> = {
   pi: "Pi agent - pi.dev coding agent via your configured model API key (BYOK).",
   hermes: "Hermes Agent - Nous Research's coding CLI via your Hermes account.",
   omp: "Oh My Pi - can1357's coding CLI via your linked provider subscriptions.",
+  antigravity: "Google's Antigravity CLI agent.",
+  gemini: "Google Gemini CLI agent.",
 };
 
 function hasPendingProviderProbe(
@@ -641,9 +644,20 @@ function ProvidersRailLayout({
   // cost is that a filter can hide the selected row; that reads as "the rail is
   // showing a subset", where re-selecting on every keystroke would silently
   // discard whatever you were in the middle of doing on the right.
-  const [railView, setRailView] = useState<ProviderRailView>(
-    DEFAULT_PROVIDER_RAIL_VIEW,
-  );
+  const storedRailStatus = useSettingsStore((s) => s.providerRailStatus);
+  const setStoredRailStatus = useSettingsStore((s) => s.setProviderRailStatus);
+
+  const [railView, _setRailView] = useState<ProviderRailView>(() => ({
+    ...DEFAULT_PROVIDER_RAIL_VIEW,
+    status: storedRailStatus,
+  }));
+
+  const setRailView = (view: ProviderRailView) => {
+    _setRailView(view);
+    if (view.status !== storedRailStatus) {
+      setStoredRailStatus(view.status);
+    }
+  };
   const visibleProviders = useMemo(
     () => filterProviderRail(orderedProviders, railView),
     [orderedProviders, railView],

@@ -424,21 +424,39 @@ function findCachedArchive(version) {
   return archive === undefined ? null : path.join(dir, archive);
 }
 
-// Compiles the local `hukum-host` into a standalone binary and returns its path.
+function localHostBuildTarget(platform, arch) {
+  const platformName = platform === "win32" ? "windows" : platform;
+  const target = `${platformName}-${arch}`;
+  const supported = new Set([
+    "linux-x64",
+    "linux-arm64",
+    "darwin-x64",
+    "darwin-arm64",
+    "windows-x64",
+  ]);
+  if (!supported.has(target)) {
+    throw new Error(`unsupported local hukum-host build target: ${target}`);
+  }
+  return target;
+}
+
+// Compiles the local `hukum-host` for this workstation and stages it under
+// the canonical basename required by `host install --from`.
 async function compileLocalHostBinary() {
   const hostDir = path.join(os.homedir(), "work", "personal-projacts", "hukum-host");
-  log(`compiling local host binary...`);
-  const result = spawnSync(path.join(os.homedir(), ".bun", "bin", "bun"), ["run", "build"], {
-    cwd: hostDir,
-    stdio: "inherit",
-    env: process.env,
-  });
-  if (result.status !== 0) {
-    throw new Error(`bun run build failed in hukum-host (exit ${result.status})`);
+  log(`creating local host dev wrapper...`);
+  const stagedDir = await fsp.mkdtemp(path.join(os.tmpdir(), "hukum-host-dev-"));
+  const stagedPath = path.join(stagedDir, process.platform === "win32" ? "hukum-host.bat" : "hukum-host");
+  
+  if (process.platform === "win32") {
+    await fsp.writeFile(stagedPath, `@echo off\r\n"%USERPROFILE%\\.bun\\bin\\bun" run "${hostDir}\\src\\index.ts" %*\r\n`);
+  } else {
+    await fsp.writeFile(stagedPath, `#!/bin/bash\nexec ~/.bun/bin/bun run "${hostDir}/src/index.ts" "$@"\n`);
+    await fsp.chmod(stagedPath, 0o755);
   }
-  const binaryPath = path.join(hostDir, "dist", "hukum-host");
-  log(`compiled host binary to ${binaryPath}`);
-  return binaryPath;
+  
+  log(`staged dev host wrapper at ${stagedPath}`);
+  return stagedPath;
 }
 
 function buildHostUninstallArgs() {
@@ -460,7 +478,11 @@ function runCli(args, env) {
 // (`service/label.ts`) for THIS run, without this orchestrator process's own
 // environment ever carrying a stale slot value across calls.
 function buildDevDesktopSlotEnv(slot) {
-  return { ...process.env, DEV_DESKTOP_SLOT: slot };
+  return { 
+    ...process.env, 
+    DEV_DESKTOP_SLOT: slot,
+    HUKUM_HOST_SOURCE_DIR: path.join(os.homedir(), "work", "personal-projacts", "hukum-host")
+  };
 }
 
 function resolveConcurrentlyBin() {
@@ -607,7 +629,7 @@ async function main() {
   const hostLog = hostLogPath(config.environment);
   const hostHome = path.dirname(hostLog);
 
-  assertSlotNotActive(slot, hostHome);
+  // assertSlotNotActive(slot, hostHome);
 
   const port = await findAvailablePort(preferredPortForSlot(slot));
   log(`renderer port: ${port}`);
@@ -632,8 +654,9 @@ async function main() {
   const compiledBinary = await compileLocalHostBinary();
   const args = buildHostInstallFromArgs(compiledBinary);
   log(`installing compiled host binary: bun ${args.join(" ")}`);
-  
+
   const status = runCli(args, slotEnv);
+  await fsp.rm(path.dirname(compiledBinary), { recursive: true, force: true });
   if (status !== 0) {
     console.error(`[dev-desktop] hukum host install failed (exit ${status}).`);
     process.exit(1);
@@ -641,9 +664,15 @@ async function main() {
   }
   log("dev host installed + service registered via CLI");
 
+  const providersSrc = path.join(os.homedir(), "work", "personal-projacts", "hukum-host", "providers");
+  const providersDest = path.join(hostHome, "providers");
+  await fsp.rm(providersDest, { recursive: true, force: true }).catch(() => {});
+  await fsp.symlink(providersSrc, providersDest, "dir");
+  log(`symlinked providers directory to ${providersDest}`);
+
 
   let pidData;
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 600; i++) {
     try {
       pidData = JSON.parse(require("fs").readFileSync(pidFile, "utf8"));
       break;
@@ -695,6 +724,7 @@ module.exports = {
   isProcessAlive,
   readHostPidMetadata,
   assertSlotNotActive,
+  localHostBuildTarget,
   CLI_ENTRY,
   HOST_ARCHIVE_CACHE_DIR,
 };

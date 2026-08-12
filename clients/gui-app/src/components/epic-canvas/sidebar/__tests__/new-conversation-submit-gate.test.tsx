@@ -31,7 +31,9 @@ const DIRTY_CONTENT: JsonContent = {
 
 const testState = vi.hoisted(() => ({
   createChat: vi.fn(),
+  createTerminalAgent: vi.fn(),
   bodySubmit: null as (() => void) | null,
+  bodyStartTerminal: null as ComposerBodyProps["onStartTerminal"] | null,
   installEditor: null as (() => void) | null,
   ingesting: false,
   resolvingPaths: false,
@@ -49,6 +51,7 @@ vi.mock("@/components/home/composer/composer-body", async () => {
   return {
     ComposerBody: (props: ComposerBodyProps) => {
       testState.bodySubmit = props.onSubmit;
+      testState.bodyStartTerminal = props.onStartTerminal;
       testState.bodyAttachmentPresence = props.hasPastedImageBytes;
       testState.bodyPickerStore = props.pickerStore;
       testState.bodyInitialSelection = props.initialSelection;
@@ -172,7 +175,10 @@ vi.mock("@/hooks/epic/use-epic-chat-mutations", () => ({
 }));
 
 vi.mock("@/hooks/agent/use-create-tui-agent", () => ({
-  useCreateTuiAgentForClient: () => ({ isPending: false, create: vi.fn() }),
+  useCreateTuiAgentForClient: () => ({
+    isPending: false,
+    create: testState.createTerminalAgent,
+  }),
 }));
 
 vi.mock("@/components/chat/composer/picker/use-composer-picker-items", () => ({
@@ -228,6 +234,7 @@ vi.mock("@/stores/epics/initial-chat-handoff-store", () => ({
 }));
 
 beforeEach(() => {
+  testState.createTerminalAgent.mockResolvedValue("terminal-agent-1");
   useNewConversationModalStore.getState().resetForTests();
   useNewConversationModalStore.getState().setContent("epic-1", DIRTY_CONTENT);
   useNewConversationModalStore.getState().setComposerMode("epic-1", "chat");
@@ -236,7 +243,10 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   testState.createChat.mockClear();
+  testState.createTerminalAgent.mockReset();
+  testState.createTerminalAgent.mockResolvedValue("terminal-agent-1");
   testState.bodySubmit = null;
+  testState.bodyStartTerminal = null;
   testState.installEditor = null;
   testState.ingesting = false;
   testState.resolvingPaths = false;
@@ -326,6 +336,42 @@ describe("NewConversationModalBody direct submit gate", () => {
     fireEvent.keyDown(window, { key: "Enter", metaKey: true });
 
     expect(testState.createChat).toHaveBeenCalledTimes(1);
+  });
+
+  it("forwards a child Terminal Agent prompt into the durable launch", () => {
+    useNewConversationModalStore
+      .getState()
+      .setComposerMode("epic-1", "terminal");
+    render(
+      <NewConversationModalBody
+        epicId="epic-1"
+        tabId="tab-1"
+        placement={ACTIVE_TILE_PLACEMENT}
+        parentId="parent-agent"
+        hostId={null}
+        dismissPickerRef={createRef<(() => boolean) | null>()}
+        onSubmitted={() => undefined}
+      />,
+    );
+
+    act(() => {
+      testState.bodyStartTerminal?.({
+        harnessId: "opencode",
+        model: "mimo-v2.5-free",
+        reasoningEffort: null,
+        initialPrompt: "hello",
+        terminalAgentArgs: null,
+        profileId: null,
+      });
+    });
+
+    expect(testState.createTerminalAgent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        epicId: "epic-1",
+        parentId: "parent-agent",
+        initialPrompt: "hello",
+      }),
+    );
   });
 
   it("passes no paste predicate before snapshot readiness and the predicate afterward", () => {

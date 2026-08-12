@@ -8,6 +8,7 @@ describe("isOpenableEpicNodeKind", () => {
     expect(isOpenableEpicNodeKind("ticket")).toBe(true);
     expect(isOpenableEpicNodeKind("story")).toBe(true);
     expect(isOpenableEpicNodeKind("review")).toBe(true);
+    expect(isOpenableEpicNodeKind("html-preview")).toBe(true);
   });
 
   it("rejects non-openable kinds", () => {

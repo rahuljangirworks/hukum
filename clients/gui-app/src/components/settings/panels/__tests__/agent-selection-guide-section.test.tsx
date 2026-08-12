@@ -21,6 +21,7 @@ import {
 type GuideData = {
   readonly content: string;
   readonly generatedDefaultContent: string;
+  readonly isPersisted?: boolean;
 };
 
 type Deferred<T> = {
@@ -303,6 +304,7 @@ describe("AgentSelectionGuideSection", () => {
     guideMocks.queryData = {
       content: "claude guide",
       generatedDefaultContent: "claude guide",
+      isPersisted: true,
     };
     guideMocks.queryDataByHost = {};
     guideMocks.queryIsError = false;
@@ -366,6 +368,19 @@ describe("AgentSelectionGuideSection", () => {
     });
     expect(guideMocks.setGlobalMutateAsync).not.toHaveBeenCalled();
     expect(guideMocks.resetGlobalMutateAsync).not.toHaveBeenCalled();
+  });
+
+  it("labels an effective unsaved host policy as a generated default", () => {
+    guideMocks.queryData = {
+      content: "generated guide",
+      generatedDefaultContent: "generated guide",
+      isPersisted: false,
+    };
+
+    renderPanel();
+
+    expect(screen.getByText("Generated default")).toBeTruthy();
+    expect(screen.queryByText("Saved")).toBeNull();
   });
 
   it("shows the load failure instead of a skeleton when the first guide fetch fails", () => {

@@ -8,6 +8,8 @@ import {
   createAgentRequestSchemaV20,
   createAgentRequestSchemaV30,
   createAgentResponseSchema,
+  spawnAgentRequestSchema,
+  spawnAgentResponseSchema,
   agentSelectionGuideRequestSchema,
   agentSelectionGuideResponseSchema,
   agentSelectionGuideGlobalGetRequestSchema,
@@ -76,6 +78,13 @@ export const agentCreateV30 = defineRpcContract({
   schemaVersion: { major: 3, minor: 0 } as const,
   requestSchema: createAgentRequestSchemaV30,
   responseSchema: createAgentResponseSchema,
+});
+
+export const agentSpawnV10 = defineRpcContract({
+  method: "agent.spawn",
+  schemaVersion: { major: 1, minor: 0 } as const,
+  requestSchema: spawnAgentRequestSchema,
+  responseSchema: spawnAgentResponseSchema,
 });
 
 /**

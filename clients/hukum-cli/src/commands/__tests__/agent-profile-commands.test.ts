@@ -6,6 +6,7 @@ import { createAgentRequestSchemaV30 } from "@hukum/protocol/host/agent/shared";
 import { buildProgram } from "../../index";
 import { buildAgentConfigureCommand } from "../agent-configure";
 import { buildAgentCreateCommand } from "../agent-create";
+import { buildAgentSpawnCommand } from "../agent-spawn";
 import { buildAgentListProfilesCommand } from "../agent-list-profiles";
 import { buildAgentProfileRateLimitsCommand } from "../agent-profile-rate-limits";
 import {
@@ -233,6 +234,53 @@ describe("agent create profile selection", () => {
     await buildAgentCreateCommand(createOpts("prof_work"))(makeCtx());
 
     expect(rpcMock.mock.calls[0]?.[1]).not.toHaveProperty("profileId");
+  });
+});
+
+describe("agent spawn initial assignment", () => {
+  it("atomically forwards the initial work with inherited profile and workspace", async () => {
+    rpcMock.mockResolvedValue({
+      agentId: "agent_child",
+      responseId: "response_1",
+      warnings: [],
+      launchState: "queued",
+    });
+
+    const result = await buildAgentSpawnCommand({
+      epicId: "epic_1",
+      senderAgentId: "agent_parent",
+      instruction: "Inspect the workspace and report the failing tests",
+      name: null,
+      harness: "opencode",
+      model: null,
+      reasoningEffort: null,
+      fast: false,
+      permissionMode: null,
+      expectReply: true,
+    })(makeCtx());
+
+    expect(rpcMock).toHaveBeenCalledWith("agent.spawn", {
+      epicId: "epic_1",
+      senderAgentId: "agent_parent",
+      name: null,
+      surface: "gui",
+      harnessId: "opencode",
+      model: null,
+      agentMode: "regular",
+      reasoningEffort: null,
+      fastMode: null,
+      workspace: null,
+      profileSelection: { kind: "inherit_sender" },
+      permissionMode: "full_access",
+      initialInstruction: "Inspect the workspace and report the failing tests",
+      expectReply: true,
+    });
+    expect(result.data).toMatchObject({ agentId: "agent_child", launchState: "queued" });
+  });
+
+  it("registers the spawn command with a required initial instruction", () => {
+    const command = expectAgentCommand("spawn");
+    expect(requiredOptionFlags(command)).toContain("--instruction");
   });
 });
 

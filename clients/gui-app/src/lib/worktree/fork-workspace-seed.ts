@@ -17,11 +17,12 @@ export interface ForkWorkspaceSeed {
 export function buildForkWorkspaceSeed(input: {
   readonly binding: WorktreeBinding | null;
   readonly stagedIntent: WorktreeIntent | null;
+  readonly hostId?: string | null;
 }): ForkWorkspaceSeed {
   const intent = visibleWorktreeIntent(input.binding, input.stagedIntent);
   return {
     intent,
-    workspace: worktreeIntentToLandingWorkspaceSnapshot(intent),
+    workspace: worktreeIntentToLandingWorkspaceSnapshot(intent, input.hostId ?? null),
   };
 }
 
@@ -39,6 +40,7 @@ export function buildForkWorkspaceSeed(input: {
 export function buildAbForkWorkspaceSeed(input: {
   readonly binding: WorktreeBinding | null;
   readonly stagedIntent: WorktreeIntent | null;
+  readonly hostId?: string | null;
 }): ForkWorkspaceSeed {
   const visible = visibleWorktreeIntent(input.binding, input.stagedIntent);
   const intent =
@@ -57,12 +59,13 @@ export function buildAbForkWorkspaceSeed(input: {
         };
   return {
     intent,
-    workspace: worktreeIntentToLandingWorkspaceSnapshot(intent),
+    workspace: worktreeIntentToLandingWorkspaceSnapshot(intent, input.hostId ?? null),
   };
 }
 
 export function buildForkWorkspaceSeedFromWorkspaceFolders(
   workspaceFolders: readonly string[],
+  hostId?: string | null,
 ): ForkWorkspaceSeed {
   const intent =
     workspaceFolders.length === 0
@@ -77,7 +80,7 @@ export function buildForkWorkspaceSeedFromWorkspaceFolders(
         };
   return {
     intent,
-    workspace: worktreeIntentToLandingWorkspaceSnapshot(intent),
+    workspace: worktreeIntentToLandingWorkspaceSnapshot(intent, hostId ?? null),
   };
 }
 
@@ -114,6 +117,7 @@ function mergeVisibleEntries(
 
 function worktreeIntentToLandingWorkspaceSnapshot(
   intent: WorktreeIntent | null,
+  hostId: string | null,
 ): LandingDraftWorkspaceSnapshot {
   // An entry-less intent is the empty workspace. Every producer above already
   // collapses that to `null`, but checking it here is what lets the primary
@@ -126,7 +130,7 @@ function worktreeIntentToLandingWorkspaceSnapshot(
   >(
     (accumulator, entry) => ({
       ...accumulator,
-      [entry.workspacePath]: folderIntentToWorkspaceFolderInfo(entry),
+      [entry.workspacePath]: folderIntentToWorkspaceFolderInfo(entry, hostId),
     }),
     {},
   );
@@ -144,6 +148,7 @@ function worktreeIntentToLandingWorkspaceSnapshot(
 
 function folderIntentToWorkspaceFolderInfo(
   intent: WorktreeFolderIntent,
+  hostId: string | null,
 ): WorkspaceFolderInfo {
   return {
     path: intent.workspacePath,
@@ -153,6 +158,6 @@ function folderIntentToWorkspaceFolderInfo(
     // stamped when folders are re-prepared on a host. Null here is safe —
     // git-backed rows resolve via repoIdentifier; local-only rows without
     // hostId stay unresolved under multi-host (B6).
-    hostId: null,
+    hostId,
   };
 }

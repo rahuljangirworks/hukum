@@ -11,6 +11,7 @@ import {
   ClipboardCheck,
   FileText,
   MessageSquare,
+  MonitorPlay,
   Terminal,
   Ticket,
   type LucideIcon,
@@ -85,6 +86,7 @@ export const EPIC_NODE_ICONS: Readonly<Record<EpicNodeKind, LucideIcon>> = {
   ticket: Ticket,
   story: BookOpen,
   review: ClipboardCheck,
+  "html-preview": MonitorPlay,
   terminal: Terminal,
 };
 
@@ -95,6 +97,7 @@ export const EPIC_NODE_LABELS: Readonly<Record<EpicNodeKind, string>> = {
   ticket: "Ticket",
   story: "Story",
   review: "Review",
+  "html-preview": "HTML Preview",
   terminal: "Terminal",
 };
 
@@ -116,6 +119,7 @@ export const EPIC_NODE_SENTENCE_NOUNS: Readonly<Record<EpicNodeKind, string>> =
     ticket: "ticket",
     story: "story",
     review: "review",
+    "html-preview": "HTML preview",
     terminal: "terminal",
   };
 
@@ -128,6 +132,7 @@ export const DEFAULT_EPIC_NODE_ICON_COLORS: EpicNodeIconColors = {
   ticket: "#a78bfa",
   story: "#34d399",
   review: "#fb7185",
+  "html-preview": "#6366f1",
   terminal: "#94a3b8",
 };
 function createEpicNodeIconColors(
@@ -140,6 +145,7 @@ function createEpicNodeIconColors(
     ticket: getColor("ticket"),
     story: getColor("story"),
     review: getColor("review"),
+    "html-preview": getColor("html-preview"),
     terminal: getColor("terminal"),
   };
 }
@@ -174,6 +180,7 @@ export const EPIC_NODE_PLACEHOLDER_TEXT: Readonly<
   ticket: "Describe this ticket — what needs to change and how to verify it…",
   story: "Describe this story — the user journey this work serves…",
   review: "Write this review — findings, decisions, and follow-ups…",
+  "html-preview": "Write HTML content…",
 };
 
 export const DEFAULT_EPIC_NODE_NAMES: Readonly<Record<EpicNodeKind, string>> = {
@@ -183,6 +190,7 @@ export const DEFAULT_EPIC_NODE_NAMES: Readonly<Record<EpicNodeKind, string>> = {
   ticket: "New ticket",
   story: "New story",
   review: "New review",
+  "html-preview": "Untitled Preview",
   terminal: "Terminal",
 };
 

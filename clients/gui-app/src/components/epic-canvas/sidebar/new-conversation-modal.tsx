@@ -472,7 +472,7 @@ export function NewConversationModalBody(props: {
     hostId,
     hostClient,
   );
-  const seed = useNewConversationModalSeed(epicId, latestWorkspaceSeed);
+  const seed = useNewConversationModalSeed(epicId, parentId, latestWorkspaceSeed);
   // Subscribe to the NON-content draft fields only. `content` is rewritten on
   // every keystroke (see `handleDocumentChange`); subscribing to the whole
   // patch here would re-render the entire modal body per character. Live
@@ -903,6 +903,7 @@ export function NewConversationModalBody(props: {
           onStatusChange: null,
           worktreeIntent,
           workspaceMode,
+          initialPrompt: launch.initialPrompt,
           terminalAgentArgs: launch.terminalAgentArgs,
           profileId: launch.profileId,
         })
@@ -1047,6 +1048,7 @@ function useModalWorkspaceSeed(
 
 function useNewConversationModalSeed(
   epicId: string,
+  parentId: string | null,
   latestWorkspaceSeed: LatestConversationWorkspaceSeed | null,
 ): NewConversationModalSeed {
   const latestSettingsSeed = useLatestConversationSettingsSeed();
@@ -1062,18 +1064,26 @@ function useNewConversationModalSeed(
       globalLastRunSettings: state.globalLastRunSettings,
     })),
   );
-  return useMemo(
-    () => ({
+  return useMemo(() => {
+    let baseSettings = runSettingsSeed.epicRunSettings ??
+      runSettingsSeed.globalLastRunSettings ??
+      latestSettingsSeed.settings;
+    if (baseSettings !== null && parentId !== null) {
+      baseSettings = { ...baseSettings, permissionMode: "full_access" };
+    }
+    return {
       content: createEmptyNewConversationContent(),
-      settings:
-        runSettingsSeed.epicRunSettings ??
-        runSettingsSeed.globalLastRunSettings ??
-        latestSettingsSeed.settings,
+      settings: baseSettings,
       composerMode: latestSettingsSeed.composerMode,
       workspace: latestWorkspaceSeed?.workspace ?? globalWorkspace,
-    }),
-    [globalWorkspace, latestSettingsSeed, latestWorkspaceSeed, runSettingsSeed],
-  );
+    };
+  }, [
+    globalWorkspace,
+    latestSettingsSeed,
+    latestWorkspaceSeed,
+    runSettingsSeed,
+    parentId,
+  ]);
 }
 
 function useLatestConversationSettingsSeed(): {

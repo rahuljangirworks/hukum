@@ -18,6 +18,11 @@ import { tuiAgentSchema } from "@hukum/protocol/persistence/epic/tui-agents";
  * cursor variant.
  */
 describe("cursor is a reserved TuiHarnessId (read compatibility)", () => {
+  it("accepts the live Gemini and Antigravity Terminal harnesses", () => {
+    expect(tuiHarnessIdSchema.safeParse("gemini").success).toBe(true);
+    expect(tuiHarnessIdSchema.safeParse("antigravity").success).toBe(true);
+  });
+
   it("parses the reserved 'cursor' harness id", () => {
     expect(tuiHarnessIdSchema.safeParse("cursor").success).toBe(true);
   });
@@ -78,6 +83,39 @@ describe("cursor is a reserved TuiHarnessId (read compatibility)", () => {
     expect(parsed.success).toBe(true);
     if (parsed.success && parsed.data.harnessId === "cursor") {
       expect(parsed.data.harnessSessionId).toBeNull();
+    }
+  });
+});
+
+describe("live Terminal harness persistence", () => {
+  const baseRecord = {
+    id: "tui-live",
+    parentId: null,
+    title: "",
+    isTitleEditedByUser: false,
+    createdAt: 1,
+    updatedAt: 2,
+    hostId: "host-1",
+    userId: "user-1",
+    workspaceFolders: ["/repo"],
+    model: "model-1",
+    reasoningEffort: null,
+    agentMode: "regular",
+    terminalAgentArgs: null,
+    terminalShellCommand: null,
+    terminalShellArgs: null,
+    profileId: null,
+  } as const;
+
+  it.each([
+    { harnessId: "antigravity", harnessSessionId: null },
+    { harnessId: "gemini", harnessSessionId: "session-1" },
+  ] as const)("parses a persisted $harnessId agent", (variant) => {
+    const parsed = tuiAgentSchema.safeParse({ ...baseRecord, ...variant });
+
+    expect(parsed.success).toBe(true);
+    if (parsed.success) {
+      expect(parsed.data.harnessId).toBe(variant.harnessId);
     }
   });
 });

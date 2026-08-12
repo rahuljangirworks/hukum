@@ -5,20 +5,20 @@ import { v4 as uuidv4 } from "uuid";
 import type {
   AgentMessageSend,
   BackgroundTaskOutput,
-  ImageGenerationResult,
-} from "@traycer/protocol/persistence/epic/content-blocks";
+} from "@hukum/protocol/persistence/epic/content-blocks";
 import type { SegmentEndState } from "@/stores/composer/chat-store";
 import { deriveA2ASendCollapsibleKey } from "@/components/chat/chat-collapsible-key";
 import { chatFindA2ASendBodyUnitId } from "@/components/chat/chat-find";
 import { SegmentEndStateBadge } from "./segment-end-state-badge";
 import { LivePulse } from "@/components/ui/live-pulse";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";
-import { useEpicAgentReference, useOpenEpicId } from "@/lib/epic-selectors";
+import { useEpicArtifact, useOpenEpicId } from "@/lib/epic-selectors";
 import {
   resolveToolInputDetail,
   type ToolInputDetail,
-} from "@traycer/protocol/host/agent/gui/tool-input-detail";
+} from "@hukum/protocol/host/agent/gui/tool-input-detail";
 import type {
+  ArtifactProjection,
   ChatProjection,
   TuiAgentProjection,
 } from "@/stores/epics/open-epic/types";
@@ -47,7 +47,11 @@ import {
   useChatOpenStoreScope,
 } from "@/stores/chats/open-store-scope";
 import { ElapsedTime } from "./segment-elapsed";
-import { ImageGenerationCard } from "./image-generation-card";
+import {
+  DatabaseRichResult,
+  WebSearchRichResult,
+  VisionRichResult,
+} from "./rich-tools";
 
 interface ToolSegmentProps {
   id: string;
@@ -75,7 +79,6 @@ interface ToolSegmentProps {
   // Wall-clock start (epoch ms) driving the elapsed heartbeat while streaming.
   startedAt: number;
   durationMs: number | null;
-  imageResults: ReadonlyArray<ImageGenerationResult>;
   variant: "card" | "row";
   headerFindUnitId: string | null;
 }
@@ -103,7 +106,7 @@ interface ToolSegmentBodyProps {
   readonly toolName: string;
 }
 
-type ReceiverNode = ChatProjection | TuiAgentProjection;
+type ReceiverNode = ArtifactProjection | ChatProjection | TuiAgentProjection;
 
 interface ReceiverOpenTarget {
   readonly type: "chat" | "terminal-agent";
@@ -138,6 +141,7 @@ function receiverOpenTarget(
   if ("harnessId" in receiverNode) {
     return { type: "terminal-agent", hostId: receiverNode.hostId };
   }
+  if ("kind" in receiverNode) return null;
   const hostId = receiverNode.hostId ?? fallbackHostId;
   if (hostId === null) return null;
   return { type: "chat", hostId };
@@ -254,20 +258,6 @@ function renderToolStreamingFooter(props: {
 }
 
 export function ToolSegment(props: ToolSegmentProps) {
-  if (props.toolName === "image_generation" && props.variant === "card") {
-    return (
-      <ImageGenerationCard
-        id={props.id}
-        inputSummary={props.inputSummary}
-        inputDetail={props.inputDetail}
-        error={props.error}
-        isStreaming={props.isStreaming}
-        endState={props.endState}
-        stopped={props.stopped}
-        imageResults={props.imageResults}
-      />
-    );
-  }
   if (props.agentMessageSend !== null) {
     return <A2ASendToolSegment {...props} send={props.agentMessageSend} />;
   }
@@ -505,21 +495,36 @@ function ToolSegmentBody(props: ToolSegmentBodyProps) {
   const isMcpTool = props.toolName.startsWith("mcp__");
   const backgroundStdout = props.backgroundOutput?.stdout ?? "";
   const backgroundStderr = props.backgroundOutput?.stderr ?? "";
+  
+  let richContent = null;
+  if (props.toolName.includes("database")) {
+    richContent = <DatabaseRichResult stdout={backgroundStdout} />;
+  } else if (props.toolName.includes("web_search")) {
+    richContent = <WebSearchRichResult stdout={backgroundStdout} />;
+  } else if (props.toolName.includes("vision")) {
+    richContent = <VisionRichResult stdout={backgroundStdout} />;
+  }
+
   return (
     <div className="flex flex-col gap-2">
       {props.expandDetail !== null ? (
         <ToolInputPanel detail={props.expandDetail} />
       ) : null}
-      <BackgroundOutputPanels
-        stdout={
-          isMcpTool
-            ? mcpResultDisplayContent(backgroundStdout)
-            : backgroundStdout
-        }
-        stdoutLabel={isMcpTool ? "Result" : "Output"}
-        stderr={backgroundStderr}
-        truncated={props.backgroundOutput?.truncated === true}
-      />
+      
+      {richContent && backgroundStdout.length > 0 ? (
+        richContent
+      ) : (
+        <BackgroundOutputPanels
+          stdout={
+            isMcpTool
+              ? mcpResultDisplayContent(backgroundStdout)
+              : backgroundStdout
+          }
+          stdoutLabel={isMcpTool ? "Result" : "Output"}
+          stderr={backgroundStderr}
+          truncated={props.backgroundOutput?.truncated === true}
+        />
+      )}
       {props.hasError ? (
         <SegmentPanel
           label="Error"
@@ -625,16 +630,16 @@ function A2ASendToolSegment(
     isStreaming,
     isStopped: false,
   });
-  const receiverNode = useEpicAgentReference(send.receiverAgentId);
+  const receiverNode = useEpicArtifact(send.receiverAgentId);
   const activeHostId = useReactiveActiveHostId();
   const epicId = useOpenEpicId();
   const tileNavigation = useEpicTileNavigation();
   const receiverName = receiverDisplayName(receiverNode, send.receiverAgentId);
   const openTarget = receiverOpenTarget(receiverNode, activeHostId);
   const openReceiverTab = () => {
-    if (openTarget === null || receiverNode === null) return;
+    if (openTarget === null) return;
     tileNavigation.openTileInEpic(epicId, {
-      id: receiverNode.id,
+      id: send.receiverAgentId,
       instanceId: uuidv4(),
       type: openTarget.type,
       name: receiverName,

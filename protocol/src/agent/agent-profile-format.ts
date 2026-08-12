@@ -187,10 +187,29 @@ function formatProviderRateLimits(rateLimits: ProviderRateLimits): string {
       .filter((line): line is string => line !== null)
       .join("\n");
   }
-  return [
-    `credit balance: ${formatNumber(rateLimits.creditBalance)}`,
-    `pass: ${rateLimits.passState ?? "unknown"}`,
-  ].join("\n");
+  if (rateLimits.provider === "kiro") {
+    return [
+      `plan: ${rateLimits.plan ?? "unknown"}`,
+      rateLimits.creditsUsed !== null && rateLimits.creditsTotal !== null
+        ? `credits: ${formatNumber(rateLimits.creditsUsed)}/${formatNumber(rateLimits.creditsTotal)} used (${rateLimits.usedPercent ?? 0}%)`
+        : null,
+      rateLimits.resetsAt !== null
+        ? `resets: ${formatTimestamp(rateLimits.resetsAt)}`
+        : null,
+    ]
+      .filter((line): line is string => line !== null)
+      .join("\n");
+  }
+  if (rateLimits.provider === "kilocode") {
+    return [
+      `credit balance: ${formatNumber(rateLimits.creditBalance)}`,
+      `pass: ${rateLimits.passState ?? "unknown"}`,
+    ].join("\n");
+  }
+  // antigravity
+  return rateLimits.models
+    .map((m) => `${m.label}: ${m.remainingPercentage}% remaining${m.isExhausted ? " (exhausted)" : ""}`)
+    .join("\n") || "No model usage data";
 }
 
 /**

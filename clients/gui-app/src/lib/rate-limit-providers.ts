@@ -84,9 +84,11 @@ export function rateLimitFetchLane(
     case "kilocode":
     case "huggingface":
       return "httpFetch";
+    case "kiro":
     case "codex":
     case "claude-code":
     case "grok":
+    case "antigravity":
       // Grok reads usage over the vendored CLI's own `_x.ai/billing` ACP
       // extension (a subprocess RPC, so Hukum never touches the grok OAuth
       // token) - an ephemeral spawn like codex/claude-code, despite grok's

@@ -306,7 +306,7 @@ describe("EpicAccessCoordinator", () => {
     });
   });
 
-  it("closes an active tab with a neutral toast when the room is unavailable on open", async () => {
+  it("closes an active tab when the host reports its Epic was not found", async () => {
     const handle = registerSession("epic-1");
     seedTabs([{ tabId: "tab-1", epicId: "epic-1", name: "Epic One" }], "tab-1");
     useComposerRunSettingsStore
@@ -318,12 +318,13 @@ describe("EpicAccessCoordinator", () => {
       expect(router.state.location.pathname).toBe("/epics/epic-1/tab-1"),
     );
 
-    // A revoke or delete discovered on (re)open surfaces indistinguishably as
-    // an unreadable room; the toast must not claim either cause.
+    // The current host reports a stale persisted tab as a fatal RPC error.
+    // A revoke or delete discovered on (re)open remains indistinguishable, so
+    // the toast must not claim either cause.
     handle.store.setState({
       snapshotFetchError: {
-        code: "UNAUTHORIZED",
-        message: "null roomInfo",
+        code: "RPC_ERROR",
+        message: "Epic epic-1 was not found",
         upgradeGuidance: null,
       },
     });
@@ -335,6 +336,36 @@ describe("EpicAccessCoordinator", () => {
       useComposerRunSettingsStore.getState().getEpicRunSettings("epic-1"),
     ).toEqual(TEST_SETTINGS);
     await waitFor(() => expect(router.state.location.pathname).toBe("/"));
+    expect(toastInfo).toHaveBeenCalledWith(
+      expect.stringContaining("no longer available"),
+      { id: "epic-access:epic-1", cancel: null },
+    );
+  });
+
+  it("closes a missing Epic before the desktop tab layout hydrates", async () => {
+    const handle = registerSession("epic-1");
+    const tabs = [{ tabId: "tab-1", epicId: "epic-1", name: "Epic One" }];
+    seedTabs(tabs, "tab-1");
+    const persistedLayout = useTabsStore.getState();
+    // Desktop canvas sources land before the authoritative strip layout. The
+    // access-loss command must still remove the source before that persisted
+    // layout is restored, or the stale tab will survive every restart.
+    useTabsStore.setState(useTabsStore.getInitialState(), true);
+    handle.store.setState({
+      snapshotFetchError: {
+        code: "RPC_ERROR",
+        message: "Epic epic-1 was not found",
+        upgradeGuidance: null,
+      },
+    });
+
+    const { router } = renderCoordinatorAt("/epics/epic-1/tab-1");
+    await waitFor(() => expect(router.state.location.pathname).toBe("/"));
+    await waitFor(() =>
+      expect(useEpicCanvasStore.getState().openTabOrder).toEqual([]),
+    );
+    tabCommandCoordinator.restoreHydratedLayout(persistedLayout);
+    expect(flattenLayoutRefs(useTabsStore.getState())).toEqual([]);
     expect(toastInfo).toHaveBeenCalledWith(
       expect.stringContaining("no longer available"),
       { id: "epic-access:epic-1", cancel: null },

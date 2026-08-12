@@ -1,16 +1,13 @@
 import type {
   RequestOfMethod,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   RpcSchedulingMode,
   RpcSchedulingPolicy,
-} from "@traycer-clients/shared/host-client/rpc-scheduling-policy";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
-import type {
-  ProviderManagedInstallState,
-  ProviderManagedVersions,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum-clients/shared/host-client/rpc-scheduling-policy";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
+import type { ProviderManagedInstallState } from "@hukum/protocol/host/provider-schemas";
 
 const SECOND_MS = 1_000;
 const MINUTE_MS = 60 * SECOND_MS;
@@ -156,37 +153,6 @@ function isRetryWorthWatching(
   if (state.retryAtMs === null) return false;
   return nowMs < state.retryAtMs + PROVIDERS_RETRY_OBSERVATION_GRACE_MS;
 }
-
-/**
- * True when any managed-pack transfer is in flight for this provider row —
- * automatic lane (`managedInstallState`) or user-lane version-manager rows
- * (`managedVersions.available[].installState`).
- *
- * User-lane downloads are independent of the automatic target: after
- * `providers.installPackVersion` returns non-blocking, only the version row
- * sits at `downloading` while the automatic slot may remain `installed` /
- * `absent`. The installing poll lane must still fire, or progress freezes on
- * the 15-minute steady cadence.
- *
- * There is no `queued` status on either wire install-state union today, so
- * this predicate only inspects `downloading` (including `percent: null`).
- */
-function providerHasManagedInstallInFlight(provider: {
-  readonly managedInstallState?: ProviderManagedInstallState | null;
-  // The protocol type, not a structural stand-in. The row shape used to be
-  // spelled out with `status: string`, which widened the wire union to any
-  // string: rename `downloading` upstream and the comparison below silently
-  // returns false, dropping every user-lane download onto the 15-minute steady
-  // lane with no compile error to notice it.
-  readonly managedVersions?: Pick<ProviderManagedVersions, "available"> | null;
-}): boolean {
-  if (provider.managedInstallState?.status === "downloading") return true;
-  const managedVersions = provider.managedVersions;
-  if (managedVersions === null || managedVersions === undefined) return false;
-  return managedVersions.available.some(
-    (row) => row.installState.status === "downloading",
-  );
-}
 export const PROVIDERS_LIMITED_POLL_LANE: ConditionPollLane = {
   id: "providers.limited",
   initialDelayMs: 30 * SECOND_MS,
@@ -303,41 +269,7 @@ const LATEST_SCHEDULING = {
 } as const;
 
 export const HOST_METHOD_POLL_TABLE = {
-  // Opt-in polling (`poll: true`), for one caller: the Overview's drain
-  // affordance. Its `busySessionCount` is the number "Apply now — ends N
-  // sessions" promises and then destroys, so the question is not whether the
-  // cached value may be reused but whether it is still TRUE. Going stale does
-  // not refetch on its own, so without a cadence a focused Overview served the
-  // count it read on mount indefinitely.
-  //
-  // Under the query's `staleTime` (30s), deliberately: this interval keeps a
-  // healthy read fresh while `isStale` demotes an unhealthy one to `null`. The
-  // two numbers are one mechanism and must move together.
-  "host.status": {
-    ...LATEST_SCHEDULING,
-    poll: { kind: "fixed", intervalMs: 10_000 },
-  },
-  // Restart commits host admission state before its deferred teardown.
-  "host.restart": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
-  // The host's own name: a bounded read that can coalesce. It has no poll —
-  // the host watches `host-name.json`, so a rename made anywhere else lands on
-  // the next read (or the next explicit invalidation) rather than needing one.
-  "host.identity.get": { ...LATEST_SCHEDULING, poll: null },
-  // Renaming persists a file the heartbeat then publishes; rapid edits must
-  // land in the order the user made them, so this is never coalesced.
-  "host.identity.set": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "host.doctor": { ...LATEST_SCHEDULING, poll: null },
-  "host.update.check": { ...LATEST_SCHEDULING, poll: null },
-  "host.update.install": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "host.getInstallationInfo": { ...LATEST_SCHEDULING, poll: null },
+  "host.status": { ...LATEST_SCHEDULING, poll: null },
   "host.getRuntimeCapabilities": { ...LATEST_SCHEDULING, poll: null },
   "host.getRateLimitUsage": {
     ...LATEST_SCHEDULING,
@@ -376,7 +308,7 @@ export const HOST_METHOD_POLL_TABLE = {
     joinResponseTimeoutMs: null,
     poll: null,
   },
-  // Retained for compatible occurrence-scoped workflow resolution callers.
+  // Dismissing an attention row resolves it (persists the acknowledgement).
   "host.notifications.resolve": {
     mode: "fifo",
     joinResponseTimeoutMs: null,
@@ -397,11 +329,6 @@ export const HOST_METHOD_POLL_TABLE = {
   // Cloud-feed dispositions persist in the replicated feed and must retain
   // their invocation order at the host boundary.
   "host.notifications.cloudFeed.markRead": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "host.notifications.cloudFeed.markAllRead": {
     mode: "fifo",
     joinResponseTimeoutMs: null,
     poll: null,
@@ -447,8 +374,8 @@ export const HOST_METHOD_POLL_TABLE = {
   },
   // Killing a process tree from the resource monitor is a destructive command.
   "resources.kill": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
-  // Shell lifecycle from the Shells list and the output window header.
-  // `fifo` is what buys these three the guarantees the
+  // Monitor/shell lifecycle from the "Monitors & Shells" list and the output
+  // window header. `fifo` is what buys these three the guarantees the
   // coordinator reserves for commands: `selectJob` refuses to coalesce a fifo
   // job, `snapshotHostTransition` refuses to abort one, and `cancelActiveRead`
   // refuses to cancel one. A delete destroys the command's entire output
@@ -597,8 +524,6 @@ export const HOST_METHOD_POLL_TABLE = {
   },
   // Stopping an agent terminates its active execution.
   "agent.stop": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
-  // Forking an agent persists a new collaboration record, like agent.create.
-  "agent.fork": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
   // Migrating a phase changes the epic's persisted workflow state.
   "phase.migrateToEpic": {
     mode: "fifo",
@@ -720,32 +645,6 @@ export const HOST_METHOD_POLL_TABLE = {
     joinResponseTimeoutMs: null,
     poll: null,
   },
-  // Visibility mutations. Optional host capability. The coordinator's queue
-  // identity is method + full params, so these two methods never share a
-  // queue and two per-chat flips of different chats do not either. fifo
-  // only serializes identical retries of the SAME call. Cross-surface
-  // ordering (master toggle vs per-chat) is a client-side one-in-flight
-  // gate per (task, viewer) — subsequent requests are refused, not queued.
-  "epic.setCloudChatVisibility": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "epic.setChatSharingDefault": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "epic.prepareArtifactImage": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "epic.finishArtifactImage": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
   // Creating a TUI agent persists its terminal-agent record.
   "epic.createTuiAgent": {
     mode: "fifo",
@@ -815,82 +714,6 @@ export const HOST_METHOD_POLL_TABLE = {
   "epic.listCommentThreads": { ...LATEST_SCHEDULING, poll: null },
   "epic.resolveArtifactByPath": { ...LATEST_SCHEDULING, poll: null },
   "epic.searchArtifacts": { ...LATEST_SCHEDULING, poll: null },
-  // The cloud-chat READ surface. All five are reads, so `latest` - and the two
-  // properties that follow from the coordinator keying on PARAMS are exactly
-  // what this fan-out wants: a read of part A never supersedes a concurrent
-  // read of part B (different params, different queue), while two readers
-  // asking for the SAME digest at the same time coalesce onto one request.
-  // `fifo` would serialize a p99 chat's ~165 parts behind each other for no
-  // property gained, since none of these writes anything.
-  //
-  // No polling. A published head changes only when its owning host publishes
-  // again, and this reader has no signal for that; an interval would spend
-  // requests on an answer that is almost always identical. A newer head is
-  // picked up by reopening.
-  "epic.listCloudChats": { ...LATEST_SCHEDULING, poll: null },
-  "epic.resolveCloudChatHead": { ...LATEST_SCHEDULING, poll: null },
-  "epic.readCloudChatPart": { ...LATEST_SCHEDULING, poll: null },
-  "epic.listCloudChatPayloads": { ...LATEST_SCHEDULING, poll: null },
-  "epic.readCloudChatPayload": { ...LATEST_SCHEDULING, poll: null },
-  // Not polled, and this is a deliberate freshness choice rather than a copy of
-  // the row above it. The answer is "which cloud row does this local chat
-  // publish into", which changes exactly once in a chat's life - when a fork
-  // sends its lineage into a clone row - and never again. A cadence would spend
-  // a request per interval per open sidebar to re-learn a constant.
-  //
-  // What it costs: between a fork's auto-resolution and the next refetch, one
-  // sidebar row can be stale - the chat's OLD publication row briefly shows as
-  // a separate entry. That is a duplicate-looking row for a moment, not wrong
-  // content: the transcript a locked row renders comes from the head read, not
-  // from this mapping, so nothing a user is reading goes stale with it. The
-  // fork's own notification is the signal that something changed, and a
-  // reopened task picks the new mapping up.
-  "epic.listChatPublicationTargets": { ...LATEST_SCHEDULING, poll: null },
-  // One-shot read: the doc content of an unreachable owner's chat cannot
-  // change while its owner is away.
-  "epic.chatReplicaRead": { ...LATEST_SCHEDULING, poll: null },
-  // The store-backed chat RECORD channel (chat-sync-v2 ticket 49).
-  //
-  // POLLED, at a cadence, and the reason is that there is no invalidation edge
-  // to ride. The facts this serves - a chat was created, renamed, re-parented,
-  // archived, deleted - are committed to the chat DATABASE and, since the
-  // single-write pivot, are written NOWHERE the renderer already listens: not
-  // into the epic Y.Doc (whose update stream is the only per-epic push channel
-  // a client has), and not into any per-epic frame on `epic.subscribe`. The
-  // host's registry does emit a change stream internally, but it has no wire
-  // surface, and giving it one is a new STREAM method - handshake-fatal against
-  // a released peer on a surface whose whole point here is to degrade quietly.
-  //
-  // A condition policy was the alternative and does not fit: `defineConditionPolicy`
-  // classifies from THIS method's own response, and nothing in a list of chat
-  // rows says whether another one is about to appear. The honest classification
-  // is "always maybe", which is a fixed interval wearing a lane's clothes.
-  //
-  // 20s: a local in-memory registry read, one per open epic. It bounds how long
-  // a chat created on ANOTHER device (or by an agent, or by the CLI) stays
-  // missing from this renderer's tree - the same staleness the sidebar's own
-  // cloud list already tolerates at 30s - and the client's own mutations do not
-  // wait for it, since they invalidate this key on success.
-  "epic.listChatRecords": {
-    ...LATEST_SCHEDULING,
-    poll: { kind: "fixed", intervalMs: 20 * SECOND_MS },
-  },
-  // The publisher's own convergence sweep is 30s, so a 45s local read is
-  // responsive without asking faster than the underlying state can change.
-  "epic.chatBackupStatus": {
-    ...LATEST_SCHEDULING,
-    poll: { kind: "fixed", intervalMs: 45_000 },
-  },
-  // Polled: no host-pushed invalidation channel exists for this event today
-  // (see the implementation report), so without a cadence a fork detected
-  // after this query first cached would never surface. 45s sits between the
-  // publisher's own ~30s detection sweep and "expensive enough to matter" -
-  // the point of a fork prompt is time-to-resolution, not zero-latency, and
-  // this is a single small unary call.
-  "host.chatFork.get": {
-    ...LATEST_SCHEDULING,
-    poll: { kind: "fixed", intervalMs: 45_000 },
-  },
   // Opening paths changes state in the user's editor.
   "editor.openPaths": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
   "git.listChangedFiles": {
@@ -923,15 +746,6 @@ export const HOST_METHOD_POLL_TABLE = {
   // No poll: the PR detail stream is what notices a new push, and a re-render
   // off a changed `headRefOid` re-keys the query on its own.
   "pr.getLocalDiff": { ...LATEST_SCHEDULING, poll: null },
-  // The composer's PR/issue mention sections. Both are latest-wins with no
-  // poll: the menu is open for seconds at a time and drives every fetch
-  // explicitly (open, refresh click, filter change), so there is no cadence
-  // to keep - and a superseded read has nothing worth waiting for.
-  "mention.githubCatalog": { ...LATEST_SCHEDULING, poll: null },
-  // Latest-wins is load-bearing here rather than incidental: the section
-  // searches as the user types, and a queued query that has already been
-  // retyped past must not be the one that lands.
-  "mention.githubSearch": { ...LATEST_SCHEDULING, poll: null },
   // Creating a terminal allocates a host PTY session.
   "terminal.create": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
   // Killing a terminal terminates a host PTY session.
@@ -982,12 +796,6 @@ export const HOST_METHOD_POLL_TABLE = {
     joinResponseTimeoutMs: null,
     poll: null,
   },
-  // Setting the repo branch-prefix override persists worktree naming config.
-  "worktree.setRepoBranchPrefix": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
   "worktree.getBinding": {
     ...LATEST_SCHEDULING,
     poll: defineConditionPolicy("worktree.getBinding", {
@@ -1022,16 +830,8 @@ export const HOST_METHOD_POLL_TABLE = {
         // first boot, and `providers.pending` decays to 30s while an install
         // needs a bounded 5s - taking the faster, tighter-capped lane while
         // bytes are moving is the only ordering that keeps progress readable.
-        //
-        // Both lanes: automatic (`managedInstallState`) AND user-lane version
-        // manager rows (`managedVersions.available[].installState`). A
-        // non-blocking installPackVersion leaves only the user-lane row as
-        // `downloading` while the automatic lane stays settled — missing that
-        // would drop progress onto the 15-minute steady lane.
-        // `percent: null` still counts: a sibling-owned transfer needs the
-        // fast lane to notice completion.
-        const hasInstallInFlight = data.providers.some((provider) =>
-          providerHasManagedInstallInFlight(provider),
+        const hasInstallInFlight = data.providers.some(
+          (provider) => provider.managedInstallState?.status === "downloading",
         );
         if (hasInstallInFlight) return PROVIDERS_INSTALLING_POLL_LANE;
         const hasPendingProbe = data.providers.some(
@@ -1187,33 +987,6 @@ export const HOST_METHOD_POLL_TABLE = {
     joinResponseTimeoutMs: null,
     poll: null,
   },
-  // Reading the upstream LLM provider catalog for a provider - a pure read, so
-  // `latest`. `poll: null`: the catalog only changes as a result of an auth
-  // mutation on this same surface, which invalidates the query directly.
-  "providers.listModelProviders": {
-    ...LATEST_SCHEDULING,
-    poll: null,
-  },
-  // Upstream credential writes (connect / start OAuth / submit code /
-  // disconnect) - `fifo` for the same reason as `providers.mcpAuth`: two rapid
-  // actions must both land, in order, not be coalesced into one.
-  "providers.modelProviderAuth": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  // Bounded status poll for an in-flight OAuth attempt - a pure read, so
-  // `latest` (a superseded poll carries no information the newer one lacks).
-  "providers.awaitModelProviderAuth": {
-    ...LATEST_SCHEDULING,
-    poll: null,
-  },
-  // Cancelling an in-flight OAuth attempt tears down host-side pending state.
-  "providers.cancelModelProviderAuth": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
   // A user-initiated "get this provider's managed pack ready" kick. `fifo`
   // because it mutates host-side scheduling state (clears the cell's backoff,
   // promotes it to the front of the install queue) and two rapid retry taps
@@ -1221,37 +994,6 @@ export const HOST_METHOD_POLL_TABLE = {
   // not a status source - progress is read from `providers.list`, which
   // already carries `managedInstallState`.
   "providers.ensurePack": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  // The four per-pack version-manager methods. All `fifo` for the reason
-  // `providers.ensurePack` above is: each mutates durable host state (bytes on
-  // disk, the shared pin/policy record), so coalescing two rapid taps into one
-  // would drop a user action - and unlike a read, replaying the survivor is not
-  // equivalent. `poll: null` on all four: none is a status source. Progress and
-  // the resulting version list are read from `providers.list`, which carries
-  // `managedVersions`; polling the mutation would re-run it.
-  //
-  // These entries exist because this table is EXHAUSTIVE over the registry's
-  // method names - adding a method to `@traycer/protocol` without adding a row
-  // here is a gui-app compile error, which is the intended tripwire.
-  "providers.installPackVersion": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "providers.removePackVersion": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "providers.usePackVersion": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "providers.setPackPolicy": {
     mode: "fifo",
     joinResponseTimeoutMs: null,
     poll: null,
@@ -1296,53 +1038,22 @@ export const HOST_METHOD_POLL_TABLE = {
     joinResponseTimeoutMs: null,
     poll: null,
   },
-  // Config reads and bounded diagnostics reads can coalesce safely; config
-  // writes are ordered so rapid user changes are all persisted in sequence.
-  "config.shell.get": { ...LATEST_SCHEDULING, poll: null },
-  "config.shell.set": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
-  "config.shell.reset": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "config.shell.add": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
-  "config.shell.remove": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "config.shell.revertArgs": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "config.shell.listDetected": { ...LATEST_SCHEDULING, poll: null },
-  "config.shell.probe": { ...LATEST_SCHEDULING, poll: null },
-  "config.env.list": { ...LATEST_SCHEDULING, poll: null },
-  "config.env.set": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
-  "config.env.delete": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "config.logLevels.get": { ...LATEST_SCHEDULING, poll: null },
-  "config.logLevels.set": {
-    mode: "fifo",
-    joinResponseTimeoutMs: null,
-    poll: null,
-  },
-  "diagnostics.logs.list": { ...LATEST_SCHEDULING, poll: null },
-  "diagnostics.logs.tail": { ...LATEST_SCHEDULING, poll: null },
-  // A bounded read over settled facts (Usage page + epic cost badge). The
-  // Settings panel controls its own refetch (window/metric change, manual
-  // retry) and opts out of polling; the ambient epic cost badge opts in
-  // (matching `host.getRateLimitUsage`'s cadence below) so it self-heals
-  // within a bounded time from a silently-reverted fetch instead of staying
-  // stuck pending forever with no other trigger (ticket-7 fixup-01).
-  "host.usage.summary": {
-    ...LATEST_SCHEDULING,
-    poll: { kind: "fixed", intervalMs: 15 * MINUTE_MS },
-  },
+  "agentQuestions.list": { ...LATEST_SCHEDULING, poll: { kind: "fixed", intervalMs: 2000 } },
+  "agentQuestions.answer": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "agentQuestions.dismiss": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "backgroundJobs.list": { ...LATEST_SCHEDULING, poll: { kind: "fixed", intervalMs: 2000 } },
+  "backgroundJobs.status": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "backgroundJobs.cancel": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "agent.spawn": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "providers.updateBundled": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "providers.addApiKey": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "providers.removeApiKey": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "providers.listApiKeys": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.scaffold": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.connect": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.getRegistry": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.switch": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.remove": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
 } satisfies HostMethodPolicyTable;
 
 const hostMethodPolicyTable: HostMethodPolicyTable = HOST_METHOD_POLL_TABLE;

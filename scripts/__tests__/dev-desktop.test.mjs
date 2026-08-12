@@ -21,6 +21,15 @@ const CLI_ENTRY = path.join(
 );
 
 describe("dev-desktop CLI argv construction", () => {
+  it("selects one host build target for the current platform instead of the cross-platform matrix", () => {
+    expect(devDesktop.localHostBuildTarget("linux", "x64")).toBe("linux-x64");
+    expect(devDesktop.localHostBuildTarget("darwin", "arm64")).toBe("darwin-arm64");
+    expect(devDesktop.localHostBuildTarget("win32", "x64")).toBe("windows-x64");
+    expect(() => devDesktop.localHostBuildTarget("win32", "arm64")).toThrow(
+      "unsupported local hukum-host build target: windows-arm64",
+    );
+  });
+
   it("`host install` runs from source with --release + --allow-self-invocation when no cached archive is used", () => {
     expect(devDesktop.buildHostInstallArgs({ release: "1.2.3" })).toEqual([
       "run",
@@ -124,12 +133,13 @@ describe("dev-desktop concurrent stack entries", () => {
       "/tmp/hukum/example-slot/host.log",
       "example-slot",
       19123,
+      "http://127.0.0.1:42689",
     );
     const electronEntry = entries.find((e) => e.name === "electron");
     const hostEntry = entries.find((e) => e.name === "host");
     expect(electronEntry).toBeDefined();
     expect(electronEntry.command).toBe(
-      "DEV_DESKTOP_SLOT='example-slot' PORT='19123' bun run --cwd clients/desktop dev",
+      "HUKUM_DEV_AUTHN_BASE_URL='http://127.0.0.1:42689' DEV_DESKTOP_SLOT='example-slot' PORT='19123' ~/.bun/bin/bun run --cwd clients/desktop dev",
     );
     expect(hostEntry?.command).toContain(
       "/tmp/hukum/example-slot/host.log",

@@ -10,25 +10,27 @@ export interface OrderedProvider {
 }
 
 const PROVIDER_ID_ORDER = [
-  "codex",
-  "claude-code",
-  "opencode",
   "hukum",
+  "pi",
+  "antigravity",
+  "claude-code",
+  "cursor",
+  "codex",
+  "kiro",
+  "grok",
+  "opencode",
+  "kilocode",
+  "omp",
   "openrouter",
   "huggingface",
   "droid",
-  "cursor",
   "copilot",
-  "grok",
-  "kiro",
-  "kilocode",
   "kimi",
   "qwen",
   "amp",
   "devin",
-  "pi",
   "hermes",
-  "omp",
+  "gemini",
 ] as const satisfies ReadonlyArray<ProviderId>;
 
 type MissingProviderIdFromOrder = Exclude<
@@ -63,6 +65,8 @@ const GUI_HARNESS_BY_PROVIDER_ID = {
   pi: "pi",
   hermes: "hermes",
   omp: "omp",
+  antigravity: "antigravity",
+  gemini: "gemini",
 } satisfies Readonly<Record<ProviderId, GuiHarnessId>>;
 
 export const ORDERED_PROVIDERS: ExhaustiveOrderedProviders =

@@ -111,6 +111,7 @@ function makeTerminalAgentProjectionDoc(
   terminalAgentArgs: unknown,
   shouldSetTerminalAgentArgs: boolean,
   harnessId: string,
+  harnessSessionId: string | null = null,
 ): Y.Doc {
   const doc = new Y.Doc();
   const epic = doc.getMap("epic");
@@ -128,7 +129,7 @@ function makeTerminalAgentProjectionDoc(
   terminalAgent.set("model", null);
   terminalAgent.set("reasoningEffort", null);
   terminalAgent.set("agentMode", "regular");
-  terminalAgent.set("harnessSessionId", null);
+  terminalAgent.set("harnessSessionId", harnessSessionId);
   if (shouldSetTerminalAgentArgs) {
     terminalAgent.set("terminalAgentArgs", terminalAgentArgs);
   }
@@ -234,6 +235,22 @@ describe("open-epic-store doc projection", () => {
     const projected = projectTerminalAgents(doc, null);
 
     expect(projected.byId["terminal-1"]).toBeUndefined();
+  });
+
+  it("projects every live non-OpenCode Terminal harness", () => {
+    const antigravity = projectTerminalAgents(
+      makeTerminalAgentProjectionDoc(null, false, "antigravity"),
+      null,
+    );
+    const gemini = projectTerminalAgents(
+      makeTerminalAgentProjectionDoc(null, false, "gemini", "session-1"),
+      null,
+    );
+
+    expect(antigravity.byId["terminal-1"]?.harnessId).toBe("antigravity");
+    expect(antigravity.byId["terminal-1"]?.harnessSessionId).toBeNull();
+    expect(gemini.byId["terminal-1"]?.harnessId).toBe("gemini");
+    expect(gemini.byId["terminal-1"]?.harnessSessionId).toBe("session-1");
   });
 
   it("projects durable terminal-agent args with fallback and override semantics", () => {

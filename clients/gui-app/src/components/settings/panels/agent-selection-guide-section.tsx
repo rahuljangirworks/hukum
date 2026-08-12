@@ -29,6 +29,7 @@ const SAVE_DEBOUNCE_MS = 600;
 type AgentsGuideEditorState = {
   readonly value: string;
   readonly savedContent: string;
+  readonly persisted: boolean;
   readonly confirmOpen: boolean;
   readonly saveInFlight: boolean;
   readonly resetInFlight: boolean;
@@ -51,11 +52,12 @@ type AgentsGuideEditorAction =
   | { readonly type: "reset-idle-before-save" };
 
 function createAgentsGuideEditorState(
-  initialContent: string,
+  initial: { readonly content: string; readonly persisted: boolean },
 ): AgentsGuideEditorState {
   return {
-    value: initialContent,
-    savedContent: initialContent,
+    value: initial.content,
+    savedContent: initial.content,
+    persisted: initial.persisted,
     confirmOpen: false,
     saveInFlight: false,
     resetInFlight: false,
@@ -77,7 +79,7 @@ function agentsGuideEditorReducer(
     case "save-queued":
       return { ...state, saveError: false };
     case "save-succeeded":
-      return { ...state, savedContent: action.content };
+      return { ...state, savedContent: action.content, persisted: true };
     case "save-failed":
       return { ...state, saveError: true };
     case "save-idle":
@@ -91,6 +93,7 @@ function agentsGuideEditorReducer(
         ...state,
         value: action.content,
         savedContent: action.content,
+        persisted: true,
       };
     case "reset-failed":
       return { ...state, saveError: true };
@@ -197,6 +200,7 @@ function AgentSelectionGuideSectionInner(props: { readonly scope: HostScope }) {
         hostLabel={scope.hostLabel}
         initialContent={query.data.content}
         generatedDefaultContent={query.data.generatedDefaultContent}
+        initialPersisted={query.data.isPersisted !== false}
       />
     );
   }
@@ -231,13 +235,19 @@ function AgentsGuideEditor(props: {
   readonly hostLabel: string;
   readonly initialContent: string;
   readonly generatedDefaultContent: string;
+  readonly initialPersisted: boolean;
 }) {
-  const { hostLabel, initialContent, generatedDefaultContent } = props;
+  const {
+    hostLabel,
+    initialContent,
+    generatedDefaultContent,
+    initialPersisted,
+  } = props;
   const setMutation = useAgentSelectionGuideSetGlobalMutation();
   const resetMutation = useAgentSelectionGuideResetGlobalMutation();
   const [state, dispatch] = useReducer(
     agentsGuideEditorReducer,
-    initialContent,
+    { content: initialContent, persisted: initialPersisted },
     createAgentsGuideEditorState,
   );
   const debounceRef = useRef<number | null>(null);
@@ -385,7 +395,13 @@ function AgentsGuideEditor(props: {
         }
         onRevert={() => dispatch({ type: "confirm-open-changed", open: true })}
         revertTestId="agents-selection-guide-revert"
-        status={<SaveStatus saving={isSaving} error={hasError} />}
+        status={
+          <SaveStatus
+            saving={isSaving}
+            error={hasError}
+            persisted={state.persisted}
+          />
+        }
       />
       <ConfirmDestructiveDialog
         open={state.confirmOpen}
@@ -406,6 +422,7 @@ function AgentsGuideEditor(props: {
 function SaveStatus(props: {
   readonly saving: boolean;
   readonly error: boolean;
+  readonly persisted: boolean;
 }) {
   if (props.error) {
     return (
@@ -424,6 +441,13 @@ function SaveStatus(props: {
           variant={undefined}
         />
         Saving…
+      </span>
+    );
+  }
+  if (!props.persisted) {
+    return (
+      <span className="text-ui-xs text-muted-foreground">
+        Generated default
       </span>
     );
   }

@@ -34,12 +34,14 @@ vi.mock("@/hooks/providers/use-providers-list-query", () => ({
   }),
 }));
 
-function makeToolbarStore() {
+type TestedTuiHarness = "claude" | "opencode" | "antigravity" | "gemini";
+
+function makeToolbarStore(harnessId: TestedTuiHarness) {
   const store = createComposerToolbarStore({
     seedKey: "test",
     values: {
       permission: "supervised",
-      selection: { harnessId: "claude", modelSlug: "", profileId: null },
+      selection: { harnessId, modelSlug: "", profileId: null },
       reasoning: "",
       serviceTier: "",
     },
@@ -47,13 +49,13 @@ function makeToolbarStore() {
     tuiOnly: true,
   });
   // The Start gate reads the selected harness's runtime `modes` from the
-  // catalog, so seed a loaded catalog where `claude` is TUI-capable - otherwise
+  // catalog, so seed a loaded catalog where the harness is TUI-capable - otherwise
   // Start stays disabled.
   store.getState().setCatalog({
     harnesses: [
       {
-        id: "claude",
-        label: "Claude Code",
+        id: harnessId,
+        label: harnessId,
         enabled: true,
         available: true,
         error: null,
@@ -67,7 +69,7 @@ function makeToolbarStore() {
         availabilityPending: false,
       },
     ],
-    modelsHarnessId: "claude",
+    modelsHarnessId: harnessId,
     models: [],
     modelsLoaded: true,
     tuiOnly: true,
@@ -111,10 +113,13 @@ function makeGuiOnlyToolbarStore() {
   return store;
 }
 
-function renderPanel(onStart: (launch: TerminalAgentLaunch) => void) {
+function renderPanel(
+  onStart: (launch: TerminalAgentLaunch) => void,
+  harnessId: TestedTuiHarness,
+) {
   return render(
     <TerminalLaunchPanel
-      store={makeToolbarStore()}
+      store={makeToolbarStore(harnessId)}
       pending={false}
       disabledHint={null}
       onStart={onStart}
@@ -122,7 +127,7 @@ function renderPanel(onStart: (launch: TerminalAgentLaunch) => void) {
   );
 }
 
-describe("<TerminalLaunchPanel /> terminal-agent args handoff", () => {
+describe("<TerminalLaunchPanel /> initial prompt handoff", () => {
   beforeEach(() => {
     panelMocks.providers = [
       { providerId: "claude-code", terminalAgentArgs: "--from-settings" },
@@ -134,7 +139,7 @@ describe("<TerminalLaunchPanel /> terminal-agent args handoff", () => {
   });
 
   it("keeps the Start button visibly filled inside dialogs", () => {
-    renderPanel(vi.fn());
+    renderPanel(vi.fn(), "claude");
 
     const start = screen.getByRole("button", { name: "Start agent" });
     expect(start.getAttribute("data-variant")).toBe("secondary");
@@ -143,66 +148,107 @@ describe("<TerminalLaunchPanel /> terminal-agent args handoff", () => {
     );
   });
 
-  it("prefills Settings args but sends null when the field is untouched", () => {
+  it("keeps advanced Settings args out of the prompt field", () => {
     const onStart = vi.fn();
-    renderPanel(onStart);
+    renderPanel(onStart, "claude");
 
     const input = screen.getByLabelText<HTMLInputElement>(
-      "Terminal interface CLI arguments",
+      "Initial terminal agent prompt",
     );
-    expect(input.value).toBe("--from-settings");
+    expect(input.value).toBe("");
 
     fireEvent.click(screen.getByRole("button", { name: "Start agent" }));
 
     expect(onStart).toHaveBeenCalledWith(
       expect.objectContaining({
         harnessId: "claude",
+        initialPrompt: null,
         terminalAgentArgs: null,
       }),
     );
   });
 
-  it("sends an explicit empty-string override after the field is edited", () => {
+  it("sends typed text as an initial prompt, never as CLI args", () => {
     const onStart = vi.fn();
-    renderPanel(onStart);
+    renderPanel(onStart, "claude");
 
     fireEvent.change(
-      screen.getByLabelText("Terminal interface CLI arguments"),
+      screen.getByLabelText("Initial terminal agent prompt"),
       {
-        target: { value: "" },
+        target: { value: "Fix the terminal reliably" },
       },
     );
     fireEvent.click(screen.getByRole("button", { name: "Start agent" }));
 
     expect(onStart).toHaveBeenCalledWith(
       expect.objectContaining({
-        terminalAgentArgs: "",
+        initialPrompt: "Fix the terminal reliably",
+        terminalAgentArgs: null,
       }),
     );
   });
 
-  it("sends edited non-empty args verbatim", () => {
+  it("treats whitespace-only input as no initial prompt", () => {
     const onStart = vi.fn();
-    renderPanel(onStart);
+    renderPanel(onStart, "claude");
 
     fireEvent.change(
-      screen.getByLabelText("Terminal interface CLI arguments"),
+      screen.getByLabelText("Initial terminal agent prompt"),
       {
-        target: { value: "--dangerously-skip-permissions" },
+        target: { value: "   " },
       },
     );
     fireEvent.click(screen.getByRole("button", { name: "Start agent" }));
 
     expect(onStart).toHaveBeenCalledWith(
       expect.objectContaining({
-        terminalAgentArgs: "--dangerously-skip-permissions",
+        initialPrompt: null,
+        terminalAgentArgs: null,
       }),
     );
   });
+
+  it("accepts plain OpenCode prompt text without treating it as a path", () => {
+    const onStart = vi.fn();
+    renderPanel(onStart, "opencode");
+
+    const input = screen.getByLabelText("Initial terminal agent prompt");
+    fireEvent.change(input, { target: { value: "hello" } });
+
+    const start = screen.getByRole("button", { name: "Start agent" });
+    fireEvent.click(start);
+    expect(onStart).toHaveBeenCalledWith(
+      expect.objectContaining({
+        initialPrompt: "hello",
+        terminalAgentArgs: null,
+      }),
+    );
+  });
+
+  it.each(["antigravity", "gemini"] as const)(
+    "dispatches the selected %s Terminal harness instead of silently returning",
+    (harnessId) => {
+      const onStart = vi.fn();
+      renderPanel(onStart, harnessId);
+
+      fireEvent.change(
+        screen.getByLabelText("Initial terminal agent prompt"),
+        { target: { value: "Inspect this workspace" } },
+      );
+      fireEvent.click(screen.getByRole("button", { name: "Start agent" }));
+
+      expect(onStart).toHaveBeenCalledWith(
+        expect.objectContaining({
+          harnessId,
+          initialPrompt: "Inspect this workspace",
+        }),
+      );
+    },
+  );
 
   it("starts the agent with Cmd+Enter from anywhere on the surface", () => {
     const onStart = vi.fn();
-    renderPanel(onStart);
+    renderPanel(onStart, "claude");
 
     const startButton = screen.getByRole("button", { name: "Start agent" });
     expect(startButton.textContent).toContain(modLabel());

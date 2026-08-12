@@ -113,6 +113,10 @@ type HuggingFaceRateLimits = Extract<
   ProviderRateLimits,
   { provider: "huggingface" }
 >;
+type AntigravityRateLimits = Extract<
+  ProviderRateLimits,
+  { provider: "antigravity" }
+>;
 
 const MINUTES_PER_HOUR = 60;
 // A manual reset expiring inside this window is tinted `text-destructive` in the
@@ -1448,5 +1452,38 @@ export function ProviderRateLimitDetail({
     // without one render spend figures alone.
     case "huggingface":
       return <HuggingFaceRateLimitView data={data} variant={variant} />;
+    case "antigravity":
+      return <AntigravityRateLimitView data={data} variant={variant} />;
   }
+}
+
+export function AntigravityRateLimitView({
+  data,
+  variant,
+}: {
+  readonly data: AntigravityRateLimits;
+  readonly variant: RateLimitViewVariant;
+}): ReactNode {
+  return (
+    <RateLimitGroupStack>
+      {data.models.map((model) => (
+        <ProviderWindowRow
+          key={model.modelId}
+          window={{
+            usedPercent: Math.max(0, 1 - model.remainingPercentage),
+            resetsAt: Date.now() + model.timeUntilResetMs,
+            durationMinutes: null,
+          }}
+          namePrefix={model.label}
+          qualifier={model.isAutocompleteOnly ? "Autocomplete only" : null}
+        />
+      ))}
+      {!isOverviewVariant(variant) && (
+        <>
+          <ProviderNumberRow label="Prompt Credits" value={data.promptCredits.available} />
+          <ProviderNumberRow label="Monthly Prompts" value={data.promptCredits.monthly} />
+        </>
+      )}
+    </RateLimitGroupStack>
+  );
 }
