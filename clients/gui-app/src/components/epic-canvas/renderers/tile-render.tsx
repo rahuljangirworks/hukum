@@ -93,21 +93,22 @@ const TILE_RENDERERS: TileRendererRegistry = {
       isActive={isActive}
     />
   ),
-  "html-preview": ({ node, viewTabId, tileId }) => (
+  "html-preview": ({ node, viewTabId, tileId, epicId }) => (
     <HtmlPreviewTile
       node={node}
       viewTabId={viewTabId}
       tileId={tileId}
       isActive={false}
+      epicId={epicId}
     />
   ),
-  "brain-note": ({ node, viewTabId, tileId }) => (
+  "brain-note": ({ node, viewTabId, tileId, epicId }) => (
     <BrainNoteTile
       node={node}
       viewTabId={viewTabId}
       tileId={tileId}
       isActive={false}
-      epicId=""
+      epicId={epicId}
     />
   ),
   terminal: ({ node, viewTabId, tileId, isActive }) => (

@@ -85,6 +85,8 @@ function fiveHourWindow(
     case "grok":
     case "huggingface":
       return null;
+    default:
+      return null;
   }
 }
 
@@ -102,6 +104,8 @@ function weeklyWindow(
     case "kilocode":
     case "grok":
     case "huggingface":
+      return null;
+    default:
       return null;
   }
 }

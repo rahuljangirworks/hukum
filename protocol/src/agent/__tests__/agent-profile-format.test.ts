@@ -175,6 +175,8 @@ describe("detailed rate-limit formatting", () => {
         onDemandCap: null,
         onDemandUsed: null,
         prepaidBalance: null,
+        totalPeriodCredits: null,
+        usedPeriodCredits: null,
       },
       usageUpdatedAt: CAPTURED_AT,
     };

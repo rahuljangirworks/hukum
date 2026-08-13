@@ -202,6 +202,11 @@ export const TUI_AGENT_HARNESS_LABELS: Readonly<Record<TuiHarnessId, string>> =
     // Reserved schema value; current runtime catalogs and epic projection hide
     // Cursor terminal agents until the TUI surface is supported.
     cursor: "Cursor",
+    antigravity: "Antigravity",
+    gemini: "Gemini",
+    kiro: "Kiro",
+    kilocode: "Kilo Code",
+    pi: "Pi",
   };
 
 /**

@@ -608,6 +608,8 @@ describe("host.getRateLimitUsage v3.0 -> v2.1 / v1.2 grok downgrade bridges", ()
     onDemandCap: 0,
     onDemandUsed: 0,
     prepaidBalance: 0,
+    totalPeriodCredits: 100,
+    usedPeriodCredits: 12,
   };
 
   const grokAvailablePeriodLess = {
@@ -622,6 +624,8 @@ describe("host.getRateLimitUsage v3.0 -> v2.1 / v1.2 grok downgrade bridges", ()
     onDemandCap: null,
     onDemandUsed: null,
     prepaidBalance: null,
+    totalPeriodCredits: null,
+    usedPeriodCredits: null,
   };
 
   const grokUnavailable = {

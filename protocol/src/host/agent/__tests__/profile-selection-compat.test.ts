@@ -806,6 +806,8 @@ describe("agent.getProviderProfileRateLimits v1 <-> v2 hermes-provider translati
           onDemandCap: 0,
           onDemandUsed: 0,
           prepaidBalance: 0,
+          totalPeriodCredits: 100,
+          usedPeriodCredits: 12,
         },
         usageUpdatedAt: 1753142400000,
       });
@@ -837,6 +839,8 @@ describe("agent.getProviderProfileRateLimits v1 <-> v2 hermes-provider translati
           onDemandCap: null,
           onDemandUsed: null,
           prepaidBalance: null,
+          totalPeriodCredits: null,
+          usedPeriodCredits: null,
         },
         usageUpdatedAt: null,
       });
@@ -872,6 +876,8 @@ describe("agent.getProviderProfileRateLimits v1 <-> v2 hermes-provider translati
       onDemandCap: 0,
       onDemandUsed: 0,
       prepaidBalance: 0,
+      totalPeriodCredits: 100,
+      usedPeriodCredits: 12,
     };
     const downgraded =
       agentGetProviderProfileRateLimitsDowngradeV30ToV20.downgradeResponse({
@@ -926,6 +932,8 @@ describe("agent.getProviderProfileRateLimits v1 <-> v2 hermes-provider translati
           onDemandCap: null,
           onDemandUsed: null,
           prepaidBalance: null,
+          totalPeriodCredits: null,
+          usedPeriodCredits: null,
         },
         usageUpdatedAt: null,
       });

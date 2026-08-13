@@ -246,6 +246,9 @@ export const TUI_HARNESS_ID_TO_PROVIDER_ID: Record<TuiHarnessId, ProviderId> = {
   cursor: "cursor",
   antigravity: "antigravity",
   gemini: "gemini",
+  kiro: "kiro",
+  kilocode: "kilocode",
+  pi: "pi",
 };
 
 export const providerSelectionSchema = z.discriminatedUnion("kind", [

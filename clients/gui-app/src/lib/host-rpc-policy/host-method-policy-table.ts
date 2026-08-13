@@ -1054,6 +1054,17 @@ export const HOST_METHOD_POLL_TABLE = {
   "brain.getRegistry": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
   "brain.switch": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
   "brain.remove": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.getConfig": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.listTemplates": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.search": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.readNote": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.writeNote": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.listFolder": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.rebuildIndex": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.listSkills": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.createSkill": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.updateSkill": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
+  "brain.setSkillEnabled": { mode: "fifo", joinResponseTimeoutMs: null, poll: null },
 } satisfies HostMethodPolicyTable;
 
 const hostMethodPolicyTable: HostMethodPolicyTable = HOST_METHOD_POLL_TABLE;

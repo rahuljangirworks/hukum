@@ -23,7 +23,13 @@ interface BuildTreeRow {
   readonly parentId: string | null;
   readonly name: string;
   readonly type:
-    "chat" | "terminal-agent" | "spec" | "ticket" | "story" | "review";
+    | "chat"
+    | "terminal-agent"
+    | "spec"
+    | "ticket"
+    | "story"
+    | "review"
+    | "html-preview";
 }
 
 function buildTreeRecords(

@@ -16,18 +16,22 @@ export function AgentQuestionsPanelBody(props: LeftPanelSlotProps) {
     params,
     options: {
       enabled: true,
-      refetchInterval: 2000,
+      poll: true,
     },
   });
 
   const answerMutation = useHostMutation({
     client,
     method: "agentQuestions.answer",
+    options: null,
+    mapVariables: (v: { questionId: string; answer: string }) => v,
   });
 
   const dismissMutation = useHostMutation({
     client,
     method: "agentQuestions.dismiss",
+    options: null,
+    mapVariables: (v: { questionId: string }) => v,
   });
 
   const questions = query.data ?? [];
@@ -58,7 +62,7 @@ export function AgentQuestionsPanelBody(props: LeftPanelSlotProps) {
   );
 }
 
-export function AgentQuestionsLoadingPanelBody(props: LeftPanelSlotProps) {
+export function AgentQuestionsLoadingPanelBody() {
   return (
     <div className="h-full p-4 flex flex-col items-center justify-center text-muted-foreground gap-2">
       <CircleHelp className="h-8 w-8 animate-pulse" />

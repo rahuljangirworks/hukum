@@ -32,6 +32,8 @@ const ENV_NAME_PLACEHOLDER: Record<ProviderId, string> = {
   // OpenRouter, ...) in its own credential store; the env name is illustrative
   // only, same as Hermes above.
   omp: "OPENROUTER_API_KEY",
+  antigravity: "ANTIGRAVITY_API_KEY",
+  gemini: "GEMINI_API_KEY",
 };
 
 export function envNamePlaceholder(providerId: ProviderId): string {

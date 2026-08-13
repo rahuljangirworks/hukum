@@ -129,10 +129,17 @@ export const deletedReviewArtifactSchema = z.object({
 });
 export type DeletedReviewArtifact = z.infer<typeof deletedReviewArtifactSchema>;
 
+export const deletedHtmlPreviewArtifactSchema = z.object({
+  kind: z.literal("html-preview"),
+  ...baseDeletedEpicArtifactFields,
+});
+export type DeletedHtmlPreviewArtifact = z.infer<typeof deletedHtmlPreviewArtifactSchema>;
+
 export const deletedEpicArtifactSchema = z.discriminatedUnion("kind", [
   deletedSpecArtifactSchema,
   deletedTicketArtifactSchema,
   deletedStoryArtifactSchema,
   deletedReviewArtifactSchema,
+  deletedHtmlPreviewArtifactSchema,
 ]);
 export type DeletedEpicArtifact = z.infer<typeof deletedEpicArtifactSchema>;

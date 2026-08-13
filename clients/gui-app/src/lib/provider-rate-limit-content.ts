@@ -277,5 +277,7 @@ export function resolveProviderPlanLabel(
     case "kilocode":
     case "huggingface":
       return null;
+    default:
+      return null;
   }
 }

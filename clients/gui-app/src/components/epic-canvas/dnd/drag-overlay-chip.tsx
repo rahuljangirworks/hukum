@@ -13,7 +13,7 @@ import {
   FilePlus,
   Folder,
   GitPullRequest,
-  Lock,
+  Brain,
 } from "lucide-react";
 import { LEFT_PANEL_DEFINITIONS } from "@/components/epic-canvas/sidebar/left-panel-registry";
 import { EpicNodeTabIcon } from "@/components/epic-canvas/epic-node-tab-icon";
@@ -32,11 +32,11 @@ import {
   isBlankTileRef,
   isManagedCommandOutputTileRef,
   isCommGraphTileRef,
-  isPublishedChatTileRef,
   isDiffTileRef,
   isGitDiffTileRef,
   isPrDetailTileRef,
   isPrDiffTileRef,
+  isBrainNoteTileRef,
   type BlankTileRef,
   type ManagedCommandOutputTileRef,
   type EpicCanvasTileRef,
@@ -187,10 +187,10 @@ function EpicCanvasNodeDragOverlay(props: {
       </m.div>
     );
   }
-  if (isPublishedChatTileRef(props.node)) {
+  if (isBrainNoteTileRef(props.node)) {
     return (
       <m.div {...CHIP_MOTION} className={cn(CHIP_CLASS)}>
-        <Lock className="size-3.5 shrink-0 text-muted-foreground" />
+        <Brain className="size-3.5 shrink-0 text-muted-foreground" />
         <span className="min-w-0 truncate font-medium">{props.node.name}</span>
       </m.div>
     );

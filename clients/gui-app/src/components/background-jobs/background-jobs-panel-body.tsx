@@ -16,13 +16,15 @@ export function BackgroundJobsPanelBody(props: LeftPanelSlotProps) {
     params,
     options: {
       enabled: true,
-      refetchInterval: 2000,
+      poll: true,
     },
   });
 
   const cancelMutation = useHostMutation({
     client,
     method: "backgroundJobs.cancel",
+    options: null,
+    mapVariables: (v: { jobId: string }) => v,
   });
 
   const jobs = query.data ?? [];
@@ -53,7 +55,7 @@ export function BackgroundJobsPanelBody(props: LeftPanelSlotProps) {
   );
 }
 
-export function BackgroundJobsLoadingPanelBody(props: LeftPanelSlotProps) {
+export function BackgroundJobsLoadingPanelBody() {
   return (
     <div className="h-full p-4 flex flex-col items-center justify-center text-muted-foreground gap-2">
       <Activity className="h-8 w-8 animate-pulse" />

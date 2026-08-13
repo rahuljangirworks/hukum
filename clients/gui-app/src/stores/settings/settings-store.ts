@@ -250,6 +250,7 @@ function clampCodeFontSize(value: number): number {
 
 function partializeSettingsState(state: SettingsState): PersistedSettingsState {
   return {
+    providerRailStatus: state.providerRailStatus,
     theme: state.theme,
     themePreset: state.themePreset,
     defaultSelection: state.defaultSelection,

@@ -31,6 +31,8 @@ const TERMINAL_AGENT_ARGS_PLACEHOLDER: Record<ProviderId, string> = {
   pi: "CLI arguments (optional)",
   hermes: "CLI arguments (optional)",
   omp: "CLI arguments (optional)",
+  antigravity: "CLI arguments (optional)",
+  gemini: "CLI arguments (optional)",
 };
 
 function terminalAgentArgsPlaceholder(providerId: ProviderId): string {

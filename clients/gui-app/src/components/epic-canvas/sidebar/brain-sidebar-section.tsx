@@ -8,7 +8,7 @@
 
 import { useEffect } from "react";
 import { Brain } from "lucide-react";
-import { useBrainConfigStore, selectActiveBrain, selectHasMultipleBrains } from "@/stores/brain/brain-config-store";
+import { useBrainConfigStore, selectActiveBrain } from "@/stores/brain/brain-config-store";
 import { useBrainTreeStore } from "@/stores/brain/brain-tree-store";
 import { BrainSearchInput } from "./brain-search-input";
 import { BrainFolderTree } from "./brain-folder-tree";
@@ -51,18 +51,13 @@ function BrainConfiguredContent() {
       name,
       isDir: true,
     }));
-    entries.push({ path: "_config.md", name: "_config.md", isDir: false, title: "Brain Config" });
+    entries.push({ path: "_config.md", name: "_config.md", isDir: false });
 
     setFolderEntries("", entries);
   }, [config, folderCache, setFolderEntries]);
 
   // Derive brain display name from vault path
   const activeBrain = useBrainConfigStore(selectActiveBrain);
-  const brains = useBrainConfigStore((s) => s.brains);
-  const hasMultiple = useBrainConfigStore(selectHasMultipleBrains);
-  const switchBrain = useBrainConfigStore((s) => s.switchBrain);
-  const openSetupWizard = useBrainConfigStore((s) => s.openSetupWizard);
-  const removeBrainEntry = useBrainConfigStore((s) => s.removeBrainEntry);
 
   const brainName = activeBrain?.name ?? config?.vaultPath?.split("/").pop()?.replace(/^\./, "") ?? "brain";
   const brainPath = activeBrain?.vaultPath ?? config?.vaultPath ?? "";

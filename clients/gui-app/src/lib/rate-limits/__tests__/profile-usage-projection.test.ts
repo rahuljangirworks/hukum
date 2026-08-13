@@ -110,6 +110,8 @@ function grok(
     onDemandCap: null,
     onDemandUsed: null,
     prepaidBalance: null,
+    totalPeriodCredits: null,
+    usedPeriodCredits: null,
   };
 }
 

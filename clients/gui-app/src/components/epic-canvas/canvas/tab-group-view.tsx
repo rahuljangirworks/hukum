@@ -65,6 +65,7 @@ import type {
 import { WORKSPACE_FILE_TAB_KIND } from "@/stores/epics/canvas/types";
 import {
   isBlankTileRef,
+  isBrainNoteTileRef,
   isCommGraphTileRef,
   isPublishedChatTileRef,
   isDiffTileRef,
@@ -847,6 +848,7 @@ function ActiveTabBody(props: ActiveTabBodyProps) {
     isPrDetailTileRef(activeTab) ||
     isPrDiffTileRef(activeTab) ||
     isBlankTileRef(activeTab) ||
+    isBrainNoteTileRef(activeTab) ||
     isManagedCommandOutputTileRef(activeTab) ||
     isCommGraphTileRef(activeTab) ||
     isPublishedChatTileRef(activeTab) ||

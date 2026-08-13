@@ -90,6 +90,9 @@ export const tuiHarnessIdSchema = z.enum([
   "cursor",
   "antigravity",
   "gemini",
+  "kiro",
+  "kilocode",
+  "pi",
 ]);
 export type TuiHarnessId = z.infer<typeof tuiHarnessIdSchema>;
 

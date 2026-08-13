@@ -99,6 +99,8 @@ const PROVIDER_SHARES_SKILLS_AND_PLUGINS: Record<
   pi: false,
   hermes: false,
   omp: false,
+  antigravity: false,
+  gemini: false,
 };
 
 export interface FailedProviderProfileAttempt {

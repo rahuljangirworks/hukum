@@ -8,6 +8,7 @@ export interface DescendantCounts {
   readonly review: number;
   readonly chat: number;
   readonly "terminal-agent": number;
+  readonly "html-preview": number;
 }
 
 /**
@@ -29,6 +30,7 @@ export function computeDescendantCounts(
     review: 0,
     chat: 0,
     "terminal-agent": 0,
+    "html-preview": 0,
   };
   const queue: string[] = [rootId];
   while (queue.length > 0) {
@@ -64,6 +66,7 @@ export function computeDescendantCountsFromTree(
     review: 0,
     chat: 0,
     "terminal-agent": 0,
+    "html-preview": 0,
   };
   const queue: string[] = [rootId];
   const seen = new Set<string>();

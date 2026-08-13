@@ -820,7 +820,7 @@ class TerminalMentionProvider extends ComposerMentionProvider {
 }
 
 const EPIC_ARTIFACT_MENTION_METHODS: Record<
-  EpicArtifactKind,
+  Exclude<EpicArtifactKind, "html-preview">,
   EpicArtifactMentionMethod
 > = {
   spec: "epic.mentionSpecs",
@@ -829,7 +829,7 @@ const EPIC_ARTIFACT_MENTION_METHODS: Record<
   review: "epic.mentionReviews",
 };
 
-const ALL_ARTIFACT_KINDS: ReadonlyArray<EpicArtifactKind> = [
+const ALL_ARTIFACT_KINDS: ReadonlyArray<Exclude<EpicArtifactKind, "html-preview">> = [
   "spec",
   "ticket",
   "story",

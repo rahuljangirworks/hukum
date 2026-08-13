@@ -392,6 +392,8 @@ describe("resolveProviderPlanLabel", () => {
         onDemandCap: null,
         onDemandUsed: null,
         prepaidBalance: null,
+        totalPeriodCredits: null,
+        usedPeriodCredits: null,
       }),
     ).toBe("SuperGrok");
   });
@@ -410,6 +412,8 @@ describe("resolveProviderPlanLabel", () => {
         onDemandCap: null,
         onDemandUsed: null,
         prepaidBalance: null,
+        totalPeriodCredits: null,
+        usedPeriodCredits: null,
       }),
     ).toBeNull();
   });

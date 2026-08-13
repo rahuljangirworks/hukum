@@ -84,6 +84,8 @@ const GROK_GOOD: ProviderRateLimits = {
   onDemandCap: null,
   onDemandUsed: null,
   prepaidBalance: null,
+  totalPeriodCredits: null,
+  usedPeriodCredits: null,
 };
 
 function response(

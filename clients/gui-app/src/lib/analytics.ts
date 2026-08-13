@@ -94,7 +94,9 @@ export type AnalyticsHarness =
   | "openrouter"
   | "pi"
   | "qwen"
-  | "hukum";
+  | "hukum"
+  | "antigravity"
+  | "gemini";
 
 /** Product vocabulary only - never the internal host/app-local/global source
  * seam. Callers pass `MergedNotificationRow.category`, already mapped at the
@@ -189,7 +191,9 @@ export type AnalyticsProvider =
   | "openrouter"
   | "pi"
   | "qwen"
-  | "hukum";
+  | "hukum"
+  | "antigravity"
+  | "gemini";
 
 export type AnalyticsRole = "editor" | "owner" | "viewer";
 

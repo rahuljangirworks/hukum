@@ -11,7 +11,6 @@ import { useCallback, use, useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogDescription,
   DialogFooter,
@@ -36,7 +35,7 @@ import {
   selectResolvedVaultPath,
   type BrainTemplate,
 } from "@/stores/brain/brain-config-store";
-import { BrainTemplateCard } from "./brain-template-card";
+
 import { RunnerHostContext } from "@/providers/runner-host-context";
 import { useHostClient } from "@/lib/host";
 
@@ -121,7 +120,6 @@ function ChoosePathStep() {
 
 function SelectTemplateStep() {
   const setupMode = useBrainConfigStore((s) => s.setupMode);
-  const setSetupStep = useBrainConfigStore((s) => s.setSetupStep);
 
   return setupMode === "new" ? <NewBrainForm /> : <ConnectBrainForm />;
 }
@@ -135,7 +133,6 @@ function NewBrainForm() {
   const setVaultName = useBrainConfigStore((s) => s.setVaultName);
   const setSelectedTemplate = useBrainConfigStore((s) => s.setSelectedTemplate);
   const setSetupStep = useBrainConfigStore((s) => s.setSetupStep);
-  const setSetupError = useBrainConfigStore((s) => s.setSetupError);
   const setupError = useBrainConfigStore((s) => s.setupError);
   const resolvedPath = useBrainConfigStore(selectResolvedVaultPath);
   const runnerHost = use(RunnerHostContext);
@@ -422,9 +419,7 @@ function ConnectingStep() {
   const selectedTemplate = useBrainConfigStore((s) => s.selectedTemplate);
   const existingPath = useBrainConfigStore((s) => s.existingPath);
   const setSetupStep = useBrainConfigStore((s) => s.setSetupStep);
-  const setSetupError = useBrainConfigStore((s) => s.setSetupError);
   const setSetupResult = useBrainConfigStore((s) => s.setSetupResult);
-  const setConfig = useBrainConfigStore((s) => s.setConfig);
   const resolvedPath = useBrainConfigStore(selectResolvedVaultPath);
   const client = useHostClient();
 

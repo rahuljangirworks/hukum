@@ -1465,25 +1465,37 @@ export function AntigravityRateLimitView({
   readonly variant: RateLimitViewVariant;
 }): ReactNode {
   return (
-    <RateLimitGroupStack>
-      {data.models.map((model) => (
-        <ProviderWindowRow
-          key={model.modelId}
-          window={{
-            usedPercent: Math.max(0, 1 - model.remainingPercentage),
-            resetsAt: Date.now() + model.timeUntilResetMs,
-            durationMinutes: null,
-          }}
-          namePrefix={model.label}
-          qualifier={model.isAutocompleteOnly ? "Autocomplete only" : null}
-        />
-      ))}
-      {!isOverviewVariant(variant) && (
-        <>
-          <ProviderNumberRow label="Prompt Credits" value={data.promptCredits.available} />
-          <ProviderNumberRow label="Monthly Prompts" value={data.promptCredits.monthly} />
-        </>
-      )}
-    </RateLimitGroupStack>
+    <RateLimitGroupStack
+      groups={[
+        {
+          key: "models",
+          node: data.models.length > 0 ? (
+            <div className="flex flex-col gap-3">
+              {data.models.map((model) => (
+                <ProviderWindowRow
+                  key={model.modelId}
+                  window={{
+                    usedPercent: Math.max(0, 1 - model.remainingPercentage),
+                    resetsAt: Date.now() + model.timeUntilResetMs,
+                    durationMinutes: null,
+                  }}
+                  namePrefix={model.label}
+                  qualifier={model.isAutocompleteOnly ? "Autocomplete only" : null}
+                />
+              ))}
+            </div>
+          ) : null,
+        },
+        {
+          key: "credits",
+          node: !isOverviewVariant(variant) ? (
+            <>
+              <ProviderNumberRow label="Prompt Credits" value={data.promptCredits.available} format={(v) => v.toLocaleString()} />
+              <ProviderNumberRow label="Monthly Prompts" value={data.promptCredits.monthly} format={(v) => v.toLocaleString()} />
+            </>
+          ) : null,
+        },
+      ]}
+    />
   );
 }

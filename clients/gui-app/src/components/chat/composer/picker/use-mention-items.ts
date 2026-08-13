@@ -918,6 +918,8 @@ function localArtifactSuggestion(
       return { kind: "epic-artifact", artifactType: "story", ...common };
     case "review":
       return { kind: "epic-artifact", artifactType: "review", ...common };
+    case "html-preview":
+      return { kind: "epic-artifact", artifactType: "html-preview", ...common };
   }
 }
 

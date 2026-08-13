@@ -689,6 +689,12 @@ export type EpicMentionReviewSuggestion = z.infer<
   typeof epicMentionReviewSuggestionSchema
 >;
 
+export const epicMentionHtmlPreviewSuggestionSchema =
+  epicMentionArtifactSuggestionSchemaFor("html-preview");
+export type EpicMentionHtmlPreviewSuggestion = z.infer<
+  typeof epicMentionHtmlPreviewSuggestionSchema
+>;
+
 export const epicMentionArtifactSuggestionSchema = z.discriminatedUnion(
   "artifactType",
   [
@@ -696,6 +702,7 @@ export const epicMentionArtifactSuggestionSchema = z.discriminatedUnion(
     epicMentionTicketSuggestionSchema,
     epicMentionStorySuggestionSchema,
     epicMentionReviewSuggestionSchema,
+    epicMentionHtmlPreviewSuggestionSchema,
   ],
 );
 export type EpicMentionArtifactSuggestion = z.infer<

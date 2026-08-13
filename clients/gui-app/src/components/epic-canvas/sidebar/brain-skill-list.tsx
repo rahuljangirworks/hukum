@@ -87,10 +87,9 @@ function BrainSkillRow({
           {skill.name}
         </span>
         {skill.overLimit && (
-          <AlertTriangle
-            className="h-3 w-3 shrink-0 text-amber-500"
-            title="Over 200 lines — consider compressing"
-          />
+          <span title="Over 200 lines — consider compressing">
+            <AlertTriangle className="h-3 w-3 shrink-0 text-amber-500" />
+          </span>
         )}
       </div>
       <Switch

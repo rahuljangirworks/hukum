@@ -37,6 +37,8 @@ const API_KEY_DASHBOARD_URL: Record<ProviderId, string | null> = {
   pi: null,
   hermes: null,
   omp: null,
+  antigravity: null,
+  gemini: null,
 };
 
 function apiKeyStatusLabel(apiKey: ProviderCliState["apiKey"]): string {

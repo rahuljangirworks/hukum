@@ -35,7 +35,7 @@ interface MutationContext {
 function useThreadInvalidator(): (
   hostId: string | null,
   epicId: string,
-  artifactType: "spec" | "ticket" | "story" | "review",
+  artifactType: "spec" | "ticket" | "story" | "review" | "html-preview",
   artifactId: string,
 ) => void {
   const queryClient = useQueryClient();

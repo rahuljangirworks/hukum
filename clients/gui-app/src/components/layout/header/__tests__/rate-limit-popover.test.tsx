@@ -1381,6 +1381,8 @@ describe("<RateLimitPopover /> rail", () => {
         onDemandCap: null,
         onDemandUsed: null,
         prepaidBalance: 25,
+        totalPeriodCredits: null,
+        usedPeriodCredits: null,
       }),
     };
     renderPopover();

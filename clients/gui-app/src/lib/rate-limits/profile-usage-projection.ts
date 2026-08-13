@@ -329,7 +329,7 @@ function projectedLiveWindows(
       const credits = huggingFaceCreditProjection(rateLimits);
       return credits === null ? [] : [credits];
     }
-    case "kilocode":
+    default:
       return [];
   }
 }

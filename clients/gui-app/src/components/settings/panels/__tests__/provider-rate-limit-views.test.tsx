@@ -765,6 +765,8 @@ describe("GrokRateLimitView", () => {
     onDemandCap: 50,
     onDemandUsed: 5.5,
     prepaidBalance: 25,
+    totalPeriodCredits: null,
+    usedPeriodCredits: null,
   };
 
   const grokPeriodLess: GrokRateLimits = {
@@ -779,6 +781,8 @@ describe("GrokRateLimitView", () => {
     onDemandCap: null,
     onDemandUsed: null,
     prepaidBalance: null,
+    totalPeriodCredits: null,
+    usedPeriodCredits: null,
   };
 
   it("renders a Weekly usage bar when period is present", () => {
@@ -949,6 +953,8 @@ describe("ProviderRateLimitDetail dispatch", () => {
           onDemandCap: null,
           onDemandUsed: null,
           prepaidBalance: 8,
+          totalPeriodCredits: null,
+          usedPeriodCredits: null,
         }}
         variant="settings"
         codexResetAction={null}

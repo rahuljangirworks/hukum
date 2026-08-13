@@ -235,6 +235,9 @@ export const tuiHarnessIdSchema = harnessIdSchema.extract([
   "cursor",
   "antigravity",
   "gemini",
+  "kiro",
+  "kilocode",
+  "pi",
 ]);
 export type TuiHarnessId = z.infer<typeof tuiHarnessIdSchema>;
 

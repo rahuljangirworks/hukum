@@ -19,6 +19,7 @@ import {
   TILE_KIND_PUBLISHED_CHAT,
   TILE_KIND_SNAPSHOT_DIFF,
 } from "./tile-kinds";
+import type { BrainNoteTileRef } from "./tile-schema/brain-note-tile";
 
 /**
  * Openable node kinds in v1. Subset of `EpicNodeKind` - the sidebar may
@@ -446,7 +447,8 @@ export type EpicCanvasTileRef =
   | PublishedChatTileRef
   | PrDetailTileRef
   | PrDiffTileRef
-  | BlankTileRef;
+  | BlankTileRef
+  | BrainNoteTileRef;
 
 export function isPublishedChatTileRef(
   value: EpicCanvasTileRef,
@@ -458,6 +460,12 @@ export function isBlankTileRef(
   value: EpicCanvasTileRef,
 ): value is BlankTileRef {
   return value.type === TILE_KIND_BLANK;
+}
+
+export function isBrainNoteTileRef(
+  value: EpicCanvasTileRef,
+): value is BrainNoteTileRef {
+  return value.type === "brain-note";
 }
 
 export function isManagedCommandOutputTileRef(
