@@ -1390,6 +1390,16 @@ function useChatTileSessionViewModel(props: ChatTileSessionViewProps) {
   // they can act on or attribute an indicator to. See
   // `resolvedTurnStatus`'s doc comment for the exact derivation.
   const composerActiveTurnStatus = resolvedTurnStatus(state, activeTurnStatus);
+  const activeMessageContent = useMemo<
+    ChatQueuedPromptItem["message"]["content"] | null
+  >(() => {
+    const userMessageId = state.activeTurn?.userMessageId;
+    if (userMessageId === null || userMessageId === undefined) return null;
+    const message = state.messages.find(
+      (candidate) => candidate.role === "user" && candidate.messageId === userMessageId,
+    );
+    return message?.role === "user" ? message.message.content : null;
+  }, [state.activeTurn?.userMessageId, state.messages]);
   const renderedMessages = useRenderedMessages(
     {
       messages: state.messages,
@@ -2125,6 +2135,7 @@ function useChatTileSessionViewModel(props: ChatTileSessionViewProps) {
   const lowerTurn = useMemo(
     () => ({
       activeTurnStatus: composerActiveTurnStatus,
+      activeMessageContent,
       steerCapable,
       steerProtocolSupported,
       getActiveTurnForSteer,
@@ -2133,6 +2144,7 @@ function useChatTileSessionViewModel(props: ChatTileSessionViewProps) {
     }),
     [
       composerActiveTurnStatus,
+      activeMessageContent,
       steerCapable,
       steerProtocolSupported,
       getActiveTurnForSteer,

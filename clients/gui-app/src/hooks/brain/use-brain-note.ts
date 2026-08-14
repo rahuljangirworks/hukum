@@ -41,6 +41,6 @@ export function useBrainWriteNote() {
     method: "brain.writeNote",
     mutationKey: ["brain", "writeNote"],
     errorMessage: "Failed to write brain note",
-    invalidateMethods: ["brain.search", "brain.readNote", "brain.listFolder"],
+    invalidateMethods: ["brain.search", "brain.getGraph", "brain.readNote", "brain.listFolder"],
   });
 }

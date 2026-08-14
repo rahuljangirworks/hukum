@@ -1,0 +1,119 @@
+# Implementation Plan
+
+- [x] 1. Write bug condition exploration test
+  - **Property 1: Bug Condition** - Executable Resolution Fails With Incorrect Base Directory
+  - **IMPORTANT**: Write this property-based test BEFORE implementing the fix
+  - **CRITICAL**: This test MUST FAIL on unfixed code - failure confirms the bug exists
+  - **DO NOT attempt to fix the test or the code when it fails**
+  - **NOTE**: This test encodes the expected behavior - it will validate the fix when it passes after implementation
+  - **GOAL**: Surface counterexamples that demonstrate the resolver computes incorrect paths and `defaultTerminalSelection` is undefined
+  - **Scoped PBT Approach**: Scope the property to concrete failing cases:
+    - `bundledExecutableCandidates("pi")` when `process.cwd()` differs from project root
+    - `bundledExecutableCandidates("gemini")` in compiled mode with mismatched `process.execPath`
+    - `settingsStore.getState().defaultTerminalSelection` is undefined
+  - Test file location: `src/services/tui-lifecycle-service/__tests__/resolver-bug-condition.test.ts` (host side for resolver) and `clients/gui-app/src/__tests__/terminal-default-bug-condition.test.ts` (client side for settings)
+  - Test that `bundledExecutableCandidates(harnessId)` returns paths that do NOT exist when `process.cwd()` is set to a subdirectory (from Bug Condition: `bundledBinaryNotFoundAtComputedPath(harnessId, runtimeMode)`)
+  - Test that `defaultTerminalSelection` is undefined on the settings store (from Bug Condition: `defaultTerminalSelection IS UNDEFINED`)
+  - Test that new terminal conversations use `defaultSelection` (chat default) instead of a terminal-specific default
+  - Run test on UNFIXED code - expect FAILURE (this confirms the bug exists)
+  - **EXPECTED OUTCOME**: Test FAILS (this is correct - it proves the bug exists)
+  - Document counterexamples found:
+    - `bundledExecutableCandidates("pi")` resolves to wrong path when cwd != project root
+    - `defaultExecutableResolver("gemini")` returns null in compiled mode
+    - `useSettingsStore.getState().defaultTerminalSelection` is undefined
+  - Mark task complete when test is written, run, and failure is documented
+  - _Requirements: 1.2, 1.3, 1.4, 2.2, 2.3, 2.4_
+
+- [x] 2. Write preservation property tests (BEFORE implementing fix)
+  - **Property 2: Preservation** - Claude/Codex Resolution and Chat Defaults Unchanged
+  - **IMPORTANT**: Follow observation-first methodology
+  - **IMPORTANT**: Write these tests BEFORE implementing the fix
+  - Observe behavior on UNFIXED code for non-buggy inputs:
+    - Observe: `defaultExecutableResolver("claude")` resolves correctly in dev mode
+    - Observe: `defaultExecutableResolver("codex")` resolves correctly in dev mode
+    - Observe: PATH fallback works for executables not in `providers/`
+    - Observe: `settingsStore.getState().defaultSelection` returns current chat default
+    - Observe: Mid-session provider switching via `composerHarnessMemoryStore` works
+    - Observe: Persisted settings load and merge correctly
+  - Write property-based tests capturing observed behavior patterns:
+    - For all resolution calls with harnessId in ["claude", "codex"], the resolver produces valid paths that exist under `providers/` (from Preservation Requirements: claude/codex continue to resolve)
+    - For all PATH-only executables, fallback resolution behavior is identical (from Preservation: PATH fallback unchanged)
+    - For all chat conversations, `defaultSelection` is used (from Preservation: chat default unchanged)
+    - For all persisted state shapes (simulating legacy data without `defaultTerminalSelection`), merge produces valid state (from Preservation: settings migration)
+  - Test file location: `src/services/tui-lifecycle-service/__tests__/resolver-preservation.test.ts` (host side) and `clients/gui-app/src/__tests__/settings-preservation.test.ts` (client side)
+  - Run tests on UNFIXED code
+  - **EXPECTED OUTCOME**: Tests PASS (this confirms baseline behavior to preserve)
+  - Mark task complete when tests are written, run, and passing on unfixed code
+  - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
+
+- [x] 3. Fix executable resolver base directory computation
+
+  - [x] 3.1 Implement robust base directory resolution in `bundledExecutableCandidates()`
+    - Replace `process.cwd()` fallback with `__dirname`-relative computation (or `import.meta.dir` for Bun)
+    - In dev mode: resolve relative to file's actual location (`join(__dirname, "..", "..", "..")` to reach project root)
+    - In compiled mode: continue using `dirname(process.execPath)/..` but validate the path exists
+    - Improve dev-mode detection: instead of checking if `execPath` ends with "bun"/"node", check if `__dirname` contains a `src/` path segment or use an env flag
+    - File: `src/services/tui-lifecycle-service/resolver.ts` (hukum-host)
+    - _Bug_Condition: isBugCondition(input) where input.action == "resolve" AND bundledBinaryNotFoundAtComputedPath(harnessId, runtimeMode)_
+    - _Expected_Behavior: bundledExecutableCandidates(harnessId) returns correct absolute path using __dirname-relative resolution regardless of cwd or execPath_
+    - _Preservation: claude/codex resolution unchanged, PATH fallback unchanged_
+    - _Requirements: 2.1, 2.2_
+
+  - [x] 3.2 Add diagnostic logging for resolution failures
+    - When a candidate path doesn't exist, log the computed path and which strategy was used
+    - For bundled binaries that exist but lack `X_OK`, log a specific warning mentioning `chmod +x`
+    - For gitignored providers (opencode, kiro, kilocode) whose binaries are missing, provide actionable guidance ("binary not found at expected path, run build or ensure executable is on PATH")
+    - File: `src/services/tui-lifecycle-service/resolver.ts` (hukum-host), possibly `constants.ts`
+    - _Bug_Condition: isBugCondition(input) where gitignored provider binary missing_
+    - _Expected_Behavior: clear diagnostic message + PATH fallback still attempted_
+    - _Preservation: existing log output for claude/codex unchanged_
+    - _Requirements: 2.1_
+
+  - [x] 3.3 Add `defaultTerminalSelection` to settings store
+    - Add `defaultTerminalSelection: HarnessModelSelection` field to `SettingsState` interface
+    - Add to `PersistedSettingsState` for persistence
+    - Add `setDefaultTerminalSelection` setter using existing `makeSetter` pattern
+    - Set initial value to `DEFAULT_SELECTION` (same as chat initially)
+    - Update `partializeSettingsState()` to include `defaultTerminalSelection`
+    - Update `merge()` function to handle rehydration gracefully (fall back to `DEFAULT_SELECTION` if missing)
+    - Export `DEFAULT_TERMINAL_SELECTION` constant from `landing-options.ts`
+    - Files: `clients/gui-app/src/stores/settings/settings-store.ts`, `clients/gui-app/src/components/home/data/landing-options.ts`
+    - _Bug_Condition: isBugCondition(input) where input.action == "default" AND defaultTerminalSelection IS UNDEFINED_
+    - _Expected_Behavior: settingsStore exposes defaultTerminalSelection field with getter/setter and persistence_
+    - _Preservation: existing defaultSelection for chat unchanged, settings migration safe_
+    - _Requirements: 2.3, 3.3, 3.5_
+
+  - [x] 3.4 Wire landing composer to use per-surface default
+    - When creating a new terminal conversation, read `defaultTerminalSelection` from settings store
+    - When creating a new chat conversation, read `defaultSelection` from settings store
+    - Do NOT use `composerHarnessMemoryStore` last-used value for new conversation initialization
+    - The memory store continues to record selections for mid-session switching only
+    - Files: Landing composer component, `clients/gui-app/src/stores/composer/composer-harness-memory-store.ts`
+    - _Bug_Condition: isBugCondition(input) where composerMode == "terminal" AND defaultTerminalSelection was undefined_
+    - _Expected_Behavior: new terminal conversations use defaultTerminalSelection, new chats use defaultSelection_
+    - _Preservation: mid-session provider switching unchanged, composerHarnessMemoryStore still records for in-session use_
+    - _Requirements: 2.3, 2.4, 3.2_
+
+  - [x] 3.5 Verify bug condition exploration test now passes
+    - **Property 1: Expected Behavior** - Executable Resolution Across Runtime Modes
+    - **IMPORTANT**: Re-run the SAME test from task 1 - do NOT write a new test
+    - The test from task 1 encodes the expected behavior (correct path resolution, defined defaultTerminalSelection)
+    - When this test passes, it confirms the expected behavior is satisfied
+    - Run bug condition exploration test from step 1
+    - **EXPECTED OUTCOME**: Test PASSES (confirms bug is fixed)
+    - _Requirements: 2.1, 2.2, 2.3, 2.4_
+
+  - [x] 3.6 Verify preservation tests still pass
+    - **Property 2: Preservation** - Claude/Codex Resolution and Chat Defaults Unchanged
+    - **IMPORTANT**: Re-run the SAME tests from task 2 - do NOT write new tests
+    - Run preservation property tests from step 2
+    - **EXPECTED OUTCOME**: Tests PASS (confirms no regressions)
+    - Confirm all tests still pass after fix (no regressions)
+    - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
+
+- [x] 4. Checkpoint - Ensure all tests pass
+  - Run full test suite across both host and client projects
+  - Verify bug condition exploration test passes (confirms fix)
+  - Verify preservation tests pass (confirms no regressions)
+  - Verify any existing test suites still pass
+  - Ensure all tests pass, ask the user if questions arise.

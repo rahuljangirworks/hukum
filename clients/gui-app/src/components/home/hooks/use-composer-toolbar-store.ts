@@ -89,7 +89,9 @@ export function useComposerToolbarStore(
 ): ComposerToolbarStore {
   const activityEnabled = useSurfaceActivity();
   const defaultPermission = useSettingsStore((s) => s.defaultPermission);
-  const defaultSelection = useSettingsStore((s) => s.defaultSelection);
+  const defaultSelection = useSettingsStore((s) =>
+    tuiOnly ? s.defaultTerminalSelection : s.defaultSelection,
+  );
   const defaultReasoning = useSettingsStore((s) => s.defaultReasoning);
   const defaultServiceTier = useSettingsStore((s) => s.defaultServiceTier);
   const settingsSeed = seedSource.kind === "none" ? null : seedSource.settings;

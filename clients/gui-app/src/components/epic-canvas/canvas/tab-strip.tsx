@@ -12,6 +12,7 @@ import { useDraggable, useDroppable } from "@dnd-kit/core";
 import {
   Activity,
   Brain,
+  Network,
   FileDiff,
   FilePlus,
   GitPullRequest,
@@ -58,6 +59,7 @@ import type {
 } from "@/stores/epics/canvas/types";
 import {
   isBlankTileRef,
+  isBrainGraphTileRef,
   isBrainNoteTileRef,
   isCommGraphTileRef,
   isDiffTileRef,
@@ -976,6 +978,9 @@ function TabIcon(props: {
   }
   if (isCommGraphTileRef(props.tab)) {
     return <CommGraphTileIcon className="size-3.5" />;
+  }
+  if (isBrainGraphTileRef(props.tab)) {
+    return <Network className="size-3.5 shrink-0 text-muted-foreground" />;
   }
   if (isBrainNoteTileRef(props.tab)) {
     return <Brain className="size-3.5 shrink-0 text-muted-foreground" />;

@@ -147,6 +147,13 @@ describe("<SettingsSidebar /> leader hints", () => {
     expect(labels).not.toContain("Agents");
   });
 
+  it("exposes Brain as a Host-scoped Settings destination", () => {
+    const brain = SETTINGS_SECTIONS.find((section) => section.id === "brain");
+    expect(brain?.label).toBe("Brain");
+    expect(brain?.group).toBe("host");
+    expect(brain?.requiresLocalHost).toBe(false);
+  });
+
   it("delays sub-leader digit badges in settings navigation", async () => {
     const router = buildRouter("/settings/general");
     render(

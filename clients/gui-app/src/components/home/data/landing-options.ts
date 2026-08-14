@@ -185,6 +185,12 @@ export const DEFAULT_SELECTION: HarnessModelSelection = {
   profileId: null,
 };
 
+export const DEFAULT_TERMINAL_SELECTION: HarnessModelSelection = {
+  harnessId: "codex",
+  modelSlug: "",
+  profileId: null,
+};
+
 export const DEFAULT_REASONING: ReasoningLevel = "high";
 export const DEFAULT_SERVICE_TIER: ServiceTier = "";
 

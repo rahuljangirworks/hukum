@@ -114,6 +114,7 @@ interface QueuedMessageEditActionCopy {
 export interface QueuedMessagePanelProps {
   readonly queue: ChatSessionState["queue"];
   readonly activeTurnStatus: ChatActiveTurn["status"] | null;
+  readonly activeMessageContent?: ChatQueuedPromptItem["message"]["content"] | null;
   readonly canAct: boolean;
   readonly readOnly: boolean;
   readonly editingQueueItemId: string | null;
@@ -156,6 +157,14 @@ export function QueuedMessagePanel(props: QueuedMessagePanelProps) {
     [items],
   );
   const { hasPausableHumanItems, hasPausedItems } = useQueuePauseState(items);
+  const clearableItems = useMemo(
+    () => items.filter(queueItemAllowsBulkClear),
+    [items],
+  );
+  const onCancel = props.onCancel;
+  const handleClearAll = useCallback(() => {
+    for (const item of clearableItems) onCancel(item);
+  }, [clearableItems, onCancel]);
   const reorderDnd = useQueuedMessageReorderDnd({
     items,
     onReorder: props.onReorder,
@@ -201,6 +210,10 @@ export function QueuedMessagePanel(props: QueuedMessagePanelProps) {
         props.readOnly ? "opacity-95" : null,
       )}
     >
+      <CurrentWorkRow
+        content={props.activeMessageContent ?? null}
+        status={props.activeTurnStatus}
+      />
       <QueuedMessageHeader
         open={open}
         count={items.length}
@@ -209,8 +222,11 @@ export function QueuedMessagePanel(props: QueuedMessagePanelProps) {
         canResumeQueue={hasPausedItems}
         canAct={props.canAct}
         readOnly={props.readOnly}
+        clearableCount={clearableItems.length}
+        containsReadOnlyItems={clearableItems.length < items.length}
         onPause={props.onPause}
         onResume={props.onResume}
+        onClearAll={handleClearAll}
       />
       <CollapsibleContent>
         <div
@@ -298,8 +314,11 @@ function QueuedMessageHeader(props: {
   readonly canResumeQueue: boolean;
   readonly canAct: boolean;
   readonly readOnly: boolean;
+  readonly clearableCount: number;
+  readonly containsReadOnlyItems: boolean;
   readonly onPause: () => string | null;
   readonly onResume: () => string | null;
+  readonly onClearAll: () => void;
 }) {
   const {
     count,
@@ -308,8 +327,11 @@ function QueuedMessageHeader(props: {
     canResumeQueue,
     canAct,
     readOnly,
+    clearableCount,
+    containsReadOnlyItems,
     onPause,
     onResume,
+    onClearAll,
     open,
   } = props;
   const handlePause = useCallback(() => {
@@ -382,6 +404,19 @@ function QueuedMessageHeader(props: {
           Owner manages queue
         </span>
       ) : null}
+      {!readOnly && clearableCount > 0 ? (
+        <Button
+          type="button"
+          size="sm"
+          variant="ghost"
+          className="h-7 shrink-0 px-2 text-ui-xs text-muted-foreground"
+          disabled={!canAct}
+          onClick={onClearAll}
+          data-testid="clear-queued-messages-button"
+        >
+          {containsReadOnlyItems ? "Clear mine" : "Clear all"}
+        </Button>
+      ) : null}
       {showResumeQueueButton ? (
         <div className="flex shrink-0 items-center pr-1.5">
           <Button
@@ -418,6 +453,45 @@ function QueuedMessageHeader(props: {
   );
 
   return header;
+}
+
+function CurrentWorkRow(props: {
+  readonly content: ChatQueuedPromptItem["message"]["content"] | null;
+  readonly status: ChatActiveTurn["status"] | null;
+}) {
+  if (props.content === null || props.status === null) return null;
+  return (
+    <div
+      className="flex min-w-0 items-start gap-2 border-b border-border/50 bg-amber-500/5 px-3 py-2"
+      data-testid="current-work-row"
+    >
+      <ChevronDown
+        aria-hidden
+        className="mt-0.5 size-3 shrink-0 -rotate-90 text-amber-500/80"
+      />
+      <span className="shrink-0 text-ui-xs font-medium text-amber-600 dark:text-amber-400">
+        Current
+      </span>
+      <div className="min-w-0 flex-1 truncate text-ui-xs text-foreground/85">
+        <ComposerContentPreview
+          content={props.content}
+          emptyLabel="Current work"
+          testId="current-work-content-preview"
+          className="truncate"
+        />
+      </div>
+      <span className="shrink-0 text-ui-xs capitalize text-muted-foreground">
+        {props.status}
+      </span>
+    </div>
+  );
+}
+
+function queueItemAllowsBulkClear(item: ChatQueuedItem): boolean {
+  return !isReceivedAgentResponse(item)
+    && !isOptimisticQueuedItem(item)
+    && !queueItemSteerLocked(item)
+    && item.status !== "injected";
 }
 
 const QueuedMessageRow = memo(function QueuedMessageRow(props: {

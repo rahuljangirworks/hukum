@@ -119,8 +119,17 @@ function buildModalRouter() {
     validateSearch: (raw) => historySearchParamsSchema.parse(raw),
     component: () => <div data-testid="history" />,
   });
+  const brainSettingsRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: "/settings/brain",
+    component: () => <div data-testid="brain-settings" />,
+  });
   return createRouter({
-    routeTree: rootRoute.addChildren([indexRoute, historyRoute]),
+    routeTree: rootRoute.addChildren([
+      indexRoute,
+      historyRoute,
+      brainSettingsRoute,
+    ]),
     history: createMemoryHistory({ initialEntries: ["/"] }),
   });
 }
@@ -216,6 +225,37 @@ describe("settings section is store-backed, not URL-backed", () => {
 
     expect(actionProbeRenderSpy).toHaveBeenCalledTimes(
       rendersBeforeSectionChange,
+    );
+  });
+
+  it("promotes the Brain Settings overlay into the Brain main-tab route", async () => {
+    const router = buildModalRouter();
+    render(<RouterProvider router={router} />);
+    await waitFor(() => expect(modalProbe.current).not.toBeNull());
+
+    act(() => {
+      modalProbe.current?.openSettings({
+        section: "brain",
+        resetToGeneral: false,
+      });
+    });
+    await waitFor(() => {
+      expect(modalProbe.current?.active).toMatchObject({
+        kind: "settings",
+        section: "brain",
+      });
+    });
+
+    act(() => {
+      modalProbe.current?.promoteToTab();
+    });
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe("/settings/brain");
+    });
+    expect(router.state.location.search).not.toHaveProperty("settingsOverlay");
+    expect(useTabsStore.getState().systemTabs.settings?.lastPath).toBe(
+      "/settings/brain",
     );
   });
 

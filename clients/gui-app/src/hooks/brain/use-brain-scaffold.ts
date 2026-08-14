@@ -12,7 +12,7 @@ export function useBrainScaffold() {
     method: "brain.scaffold",
     mutationKey: ["brain", "scaffold"],
     errorMessage: "Failed to create brain vault",
-    invalidateMethods: ["brain.getConfig", "brain.getRegistry", "brain.listFolder"],
+    invalidateMethods: ["brain.getConfig", "brain.getRegistry", "brain.listFolder", "brain.getGraph"],
   });
 }
 
@@ -24,19 +24,21 @@ export function useBrainConnect() {
     method: "brain.connect",
     mutationKey: ["brain", "connect"],
     errorMessage: "Failed to connect brain vault",
-    invalidateMethods: ["brain.getConfig", "brain.getRegistry", "brain.listFolder"],
+    invalidateMethods: ["brain.getConfig", "brain.getRegistry", "brain.listFolder", "brain.getGraph"],
   });
 }
 
 /**
  * Switch the active brain in a multi-brain registry.
+ * Closes all open workspace-file tabs belonging to the current brain vault
+ * before sending the switch RPC.
  */
 export function useBrainSwitch() {
   return useHostScopedMutation<"brain.switch">({
     method: "brain.switch",
     mutationKey: ["brain", "switch"],
     errorMessage: "Failed to switch brain",
-    invalidateMethods: ["brain.getConfig", "brain.getRegistry", "brain.listFolder", "brain.search", "brain.listSkills"],
+    invalidateMethods: ["brain.getConfig", "brain.getRegistry", "brain.listFolder", "brain.search", "brain.getGraph", "brain.listSkills"],
   });
 }
 
@@ -60,6 +62,6 @@ export function useBrainRebuildIndex() {
     method: "brain.rebuildIndex",
     mutationKey: ["brain", "rebuildIndex"],
     errorMessage: "Failed to rebuild brain index",
-    invalidateMethods: ["brain.search"],
+    invalidateMethods: ["brain.search", "brain.getGraph"],
   });
 }

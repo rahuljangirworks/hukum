@@ -276,6 +276,8 @@ function WorktreesToolbar(props: {
   readonly lastUpdatedAt: number | null;
   readonly selectionControls: ReactNode | null;
   readonly filterControls: ReactNode | null;
+  readonly onCleanUpIdle: (() => void) | null;
+  readonly idleCount: number;
 }): ReactNode {
   const {
     canRefresh,
@@ -284,6 +286,8 @@ function WorktreesToolbar(props: {
     onRefresh,
     refreshing,
     selectionControls,
+    onCleanUpIdle,
+    idleCount,
   } = props;
   const refreshWorktrees = useCallback(async () => {
     await onRefresh();
@@ -305,6 +309,26 @@ function WorktreesToolbar(props: {
           data-testid="worktrees-toolbar-actions"
         >
           {selectionControls}
+          {onCleanUpIdle !== null && idleCount > 0 ? (
+            <TooltipWrapper
+              label={`Delete ${idleCount} idle worktree${idleCount === 1 ? "" : "s"} proven safe to remove (merged, at base commit, or unreferenced)`}
+              side="bottom"
+              sideOffset={undefined}
+              align={undefined}
+            >
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={onCleanUpIdle}
+                aria-label={`Clean up ${idleCount} idle worktrees`}
+                data-testid="worktrees-clean-up-idle"
+              >
+                <Trash2 className="size-4" />
+                <span>Clean Up ({idleCount})</span>
+              </Button>
+            </TooltipWrapper>
+          ) : null}
           {refresh.refreshing ? null : (
             <WorktreesUpdatedAgoLabel updatedAt={lastUpdatedAt} />
           )}
@@ -659,6 +683,8 @@ function WorktreesBody(props: {
           {...toolbarProps}
           selectionControls={null}
           filterControls={null}
+          onCleanUpIdle={null}
+          idleCount={0}
         />
       ) : null}
       {/* The gate owns every state where the scope has no client: it names
@@ -1369,6 +1395,24 @@ export function WorktreesList(props: {
   const requestDeleteSelectedTargets = useCallback(() => {
     requestDeleteTargets(selectedTargets);
   }, [requestDeleteTargets, selectedTargets]);
+  // Idle worktrees: proven-removable (green tier) and not currently being deleted.
+  // Used by the "Clean Up" toolbar button for one-click bulk deletion.
+  const idleWorktrees = useMemo(
+    () =>
+      mergedWorktrees.filter(
+        (entry) =>
+          entry.resolvedAt !== null &&
+          !entry.inUse &&
+          provenRemovable(entry) &&
+          !backgroundedDeleteStatusByPath.has(entry.worktreePath) &&
+          deleteEnrichmentStateFor(entry.worktreePath) !== "pending",
+      ),
+    [mergedWorktrees, backgroundedDeleteStatusByPath, deleteEnrichmentStateFor],
+  );
+  const requestCleanUpIdle = useCallback(() => {
+    if (idleWorktrees.length === 0) return;
+    requestDeleteTargets(idleWorktrees);
+  }, [idleWorktrees, requestDeleteTargets]);
   const openScriptReviewFor = useCallback((target: WorktreeHostEntryV14) => {
     const reviewedScriptsByPath = reviewedScriptsByPathRef.current;
     setPendingScriptReview({
@@ -1576,6 +1620,8 @@ export function WorktreesList(props: {
               onSortModeChange={setSortMode}
             />
           }
+          onCleanUpIdle={idleWorktrees.length > 0 ? requestCleanUpIdle : null}
+          idleCount={idleWorktrees.length}
         />
         <WorktreeDeleteProgressStrip
           summary={progressSummary}

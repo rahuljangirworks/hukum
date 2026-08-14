@@ -6,6 +6,7 @@ import {
   DEFAULT_COMPOSER_MODE,
   DEFAULT_REASONING,
   DEFAULT_SELECTION,
+  DEFAULT_TERMINAL_SELECTION,
   DEFAULT_SERVICE_TIER,
   type PermissionMode,
   type ComposerMode,
@@ -68,6 +69,7 @@ export interface SettingsState {
   theme: ThemeMode;
   themePreset: ThemePreset;
   defaultSelection: HarnessModelSelection;
+  defaultTerminalSelection: HarnessModelSelection;
   defaultReasoning: ReasoningLevel;
   defaultServiceTier: ServiceTier;
   defaultPermission: PermissionMode;
@@ -177,6 +179,7 @@ export interface SettingsState {
   setDiffViewerPreferences: (preferences: DiffViewerPreferences) => void;
   patchDiffViewerPreferences: (patch: DiffViewerPreferencesPatch) => void;
   setProviderRailStatus: (status: ProviderRailStatus) => void;
+  setDefaultTerminalSelection: (selection: HarnessModelSelection) => void;
 }
 
 type PersistedSettingsState = Pick<
@@ -184,6 +187,7 @@ type PersistedSettingsState = Pick<
   | "theme"
   | "themePreset"
   | "defaultSelection"
+  | "defaultTerminalSelection"
   | "defaultReasoning"
   | "defaultServiceTier"
   | "defaultPermission"
@@ -254,6 +258,7 @@ function partializeSettingsState(state: SettingsState): PersistedSettingsState {
     theme: state.theme,
     themePreset: state.themePreset,
     defaultSelection: state.defaultSelection,
+    defaultTerminalSelection: state.defaultTerminalSelection,
     defaultReasoning: state.defaultReasoning,
     defaultServiceTier: state.defaultServiceTier,
     defaultPermission: state.defaultPermission,
@@ -290,6 +295,7 @@ export const useSettingsStore = create<SettingsState>()(
       theme: "system",
       themePreset: DEFAULT_THEME_PRESET,
       defaultSelection: DEFAULT_SELECTION,
+      defaultTerminalSelection: DEFAULT_TERMINAL_SELECTION,
       defaultReasoning: DEFAULT_REASONING,
       defaultServiceTier: DEFAULT_SERVICE_TIER,
       defaultPermission: DEFAULT_PERMISSION,
@@ -386,6 +392,15 @@ export const useSettingsStore = create<SettingsState>()(
       setSteerOnModEnterEnabled: makeSetter(set, "steerOnModEnterEnabled"),
       setDiffViewerPreferences: makeSetter(set, "diffViewerPreferences"),
       setProviderRailStatus: makeSetter(set, "providerRailStatus"),
+      setDefaultTerminalSelection: (selection) => {
+        set((s) =>
+          s.defaultTerminalSelection.harnessId === selection.harnessId &&
+          s.defaultTerminalSelection.modelSlug === selection.modelSlug &&
+          s.defaultTerminalSelection.profileId === selection.profileId
+            ? s
+            : { defaultTerminalSelection: selection },
+        );
+      },
       patchDiffViewerPreferences: (patch) => {
         set((s) => ({
           diffViewerPreferences: {
@@ -413,6 +428,11 @@ export const useSettingsStore = create<SettingsState>()(
         const merged: SettingsState = { ...currentState, ...persisted };
         return {
           ...merged,
+          defaultTerminalSelection:
+            isRecord(merged.defaultTerminalSelection) &&
+            typeof (merged.defaultTerminalSelection as Record<string, unknown>).harnessId === "string"
+              ? merged.defaultTerminalSelection
+              : DEFAULT_TERMINAL_SELECTION,
           worktreeBranchPrefix:
             typeof merged.worktreeBranchPrefix === "string" &&
             worktreeBranchPrefixError(merged.worktreeBranchPrefix) === null

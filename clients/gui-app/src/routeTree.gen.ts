@@ -19,6 +19,7 @@ import { Route as EpicsIndexRouteImport } from "./routes/epics/index";
 import { Route as SettingsIndexRouteImport } from "./routes/settings.index";
 import { Route as SettingsAgentsRouteImport } from "./routes/settings.agents";
 import { Route as SettingsAppearanceRouteImport } from "./routes/settings.appearance";
+import { Route as SettingsBrainRouteImport } from "./routes/settings.brain";
 import { Route as SettingsDevicesRouteImport } from "./routes/settings.devices";
 import { Route as SettingsDiagnosticsRouteImport } from "./routes/settings.diagnostics";
 import { Route as SettingsGeneralRouteImport } from "./routes/settings.general";
@@ -80,6 +81,11 @@ const SettingsAgentsRoute = SettingsAgentsRouteImport.update({
 const SettingsAppearanceRoute = SettingsAppearanceRouteImport.update({
   id: "/appearance",
   path: "/appearance",
+  getParentRoute: () => SettingsRoute,
+} as any);
+const SettingsBrainRoute = SettingsBrainRouteImport.update({
+  id: "/brain",
+  path: "/brain",
   getParentRoute: () => SettingsRoute,
 } as any);
 const SettingsDevicesRoute = SettingsDevicesRouteImport.update({
@@ -152,6 +158,7 @@ export interface FileRoutesByFullPath {
   "/draft/new": typeof DraftNewRoute;
   "/settings/agents": typeof SettingsAgentsRoute;
   "/settings/appearance": typeof SettingsAppearanceRoute;
+  "/settings/brain": typeof SettingsBrainRoute;
   "/settings/devices": typeof SettingsDevicesRoute;
   "/settings/diagnostics": typeof SettingsDiagnosticsRoute;
   "/settings/general": typeof SettingsGeneralRoute;
@@ -174,6 +181,7 @@ export interface FileRoutesByTo {
   "/draft/new": typeof DraftNewRoute;
   "/settings/agents": typeof SettingsAgentsRoute;
   "/settings/appearance": typeof SettingsAppearanceRoute;
+  "/settings/brain": typeof SettingsBrainRoute;
   "/settings/devices": typeof SettingsDevicesRoute;
   "/settings/diagnostics": typeof SettingsDiagnosticsRoute;
   "/settings/general": typeof SettingsGeneralRoute;
@@ -199,6 +207,7 @@ export interface FileRoutesById {
   "/draft/new": typeof DraftNewRoute;
   "/settings/agents": typeof SettingsAgentsRoute;
   "/settings/appearance": typeof SettingsAppearanceRoute;
+  "/settings/brain": typeof SettingsBrainRoute;
   "/settings/devices": typeof SettingsDevicesRoute;
   "/settings/diagnostics": typeof SettingsDiagnosticsRoute;
   "/settings/general": typeof SettingsGeneralRoute;
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | "/draft/new"
     | "/settings/agents"
     | "/settings/appearance"
+    | "/settings/brain"
     | "/settings/devices"
     | "/settings/diagnostics"
     | "/settings/general"
@@ -247,6 +257,7 @@ export interface FileRouteTypes {
     | "/draft/new"
     | "/settings/agents"
     | "/settings/appearance"
+    | "/settings/brain"
     | "/settings/devices"
     | "/settings/diagnostics"
     | "/settings/general"
@@ -271,6 +282,7 @@ export interface FileRouteTypes {
     | "/draft/new"
     | "/settings/agents"
     | "/settings/appearance"
+    | "/settings/brain"
     | "/settings/devices"
     | "/settings/diagnostics"
     | "/settings/general"
@@ -366,6 +378,13 @@ declare module "@tanstack/react-router" {
       path: "/appearance";
       fullPath: "/settings/appearance";
       preLoaderRoute: typeof SettingsAppearanceRouteImport;
+      parentRoute: typeof SettingsRoute;
+    };
+    "/settings/brain": {
+      id: "/settings/brain";
+      path: "/brain";
+      fullPath: "/settings/brain";
+      preLoaderRoute: typeof SettingsBrainRouteImport;
       parentRoute: typeof SettingsRoute;
     };
     "/settings/devices": {
@@ -470,6 +489,7 @@ const EpicsRouteWithChildren = EpicsRoute._addFileChildren(EpicsRouteChildren);
 interface SettingsRouteChildren {
   SettingsAgentsRoute: typeof SettingsAgentsRoute;
   SettingsAppearanceRoute: typeof SettingsAppearanceRoute;
+  SettingsBrainRoute: typeof SettingsBrainRoute;
   SettingsDevicesRoute: typeof SettingsDevicesRoute;
   SettingsDiagnosticsRoute: typeof SettingsDiagnosticsRoute;
   SettingsGeneralRoute: typeof SettingsGeneralRoute;
@@ -487,6 +507,7 @@ interface SettingsRouteChildren {
 const SettingsRouteChildren: SettingsRouteChildren = {
   SettingsAgentsRoute: SettingsAgentsRoute,
   SettingsAppearanceRoute: SettingsAppearanceRoute,
+  SettingsBrainRoute: SettingsBrainRoute,
   SettingsDevicesRoute: SettingsDevicesRoute,
   SettingsDiagnosticsRoute: SettingsDiagnosticsRoute,
   SettingsGeneralRoute: SettingsGeneralRoute,

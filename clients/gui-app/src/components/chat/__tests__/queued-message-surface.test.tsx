@@ -810,6 +810,38 @@ describe("<QueuedMessagePanel />", () => {
     expect(within(agentRow).queryByText("Can steer")).toBeNull();
     expect(within(agentRow).getByText("Will steer")).not.toBeNull();
   });
+
+  it("shows the active user request above queued follow-ups", () => {
+    renderPanel({
+      queue: queueState([queuedItem("queue-1", "Follow-up task", "pending")]),
+      readOnly: false,
+      canAct: true,
+      onReorder: null,
+      activeMessageContent: content("Build the Brain settings page"),
+    });
+
+    expect(screen.getByTestId("current-work-row")).not.toBeNull();
+    expect(screen.getByText("Build the Brain settings page")).not.toBeNull();
+    expect(screen.getByText("Follow-up task")).not.toBeNull();
+  });
+
+  it("bulk-clears user-owned rows while preserving received agent messages", () => {
+    renderPanel({
+      queue: queueState([
+        queuedItem("queue-user", "My follow-up", "pending"),
+        agentQueuedItem("queue-agent", "Agent response"),
+      ]),
+      readOnly: false,
+      canAct: true,
+      onReorder: null,
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Clear mine" }));
+    expect(onCancelSpy).toHaveBeenCalledTimes(1);
+    expect(onCancelSpy).toHaveBeenCalledWith(
+      expect.objectContaining({ queueItemId: "queue-user" }),
+    );
+  });
 });
 
 function renderPanel(input: {
@@ -818,12 +850,14 @@ function renderPanel(input: {
   readonly canAct: boolean;
   readonly onReorder:
     ((item: ChatQueuedItem, beforeQueueItemId: string | null) => void) | null;
+  readonly activeMessageContent?: JsonContent;
 }) {
   return render(
     <TooltipProvider delayDuration={0}>
       <QueuedMessagePanel
         queue={input.queue}
         activeTurnStatus="running"
+        activeMessageContent={input.activeMessageContent ?? null}
         canAct={input.canAct}
         readOnly={input.readOnly}
         editingQueueItemId={null}

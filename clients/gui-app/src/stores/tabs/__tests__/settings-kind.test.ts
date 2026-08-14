@@ -41,6 +41,14 @@ describe("settings tab kind - host section", () => {
     expect(settingsSectionPath("devices")).toBe("/settings/devices");
   });
 
+  it("round-trips the Brain settings section and main-tab route", () => {
+    expect(settingsSectionFromPath("/settings/brain")).toBe("brain");
+    expect(settingsSectionPath("brain")).toBe("/settings/brain");
+    expect(
+      settingsTabDescriptor.routeOptions(settingsTabIntent("brain")),
+    ).toEqual({ to: "/settings/brain" });
+  });
+
   it("settingsTabDescriptor.routeOptions for the host intent navigates to /settings/host", () => {
     const intent = settingsTabIntent("host");
     const options = settingsTabDescriptor.routeOptions(intent);

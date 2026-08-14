@@ -58,10 +58,10 @@ import { BrainSidebarSection } from "@/components/epic-canvas/sidebar/brain-side
 import { BrainSetupWizard } from "@/components/brain/brain-setup-wizard";
 
 // Brain panel body — wraps the brain sidebar section component
-function BrainPanelBody() {
+function BrainPanelBody(props: { epicId: string; tabId: string }) {
   return (
     <>
-      <BrainSidebarSection />
+      <BrainSidebarSection epicId={props.epicId} tabId={props.tabId} />
       <BrainSetupWizard />
     </>
   );

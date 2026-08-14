@@ -113,6 +113,7 @@ function chatSendDisabledHint(access: ChatLowerAccessState): string | null {
 
 export interface ChatLowerTurnState {
   readonly activeTurnStatus: ChatActiveTurn["status"] | null;
+  readonly activeMessageContent?: ChatQueuedPromptItem["message"]["content"] | null;
   /** Host-projected same-turn steering capability of the running turn's harness. */
   readonly steerCapable: boolean;
   /**
@@ -397,6 +398,7 @@ export function ChatLowerInteractionSurfaces(
         backgroundStopPendingTaskIds={props.backgroundStopPendingTaskIds}
         backgroundStopAllPending={props.backgroundStopAllPending}
         activeTurnStatus={props.turn.activeTurnStatus}
+        activeMessageContent={props.turn.activeMessageContent ?? null}
         canAct={props.access.canAct}
         readOnly={props.access.isViewer}
         editingQueueItemId={props.queue.editingItemId}

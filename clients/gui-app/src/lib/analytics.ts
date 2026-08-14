@@ -12,12 +12,7 @@ export type AnalyticsSource =
   | "notification"
   | "history"
   | "deep_link"
-  | "restored_session"
-  // The app moved itself: the selected host stopped being dialable and the
-  // directory re-homed the window (or handed it back when that host
-  // returned). Distinct from every other source here because there was no
-  // gesture at all behind it.
-  | "host_failover";
+  | "restored_session";
 
 export type AnalyticsBlocker =
   | "authentication"
@@ -60,6 +55,7 @@ export type AnalyticsCommand =
 export type AnalyticsSettingsSection =
   | "agents"
   | "appearance"
+  | "brain"
   | "devices"
   | "diagnostics"
   | "general"
@@ -68,10 +64,10 @@ export type AnalyticsSettingsSection =
   | "notifications"
   | "providers"
   | "shell"
-  | "usage"
   | "worktrees";
 
-export type AnalyticsArtifactKind = "review" | "spec" | "story" | "ticket" | "html-preview";
+export type AnalyticsArtifactKind =
+  "review" | "spec" | "story" | "ticket" | "html-preview";
 
 export type AnalyticsEditor = "cursor" | "vscode" | "windsurf" | "zed";
 
@@ -449,7 +445,7 @@ export function analyticsArtifactKindForCanvasTileType(
     case "story":
     case "ticket":
     case "html-preview":
-      return tileType as AnalyticsArtifactKind;
+      return tileType;
     default:
       return null;
   }
@@ -946,32 +942,19 @@ const ANALYTICS_PROVIDERS = new Set<string>([
   "hukum",
 ]);
 
-/**
- * Built from a `satisfies Record<AnalyticsSettingsSection, true>` rather than
- * a bare string list, because the bare list is a seam that fails SILENTLY:
- * this set is what `sanitizeAnalyticsProperties` validates `section` against,
- * and a value in the union but missing here makes `Analytics.track` return
- * `false` and drop the event — no type error, no runtime error, just a
- * section whose navigation is never recorded. Both `devices` and `usage` had
- * already gone missing that way. The `satisfies` makes adding a section to
- * the union without listing it here a COMPILE error instead.
- */
-const ANALYTICS_SETTINGS_SECTIONS = new Set<string>(
-  Object.keys({
-    agents: true,
-    appearance: true,
-    devices: true,
-    diagnostics: true,
-    general: true,
-    host: true,
-    keybindings: true,
-    notifications: true,
-    providers: true,
-    shell: true,
-    usage: true,
-    worktrees: true,
-  } satisfies Record<AnalyticsSettingsSection, true>),
-);
+const ANALYTICS_SETTINGS_SECTIONS = new Set<string>([
+  "agents",
+  "appearance",
+  "brain",
+  "diagnostics",
+  "general",
+  "host",
+  "keybindings",
+  "notifications",
+  "providers",
+  "shell",
+  "worktrees",
+]);
 
 const ANALYTICS_SETTINGS = new Set<string>([
   "allowPrereleaseUpdates",

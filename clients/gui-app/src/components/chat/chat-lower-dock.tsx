@@ -38,6 +38,7 @@ export interface ChatLowerDockProps {
   readonly backgroundStopPendingTaskIds: ReadonlySet<string>;
   readonly backgroundStopAllPending: boolean;
   readonly activeTurnStatus: ChatActiveTurn["status"] | null;
+  readonly activeMessageContent?: ChatQueuedPromptItem["message"]["content"] | null;
   readonly canAct: boolean;
   readonly readOnly: boolean;
   readonly editingQueueItemId: string | null;
@@ -119,6 +120,7 @@ function QueueSection(props: {
     <QueuedMessagePanel
       queue={dock.queue}
       activeTurnStatus={dock.activeTurnStatus}
+      activeMessageContent={dock.activeMessageContent}
       canAct={dock.canAct}
       readOnly={dock.readOnly}
       editingQueueItemId={dock.editingQueueItemId}

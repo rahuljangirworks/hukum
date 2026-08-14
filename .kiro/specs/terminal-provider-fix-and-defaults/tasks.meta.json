@@ -1,0 +1,183 @@
+{
+  "pbtResults": {
+    "1. Write bug condition exploration test": {
+      "status": "passed",
+      "failingExample": "HOST SIDE (6 failures - resolver computes incorrect paths):\n\n1. `bundledExecutableCandidates(\"pi\")` with cwd=`<project-root>/src/services`:\n   Expected: \"/home/rahul/work/personal-projacts/hukum-host/providers/pi/pi\"\n   Received: \"/home/rahul/work/personal-projacts/hukum-host/src/services/providers/pi/pi\"\n\n2. `bundledExecutableCandidates(\"gemini\")` with cwd=`<project-root>/..`:\n   Expected: \"/home/rahul/work/personal-projacts/hukum-host/providers/gemini/gemini\"\n   Received: \"/home/rahul/work/personal-projacts/providers/gemini/gemini\"\n\n3. `bundledExecutableCandidates(\"opencode\")` with cwd=\"/tmp\":\n   Expected: \"/home/rahul/work/personal-projacts/hukum-host/providers/opencode/opencode\"\n   Received: \"/tmp/providers/opencode/opencode\"\n\n4. Compiled mode `gemini` with execPath=\"/usr/local/bin/hukum-host\":\n   Expected: \"/home/rahul/work/personal-projacts/hukum-host/providers/gemini/gemini\"\n   Received: \"/usr/local/providers/gemini/gemini\"\n\n5. Compiled mode `pi` with execPath=\"/home/user/.local/share/hukum/bin/hukum-host\":\n   Expected: \"/home/rahul/work/personal-projacts/hukum-host/providers/pi/pi\"\n   Received: \"/home/user/.local/share/hukum/providers/pi/pi\"\n\n6. Path existence verification confirms buggy path != correct path.\n\nCLIENT SIDE (6 failures - defaultTerminalSelection is undefined):\n\n1. `useSettingsStore.getState()` does NOT have property \"defaultTerminalSelection\"\n2. `(state as any).defaultTerminalSelection` is undefined (not a HarnessModelSelection)\n3. `defaultTerminalSelection` is undefined, expected { harnessId: \"codex\", modelSlug: \"\", profileId: null }\n4. `\"defaultTerminalSelection\" in initialState` is false\n5. `state` does NOT have property \"setDefaultTerminalSelection\"\n6. `(state as any).defaultTerminalSelection` is undefined (terminal default missing)",
+      "lastRunTimestamp": 1786672930655
+    },
+    "2. Write preservation property tests (BEFORE implementing fix)": {
+      "status": "passed",
+      "lastRunTimestamp": 1786673422955
+    },
+    "3.5 Verify bug condition exploration test now passes": {
+      "status": "passed",
+      "lastRunTimestamp": 1786677118433
+    },
+    "3.6 Verify preservation tests still pass": {
+      "status": "passed",
+      "lastRunTimestamp": 1786677670667
+    }
+  },
+  "executionHistory": {
+    "1. Write bug condition exploration test": [
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672519344
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672531034
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672948539
+      }
+    ],
+    "2. Write preservation property tests (BEFORE implementing fix)": [
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672519415
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672954461
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786673441461
+      }
+    ],
+    "3.1 Implement robust base directory resolution in `bundledExecutableCandidates()`": [
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672519459
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786673455217
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786674067855
+      }
+    ],
+    "3.2 Add diagnostic logging for resolution failures": [
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672519541
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786674074120
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786674339458
+      }
+    ],
+    "3.3 Add `defaultTerminalSelection` to settings store": [
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672519611
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786674346554
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786674523965
+      }
+    ],
+    "3.4 Wire landing composer to use per-surface default": [
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672519694
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786674531093
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786674646555
+      }
+    ],
+    "3.5 Verify bug condition exploration test now passes": [
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672519735
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786674653944
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786677139218
+      }
+    ],
+    "3.6 Verify preservation tests still pass": [
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672519783
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786677145924
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786677685228
+      }
+    ],
+    "4. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786672519822
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786677694063
+      },
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786677885565
+      }
+    ],
+    "3. Fix executable resolver base directory computation": [
+      {
+        "executionId": "f67bbe11-204d-4068-a169-86c8a7bab16f",
+        "chatSessionId": "sess_a59c1c64-8f09-4c56-8b95-84c5ec33472c",
+        "timestamp": 1786677685305
+      }
+    ]
+  }
+}

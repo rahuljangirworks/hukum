@@ -85,6 +85,7 @@ import {
   toggleGitDiffBundleFileCollapsed,
   toggleSnapshotDiffBundleFileCollapsed,
   updateCommGraphTileView,
+  updateBrainGraphTile,
   updateGitDiffTileView,
   updateSnapshotDiffTileView,
   updatePrDiffTileView,
@@ -107,6 +108,7 @@ import {
   type EpicCanvasTileRef,
   type EpicCanvasState,
   type CommGraphTileViewState,
+  type BrainGraphTileRef,
   type EpicViewTab,
   type GitDiffTileViewState,
   type SplitDirection,
@@ -488,6 +490,11 @@ export interface EpicCanvasStore {
     tabId: string,
     tileId: string,
     view: CommGraphTileViewState,
+  ) => void;
+  updateBrainGraphTileInTab: (
+    tabId: string,
+    tileId: string,
+    patch: Partial<Pick<BrainGraphTileRef, "rootPath" | "depth" | "folder" | "query" | "includeOrphans">>,
   ) => void;
   updatePrDiffTileViewInTab: (
     tabId: string,
@@ -1911,6 +1918,14 @@ export const useEpicCanvasStore = create<EpicCanvasStore>()(
           set((state) =>
             updateTabCanvas(state, tabId, (canvas) =>
               updateCommGraphTileView(canvas, tileId, view),
+            ),
+          );
+        },
+
+        updateBrainGraphTileInTab: (tabId, tileId, patch) => {
+          set((state) =>
+            updateTabCanvas(state, tabId, (canvas) =>
+              updateBrainGraphTile(canvas, tileId, patch),
             ),
           );
         },

@@ -21,6 +21,7 @@
 import { v4 as uuidv4 } from "uuid";
 import type {
   CommGraphTileViewState,
+  BrainGraphTileRef,
   EpicCanvasTileRef,
   EpicCanvasState,
   GitDiffTileRef,
@@ -30,6 +31,7 @@ import type {
 import {
   isBlankTileRef,
   isCommGraphTileRef,
+  isBrainGraphTileRef,
   isGitDiffTileRef,
   isSnapshotDiffTileRef,
   isPrDiffTileRef,
@@ -1457,6 +1459,18 @@ export function updateCommGraphTileView(
       }
       return { ...ref, view };
     },
+  );
+}
+
+export function updateBrainGraphTile(
+  state: EpicCanvasState,
+  tileId: string,
+  patch: Partial<Pick<BrainGraphTileRef, "rootPath" | "depth" | "folder" | "query" | "includeOrphans">>,
+): EpicCanvasState {
+  return updateTilesWhere(
+    state,
+    (ref) => ref.id === tileId && isBrainGraphTileRef(ref),
+    (ref) => (isBrainGraphTileRef(ref) ? { ...ref, ...patch } : ref),
   );
 }
 

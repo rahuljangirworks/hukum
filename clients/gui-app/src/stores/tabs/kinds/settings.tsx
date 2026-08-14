@@ -38,6 +38,8 @@ function settingsRouteOptions(section: SettingsSectionId) {
       return { to: "/settings/shell" } as const;
     case "worktrees":
       return { to: "/settings/worktrees" } as const;
+    case "brain":
+      return { to: "/settings/brain" } as const;
     case "host":
       return { to: "/settings/host" } as const;
     case "devices":

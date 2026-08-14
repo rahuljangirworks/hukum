@@ -9,6 +9,8 @@ import { useCallback } from "react";
 import { Sparkles, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
+import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
+import { useBrainSetSkillEnabled, useBrainSkills } from "@/hooks/brain";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -32,9 +34,24 @@ interface BrainSkillListProps {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function BrainSkillList({ skills, onToggle }: BrainSkillListProps) {
-  // If no skills provided (not wired to RPC yet), show placeholder
   if (!skills || skills.length === 0) return null;
 
+  return <BrainSkillRows skills={skills} onToggle={onToggle} />;
+}
+
+export function ConnectedBrainSkillList() {
+  const skillsQuery = useBrainSkills();
+  const toggleMutation = useBrainSetSkillEnabled();
+  const skills = skillsQuery.data?.skills ?? [];
+  const handleToggle = (name: string, enabled: boolean) => {
+    toggleMutation.mutate({ name, enabled });
+  };
+
+  if (skills.length === 0) return null;
+  return <BrainSkillRows skills={skills} onToggle={handleToggle} />;
+}
+
+function BrainSkillRows({ skills, onToggle }: { skills: BrainSkill[]; onToggle?: (name: string, enabled: boolean) => void }) {
   return (
     <div className="border-t border-border/40 px-2 py-2">
       <h3 className="mb-1.5 flex items-center gap-1.5 px-1 text-[0.6875rem] font-semibold uppercase tracking-wide text-muted-foreground">
@@ -86,11 +103,13 @@ function BrainSkillRow({
         >
           {skill.name}
         </span>
-        {skill.overLimit && (
-          <span title="Over 200 lines — consider compressing">
+        {skill.overLimit ? (
+          <TooltipWrapper label="Over 200 lines — consider compressing" side="top" sideOffset={4} align="center">
+            <span aria-label="Skill is over 200 lines">
             <AlertTriangle className="h-3 w-3 shrink-0 text-amber-500" />
-          </span>
-        )}
+            </span>
+          </TooltipWrapper>
+        ) : null}
       </div>
       <Switch
         checked={skill.enabled}

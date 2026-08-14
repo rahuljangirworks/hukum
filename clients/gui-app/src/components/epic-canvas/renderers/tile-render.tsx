@@ -27,7 +27,7 @@ import { GitDiffTile } from "./git-diff-tile";
 import { SnapshotDiffTile } from "./snapshot-diff-tile";
 import { ManagedCommandOutputTile } from "./managed-command-output-tile";
 import { CommGraphTile } from "./comm-graph-tile";
-import { PublishedChatTile } from "./published-chat-tile";
+import { BrainGraphTile } from "./brain-graph-tile";
 import { PrDetailTile } from "./pr-detail-tile";
 import { PrDiffTile } from "./pr-diff-tile";
 import { PaneOpener } from "@/components/epic-canvas/canvas/pane-opener";
@@ -147,16 +147,8 @@ const TILE_RENDERERS: TileRendererRegistry = {
   "comm-graph": ({ node, viewTabId }) => (
     <CommGraphTile node={node} viewTabId={viewTabId} />
   ),
-  // The ordinary chat surface fed from a published copy - see the tile's own
-  // note. Bound, like every tile, to the tab's host: that host SERVES the cloud
-  // read, and the chat's owning host is metadata the locked composer names.
-  "published-chat": ({ node, epicId, viewTabId, isActive }) => (
-    <PublishedChatTile
-      node={node}
-      epicId={epicId}
-      viewTabId={viewTabId}
-      isActive={isActive}
-    />
+  "brain-graph": ({ node, viewTabId, epicId }) => (
+    <BrainGraphTile node={node} viewTabId={viewTabId} epicId={epicId} />
   ),
   "pr-detail": ({ node, epicId, viewTabId, isActive }) => (
     <PrDetailTile

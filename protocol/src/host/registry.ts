@@ -1,5 +1,5 @@
-import { z } from "zod";
 import { defineRpcContract } from "@hukum/protocol/framework/index";
+import { BRAIN_REGISTRY_ENTRIES } from "./registry-domains/brain";
 import {
   agentQuestionsListV10,
   agentQuestionsAnswerV10,
@@ -3055,185 +3055,6 @@ export const epicCreateTuiAgentUpgradeV10ToV11 = defineUpgradePath<
 });
 
 
-
-export const brainScaffoldV10 = defineRpcContract({
-  method: "brain.scaffold",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ parentDir: z.string(), vaultName: z.string(), template: z.string() }),
-  responseSchema: z.object({ vaultPath: z.string(), createdDirs: z.array(z.string()), createdFiles: z.array(z.string()) }),
-});
-
-export const brainConnectV10 = defineRpcContract({
-  method: "brain.connect",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ vaultPath: z.string() }),
-  responseSchema: z.object({ vaultPath: z.string(), noteCount: z.number(), hasObsidianConfig: z.boolean() }),
-});
-
-export const brainGetRegistryV10 = defineRpcContract({
-  method: "brain.getRegistry",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({}),
-  responseSchema: z.object({
-    brains: z.array(z.object({
-      id: z.string(),
-      name: z.string(),
-      vaultPath: z.string(),
-      template: z.string(),
-      createdAt: z.string(),
-    })),
-    activeBrainId: z.string().nullable(),
-  }),
-});
-
-export const brainSwitchV10 = defineRpcContract({
-  method: "brain.switch",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ brainId: z.string() }),
-  responseSchema: z.object({ ok: z.literal(true) }),
-});
-
-export const brainRemoveV10 = defineRpcContract({
-  method: "brain.remove",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ brainId: z.string() }),
-  responseSchema: z.object({ ok: z.literal(true), remainingCount: z.number() }),
-});
-
-export const brainGetConfigV10 = defineRpcContract({
-  method: "brain.getConfig",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({}),
-  responseSchema: z.object({
-    config: z.object({
-      vaultPath: z.string(),
-      template: z.string(),
-      createdAt: z.string(),
-      agentContextFiles: z.array(z.string()),
-      contextTokenBudget: z.number(),
-      watchEnabled: z.boolean(),
-      sync: z.unknown().nullable(),
-    }).nullable(),
-  }),
-});
-
-export const brainListTemplatesV10 = defineRpcContract({
-  method: "brain.listTemplates",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({}),
-  responseSchema: z.object({
-    templates: z.array(z.object({
-      id: z.string(),
-      label: z.string(),
-      description: z.string(),
-      bestFor: z.string(),
-      directories: z.array(z.string()),
-      preview: z.string(),
-    })),
-  }),
-});
-
-export const brainSearchV10 = defineRpcContract({
-  method: "brain.search",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ query: z.string(), maxResults: z.number().optional() }),
-  responseSchema: z.object({
-    results: z.array(z.object({
-      path: z.string(),
-      title: z.string(),
-      snippet: z.string(),
-      relevance: z.number(),
-    })),
-  }),
-});
-
-export const brainReadNoteV10 = defineRpcContract({
-  method: "brain.readNote",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ path: z.string() }),
-  responseSchema: z.object({
-    content: z.string(),
-    frontmatter: z.record(z.string(), z.unknown()),
-    title: z.string(),
-    backlinks: z.array(z.object({ path: z.string(), title: z.string() })),
-  }),
-});
-
-export const brainWriteNoteV10 = defineRpcContract({
-  method: "brain.writeNote",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ path: z.string(), content: z.string() }),
-  responseSchema: z.object({ ok: z.literal(true) }),
-});
-
-export const brainListFolderV10 = defineRpcContract({
-  method: "brain.listFolder",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ path: z.string().optional() }),
-  responseSchema: z.object({
-    entries: z.array(z.object({
-      path: z.string(),
-      name: z.string(),
-      isDir: z.boolean(),
-      title: z.string().optional(),
-    })),
-  }),
-});
-
-export const brainRebuildIndexV10 = defineRpcContract({
-  method: "brain.rebuildIndex",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({}),
-  responseSchema: z.object({ indexed: z.number(), durationMs: z.number() }),
-});
-
-export const brainListSkillsV10 = defineRpcContract({
-  method: "brain.listSkills",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({}),
-  responseSchema: z.object({
-    skills: z.array(z.object({
-      name: z.string(),
-      path: z.string(),
-      scope: z.string(),
-      lineCount: z.number(),
-      enabled: z.boolean(),
-      updatedAt: z.string(),
-      overLimit: z.boolean(),
-    })),
-  }),
-});
-
-export const brainCreateSkillV10 = defineRpcContract({
-  method: "brain.createSkill",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ name: z.string(), content: z.string().optional() }),
-  responseSchema: z.object({
-    skill: z.object({
-      name: z.string(),
-      path: z.string(),
-      scope: z.string(),
-      lineCount: z.number(),
-      enabled: z.boolean(),
-      updatedAt: z.string(),
-      overLimit: z.boolean(),
-    }),
-  }),
-});
-
-export const brainUpdateSkillV10 = defineRpcContract({
-  method: "brain.updateSkill",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ name: z.string(), content: z.string() }),
-  responseSchema: z.object({ ok: z.literal(true) }),
-});
-
-export const brainSetSkillEnabledV10 = defineRpcContract({
-  method: "brain.setSkillEnabled",
-  schemaVersion: { major: 1, minor: 0 } as const,
-  requestSchema: z.object({ name: z.string(), enabled: z.boolean() }),
-  responseSchema: z.object({ ok: z.literal(true) }),
-});
 
 const HOST_RPC_REGISTRY_BASE_DEFINITION = {
   "agentQuestions.list": {
@@ -6295,70 +6116,6 @@ const HOST_RPC_REGISTRY_BASE_TAIL_DEFINITION = {
     },
   },
 
-  "brain.scaffold": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainScaffoldV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.connect": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainConnectV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.getRegistry": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainGetRegistryV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.switch": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainSwitchV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.remove": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainRemoveV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.getConfig": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainGetConfigV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.listTemplates": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainListTemplatesV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.search": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainSearchV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.readNote": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainReadNoteV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.writeNote": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainWriteNoteV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.listFolder": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainListFolderV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.rebuildIndex": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainRebuildIndexV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.listSkills": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainListSkillsV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.createSkill": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainCreateSkillV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.updateSkill": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainUpdateSkillV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
-  "brain.setSkillEnabled": {
-    degrade: { kind: "unsupported" },
-    1: { latestMinor: 0, versions: { 0: { contract: brainSetSkillEnabledV10, upgradeFromPreviousVersion: null } }, downgradePathsFromLatest: {} },
-  },
 } as const;
 
 const HOST_RPC_EDITING_REGISTRY_DEFINITION = {
@@ -6418,6 +6175,18 @@ type DuplicateHostRpcMethodNames =
   | Extract<
       keyof typeof HOST_RPC_REGISTRY_BASE_TAIL_DEFINITION,
       keyof typeof HOST_RPC_EDITING_REGISTRY_DEFINITION
+    >
+  | Extract<
+      keyof typeof HOST_RPC_REGISTRY_BASE_DEFINITION,
+      keyof typeof BRAIN_REGISTRY_ENTRIES
+    >
+  | Extract<
+      keyof typeof HOST_RPC_REGISTRY_BASE_TAIL_DEFINITION,
+      keyof typeof BRAIN_REGISTRY_ENTRIES
+    >
+  | Extract<
+      keyof typeof HOST_RPC_EDITING_REGISTRY_DEFINITION,
+      keyof typeof BRAIN_REGISTRY_ENTRIES
     >;
 
 // `Record<never, never>` is `{}` while the key sets stay disjoint, so this
@@ -6425,12 +6194,14 @@ type DuplicateHostRpcMethodNames =
 type HostRpcRegistryDefinition = typeof HOST_RPC_REGISTRY_BASE_DEFINITION &
   typeof HOST_RPC_REGISTRY_BASE_TAIL_DEFINITION &
   typeof HOST_RPC_EDITING_REGISTRY_DEFINITION &
+  typeof BRAIN_REGISTRY_ENTRIES &
   Record<AssertNever<DuplicateHostRpcMethodNames>, never>;
 
 const HOST_RPC_REGISTRY_DEFINITION: HostRpcRegistryDefinition = {
   ...HOST_RPC_REGISTRY_BASE_DEFINITION,
   ...HOST_RPC_REGISTRY_BASE_TAIL_DEFINITION,
   ...HOST_RPC_EDITING_REGISTRY_DEFINITION,
+  ...BRAIN_REGISTRY_ENTRIES,
 };
 
 export const hostRpcRegistry: VersionedRpcRegistry<HostRpcRegistryDefinition> =
@@ -6884,4 +6655,3 @@ export type HostStreamRpcRegistry =
 // this annotation in place.
 export const hostStreamRpcRegistry: HostStreamRpcRegistry =
   defineVersionedStreamRpcRegistry(HOST_STREAM_RPC_REGISTRY_DEFINITION);
-

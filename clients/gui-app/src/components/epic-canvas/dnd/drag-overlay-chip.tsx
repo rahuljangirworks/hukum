@@ -14,6 +14,7 @@ import {
   Folder,
   GitPullRequest,
   Brain,
+  Network,
 } from "lucide-react";
 import { LEFT_PANEL_DEFINITIONS } from "@/components/epic-canvas/sidebar/left-panel-registry";
 import { EpicNodeTabIcon } from "@/components/epic-canvas/epic-node-tab-icon";
@@ -30,6 +31,7 @@ import {
 import type { HeaderTabDragData } from "@/components/layout/tabs/header-tab-dnd";
 import {
   isBlankTileRef,
+  isBrainGraphTileRef,
   isManagedCommandOutputTileRef,
   isCommGraphTileRef,
   isDiffTileRef,
@@ -183,6 +185,14 @@ function EpicCanvasNodeDragOverlay(props: {
     return (
       <m.div {...CHIP_MOTION} className={cn(CHIP_CLASS)}>
         <CommGraphTileIcon className="size-3.5" />
+        <span className="min-w-0 truncate font-medium">{props.node.name}</span>
+      </m.div>
+    );
+  }
+  if (isBrainGraphTileRef(props.node)) {
+    return (
+      <m.div {...CHIP_MOTION} className={cn(CHIP_CLASS)}>
+        <Network className="size-3.5 shrink-0 text-muted-foreground" />
         <span className="min-w-0 truncate font-medium">{props.node.name}</span>
       </m.div>
     );

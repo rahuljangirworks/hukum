@@ -94,6 +94,7 @@ function identityForTile(
     case "managed-command-output":
       return liveIdentity(node, epicId);
     case "blank":
+    case "brain-graph":
     case "comm-graph":
     case "pr-detail":
       return null;
