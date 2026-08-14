@@ -275,7 +275,7 @@ function SummonHotkeyRow(props: SummonHotkeyRowProps) {
     string | null
   >(null);
 
-  if (status === null) {
+  if (status == null) {
     return (
       <li className="flex items-center justify-between gap-6 px-5 py-3">
         <span className="truncate text-ui-sm text-foreground">

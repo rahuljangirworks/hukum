@@ -2,8 +2,8 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { queryOptions, useMutation, useQuery } from "@tanstack/react-query";
 import { ChevronDown, ChevronUp, FolderOpen, Info } from "lucide-react";
 import { toast } from "sonner";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { DiagnosticsLogTarget } from "@traycer/protocol/host/diagnostics/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { DiagnosticsLogTarget } from "@hukum/protocol/host/diagnostics/index";
 import { SettingsPanelShell } from "@/components/settings/settings-panel-shell";
 import { SettingsGroup } from "@/components/settings/settings-group";
 import {
@@ -65,7 +65,7 @@ import type {
 
 const LOG_TAIL_LINES = 100;
 const PANEL_DESCRIPTION =
-  "Log verbosity for each Traycer component, plus recent log output. All default to Info - raise a level to Debug when capturing a problem for support, then set it back.";
+  "Log verbosity for each Hukum component, plus recent log output. All default to Info - raise a level to Debug when capturing a problem for support, then set it back.";
 /** The `cli`/`host` rows' method; the whole config family ships in one release. */
 const LOG_LEVELS_GATE_METHOD = "config.logLevels.get";
 /** Recent logs' method, asked separately so each region states its own truth. */
@@ -892,7 +892,7 @@ function HostLogEntry(props: {
     tail = { status: "error" };
   } else if (tailQuery.isSuccess) {
     tail =
-      tailQuery.data.status === "available"
+      tailQuery.data?.status === "available"
         ? { status: "ready", lines: tailQuery.data.lines }
         : { status: "missing" };
   }

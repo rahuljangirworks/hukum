@@ -28,17 +28,17 @@ import { v4 as uuidv4 } from "uuid";
 import * as Y from "yjs";
 import type { Awareness } from "y-protocols/awareness";
 import { artifactFolderChain } from "@/lib/artifacts/artifact-folder-chain";
-import type { PermissionRole } from "@traycer/protocol/host/epic/unary-schemas";
-import type { RoleClaim } from "@traycer/protocol/persistence/epic/role-claims";
+import type { PermissionRole } from "@hukum/protocol/host/epic/unary-schemas";
+import type { RoleClaim } from "@hukum/protocol/persistence/epic/role-claims";
 import type {
   GuiHarnessId,
   TuiHarnessId,
-} from "@traycer/protocol/persistence/epic/schemas";
-import type { ChatRecordRemovalReason } from "@traycer/protocol/host/epic/chat-records";
-import type { WorktreeBindingOwnerKind } from "@traycer/protocol/host/worktree-schemas";
-import type { SnapshotMetaEpic } from "@traycer/protocol/host/epic/snapshot-meta";
-import type { StreamConnectionStatus } from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum/protocol/persistence/epic/schemas";
+import type { ChatRecordRemovalReason } from "@hukum/protocol/host/epic/chat-records";
+import type { WorktreeBindingOwnerKind } from "@hukum/protocol/host/worktree-schemas";
+import type { SnapshotMetaEpic } from "@hukum/protocol/host/epic/snapshot-meta";
+import type { StreamConnectionStatus } from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import { displayTitle } from "@/lib/display-title";
 import { managedCommandTitle } from "@/lib/managed-commands/managed-command-copy";
@@ -1200,7 +1200,9 @@ export function useEpicAgentRoleClaimsByAgentId(): Readonly<
  */
 export function useEpicArtifactStatus(id: string): number | null {
   return useEpicStore((s) =>
-    Object.hasOwn(s.artifacts.byId, id) ? s.artifacts.byId[id].status : null,
+    Object.hasOwn(s.artifacts.byId, id)
+      ? (s.artifacts.byId[id]?.status ?? null)
+      : null,
   );
 }
 

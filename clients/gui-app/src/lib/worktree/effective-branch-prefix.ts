@@ -1,4 +1,4 @@
-import type { RepoBranchPrefixState } from "@traycer/protocol/host/worktree-schemas";
+import type { RepoBranchPrefixState } from "@hukum/protocol/host/worktree-schemas";
 import { worktreeBranchPrefixError } from "@/lib/worktree/worktree-branch-prefix-validation";
 
 /**
@@ -21,7 +21,7 @@ export interface EffectiveBranchPrefix {
   /** Non-null exactly when `source === "global"` because the repo override
    * was invalid or the file couldn't be read - `null` for a clean inherit
    * (repo state `"absent"`) or a valid repo override. Carries the
-   * `.traycer/environment.json` path so every renderer (the Environment
+   * `.hukum/environment.json` path so every renderer (the Environment
    * dialog, the creation picker) can show the same actionable, repair-ready
    * text without re-deriving it. */
   readonly warning: string | null;
@@ -34,14 +34,14 @@ export interface EffectiveBranchPrefix {
  * picker row) still names the file to fix.
  */
 export function resolveEffectiveBranchPrefix(
-  repoState: RepoBranchPrefixState,
+  repoState: RepoBranchPrefixState | undefined,
   globalPrefix: string,
   workspacePath: string,
 ): EffectiveBranchPrefix {
-  if (repoState.status === "absent") {
+  if (repoState === undefined || repoState.status === "absent") {
     return { value: globalPrefix, source: "global", warning: null };
   }
-  const envFilePath = `${workspacePath}/.traycer/environment.json`;
+  const envFilePath = `${workspacePath}/.hukum/environment.json`;
   if (repoState.status === "malformed") {
     return {
       value: globalPrefix,
