@@ -15,7 +15,6 @@ import type { TileKindId } from "@/stores/epics/canvas/tile-kinds";
 import type { TileKindToRefMap } from "@/stores/epics/canvas/tile-kind-types";
 import { ChatTile } from "./chat-tile";
 import { ReviewTile } from "./review-tile";
-import { HtmlPreviewTile } from "./html-preview-tile";
 import { BrainNoteTile } from "./brain-note-tile";
 import { SpecTile } from "./spec-tile";
 import { StoryTile } from "./story-tile";
@@ -91,15 +90,6 @@ const TILE_RENDERERS: TileRendererRegistry = {
       viewTabId={viewTabId}
       tileId={tileId}
       isActive={isActive}
-    />
-  ),
-  "html-preview": ({ node, viewTabId, tileId, epicId }) => (
-    <HtmlPreviewTile
-      node={node}
-      viewTabId={viewTabId}
-      tileId={tileId}
-      isActive={false}
-      epicId={epicId}
     />
   ),
   "brain-note": ({ node, viewTabId, tileId, epicId }) => (
