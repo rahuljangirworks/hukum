@@ -1,7 +1,7 @@
 import {
   InMemoryChatPartCache,
   type ChatPartCache,
-} from "@traycer-clients/shared/cloud-chat/part-cache";
+} from "@hukum-clients/shared/cloud-chat/part-cache";
 
 /**
  * The renderer's content-addressed store for published chat parts.
@@ -57,7 +57,7 @@ export interface ChatPartCacheStore {
  * are simply abandoned under the old name and evicted as quota demands. It is
  * not a schema version: the entries have no schema, they are the bytes.
  */
-const PART_CACHE_NAME = "traycer-chat-parts-v1";
+const PART_CACHE_NAME = "hukum-chat-parts-v1";
 
 /**
  * The Cache API keys on requests, so a digest is spelled as a URL under a
@@ -65,7 +65,7 @@ const PART_CACHE_NAME = "traycer-chat-parts-v1";
  * stray fetch of one of these keys cannot leave the machine.
  */
 function requestFor(sha256: string): string {
-  return `https://chat-parts.traycer.invalid/${sha256}`;
+  return `https://chat-parts.hukum.invalid/${sha256}`;
 }
 
 /**

@@ -1,10 +1,10 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
-import type { CloudChatRead } from "@traycer-clients/shared/cloud-chat/cloud-chat-reader";
-import type { ChatReplicaReadResponse } from "@traycer/protocol/host/epic/chat-replica-read";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { RpcErrorCode } from "@traycer/protocol/framework/index";
+import type { CloudChatRead } from "@hukum-clients/shared/cloud-chat/cloud-chat-reader";
+import type { ChatReplicaReadResponse } from "@hukum/protocol/host/epic/chat-replica-read";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { RpcErrorCode } from "@hukum/protocol/framework/index";
 import { TILE_KIND_PUBLISHED_CHAT } from "@/stores/epics/canvas/tile-kinds";
 import type { PublishedChatTileRef } from "@/stores/epics/canvas/types";
 import type { CloudChatTranscriptState } from "@/lib/chats/cloud-chat-transcript-state";
@@ -495,7 +495,7 @@ describe("PublishedChatTile - doc-replica fallback", () => {
 
     const view = screen.getByTestId("chat-tile-session-view");
     expect(view.textContent).toContain(
-      "1 item needs a newer version of Traycer to render",
+      "1 item needs a newer version of Hukum to render",
     );
   });
 });

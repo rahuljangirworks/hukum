@@ -2,9 +2,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   HostRequestAbortedError,
   HostRpcError,
@@ -12,12 +12,12 @@ import {
   RetryableTransportError,
   type RequestOfMethod,
   type ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
-import type { LocalHostSnapshot } from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
+import type { LocalHostSnapshot } from "@hukum-clients/shared/platform/runner-host";
 import {
   HostCompatibilityProvider,
   hostRpcRegistry,
@@ -44,8 +44,8 @@ import {
   clearSessionCreatedEpics,
   markEpicCreatedThisSession,
 } from "@/lib/epics/session-created-epics";
-import type { JsonContent } from "@traycer/protocol/common/registry";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+import type { JsonContent } from "@hukum/protocol/common/registry";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 
 const STARTUP_EPIC_ID = "epic-startup-compat";
 const STALE_EPIC_ID = "epic-stale-persisted";
@@ -182,13 +182,13 @@ function mountStartupConsumers(
   options: StartupConsumersOptions,
 ): StartupConsumersMount {
   const host = new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: localSnapshot,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   void host.tokenStore.signIn(
     { token: "test-token", refreshToken: "test-refresh-token" },
@@ -570,7 +570,7 @@ describe("HostCompatibilityProvider startup consumers", () => {
   it("a still-dialing probe yields checking, not failed", async () => {
     // D5.1: a pending-class transport error with no held data is not a
     // settled verdict. Treating `RetryableTransportError` as `failed` is what
-    // put a full-screen "Traycer Host is not responding" in front of a remote
+    // put a full-screen "Hukum Host is not responding" in front of a remote
     // host that was seconds from ready.
     const getTaskContexts = vi.fn(taskContextsFor([STARTUP_EPIC_ID]));
     const listHarnesses = vi.fn((): ListHarnessesResponse => ({
@@ -688,13 +688,13 @@ describe("HostCompatibilityProvider startup consumers", () => {
       harnesses: [],
     }));
     const host = new MockRunnerHost({
-      signInUrl: "https://auth.traycer.invalid/sign-in",
+      signInUrl: "https://auth.hukum.invalid/sign-in",
       authnBaseUrl: "http://localhost:5005",
       localHost: localSnapshot,
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
     void host.tokenStore.signIn(
       { token: "test-token", refreshToken: "test-refresh-token" },
@@ -783,7 +783,7 @@ describe("HostCompatibilityProvider startup consumers", () => {
     queryClient.clear();
   });
 
-  // traycer#860: the host was alive and completing agent turns for the whole
+  // hukum#860: the host was alive and completing agent turns for the whole
   // session. A stream availability recovery invalidated the host-scoped
   // queries, the compat refetch failed under machine load, and the gate tore
   // the entire workspace down and told the user the host had not started.
@@ -828,7 +828,7 @@ describe("HostCompatibilityProvider startup consumers", () => {
     queryClient.clear();
   });
 
-  // traycer#4747: a successful host.status answer surfaces its own busy /
+  // hukum#4747: a successful host.status answer surfaces its own busy /
   // version payload on the compatible arm so report health can name a host
   // that was up and serving turns.
   it("carries hostStatus fields from a successful host.status answer", async () => {

@@ -17,12 +17,12 @@ import {
   notificationFeedTone,
 } from "@/components/notifications/notification-indicator-tones";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   hostUnavailability,
   isConfirmedTransportRefusal,
   type HostUnavailability,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
 import { useRemoteSessionPollReadiness } from "@/hooks/agent/use-host-reachability";
 import { useHostDirectoryEntry } from "@/hooks/host/use-host-directory-entry";
 import { useReactiveLocalHostEntry } from "@/hooks/host/use-reactive-local-host-entry";

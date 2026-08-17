@@ -1,7 +1,7 @@
 /**
  * Write keys for the machine-user-global config store over host RPC
- * (`config.*`). The store is the same file `traycer config …` writes, so these
- * mutations are the RPC twin of the `runner.traycer.*` bridge keys — kept in
+ * (`config.*`). The store is the same file `hukum config …` writes, so these
+ * mutations are the RPC twin of the `runner.hukum.*` bridge keys — kept in
  * their own namespace so a queued CLI write and a queued RPC write are never
  * mistaken for one another when the stopped-local fallback is in play.
  */

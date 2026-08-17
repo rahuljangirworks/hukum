@@ -1,22 +1,22 @@
-import type { AssembledChat } from "@traycer/protocol/persistence/chat-sync/assembly";
+import type { AssembledChat } from "@hukum/protocol/persistence/chat-sync/assembly";
 import type {
   ChatLifecycle,
   ChatSyncRunSettings,
-} from "@traycer/protocol/persistence/chat-sync/core";
+} from "@hukum/protocol/persistence/chat-sync/core";
 import type {
   ChatSyncMessage,
   PreservedChatEvent,
   PreservedChatMessage,
   PreservedContentBlock,
-} from "@traycer/protocol/persistence/chat-sync/entries";
+} from "@hukum/protocol/persistence/chat-sync/entries";
 import {
   readJsonProperty,
   type JsonObject,
-} from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/json";
 import type {
   SnapshotChatEvent,
   SnapshotContentBlock,
-} from "@traycer/protocol/persistence/chat-sync/open-harness";
+} from "@hukum/protocol/persistence/chat-sync/open-harness";
 
 /**
  * Assembled chat -> render model, shared by every reader that displays a
@@ -136,7 +136,7 @@ export type PresentedChatEvent = {
 
 /**
  * Counts of what this build could not interpret, so a surface can say
- * "3 items need a newer version of Traycer" once at the top instead of
+ * "3 items need a newer version of Hukum" once at the top instead of
  * repeating an apology per row - and so the fidelity of a cloud read is
  * measurable rather than anecdotal.
  */
@@ -337,8 +337,8 @@ export function describeUnknownVariant(
   const noun =
     domain === "message" ? "message" : domain === "block" ? "content" : "activity";
   return variant.length === 0
-    ? `Unsupported ${noun} — this chat needs a newer version of Traycer`
-    : `Unsupported ${noun} (${variant}) — this chat needs a newer version of Traycer`;
+    ? `Unsupported ${noun} — this chat needs a newer version of Hukum`
+    : `Unsupported ${noun} (${variant}) — this chat needs a newer version of Hukum`;
 }
 
 /**

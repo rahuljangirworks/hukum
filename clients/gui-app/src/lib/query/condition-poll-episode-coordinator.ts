@@ -196,7 +196,7 @@ export class ConditionPollEpisodeCoordinator {
 
     const brandedMethod = this.brandedMethodFor(observer);
     if (method === undefined) return;
-    const policy = HOST_METHOD_POLL_TABLE[method].poll;
+    const policy = HOST_METHOD_POLL_TABLE[method]?.poll ?? null;
     if (policy === null || policy.kind !== "condition") return;
     if (brandedMethod !== undefined && brandedMethod !== method) return;
 
@@ -295,7 +295,7 @@ export class ConditionPollEpisodeCoordinator {
     method: HostRpcMethod,
     episode: EpisodeState,
   ): void {
-    const policy = HOST_METHOD_POLL_TABLE[method].poll;
+    const policy = HOST_METHOD_POLL_TABLE[method]?.poll ?? null;
     if (policy === null || policy.kind !== "condition") return;
     if (episode.activeObservers.size === 0) return;
 
@@ -462,7 +462,7 @@ export class ConditionPollEpisodeCoordinator {
       return;
     }
 
-    const policy = HOST_METHOD_POLL_TABLE[method].poll;
+    const policy = HOST_METHOD_POLL_TABLE[method]?.poll ?? null;
     if (policy === null) {
       this.assertPolicy(
         false,
@@ -506,7 +506,7 @@ export class ConditionPollEpisodeCoordinator {
   private requireConditionPolicy(
     method: HostRpcMethod,
   ): ErasedConditionPollPolicy<HostRpcMethod> {
-    const policy = HOST_METHOD_POLL_TABLE[method].poll;
+    const policy = HOST_METHOD_POLL_TABLE[method]?.poll ?? null;
     if (policy === null || policy.kind !== "condition") {
       throw new Error(`${method} does not declare condition polling.`);
     }

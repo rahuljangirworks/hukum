@@ -1,6 +1,6 @@
 import { useMemo, type ReactNode } from "react";
 import { LineChart } from "lucide-react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import { SettingsPanelShell } from "@/components/settings/settings-panel-shell";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { useHostScope } from "@/components/settings/host-scope/use-host-scope";
@@ -117,7 +117,7 @@ function UsageSettingsPanelBody(props: {
     return (
       <UsageNotice
         title="No host connected"
-        detail="Install the Traycer host on a computer and sign in — your usage appears here on its own."
+        detail="Install the Hukum host on a computer and sign in — your usage appears here on its own."
         testId="usage-no-host-notice"
       />
     );

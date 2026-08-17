@@ -66,7 +66,7 @@ export function deriveHostStatusStripState(args: {
     return "error";
   }
   // Whatever is left is a `compatible` verdict; `degraded` means it is being
-  // HELD through a failed refetch (traycer#860) rather than freshly answered.
+  // HELD through a failed refetch (hukum#860) rather than freshly answered.
   if (args.compatibility.degraded) return "degraded";
   return "hidden";
 }

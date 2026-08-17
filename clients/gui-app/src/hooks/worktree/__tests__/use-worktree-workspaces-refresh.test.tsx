@@ -2,17 +2,17 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import {
   mockLocalHostEntry,
   mockRemoteHostEntry,
-} from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
+} from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
 import {
   LEGACY_HOST_RESOLVED_AT,
   type WorktreeWorkspaceSummaryV15,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
@@ -173,7 +173,7 @@ describe("useWorktreeWorkspacesRefresh", () => {
     // active-only invalidation never fetches an inactive entry, so dropping
     // the await bought nothing against it and cost the visible list. Refresh
     // reported done while the mounted picker still showed cached branches, so
-    // a branch deleted outside Traycer - the reason someone presses Refresh -
+    // a branch deleted outside Hukum - the reason someone presses Refresh -
     // stayed selectable exactly when the spinner said it was safe to look.
     //
     // This fixture holds an ACTIVE read (the picker is mounted and

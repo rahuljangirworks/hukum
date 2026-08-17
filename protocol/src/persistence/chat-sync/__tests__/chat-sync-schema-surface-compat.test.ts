@@ -1,8 +1,8 @@
-import { getRecordSchema } from "@traycer/protocol/framework/index";
-import { chatHeadStorageSchema } from "@traycer/protocol/persistence/chat-sync/head";
-import type { JsonObject } from "@traycer/protocol/persistence/chat-sync/json";
-import { chatShardStorageSchema } from "@traycer/protocol/persistence/chat-sync/shard";
-import { persistenceRecordRegistry } from "@traycer/protocol/persistence/registry";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
+import { chatHeadStorageSchema } from "@hukum/protocol/persistence/chat-sync/head";
+import type { JsonObject } from "@hukum/protocol/persistence/chat-sync/json";
+import { chatShardStorageSchema } from "@hukum/protocol/persistence/chat-sync/shard";
+import { persistenceRecordRegistry } from "@hukum/protocol/persistence/registry";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 import { chatSyncSchemaSurfaceBaseline } from "./__fixtures__/chat-sync-schema-surface";

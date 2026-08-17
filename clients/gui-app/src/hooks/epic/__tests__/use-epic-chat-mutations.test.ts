@@ -8,7 +8,7 @@ vi.mock("sonner", () => ({
 
 vi.mock("@/lib/host/runtime", async () => {
   const { HostRpcError } =
-    await import("@traycer-clients/shared/host-transport/host-messenger");
+    await import("@hukum-clients/shared/host-transport/host-messenger");
   return {
     useHostClient: () => ({
       // `epic.deleteChat` names no host on the wire, so the delete hook reads
@@ -58,7 +58,7 @@ vi.mock("@/lib/registries/chat-session-registry", () => ({
   }),
 }));
 
-import type { CreateChatRequest } from "@traycer/protocol/host/epic/unary-schemas";
+import type { CreateChatRequest } from "@hukum/protocol/host/epic/unary-schemas";
 import type {
   CreateChatMutationInput,
   DeleteChatMutationOptions,
@@ -97,13 +97,13 @@ import {
   useEpicRenameChat,
   useEpicDeleteChat,
 } from "@/hooks/epic/use-epic-chat-mutations";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { hostQueryKeys } from "@/lib/query-keys";
-import type { RpcErrorCode } from "@traycer/protocol/framework/index";
+import type { RpcErrorCode } from "@hukum/protocol/framework/index";
 import type {
   SetChatArchivedRequest,
   SetChatArchivedResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 
 function makeError(code: RpcErrorCode): HostRpcError {
   return new HostRpcError({
@@ -451,7 +451,7 @@ describe("useEpicArchiveChat", () => {
     // host-upgrade message (a version gap, not a failed archive), which is the
     // right actionable copy for this exact case, so the fallback never shows.
     expect(toast.error).toHaveBeenCalledWith(
-      "This needs a newer Traycer host. Update the host to continue.",
+      "This needs a newer Hukum host. Update the host to continue.",
     );
   });
 });

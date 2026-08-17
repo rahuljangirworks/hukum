@@ -30,7 +30,7 @@ const emptyRequestSchema = z.object({});
  *
  * `effectiveName` is deliberately not `customName ?? systemName`. On an
  * ordinary machine the label IS `os.hostname()` and the two are identical; on a
- * provisioned host started with `TRAYCER_HOST_LABEL` they differ, and the label
+ * provisioned host started with `HUKUM_HOST_LABEL` they differ, and the label
  * is the name the cloud registry already shows. The registry's `displayName`
  * follows this exact value each time the host republishes it on its periodic
  * credential refresh (not the deleted presence heartbeat) - so a client that

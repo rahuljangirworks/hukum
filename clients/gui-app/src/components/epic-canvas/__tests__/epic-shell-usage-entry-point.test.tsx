@@ -3,21 +3,21 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as Y from "yjs";
-import type { EpicStreamCallbacks } from "@traycer-clients/shared/host-transport/epic-stream-client";
-import type { PermissionRole } from "@traycer/protocol/host/epic/unary-schemas";
-import type { SnapshotMetaEpic } from "@traycer/protocol/host/epic/snapshot-meta";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
+import type { EpicStreamCallbacks } from "@hukum-clients/shared/host-transport/epic-stream-client";
+import type { PermissionRole } from "@hukum/protocol/host/epic/unary-schemas";
+import type { SnapshotMetaEpic } from "@hukum/protocol/host/epic/snapshot-meta";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
 import type {
   RequestOfMethod,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
 import { EpicShell } from "@/components/epic-canvas/epic-shell";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -240,7 +240,7 @@ function buildMeta(
     repos: [
       {
         task: null,
-        repoIdentifier: { owner: "traycer", repo: "cached-repo" },
+        repoIdentifier: { owner: "hukum", repo: "cached-repo" },
         createdAt: 0,
         createdBy: "u",
       },

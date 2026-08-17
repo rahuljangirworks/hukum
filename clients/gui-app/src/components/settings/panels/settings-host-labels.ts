@@ -1,5 +1,5 @@
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import { hostUnavailability } from "@traycer-clients/shared/host-client/remote-fetcher";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import { hostUnavailability } from "@hukum-clients/shared/host-client/remote-fetcher";
 
 export function settingsHostDisplayName(host: HostDirectoryEntry): string {
   return host.label.length > 0 ? host.label : host.hostId;

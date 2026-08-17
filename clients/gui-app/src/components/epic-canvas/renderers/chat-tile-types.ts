@@ -17,7 +17,7 @@ export interface ChatSurfaceNode {
   readonly name: string;
 }
 
-import type { InterviewQuestion } from "@traycer/protocol/persistence/epic/schemas";
+import type { InterviewQuestion } from "@hukum/protocol/persistence/epic/schemas";
 
 export interface PendingInterviewView {
   readonly blockId: string;

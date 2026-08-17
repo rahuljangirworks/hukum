@@ -60,13 +60,13 @@ describe("GithubMentionFilterPopover", () => {
           repositories: [
             {
               githubHost: "github.com",
-              owner: "traycerai",
-              repo: "traycer",
+              owner: "hukumai",
+              repo: "hukum",
             },
             {
               githubHost: "github.com",
-              owner: "traycerai",
-              repo: "traycer-internal",
+              owner: "hukumai",
+              repo: "hukum-internal",
             },
           ],
           selected: DEFAULT_PULL_REQUEST_MENTION_FILTER,
@@ -197,7 +197,7 @@ describe("GithubMentionFilterPopover", () => {
         involvement: "everyone",
         repository: {
           githubHost: "github.com",
-          owner: "traycerai",
+          owner: "hukumai",
           repo: "detached",
         },
       },
@@ -255,7 +255,7 @@ describe("GithubMentionFilterPopover", () => {
         involvement: "review-requested",
         repository: {
           githubHost: "github.com",
-          owner: "traycerai",
+          owner: "hukumai",
           repo: "detached",
         },
       },
@@ -270,13 +270,13 @@ describe("GithubMentionFilterPopover", () => {
           repositories: [
             {
               githubHost: "github.com",
-              owner: "traycerai",
-              repo: "traycer",
+              owner: "hukumai",
+              repo: "hukum",
             },
             {
               githubHost: "github.com",
-              owner: "traycerai",
-              repo: "traycer-internal",
+              owner: "hukumai",
+              repo: "hukum-internal",
             },
           ],
           // Reconciled: default state/involvement, no repository.
@@ -320,7 +320,7 @@ describe("GithubMentionFilterPopover", () => {
     // come back when its folder is re-attached.
     const detached = {
       githubHost: "github.com",
-      owner: "traycerai",
+      owner: "hukumai",
       repo: "detached",
     };
     useGithubMentionFilterStore.getState().setFilter({
@@ -342,13 +342,13 @@ describe("GithubMentionFilterPopover", () => {
           repositories: [
             {
               githubHost: "github.com",
-              owner: "traycerai",
-              repo: "traycer",
+              owner: "hukumai",
+              repo: "hukum",
             },
             {
               githubHost: "github.com",
-              owner: "traycerai",
-              repo: "traycer-internal",
+              owner: "hukumai",
+              repo: "hukum-internal",
             },
           ],
           selected: DEFAULT_PULL_REQUEST_MENTION_FILTER,
@@ -387,7 +387,7 @@ describe("GithubMentionFilterPopover", () => {
         involvement: "everyone",
         repository: {
           githubHost: "github.com",
-          owner: "traycerai",
+          owner: "hukumai",
           repo: "detached",
         },
       },
@@ -395,8 +395,8 @@ describe("GithubMentionFilterPopover", () => {
 
     const inScope = {
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
     };
     const user = userEvent.setup();
     render(
@@ -408,8 +408,8 @@ describe("GithubMentionFilterPopover", () => {
             inScope,
             {
               githubHost: "github.com",
-              owner: "traycerai",
-              repo: "traycer-internal",
+              owner: "hukumai",
+              repo: "hukum-internal",
             },
           ],
           selected: DEFAULT_PULL_REQUEST_MENTION_FILTER,
@@ -419,7 +419,7 @@ describe("GithubMentionFilterPopover", () => {
     );
 
     await user.click(screen.getByRole("button", { name: "Filter" }));
-    await user.click(await screen.findByRole("radio", { name: "traycer" }));
+    await user.click(await screen.findByRole("radio", { name: "hukum" }));
 
     const stored = selectGithubMentionFilter(
       useGithubMentionFilterStore.getState(),

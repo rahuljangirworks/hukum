@@ -8,7 +8,7 @@
  * `chat.subscribe@1.6` is a released, frozen line (see `chatSubscribeV16` in
  * `subscribe.ts`) - it must never change again. This fixture was originally
  * captured from the commit immediately before the pre-image freeze
- * (`git -C traycer show <freeze-commit>^`), before `chatSubscribeV16` was
+ * (`git -C hukum show <freeze-commit>^`), before `chatSubscribeV16` was
  * rebound from the live schemas to the frozen `chatSchemaPreImage` /
  * `runtimeEventSchemaPreImage`. Regenerating it from the current tree should
  * therefore reproduce the exact same bytes forever; a diff here means the
@@ -17,7 +17,7 @@
  * unchanged before regenerating in that case.
  */
 import { z } from "zod";
-import { chatSubscribeV16 } from "@traycer/protocol/host/agent/gui/subscribe";
+import { chatSubscribeV16 } from "@hukum/protocol/host/agent/gui/subscribe";
 
 const surface = {
   method: chatSubscribeV16.method,

@@ -3,14 +3,14 @@ import type { UseBoundStore, StoreApi } from "zustand";
 import {
   chatEventSchema,
   type ChatEvent,
-} from "@traycer/protocol/persistence/epic/chat-events";
+} from "@hukum/protocol/persistence/epic/chat-events";
 import {
   messageSchema,
   type Message,
-} from "@traycer/protocol/persistence/epic/messages";
-import { contentBlockSchema } from "@traycer/protocol/persistence/epic/content-blocks";
-import type { JsonObject } from "@traycer/protocol/persistence/chat-sync/json";
-import type { PresentedChat } from "@traycer/protocol/persistence/chat-sync/presentation";
+} from "@hukum/protocol/persistence/epic/messages";
+import { contentBlockSchema } from "@hukum/protocol/persistence/epic/content-blocks";
+import type { JsonObject } from "@hukum/protocol/persistence/chat-sync/json";
+import type { PresentedChat } from "@hukum/protocol/persistence/chat-sync/presentation";
 import type {
   ChatSessionState,
   ChatSessionStoreHandle,
@@ -152,7 +152,7 @@ function placeholderBlockRaw(blockId: string, index: number): JsonObject {
     timestamp: 0,
     parentBlockId: null,
     type: "text",
-    text: "This part of the message needs a newer version of Traycer to display.",
+    text: "This part of the message needs a newer version of Hukum to display.",
     providerNotice: null,
   };
 }

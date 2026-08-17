@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import type { HostListItem } from "@traycer/protocol/host/host-status";
-import { hostListItemToDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import type { HostListItem } from "@hukum/protocol/host/host-status";
+import { hostListItemToDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
 import {
   buildHostScopeOptions,
   resolveScopedHost,

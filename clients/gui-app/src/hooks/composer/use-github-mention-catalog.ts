@@ -6,18 +6,18 @@ import {
   type QueryKey,
 } from "@tanstack/react-query";
 
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   GithubMentionRepository,
   GithubMentionRow,
   GithubMentionSection,
   MentionGithubCatalogRequest,
   MentionGithubCatalogResponse,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 import type {
   PrSourceNotice,
   PrSourceStatus,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 
 import { useHostMutation } from "@/hooks/host/use-host-query";
 import { useHostQuery } from "@/hooks/host/use-host-query";

@@ -1,8 +1,8 @@
 import type {
   ChatPayloadRef,
   ChatPayloadResolver,
-} from "@traycer/protocol/persistence/chat-sync/presentation";
-import type { CloudChatPayloadRef } from "@traycer/protocol/host/epic/cloud-chat";
+} from "@hukum/protocol/persistence/chat-sync/presentation";
+import type { CloudChatPayloadRef } from "@hukum/protocol/host/epic/cloud-chat";
 
 /**
  * The bridge between "which payloads may I fetch" (a wire answer) and "is this

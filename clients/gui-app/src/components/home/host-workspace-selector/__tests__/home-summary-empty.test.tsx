@@ -10,8 +10,8 @@ import {
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ActiveHostWorkspaceControls } from "../host-workspace-selector";
-import type { WorktreeWorkspaceSummaryV15 } from "@traycer/protocol/host/worktree-schemas";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { WorktreeWorkspaceSummaryV15 } from "@hukum/protocol/host/worktree-schemas";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type { ResolvedFolder } from "@/lib/workspace/resolved-folder";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import type { ComposerPromptEditorHandle } from "@/components/chat/composer/composer-prompt-editor";
@@ -787,7 +787,7 @@ describe("landing workspace summary empty state", () => {
   });
 
   // Next-use-only contract for worktreeBranchPrefix:
-  // 1) a folder that resolves under the default seeds with traycer/<suffix>
+  // 1) a folder that resolves under the default seeds with hukum/<suffix>
   // 2) changing the setting mid-session does NOT retrofit already-seeded names
   // 3) a folder that resolves AFTER the change seeds with the new prefix
   it("applies worktree branch prefix next-use-only across mid-session resolves", async () => {
@@ -855,7 +855,7 @@ describe("landing workspace summary empty state", () => {
         workspacePath: folderAPath,
         branch: {
           type: "new",
-          name: "traycer/swift-otter",
+          name: "hukum/swift-otter",
         },
       });
     });
@@ -870,7 +870,7 @@ describe("landing workspace summary empty state", () => {
       workspacePath: folderAPath,
       branch: {
         type: "new",
-        name: "traycer/swift-otter",
+        name: "hukum/swift-otter",
       },
     });
 
@@ -930,7 +930,7 @@ describe("landing workspace summary empty state", () => {
         (entry) => entry.workspacePath === folderBPath,
       );
       expect(entryA).toMatchObject({
-        branch: { type: "new", name: "traycer/swift-otter" },
+        branch: { type: "new", name: "hukum/swift-otter" },
       });
       expect(entryB).toMatchObject({
         kind: "worktree",

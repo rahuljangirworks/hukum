@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import type { QueryClient } from "@tanstack/react-query";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { useCloudChatViewerId } from "@/hooks/chats/use-cloud-chat-queries";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { useHostClient } from "@/lib/host/runtime";

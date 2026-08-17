@@ -1,4 +1,4 @@
-import { getRecordSchema } from "@traycer/protocol/framework/index";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
 import {
   CHAT_SYNC_READER_VERSION,
   chatHeadReaderSchema,
@@ -7,17 +7,17 @@ import {
   gateChatHeadVersion,
   listChatHeadParts,
   serializeChatHeadDocument,
-} from "@traycer/protocol/persistence/chat-sync/head";
+} from "@hukum/protocol/persistence/chat-sync/head";
 import {
   canonicalJsonStringify,
   canonicalizeJsonValue,
   type JsonObject,
-} from "@traycer/protocol/persistence/chat-sync/json";
-import { CHAT_SYNC_SCHEMA_VERSION } from "@traycer/protocol/persistence/chat-sync/version";
+} from "@hukum/protocol/persistence/chat-sync/json";
+import { CHAT_SYNC_SCHEMA_VERSION } from "@hukum/protocol/persistence/chat-sync/version";
 import {
   persistenceRecordRegistry,
   type ChatHead,
-} from "@traycer/protocol/persistence/registry";
+} from "@hukum/protocol/persistence/registry";
 import { describe, expect, it } from "vitest";
 import {
   FIXTURE_CDC,

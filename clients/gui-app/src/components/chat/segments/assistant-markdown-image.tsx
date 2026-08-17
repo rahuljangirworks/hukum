@@ -1,6 +1,6 @@
 import { createContext, useContext, type ReactNode } from "react";
 import { Link } from "lucide-react";
-import { MAX_ARTIFACT_IMAGE_BYTES } from "@traycer/protocol/host/epic/unary-schemas";
+import { MAX_ARTIFACT_IMAGE_BYTES } from "@hukum/protocol/host/epic/unary-schemas";
 import {
   useScrollToChatBlock,
   type ScrollToChatBlock,

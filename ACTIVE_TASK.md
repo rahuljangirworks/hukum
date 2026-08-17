@@ -1,6 +1,6 @@
 ---
-title: "hukum Active Task Compatibility Handoff"
-project: "hukum"
+title: "hukum-client Active Task Compatibility Handoff"
+project: "hukum-client"
 scope: personal
 status: compatibility-pointer
 canonical_state: PROJECT-STATE.md

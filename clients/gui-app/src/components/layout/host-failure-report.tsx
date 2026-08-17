@@ -14,12 +14,12 @@ import { createReportIssueContext } from "@/lib/report-issue-context";
  * variant, which is where those same failures now surface once the app has
  * been up.
  *
- * Every one of those used to file the SAME "Could not start Traycer Host"
+ * Every one of those used to file the SAME "Could not start Hukum Host"
  * report. On 2026-07-31 that single template produced three field reports with
  * identical titles and three completely unrelated causes - an offline host that
- * could not verify the session (traycer#858), a first install whose 60s
- * readiness budget expired mid-provisioning (traycer#862), and a host that had
- * been running and serving agent turns for hours (traycer#860). Each one cost a
+ * could not verify the session (hukum#858), a first install whose 60s
+ * readiness budget expired mid-provisioning (hukum#862), and a host that had
+ * been running and serving agent turns for hours (hukum#860). Each one cost a
  * full desktop+host log pull just to learn WHICH failure it was.
  *
  * So the pre-filled report now names its own failure family (`title`/`code`)
@@ -29,7 +29,7 @@ import { createReportIssueContext } from "@/lib/report-issue-context";
  * `source` is part of that discrimination, not decoration: it is the phase the
  * failure belongs to. Only two of these four fallbacks are startup failures.
  * A compatibility probe that stops answering is a host that already ran and
- * later went quiet - the traycer#860 shape - and filing that under "Host
+ * later went quiet - the hukum#860 shape - and filing that under "Host
  * startup" sends triage down the provisioning path, which is the exact wrong
  * place to look.
  *
@@ -102,7 +102,7 @@ function describeHostHealth(
   if (presentation.hostBusy) parts.push("busy");
   if (presentation.stage === "slow") parts.push("slow start");
   // Fall back to the retained last event once the mutation has settled: a
-  // failed install's report must still say where it died (traycer#862's
+  // failed install's report must still say where it died (hukum#862's
   // report carried no stage at all because the live value nulls on settle).
   // Only for the report that failure belongs to - see
   // `includeRetainedProgress`.
@@ -124,7 +124,7 @@ function describeCompatHealth(
   const verdict = compatVerdict(compatibility);
   // The host's own last answer, not the desktop's converge outcome (that is
   // the separate `hostBusy` part): a host that reported itself busy serving
-  // turns was up and working, whatever else this report says (traycer#860).
+  // turns was up and working, whatever else this report says (hukum#860).
   const hostStatus = compatibility.hostStatus;
   if (hostStatus === null || !hostStatus.busy) return verdict;
   // An older host reports `busy` without a count. It used to arrive as a

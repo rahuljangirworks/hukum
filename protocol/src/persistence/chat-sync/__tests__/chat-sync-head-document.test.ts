@@ -7,14 +7,14 @@ import {
   listChatHeadParts,
   serializeChatHeadDocument,
   type ChatHeadRecord,
-} from "@traycer/protocol/persistence/chat-sync/head";
+} from "@hukum/protocol/persistence/chat-sync/head";
 import {
   canonicalJsonStringify,
   isJsonObject,
   readJsonProperty,
   type JsonObject,
   type JsonValue,
-} from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/json";
 import { describe, expect, it } from "vitest";
 import { publishChat, sha256Hex } from "./__fixtures__/published-chat";
 

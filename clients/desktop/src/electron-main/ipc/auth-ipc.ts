@@ -10,11 +10,11 @@ import {
   revokeUserSessionViaHttp,
   toRetainedStepUpVerifyResult,
   verifyStepUpChallengeViaHttp,
-} from "@traycer-clients/shared/auth/devices-sessions-fetcher";
-import { validateAuthTokenIdentityAccessOnly } from "@traycer-clients/shared/auth/auth-validation";
-import { fetchRegisteredHostsViaHttp } from "@traycer-clients/shared/host-client/remote-fetcher";
-import { updateHostVersionPolicyViaHttp } from "@traycer-clients/shared/host-client/host-version-policy-fetcher";
-import { deregisterHostViaHttp } from "@traycer-clients/shared/host-client/host-deregister-fetcher";
+} from "@hukum-clients/shared/auth/devices-sessions-fetcher";
+import { validateAuthTokenIdentityAccessOnly } from "@hukum-clients/shared/auth/auth-validation";
+import { fetchRegisteredHostsViaHttp } from "@hukum-clients/shared/host-client/remote-fetcher";
+import { updateHostVersionPolicyViaHttp } from "@hukum-clients/shared/host-client/host-version-policy-fetcher";
+import { deregisterHostViaHttp } from "@hukum-clients/shared/host-client/host-deregister-fetcher";
 import type { DesktopAuthSessionSnapshot } from "../../ipc-contracts/window-types";
 import {
   assertString,

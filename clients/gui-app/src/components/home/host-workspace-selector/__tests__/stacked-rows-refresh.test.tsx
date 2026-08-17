@@ -1,5 +1,5 @@
 /**
- * The stacked rows arm's intent edge (traycerai/traycer#711).
+ * The stacked rows arm's intent edge (hukumai/hukum#711).
  *
  * `ActiveHostWorkspaceControls layout="stacked"` is what the fork-chat dialog,
  * the terminal-agent fork dialog and the add-node launcher render. All three
@@ -11,7 +11,7 @@ import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { WorktreeWorkspaceSummaryV15 } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeWorkspaceSummaryV15 } from "@hukum/protocol/host/worktree-schemas";
 import type { ResolvedFolder } from "@/lib/workspace/resolved-folder";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ActiveHostWorkspaceControls } from "../host-workspace-selector";

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ModelProviderPrompt } from "@traycer/protocol/host/provider-native-schemas";
+import type { ModelProviderPrompt } from "@hukum/protocol/host/provider-native-schemas";
 import {
   defaultModelProviderPromptAnswers,
   modelProviderPromptConditionSatisfied,

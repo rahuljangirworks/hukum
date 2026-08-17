@@ -10,6 +10,7 @@ import type {
   PrDiffTileRef,
   SnapshotDiffTileRef,
   WorkspaceFileRef,
+  PublishedChatTileRef,
 } from "./types";
 import type { BrainNoteTileRef } from "./tile-schema/brain-note-tile";
 import type { TileKindId } from "./tile-kinds";
@@ -40,6 +41,7 @@ export interface TileKindToRefMap {
   readonly "brain-graph": BrainGraphTileRef;
   readonly "pr-detail": PrDetailTileRef;
   readonly "pr-diff": PrDiffTileRef;
+  readonly "published-chat": PublishedChatTileRef;
   readonly blank: BlankTileRef;
 }
 

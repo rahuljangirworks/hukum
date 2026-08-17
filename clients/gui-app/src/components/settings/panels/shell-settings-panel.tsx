@@ -4,13 +4,13 @@ import {
   defaultShellArgs,
   isLoginShellFamily,
   windowsShellCaptionFamily,
-} from "@traycer/protocol/config/shell-family";
+} from "@hukum/protocol/config/shell-family";
 import type {
   ConfigDetectedShell,
   ConfigEnvEntry,
-} from "@traycer/protocol/host/config/index";
-import type { ITraycerCli } from "@traycer-clients/shared/platform/runner-host";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host/config/index";
+import type { IHukumCli } from "@hukum-clients/shared/platform/runner-host";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { isWindows } from "@/lib/keybindings/platform";
 import {
   HoverCard,
@@ -58,7 +58,7 @@ import { useSettingsDensity } from "@/providers/settings-density-context";
 import { useRunnerHost } from "@/providers/use-runner-host";
 
 const PANEL_DESCRIPTION =
-  "How Traycer launches terminals, the host, and provider harnesses. New terminals pick up shell changes immediately; host env changes apply on restart.";
+  "How Hukum launches terminals, the host, and provider harnesses. New terminals pick up shell changes immediately; host env changes apply on restart.";
 const SAVED_FLASH_MS = 1600;
 type ShellSaveTarget = "program" | "flags";
 
@@ -68,7 +68,7 @@ type ShellSaveTarget = "program" | "flags";
 // (PowerShell / Git Bash profiles are read into the agent env), so only WSL
 // earns a caption (Windows hosts only) - one quiet line under the picker, with
 // the remedy behind a hover card instead of inline prose.
-const WSL_AGENTS_DOCS_URL = "https://docs.traycer.ai/settings/shell#using-wsl";
+const WSL_AGENTS_DOCS_URL = "https://docs.hukum.ai/settings/shell#using-wsl";
 
 /** Final path segment of the resolved shell, used to name its flags. */
 function programName(path: string): string {
@@ -194,7 +194,7 @@ function ShellSettingsPanelOverRpc(props: {
   // degrades to the picker's typed-path field, which works everywhere.
   const pickProgramFile =
     scope.host?.isLocalMachine === true
-      ? (runnerHost.traycerCli?.pickShellProgramFile ?? null)
+      ? (runnerHost.hukumCli?.pickShellProgramFile ?? null)
       : null;
   const controller = useRpcShellConfigController({
     enabled: supported !== false,
@@ -223,8 +223,8 @@ function ShellSettingsPanelOverLocalStore(props: {
   readonly reason: LocalConfigFallbackReason;
 }) {
   const runnerHost = useRunnerHost();
-  const traycerCli = runnerHost.traycerCli;
-  if (traycerCli === null) {
+  const hukumCli = runnerHost.hukumCli;
+  if (hukumCli === null) {
     return (
       <SettingsPanelShell title="Shell" description={PANEL_DESCRIPTION}>
         <NoConfigSourceNotice hostName={props.hostName} />
@@ -238,7 +238,7 @@ function ShellSettingsPanelOverLocalStore(props: {
       bodyClassName="overflow-visible rounded-none border-none bg-transparent"
     >
       <ShellSettingsPanelOverBridge
-        traycerCli={traycerCli}
+        hukumCli={hukumCli}
         hostName={props.hostName}
         reason={props.reason}
       />
@@ -247,12 +247,12 @@ function ShellSettingsPanelOverLocalStore(props: {
 }
 
 function ShellSettingsPanelOverBridge(props: {
-  readonly traycerCli: ITraycerCli;
+  readonly hukumCli: IHukumCli;
   readonly hostName: string;
   readonly reason: LocalConfigFallbackReason;
 }) {
   const controller = useBridgeShellConfigController({
-    traycerCli: props.traycerCli,
+    hukumCli: props.hukumCli,
   });
   return (
     <ShellSettingsPanelBody
@@ -645,7 +645,7 @@ function TerminalShellGroup(props: {
 /**
  * The WSL boundary in one quiet line: terminal tabs open in WSL, but
  * agent chats stay Windows processes, so WSL-installed tools never reach them.
- * The full explanation and the remedy (a Traycer host inside WSL) live
+ * The full explanation and the remedy (a Hukum host inside WSL) live
  * in the hover card - reachable because `HoverCard`'s close grace lets the
  * pointer travel into the card's link. The hover card is pointer-only, so the
  * Info glyph is itself a focusable anchor to the same docs page - keyboard

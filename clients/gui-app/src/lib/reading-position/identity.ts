@@ -51,7 +51,6 @@ function identityForTile(
     case "ticket":
     case "story":
     case "review":
-    case "html-preview":
     case "brain-note":
       return durableIdentity({
         node,

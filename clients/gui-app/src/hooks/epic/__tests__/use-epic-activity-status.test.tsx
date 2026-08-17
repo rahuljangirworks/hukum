@@ -12,7 +12,7 @@
  */
 import { afterEach, describe, expect, it } from "vitest";
 import { act, renderHook } from "@testing-library/react";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import { useEpicActivityStatus } from "@/hooks/epic/use-epic-activity-status";
 import { __getOpenEpicRegistryForTests } from "@/lib/registries/epic-session-registry";
 import {

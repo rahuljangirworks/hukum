@@ -4,7 +4,7 @@ import { Check, ChevronsUpDown, X } from "lucide-react";
 import type {
   ConfigDetectedShell,
   ConfigShellProbeResponse,
-} from "@traycer/protocol/host/config/index";
+} from "@hukum/protocol/host/config/index";
 import {
   Popover,
   PopoverContent,

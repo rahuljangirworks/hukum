@@ -20,18 +20,18 @@ import { sandboxHome } from "../../__tests__/sandbox-home";
 // anywhere in this call graph), the desktop-held `cli-lock` sections around
 // SMAppService work (proven with a genuine two-process test), identity/debt
 // derivation and convergence, the yank/apply reconcile-ordering edge, the
-// macOS vs CLI-owned platform matrix, `removeTraycer`'s ordering, and
+// macOS vs CLI-owned platform matrix, `removeHukum`'s ordering, and
 // `applyPendingLoginItemRevisionIfIdle` (the production-incident-driven
 // pending-LaunchAgent-revision refresh, retargeted here after
 // `host-ensure-ipc.ts`'s deletion folded its coverage in).
 //
-// Mocking boundary: the CLI subprocess wrapper (`../../cli/traycer-cli`),
+// Mocking boundary: the CLI subprocess wrapper (`../../cli/hukum-cli`),
 // the macOS SMAppService bindings (`../../app/host-login-item`), and
 // `waitForHostReady`'s own polling (`../host-readiness` - its polling
 // mechanics are a pre-existing primitive, not part of this ticket) are
 // mocked. `./host-state`, `./host-paths`, `./host-removal-state`, and
 // `./desktop-cli-lock` are REAL - installed/staged/pid records are read from
-// and written to a real temp `$HOME/.traycer` tree per test, so state
+// and written to a real temp `$HOME/.hukum` tree per test, so state
 // derivation and the desktop lock are genuinely exercised, not simulated.
 
 vi.mock("electron", () => ({
@@ -52,10 +52,10 @@ vi.mock("electron-log", () => ({
   },
 }));
 
-vi.mock("../../cli/traycer-cli", () => ({
-  runBundledTraycerCliJson: vi.fn(async () => ({})),
-  streamBundledTraycerCliJson: vi.fn(async () => ({ data: {} })),
-  TraycerCliError: class extends Error {
+vi.mock("../../cli/hukum-cli", () => ({
+  runBundledHukumCliJson: vi.fn(async () => ({})),
+  streamBundledHukumCliJson: vi.fn(async () => ({ data: {} })),
+  HukumCliError: class extends Error {
     readonly code: string;
     constructor(code: string, message: string) {
       super(message);
@@ -90,7 +90,7 @@ vi.mock("../host-readiness", async (importOriginal) => {
   };
 });
 
-vi.mock("@traycer-clients/shared/host-client/host-activity-probe", () => ({
+vi.mock("@hukum-clients/shared/host-client/host-activity-probe", () => ({
   probeHostActivityBusy: vi.fn(async () => false),
 }));
 
@@ -104,10 +104,10 @@ vi.mock("../../app/update-preferences", async (importOriginal) => {
 });
 
 import {
-  runBundledTraycerCliJson,
-  streamBundledTraycerCliJson,
-  TraycerCliError,
-} from "../../cli/traycer-cli";
+  runBundledHukumCliJson,
+  streamBundledHukumCliJson,
+  HukumCliError,
+} from "../../cli/hukum-cli";
 import { prereleaseUpdatesEnabled } from "../../app/update-preferences";
 import {
   hasUnappliedPendingLoginItemRevision,
@@ -118,8 +118,8 @@ import {
 } from "../../app/host-login-item";
 import { resolveBundledCliPath } from "../../cli/cli-discovery";
 import { waitForHostReady } from "../host-readiness";
-import { probeHostActivityBusy } from "@traycer-clients/shared/host-client/host-activity-probe";
-import { encodeInstallGeneration } from "@traycer-clients/shared/host-version/install-generation";
+import { probeHostActivityBusy } from "@hukum-clients/shared/host-client/host-activity-probe";
+import { encodeInstallGeneration } from "@hukum-clients/shared/host-version/install-generation";
 import {
   DESKTOP_LOCK_POLL_INTERVAL_MS,
   DESKTOP_LOCK_WAIT_MS,
@@ -150,21 +150,21 @@ const ORIGINAL_DEV_DESKTOP_SLOT = process.env[DEV_DESKTOP_SLOT_ENV];
 let workHome: string;
 
 beforeEach(() => {
-  workHome = mkdtempSync(join(tmpdir(), "traycer-host-controller-"));
+  workHome = mkdtempSync(join(tmpdir(), "hukum-host-controller-"));
   sandboxHome(workHome);
   delete process.env[DEV_DESKTOP_SLOT_ENV];
   // `withDesktopCliLock`'s `open(path, "wx", ...)` needs the lock file's
   // parent directory to already exist (production always has it - the CLI
   // slot setup creates it early); a fresh temp HOME does not.
-  mkdirSync(join(workHome, ".traycer", "cli"), { recursive: true });
+  mkdirSync(join(workHome, ".hukum", "cli"), { recursive: true });
   // `host-removal-state.ts`'s in-memory cache + memoized store handle are
   // module-level and would otherwise leak the previous test's sentinel
   // value across this test's fresh temp userData dir.
   __resetHostRemovalStateForTest();
   vi.mocked(hostManagesHostLoginItem).mockResolvedValue(false);
   vi.mocked(prereleaseUpdatesEnabled).mockReturnValue(false);
-  vi.mocked(runBundledTraycerCliJson).mockResolvedValue({});
-  vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({ data: {} });
+  vi.mocked(runBundledHukumCliJson).mockResolvedValue({});
+  vi.mocked(streamBundledHukumCliJson).mockResolvedValue({ data: {} });
   vi.mocked(waitForHostReady).mockResolvedValue({
     ready: true,
     version: "1.0.0",
@@ -315,7 +315,7 @@ function writeInstallRecord(
       signatureVerifiedAt: "2026-01-01T00:00:00.000Z",
       signatureKeyId: "test-key",
       sizeBytes: 1,
-      executablePath: join(layout.installDir, "traycer-host"),
+      executablePath: join(layout.installDir, "hukum-host"),
     }),
   );
 }
@@ -396,8 +396,8 @@ async function flushMicrotasks(): Promise<void> {
   await Promise.resolve();
 }
 
-// Mirrors the REAL `traycer host available --json` wire shape (pinned by
-// the contract test in `traycer-cli/src/commands/__tests__/host-available.test.ts`):
+// Mirrors the REAL `hukum host available --json` wire shape (pinned by
+// the contract test in `hukum-cli/src/commands/__tests__/host-available.test.ts`):
 // `{ manifest: { latest, versions[].platforms[platformKey] }, manifestUrl,
 // platformKey }`, NOT a flat `{latest, versions[].platformAsset}` shape
 // (fixup A1 - every fixture using the old flat shape validated the parsing
@@ -414,7 +414,7 @@ function availableSnapshotFixture(
       versions: availableVersions.map((version) => ({
         version,
         releasedAt: "2026-01-01T00:00:00.000Z",
-        releaseNotesUrl: `https://github.com/traycerai/traycer/releases/tag/host-v${version}`,
+        releaseNotesUrl: `https://github.com/hukumai/hukum/releases/tag/host-v${version}`,
         yanked: false,
         deprecationReason: null,
         requiredCliVersion: null,
@@ -462,7 +462,7 @@ describe("headline: convergeReady during an in-flight mutation resolves, never r
     });
 
     const applyGate = deferred<{ data: unknown }>();
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("apply")) return applyGate.promise;
       if (opts.args.includes("ensure")) {
         return {
@@ -516,7 +516,7 @@ describe("headline: convergeReady during an in-flight mutation resolves, never r
       runtimeVersion: "1.7.0",
     });
     writeStagedRecord("production", "1.8.0", null);
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         outcome: "applied",
         record: { version: "1.8.0" },
@@ -553,10 +553,10 @@ describe("mutation lane: wait-never-reject", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockRejectedValueOnce(
+    vi.mocked(streamBundledHukumCliJson).mockRejectedValueOnce(
       new Error("boom"),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValueOnce({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValueOnce({
       data: { activated: true },
     });
 
@@ -582,7 +582,7 @@ describe("mutation lane: wait-never-reject", () => {
     let concurrentHolders = 0;
     let maxConcurrentHolders = 0;
     const order: string[] = [];
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       concurrentHolders += 1;
       maxConcurrentHolders = Math.max(maxConcurrentHolders, concurrentHolders);
       order.push(opts.args.join(" "));
@@ -633,10 +633,10 @@ describe("mutation lane: wait-never-reject", () => {
     const unsubscribeProgress = controller.onMutationProgress((progress) => {
       progresses.push(progress);
     });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       opts.onEvent({
         type: "progress",
@@ -723,10 +723,10 @@ describe("update-flow findings: Mo-A approval preflight, Mi-1 heartbeat carry-fo
     const unsubscribeProgress = controller.onMutationProgress((p) => {
       progresses.push(p);
     });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       opts.onEvent({
         type: "progress",
@@ -779,7 +779,7 @@ describe("update-flow findings: Mo-A approval preflight, Mi-1 heartbeat carry-fo
   it("a registry liveness tick keeps the running stage, but a real stage transition still lands", async () => {
     // `registry-*` ticks are emitted from inside whatever stage is already
     // running, so letting one overwrite `stage` flipped the renderer's
-    // heading away from "Downloading Traycer Host…" and back on every
+    // heading away from "Downloading Hukum Host…" and back on every
     // retry - constant flicker on the throttled links the retry budget
     // exists for. The tick's message must still come through.
     const controller = newController("production");
@@ -799,10 +799,10 @@ describe("update-flow findings: Mo-A approval preflight, Mi-1 heartbeat carry-fo
     const unsubscribeProgress = controller.onMutationProgress((p) => {
       progresses.push(p);
     });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       opts.onEvent({
         type: "progress",
@@ -875,14 +875,14 @@ describe("coalescing: duplicate in-flight submissions join rather than re-execut
     let availableCalls = 0;
     let downloadCalls = 0;
     let applyCalls = 0;
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         availableCalls += 1;
         return availableSnapshotFixture("1.8.0", ["1.8.0"]);
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         downloadCalls += 1;
         await downloadGate.promise;
@@ -928,14 +928,14 @@ describe("coalescing: duplicate in-flight submissions join rather than re-execut
 
     let availableCalls = 0;
     let restartCalls = 0;
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         availableCalls += 1;
         return availableSnapshotFixture("1.7.0", ["1.7.0"]);
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("restart")) {
         restartCalls += 1;
         return { data: { activated: true } };
@@ -962,14 +962,14 @@ describe("coalescing: duplicate in-flight submissions join rather than re-execut
     const downloadGate = deferred<void>();
     let availableCalls = 0;
     let downloadCalls = 0;
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         availableCalls += 1;
         return availableSnapshotFixture("1.8.0", ["1.8.0"]);
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         downloadCalls += 1;
         await downloadGate.promise;
@@ -998,7 +998,7 @@ describe("coalescing: duplicate in-flight submissions join rather than re-execut
       runtimeVersion: "1.7.0",
     });
     let restartCalls = 0;
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async () => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async () => {
       restartCalls += 1;
       return { data: { activated: true } };
     });
@@ -1020,7 +1020,7 @@ describe("coalescing: duplicate in-flight submissions join rather than re-execut
       runtimeVersion: "1.7.0",
     });
     let installCalls = 0;
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async () => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async () => {
       installCalls += 1;
       return { data: { version: "1.8.0", installGeneration: null } };
     });
@@ -1042,7 +1042,7 @@ describe("coalescing: duplicate in-flight submissions join rather than re-execut
       runtimeVersion: "1.7.0",
     });
     let installCalls = 0;
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async () => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async () => {
       installCalls += 1;
       return { data: { version: "1.8.0", installGeneration: null } };
     });
@@ -1062,7 +1062,7 @@ describe("coalescing: duplicate in-flight submissions join rather than re-execut
       runtimeVersion: "1.7.0",
     });
     let restartCalls = 0;
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async () => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async () => {
       restartCalls += 1;
       return { data: { activated: true } };
     });
@@ -1088,7 +1088,7 @@ describe("two lanes: mutation vs download independence", () => {
 
     const mutationGate = deferred<{ data: unknown }>();
     const downloadCalls: string[][] = [];
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("restart")) return mutationGate.promise;
       if (opts.args.includes("download")) {
         downloadCalls.push([...opts.args]);
@@ -1096,7 +1096,7 @@ describe("two lanes: mutation vs download independence", () => {
       }
       return { data: {} };
     });
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         return availableSnapshotFixture("1.8.0", ["1.8.0"]);
       }
@@ -1147,14 +1147,14 @@ describe("two lanes: mutation vs download independence", () => {
     // finished) rather than genuinely exercising the re-check.
     const restartGate = deferred<{ data: unknown }>();
     const downloadCalls: string[][] = [];
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         await probeGate.promise;
         return availableSnapshotFixture("1.8.0", ["1.8.0"]);
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         downloadCalls.push([...opts.args]);
         return { data: {} };
@@ -1211,13 +1211,13 @@ describe("two lanes: mutation vs download independence", () => {
     // pass without ever exercising the concurrency it claims to prove.
     const downloadStarted = deferred<void>();
     let ensureCalled = false;
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         return availableSnapshotFixture("1.8.0", ["1.8.0"]);
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         downloadStarted.resolve(undefined);
         await downloadGate.promise;
@@ -1276,13 +1276,13 @@ describe("two lanes: mutation vs download independence", () => {
     // have been entered before convergeReady starts, or this proves nothing.
     const downloadStarted = deferred<void>();
     let ensureCalled = false;
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         return availableSnapshotFixture("1.8.0", ["1.8.0"]);
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         downloadStarted.resolve(undefined);
         await downloadGate.promise;
@@ -1331,13 +1331,13 @@ describe("download lane: terminal lastError is observable via canonical status (
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         return availableSnapshotFixture("1.8.0", ["1.8.0"]);
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         throw new Error("network unreachable");
       }
@@ -1355,7 +1355,7 @@ describe("download lane: terminal lastError is observable via canonical status (
 
     // A clean settle (this attempt succeeds) clears the lane rather than
     // leaving a stale error behind.
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         return { data: {} };
       }
@@ -1376,7 +1376,7 @@ describe("desktop-held cli-lock: two-process test", () => {
   // register - disk state never changed, so this couldn't catch any of the
   // races it exists to cover (nested stamp reacquisition (A7), missing
   // post-acquisition state reread (B12), supersession (A4)). The worker now
-  // starts a real terminal `traycer host uninstall` process while it holds
+  // starts a real terminal `hukum host uninstall` process while it holds
   // that lock. This test asserts both lock participation (the real CLI has
   // not changed disk state while the worker lock is held) and the desktop
   // post-acquisition reread after the terminal mutation wins the lock.
@@ -1407,7 +1407,7 @@ describe("desktop-held cli-lock: two-process test", () => {
     });
 
     const lockPath = cliLockPath("dev");
-    mkdirSync(join(workHome, ".traycer", "cli", "dev-runs", "round4-v1-lock"), {
+    mkdirSync(join(workHome, ".hukum", "cli", "dev-runs", "round4-v1-lock"), {
       recursive: true,
     });
     const barrierDir = join(workHome, "barrier");
@@ -1426,7 +1426,7 @@ describe("desktop-held cli-lock: two-process test", () => {
         WORKER_CLI_ENTRY: join(
           process.cwd(),
           "..",
-          "traycer-cli",
+          "hukum-cli",
           "src",
           "index.ts",
         ),
@@ -1496,7 +1496,7 @@ describe("desktop-held cli-lock: two-process test", () => {
 // `withDesktopCliLock` closure. Nesting a CLI-locked section inside a
 // desktop-locked one deadlocks the subprocess against its own caller until
 // the desktop's own subprocess timeout swallows the error - activation then
-// reports success while the stamp silently never lands. `runBundledTraycerCliJson`
+// reports success while the stamp silently never lands. `runBundledHukumCliJson`
 // is mocked here to make a REAL acquisition attempt against the SAME lock
 // file `runLockedMacActivationCycle` uses (`./desktop-cli-lock` is real, not
 // mocked, per this suite's mocking boundary) - proving genuine contention
@@ -1514,7 +1514,7 @@ describe("desktop-held lock vs CLI subprocess: sequenced, not nested (fixup A7)"
 
     const lockPath = cliLockPath("production");
     const acquireAttempts: Array<"acquired" | "busy"> = [];
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async () => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async () => {
       const outcome = await acquireDesktopCliLock({
         lockPath,
         reason: "stamp-runtime-probe",
@@ -1531,7 +1531,7 @@ describe("desktop-held lock vs CLI subprocess: sequenced, not nested (fixup A7)"
     const outcome = await controller.respawn();
 
     expect(outcome.kind).toBe("ok");
-    expect(runBundledTraycerCliJson).toHaveBeenCalledTimes(1);
+    expect(runBundledHukumCliJson).toHaveBeenCalledTimes(1);
     expect(acquireAttempts).toEqual(["acquired"]);
   });
 });
@@ -1608,7 +1608,7 @@ describe("lock-contention terminal contract: convergeReady classifies busy as fa
       runtimeVersion: "1.7.0",
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { action: "noop", version: "1.7.0", runtimeVersion: "1.7.0" },
     });
 
@@ -1922,7 +1922,7 @@ describe("canonical status: activation-state derivation", () => {
       installId: "install-legacy",
     });
     removePidMetadata("production");
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("restart")) {
         return {
           data: {
@@ -1934,7 +1934,7 @@ describe("canonical status: activation-state derivation", () => {
       }
       return { data: {} };
     });
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) return { outcome: "stamped" };
       return {};
     });
@@ -1946,7 +1946,7 @@ describe("canonical status: activation-state derivation", () => {
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
     const activated = await launch1.activateInstalled(false);
     expect(activated.kind).toBe("ok");
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(
       expect.arrayContaining(["stamp-runtime"]),
     );
 
@@ -1981,10 +1981,10 @@ describe("yank/apply ordering", () => {
       runtimeVersion: "1.7.0",
     });
     writeStagedRecord("production", "1.8.0", "1.8.0");
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       return {
         data: {
@@ -2004,7 +2004,7 @@ describe("yank/apply ordering", () => {
     });
 
     expect((await controller.applyStaged("manual", false)).kind).toBe("ok");
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({
         args: expect.arrayContaining([
           "host",
@@ -2034,10 +2034,10 @@ describe("yank/apply ordering", () => {
     );
     let downloadCalls = 0;
     let applyCalls = 0;
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         downloadCalls += 1;
         writeStagedRecord("production", "1.8.0", "1.8.0");
@@ -2089,10 +2089,10 @@ describe("yank/apply ordering", () => {
     writeStagedRecord("production", "1.8.0", "1.8.0");
     const layout = getHostFsLayout("production");
     const applyFingerprints: string[] = [];
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       if (opts.args.includes("apply")) {
         const fingerprintIndex = opts.args.indexOf(
@@ -2144,10 +2144,10 @@ describe("yank/apply ordering", () => {
     writeStagedRecord("production", "1.8.0", "1.8.0");
     const layout = getHostFsLayout("production");
     const applyFingerprints: string[] = [];
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (!opts.args.includes("apply")) return { data: {} };
       const fingerprintIndex = opts.args.indexOf(
         "--expected-stage-fingerprint",
@@ -2183,10 +2183,10 @@ describe("yank/apply ordering", () => {
     writeStagedRecord("production", "1.8.0", "1.8.0");
     const layout = getHostFsLayout("production");
     const applyFingerprints: string[] = [];
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (!opts.args.includes("apply")) return { data: {} };
       const fingerprintIndex = opts.args.indexOf(
         "--expected-stage-fingerprint",
@@ -2233,14 +2233,14 @@ describe("yank/apply ordering", () => {
       runtimeVersion: "1.7.0",
     });
     writeStagedRecord("production", "1.8.0-rc.1", "1.8.0-rc.1");
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0-rc.1", ["1.8.0-rc.1"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({ data: {} });
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({ data: {} });
 
     await controller.stageLatest();
 
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith([
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith([
       "host",
       "available",
       "--json",
@@ -2257,11 +2257,11 @@ describe("yank/apply ordering", () => {
     });
     // Stable `latest` stays 1.8.0 (== installed, so `--automatic` sees "no
     // update"); an RC 1.9.0-rc.1 is newer and must be pinned exactly.
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0", "1.9.0-rc.1"]),
     );
     const downloads: string[] = [];
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) downloads.push(opts.args.join(" "));
       return { data: {} };
     });
@@ -2269,7 +2269,7 @@ describe("yank/apply ordering", () => {
     await controller.stageLatest();
 
     // Opt-in widens the probe to pre-releases even with no RC already staged.
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith([
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith([
       "host",
       "available",
       "--json",
@@ -2288,11 +2288,11 @@ describe("yank/apply ordering", () => {
       runtimeVersion: "2.0.0",
     });
     // The newest available RC (1.9.0-rc.1) is OLDER than the installed 2.0.0.
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0", "1.9.0-rc.1"]),
     );
     const downloads: string[] = [];
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) downloads.push(opts.args.join(" "));
       return { data: {} };
     });
@@ -2310,11 +2310,11 @@ describe("yank/apply ordering", () => {
       runtimeVersion: "1.8.0",
     });
     // A genuine stable update - the untouched `--automatic` path handles it.
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.9.0", ["1.9.0"]),
     );
     const downloads: string[] = [];
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) downloads.push(opts.args.join(" "));
       return { data: {} };
     });
@@ -2322,7 +2322,7 @@ describe("yank/apply ordering", () => {
     await controller.stageLatest();
 
     // No opt-in and no RC staged => the probe stays stable-only...
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith([
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith([
       "host",
       "available",
       "--json",
@@ -2339,7 +2339,7 @@ describe("yank/apply ordering", () => {
     });
     writeStagedRecord("production", "1.8.0", "1.8.0");
     const layout = getHostFsLayout("production");
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         return availableSnapshotFixture("1.7.0", ["1.7.0"]);
       }
@@ -2355,7 +2355,7 @@ describe("yank/apply ordering", () => {
 
     await controller.stageLatest();
 
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith([
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith([
       "host",
       "purge-stage",
       "--expected-stage-fingerprint",
@@ -2379,14 +2379,14 @@ describe("yank/apply ordering", () => {
 
     const order: string[] = [];
     const downloadGate = deferred<unknown>();
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         order.push("available-probe");
         return availableSnapshotFixture("1.8.0", ["1.8.0"]);
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         order.push("download-start");
         await downloadGate.promise;
@@ -2445,7 +2445,7 @@ describe("yank/apply ordering", () => {
     let firstReconcileReleased = false;
     let downloadCalls = 0;
 
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         availableCalls += 1;
         if (availableCalls === 1) {
@@ -2460,7 +2460,7 @@ describe("yank/apply ordering", () => {
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         downloadCalls += 1;
         if (firstReconcileReleased) {
@@ -2512,7 +2512,7 @@ describe("yank/apply ordering", () => {
     let downloadCalls = 0;
     let applyCalls = 0;
 
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("purge-stage")) {
         rmSync(layout.stagedDir, { recursive: true, force: true });
         return { outcome: "purged", purged: true };
@@ -2528,7 +2528,7 @@ describe("yank/apply ordering", () => {
         availableCalls === 1 ? ["1.8.0"] : ["1.7.0"],
       );
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("restart")) {
         await restartGate.promise;
         return { data: { activated: true } };
@@ -2553,7 +2553,7 @@ describe("yank/apply ordering", () => {
 
     const restart = controller.respawn();
     await vi.waitFor(() => {
-      expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+      expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
         expect.objectContaining({ args: ["host", "restart"] }),
       );
     });
@@ -2588,7 +2588,7 @@ describe("yank/apply ordering", () => {
     const layout = getHostFsLayout("production");
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
 
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         return availableSnapshotFixture("1.7.0", ["1.7.0"]);
       }
@@ -2598,7 +2598,7 @@ describe("yank/apply ordering", () => {
       }
       return { outcome: "stamped" };
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         // The yank-heal reconcile discovers the staged version was pulled
         // from the registry and discards the stage - mirrors what the real
@@ -2618,12 +2618,12 @@ describe("yank/apply ordering", () => {
     const outcome = await controller.activateInstalled(false);
 
     expect(outcome).toEqual({ kind: "ok", value: { activated: true } });
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({
         args: expect.arrayContaining(["restart", "--if-idle"]),
       }),
     );
-    expect(streamBundledTraycerCliJson).not.toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).not.toHaveBeenCalledWith(
       expect.objectContaining({ args: expect.arrayContaining(["apply"]) }),
     );
   });
@@ -2639,19 +2639,19 @@ describe("platform matrix", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { version: "1.8.0", installGeneration: null },
     });
 
     await controller.installVersion("1.8.0", false);
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({
         args: ["host", "install", "--release", "1.8.0", "--if-idle"],
       }),
     );
 
     await controller.installVersion("1.8.0", true);
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({
         args: ["host", "install", "--release", "1.8.0"],
       }),
@@ -2666,7 +2666,7 @@ describe("platform matrix", () => {
       runtimeVersion: "1.7.0",
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { version: "1.8.0", installGeneration: null },
     });
     vi.mocked(waitForHostReady).mockResolvedValue({
@@ -2679,7 +2679,7 @@ describe("platform matrix", () => {
 
     const outcome = await controller.installVersion("1.8.0", false);
 
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({
         args: [
           "host",
@@ -2712,7 +2712,7 @@ describe("platform matrix", () => {
       websocketUrl: "ws://127.0.0.1:55555/rpc",
     });
     vi.mocked(probeHostActivityBusy).mockResolvedValue(true);
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { version: "1.8.0", installGeneration: null },
     });
     vi.mocked(waitForHostReady).mockResolvedValue({
@@ -2746,7 +2746,7 @@ describe("platform matrix", () => {
       runtimeVersion: "1.7.0",
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { version: "1.8.0", installGeneration: null },
     });
     vi.mocked(registerHostLoginItem).mockResolvedValue("enabled");
@@ -2793,7 +2793,7 @@ describe("platform matrix", () => {
       runtimeVersion: null,
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { action: "installed", version: "1.8.0", runtimeVersion: null },
     });
 
@@ -2812,7 +2812,7 @@ describe("platform matrix", () => {
       runtimeVersion: "1.7.0",
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { action: "noop", version: "1.7.0", runtimeVersion: "1.7.0" },
     });
 
@@ -2829,8 +2829,8 @@ describe("platform matrix", () => {
       runtimeVersion: "1.7.0",
     });
     await cliController.registerService();
-    expect(streamBundledTraycerCliJson).not.toHaveBeenCalled();
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).not.toHaveBeenCalled();
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(
       expect.arrayContaining(["host", "service", "install"]),
     );
     expect(waitForHostReady).toHaveBeenCalledTimes(1);
@@ -2841,7 +2841,7 @@ describe("platform matrix", () => {
     vi.mocked(registerHostLoginItem).mockResolvedValue("enabled");
     const macController = newController("production");
     await macController.registerService();
-    expect(runBundledTraycerCliJson).not.toHaveBeenCalled();
+    expect(runBundledHukumCliJson).not.toHaveBeenCalled();
     expect(registerHostLoginItem).toHaveBeenCalledTimes(1);
     expect(waitForHostReady).toHaveBeenCalledTimes(1);
   });
@@ -2863,7 +2863,7 @@ describe("platform matrix", () => {
     const outcome = await controller.registerService();
 
     expect(outcome.kind).toBe("failed");
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(
       expect.arrayContaining(["host", "service", "install"]),
     );
   });
@@ -2875,7 +2875,7 @@ describe("platform matrix", () => {
       runtimeVersion: null,
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) return { outcome: "stamped" };
       return {
         installGeneration: "service-install-command-generation",
@@ -2888,7 +2888,7 @@ describe("platform matrix", () => {
 
     expect(outcome.kind).toBe("ok");
     expect(waitForHostReady).toHaveBeenCalledTimes(1);
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(
       expect.arrayContaining(["host", "stamp-runtime"]),
     );
   });
@@ -2920,7 +2920,7 @@ describe("platform matrix", () => {
       runtimeVersion: null,
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) return { outcome: "stamped" };
       return {};
     });
@@ -2929,7 +2929,7 @@ describe("platform matrix", () => {
 
     expect(outcome.kind).toBe("ok");
     expect(waitForHostReady).toHaveBeenCalledTimes(1);
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(
       expect.arrayContaining(["host", "stamp-runtime"]),
     );
   });
@@ -2955,7 +2955,7 @@ describe("platform matrix", () => {
     const controller = newController("dev");
     writeInstallRecord("dev", { version: "1.7.0", runtimeVersion: "1.7.0" });
     await controller.registerService();
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith([
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith([
       "host",
       "service",
       "install",
@@ -2963,7 +2963,7 @@ describe("platform matrix", () => {
     ]);
   });
 
-  it("removeTraycer ordering: sentinel is persisted before the login-item unregister and the CLI uninstall run", async () => {
+  it("removeHukum ordering: sentinel is persisted before the login-item unregister and the CLI uninstall run", async () => {
     vi.mocked(hostManagesHostLoginItem).mockResolvedValue(true);
     const controller = newController("production");
     writeInstallRecord("production", {
@@ -2976,7 +2976,7 @@ describe("platform matrix", () => {
     vi.mocked(unregisterHostLoginItem).mockImplementation(async () => {
       sentinelWasSetWhenUnregisterRan.push(await isHostRemovedByUser());
     });
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("uninstall")) {
         sentinelWasSetWhenUninstallRan.push(await isHostRemovedByUser());
       }
@@ -2984,7 +2984,7 @@ describe("platform matrix", () => {
     });
 
     expect(await isHostRemovedByUser()).toBe(false);
-    const outcome = await controller.removeTraycer();
+    const outcome = await controller.removeHukum();
 
     expect(outcome.kind).toBe("ok");
     expect(sentinelWasSetWhenUnregisterRan).toEqual([true]);
@@ -2996,7 +2996,7 @@ describe("platform matrix", () => {
   // for that child to close before it begins the uninstall. A signal-only
   // check is insufficient: it would still allow a late promote to race the
   // removal path.
-  it("P3: removeTraycer aborts an in-flight download and waits for its child to settle before uninstalling", async () => {
+  it("P3: removeHukum aborts an in-flight download and waits for its child to settle before uninstalling", async () => {
     const controller = newController("production");
     writeInstallRecord("production", {
       version: "1.7.0",
@@ -3005,7 +3005,7 @@ describe("platform matrix", () => {
     const downloadGate = deferred<unknown>();
     let observedAbort = false;
     let uninstallCalls = 0;
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         return availableSnapshotFixture("1.8.0", ["1.8.0"]);
       }
@@ -3024,7 +3024,7 @@ describe("platform matrix", () => {
     // behaviour under test. Raising that deadline would only wait longer on
     // a precondition that never became true.
     const downloadStarted = deferred<void>();
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) {
         const aborted = new Promise<void>((resolve) => {
           if (opts.signal === null) {
@@ -3059,7 +3059,7 @@ describe("platform matrix", () => {
     const stagePromise = controller.stageLatest();
     await downloadStarted.promise;
 
-    const removal = controller.removeTraycer();
+    const removal = controller.removeHukum();
     await vi.waitFor(() => {
       expect(observedAbort).toBe(true);
     });
@@ -3077,10 +3077,10 @@ describe("platform matrix", () => {
     // once removed - this is the actual "no resurrection" guarantee (the
     // in-flight download's bytes landing late doesn't get picked up by
     // anything, because every entry point re-checks `isHostRemovedByUser`).
-    const runCallsBefore = vi.mocked(runBundledTraycerCliJson).mock.calls
+    const runCallsBefore = vi.mocked(runBundledHukumCliJson).mock.calls
       .length;
     await controller.stageLatest();
-    expect(vi.mocked(runBundledTraycerCliJson).mock.calls.length).toBe(
+    expect(vi.mocked(runBundledHukumCliJson).mock.calls.length).toBe(
       runCallsBefore,
     );
   });
@@ -3091,7 +3091,7 @@ describe("platform matrix", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue({
       removedInstallDir: true,
       serviceUninstalled: true,
     });
@@ -3118,10 +3118,10 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
       runtimeVersion: "1.7.0",
     });
     writeStagedRecord("production", "1.8.0", null);
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         outcome: "applied",
         record: { version: "1.8.0", runtimeVersion: null },
@@ -3148,11 +3148,11 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
     });
     writeStagedRecord("production", "1.8.0", null);
     writePidMetadata("production", { version: "1.8.0", pid: process.pid });
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) return { outcome: "stamped" };
       return availableSnapshotFixture("1.8.0", ["1.8.0"]);
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       if (opts.args.includes("apply")) {
         return {
@@ -3189,10 +3189,10 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
       runtimeVersion: "1.7.0",
     });
     writeStagedRecord("production", "1.8.0", "1.8.0");
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       return {
         data: {
@@ -3217,7 +3217,7 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
       kind: "installed-not-converged",
       message: expect.stringContaining("doctor"),
     });
-    expect(runBundledTraycerCliJson).not.toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).not.toHaveBeenCalledWith(
       expect.arrayContaining(["host", "stamp-runtime"]),
     );
   });
@@ -3231,7 +3231,7 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
     writeStagedRecord("production", "1.8.0", null);
     writePidMetadata("production", { version: "1.8.0", pid: process.pid });
     let stampCalls = 0;
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       if (opts.args.includes("apply")) {
         return {
@@ -3245,7 +3245,7 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
       }
       return { data: {} };
     });
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) {
         stampCalls += 1;
         writeInstallRecord("production", {
@@ -3273,7 +3273,7 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
 
   it("F2: explicit install of an already-stamped record waits for readiness but skips the CAS", async () => {
     const controller = newController("production");
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         version: "1.8.0",
         runtimeVersion: "1.8.0",
@@ -3296,7 +3296,7 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
 
     expect(outcome.kind).toBe("ok");
     expect(waitForHostReady).toHaveBeenCalledTimes(1);
-    expect(runBundledTraycerCliJson).not.toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).not.toHaveBeenCalledWith(
       expect.arrayContaining(["host", "stamp-runtime"]),
     );
   });
@@ -3310,14 +3310,14 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
     writeStagedRecord("production", "1.8.0", null);
     writePidMetadata("production", { version: "1.8.0", pid: process.pid });
     const stampCalls: (readonly string[])[] = [];
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) {
         stampCalls.push(args);
         return { outcome: "stamped" };
       }
       return availableSnapshotFixture("1.8.0", ["1.8.0"]);
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       return {
         data: {
@@ -3348,14 +3348,14 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
     const controller = newController("production");
     writePidMetadata("production", { version: "1.8.0", pid: process.pid });
     const stampCalls: (readonly string[])[] = [];
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) {
         stampCalls.push(args);
         return { outcome: "stamped" };
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         action: "started",
         installed: true,
@@ -3387,14 +3387,14 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
     const controller = newController("production");
     writePidMetadata("production", { version: "1.8.0", pid: process.pid });
     const stampCalls: (readonly string[])[] = [];
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) {
         stampCalls.push(args);
         return { outcome: "stamped" };
       }
       return {};
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         version: "1.8.0",
         runtimeVersion: null,
@@ -3429,7 +3429,7 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
     });
     writeStagedRecord("production", "1.8.0", null);
     writePidMetadata("production", { version: "1.8.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         outcome: "applied",
         record: { version: "1.8.0", runtimeVersion: null },
@@ -3440,7 +3440,7 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
 
     await controller.applyStaged("manual", false);
 
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(
       expect.arrayContaining(["host", "stamp-runtime"]),
     );
   });
@@ -3452,7 +3452,7 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
       runtimeVersion: null,
     });
     writeStagedRecord("production", "1.8.0", "1.8.0");
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         outcome: "applied",
         record: { version: "1.8.0", runtimeVersion: "1.8.0" },
@@ -3463,7 +3463,7 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
 
     await controller.applyStaged("manual", false);
 
-    expect(runBundledTraycerCliJson).not.toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).not.toHaveBeenCalledWith(
       expect.arrayContaining(["host", "stamp-runtime"]),
     );
   });
@@ -3475,10 +3475,10 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
       runtimeVersion: "1.7.0",
     });
     writeStagedRecord("production", "1.8.0", "1.8.0");
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       return {
         data: {
@@ -3504,10 +3504,10 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
     });
     writeStagedRecord("production", "1.8.0", "1.8.0");
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       return {
         data: {
@@ -3544,10 +3544,10 @@ describe("applyStagedCliOwned stamping decision (fixup B9)", () => {
     });
     writeStagedRecord("production", "1.8.0", "1.8.0");
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("download")) return { data: {} };
       return {
         data: {
@@ -3591,7 +3591,7 @@ describe("packaged-macOS null-runtime readiness budget", () => {
       runtimeVersion: null,
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) return { outcome: "stamped" };
       return availableSnapshotFixture("1.7.0", ["1.7.0"]);
     });
@@ -3614,7 +3614,7 @@ describe("packaged-macOS null-runtime readiness budget", () => {
 // Fixup B7: `convergeReadyCliOwned` used to ignore `postSwapError` entirely
 // and only wait for readiness on the null-runtime CAS path - a non-throwing
 // post-swap start failure returned `ok`/`running:false`, which the IPC layer
-// misprojects as `{action:"removed"}` (see `traycerHostEnsure`'s comment:
+// misprojects as `{action:"removed"}` (see `hukumHostEnsure`'s comment:
 // `running:false` is otherwise only reachable via the removed-by-user
 // short-circuit); an already-stamped service-starting branch reported `ok`
 // before the endpoint had actually bound.
@@ -3626,7 +3626,7 @@ describe("convergeReadyCliOwned postSwapError + readiness (fixup B7)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         action: "installed",
         installed: true,
@@ -3650,7 +3650,7 @@ describe("convergeReadyCliOwned postSwapError + readiness (fixup B7)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         action: "started",
         installed: true,
@@ -3695,8 +3695,8 @@ describe("convergeReady E_HOST_BUSY classification (fixup B8)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockRejectedValueOnce(
-      new TraycerCliError("E_HOST_BUSY", "host busy"),
+    vi.mocked(streamBundledHukumCliJson).mockRejectedValueOnce(
+      new HukumCliError("E_HOST_BUSY", "host busy"),
     );
 
     const outcome = await controller.convergeReady(false);
@@ -3750,7 +3750,7 @@ describe("Windows bundled-host --from fallback", () => {
     setArch("x64");
     const cliDir = join(workHome, "cli");
     mkdirSync(cliDir, { recursive: true });
-    const bundledCli = join(cliDir, "traycer.exe");
+    const bundledCli = join(cliDir, "hukum.exe");
     writeFileSync(bundledCli, "");
     const archive = join(cliDir, "host-runtime-win32-x64.tar.gz");
     writeFileSync(archive, "");
@@ -3761,13 +3761,13 @@ describe("Windows bundled-host --from fallback", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { running: true, version: "1.7.0", action: "noop" },
     });
 
     await controller.convergeReady(false);
 
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({
         args: ["host", "ensure", "--from", archive],
       }),
@@ -3779,7 +3779,7 @@ describe("Windows bundled-host --from fallback", () => {
     setArch("arm64");
     const cliDir = join(workHome, "cli");
     mkdirSync(cliDir, { recursive: true });
-    const bundledCli = join(cliDir, "traycer.exe");
+    const bundledCli = join(cliDir, "hukum.exe");
     writeFileSync(bundledCli, "");
     const archive = join(cliDir, "host-runtime-win32-x64.tar.gz");
     writeFileSync(archive, "");
@@ -3790,13 +3790,13 @@ describe("Windows bundled-host --from fallback", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { running: true, version: "1.7.0", action: "noop" },
     });
 
     await controller.convergeReady(false);
 
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({
         args: ["host", "ensure", "--from", archive],
       }),
@@ -3813,13 +3813,13 @@ describe("Windows bundled-host --from fallback", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { running: true, version: "1.7.0", action: "noop" },
     });
 
     await controller.convergeReady(false);
 
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({ args: ["host", "ensure"] }),
     );
   });
@@ -3829,7 +3829,7 @@ describe("Windows bundled-host --from fallback", () => {
     setArch("x64");
     const cliDir = join(workHome, "cli");
     mkdirSync(cliDir, { recursive: true });
-    const bundledCli = join(cliDir, "traycer.exe");
+    const bundledCli = join(cliDir, "hukum.exe");
     writeFileSync(bundledCli, "");
     vi.mocked(resolveBundledCliPath).mockResolvedValue(bundledCli);
 
@@ -3838,13 +3838,13 @@ describe("Windows bundled-host --from fallback", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { running: true, version: "1.7.0", action: "noop" },
     });
 
     await controller.convergeReady(false);
 
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({ args: ["host", "ensure"] }),
     );
   });
@@ -3853,7 +3853,7 @@ describe("Windows bundled-host --from fallback", () => {
     setPlatform("darwin");
     const cliDir = join(workHome, "cli");
     mkdirSync(cliDir, { recursive: true });
-    const bundledCli = join(cliDir, "traycer");
+    const bundledCli = join(cliDir, "hukum");
     writeFileSync(bundledCli, "");
     vi.mocked(resolveBundledCliPath).mockResolvedValue(bundledCli);
 
@@ -3862,13 +3862,13 @@ describe("Windows bundled-host --from fallback", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { running: true, version: "1.7.0", action: "noop" },
     });
 
     await controller.convergeReady(false);
 
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({ args: ["host", "ensure"] }),
     );
   });
@@ -4009,7 +4009,7 @@ describe("applyPendingLoginItemRevisionIfIdle", () => {
       kind: "ok",
       value: { running: true, version: "1.7.0" },
     });
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith([
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith([
       "host",
       "service",
       "install",
@@ -4037,7 +4037,7 @@ describe("applyPendingLoginItemRevisionIfIdle", () => {
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
     vi.mocked(hasUnappliedPendingLoginItemRevision).mockResolvedValue(true);
     vi.mocked(registerHostLoginItem).mockResolvedValue("not-found");
-    vi.mocked(runBundledTraycerCliJson).mockRejectedValue(
+    vi.mocked(runBundledHukumCliJson).mockRejectedValue(
       new Error("takeover exploded"),
     );
 
@@ -4269,7 +4269,7 @@ describe("applyPendingLoginItemRevisionIfIdle", () => {
       reason: "ready",
     });
     const stampCalls: (readonly string[])[] = [];
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) {
         stampCalls.push(args);
         return { outcome: "stamped" };
@@ -4356,7 +4356,7 @@ describe("applyPendingLoginItemRevisionIfIdle", () => {
       registerCalled = true;
       return registerGate.promise;
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         action: "noop",
         running: true,
@@ -4471,7 +4471,7 @@ describe("applyPendingLoginItemRevisionIfIdle", () => {
       registerCalled = true;
       return registerGate.promise;
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         action: "noop",
         running: true,
@@ -4549,7 +4549,7 @@ describe("applyPendingLoginItemRevisionIfIdle", () => {
 
 // ---------------------------------------------------------------------------
 // Fixup B14: `respawn()` used to ignore the removed-by-user sentinel (a
-// terminal `Remove Traycer` that persisted the sentinel but then
+// terminal `Remove Hukum` that persisted the sentinel but then
 // failed/was interrupted mid-uninstall can leave bytes behind - Restart
 // must not resurrect them), and `notifyRespawning()` cleared the
 // renderer-facing snapshot BEFORE the disruptive cycle's own lock-
@@ -4573,7 +4573,7 @@ describe("respawn (fixup B14)", () => {
       kind: "deferred",
       message: "Host was removed by the user.",
     });
-    expect(streamBundledTraycerCliJson).not.toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).not.toHaveBeenCalledWith(
       expect.objectContaining({
         args: expect.arrayContaining(["restart"]),
       }),
@@ -4594,8 +4594,8 @@ describe("respawn (fixup B14)", () => {
       runtimeVersion: "1.7.0",
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockRejectedValueOnce(
-      new TraycerCliError("E_CLI_LOCK_BUSY", "cli lock busy"),
+    vi.mocked(streamBundledHukumCliJson).mockRejectedValueOnce(
+      new HukumCliError("E_CLI_LOCK_BUSY", "cli lock busy"),
     );
 
     const outcome = await controller.respawn();
@@ -4637,7 +4637,7 @@ describe("hostLifecycle wiring on success (fixup C2)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { action: "noop", version: "1.7.0", runtimeVersion: "1.7.0" },
     });
 
@@ -4663,7 +4663,7 @@ describe("hostLifecycle wiring on success (fixup C2)", () => {
       runtimeVersion: "1.7.0",
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { version: "1.8.0", installGeneration: null },
     });
     vi.mocked(waitForHostReady).mockResolvedValue({
@@ -4696,7 +4696,7 @@ describe("hostLifecycle wiring on success (fixup C2)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { version: "1.8.0", installGeneration: null },
     });
     vi.mocked(waitForHostReady).mockResolvedValue({
@@ -4729,7 +4729,7 @@ describe("hostLifecycle wiring on success (fixup C2)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { action: "noop", version: "1.7.0", runtimeVersion: "1.7.0" },
     });
 
@@ -4753,7 +4753,7 @@ describe("hostLifecycle wiring on success (fixup C2)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { action: "installed", version: "1.7.0", runtimeVersion: "1.7.0" },
     });
     vi.mocked(waitForHostReady).mockResolvedValue({
@@ -4814,7 +4814,7 @@ describe("Class B no-op liveness", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.7.0", ["1.7.0"]),
     );
 
@@ -4835,10 +4835,10 @@ describe("Class B no-op liveness", () => {
       runtimeVersion: "1.7.0",
     });
     writeStagedRecord("production", "1.8.0", "1.8.0");
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { outcome: "no-op", installedVersion: "1.7.0" },
     });
 
@@ -4860,10 +4860,10 @@ describe("Class B no-op liveness", () => {
       runtimeVersion: "1.7.0",
     });
     writeStagedRecord("production", "1.8.0", "1.8.0");
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: { outcome: "no-op", installedVersion: "1.7.0" },
     });
 
@@ -4883,14 +4883,14 @@ describe("Class B no-op liveness", () => {
 // isolation.
 describe("Class B CLI-owned caller publication", () => {
   function configureRestartAndStamp(): void {
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         installGeneration: "restart-command-generation",
         runtimeVersion: null,
         runtimeWasNull: true,
       },
     });
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("available")) {
         return availableSnapshotFixture("1.7.0", ["1.7.0"]);
       }
@@ -4977,7 +4977,7 @@ describe("recoverIfDown", () => {
       runtimeVersion: "1.7.0",
     });
     const gate = deferred<{ data: unknown }>();
-    vi.mocked(streamBundledTraycerCliJson).mockReturnValueOnce(gate.promise);
+    vi.mocked(streamBundledHukumCliJson).mockReturnValueOnce(gate.promise);
 
     const respawnPromise = controller.respawn();
     await flushMicrotasks();
@@ -4999,7 +4999,7 @@ describe("recoverIfDown", () => {
 
     const outcome = await controller.recoverIfDown();
     expect(outcome).toEqual({ kind: "ok", value: { activated: true } });
-    expect(streamBundledTraycerCliJson).not.toHaveBeenCalled();
+    expect(streamBundledHukumCliJson).not.toHaveBeenCalled();
   });
 
   // Fixup A3: `readRunningRuntimeVersion` used to be a structural pid.json
@@ -5019,20 +5019,20 @@ describe("recoverIfDown", () => {
       runtimeVersion: "1.7.0",
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         installGeneration: "recover-command-generation",
         runtimeVersion: null,
         runtimeWasNull: true,
       },
     });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue({
       outcome: "stamped",
     });
 
     const outcome = await controller.recoverIfDown();
     expect(outcome).toEqual({ kind: "ok", value: { activated: true } });
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({ args: ["host", "restart"] }),
     );
   });
@@ -5044,7 +5044,7 @@ describe("recoverIfDown", () => {
       runtimeVersion: "1.7.0",
     });
     removePidMetadata("production");
-    await controller.removeTraycer().catch(() => undefined);
+    await controller.removeHukum().catch(() => undefined);
 
     const outcome = await controller.recoverIfDown();
     expect(outcome).toEqual({
@@ -5060,14 +5060,14 @@ describe("recoverIfDown", () => {
       runtimeVersion: "1.7.0",
     });
     removePidMetadata("production");
-    vi.mocked(streamBundledTraycerCliJson).mockRejectedValue(
-      new TraycerCliError("E_CLI_LOCK_BUSY", "lock busy"),
+    vi.mocked(streamBundledHukumCliJson).mockRejectedValue(
+      new HukumCliError("E_CLI_LOCK_BUSY", "lock busy"),
     );
 
     const outcome = await controller.recoverIfDown();
     expect(outcome).toEqual({
       kind: "deferred",
-      message: "Another Traycer process is managing the host.",
+      message: "Another Hukum process is managing the host.",
     });
   });
 
@@ -5082,7 +5082,7 @@ describe("recoverIfDown", () => {
       runtimeVersion: "1.7.0",
     });
     removePidMetadata("production");
-    vi.mocked(streamBundledTraycerCliJson).mockRejectedValue(
+    vi.mocked(streamBundledHukumCliJson).mockRejectedValue(
       new Error("connection refused"),
     );
 
@@ -5105,7 +5105,7 @@ describe("recoverIfDown", () => {
       runtimeVersion: null,
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         installGeneration: "free-port-command-generation",
         runtimeVersion: null,
@@ -5115,7 +5115,7 @@ describe("recoverIfDown", () => {
 
     await controller.recoverIfDown();
 
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(
       expect.arrayContaining(["host", "stamp-runtime"]),
     );
   });
@@ -5137,24 +5137,24 @@ describe("freePortAndRestart (CLI-owned)", () => {
       runtimeVersion: null,
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         installGeneration: "free-port-command-generation",
         runtimeVersion: null,
         runtimeWasNull: true,
       },
     });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue({
       outcome: "stamped",
     });
 
     const outcome = await controller.freePortAndRestart(null, null);
 
     expect(outcome.kind).toBe("ok");
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({ args: ["host", "free-port-and-restart"] }),
     );
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(
       expect.arrayContaining(["host", "stamp-runtime"]),
     );
   });
@@ -5170,7 +5170,7 @@ describe("CLI-owned service start attestation (closing A2)", () => {
   const commandGeneration = "committed-under-cli-lock";
 
   function configureStampAndServiceAttestation(): void {
-    vi.mocked(runBundledTraycerCliJson).mockImplementation(async (args) => {
+    vi.mocked(runBundledHukumCliJson).mockImplementation(async (args) => {
       if (args.includes("stamp-runtime")) return { outcome: "stamped" };
       if (args.includes("available")) {
         return availableSnapshotFixture("1.7.0", ["1.7.0"]);
@@ -5181,7 +5181,7 @@ describe("CLI-owned service start attestation (closing A2)", () => {
         runtimeWasNull: true,
       };
     });
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValue({
       data: {
         installGeneration: commandGeneration,
         runtimeVersion: null,
@@ -5191,7 +5191,7 @@ describe("CLI-owned service start attestation (closing A2)", () => {
   }
 
   function expectCommandGenerationWasStamped(): void {
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(
       expect.arrayContaining([
         "host",
         "stamp-runtime",
@@ -5236,7 +5236,7 @@ describe("CLI-owned service start attestation (closing A2)", () => {
       runtimeVersion: "1.7.0",
     });
     writePidMetadata("production", { version: "1.7.0", pid: process.pid });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue({
       installGeneration: "already-stamped-generation",
       runtimeVersion: "1.7.0",
       runtimeWasNull: false,
@@ -5300,7 +5300,7 @@ describe("CLI-owned service start attestation (closing A2)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue({
       installGeneration: "already-stamped-generation",
       runtimeVersion: "1.7.0",
       runtimeWasNull: false,
@@ -5335,7 +5335,7 @@ describe("CLI-owned service start attestation (closing A2)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue({
       installGeneration: "already-stamped-generation",
       runtimeVersion: "1.7.0",
       runtimeWasNull: false,
@@ -5372,7 +5372,7 @@ describe("CLI-owned service start attestation (closing A2)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue({
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue({
       installGeneration: "already-stamped-generation",
       runtimeVersion: "1.7.0",
       runtimeWasNull: false,
@@ -5400,7 +5400,7 @@ describe("CLI-owned service start attestation (closing A2)", () => {
       desktopLockWaitMs: DESKTOP_LOCK_WAIT_MS,
       desktopLockPollIntervalMs: DESKTOP_LOCK_POLL_INTERVAL_MS,
     });
-    vi.mocked(streamBundledTraycerCliJson).mockRejectedValueOnce(
+    vi.mocked(streamBundledHukumCliJson).mockRejectedValueOnce(
       new Error("ensure failed after side effects"),
     );
 
@@ -5420,10 +5420,10 @@ describe("CLI-owned service start attestation (closing A2)", () => {
       runtimeVersion: "1.7.0",
     });
     writeStagedRecord("production", "1.8.0", "1.8.0");
-    vi.mocked(runBundledTraycerCliJson).mockResolvedValue(
+    vi.mocked(runBundledHukumCliJson).mockResolvedValue(
       availableSnapshotFixture("1.8.0", ["1.8.0"]),
     );
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("apply")) {
         throw new Error("apply failed after side effects");
       }
@@ -5443,7 +5443,7 @@ describe("CLI-owned service start attestation (closing A2)", () => {
       desktopLockWaitMs: DESKTOP_LOCK_WAIT_MS,
       desktopLockPollIntervalMs: DESKTOP_LOCK_POLL_INTERVAL_MS,
     });
-    vi.mocked(streamBundledTraycerCliJson).mockImplementation(async (opts) => {
+    vi.mocked(streamBundledHukumCliJson).mockImplementation(async (opts) => {
       if (opts.args.includes("install")) {
         throw new Error("install failed after side effects");
       }
@@ -5470,8 +5470,8 @@ describe("installVersion busy/force continuation (CLI-owned)", () => {
       runtimeVersion: "1.7.0",
     });
 
-    vi.mocked(streamBundledTraycerCliJson).mockRejectedValueOnce(
-      new TraycerCliError("E_HOST_BUSY", "host busy"),
+    vi.mocked(streamBundledHukumCliJson).mockRejectedValueOnce(
+      new HukumCliError("E_HOST_BUSY", "host busy"),
     );
     const busyOutcome = await controller.installVersion("1.8.0", false);
     expect(busyOutcome).toEqual({
@@ -5479,18 +5479,18 @@ describe("installVersion busy/force continuation (CLI-owned)", () => {
       continuation: "retry-with-force",
       message: expect.stringContaining("work in progress"),
     });
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({
         args: ["host", "install", "--release", "1.8.0", "--if-idle"],
       }),
     );
 
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValueOnce({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValueOnce({
       data: { version: "1.8.0", installGeneration: null },
     });
     const forcedOutcome = await controller.installVersion("1.8.0", true);
     expect(forcedOutcome.kind).toBe("ok");
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledWith(
+    expect(streamBundledHukumCliJson).toHaveBeenCalledWith(
       expect.objectContaining({
         args: ["host", "install", "--release", "1.8.0"],
       }),
@@ -5503,14 +5503,14 @@ describe("installVersion busy/force continuation (CLI-owned)", () => {
       version: "1.7.0",
       runtimeVersion: "1.7.0",
     });
-    vi.mocked(streamBundledTraycerCliJson).mockRejectedValueOnce(
-      new TraycerCliError("E_HOST_BUSY", "host busy"),
+    vi.mocked(streamBundledHukumCliJson).mockRejectedValueOnce(
+      new HukumCliError("E_HOST_BUSY", "host busy"),
     );
     await controller.installVersion("1.8.0", false);
 
     // A later, unrelated intent is unaffected - there is no leftover
     // "pending pin" the controller silently retries or blocks behind.
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValueOnce({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValueOnce({
       data: { activated: true },
     });
     const respawnOutcome = await controller.respawn();
@@ -5522,12 +5522,12 @@ describe("installVersion busy/force continuation (CLI-owned)", () => {
     // confirm it genuinely re-executes against the CLI rather than
     // resolving from (or being blocked by) stale coalescing state left over
     // from the earlier busy attempt.
-    vi.mocked(streamBundledTraycerCliJson).mockResolvedValueOnce({
+    vi.mocked(streamBundledHukumCliJson).mockResolvedValueOnce({
       data: { version: "1.8.0", installGeneration: null },
     });
     const retryOutcome = await controller.installVersion("1.8.0", false);
     expect(retryOutcome.kind).toBe("ok");
-    expect(streamBundledTraycerCliJson).toHaveBeenCalledTimes(3);
+    expect(streamBundledHukumCliJson).toHaveBeenCalledTimes(3);
   });
 });
 
@@ -5705,7 +5705,7 @@ describe("packaged-mac register failure: CLI-owned LaunchAgent takeover fallback
     const outcome = await controller.respawn();
 
     expect(outcome.kind).toBe("ok");
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(TAKEOVER_ARGV);
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(TAKEOVER_ARGV);
     // The futile-retry pin: `not-found` is sticky for this SMAppService
     // session, so neither the S8 wrapper nor the fallback may re-run the
     // register cycle.
@@ -5719,7 +5719,7 @@ describe("packaged-mac register failure: CLI-owned LaunchAgent takeover fallback
   it("activation cycle: a failing takeover surfaces one terminal message naming the status and the manual escape hatch", async () => {
     const controller = stagePackagedMacWorld();
     vi.mocked(registerHostLoginItem).mockResolvedValue("not-found");
-    vi.mocked(runBundledTraycerCliJson).mockRejectedValue(
+    vi.mocked(runBundledHukumCliJson).mockRejectedValue(
       new Error("takeover exploded"),
     );
 
@@ -5743,8 +5743,8 @@ describe("packaged-mac register failure: CLI-owned LaunchAgent takeover fallback
   it("activation cycle: a takeover denied by a busy host is deferred - retry-later information, not a reportable failure", async () => {
     const controller = stagePackagedMacWorld();
     vi.mocked(registerHostLoginItem).mockResolvedValue("not-found");
-    vi.mocked(runBundledTraycerCliJson).mockRejectedValue(
-      new TraycerCliError(
+    vi.mocked(runBundledHukumCliJson).mockRejectedValue(
+      new HukumCliError(
         "E_HOST_BUSY",
         "service install --takeover: the running host has work in progress and denied the shutdown claim; retry once the work completes.",
       ),
@@ -5793,7 +5793,7 @@ describe("packaged-mac register failure: CLI-owned LaunchAgent takeover fallback
     const outcome = await controller.registerService();
 
     expect(outcome).toEqual({ kind: "ok", value: { registered: true } });
-    expect(runBundledTraycerCliJson).toHaveBeenCalledWith(TAKEOVER_ARGV);
+    expect(runBundledHukumCliJson).toHaveBeenCalledWith(TAKEOVER_ARGV);
   });
 
   it("requires-approval NEVER escalates to the takeover - the toggle is the user's alone", async () => {
@@ -5826,7 +5826,7 @@ describe("packaged-mac register failure: CLI-owned LaunchAgent takeover fallback
     // reached registration - otherwise "failed" and no takeover would hold
     // trivially without exercising the escalation gate at all.
     expect(registerHostLoginItem).toHaveBeenCalledTimes(2);
-    expect(runBundledTraycerCliJson).not.toHaveBeenCalledWith(TAKEOVER_ARGV);
+    expect(runBundledHukumCliJson).not.toHaveBeenCalledWith(TAKEOVER_ARGV);
   });
 
   it("removed-by-user NEVER escalates to the takeover - reinstalling the service would defy the removal", async () => {
@@ -5842,6 +5842,6 @@ describe("packaged-mac register failure: CLI-owned LaunchAgent takeover fallback
     if (outcome.kind === "failed") {
       expect(outcome.message).toBe(HOST_REMOVED_BY_USER_MESSAGE);
     }
-    expect(runBundledTraycerCliJson).not.toHaveBeenCalledWith(TAKEOVER_ARGV);
+    expect(runBundledHukumCliJson).not.toHaveBeenCalledWith(TAKEOVER_ARGV);
   });
 });

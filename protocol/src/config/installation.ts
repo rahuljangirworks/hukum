@@ -8,12 +8,12 @@ import type { Environment } from "./paths";
  * Shared on-disk installation contracts for the CLI and its host.
  *
  * These records are deliberately Node-only and therefore live under the
- * `@traycer/protocol/config` subpath, like the shared config store. The host
+ * `@hukum/protocol/config` subpath, like the shared config store. The host
  * reads these exact records for RPC installation information while the CLI
  * remains the sole writer and lifecycle owner.
  */
 
-const TRAYCER_HOME_DIRNAME = ".traycer";
+const HUKUM_HOME_DIRNAME = ".hukum";
 const CLI_DIRNAME = "cli";
 const HOST_DIRNAME = "host";
 const HOST_INSTALL_DIRNAME = "install";
@@ -61,8 +61,8 @@ export function devDesktopSlotForEnvironment(
   return slot;
 }
 
-function traycerHomeDir(): string {
-  return join(homedir(), TRAYCER_HOME_DIRNAME);
+function hukumHomeDir(): string {
+  return join(homedir(), HUKUM_HOME_DIRNAME);
 }
 
 function slotInstallDir(base: string, environment: Environment): string {
@@ -73,7 +73,7 @@ function slotInstallDir(base: string, environment: Environment): string {
 
 /** The CLI install directory for this exact environment and development slot. */
 export function cliInstallHomeDir(environment: Environment): string {
-  return slotInstallDir(join(traycerHomeDir(), CLI_DIRNAME), environment);
+  return slotInstallDir(join(hukumHomeDir(), CLI_DIRNAME), environment);
 }
 
 export function cliManifestPath(environment: Environment): string {
@@ -82,7 +82,7 @@ export function cliManifestPath(environment: Environment): string {
 
 /** The host install/runtime directory matching the CLI's selected slot. */
 export function hostInstallHomeDir(environment: Environment): string {
-  return slotInstallDir(join(traycerHomeDir(), HOST_DIRNAME), environment);
+  return slotInstallDir(join(hukumHomeDir(), HOST_DIRNAME), environment);
 }
 
 export function hostInstallDir(environment: Environment): string {

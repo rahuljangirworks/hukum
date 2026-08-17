@@ -4,7 +4,7 @@ import { cleanup, renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { DeregisterHostFetchResult } from "@traycer-clients/shared/host-client/host-deregister-fetcher";
+import type { DeregisterHostFetchResult } from "@hukum-clients/shared/host-client/host-deregister-fetcher";
 import type { AuthService } from "@/lib/auth/auth-service";
 import type { HostDirectoryService } from "@/lib/host";
 import { authQueryKeys } from "@/lib/query-keys";

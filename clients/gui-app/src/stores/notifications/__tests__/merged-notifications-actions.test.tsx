@@ -2,21 +2,21 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   HostNotificationEntry,
   HostNotificationsCloudFeedRow,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import {
   createNotificationRoomEntryMap,
   NOTIFICATIONS_ARRAY_KEY,
   type NotificationRoomEntryMap,
-} from "@traycer/protocol/notifications/notification-room";
+} from "@hukum/protocol/notifications/notification-room";
 import {
   type NotificationEntry,
   NOTIFICATION_EVENT_TYPES,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 import {
   __resetAppLocalNotificationsStoreForTests,
   useAppLocalNotificationsStore,

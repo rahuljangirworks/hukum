@@ -6,10 +6,10 @@ import type { PluggableList } from "unified";
 import { CodeBlock, PreBlock } from "./components/code-block";
 import { MarkdownAnchor } from "./components/markdown-anchor";
 import { MermaidBlock } from "./components/mermaid-block";
-import { TraycerChatReference } from "./components/traycer-chat-reference";
-import { TraycerEpicReference } from "./components/traycer-epic-reference";
-import { TraycerSpecReference } from "./components/traycer-spec-reference";
-import { TraycerTicketReference } from "./components/traycer-ticket-reference";
+import { HukumChatReference } from "./components/hukum-chat-reference";
+import { HukumEpicReference } from "./components/hukum-epic-reference";
+import { HukumSpecReference } from "./components/hukum-spec-reference";
+import { HukumTicketReference } from "./components/hukum-ticket-reference";
 import {
   TableCell,
   TableHead,
@@ -22,24 +22,24 @@ import {
   markdownUrlTransform,
 } from "./links/markdown-url-transform";
 import {
-  TRAYCER_CHAT_TAG,
-  TRAYCER_EPIC_TAG,
-  TRAYCER_MERMAID_TAG,
-  TRAYCER_SPEC_TAG,
-  TRAYCER_TICKET_TAG,
+  HUKUM_CHAT_TAG,
+  HUKUM_EPIC_TAG,
+  HUKUM_MERMAID_TAG,
+  HUKUM_SPEC_TAG,
+  HUKUM_TICKET_TAG,
 } from "./plugins/const";
 import { rehypeCustomMermaid } from "./plugins/rehype-custom-mermaid";
-import { rehypeTraycerChat } from "./plugins/rehype-traycer-chat";
-import { rehypeTraycerEpic } from "./plugins/rehype-traycer-epic";
-import { rehypeTraycerSpec } from "./plugins/rehype-traycer-spec";
-import { rehypeTraycerTicket } from "./plugins/rehype-traycer-ticket";
+import { rehypeHukumChat } from "./plugins/rehype-hukum-chat";
+import { rehypeHukumEpic } from "./plugins/rehype-hukum-epic";
+import { rehypeHukumSpec } from "./plugins/rehype-hukum-spec";
+import { rehypeHukumTicket } from "./plugins/rehype-hukum-ticket";
 import {
   extendAssistantImageSanitizeSchema,
-  extendTraycerSanitizeSchema,
+  extendHukumSanitizeSchema,
 } from "./plugins/rehype-sanitize-schema";
-import { getTraycerStreamingHighlighter } from "./traycer-streaming-highlighter";
+import { getHukumStreamingHighlighter } from "./hukum-streaming-highlighter";
 
-const TRAYCER_STREAMING_HIGHLIGHTER = getTraycerStreamingHighlighter();
+const HUKUM_STREAMING_HIGHLIGHTER = getHukumStreamingHighlighter();
 
 // Product rehype plugins only. Tailmark already runs rehype-raw, sanitize, and
 // its marker policy; do not re-register GFM / disable-indented-code (built-in).
@@ -47,13 +47,13 @@ const TRAYCER_STREAMING_HIGHLIGHTER = getTraycerStreamingHighlighter();
 // full-document repair path, and TextSegment peels next-steps before render.
 const PRODUCT_REHYPE_PLUGINS: PluggableList = [
   rehypeCustomMermaid,
-  rehypeTraycerChat,
-  rehypeTraycerEpic,
-  rehypeTraycerSpec,
-  rehypeTraycerTicket,
+  rehypeHukumChat,
+  rehypeHukumEpic,
+  rehypeHukumSpec,
+  rehypeHukumTicket,
 ];
 
-// Product custom tags (mermaid + traycer references) are not on react-markdown's
+// Product custom tags (mermaid + hukum references) are not on react-markdown's
 // `Components` keyof surface; cast after building the map so StreamingMarkdown
 // still receives a single stable components object.
 const DEFAULT_COMPONENTS = {
@@ -65,22 +65,22 @@ const DEFAULT_COMPONENTS = {
   th: TableHeader as Components["th"],
   td: TableCell as Components["td"],
   tr: TableRow as Components["tr"],
-  [TRAYCER_MERMAID_TAG]: MermaidBlock as ComponentType<Record<string, unknown>>,
-  [TRAYCER_SPEC_TAG]: TraycerSpecReference as ComponentType<
+  [HUKUM_MERMAID_TAG]: MermaidBlock as ComponentType<Record<string, unknown>>,
+  [HUKUM_SPEC_TAG]: HukumSpecReference as ComponentType<
     Record<string, unknown>
   >,
-  [TRAYCER_TICKET_TAG]: TraycerTicketReference as ComponentType<
+  [HUKUM_TICKET_TAG]: HukumTicketReference as ComponentType<
     Record<string, unknown>
   >,
-  [TRAYCER_CHAT_TAG]: TraycerChatReference as ComponentType<
+  [HUKUM_CHAT_TAG]: HukumChatReference as ComponentType<
     Record<string, unknown>
   >,
-  [TRAYCER_EPIC_TAG]: TraycerEpicReference as ComponentType<
+  [HUKUM_EPIC_TAG]: HukumEpicReference as ComponentType<
     Record<string, unknown>
   >,
 } as Components;
 
-export interface TraycerMarkdownProps {
+export interface HukumMarkdownProps {
   children: string;
   className: string | null;
   proseSize: "compact" | "normal";
@@ -98,7 +98,7 @@ export interface TraycerMarkdownProps {
   isStreaming: boolean;
 }
 
-export function TraycerMarkdown({
+export function HukumMarkdown({
   children,
   className,
   proseSize,
@@ -108,7 +108,7 @@ export function TraycerMarkdown({
   rehypePlugins,
   quotable,
   isStreaming,
-}: TraycerMarkdownProps) {
+}: HukumMarkdownProps) {
   const mergedComponents = useMemo((): Components => {
     if (!components) return DEFAULT_COMPONENTS;
     return {
@@ -142,11 +142,11 @@ export function TraycerMarkdown({
     >
       <StreamingMarkdown
         isStreaming={isStreaming}
-        highlighter={TRAYCER_STREAMING_HIGHLIGHTER}
+        highlighter={HUKUM_STREAMING_HIGHLIGHTER}
         sanitizeSchema={
           imageRendering === "assistant"
             ? extendAssistantImageSanitizeSchema
-            : extendTraycerSanitizeSchema
+            : extendHukumSanitizeSchema
         }
         urlTransform={
           imageRendering === "assistant"

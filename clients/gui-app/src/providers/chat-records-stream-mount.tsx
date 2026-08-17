@@ -2,7 +2,7 @@ import { useEffect, type ReactNode } from "react";
 import {
   ChatRecordsStreamClient,
   type ChatRecordDelta,
-} from "@traycer-clients/shared/host-transport/chat-records-stream-client";
+} from "@hukum-clients/shared/host-transport/chat-records-stream-client";
 import {
   useStreamMethodSupport,
   useWsStreamClient,

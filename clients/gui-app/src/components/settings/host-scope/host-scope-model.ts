@@ -1,10 +1,10 @@
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import type {
   HostListItem,
   HostUpdateState,
-} from "@traycer/protocol/host/host-status";
-import type { ServiceStatusSnapshot } from "@traycer-clients/shared/platform/runner-host";
-import { hostUnavailability } from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum/protocol/host/host-status";
+import type { ServiceStatusSnapshot } from "@hukum-clients/shared/platform/runner-host";
+import { hostUnavailability } from "@hukum-clients/shared/host-client/remote-fetcher";
 import { dialableHostEndpointFor } from "@/lib/host/transport-key";
 import {
   deriveHostHealth,
@@ -106,7 +106,7 @@ export function buildHostScopeOptions(
       ),
       registered: item !== null,
       platform: item?.platform ?? null,
-      version: item?.status.appVersion ?? entry?.version ?? null,
+      version: item?.status?.appVersion ?? entry?.version ?? null,
       health: deriveHostHealth({
         item,
         isLocalMachine,
@@ -115,7 +115,7 @@ export function buildHostScopeOptions(
         service: isLocalMachine ? input.localService : undefined,
         nowMs: input.nowMs,
       }),
-      updateState: item?.status.updateState ?? null,
+      updateState: item?.status?.updateState ?? null,
       entry,
       item,
     };

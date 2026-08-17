@@ -3,16 +3,16 @@ import {
   encodeBase64,
   utf8Bytes,
   webCryptoSha256Hex,
-} from "@traycer-clients/shared/cloud-chat/bytes";
+} from "@hukum-clients/shared/cloud-chat/bytes";
 import {
   readCloudChat,
   type CloudChatRead,
-} from "@traycer-clients/shared/cloud-chat/cloud-chat-reader";
+} from "@hukum-clients/shared/cloud-chat/cloud-chat-reader";
 import {
   InMemoryChatPartCache,
   NO_PART_CACHE,
   type ChatPartCache,
-} from "@traycer-clients/shared/cloud-chat/part-cache";
+} from "@hukum-clients/shared/cloud-chat/part-cache";
 import {
   DEFAULT_PUBLISH,
   FIRST_COHORT,

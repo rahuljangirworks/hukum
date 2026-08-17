@@ -1,17 +1,17 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { DefaultRequestContextProvider } from "@traycer-clients/shared/auth/request-context-provider";
-import { createAuthenticatedUserFixture } from "@traycer-clients/shared/test-fixtures/authenticated-user";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import { mockRemoteHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import type { LocalHostSnapshot } from "@traycer-clients/shared/platform/runner-host";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import { DefaultRequestContextProvider } from "@hukum-clients/shared/auth/request-context-provider";
+import { createAuthenticatedUserFixture } from "@hukum-clients/shared/test-fixtures/authenticated-user";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import { mockRemoteHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import type { LocalHostSnapshot } from "@hukum-clients/shared/platform/runner-host";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   hostListItemToDirectoryEntry,
   isRemoteHostDirectoryEntry,
   RELAY_FUSE_MAX_ATTACH_MS,
   type RemoteHostFetchOutcome,
   type RemoteHostFetcher,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
 import {
   HostDirectoryService,
   type HostDirectoryServiceOptions,
@@ -50,11 +50,11 @@ vi.mock("sonner", () => ({
 const readySessionHosts = vi.hoisted(() => ({ value: new Set<string>() }));
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/remote/index",
+  "@hukum-clients/shared/host-transport/remote/index",
   async (importOriginal) => {
     const actual =
       await importOriginal<
-        typeof import("@traycer-clients/shared/host-transport/remote/index")
+        typeof import("@hukum-clients/shared/host-transport/remote/index")
       >();
     return {
       ...actual,
@@ -95,7 +95,7 @@ const rememberedRemoteHostEntry: HostDirectoryEntry = {
   hostId: "remembered-remote-host",
   label: "Remembered Remote",
   kind: "remote",
-  websocketUrl: "wss://remembered-remote.traycer.invalid/rpc",
+  websocketUrl: "wss://remembered-remote.hukum.invalid/rpc",
   version: "0.0.0-mock",
   transportDialability: "dialable",
 };
@@ -104,7 +104,7 @@ const secondRemoteHostEntry: HostDirectoryEntry = {
   hostId: "second-remote-host",
   label: "Second Remote",
   kind: "remote",
-  websocketUrl: "wss://second-remote.traycer.invalid/rpc",
+  websocketUrl: "wss://second-remote.hukum.invalid/rpc",
   version: "0.0.0-mock",
   transportDialability: "dialable",
 };
@@ -114,20 +114,20 @@ const thirdRemoteHostEntry: HostDirectoryEntry = {
   hostId: "third-remote-host",
   label: "Third Remote",
   kind: "remote",
-  websocketUrl: "wss://third-remote.traycer.invalid/rpc",
+  websocketUrl: "wss://third-remote.hukum.invalid/rpc",
   version: "0.0.0-mock",
   transportDialability: "dialable",
 };
 
 function makeHost(localHost: LocalHostSnapshot | null): MockRunnerHost {
   return new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 
@@ -246,7 +246,7 @@ const accountAHostEntry: HostDirectoryEntry = {
   hostId: "account-a-host",
   label: "Account A Host",
   kind: "remote",
-  websocketUrl: "wss://account-a.traycer.invalid/rpc",
+  websocketUrl: "wss://account-a.hukum.invalid/rpc",
   version: "0.0.0-mock",
   transportDialability: "dialable",
 };
@@ -255,7 +255,7 @@ const accountBHostEntry: HostDirectoryEntry = {
   hostId: "account-b-host",
   label: "Account B Host",
   kind: "remote",
-  websocketUrl: "wss://account-b.traycer.invalid/rpc",
+  websocketUrl: "wss://account-b.hukum.invalid/rpc",
   version: "0.0.0-mock",
   transportDialability: "dialable",
 };
@@ -326,7 +326,7 @@ describe("HostDirectoryService", () => {
       hostId: localSnapshot.hostId,
       label: "Registry copy",
       kind: "remote",
-      websocketUrl: "wss://relay.traycer.invalid/attach",
+      websocketUrl: "wss://relay.hukum.invalid/attach",
       version: localSnapshot.version,
       transportDialability: "dialable",
     };
@@ -411,7 +411,7 @@ describe("HostDirectoryService", () => {
       hostId: "mock-remote-2",
       label: "Second Remote",
       kind: "remote",
-      websocketUrl: "wss://mock-remote-2.traycer.invalid/rpc",
+      websocketUrl: "wss://mock-remote-2.hukum.invalid/rpc",
       version: "0.0.0-mock",
       transportDialability: "dialable",
     };
@@ -1431,7 +1431,7 @@ describe("HostDirectoryService", () => {
       hostId: "mock-remote-2",
       label: "Second Remote",
       kind: "remote",
-      websocketUrl: "wss://mock-remote-2.traycer.invalid/rpc",
+      websocketUrl: "wss://mock-remote-2.hukum.invalid/rpc",
       version: "0.0.0-mock",
       transportDialability: "dialable",
     };
@@ -1692,7 +1692,7 @@ describe("HostDirectoryService", () => {
       hostId: localSnapshot.hostId,
       label: "hardiks-macbook",
       kind: "remote",
-      websocketUrl: "wss://relay.traycer.invalid/attach",
+      websocketUrl: "wss://relay.hukum.invalid/attach",
       version: "1.2.2",
       transportDialability: "dialable",
     };
@@ -1870,14 +1870,14 @@ describe("HostDirectoryService", () => {
         window.localStorage.getItem(LAST_LOCAL_HOST_ID_STORAGE_KEY),
       ).toBeNull();
       const host = new MockRunnerHost({
-        signInUrl: "https://auth.traycer.invalid/sign-in",
+        signInUrl: "https://auth.hukum.invalid/sign-in",
         authnBaseUrl: "http://localhost:5005",
         localHost: null,
         lastKnownLocalHostId: localSnapshot.hostId,
         hosts: [],
         workspaceFolderPickerPaths: undefined,
         hasLocalHost: undefined,
-        traycerCli: undefined,
+        hukumCli: undefined,
       });
       const directory = makeDirectory({
         authContextId: null,
@@ -1911,13 +1911,13 @@ describe("HostDirectoryService", () => {
     it("abandons startup when disposed while the shell seed is in flight", async () => {
       let releaseSeed: () => void = () => undefined;
       const host = new MockRunnerHost({
-        signInUrl: "https://auth.traycer.invalid/sign-in",
+        signInUrl: "https://auth.hukum.invalid/sign-in",
         authnBaseUrl: "http://localhost:5005",
         localHost: null,
         hosts: [],
         workspaceFolderPickerPaths: undefined,
         hasLocalHost: undefined,
-        traycerCli: undefined,
+        hukumCli: undefined,
       });
       const seedGate = new Promise<void>((resolve) => {
         releaseSeed = resolve;
@@ -2243,7 +2243,7 @@ describe("HostDirectoryService", () => {
         hostId: "non-dialable-other",
         label: "Dead Other",
         kind: "remote",
-        websocketUrl: "wss://dead-other.traycer.invalid/rpc",
+        websocketUrl: "wss://dead-other.hukum.invalid/rpc",
         version: "0.0.0-mock",
         transportDialability: "dialable",
       });
@@ -2448,7 +2448,7 @@ describe("HostDirectoryService", () => {
         hostId: localSnapshot.hostId,
         label: "Registry twin",
         kind: "remote",
-        websocketUrl: "wss://relay.traycer.invalid/attach",
+        websocketUrl: "wss://relay.hukum.invalid/attach",
         version: "0.0.0-mock",
         transportDialability: "dialable",
       };
@@ -3813,7 +3813,7 @@ describe("HostDirectoryService boot-ordering convergence", () => {
     hostId: LOCAL_HOST_ID,
     label: "hardiks-macbook",
     kind: "remote",
-    websocketUrl: "wss://relay.traycer.invalid/attach",
+    websocketUrl: "wss://relay.hukum.invalid/attach",
     version: "1.2.3",
     transportDialability: "not-dialable",
   };

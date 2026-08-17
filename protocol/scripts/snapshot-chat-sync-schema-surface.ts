@@ -13,10 +13,10 @@
  *   bun run protocol/scripts/snapshot-chat-sync-schema-surface.ts > \
  *     protocol/src/persistence/chat-sync/__tests__/__fixtures__/chat-sync-schema-surface.ts
  */
-import { getRecordSchema } from "@traycer/protocol/framework/index";
-import { chatHeadStorageSchema } from "@traycer/protocol/persistence/chat-sync/head";
-import { chatShardStorageSchema } from "@traycer/protocol/persistence/chat-sync/shard";
-import { persistenceRecordRegistry } from "@traycer/protocol/persistence/registry";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
+import { chatHeadStorageSchema } from "@hukum/protocol/persistence/chat-sync/head";
+import { chatShardStorageSchema } from "@hukum/protocol/persistence/chat-sync/shard";
+import { persistenceRecordRegistry } from "@hukum/protocol/persistence/registry";
 import { z } from "zod";
 
 const chatHeadSchema = getRecordSchema(

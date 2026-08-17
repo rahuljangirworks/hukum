@@ -14,6 +14,7 @@ import { ProvidersSettingsPanel } from "@/components/settings/panels/providers-s
 import { AgentsSettingsPanel } from "@/components/settings/panels/agents-settings-panel";
 import { NotificationsSettingsPanel } from "@/components/settings/panels/notifications-settings-panel";
 import { BrainCapabilitiesPanel } from "@/components/brain/brain-capabilities-panel";
+import { VoiceSettingsPanel } from "@/components/settings/panels/voice-settings-panel";
 import { useSystemTabModalActions } from "@/stores/tabs/use-system-tab-modal";
 
 export interface SettingsModalContentProps {
@@ -70,6 +71,8 @@ export function SettingsPanelForSection(props: {
       return <WorktreesSettingsPanel />;
     case "brain":
       return <BrainCapabilitiesPanel />;
+    case "voice":
+      return <VoiceSettingsPanel />;
     case "host":
       return <HostSettingsPanel />;
     case "devices":

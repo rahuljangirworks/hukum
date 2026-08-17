@@ -1,7 +1,7 @@
 import { useMemo, type ReactNode } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { ChatReplicaReadResponse } from "@traycer/protocol/host/epic/chat-replica-read";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { ChatReplicaReadResponse } from "@hukum/protocol/host/epic/chat-replica-read";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { PublishedChatTileRef } from "@/stores/epics/canvas/types";
 import { useTabHostClient } from "@/hooks/host/use-tab-host-client";
 import {

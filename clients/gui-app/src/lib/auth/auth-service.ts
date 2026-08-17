@@ -8,42 +8,42 @@ import type {
   StoredCredentialsIdentity,
   TokenRotateOutcome,
   TokenRotateResult,
-} from "@traycer-clients/shared/platform/runner-host";
-import { shouldWipeLegacyCredentials } from "@traycer-clients/shared/platform/runner-host";
-import type { Disposable } from "@traycer-clients/shared/platform/uri-callback";
-import type { AuthenticatedUser } from "@traycer/protocol/auth";
+} from "@hukum-clients/shared/platform/runner-host";
+import { shouldWipeLegacyCredentials } from "@hukum-clients/shared/platform/runner-host";
+import type { Disposable } from "@hukum-clients/shared/platform/uri-callback";
+import type { AuthenticatedUser } from "@hukum/protocol/auth";
 import type {
   ListUserSessionsResponse,
   MintHostCredentialRequest,
-} from "@traycer/protocol/auth/devices-sessions";
-import type { HostListResponse } from "@traycer/protocol/host/host-status";
+} from "@hukum/protocol/auth/devices-sessions";
+import type { HostListResponse } from "@hukum/protocol/host/host-status";
 import type {
   MintHostCredentialFetchResult,
   RetainedStepUpVerifyFetchResult,
   RevokeAllSessionsFetchResult,
   RevokeUserSessionFetchResult,
   StepUpChallengeFetchResult,
-} from "@traycer-clients/shared/auth/devices-sessions-fetcher";
+} from "@hukum-clients/shared/auth/devices-sessions-fetcher";
 import type {
   UpdateHostVersionPolicyFetchResult,
   UpdateHostVersionPolicyInput,
-} from "@traycer-clients/shared/host-client/host-version-policy-fetcher";
-import type { DeregisterHostFetchResult } from "@traycer-clients/shared/host-client/host-deregister-fetcher";
-import type { AuthIdentityValidationResult } from "@traycer-clients/shared/auth/auth-validation";
-import { credentialsIdentityFromAuthenticatedUser } from "@traycer-clients/shared/auth/auth-validation";
+} from "@hukum-clients/shared/host-client/host-version-policy-fetcher";
+import type { DeregisterHostFetchResult } from "@hukum-clients/shared/host-client/host-deregister-fetcher";
+import type { AuthIdentityValidationResult } from "@hukum-clients/shared/auth/auth-validation";
+import { credentialsIdentityFromAuthenticatedUser } from "@hukum-clients/shared/auth/auth-validation";
 import {
   DefaultRequestContextProvider,
   type AuthEra,
   type RequestContextProvider,
-} from "@traycer-clients/shared/auth/request-context-provider";
-import type { OpenFrameBearerSource } from "@traycer-clients/shared/auth/bearer-source";
+} from "@hukum-clients/shared/auth/request-context-provider";
+import type { OpenFrameBearerSource } from "@hukum-clients/shared/auth/bearer-source";
 import {
   createProactiveRefreshScheduler,
   DEFAULT_REFRESH_LEAD_MS,
   DEFAULT_REFRESH_MIN_DELAY_MS,
   type ProactiveRefreshScheduler,
-} from "@traycer-clients/shared/auth/token-refresh-scheduler";
-import { usernameFromAuthenticatedUser } from "@traycer/protocol/auth/request-context";
+} from "@hukum-clients/shared/auth/token-refresh-scheduler";
+import { usernameFromAuthenticatedUser } from "@hukum/protocol/auth/request-context";
 import {
   useAuthStore,
   type AuthContextMetadata,
@@ -70,8 +70,8 @@ import { AuthTokenStore } from "./auth-token-store";
 // `desktop-runner-host` keys. The write path is gone (§3); §6 reads these one
 // last time via the generic `secureStorage` seam to migrate the pair onto the
 // shared file, then wipes them.
-const LEGACY_ACCESS_TOKEN_KEY = "traycer.token";
-const LEGACY_REFRESH_TOKEN_KEY = "traycer.refresh-token";
+const LEGACY_ACCESS_TOKEN_KEY = "hukum.token";
+const LEGACY_REFRESH_TOKEN_KEY = "hukum.refresh-token";
 
 /**
  * Thrown when a read is asked for on behalf of a credential era that is no
@@ -1251,7 +1251,7 @@ export class AuthService {
     // Tear down any in-flight attempt: abort it and cancel its main-process
     // device poll so no ~10-minute poll leaks.
     this.discardActiveAttempt();
-    // The single file-destroying path in the app (the other is `traycer logout`).
+    // The single file-destroying path in the app (the other is `hukum logout`).
     // `delete()` rejects if the delete cannot land; a failed sign-out must stay
     // signed in and surface, never falsely report signed-out (§5).
     const deleteError = await this.tokenStore.delete().then(
@@ -1531,7 +1531,7 @@ export class AuthService {
     // `network-error`: a transient outage that did NOT sign the user out. Throw
     // so TanStack Query surfaces a retryable error on the panel (refresh button)
     // instead of a misleading "no subscription" empty state.
-    throw new Error("Couldn't reach Traycer to load your subscription.");
+    throw new Error("Couldn't reach Hukum to load your subscription.");
   }
 
   /**
@@ -1666,7 +1666,7 @@ export class AuthService {
       return null;
     }
     if (result.kind === "network-error") {
-      throw new Error("Couldn't reach Traycer to load your hosts.");
+      throw new Error("Couldn't reach Hukum to load your hosts.");
     }
     return result.response;
   }
@@ -1712,7 +1712,7 @@ export class AuthService {
       return null;
     }
     if (initial.kind === "network-error") {
-      throw new Error("Couldn't reach Traycer to load your sessions.");
+      throw new Error("Couldn't reach Hukum to load your sessions.");
     }
     if (
       initial.kind === "ok" &&
@@ -1757,7 +1757,7 @@ export class AuthService {
       return null;
     }
     if (repaired.kind === "network-error") {
-      throw new Error("Couldn't reach Traycer to load your sessions.");
+      throw new Error("Couldn't reach Hukum to load your sessions.");
     }
     if (repaired.kind === "unauthorized") {
       if (useAuthStore.getState().status === "signed-in") {
@@ -2138,7 +2138,7 @@ export class AuthService {
 
   /**
    * VALIDATE-ONLY re-adoption from the credentials file:
-   *   - file null → UI-only signed-out (sign-out-elsewhere / traycer logout);
+   *   - file null → UI-only signed-out (sign-out-elsewhere / hukum logout);
    *   - file present + access valid → applySignedIn (same-user rotation OR
    *     account switch OR signed-out→present);
    *   - file present + invalid/expired → UI-only sign-out + a handoff to the
@@ -2661,7 +2661,7 @@ export class AuthService {
 
   /**
    * Browser-return signal handler. The shell delivers a payload-free nudge when
-   * the user comes back from the device-approval tab (the `traycer://` deep
+   * the user comes back from the device-approval tab (the `hukum://` deep
    * link). It carries no token or code: it only pokes the in-flight device poll
    * to fire immediately so approval is picked up without waiting out the poll
    * interval. With no live attempt (a cold-start replay, or one already

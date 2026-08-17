@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
 // Dev orchestrator for `make dev-desktop` (OSS).
 //
-// Mirrors the internal `make dev-desktop` flow, but the Traycer host is
+// Mirrors the internal `make dev-desktop` flow, but the Hukum host is
 // DOWNLOADED from GitHub Releases instead of built from source — the
-// Traycer Host and cloud backend are not part of this repo. The desktop runs
+// Hukum Host and cloud backend are not part of this repo. The desktop runs
 // against PRODUCTION: its baked config points at the real cloud, and the CLI
 // provisions the real signed host release.
 //
@@ -12,30 +12,30 @@
 // separate worktrees — or a second run from the same worktree with an
 // explicit `--slot` — never collide. The slot is set once on `process.env`
 // and everything downstream reads it from there: the CLI's own install/lock
-// paths (`clients/traycer-cli/src/store/paths.ts`), its OS service label
-// (`clients/traycer-cli/src/service/label.ts`, `ai.traycer.host.dev.<slot>`),
+// paths (`clients/hukum-cli/src/store/paths.ts`), its OS service label
+// (`clients/hukum-cli/src/service/label.ts`, `ai.hukum.host.dev.<slot>`),
 // and the Desktop's CLI discovery + userData/single-instance identity
 // (`clients/desktop/src/electron-main/cli/cli-discovery.ts`) all branch on it.
 //
 //   - Stages a dev CLI wrapper at this run's slot-scoped bin path
-//     (`~/.traycer/cli/dev-runs/<slot>/bin/traycer`) that exec's
-//     `bun <repo>/clients/traycer-cli/src/index.ts "$@"`, so the OS service
+//     (`~/.hukum/cli/dev-runs/<slot>/bin/hukum`) that exec's
+//     `bun <repo>/clients/hukum-cli/src/index.ts "$@"`, so the OS service
 //     plist resolves to a stable executable path (launchd's PATH is minimal,
 //     so absolute paths are baked into the wrapper).
-//   - Invokes `traycer host install [--release <version>]
+//   - Invokes `hukum host install [--release <version>]
 //     --allow-self-invocation`. The CLI runs from source
 //     (`config.environment === "dev"`), so it targets the dev slot
 //     automatically: it downloads + verifies the released host, swaps this
 //     run's dev install dir, writes
-//     `~/.traycer/host/dev-runs/<slot>/install/install.json`, registers the
+//     `~/.hukum/host/dev-runs/<slot>/install/install.json`, registers the
 //     slot-specific dev OS service label, and starts the host. With no
 //     `--release`, the CLI installs `latest`.
 //   - Runs the HMR Electron shell (on a hash-derived, availability-checked
 //     renderer port — a fixed port would make every worktree but the first
-//     fail outright) + tails `~/.traycer/host/dev-runs/<slot>/host.log` under
+//     fail outright) + tails `~/.hukum/host/dev-runs/<slot>/host.log` under
 //     `concurrently`.
-//   - On Ctrl-C, runs `traycer host uninstall --all` so this run's dev
-//     install + service are gone. `~/.traycer/` user data is preserved (no
+//   - On Ctrl-C, runs `hukum host uninstall --all` so this run's dev
+//     install + service are gone. `~/.hukum/` user data is preserved (no
 //     --purge); any production host/CLI state in the prod slot, and any other
 //     run's dev-runs/<slot>, are never touched.
 
@@ -58,19 +58,19 @@ const CLI_ENTRY = path.join(
   "index.ts",
 );
 const DESKTOP_WORKSPACE = path.join(REPO_ROOT, "clients", "desktop");
-const TRAYCER_HOME = path.join(os.homedir(), ".hukum");
+const HUKUM_HOME = path.join(os.homedir(), ".hukum");
 // Local, version-keyed cache of downloaded host archives so repeated
 // `make dev-desktop` runs (the Ctrl-C teardown uninstalls the dev host) don't
 // re-download the same release. Outside the repo tree, so `git clean` never
 // nukes it and it's shared across worktrees. Each archive is installed via
 // `host install --from`, which re-checks its sha256.
-const HOST_ARCHIVE_CACHE_DIR = path.join(TRAYCER_HOME, "dev-host-cache");
+const HOST_ARCHIVE_CACHE_DIR = path.join(HUKUM_HOME, "dev-host-cache");
 
 // Multi-run: each worktree's `make dev-desktop` gets its own dev slot, derived
 // deterministically from the repo root (or overridden via `--slot` /
 // `DEV_DESKTOP_SLOT`). Everything downstream - the CLI's own install/lock
-// paths (clients/traycer-cli/src/store/paths.ts), its service label
-// (clients/traycer-cli/src/service/label.ts), and the Desktop's CLI discovery
+// paths (clients/hukum-cli/src/store/paths.ts), its service label
+// (clients/hukum-cli/src/service/label.ts), and the Desktop's CLI discovery
 // + userData/single-instance identity (electron-main/cli/cli-discovery.ts,
 // electron-main/dev-desktop-runtime.ts) - already branches on
 // `DEV_DESKTOP_SLOT` being set. This script is the one piece that never set
@@ -100,7 +100,7 @@ function parseSlotArg(argv) {
   return null;
 }
 
-// Sourced from the canonical `@traycer-clients/shared` module (this script
+// Sourced from the canonical `@hukum-clients/shared` module (this script
 // lives in the same Bun workspace, unlike the internal repo's orchestrator,
 // which keeps its own copy in lockstep by convention because it sits outside
 // this submodule entirely) so Desktop, the CLI, and this script can never
@@ -308,12 +308,12 @@ function resolveBinary(tool) {
   return first ?? tool;
 }
 
-// Stage the dev CLI wrapper the OS service invokes as `traycer host start`
+// Stage the dev CLI wrapper the OS service invokes as `hukum host start`
 // (dev slot, baked from the source `config.environment`). Points at the
 // source-tree CLI entry via bun so the dev loop needs no SEA build; baked
-// absolute paths survive launchd's minimal PATH. Also exports `TRAYCER_CLI`
+// absolute paths survive launchd's minimal PATH. Also exports `HUKUM_CLI`
 // (its own absolute path) so a host-spawned agent session resolves
-// `${TRAYCER_CLI} monitor` absolutely instead of relying on a bare-`traycer`
+// `${HUKUM_CLI} monitor` absolutely instead of relying on a bare-`hukum`
 // PATH lookup, and `DEV_DESKTOP_SLOT` so the service - launched by launchd
 // with a minimal, non-inherited environment - still resolves its own
 // per-slot install/log paths when it execs the CLI entry.
@@ -329,7 +329,7 @@ async function stageDevCliWrapper(cliBinDir, slot) {
       [
         `@echo off`,
         `set "PATH=${q(bunBinDir)};%PATH%"`,
-        `set "TRAYCER_CLI=${q(wrapperPath)}"`,
+        `set "HUKUM_CLI=${q(wrapperPath)}"`,
         `set "DEV_DESKTOP_SLOT=${q(slot)}"`,
         `"${q(bunBin)}" "${q(CLI_ENTRY)}" %*`,
         ``,
@@ -344,7 +344,7 @@ async function stageDevCliWrapper(cliBinDir, slot) {
     [
       `#!/bin/sh`,
       `export PATH=${shellEscape(bunBinDir)}:"$PATH"`,
-      `export TRAYCER_CLI=${shellEscape(wrapperPath)}`,
+      `export HUKUM_CLI=${shellEscape(wrapperPath)}`,
       `export DEV_DESKTOP_SLOT=${shellEscape(slot)}`,
       `exec ${shellEscape(bunBin)} ${shellEscape(CLI_ENTRY)} "$@"`,
       ``,
@@ -381,7 +381,7 @@ function parseReleaseArg(argv) {
 // (`config.environment === "dev"`), so every command targets the dev slot
 // automatically — there is no flag to pass. `--allow-self-invocation` lets the
 // unpackaged CLI register itself as the service command; the service resolves
-// the wrapper we staged at `~/.traycer/cli/dev/bin/traycer`. Exported for the
+// the wrapper we staged at `~/.hukum/cli/dev/bin/hukum`. Exported for the
 // unit test to pin the command shape.
 function buildHostInstallArgs(opts) {
   const releaseArgs = opts && opts.release ? ["--release", opts.release] : [];
@@ -473,7 +473,7 @@ function runCli(args, env) {
 }
 
 // Merged into `process.env` (never mutating it directly) at every CLI
-// subprocess spawn, so `traycer host install`/`uninstall` resolve their own
+// subprocess spawn, so `hukum host install`/`uninstall` resolve their own
 // per-slot install/lock paths (`store/paths.ts`) and service label
 // (`service/label.ts`) for THIS run, without this orchestrator process's own
 // environment ever carrying a stale slot value across calls.
@@ -508,7 +508,7 @@ function resolveConcurrentlyBin() {
 // CLI discovery paths) from `DEV_DESKTOP_SLOT` via `isDevBuild` +
 // `resolveDesktopRuntimeIdentity` — this orchestrator only needs to hand it
 // the slot and the renderer's allocated port (`clients/desktop/scripts/dev/
-// dev-stack.cjs` derives `TRAYCER_DESKTOP_DEV_URL` from `PORT` itself).
+// dev-stack.cjs` derives `HUKUM_DESKTOP_DEV_URL` from `PORT` itself).
 function buildDevDesktopEntries(hostLogPath, slot, port, hostUrl) {
   return [
     {

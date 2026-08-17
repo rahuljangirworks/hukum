@@ -7,6 +7,7 @@ import type { HostListResponse } from "@hukum/protocol/host/host-status";
 import type { AuthService } from "@/lib/auth/auth-service";
 import { useHostBinding } from "@/lib/host";
 import { useAuthStore } from "@/stores/auth/auth-store";
+import { useHostRemovalStore } from "@/stores/host/host-removal-store";
 import { authQueryKeys } from "@/lib/query-keys";
 
 /**
@@ -95,7 +96,10 @@ export function useRegisteredHosts(): UseQueryResult<HostListResponse | null> {
   const auth = binding === null ? null : binding.auth;
   const signedIn = useAuthStore((s) => s.status === "signed-in");
   const userId = useAuthStore((s) => s.contextMetadata?.userId ?? null);
-  return useQuery(registeredHostsQueryOptions(auth, userId, signedIn, false));
+  const removedInSession = useHostRemovalStore((s) => s.removedInSession);
+  return useQuery(
+    registeredHostsQueryOptions(auth, userId, signedIn && !removedInSession, false),
+  );
 }
 
 /**
@@ -119,11 +123,12 @@ export function useRegisteredHostsPollLiveness(): void {
   const auth = binding === null ? null : binding.auth;
   const signedIn = useAuthStore((s) => s.status === "signed-in");
   const userId = useAuthStore((s) => s.contextMetadata?.userId ?? null);
+  const removedInSession = useHostRemovalStore((s) => s.removedInSession);
   useQuery(
     registeredHostsQueryOptions(
       auth,
       userId,
-      signedIn,
+      signedIn && !removedInSession,
       REGISTERED_HOSTS_POLL_MS,
     ),
   );

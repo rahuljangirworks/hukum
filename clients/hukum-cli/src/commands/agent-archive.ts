@@ -1,7 +1,7 @@
 import {
   setChatArchivedRequestSchema,
   setChatArchivedResponseSchema,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   callHostRpc,
   parseHostResponse,
@@ -21,7 +21,7 @@ const RECORD_NOT_FOUND_PREFIX = "RECORD_NOT_FOUND:";
 const TARGET_NOT_LOCAL_PREFIX = "TARGET_NOT_LOCAL:";
 
 /**
- * `traycer agent archive --agent-id <id> [--unarchive]` - toggle the durable
+ * `hukum agent archive --agent-id <id> [--unarchive]` - toggle the durable
  * archive flag on a GUI chat or terminal agent (`epic.setChatArchived`). One
  * RPC covers both record kinds; the host resolves the id against chats first,
  * then terminal agents.
@@ -94,7 +94,7 @@ function remapArchiveError(err: unknown, agentId: string): unknown {
       // a stop and must be waited out or stopped individually. Collapsing both
       // into "stop it first" walks the second case into a retry loop, and any
       // arm the host adds later would inherit the same wrong advice.
-      message: `traycer: ${stripBusyPrefix(err.message)}`,
+      message: `hukum: ${stripBusyPrefix(err.message)}`,
       details: null,
       exitCode: 1,
     });
@@ -106,7 +106,7 @@ function remapArchiveError(err: unknown, agentId: string): unknown {
   if (err.message.startsWith(TARGET_NOT_LOCAL_PREFIX)) {
     return cliError({
       code: CLI_ERROR_CODES.AGENT_NOT_LOCAL,
-      message: `traycer: ${agentId} runs on another host - archive it from that host instead.`,
+      message: `hukum: ${agentId} runs on another host - archive it from that host instead.`,
       details: null,
       exitCode: 1,
     });
@@ -114,7 +114,7 @@ function remapArchiveError(err: unknown, agentId: string): unknown {
   if (err.message.startsWith(RECORD_NOT_FOUND_PREFIX)) {
     return cliError({
       code: CLI_ERROR_CODES.AGENT_RECORD_NOT_FOUND,
-      message: `traycer: no agent with id ${agentId} in this epic.`,
+      message: `hukum: no agent with id ${agentId} in this epic.`,
       details: null,
       exitCode: 1,
     });

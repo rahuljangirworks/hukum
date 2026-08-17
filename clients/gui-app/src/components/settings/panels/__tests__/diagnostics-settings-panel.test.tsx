@@ -53,13 +53,13 @@ import {
   vi,
   type Mock,
 } from "vitest";
-import type { LogLevel } from "@traycer/protocol/config/log-level";
-import type { DiagnosticsLogDescriptor } from "@traycer/protocol/host/diagnostics/index";
+import type { LogLevel } from "@hukum/protocol/config/log-level";
+import type { DiagnosticsLogDescriptor } from "@hukum/protocol/host/diagnostics/index";
 import { hostScopeOptionFixture } from "@/components/settings/host-scope/host-scope-fixture";
 import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
 import { DiagnosticsSettingsPanel } from "@/components/settings/panels/diagnostics-settings-panel";
 import {
   ALL_CONFIG_RPC_METHODS,
@@ -81,8 +81,8 @@ import type {
   DesktopSupportSnapshot,
 } from "@/lib/windows/types";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import { toast } from "sonner";
 
 vi.mock("sonner", () => ({
@@ -215,7 +215,7 @@ function clearLogLevelsBridge(): void {
 
 function readySupportSnapshot(): DesktopSupportSnapshot {
   return {
-    appName: "Traycer",
+    appName: "Hukum",
     appVersion: "1.0.0",
     platform: "darwin",
     arch: "arm64",
@@ -232,7 +232,7 @@ function readySupportSnapshot(): DesktopSupportSnapshot {
       },
     ],
     links: [],
-    supportEmail: "support@traycer.ai",
+    supportEmail: "support@hukum.ai",
     privateDeliveryAvailable: true,
   };
 }
@@ -298,7 +298,7 @@ function makeHost(support: DesktopSupportBridge | null): IRunnerHost {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const proto = Object.getPrototypeOf(host) as object;
   return Object.assign(Object.create(proto) as IRunnerHost, host, {

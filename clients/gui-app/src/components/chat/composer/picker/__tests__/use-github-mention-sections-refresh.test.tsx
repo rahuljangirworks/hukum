@@ -1,6 +1,6 @@
 import { cleanup, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 
 import type { HostRpcRegistry } from "@/lib/host";
 import type {

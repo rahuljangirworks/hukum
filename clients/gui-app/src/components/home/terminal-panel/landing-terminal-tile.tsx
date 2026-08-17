@@ -16,7 +16,7 @@ import type {
 } from "@/stores/terminals/terminal-session-store";
 import type { TerminalScope } from "@hukum/protocol/host/terminal/unary-schemas";
 import { Button } from "@/components/ui/button";
-import type { HostUnavailability } from "@traycer-clients/shared/host-client/remote-fetcher";
+import type { HostUnavailability } from "@hukum-clients/shared/host-client/remote-fetcher";
 import { useHostReachability } from "@/hooks/agent/use-host-reachability";
 import { focusActiveComposer } from "@/lib/composer/composer-focus-registry";
 import {

@@ -4,9 +4,9 @@ import {
   useQueryClient,
   type QueryKey,
 } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { ResponseOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { WorktreeWorkspaceSummaryV15 } from "@traycer/protocol/host/worktree-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { ResponseOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { WorktreeWorkspaceSummaryV15 } from "@hukum/protocol/host/worktree-schemas";
 import { useHostMutation } from "@/hooks/host/use-host-query";
 import { worktreeListByWorkspacePathsParams } from "@/hooks/worktree/use-worktree-list-by-workspace-paths-query";
 import type { HostRpcRegistry } from "@/lib/host";
@@ -279,7 +279,7 @@ export function useWorktreeWorkspacesRefresh(args: {
         }
         // The branch LIST is a separate cache with its own host-side read, so
         // the summary refresh alone leaves a branch that was deleted outside
-        // Traycer sitting in the new-worktree source picker until the list
+        // Hukum sitting in the new-worktree source picker until the list
         // refetches.
         //
         // AWAITED, but `refetchType: "active"` only - and the two halves of
@@ -294,7 +294,7 @@ export function useWorktreeWorkspacesRefresh(args: {
         // What it cost instead was the VISIBLE list. Refresh reported done
         // while the mounted picker still showed cached branches, so the very
         // thing that sends someone to Refresh - a branch deleted outside
-        // Traycer - was still on screen and still selectable at the moment the
+        // Hukum - was still on screen and still selectable at the moment the
         // spinner cleared.
         await queryClient.invalidateQueries({
           queryKey: queryKeys.hostMethodScope(

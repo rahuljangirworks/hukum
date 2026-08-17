@@ -25,7 +25,7 @@ import type {
   NotificationForegroundDisplay,
   NotificationShowOutcome,
   ServiceRegistrationOk,
-  TraycerUninstallResult,
+  HukumUninstallResult,
   FreePortAndRestartInput,
   IHostManagement,
   IHostPicker,
@@ -38,20 +38,20 @@ import type {
   IServiceHost,
   ITokenStore,
   ITrayState,
-  ITraycerCli,
+  IHukumCli,
   IWorkspaceFoldersHost,
   IZoomHost,
   LocalHostSnapshot,
   MigrationRunningSnapshot,
   TrayEpic,
   TrayIndicatorState,
-  TraycerHostStatusSnapshot,
-  TraycerDetectedShell,
-  TraycerEnvOverride,
-  TraycerShellConfig,
-  TraycerShellConfigSetInput,
-  TraycerShellProbeResult,
-} from "@traycer-clients/shared/platform/runner-host";
+  HukumHostStatusSnapshot,
+  HukumDetectedShell,
+  HukumEnvOverride,
+  HukumShellConfig,
+  HukumShellConfigSetInput,
+  HukumShellProbeResult,
+} from "@hukum-clients/shared/platform/runner-host";
 import type {
   AccessibilityThemeSnapshot,
   BackgroundMaterial,
@@ -81,8 +81,8 @@ export type {
   Vibrancy as DesktopVibrancy,
 };
 
-import type { AuthIdentityValidationResult } from "@traycer-clients/shared/auth/auth-validation-types";
-import type { HostListFetchResult } from "@traycer-clients/shared/host-client/remote-fetcher";
+import type { AuthIdentityValidationResult } from "@hukum-clients/shared/auth/auth-validation-types";
+import type { HostListFetchResult } from "@hukum-clients/shared/host-client/remote-fetcher";
 import type {
   ListUserSessionsFetchResult,
   MintHostCredentialFetchResult,
@@ -90,14 +90,14 @@ import type {
   RevokeUserSessionFetchResult,
   StepUpChallengeFetchResult,
   RetainedStepUpVerifyFetchResult,
-} from "@traycer-clients/shared/auth/devices-sessions-fetcher";
-import type { MintHostCredentialRequest } from "@traycer/protocol/auth/devices-sessions";
+} from "@hukum-clients/shared/auth/devices-sessions-fetcher";
+import type { MintHostCredentialRequest } from "@hukum/protocol/auth/devices-sessions";
 import type {
   UpdateHostVersionPolicyFetchResult,
   UpdateHostVersionPolicyInput,
-} from "@traycer-clients/shared/host-client/host-version-policy-fetcher";
-import type { DeregisterHostFetchResult } from "@traycer-clients/shared/host-client/host-deregister-fetcher";
-import type { Disposable } from "@traycer-clients/shared/platform/uri-callback";
+} from "@hukum-clients/shared/host-client/host-version-policy-fetcher";
+import type { DeregisterHostFetchResult } from "@hukum-clients/shared/host-client/host-deregister-fetcher";
+import type { Disposable } from "@hukum-clients/shared/platform/uri-callback";
 import type {
   DesktopAppUpdateCheckIntent,
   DesktopAppUpdateSnapshot,
@@ -231,7 +231,7 @@ export interface DesktopPreloadBridge {
   support: DesktopSupportBridge;
   windows: DesktopWindowsBridge;
   service: DesktopServiceBridge;
-  traycerCli: DesktopTraycerCliBridge;
+  hukumCli: DesktopHukumCliBridge;
   migration: DesktopMigrationBridge;
   platform: DesktopPlatformBridge;
   power: DesktopPowerBridge;
@@ -274,7 +274,7 @@ export interface DesktopHostManagementBridge {
     force: boolean,
   ): Promise<MutationOutcome<InstallVersionOk>>;
   uninstallHost(input: { readonly all: boolean }): Promise<HostUninstallResult>;
-  uninstallTraycer(): Promise<TraycerUninstallResult>;
+  uninstallHukum(): Promise<HukumUninstallResult>;
   getRemovalState(): Promise<HostRemovalState>;
   clearRemoval(): Promise<void>;
   restartHost(): Promise<HostRestartRequestResult>;
@@ -428,20 +428,20 @@ export interface DesktopZoomBridge {
   };
 }
 
-export interface DesktopTraycerCliBridge {
-  hostStatus(): Promise<TraycerHostStatusSnapshot>;
-  shellConfigGet(): Promise<TraycerShellConfig>;
-  shellConfigSet(input: TraycerShellConfigSetInput): Promise<void>;
+export interface DesktopHukumCliBridge {
+  hostStatus(): Promise<HukumHostStatusSnapshot>;
+  shellConfigGet(): Promise<HukumShellConfig>;
+  shellConfigSet(input: HukumShellConfigSetInput): Promise<void>;
   shellConfigReset(): Promise<void>;
   shellConfigAdd(input: { readonly path: string }): Promise<void>;
   shellConfigRemove(input: { readonly path: string }): Promise<void>;
   shellRevertArgs(input: { readonly path: string }): Promise<void>;
   shellProbe(input: {
     readonly path: string;
-  }): Promise<TraycerShellProbeResult>;
+  }): Promise<HukumShellProbeResult>;
   pickShellProgramFile(): Promise<string | null>;
-  shellListDetected(): Promise<readonly TraycerDetectedShell[]>;
-  envOverrideList(): Promise<readonly TraycerEnvOverride[]>;
+  shellListDetected(): Promise<readonly HukumDetectedShell[]>;
+  envOverrideList(): Promise<readonly HukumEnvOverride[]>;
   envOverrideSet(input: {
     readonly key: string;
     readonly value: string | null;
@@ -564,7 +564,7 @@ export interface DesktopRunnerHostOptions {
  * contract.
  *
  * `signInUrl` is pre-composed by the caller with
- * `redirect_uri=traycer://auth/callback` so `gui-app` treats it as an opaque,
+ * `redirect_uri=hukum://auth/callback` so `gui-app` treats it as an opaque,
  * browser-safe URL. `authnBaseUrl` is resolved in preload from the Electron
  * process environment, so it is already a plain string when we read it here.
  */
@@ -587,7 +587,7 @@ export class DesktopRunnerHost implements IRunnerHost {
   readonly globalShortcuts: DesktopGlobalShortcutsBridge;
   readonly support: DesktopSupportBridge;
   readonly service: IServiceHost;
-  readonly traycerCli: ITraycerCli;
+  readonly hukumCli: IHukumCli;
   readonly migration: IMigrationHost;
   readonly platform: DesktopPlatformBridge;
   readonly power: DesktopPowerBridge;
@@ -706,24 +706,24 @@ export class DesktopRunnerHost implements IRunnerHost {
       enableLinger: () => this.bridge.service.enableLinger(),
       getLogTail: (maxLines) => this.bridge.service.getLogTail(maxLines),
     };
-    this.traycerCli = {
-      hostStatus: () => this.bridge.traycerCli.hostStatus(),
-      shellConfigGet: () => this.bridge.traycerCli.shellConfigGet(),
-      shellConfigSet: (input) => this.bridge.traycerCli.shellConfigSet(input),
-      shellConfigReset: () => this.bridge.traycerCli.shellConfigReset(),
-      shellConfigAdd: (input) => this.bridge.traycerCli.shellConfigAdd(input),
+    this.hukumCli = {
+      hostStatus: () => this.bridge.hukumCli.hostStatus(),
+      shellConfigGet: () => this.bridge.hukumCli.shellConfigGet(),
+      shellConfigSet: (input) => this.bridge.hukumCli.shellConfigSet(input),
+      shellConfigReset: () => this.bridge.hukumCli.shellConfigReset(),
+      shellConfigAdd: (input) => this.bridge.hukumCli.shellConfigAdd(input),
       shellConfigRemove: (input) =>
-        this.bridge.traycerCli.shellConfigRemove(input),
-      shellRevertArgs: (input) => this.bridge.traycerCli.shellRevertArgs(input),
-      shellProbe: (input) => this.bridge.traycerCli.shellProbe(input),
+        this.bridge.hukumCli.shellConfigRemove(input),
+      shellRevertArgs: (input) => this.bridge.hukumCli.shellRevertArgs(input),
+      shellProbe: (input) => this.bridge.hukumCli.shellProbe(input),
       // Desktop always ships the native file dialog, so this capability is
-      // present here (non-desktop hosts leave `traycerCli` null entirely).
-      pickShellProgramFile: () => this.bridge.traycerCli.pickShellProgramFile(),
-      shellListDetected: () => this.bridge.traycerCli.shellListDetected(),
-      envOverrideList: () => this.bridge.traycerCli.envOverrideList(),
-      envOverrideSet: (input) => this.bridge.traycerCli.envOverrideSet(input),
+      // present here (non-desktop hosts leave `hukumCli` null entirely).
+      pickShellProgramFile: () => this.bridge.hukumCli.pickShellProgramFile(),
+      shellListDetected: () => this.bridge.hukumCli.shellListDetected(),
+      envOverrideList: () => this.bridge.hukumCli.envOverrideList(),
+      envOverrideSet: (input) => this.bridge.hukumCli.envOverrideSet(input),
       envOverrideDelete: (input) =>
-        this.bridge.traycerCli.envOverrideDelete(input),
+        this.bridge.hukumCli.envOverrideDelete(input),
     };
     this.migration = {
       announceRunning: (snapshot) =>
@@ -742,7 +742,7 @@ export class DesktopRunnerHost implements IRunnerHost {
       installVersion: (pin, force) =>
         managementBridge.installVersion(pin, force),
       uninstallHost: (input) => managementBridge.uninstallHost(input),
-      uninstallTraycer: () => managementBridge.uninstallTraycer(),
+      uninstallHukum: () => managementBridge.uninstallHukum(),
       getRemovalState: () => managementBridge.getRemovalState(),
       clearRemoval: () => managementBridge.clearRemoval(),
       restartHost: () => managementBridge.restartHost(),

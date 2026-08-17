@@ -3,8 +3,8 @@ import type { IpcMainInvokeEvent } from "electron";
 import {
   clipboardImageMediaTypes,
   type ClipboardImageMediaType,
-} from "@traycer-clients/shared/images/clipboard-image-media";
-import { MAX_ARTIFACT_IMAGE_BYTES } from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum-clients/shared/images/clipboard-image-media";
+import { MAX_ARTIFACT_IMAGE_BYTES } from "@hukum/protocol/host/epic/unary-schemas";
 import { RunnerHostInvoke } from "../../../ipc-contracts/ipc-channels";
 import { registerPlatformIpc } from "../platform-ipc";
 
@@ -18,7 +18,7 @@ const createFromBufferMock = vi.hoisted(() =>
 
 vi.mock("electron", () => ({
   app: {
-    getPath: (name: string): string => `/tmp/traycer-test-${name}`,
+    getPath: (name: string): string => `/tmp/hukum-test-${name}`,
   },
   BrowserWindow: {
     fromWebContents: (): null => null,
@@ -98,13 +98,13 @@ vi.mock("../../app/desktop-log-level", () => ({
   getDesktopLogLevel: vi.fn(() => "info"),
   setDesktopLogLevel: vi.fn(),
 }));
-vi.mock("@traycer/protocol/config/store", () => ({
+vi.mock("@hukum/protocol/config/store", () => ({
   readFeatureSettings: vi.fn(() => ({ agentRolesEnabled: false })),
   readLogLevels: vi.fn(() => ({})),
   setAgentRolesEnabled: vi.fn(),
   setLogLevels: vi.fn(),
 }));
-vi.mock("@traycer/protocol/config/log-level", () => ({
+vi.mock("@hukum/protocol/config/log-level", () => ({
   isLogLevel: () => true,
 }));
 

@@ -6,8 +6,8 @@ import {
   type ChatSessionStoreHandle,
 } from "@/stores/chats/chat-session-store";
 import { IMMEDIATE_STREAM_FLUSH_COORDINATOR } from "@/stores/chats/stream-flush-coordinator";
-import type { ChatAccess } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { ChatAccess } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 
 const EPIC_ID = "epic-1";
 const CHAT_ID = "chat-1";

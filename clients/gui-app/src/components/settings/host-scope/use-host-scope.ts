@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostInstalledRecord } from "@traycer-clients/shared/platform/runner-host";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostInstalledRecord } from "@hukum-clients/shared/platform/runner-host";
 import { useHostClientFor } from "@/hooks/host/use-host-client-for";
 import { useHostDirectoryList } from "@/hooks/host/use-host-directory-list-query";
 import { useRemoteSessionsPollReadiness } from "@/hooks/host/use-remote-sessions-poll-readiness";

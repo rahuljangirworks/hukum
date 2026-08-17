@@ -14,9 +14,9 @@ import type { ReactNode } from "react";
 import type {
   HostConnectivity,
   HostListItem,
-} from "@traycer/protocol/host/host-status";
-import { hostListItemToDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+} from "@hukum/protocol/host/host-status";
+import { hostListItemToDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 
 interface DirectoryListener {
   (): void;
@@ -37,11 +37,11 @@ vi.mock("@/lib/host", () => ({
 const readySessionHosts = vi.hoisted(() => ({ value: new Set<string>() }));
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/remote/index",
+  "@hukum-clients/shared/host-transport/remote/index",
   async (importOriginal) => {
     const actual =
       await importOriginal<
-        typeof import("@traycer-clients/shared/host-transport/remote/index")
+        typeof import("@hukum-clients/shared/host-transport/remote/index")
       >();
     return {
       ...actual,

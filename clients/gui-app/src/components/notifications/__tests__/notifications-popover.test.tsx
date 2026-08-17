@@ -21,11 +21,11 @@ import {
   RouterProvider,
   useRouterState,
 } from "@tanstack/react-router";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
 import {
   hostListItemToDirectoryEntry,
   type RemoteHostDirectoryEntry,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
 import { NotificationsPopover } from "@/components/notifications/notifications-popover";
 import {
   __resetAppLocalNotificationsStoreForTests,
@@ -45,20 +45,20 @@ import { useNotificationsPopoverStore } from "@/stores/notifications/notificatio
 import { useEpicCanvasStore } from "@/stores/epics/canvas/store";
 import { useSettingsSectionStore } from "@/stores/tabs/settings-section-store";
 import { __resetTabNavigationControllerForTesting } from "@/lib/tab-navigation";
-import type { NotificationsStreamCallbacks } from "@traycer-clients/shared/host-transport/notifications-stream-client";
+import type { NotificationsStreamCallbacks } from "@hukum-clients/shared/host-transport/notifications-stream-client";
 import {
   type NotificationEntry,
   NOTIFICATION_EVENT_TYPES,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 import {
   type NotificationRoomEntryMap,
   NOTIFICATIONS_ARRAY_KEY,
   createNotificationRoomEntryMap,
-} from "@traycer/protocol/notifications/notification-room";
+} from "@hukum/protocol/notifications/notification-room";
 import type {
   HostNotificationEntry,
   HostNotificationsCloudFeedRow,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import { ALL_NOTIFICATION_CATEGORIES } from "@/lib/notifications/notification-category";
 import { Analytics, AnalyticsEvent } from "@/lib/analytics";
 import { toastFromHostError } from "@/lib/host-error-toast";
@@ -137,11 +137,11 @@ vi.mock("@/lib/notifications/notification-feed-mode", () => ({
 const readySessionHosts = vi.hoisted(() => ({ value: new Set<string>() }));
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/remote/index",
+  "@hukum-clients/shared/host-transport/remote/index",
   async (importOriginal) => {
     const actual =
       await importOriginal<
-        typeof import("@traycer-clients/shared/host-transport/remote/index")
+        typeof import("@hukum-clients/shared/host-transport/remote/index")
       >();
     return {
       ...actual,

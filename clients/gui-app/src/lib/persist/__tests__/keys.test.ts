@@ -208,7 +208,7 @@ describe("persist key builders — output-preserving against current source", ()
 
   it("scopes completion receipts by user, host, and occurrence", () => {
     expect(appLocalNotificationCompletionReceiptPrefix("user/1")).toBe(
-      "traycer-gui-app:app-local-notification-completion-receipt:user%2F1",
+      "hukum-gui-app:app-local-notification-completion-receipt:user%2F1",
     );
     expect(
       appLocalNotificationCompletionReceiptHostPrefix({
@@ -216,7 +216,7 @@ describe("persist key builders — output-preserving against current source", ()
         originHostId: "host:1",
       }),
     ).toBe(
-      "traycer-gui-app:app-local-notification-completion-receipt:user%2F1:host%3A1",
+      "hukum-gui-app:app-local-notification-completion-receipt:user%2F1:host%3A1",
     );
     expect(
       appLocalNotificationCompletionReceiptKey({
@@ -225,7 +225,7 @@ describe("persist key builders — output-preserving against current source", ()
         occurrenceKey: "agent.stopped:chat-1@42",
       }),
     ).toBe(
-      "traycer-gui-app:app-local-notification-completion-receipt:user%2F1:host%3A1:agent.stopped%3Achat-1%4042",
+      "hukum-gui-app:app-local-notification-completion-receipt:user%2F1:host%3A1:agent.stopped%3Achat-1%4042",
     );
   });
 

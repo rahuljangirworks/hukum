@@ -1,11 +1,11 @@
 import { useCallback, useMemo, useState } from "react";
 
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   GithubMentionRepository,
   GithubMentionRow,
   GithubMentionSection,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 
 import { useGithubMentionCatalog } from "@/hooks/composer/use-github-mention-catalog";
 import type {

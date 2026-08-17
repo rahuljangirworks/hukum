@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { CloudChatIdentity } from "@traycer/protocol/host/epic/cloud-chat";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { CloudChatIdentity } from "@hukum/protocol/host/epic/cloud-chat";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   useCloudChatPayloadList,
   useCloudChatRead,

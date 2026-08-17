@@ -4,7 +4,7 @@ import {
   storedCliInstallManifestSchema,
   // The browser-safe half deliberately: this module is on the RPC registry the
   // renderer imports, and `./installation` also carries the Node-only readers.
-} from "@traycer/protocol/config/installation-records";
+} from "@hukum/protocol/config/installation-records";
 import { z } from "zod";
 
 const emptyRequestSchema = z.object({});

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { InMemoryChatPartCache } from "@traycer-clients/shared/cloud-chat/part-cache";
+import { InMemoryChatPartCache } from "@hukum-clients/shared/cloud-chat/part-cache";
 import {
   activeChatPartCache,
   clearChatPartCache,
@@ -83,12 +83,12 @@ describe("round trip", () => {
     const fake = new FakeCacheStorage();
     await createCacheApiChatPartCache(fake).put(DIGEST, new Uint8Array([1]));
 
-    const store = fake.caches.get("traycer-chat-parts-v1");
+    const store = fake.caches.get("hukum-chat-parts-v1");
     expect(store).toBeDefined();
     // `.invalid` never resolves (RFC 2606), so a stray fetch of a cache key
     // cannot become a request.
     expect([...(store?.entries.keys() ?? [])]).toEqual([
-      `https://chat-parts.traycer.invalid/${DIGEST}`,
+      `https://chat-parts.hukum.invalid/${DIGEST}`,
     ]);
   });
 
@@ -125,7 +125,7 @@ describe("failing softly", () => {
   it("swallows a quota failure - a read must not fail because a store did", async () => {
     const fake = new FakeCacheStorage();
     const cache = createCacheApiChatPartCache(fake);
-    const store = await fake.open("traycer-chat-parts-v1");
+    const store = await fake.open("hukum-chat-parts-v1");
     store.failNextPut = true;
 
     await expect(
@@ -138,7 +138,7 @@ describe("failing softly", () => {
     const fake = new FakeCacheStorage();
     const cache = createCacheApiChatPartCache(fake);
     await cache.put(DIGEST, new Uint8Array([5]));
-    const store = await fake.open("traycer-chat-parts-v1");
+    const store = await fake.open("hukum-chat-parts-v1");
     store.failNextMatch = true;
 
     expect(await cache.get(DIGEST)).toBeNull();
@@ -161,7 +161,7 @@ describe("choosing a store", () => {
 
     await cache.put(DIGEST, new Uint8Array([1]));
 
-    expect(fake.caches.get("traycer-chat-parts-v1")?.entries.size).toBe(1);
+    expect(fake.caches.get("hukum-chat-parts-v1")?.entries.size).toBe(1);
   });
 });
 
@@ -172,8 +172,8 @@ describe("clearing", () => {
 
     await clearChatPartCache(fake);
 
-    expect(fake.deleted).toEqual(["traycer-chat-parts-v1"]);
-    expect(fake.caches.has("traycer-chat-parts-v1")).toBe(false);
+    expect(fake.deleted).toEqual(["hukum-chat-parts-v1"]);
+    expect(fake.caches.has("hukum-chat-parts-v1")).toBe(false);
     await expect(clearChatPartCache(undefined)).resolves.toBeUndefined();
   });
 

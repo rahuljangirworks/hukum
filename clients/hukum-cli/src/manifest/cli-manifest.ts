@@ -1,5 +1,5 @@
 import { readFile, rename, writeFile } from "node:fs/promises";
-import { readStoredCliInstallManifestAtPath } from "@traycer/protocol/config/installation";
+import { readStoredCliInstallManifestAtPath } from "@hukum/protocol/config/installation";
 import { ZodError } from "zod";
 import { createCliLogger } from "../logger";
 import { CLI_ERROR_CODES, cliError } from "../runner/errors";

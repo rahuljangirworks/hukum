@@ -207,7 +207,7 @@ vi.mock("@/components/report-issue/report-issue-action", () => ({
 }));
 
 vi.mock("@/markdown", () => ({
-  TraycerMarkdown: () => null,
+  HukumMarkdown: () => null,
 }));
 
 vi.mock("@tanstack/react-query", () => ({

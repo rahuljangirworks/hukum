@@ -25,7 +25,7 @@ export function PhaseMigrationSurface(
     () => null,
   );
   const [isTakingLonger, setIsTakingLonger] = useState(false);
-  const isPending = snapshot === null || snapshot.status === "pending";
+  const isPending = snapshot === null || snapshot?.status === "pending";
   const errorMessage =
     snapshot?.status === "error" ? snapshot.errorMessage : null;
 

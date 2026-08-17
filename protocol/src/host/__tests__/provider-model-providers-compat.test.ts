@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
-import * as nativeSchemaModule from "@traycer/protocol/host/provider-native-schemas";
-import * as providerIdModule from "@traycer/protocol/host/provider-ids";
-import * as providerSchemaModule from "@traycer/protocol/host/provider-schemas";
+import * as nativeSchemaModule from "@hukum/protocol/host/provider-native-schemas";
+import * as providerIdModule from "@hukum/protocol/host/provider-ids";
+import * as providerSchemaModule from "@hukum/protocol/host/provider-schemas";
 import {
   downgradeResponseAcrossMajors,
   upgradeResponseToVersion,
-} from "@traycer/protocol/framework/index";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+} from "@hukum/protocol/framework/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   DEFAULT_PROVIDER_NATIVE_CAPABILITIES,
   DEFAULT_PROVIDER_NATIVE_CAPABILITIES_V70,
@@ -37,8 +37,8 @@ import {
   providerSkillsCapabilitiesSchemaV70,
   providerSettingsTabSchemaV70,
   type ProviderNativeCapabilities,
-} from "@traycer/protocol/host/provider-native-schemas";
-import { providerIdSchema } from "@traycer/protocol/host/provider-ids";
+} from "@hukum/protocol/host/provider-native-schemas";
+import { providerIdSchema } from "@hukum/protocol/host/provider-ids";
 import {
   PROVIDER_AUTH_SCHEMA_V20,
   providerCliStateSchema,
@@ -62,7 +62,7 @@ import {
   providersListResponseSchemaV70,
   providersModelProviderAuthRequestSchema,
   providersModelProviderAuthResponseSchema,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 /**
  * Model Providers wire contract.
@@ -131,7 +131,7 @@ const MCP_CAPABILITIES = {
   toolsSource: "native" as const,
   schemasSource: "native" as const,
   instructionsSource: "probe" as const,
-  traycerSessionsOnlyEnforcement: false,
+  hukumSessionsOnlyEnforcement: false,
   stdioDegradeNotice: false,
   oauthDegradesToConfigOnly: false,
 };
@@ -934,7 +934,7 @@ describe("providers.listModelProviders payloads", () => {
     }
   });
 
-  it("gates the request on a known Traycer provider id", () => {
+  it("gates the request on a known Hukum provider id", () => {
     expect(
       providersListModelProvidersRequestSchema.safeParse({
         providerId: "opencode",
@@ -1229,7 +1229,7 @@ describe("providers.modelProviderAuth actions", () => {
   it("accepts the base URLs upstream's dialog accepts, prefix rule and all", () => {
     // Their check is a `http(s)://` PREFIX test, not a URL parse. Adopting the
     // rule means adopting its edges: a value their app takes must not be a
-    // Traycer-only failure the user cannot explain.
+    // Hukum-only failure the user cannot explain.
     const base = {
       action: "createCustom" as const,
       modelProviderId: "my-endpoint",

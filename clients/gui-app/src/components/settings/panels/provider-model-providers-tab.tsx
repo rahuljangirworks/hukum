@@ -5,8 +5,8 @@ import type {
   ModelProviderEntry,
   ModelProvidersListResult,
   ProviderModelProvidersCapabilities,
-} from "@traycer/protocol/host/provider-native-schemas";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { ModelProviderMark } from "@/components/home/pickers/model-provider-icons";
 import { Badge } from "@/components/ui/badge";
@@ -620,7 +620,7 @@ export function ProviderModelProvidersTab(props: {
     >
       <p className="text-ui-xs text-muted-foreground">
         Credentials for the upstream model providers {providerLabel} can call.
-        They are stored by {providerLabel} itself, so its CLI and Traycer see
+        They are stored by {providerLabel} itself, so its CLI and Hukum see
         the same sign-ins.
       </p>
 
@@ -1092,7 +1092,7 @@ function ModelProviderRow(props: {
   // that has moved on.
   const configBusy = props.busy || props.configWriteInFlight;
   // The affordance is gated on `canDisconnect` ALONE. `hasStoredCredential`
-  // answers a different question ("does Traycer hold a credential for this?")
+  // answers a different question ("does Hukum hold a credential for this?")
   // and a later host may answer the two differently - reading either one for
   // the other is how a button appears that the host will refuse.
   const showDisconnect = props.canDisconnect && entry.canDisconnect;

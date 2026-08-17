@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 import { z } from "zod";
-import type { AuthenticatedUser } from "@traycer/protocol/auth";
+import type { AuthenticatedUser } from "@hukum/protocol/auth";
 import type { Disposable } from "../../platform/uri-callback";
 import {
   defineRpcContract,
   defineVersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   DefaultRequestContextProvider,
   type AuthEra,
@@ -16,7 +16,7 @@ import type {
 } from "../host-client";
 import type { HostDirectoryEntry } from "../host-directory";
 import { HostRuntime, type IHostDirectoryService } from "../host-runtime";
-import { CredentialLeaseReleasedError } from "@traycer/protocol/auth/request-context";
+import { CredentialLeaseReleasedError } from "@hukum/protocol/auth/request-context";
 import {
   mockLocalHostEntry,
   mockRemoteHostEntry,
@@ -64,7 +64,7 @@ const accountAHostEntry: HostDirectoryEntry = {
   hostId: "account-a-host",
   label: "Account A Host",
   kind: "remote",
-  websocketUrl: "wss://account-a.traycer.invalid/rpc",
+  websocketUrl: "wss://account-a.hukum.invalid/rpc",
   version: "0.0.0-mock",
   transportDialability: "dialable",
 };
@@ -73,7 +73,7 @@ const accountBHostEntry: HostDirectoryEntry = {
   hostId: "account-b-host",
   label: "Account B Host",
   kind: "remote",
-  websocketUrl: "wss://account-b.traycer.invalid/rpc",
+  websocketUrl: "wss://account-b.hukum.invalid/rpc",
   version: "0.0.0-mock",
   transportDialability: "dialable",
 };
@@ -203,13 +203,13 @@ function buildRuntime(options: {
   directory.selected = options.initialSelected;
   const invalidator = new RecordingInvalidator();
   const runnerHost = new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: null,
     hosts: directory.entries,
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const messenger = new MockHostMessenger<typeof registry>({
     registry,

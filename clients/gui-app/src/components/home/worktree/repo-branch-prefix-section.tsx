@@ -6,8 +6,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { RepoBranchPrefixState } from "@traycer/protocol/host/worktree-schemas";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { RepoBranchPrefixState } from "@hukum/protocol/host/worktree-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -498,7 +498,7 @@ function UnsupportedBranchNaming(props: {
         className="text-ui-xs text-amber-950 dark:text-amber-100"
         data-testid="repo-branch-prefix-unsupported"
       >
-        Repository prefixes require a newer Traycer host. Branches continue
+        Repository prefixes require a newer Hukum host. Branches continue
         using the global default.
       </p>
       <BranchPreviewRow
@@ -672,7 +672,7 @@ function EditingBranchNaming(props: {
           aria-describedby={
             props.draftError !== null ? `${props.uid}-prefix-error` : undefined
           }
-          placeholder="traycer/"
+          placeholder="hukum/"
           className="font-mono"
           onChange={(event) => props.onDraftChange(event.target.value)}
           onKeyDown={(event) => {

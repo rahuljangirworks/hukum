@@ -4,7 +4,7 @@ import { z } from "zod";
  * The browser-safe half of the shared installation contracts: the record
  * schemas themselves, with no filesystem, path or os imports.
  *
- * Split out because `@traycer/protocol/host/maintenance` puts these records on
+ * Split out because `@hukum/protocol/host/maintenance` puts these records on
  * the WIRE, and the RPC registry that references them is imported by the
  * renderer. While the schemas lived beside the readers, every renderer build
  * externalized `node:fs/promises`, `node:os` and `node:path` for browser

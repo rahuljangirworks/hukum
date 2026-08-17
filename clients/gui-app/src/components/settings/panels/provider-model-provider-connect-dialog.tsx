@@ -6,8 +6,8 @@ import type {
   ModelProviderEntry,
   ModelProviderPrompt,
   ProviderModelProvidersCapabilities,
-} from "@traycer/protocol/host/provider-native-schemas";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { ModelProviderMark } from "@/components/home/pickers/model-provider-icons";
 import { Button } from "@/components/ui/button";
@@ -549,7 +549,7 @@ export function ProviderModelProviderConnectDialog(props: {
   if (choices.length === 0) {
     body = (
       <p className="text-ui-xs text-muted-foreground">
-        {entry.name} advertises no sign-in method Traycer can drive. Sign in
+        {entry.name} advertises no sign-in method Hukum can drive. Sign in
         with the provider&apos;s own CLI and it will appear as connected here.
       </p>
     );
@@ -846,7 +846,7 @@ function PromptField(props: {
  * the browser, lifted out of the instructions and given a field of its own.
  *
  * The instructions stay above it verbatim rather than being replaced: they are
- * the provider's own wording for a flow Traycer does not otherwise understand,
+ * the provider's own wording for a flow Hukum does not otherwise understand,
  * and this only promotes the one fragment that has to be transcribed. When
  * nothing code-shaped can be lifted (see `extractConfirmationCode`), this
  * renders nothing and the prose is all there is - which is exactly what the
@@ -898,7 +898,7 @@ function ConfirmationCodeField(props: {
  * The panel a live OAuth attempt owns.
  *
  * Both arms show the provider's own `instructions` verbatim when it sent any -
- * it is the only honest copy for a flow Traycer does not otherwise understand,
+ * it is the only honest copy for a flow Hukum does not otherwise understand,
  * and paraphrasing it would invent steps.
  */
 function OauthWaitingPanel(props: {
@@ -987,7 +987,7 @@ function OauthWaitingPanel(props: {
           Reopen sign-in page
         </Button>
         {/* Honest label: upstream has no OAuth-cancel endpoint, so this stops
-            Traycer waiting and releases the server it was holding. It does not
+            Hukum waiting and releases the server it was holding. It does not
             revoke anything at the provider. */}
         <Button
           type="button"

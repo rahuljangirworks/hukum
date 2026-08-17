@@ -33,7 +33,7 @@ export function parseCreateProfileSelection(
 }
 
 /**
- * Parses `traycer agent fork`'s `--profile <ambient|id>` into
+ * Parses `hukum agent fork`'s `--profile <ambient|id>` into
  * `ForkAgentProfileSelection`. Deliberately separate from
  * `parseCreateProfileSelection`: fork's omit-default is `inherit` (byte-for-byte
  * continuation of the SOURCE agent's own profile), not `last_used` (a

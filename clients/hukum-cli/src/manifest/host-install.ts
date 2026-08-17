@@ -7,7 +7,7 @@ import {
   type HostInstallRecord,
   type HostInstallSource,
   type HostInstallSourceKind,
-} from "@traycer/protocol/config/installation";
+} from "@hukum/protocol/config/installation";
 import { ZodError } from "zod";
 import type { Environment } from "../runner/environment";
 import { createCliLogger, errorFromUnknown } from "../logger";
@@ -30,7 +30,7 @@ export type {
   HostInstallRecord,
   HostInstallSource,
   HostInstallSourceKind,
-} from "@traycer/protocol/config/installation";
+} from "@hukum/protocol/config/installation";
 
 // Returns null when the record file is absent (no host installed on
 // this environment). Throws HOST_INSTALL_RECORD_INVALID for a present but

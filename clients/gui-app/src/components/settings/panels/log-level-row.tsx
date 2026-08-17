@@ -1,5 +1,5 @@
-import { LOG_LEVELS, isLogLevel } from "@traycer/protocol/config/log-level";
-import type { LogLevel } from "@traycer/protocol/config/log-level";
+import { LOG_LEVELS, isLogLevel } from "@hukum/protocol/config/log-level";
+import type { LogLevel } from "@hukum/protocol/config/log-level";
 import { SettingsRow } from "@/components/settings/settings-row";
 import {
   Select,

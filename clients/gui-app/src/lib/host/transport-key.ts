@@ -1,10 +1,10 @@
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   isConfirmedTransportRefusal,
   isRemoteHostDirectoryEntry,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
-import { hasReadyRemoteSession } from "@traycer-clients/shared/host-transport/remote/index";
-import type { HostTransportEndpoint } from "@traycer-clients/shared/host-transport/ws-rpc-client";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
+import { hasReadyRemoteSession } from "@hukum-clients/shared/host-transport/remote/index";
+import type { HostTransportEndpoint } from "@hukum-clients/shared/host-transport/ws-rpc-client";
 
 // NUL byte: a separator that cannot appear inside any host field value, so
 // distinct field tuples can never collide into the same key. Matches the

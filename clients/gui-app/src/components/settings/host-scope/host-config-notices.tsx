@@ -82,7 +82,7 @@ export function LocalConfigFallbackNotice(props: {
 
 /**
  * The host cannot answer for its own configuration AND this shell has no local
- * Traycer CLI to read the store from disk — so there is no source for this page
+ * Hukum CLI to read the store from disk — so there is no source for this page
  * at all. Rare (a local host implies the desktop shell), but it is the one
  * combination the two notices above cannot describe.
  */
@@ -104,7 +104,7 @@ export function NoConfigSourceNotice(props: {
         </div>
         <p className="text-muted-foreground">
           It can&apos;t answer for its own configuration right now, and this
-          shell has no local Traycer CLI to read that configuration from disk.
+          shell has no local Hukum CLI to read that configuration from disk.
         </p>
       </div>
     </div>

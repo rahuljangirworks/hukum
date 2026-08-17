@@ -1,4 +1,4 @@
-import type { CommitArtifactImageResponse } from "@traycer/protocol/host/epic/unary-schemas";
+import type { CommitArtifactImageResponse } from "@hukum/protocol/host/epic/unary-schemas";
 
 const FINISH_RETRY_DELAYS_MS = [25, 50, 100, 200, 400, 800] as const;
 

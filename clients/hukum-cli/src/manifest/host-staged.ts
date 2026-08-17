@@ -1,11 +1,11 @@
 import { rename, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { HostStagedRecord as SharedHostStagedRecord } from "@traycer/protocol/config/installation";
+import type { HostStagedRecord as SharedHostStagedRecord } from "@hukum/protocol/config/installation";
 import {
   HOST_STAGED_RECORD_SCHEMA_VERSION as SHARED_HOST_STAGED_RECORD_SCHEMA_VERSION,
   isStructurallyValidStagedExecutablePath,
   readHostStagedRecordAt as readSharedHostStagedRecordAt,
-} from "@traycer/protocol/config/installation";
+} from "@hukum/protocol/config/installation";
 import type { Environment } from "../runner/environment";
 import { createCliLogger } from "../logger";
 import { hostStagedDir } from "../store/paths";

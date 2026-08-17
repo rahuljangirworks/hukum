@@ -16,19 +16,19 @@ import {
   downgradeResponseAcrossMajors,
   upgradeRequestToVersion,
   upgradeResponseToVersion,
-} from "@traycer/protocol/framework/versioned-rpc";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/framework/versioned-rpc";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   createTuiAgentRequestSchemaV10,
   createTuiAgentRequestSchema,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   providersListRequestSchemaBeforeV70,
   providersListRequestSchemaV70,
   providersListResponseSchemaV60,
   providersListResponseSchemaV70,
-} from "@traycer/protocol/host/provider-schemas";
-import type { NativeListQuery } from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-schemas";
+import type { NativeListQuery } from "@hukum/protocol/host/provider-native-schemas";
 
 const createTuiRegistry = hostRpcRegistry["epic.createTuiAgent"];
 const providersListRegistry = hostRpcRegistry["providers.list"];

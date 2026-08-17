@@ -3,13 +3,13 @@ import { cleanup, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   GithubMentionRow,
   GithubMentionSection,
   MentionGithubSearchRequest,
   MentionGithubSearchResponse,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 
 import { DEFAULT_PULL_REQUEST_MENTION_FILTER } from "@/lib/composer/mentions/github-mention-rows";
 import type { GithubMentionScope } from "@/hooks/composer/use-github-mention-catalog";
@@ -60,11 +60,11 @@ function pullRequest(number: number): GithubMentionRow {
   return {
     kind: "pull-request",
     githubHost: "github.com",
-    owner: "traycerai",
-    repo: "traycer",
+    owner: "hukumai",
+    repo: "hukum",
     number,
     title: `PR ${number}`,
-    url: `https://github.com/traycerai/traycer/pull/${number}`,
+    url: `https://github.com/hukumai/hukum/pull/${number}`,
     author: { login: "alice", avatarUrl: null },
     updatedAt: 1_000,
     buckets: ["recent"],

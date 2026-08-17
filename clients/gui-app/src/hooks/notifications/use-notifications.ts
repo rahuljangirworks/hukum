@@ -5,7 +5,7 @@ import type {
   NotificationForegroundAppLocal,
   NotificationForegroundDisplay,
   NotificationShowOutcome,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 
 export interface NotificationShowRequest {
   readonly title: string;

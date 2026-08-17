@@ -1,12 +1,12 @@
-import { chatHeadReaderSchema, type ChatHeadRecord } from "@traycer/protocol/persistence/chat-sync/head";
-import { chatShardReaderSchema, type ChatShardRecord } from "@traycer/protocol/persistence/chat-sync/shard";
-import { CHAT_SYNC_SCHEMA_VERSION } from "@traycer/protocol/persistence/chat-sync/version";
+import { chatHeadReaderSchema, type ChatHeadRecord } from "@hukum/protocol/persistence/chat-sync/head";
+import { chatShardReaderSchema, type ChatShardRecord } from "@hukum/protocol/persistence/chat-sync/shard";
+import { CHAT_SYNC_SCHEMA_VERSION } from "@hukum/protocol/persistence/chat-sync/version";
 import {
   chatHeadRecordV110,
   chatShardRecordV110,
   type ChatHead,
   type ChatShard,
-} from "@traycer/protocol/persistence/registry";
+} from "@hukum/protocol/persistence/registry";
 import { describe, expect, it } from "vitest";
 import type { z } from "zod";
 

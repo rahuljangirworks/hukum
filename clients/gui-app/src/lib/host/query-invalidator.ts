@@ -1,5 +1,5 @@
 import type { Query, QueryClient } from "@tanstack/react-query";
-import type { IHostQueryInvalidator } from "@traycer-clients/shared/host-client/host-client";
+import type { IHostQueryInvalidator } from "@hukum-clients/shared/host-client/host-client";
 import { isCloudEpicTasksQueryKey, queryKeys } from "@/lib/query-keys";
 import { getConditionPollEpisodeCoordinator } from "@/lib/query/condition-poll-episode-coordinator";
 
@@ -13,7 +13,7 @@ import { getConditionPollEpisodeCoordinator } from "@/lib/query/condition-poll-e
  * that bypassed the doctrine. On availability recovery that meant every
  * always-mounted catalog observer re-probed at once - each a provider
  * CLI/SDK spawn on the host - feeding the stall -> stream-flap ->
- * recovery-sweep loop a slow machine cannot exit (traycer#912). A recovered
+ * recovery-sweep loop a slow machine cannot exit (hukum#912). A recovered
  * stream - or a same-host transport rebind, which a storm also produces -
  * is not evidence the catalog changed, so a recovery sweep leaves these
  * entries ENTIRELY UNTOUCHED - not refetched, and not marked stale either.

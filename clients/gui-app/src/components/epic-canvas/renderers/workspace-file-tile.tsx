@@ -12,11 +12,11 @@ import {
   createReportIssueContext,
   type ReportIssueContext,
 } from "@/lib/report-issue-context";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { ExternalLinkIcon } from "lucide-react";
 import { SvgViewToggleButton } from "@/components/epic-canvas/renderers/svg-view-toggle-button";
 import { cn } from "@/lib/utils";
-import { TraycerMarkdown } from "@/markdown";
+import { HukumMarkdown } from "@/markdown";
 import { useRegisterTileFindAdapter } from "@/components/epic-canvas/tile-find/tile-find-adapter-context";
 import {
   createWorkspaceFileFindAdapter,
@@ -898,7 +898,7 @@ function readFileReportContext(
     return createReportIssueContext({
       title: "Workspace file preview failed to load from the host",
       message:
-        "The app could not reach the Traycer host to load the file preview.",
+        "The app could not reach the Hukum host to load the file preview.",
       // Narrowed, never asserted: TanStack's error generic is an unchecked
       // cast, so a bare `Error` can occupy this channel.
       code: error instanceof HostRpcError ? error.code : null,
@@ -981,7 +981,7 @@ function MarkdownFilePreview(props: {
       className="min-size-full bg-canvas px-6 py-5"
       aria-label={`${fileName} markdown preview`}
     >
-      <TraycerMarkdown
+      <HukumMarkdown
         className="mx-auto w-full max-w-4xl text-foreground"
         proseSize="normal"
         components={null}
@@ -991,7 +991,7 @@ function MarkdownFilePreview(props: {
         isStreaming={false}
       >
         {markdown}
-      </TraycerMarkdown>
+      </HukumMarkdown>
     </section>
   );
 }

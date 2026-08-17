@@ -1,8 +1,8 @@
-import { defineRpcContract } from "@traycer/protocol/framework/index";
+import { defineRpcContract } from "@hukum/protocol/framework/index";
 import {
   hostUsageSummaryRequestSchemaV10,
   hostUsageSummaryResponseSchemaV10,
-} from "@traycer/protocol/host/usage-analytics/schemas";
+} from "@hukum/protocol/host/usage-analytics/schemas";
 
 /**
  * `host.usage.summary` - the usage analytics read path (see the

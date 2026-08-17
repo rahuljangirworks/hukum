@@ -9,9 +9,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   NotificationsStreamClient,
   type NotificationsStreamCallbacks,
-} from "@traycer-clients/shared/host-transport/notifications-stream-client";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum-clients/shared/host-transport/notifications-stream-client";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import { useHostStreamClientFor } from "@/hooks/host/use-host-stream-client-for";
 import { useStreamAuthRevalidator } from "@/lib/host/stream-auth-revalidator";
 import {
@@ -71,7 +71,7 @@ import { useAppLocalNotificationsStore } from "@/stores/notifications/app-local-
 import type {
   HostNotificationEntryV21,
   HostNotificationsEntityRef,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import {
   useMergedNotificationsActions,
   type MergedNotificationRow,

@@ -1,4 +1,4 @@
-import type { PrReviewDecision } from "@traycer/protocol/host/pr-schemas";
+import type { PrReviewDecision } from "@hukum/protocol/host/pr-schemas";
 
 /**
  * How a PR's review decision is written, in the compact form a dense surface

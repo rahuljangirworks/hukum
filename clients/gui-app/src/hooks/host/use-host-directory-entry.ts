@@ -1,10 +1,10 @@
 import { useCallback, useRef, useSyncExternalStore } from "react";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   hostUnavailability,
   isRelayFuseRecoveryCandidate,
   isRemoteHostDirectoryEntry,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
 import { useHostDirectory } from "@/lib/host";
 
 /**

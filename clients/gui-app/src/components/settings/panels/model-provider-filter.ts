@@ -19,7 +19,7 @@
  * exactly the list you were already looking at. "All" is the honest name for
  * that set.
  */
-import type { ModelProviderEntry } from "@traycer/protocol/host/provider-native-schemas";
+import type { ModelProviderEntry } from "@hukum/protocol/host/provider-native-schemas";
 
 export const MODEL_PROVIDER_METHOD_FILTER = {
   All: "all",

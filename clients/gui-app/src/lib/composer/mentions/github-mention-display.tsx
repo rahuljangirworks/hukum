@@ -16,7 +16,7 @@ import type {
   GithubMentionRow,
   GithubMentionSection,
   GithubPullRequestMentionRow,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 
 import { PR_STATE_TINT_CLASS } from "@/components/worktree/worktree-pr-state-palette";
 import {
@@ -33,7 +33,7 @@ import { formatCompactRelativeTime } from "@/lib/relative-time";
 import { cn } from "@/lib/utils";
 
 import { foldGithubIdentitySegment } from "./github-mention-rows";
-import { isDefaultGithubMentionHost } from "@traycer/protocol/common/github-mention-host";
+import { isDefaultGithubMentionHost } from "@hukum/protocol/common/github-mention-host";
 import { MENU_ICON_CLASS } from "./mention-entry-display";
 
 /**

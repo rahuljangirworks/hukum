@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/index";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/index";
 import {
   AGENT_ACTIVITY_AWARENESS_FIELD,
   AGENT_ACTIVITY_HOST_ID_AWARENESS_FIELD,
@@ -11,7 +11,7 @@ import {
   notificationsSubscribeV10,
   notificationsSubscribeV11,
   readHostRuntimeStatusAwareness,
-} from "@traycer/protocol/host/notifications/subscribe";
+} from "@hukum/protocol/host/notifications/subscribe";
 
 /**
  * `notifications.subscribe@1.0` / `@1.1` frame fixtures.

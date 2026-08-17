@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import type { Editor } from "@tiptap/core";
 import type { Transaction } from "@tiptap/pm/state";
 import { Mapping } from "@tiptap/pm/transform";
-import { MAX_ARTIFACT_IMAGE_BYTES } from "@traycer/protocol/host/epic/unary-schemas";
+import { MAX_ARTIFACT_IMAGE_BYTES } from "@hukum/protocol/host/epic/unary-schemas";
 import * as Y from "yjs";
 import { useComposerPasteEvents } from "@/hooks/composer/use-composer-paste";
 import type {

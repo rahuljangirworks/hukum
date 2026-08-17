@@ -278,7 +278,7 @@ describe("HostClient", () => {
       hostId: "mock-remote",
       label: "Mock Remote Host",
       kind: "remote",
-      websocketUrl: "wss://mock-remote.traycer.invalid/rpc",
+      websocketUrl: "wss://mock-remote.hukum.invalid/rpc",
       version: "0.0.0-mock",
       transportDialability,
       publicKey: "pubkey-a",

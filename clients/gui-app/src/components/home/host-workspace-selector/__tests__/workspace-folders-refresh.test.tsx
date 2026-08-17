@@ -16,7 +16,7 @@ import {
   waitFor,
 } from "@testing-library/react";
 import type { ReactNode } from "react";
-import type { WorktreeWorkspaceSummary } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeWorkspaceSummary } from "@hukum/protocol/host/worktree-schemas";
 import { PaneSurfaceActivityContext } from "@/components/epic-tabs/pane-visibility-context";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import type { WorktreeWorkspacesRefresh } from "@/hooks/worktree/use-worktree-workspaces-refresh";
@@ -60,10 +60,10 @@ const ITEM: WorkspaceRunItem = {
   missing: false,
   isGitRepo: true,
   mode: "worktree",
-  branchLabel: "traycer/swift-otter",
+  branchLabel: "hukum/swift-otter",
   summary: GIT_SUMMARY,
   currentIntent: null,
-  defaultNewBranchName: "traycer/swift-otter",
+  defaultNewBranchName: "hukum/swift-otter",
   branchPrefixWarning: null,
   repoIdentifier: { owner: "acme", repo: "app" },
   isPrimary: true,

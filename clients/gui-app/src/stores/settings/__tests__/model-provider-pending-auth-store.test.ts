@@ -82,7 +82,7 @@ describe("model provider pending-auth store", () => {
 
   it("matches the provider exactly, never just the host", () => {
     const store = useModelProviderPendingAuthStore.getState();
-    store.upsert(attempt({ key: { providerId: "traycer" } }));
+    store.upsert(attempt({ key: { providerId: "hukum" } }));
     expect(
       findModelProviderPendingAuth(
         useModelProviderPendingAuthStore.getState().entries,

@@ -1,10 +1,10 @@
-import { prepareArtifactImageResponseSchema } from "@traycer/protocol/host/epic/unary-schemas";
-import { imageGenerationResultSchema } from "@traycer/protocol/persistence/epic/content-blocks";
+import { prepareArtifactImageResponseSchema } from "@hukum/protocol/host/epic/unary-schemas";
+import { imageGenerationResultSchema } from "@hukum/protocol/persistence/epic/content-blocks";
 import {
   supportedImageMediaTypeSchema,
   supportedImageMediaTypes,
-} from "@traycer/protocol/persistence/epic/images";
-import { imageResolutionEntrySchema } from "@traycer/protocol/persistence/epic/messages";
+} from "@hukum/protocol/persistence/epic/images";
+import { imageResolutionEntrySchema } from "@hukum/protocol/persistence/epic/messages";
 import { describe, expect, it } from "vitest";
 
 const validHash = "a".repeat(64);

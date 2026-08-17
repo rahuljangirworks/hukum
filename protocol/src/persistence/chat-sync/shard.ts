@@ -3,29 +3,29 @@ import {
   preservedChatMessageSchema,
   type PreservedChatEvent,
   type PreservedChatMessage,
-} from "@traycer/protocol/persistence/chat-sync/entries";
+} from "@hukum/protocol/persistence/chat-sync/entries";
 import {
   chatSyncHostPrivateSchema,
   chatSyncHostPrivateStorageSchema,
   type ChatSyncHostPrivate,
-} from "@traycer/protocol/persistence/chat-sync/host-private";
+} from "@hukum/protocol/persistence/chat-sync/host-private";
 import {
   canonicalJsonStringify,
   canonicalizeJsonObject,
   type JsonObject,
-} from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/json";
 import {
   mergeResidual,
   reprojectResidualCapture,
   storageProjection,
   withResidualCapture,
-} from "@traycer/protocol/persistence/chat-sync/residual";
+} from "@hukum/protocol/persistence/chat-sync/residual";
 import {
   CHAT_SYNC_SCHEMA_VERSION,
   chatSyncReaderVersionSchema,
   chatSyncSchemaVersionSchema,
   type ChatSyncPayloadVersion,
-} from "@traycer/protocol/persistence/chat-sync/version";
+} from "@hukum/protocol/persistence/chat-sync/version";
 import { z } from "zod";
 
 /**

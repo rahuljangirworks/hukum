@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import type {
   HostControllerStatus,
   IHostManagement,
   LocalHostSnapshot,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import { SurfaceReadinessBoundary } from "@/components/layout/host-readiness-controller";
 import { HostReadinessControllerProvider } from "@/components/layout/host-readiness-controller";
 import {
@@ -30,7 +30,7 @@ import { useAuthStore } from "@/stores/auth/auth-store";
  * it has not arrived - therefore armed the real local-host lifecycle on the
  * machine in front of them: `convergeReady` fired, the removal-state sentinel
  * was read, the one-shot attempt latch was spent on an episode that belonged
- * to a different computer, and the surface said "Starting local Traycer
+ * to a different computer, and the surface said "Starting local Hukum
  * Host…" about a host nobody asked to start.
  *
  * The other half is the opposite mistake: refusing ALL unresolved targets
@@ -104,7 +104,7 @@ function buildManagementSpy(): ManagementSpy {
     installVersion: notImplemented("installVersion"),
     uninstallHost: notImplemented("uninstallHost"),
     restartHost: notImplemented("restartHost"),
-    uninstallTraycer: notImplemented("uninstallTraycer"),
+    uninstallHukum: notImplemented("uninstallHukum"),
     clearRemoval: () => Promise.resolve(),
     getHostLogs: notImplemented("getHostLogs"),
     runDoctor: notImplemented("runDoctor"),
@@ -145,13 +145,13 @@ function buildRunnerHost(
   startsWithLocalHost: boolean,
 ): MockRunnerHost {
   const runnerHost = new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: startsWithLocalHost ? localSnapshot : null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
     hostManagement: management,
   });
   void runnerHost.tokenStore.signIn(
@@ -171,7 +171,7 @@ function messengerFactory(): MessengerFactory<HostRpcRegistry> {
 }
 
 /**
- * The production chain, in production order (see traycer-app.tsx). The bug
+ * The production chain, in production order (see hukum-app.tsx). The bug
  * lived in how `HostReadinessControllerProvider` drives
  * `HostProvisioningController`, so nothing between them may be stubbed.
  */
@@ -344,11 +344,11 @@ describe("local-boot intent", () => {
 
     // The surface settles on the non-local wait…
     await waitFor(() => {
-      expect(screen.getByText("Connecting to Traycer Host…")).toBeTruthy();
+      expect(screen.getByText("Connecting to Hukum Host…")).toBeTruthy();
     });
     // …and it must never claim this machine's host is starting, nor offer any
     // action against it.
-    expect(screen.queryByText("Starting local Traycer Host…")).toBeNull();
+    expect(screen.queryByText("Starting local Hukum Host…")).toBeNull();
     expect(screen.queryByTestId("local-host-loading-spinner")).toBeNull();
     expect(screen.queryByTestId("local-host-retry")).toBeNull();
     // The two calls the blocker was about: both belong to a machine the user
@@ -361,7 +361,7 @@ describe("local-boot intent", () => {
     // Nothing remembered and no local row yet: a genuine cold local start.
     // This is the arm that must NOT be sacrificed to close the one above -
     // the rich card is where install progress and the bootstrap.log path live
-    // (traycer#862), and a first install is exactly when they are needed.
+    // (hukum#862), and a first install is exactly when they are needed.
     const spy = buildManagementSpy();
 
     mountRealChain(spy.management, false);
@@ -370,7 +370,7 @@ describe("local-boot intent", () => {
       expect(spy.convergeReadyCalls()).toBe(1);
     });
     expect(screen.getByTestId("local-host-loading-spinner")).toBeTruthy();
-    expect(screen.queryByText("Connecting to Traycer Host…")).toBeNull();
+    expect(screen.queryByText("Connecting to Hukum Host…")).toBeNull();
   });
 
   it("treats a durable selection naming this machine as a local start", async () => {
@@ -417,7 +417,7 @@ describe("local-boot intent", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("Connecting to Traycer Host…")).toBeTruthy();
+      expect(screen.getByText("Connecting to Hukum Host…")).toBeTruthy();
     });
     expect(spy.convergeReadyCalls()).toBe(0);
     expect(spy.removalStateCalls()).toBe(0);

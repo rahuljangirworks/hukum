@@ -11,8 +11,8 @@ import {
   type ProvidersInstallPackVersionResult,
   type ProvidersRemovePackVersionResult,
   type ProvidersUsePackVersionResult,
-} from "@traycer/protocol/host/provider-schemas";
-import { compareHostVersions } from "@traycer-clients/shared/host-version/compare-host-versions";
+} from "@hukum/protocol/host/provider-schemas";
+import { compareHostVersions } from "@hukum-clients/shared/host-version/compare-host-versions";
 
 /**
  * Pure decision helpers for the per-pack version-manager panel.
@@ -39,7 +39,7 @@ export function providerDisplayName(providerId: ProviderId): string {
 }
 
 /**
- * "Shared by OpenCode, Traycer, OpenRouter" — the other providers on this
+ * "Shared by OpenCode, Hukum, OpenRouter" — the other providers on this
  * pack, excluding the row the user opened from (already on `sharedWithProviders`).
  */
 export function formatSharedWithProvidersLine(
@@ -83,7 +83,7 @@ export function versionDownloadEligibility(
     case "host-ineligible":
       return {
         allowed: false,
-        reason: "This Traycer release cannot run this version",
+        reason: "This Hukum release cannot run this version",
       };
     case "uncertified":
       return {
@@ -335,7 +335,7 @@ export function certificationMetaLine(
     case "below-security-floor":
       return "Below the publisher's security minimum";
     case "host-ineligible":
-      return "This Traycer release cannot drive this version";
+      return "This Hukum release cannot drive this version";
     case "eligible":
       return null;
   }
@@ -373,7 +373,7 @@ export function composeVersionRowMeta(options: {
   if (installPart !== null) parts.push(installPart);
   if (options.sizeLabel !== null) parts.push(options.sizeLabel);
   if (options.recommended) {
-    parts.push("pairs with this Traycer release");
+    parts.push("pairs with this Hukum release");
   }
 
   const certPart = certificationMetaForCompose(
@@ -446,7 +446,7 @@ export function installPackVersionRefusalMessage(
     case "below-security-floor":
       return "Below the publisher's security minimum — cannot download";
     case "host-ineligible":
-      return "This Traycer release cannot run this version";
+      return "This Hukum release cannot run this version";
     case "yanked":
       return "Withdrawn by the publisher — not available for download";
   }
@@ -468,7 +468,7 @@ export function packVersionUseRefusalMessage(
     case "below-security-floor":
       return "Below the publisher's security minimum — cannot select";
     case "host-ineligible":
-      return "This Traycer release cannot run this version";
+      return "This Hukum release cannot run this version";
   }
 }
 
@@ -645,11 +645,11 @@ export function managedVersionsUnavailableMessage(
     case "registry-unconfigured":
       return "This build has no provider registry configured, so there are no versions to manage. Waiting will not change it.";
     case "registry-unreachable":
-      return "Traycer could not verify the provider registry's signing keys — usually no network, or the registry is down. It keeps retrying in the background.";
+      return "Hukum could not verify the provider registry's signing keys — usually no network, or the registry is down. It keeps retrying in the background.";
     case "registry-not-yet-checked":
-      return "Traycer has not finished checking the provider registry yet. This should resolve on its own in a moment.";
+      return "Hukum has not finished checking the provider registry yet. This should resolve on its own in a moment.";
     case "install-manager-unavailable":
-      return "The registry was verified, but Traycer could not start its installer, so versions cannot be listed. Restarting the host usually clears this.";
+      return "The registry was verified, but Hukum could not start its installer, so versions cannot be listed. Restarting the host usually clears this.";
   }
 }
 
@@ -683,18 +683,18 @@ export function managedInstallFailureMessage(
     case "disk-full":
       return `Not enough disk space to install ${build}. Free some space, then retry.`;
     case "network":
-      return `Traycer could not download ${build}. That is usually a network problem, but it also happens when the registry carries no artifact for this version and platform - in which case retrying will not help.`;
+      return `Hukum could not download ${build}. That is usually a network problem, but it also happens when the registry carries no artifact for this version and platform - in which case retrying will not help.`;
     case "verification":
-      return `${build} failed its signature check and was discarded. Traycer will not run bytes it cannot verify.`;
+      return `${build} failed its signature check and was discarded. Hukum will not run bytes it cannot verify.`;
     case "live-owner-stalled":
-      return `Another Traycer host on this machine was installing ${build} and stalled. Retrying takes the download over.`;
+      return `Another Hukum host on this machine was installing ${build} and stalled. Retrying takes the download over.`;
     case "trust-unavailable":
-      return `Traycer cannot verify downloads on this host, so ${build} was not installed. Retrying will not help until the registry's signing keys load.`;
+      return `Hukum cannot verify downloads on this host, so ${build} was not installed. Retrying will not help until the registry's signing keys load.`;
     case "local-storage-mismatch":
-      return `The stored copy of ${build} does not match what Traycer expects, and it cannot be re-downloaded on this machine.`;
+      return `The stored copy of ${build} does not match what Hukum expects, and it cannot be re-downloaded on this machine.`;
     case "unrepairable":
       return `${build} cannot be installed on this machine, and retrying will not change that.`;
     case "unknown":
-      return `Traycer could not install ${build}.`;
+      return `Hukum could not install ${build}.`;
   }
 }

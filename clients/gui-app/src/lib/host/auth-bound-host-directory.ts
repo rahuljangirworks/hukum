@@ -1,15 +1,15 @@
 import {
   hostListItemToDirectoryEntry,
   type RemoteHostFetcher,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import type { AuthService } from "@/lib/auth/auth-service";
 import { HostDirectoryService } from "@/lib/host/host-directory-service";
 
 /**
  * The production `RemoteHostFetcher` used whenever a caller does not override
  * one (S2/T14): every shell today passes `remoteFetcher={null}` down through
- * `TraycerApp`, which used to fall back to `HostDirectoryService`'s built-in
+ * `HukumApp`, which used to fall back to `HostDirectoryService`'s built-in
  * always-empty stub (S1 - "visible in My Hosts, not in the selectable
  * directory"). Reuses `AuthService.fetchRegisteredHosts()` - the same
  * bearer-gated `GET /api/v3/hosts` call My Hosts already makes - rather than

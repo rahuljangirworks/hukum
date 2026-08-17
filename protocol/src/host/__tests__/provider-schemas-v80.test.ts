@@ -3,8 +3,8 @@ import {
   downgradeRequestAcrossMajors,
   downgradeResponseAcrossMajors,
   upgradeResponseToVersion,
-} from "@traycer/protocol/framework/versioned-rpc";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/framework/versioned-rpc";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   providerCliStateSchema,
   providerManagedInstallStateSchema,
@@ -28,7 +28,7 @@ import {
   providersSetPackPolicyResponseSchema,
   providersUsePackVersionRequestSchema,
   providersUsePackVersionResponseSchema,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 function providerState(providerId: string) {
   return {

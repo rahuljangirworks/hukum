@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { HostUnavailability } from "@traycer-clients/shared/host-client/remote-fetcher";
+import type { HostUnavailability } from "@hukum-clients/shared/host-client/remote-fetcher";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import { ReportIssueAction } from "@/components/report-issue/report-issue-action";

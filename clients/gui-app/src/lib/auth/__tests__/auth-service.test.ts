@@ -2936,7 +2936,7 @@ describe("AuthService", () => {
         // shared across every viewer on the installation, which is sound while
         // they are signed in and is not sound as a residue.
         await vi.waitFor(() =>
-          expect(deleted.names).toEqual(["traycer-chat-parts-v1"]),
+          expect(deleted.names).toEqual(["hukum-chat-parts-v1"]),
         );
       } finally {
         deleted.restore();

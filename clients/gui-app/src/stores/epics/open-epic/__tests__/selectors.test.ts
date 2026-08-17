@@ -28,8 +28,7 @@ interface BuildTreeRow {
     | "spec"
     | "ticket"
     | "story"
-    | "review"
-    | "html-preview";
+    | "review";
 }
 
 function buildTreeRecords(

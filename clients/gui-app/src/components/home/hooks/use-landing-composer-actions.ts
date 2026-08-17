@@ -7,16 +7,16 @@ import type {
   CreateEpicResponse,
   CreateEpicWorkspaceIdentifier,
   TaskRepoIdentifier,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import type {
   WorktreeBindingSelectorRowV12,
   WorktreeBindingWorkspaceMode,
   WorktreeIntent,
   WorktreeWorkspaceSummaryV14,
-} from "@traycer/protocol/host/worktree-schemas";
-import type { JsonContent } from "@traycer/protocol/common/registry";
-import type { TuiHarnessId } from "@traycer/protocol/persistence/epic/schemas";
-import { CURRENT_EPIC_VERSION } from "@traycer-clients/shared/epic/epic-version";
+} from "@hukum/protocol/host/worktree-schemas";
+import type { JsonContent } from "@hukum/protocol/common/registry";
+import type { TuiHarnessId } from "@hukum/protocol/persistence/epic/schemas";
+import { CURRENT_EPIC_VERSION } from "@hukum-clients/shared/epic/epic-version";
 
 import { useHostClient, type HostRpcRegistry } from "@/lib/host";
 import { hostQueryKeys } from "@/lib/query-keys";

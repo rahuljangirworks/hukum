@@ -1,8 +1,8 @@
-import { defineRpcContract } from "@traycer/protocol/framework/index";
+import { defineRpcContract } from "@hukum/protocol/framework/index";
 import {
   chatForkGetRequestSchema,
   chatForkGetResponseSchema,
-} from "@traycer/protocol/host/chat-fork/schemas";
+} from "@hukum/protocol/host/chat-fork/schemas";
 
 export const chatForkGetV10 = defineRpcContract({
   method: "host.chatFork.get",

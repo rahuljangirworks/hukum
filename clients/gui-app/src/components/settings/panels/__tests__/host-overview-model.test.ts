@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { HostDoctorIssue } from "@traycer/protocol/host/maintenance/index";
-import type { LocalHostSnapshot } from "@traycer-clients/shared/platform/runner-host";
+import type { HostDoctorIssue } from "@hukum/protocol/host/maintenance/index";
+import type { LocalHostSnapshot } from "@hukum-clients/shared/platform/runner-host";
 import { hostScopeOptionFixture } from "@/components/settings/host-scope/host-scope-fixture";
 import {
   customNameFromIdentityDraft,
@@ -71,7 +71,7 @@ describe("overviewEndpointParts", () => {
           hostId: "host-b",
           label: "host-b",
           kind: "remote",
-          websocketUrl: "wss://relay.traycer.ai/rpc/abc123secret",
+          websocketUrl: "wss://relay.hukum.ai/rpc/abc123secret",
           version: "1.5.0",
           transportDialability: "dialable",
         },
@@ -79,7 +79,7 @@ describe("overviewEndpointParts", () => {
       busySessionCount: 2,
       localHost: null,
     });
-    expect(parts).toEqual(["via relay.traycer.ai", "2 active sessions"]);
+    expect(parts).toEqual(["via relay.hukum.ai", "2 active sessions"]);
     expect(parts.some((p) => p.includes("abc123secret"))).toBe(false);
   });
 });

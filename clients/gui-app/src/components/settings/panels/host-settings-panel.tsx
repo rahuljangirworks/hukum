@@ -5,7 +5,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { HostDoctorIssue as RpcDoctorIssue } from "@traycer/protocol/host/maintenance/index";
+import type { HostDoctorIssue as RpcDoctorIssue } from "@hukum/protocol/host/maintenance/index";
 import {
   HostScopeConnecting,
   HostScopeGate,
@@ -35,7 +35,7 @@ import type {
   IHostManagement,
   IRunnerHost,
   LocalHostSnapshot,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import type { ReactNode } from "react";
 import type { HostScope } from "@/components/settings/host-scope/use-host-scope";
 
@@ -373,7 +373,7 @@ function useLocalDoctorFixMutation(management: IHostManagement | null) {
     mutationKey: runnerMutationKeys.hostRunDoctor(),
     mutationFn: async (issue) => {
       if (management === null) {
-        throw new Error("This shell has no local Traycer CLI to run that fix.");
+        throw new Error("This shell has no local Hukum CLI to run that fix.");
       }
       // No conversion: the two `HostDoctorIssue` declarations are the same
       // seven fields with the same severity union, because they describe the

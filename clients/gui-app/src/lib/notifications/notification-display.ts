@@ -4,7 +4,7 @@ import type {
   NotificationForegroundAppLocal,
   NotificationForegroundDisplay,
   NotificationShowOutcome,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import { createElement } from "react";
 import { toast } from "sonner";
 import {
@@ -17,7 +17,7 @@ import type { AppLocalNotificationEntry } from "@/stores/notifications/app-local
 import type {
   HostNotificationEntryV21,
   HostNotificationsCloudFeedRow,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import {
   notificationEntityFromHostEntry,
   notificationEntityFromPayload,
@@ -529,7 +529,7 @@ function buildNotificationToastContent(
     };
   }
   return {
-    title: "Traycer",
+    title: "Hukum",
     body: `${rows.length} new notifications`,
     row: first,
     payload: first.payload,

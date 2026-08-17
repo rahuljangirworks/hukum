@@ -364,7 +364,7 @@ describe("HostDangerZone", () => {
   });
 
   it("offers Remove from account for a remote host, and never the word deregister", () => {
-    // The remote counterpart to Remove Traycer, on a THIRD capability plane:
+    // The remote counterpart to Remove Hukum, on a THIRD capability plane:
     // an account write that needs no route to the machine.
     //
     // The copy rule is not a style preference. This app already says
@@ -372,7 +372,7 @@ describe("HostDangerZone", () => {
     // deregistration — a machine-local repair with nothing in common with
     // ending a host's membership of an account. Two destructive controls
     // sharing a verb is how someone reaches for the wrong one.
-    runnerHostMock.hostManagement = { uninstallTraycer: vi.fn() };
+    runnerHostMock.hostManagement = { uninstallHukum: vi.fn() };
     render(
       <HostDangerZone
         scope={hostScopeFixture({
@@ -394,10 +394,10 @@ describe("HostDangerZone", () => {
   });
 
   it("does not offer account removal for this computer's host", () => {
-    // This computer gets Remove Traycer, which actually removes something.
+    // This computer gets Remove Hukum, which actually removes something.
     // Offering both would present two destructive buttons whose difference is
     // invisible until afterwards.
-    runnerHostMock.hostManagement = { uninstallTraycer: vi.fn() };
+    runnerHostMock.hostManagement = { uninstallHukum: vi.fn() };
     render(
       <HostDangerZone
         scope={hostScopeFixture({
@@ -414,7 +414,7 @@ describe("HostDangerZone", () => {
     expect(
       screen.queryByTestId("settings-remove-host-from-account"),
     ).toBeNull();
-    expect(screen.getByTestId("settings-remove-traycer")).not.toBeNull();
+    expect(screen.getByTestId("settings-remove-hukum")).not.toBeNull();
   });
 
   it("withholds account removal for a host that has no registry row", () => {
@@ -456,7 +456,7 @@ describe("HostDangerZone", () => {
     // This asserts the NEGATIVE claims explicitly. A dialog that quietly
     // promises self-recovery is worse than one that says nothing: it is the
     // reason someone would leave a host removed and expect it back.
-    runnerHostMock.hostManagement = { uninstallTraycer: vi.fn() };
+    runnerHostMock.hostManagement = { uninstallHukum: vi.fn() };
     render(
       <HostDangerZone
         scope={hostScopeFixture({

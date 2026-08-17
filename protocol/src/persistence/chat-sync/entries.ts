@@ -2,11 +2,11 @@ import {
   definePreservedVariant,
   preserveKnownVariant,
   type PreservedVariant,
-} from "@traycer/protocol/persistence/chat-sync/passthrough";
+} from "@hukum/protocol/persistence/chat-sync/passthrough";
 import {
   jsonObjectSchema,
   type JsonObject,
-} from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/json";
 import {
   snapshotAgentSenderSchema,
   snapshotChatEventSchema,
@@ -14,9 +14,9 @@ import {
   snapshotUserMessageSchema,
   type SnapshotChatEvent,
   type SnapshotContentBlock,
-} from "@traycer/protocol/persistence/chat-sync/open-harness";
-import { chatEventTypeSchema } from "@traycer/protocol/persistence/epic/chat-events";
-import { assistantMessageSchema } from "@traycer/protocol/persistence/epic/messages";
+} from "@hukum/protocol/persistence/chat-sync/open-harness";
+import { chatEventTypeSchema } from "@hukum/protocol/persistence/epic/chat-events";
+import { assistantMessageSchema } from "@hukum/protocol/persistence/epic/messages";
 import { z } from "zod";
 
 /**

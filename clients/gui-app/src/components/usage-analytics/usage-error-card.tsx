@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { Button } from "@/components/ui/button";
 
 export interface UsageErrorCardProps {
@@ -48,7 +48,7 @@ export function UsageErrorCard(props: UsageErrorCardProps): ReactNode {
  * The fallback is deliberately plane-NEUTRAL. Which reader answers is the
  * host's decision and is only ever revealed by a successful response's
  * `servedBy`, so at the moment a request fails the plane is genuinely
- * unknown - naming Traycer Cloud there sends a local-plane account chasing
+ * unknown - naming Hukum Cloud there sends a local-plane account chasing
  * connectivity for what was a host-transport or local-database failure. The
  * specific cause is not lost: the card renders `error.message` underneath,
  * and the host's cloud-unavailable path says so in that message.

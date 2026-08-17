@@ -34,14 +34,14 @@ import {
 import {
   RESTART_EXIT_CODE,
   SHUTDOWN_FORCE_EXIT_MS,
-} from "@traycer/protocol/host/lifecycle-constants";
+} from "@hukum/protocol/host/lifecycle-constants";
 import type { Environment } from "../../runner/environment";
 import type { StopIntentIdentity } from "../../host/stop-intent";
 import { hostHomeDir } from "../../store/paths";
-import { withDevDesktopSlotAsync as withDevDesktopSlot } from "@traycer-clients/shared/test-fixtures/dev-desktop-slot";
-import type { ProbeMarker } from "@traycer-clients/shared/host-lifecycle";
+import { withDevDesktopSlotAsync as withDevDesktopSlot } from "@hukum-clients/shared/test-fixtures/dev-desktop-slot";
+import type { ProbeMarker } from "@hukum-clients/shared/host-lifecycle";
 
-// `traycer host start --environment <ch>` is the single supervisor entry
+// `hukum host start --environment <ch>` is the single supervisor entry
 // point. There is one launch path: read the environment's
 // HostInstallRecord, refuse to spawn with stable machine-readable
 // codes when the record is missing / the executable is gone, and
@@ -70,14 +70,14 @@ function sampleRecord(executablePath: string): HostInstallRecord {
 describe("resolveHostStartTarget", () => {
   let work: string;
   beforeEach(() => {
-    work = mkdtempSync(join(tmpdir(), "traycer-host-start-target-"));
+    work = mkdtempSync(join(tmpdir(), "hukum-host-start-target-"));
   });
   afterEach(() => {
     rmSync(work, { recursive: true, force: true });
   });
 
   it("returns the install record's executablePath as the spawn target", async () => {
-    const execPath = join(work, "traycer-host");
+    const execPath = join(work, "hukum-host");
     writeFileSync(execPath, "#!/bin/sh\nexit 0\n");
     const target = await resolveHostStartTarget(
       { environment: "production", cwd: null },
@@ -208,7 +208,7 @@ interface Recorded {
   exited: number | null;
   readonly exitWaiters: Array<() => void>;
   // Log rotations attempted, in order. Stubbed (not left to the real helper) so
-  // a test run can never rotate the developer's actual ~/.traycer host log.
+  // a test run can never rotate the developer's actual ~/.hukum host log.
   readonly rotations: string[];
   // Ordered trace of the start lifecycle: rotate -> marker -> open fd -> spawn.
   // The ORDER is the invariant (see the ordering test), not just the calls.
@@ -221,7 +221,7 @@ interface Recorded {
     stdio: unknown;
     windowsHide: boolean | undefined;
   }>;
-  // Crash-diagnostics DI observations (never touch real ~/.traycer).
+  // Crash-diagnostics DI observations (never touch real ~/.hukum).
   readonly preparedCrashReportDirs: string[];
   /** Names returned by the injected prepareCrashReportsDir (pre-existing set). */
   prepareCrashReportsReturn: readonly string[];
@@ -323,7 +323,7 @@ function makeRunStubs(
   };
   const deps: Partial<RunHostStartDeps> = {
     // `runHostStart` falls back to the REAL `createCliLogger` (writing to
-    // the actual production `~/.traycer/cli/cli.log`) via `deps.logger ??
+    // the actual production `~/.hukum/cli/cli.log`) via `deps.logger ??
     // createCliLogger(...)` whenever this is left unset - `??` treats
     // `undefined` as nullish just like a missing key, so it must be
     // supplied explicitly here, not left to the `Partial` default.
@@ -331,14 +331,14 @@ function makeRunStubs(
     logger: spyLogger,
     // Same hazard as `logger` above: left unset, the `Partial` default falls
     // through to the REAL `findLiveIncumbentHost`, which reads the developer's
-    // actual `~/.traycer/host/pid.json` and probes whatever host is live on
+    // actual `~/.hukum/host/pid.json` and probes whatever host is live on
     // this machine. Every test below would then decline instead of spawning.
     findIncumbentHost: async () => null,
     // Same hazard class as `findIncumbentHost` above, now for the relaunch
     // loop:
     //   - unset, `hasStopIntent` falls through to the real implementation and
-    //     reads the developer's actual `~/.traycer/host/stop-intent.json`, so a
-    //     stray file left by a real `traycer host stop` would silently suppress
+    //     reads the developer's actual `~/.hukum/host/stop-intent.json`, so a
+    //     stray file left by a real `hukum host stop` would silently suppress
     //     every relaunch assertion below;
     //   - unset, `sleep` is a REAL timer, and one exhausted budget costs
     //     1+5+15+30+60 = 111s of wall clock, which no 10s test timeout
@@ -347,8 +347,8 @@ function makeRunStubs(
     // Same hazard as `hasStopIntent` above, and easier to miss because it is
     // read ONCE at startup rather than per attempt: unset, the `Partial`
     // default falls through to the real `readStopIntentIdentity`, which reads
-    // the developer's actual `~/.traycer/host/stop-intent.json`. A stray record
-    // from a real `traycer host stop` would then be remembered as "served at
+    // the developer's actual `~/.hukum/host/stop-intent.json`. A stray record
+    // from a real `hukum host stop` would then be remembered as "served at
     // startup", silently changing what every intent assertion below means.
     readStopIntentIdentity: async () => null,
     sleep: async () => undefined,
@@ -395,7 +395,7 @@ function makeRunStubs(
     },
     readEnvOverrides: async () => ({
       EXTRA_FROM_OVERRIDE: "1",
-      TRAYCER_TEST_UNSET: null,
+      HUKUM_TEST_UNSET: null,
     }),
     writeMarker: async (environment, phase, fields) => {
       recorded.sequence.push(`marker:${phase}`);
@@ -428,7 +428,7 @@ function makeRunStubs(
       recorded.errors.push(msg);
     },
     // Crash diagnostics: always inject so suites never touch real
-    // ~/.traycer crash-reports or host.log tee paths.
+    // ~/.hukum crash-reports or host.log tee paths.
     prepareCrashReportsDir: async (dir) => {
       recorded.preparedCrashReportDirs.push(dir);
       return recorded.prepareCrashReportsReturn;
@@ -510,15 +510,15 @@ function withChildExit(
  * One host per data dir.
  *
  * launchd runs at most one instance of a LABEL, but the CLI label
- * (`ai.traycer.host`) and Desktop's SMAppService agent label
- * (`ai.traycer.host.agent`) are distinct labels that both invoke this
+ * (`ai.hukum.host`) and Desktop's SMAppService agent label
+ * (`ai.hukum.host.agent`) are distinct labels that both invoke this
  * supervisor against the same data dir, both with `RunAtLoad`. A machine
  * carrying both registrations spawned two hosts at every login, racing the
  * same pid.json and stores.
  */
 describe("runHostStart - incumbent host guard", () => {
   it("declines with exit 0 and never spawns when a live host owns the data dir", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const guarded: Partial<RunHostStartDeps> = {
       ...deps,
@@ -543,7 +543,7 @@ describe("runHostStart - incumbent host guard", () => {
   });
 
   it("spawns normally when no live host owns the data dir", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
 
     const invoke = () =>
@@ -595,7 +595,7 @@ describe("runHostStart - incumbent host guard", () => {
 
 describe("runHostStart - label-derived reclaim probe", () => {
   it("derives live probe authority from a label-only registration and bypasses the incumbent guard", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const status = new PassThrough();
     Object.assign(child, { stdio: [null, null, null, status] });
@@ -608,7 +608,7 @@ describe("runHostStart - label-derived reclaim probe", () => {
         {
           environment: "production",
           cwd: null,
-          serviceLabel: "ai.traycer.host.fallback",
+          serviceLabel: "ai.hukum.host.fallback",
         },
         {
           ...deps,
@@ -622,7 +622,7 @@ describe("runHostStart - label-derived reclaim probe", () => {
             context: {
               transitionId: "transition-1",
               probeNonce: "nonce-1",
-              serviceLabel: "ai.traycer.host.fallback",
+              serviceLabel: "ai.hukum.host.fallback",
             },
           }),
           spawn: (command, args, options) => {
@@ -662,14 +662,14 @@ describe("runHostStart - label-derived reclaim probe", () => {
   });
 
   it("keeps a label-only start behind the incumbent guard without a live reclaim journal", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { recorded, deps } = makeRunStubs(sampleRecord(exec), null);
 
     await runHostStart(
       {
         environment: "production",
         cwd: null,
-        serviceLabel: "ai.traycer.host.fallback",
+        serviceLabel: "ai.hukum.host.fallback",
       },
       {
         ...deps,
@@ -697,7 +697,7 @@ describe("runHostStart - label-derived reclaim probe", () => {
       {
         environment: "production",
         cwd: null,
-        serviceLabel: "ai.traycer.host.fallback",
+        serviceLabel: "ai.hukum.host.fallback",
       },
       {
         ...deps,
@@ -706,7 +706,7 @@ describe("runHostStart - label-derived reclaim probe", () => {
           context: {
             transitionId: "transition-1",
             probeNonce: "nonce-1",
-            serviceLabel: "ai.traycer.host.fallback",
+            serviceLabel: "ai.hukum.host.fallback",
           },
         }),
         attestProbeSupervisor: async (serviceLabel, supervisorPid) => ({
@@ -732,7 +732,7 @@ describe("runHostStart - label-derived reclaim probe", () => {
   });
 
   it("turns an asynchronous child spawn error into one attested terminal marker", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const markerWrites: ProbeMarker[] = [];
     const status = new PassThrough();
@@ -747,7 +747,7 @@ describe("runHostStart - label-derived reclaim probe", () => {
         {
           environment: "production",
           cwd: null,
-          serviceLabel: "ai.traycer.host.fallback",
+          serviceLabel: "ai.hukum.host.fallback",
         },
         {
           ...deps,
@@ -756,7 +756,7 @@ describe("runHostStart - label-derived reclaim probe", () => {
             context: {
               transitionId: "transition-async-spawn-error",
               probeNonce: "nonce-1",
-              serviceLabel: "ai.traycer.host.fallback",
+              serviceLabel: "ai.hukum.host.fallback",
             },
           }),
           attestProbeSupervisor: async (serviceLabel, supervisorPid) => ({
@@ -796,10 +796,10 @@ describe("runHostStart - label-derived reclaim probe", () => {
 
 describe("runHostStart - installed-record launch path", () => {
   it("spawns record.executablePath directly with no shell wrapping and the environment env exported", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
-    const previousUnsetValue = process.env.TRAYCER_TEST_UNSET;
-    process.env.TRAYCER_TEST_UNSET = "inherited";
+    const previousUnsetValue = process.env.HUKUM_TEST_UNSET;
+    process.env.HUKUM_TEST_UNSET = "inherited";
 
     const invoke = () =>
       runHostStart(
@@ -813,9 +813,9 @@ describe("runHostStart - installed-record launch path", () => {
       await runUntilExit(invoke, recorded);
     } finally {
       if (previousUnsetValue === undefined) {
-        delete process.env.TRAYCER_TEST_UNSET;
+        delete process.env.HUKUM_TEST_UNSET;
       } else {
-        process.env.TRAYCER_TEST_UNSET = previousUnsetValue;
+        process.env.HUKUM_TEST_UNSET = previousUnsetValue;
       }
     }
 
@@ -843,10 +843,10 @@ describe("runHostStart - installed-record launch path", () => {
       expect.anything(),
       expect.anything(),
     ]);
-    expect(call?.env.TRAYCER_CHANNEL).toBeUndefined();
+    expect(call?.env.HUKUM_CHANNEL).toBeUndefined();
     expect(call?.env.EXTRA_FROM_OVERRIDE).toBe("1");
-    expect(call?.env.TRAYCER_TEST_UNSET).toBeUndefined();
-    expect(call?.env.TERM_PROGRAM).toBe("traycer");
+    expect(call?.env.HUKUM_TEST_UNSET).toBeUndefined();
+    expect(call?.env.TERM_PROGRAM).toBe("hukum");
     expect(call?.windowsHide).toBe(process.platform === "win32");
     // Production launch must NOT route through a shell - the spawn
     // command must be the executable itself.
@@ -863,7 +863,7 @@ describe("runHostStart - installed-record launch path", () => {
   });
 
   it("writes bootstrap markers under the dev environment and passes no environment arg", async () => {
-    const exec = "/opt/traycer/host/dev/install/traycer-host";
+    const exec = "/opt/hukum/host/dev/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const invoke = () =>
       runHostStart(
@@ -877,11 +877,11 @@ describe("runHostStart - installed-record launch path", () => {
       hostHomeDir("dev"),
     ]);
     expect(recorded.spawnCalls[0]?.args[2]).toBe("--layer0-attempt-id");
-    expect(recorded.spawnCalls[0]?.env.TRAYCER_CHANNEL).toBeUndefined();
+    expect(recorded.spawnCalls[0]?.env.HUKUM_CHANNEL).toBeUndefined();
   });
 
   it("rotates the log for this environment before anything appends to the run", async () => {
-    const exec = "/opt/traycer/host/dev/install/traycer-host";
+    const exec = "/opt/hukum/host/dev/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const invoke = () =>
       runHostStart(
@@ -909,7 +909,7 @@ describe("runHostStart - installed-record launch path", () => {
 
   it("passes the dev-desktop run host root to the host when a slot is set", async () => {
     await withDevDesktopSlot("Worktree Slot", async () => {
-      const exec = "/opt/traycer/host/dev/install/traycer-host";
+      const exec = "/opt/hukum/host/dev/install/hukum-host";
       const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
       const invoke = () =>
         runHostStart(
@@ -923,17 +923,17 @@ describe("runHostStart - installed-record launch path", () => {
       ]);
       expect(recorded.spawnCalls[0]?.args[2]).toBe("--layer0-attempt-id");
       expect(hostHomeDir("dev")).toMatch(
-        /[\\/]\.traycer[\\/]host[\\/]dev-runs[\\/]worktree-slot$/,
+        /[\\/]\.hukum[\\/]host[\\/]dev-runs[\\/]worktree-slot$/,
       );
     });
   });
 
   it("dev wrapper-script executablePath spawns through the same code path", async () => {
     // The dev orchestrator stages a small POSIX wrapper at
-    // `~/.traycer/host/dev/runtime/traycer-host` that internally
+    // `~/.hukum/host/dev/runtime/hukum-host` that internally
     // exec's `node <bundle>`. The supervisor sees only the wrapper
     // path - it does NOT branch on bundle / node-bin args anymore.
-    const wrapper = "/Users/dev/.traycer/host/dev/runtime/traycer-host";
+    const wrapper = "/Users/dev/.hukum/host/dev/runtime/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(wrapper), null);
     const invoke = () =>
       runHostStart(
@@ -973,7 +973,7 @@ describe("runHostStart - error surfaces", () => {
   });
 
   it("install record present but executable missing: exits with HOST_NOT_INSTALLED carrying the bad path", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { recorded, deps } = makeRunStubs(sampleRecord(exec), () => false);
     const invoke = () =>
       runHostStart({ environment: "production", cwd: null }, deps);
@@ -996,7 +996,7 @@ describe("runHostStart - error surfaces", () => {
 
 describe("runHostStart - signal/exit propagation", () => {
   it("persists a terminal marker before synchronous exit when an async append would be abandoned", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     let exited = false;
     const terminalMarkers: string[] = [];
@@ -1044,7 +1044,7 @@ describe("runHostStart - signal/exit propagation", () => {
   });
 
   it("translates a SIGTERM-killed child into exit code 128+15", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const invoke = () =>
       runHostStart(
@@ -1065,7 +1065,7 @@ describe("runHostStart - signal/exit propagation", () => {
       signal: NodeJS.Signals | null,
       expected,
     ) => {
-      const exec = "/opt/traycer/host/install/traycer-host";
+      const exec = "/opt/hukum/host/install/hukum-host";
       const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
       const throwingWriter: Partial<RunHostStartDeps> = {
         ...deps,
@@ -1088,7 +1088,7 @@ describe("runHostStart - signal/exit propagation", () => {
   );
 
   it("propagates a non-zero exit code as a `crashed` marker", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const invoke = () =>
       runHostStart(
@@ -1102,7 +1102,7 @@ describe("runHostStart - signal/exit propagation", () => {
   });
 
   it("enriches a crashed marker with exitMeaning, report, and stderrTail via injected deps", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const stderr = new PassThrough();
     Object.assign(child, { stderr });
@@ -1179,7 +1179,7 @@ describe("runHostStart - signal/exit propagation", () => {
   });
 
   it("enriches a killed+SIGABRT marker, logs Host crash diagnostics, and leaves SIGTERM bare", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const sigabrtNum = osConstants.signals.SIGABRT;
     expect(typeof sigabrtNum).toBe("number");
     const expectedAbrtExit = 128 + (sigabrtNum as number);
@@ -1264,7 +1264,7 @@ describe("runHostStart - signal/exit propagation", () => {
   it("writes a crashed marker without report when findCrashReport never resolves", async () => {
     // Production races the scan against CRASH_REPORT_SCAN_TIMEOUT_MS (2s).
     // A hanging findCrashReport must not block the terminal marker.
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     recorded.findCrashReportHangs = true;
 
@@ -1287,7 +1287,7 @@ describe("runHostStart - signal/exit propagation", () => {
   it("writes the terminal marker and exits when findCrashReport rejects", async () => {
     // Injected findCrashReport must not skip marker + deps.exit (the race
     // has a .catch; without it a rejection leaves the supervisor alive).
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     recorded.findCrashReportRejects = true;
 
@@ -1310,7 +1310,7 @@ describe("runHostStart - signal/exit propagation", () => {
   it("survives an error on the stderr stream and still writes the terminal marker", async () => {
     // Major: an unhandled Readable error on child.stderr used to kill the
     // supervisor before persistChildExit wrote the marker Desktop reads.
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const stderr = new PassThrough();
     Object.assign(child, { stderr });
@@ -1352,7 +1352,7 @@ describe("runHostStart - signal/exit propagation", () => {
     // Major: `exit` ≠ drained pipe. Without awaiting stderrEnded before the
     // marker, the fatal text still in the pipe is lost. This test FAILS if
     // that await is removed.
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const stderr = new PassThrough();
     Object.assign(child, { stderr });
@@ -1399,7 +1399,7 @@ describe("runHostStart - signal/exit propagation", () => {
   it("writes the marker within the stderr-end deadline when the stream never ends", async () => {
     // A grandchild holding the inherited stderr fd can delay close forever;
     // the wait is bounded so the supervisor cannot hang on exit.
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const stderr = new PassThrough();
     Object.assign(child, { stderr });
@@ -1439,7 +1439,7 @@ describe("runHostStart - signal/exit propagation", () => {
   }, 10_000);
 
   it("omits crash-diagnostic fields on clean exit", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { child, recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     await runUntilExit(
       () =>
@@ -1457,7 +1457,7 @@ describe("runHostStart - signal/exit propagation", () => {
   });
 
   it("spawn() throw is translated into HOST_SPAWN_FAILED + exit 66", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const failingSpawn: Partial<RunHostStartDeps> = {
       ...deps,
@@ -1477,7 +1477,7 @@ describe("runHostStart - signal/exit propagation", () => {
 
 describe("HostStartTarget", () => {
   it("returns the --host-data-dir slot arg and the install record on the only supported path", async () => {
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const target: HostStartTarget = await resolveHostStartTarget(
       { environment: "production", cwd: null },
       {
@@ -1513,19 +1513,19 @@ describe("service manifests never leak a flag `host start` does not have", () =>
       await import("../../service/platforms/macos");
     const xml = buildLaunchAgentPlist({
       label: {
-        id: "ai.traycer.host.prod",
-        displayName: "Traycer Host",
+        id: "ai.hukum.host.prod",
+        displayName: "Hukum Host",
         environment: "production",
       } as never,
       cli: {
-        command: "/Users/test/.traycer/cli/bin/traycer",
+        command: "/Users/test/.hukum/cli/bin/hukum",
         args: [],
       },
     });
     // launchd execs ProgramArguments[0]; the compatibility program is the
     // per-label launcher FILE (macOS names the login item after it - the
     // former inline `/bin/sh -c` vector surfaced as "sh" in Login Items).
-    expect(xml).toContain("/ai.traycer.host.prod/traycer-host-start</string>");
+    expect(xml).toContain("/ai.hukum.host.prod/hukum-host-start</string>");
     expect(xml).not.toContain("<string>/bin/sh</string>");
     for (const flag of REMOVED_FLAGS) expect(xml).not.toContain(flag);
   });
@@ -1534,12 +1534,12 @@ describe("service manifests never leak a flag `host start` does not have", () =>
     const { buildSystemdUnit } = await import("../../service/platforms/linux");
     const unit = buildSystemdUnit({
       label: {
-        id: "ai.traycer.host.dev",
-        displayName: "Traycer Host (dev)",
+        id: "ai.hukum.host.dev",
+        displayName: "Hukum Host (dev)",
         environment: "dev",
       } as never,
       cli: {
-        command: "/home/test/.traycer/cli/bin/traycer",
+        command: "/home/test/.hukum/cli/bin/hukum",
         args: [],
       },
     });
@@ -1557,12 +1557,12 @@ describe("service manifests never leak a flag `host start` does not have", () =>
     };
     try {
       const cli = {
-        command: "C:\\Users\\test\\.traycer\\cli\\bin\\traycer.exe",
+        command: "C:\\Users\\test\\.hukum\\cli\\bin\\hukum.exe",
         args: [],
       };
       const label = {
-        id: "ai.traycer.host.prod",
-        displayName: "Traycer Host",
+        id: "ai.hukum.host.prod",
+        displayName: "Hukum Host",
         environment: "production" as const,
         devSlot: null,
       };
@@ -1574,7 +1574,7 @@ describe("service manifests never leak a flag `host start` does not have", () =>
       expect(xml).toContain("wscript.exe");
       expect(xml).toContain("host-start-hidden.vbs");
       expect(xml).not.toContain(
-        "<Command>C:\\Users\\test\\.traycer\\cli\\bin\\traycer.exe</Command>",
+        "<Command>C:\\Users\\test\\.hukum\\cli\\bin\\hukum.exe</Command>",
       );
       for (const flag of REMOVED_FLAGS) {
         expect(`${xml}\n${launcher}`).not.toContain(flag);
@@ -1689,7 +1689,7 @@ function startingAttemptIds(recorded: Recorded): string[] {
 }
 
 describe("runHostStart - crash relaunch loop", () => {
-  const exec = "/opt/traycer/host/install/traycer-host";
+  const exec = "/opt/hukum/host/install/hukum-host";
 
   it("relaunches an intentional restart immediately without budget or crash evidence", async () => {
     const { recorded, deps } = makeRunStubs(sampleRecord(exec), null);
@@ -1703,7 +1703,7 @@ describe("runHostStart - crash relaunch loop", () => {
           {
             environment: "production",
             cwd: null,
-            serviceLabel: "ai.traycer.host.restart-test",
+            serviceLabel: "ai.hukum.host.restart-test",
           },
           {
             ...scripted.deps,
@@ -1716,7 +1716,7 @@ describe("runHostStart - crash relaunch loop", () => {
               context: {
                 transitionId: "restart-transition",
                 probeNonce: "restart-nonce",
-                serviceLabel: "ai.traycer.host.restart-test",
+                serviceLabel: "ai.hukum.host.restart-test",
               },
             }),
             readLayer0Frame: async (): Promise<Layer0FrameRead> => {
@@ -1808,7 +1808,7 @@ describe("runHostStart - crash relaunch loop", () => {
             {
               environment: "production",
               cwd: null,
-              serviceLabel: "ai.traycer.host.budget-test",
+              serviceLabel: "ai.hukum.host.budget-test",
             },
             {
               ...deps,
@@ -1844,7 +1844,7 @@ describe("runHostStart - crash relaunch loop", () => {
                 context: {
                   transitionId: "budget-transition",
                   probeNonce: "budget-nonce",
-                  serviceLabel: "ai.traycer.host.budget-test",
+                  serviceLabel: "ai.hukum.host.budget-test",
                 },
               }),
               readLayer0Frame: async (): Promise<Layer0FrameRead> => {
@@ -1898,7 +1898,7 @@ describe("runHostStart - crash relaunch loop", () => {
           {
             environment: "production",
             cwd: null,
-            serviceLabel: "ai.traycer.host.restart-storm",
+            serviceLabel: "ai.hukum.host.restart-storm",
           },
           {
             ...deps,
@@ -1922,7 +1922,7 @@ describe("runHostStart - crash relaunch loop", () => {
               context: {
                 transitionId: "storm-transition",
                 probeNonce: "storm-nonce",
-                serviceLabel: "ai.traycer.host.restart-storm",
+                serviceLabel: "ai.hukum.host.restart-storm",
               },
             }),
             readLayer0Frame: async (): Promise<Layer0FrameRead> => {
@@ -2492,7 +2492,7 @@ describe("runHostStart - crash relaunch loop", () => {
 
   it("abandons the relaunch when another host claims the data dir during backoff", async () => {
     // Backoff holds a claim on the data dir for seconds-to-minutes while
-    // nothing serves. `traycer host ensure` can legitimately win that race, and
+    // nothing serves. `hukum host ensure` can legitimately win that race, and
     // stacking a second host on top is what the incumbent policy exists to
     // prevent. Declining is never eviction: exit 0, leave the winner alone.
     const { recorded, deps } = makeRunStubs(sampleRecord(exec), null);
@@ -2531,7 +2531,7 @@ describe("runHostStart - crash relaunch loop", () => {
     // An install swap renames `install/` aside mid-life. A supervisor holding
     // the first attempt's path would relaunch a binary that has moved - today a
     // fresh launchd-spawned supervisor re-resolves, and the loop must keep that.
-    const moved = "/opt/traycer/host/install/traycer-host-v2";
+    const moved = "/opt/hukum/host/install/hukum-host-v2";
     const { recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const scripted = withScriptedAttempts(deps, [
       { code: 4, signal: null },
@@ -2723,11 +2723,11 @@ describe("runHostStart - crash relaunch loop", () => {
 // ---------------------------------------------------------------------------
 
 describe("runHostStart - relaunch loop, guards re-checked across the backoff", () => {
-  const exec = "/opt/traycer/host/install/traycer-host";
+  const exec = "/opt/hukum/host/install/hukum-host";
 
   it("honours a stop that lands DURING the backoff, not just one already present", async () => {
     // The original code sampled stop intent once and then slept up to a
-    // minute, so a `traycer host stop` arriving mid-backoff was decided
+    // minute, so a `hukum host stop` arriving mid-backoff was decided
     // against before it happened - and the supervisor respawned a host the
     // user had just stopped. The backoff window is exactly when a stop is
     // most likely to land, because the host is already down.
@@ -2807,7 +2807,7 @@ describe("runHostStart - relaunch loop, guards re-checked across the backoff", (
 // ---------------------------------------------------------------------------
 
 describe("runHostStart - a stop exits 0 wherever it is honoured", () => {
-  const exec = "/opt/traycer/host/install/traycer-host";
+  const exec = "/opt/hukum/host/install/hukum-host";
 
   it("exits 0, not 69, when a stop interrupts target-resolution retries", async () => {
     const { recorded, deps } = makeRunStubs(sampleRecord(exec), null);
@@ -2820,7 +2820,7 @@ describe("runHostStart - a stop exits 0 wherever it is honoured", () => {
           {
             environment: "production",
             cwd: null,
-            serviceLabel: "ai.traycer.host",
+            serviceLabel: "ai.hukum.host",
           },
           {
             ...scripted.deps,
@@ -2854,7 +2854,7 @@ describe("runHostStart - a stop exits 0 wherever it is honoured", () => {
           {
             environment: "production",
             cwd: null,
-            serviceLabel: "ai.traycer.host",
+            serviceLabel: "ai.hukum.host",
           },
           {
             ...scripted.deps,
@@ -2883,7 +2883,7 @@ describe("runHostStart - a stop exits 0 wherever it is honoured", () => {
           {
             environment: "production",
             cwd: null,
-            serviceLabel: "ai.traycer.host",
+            serviceLabel: "ai.hukum.host",
           },
           {
             ...deps,
@@ -2920,7 +2920,7 @@ describe("runHostStart - a stop exits 0 wherever it is honoured", () => {
           {
             environment: "production",
             cwd: null,
-            serviceLabel: "ai.traycer.host",
+            serviceLabel: "ai.hukum.host",
           },
           {
             ...deps,
@@ -2947,7 +2947,7 @@ describe("runHostStart - a stop exits 0 wherever it is honoured", () => {
 });
 
 describe("runHostStart - relaunch loop, per-attempt isolation", () => {
-  const exec = "/opt/traycer/host/install/traycer-host";
+  const exec = "/opt/hukum/host/install/hukum-host";
 
   it("arms the transition probe on the first attempt only", async () => {
     // The probe answers "did THIS transition succeed" - a one-shot verdict
@@ -2992,7 +2992,7 @@ describe("runHostStart - relaunch loop, per-attempt isolation", () => {
             probe: {
               transitionId: "t-1",
               probeNonce: "n-1",
-              serviceLabel: "ai.traycer.host",
+              serviceLabel: "ai.hukum.host",
             },
           },
           {
@@ -3003,11 +3003,11 @@ describe("runHostStart - relaunch loop, per-attempt isolation", () => {
               context: {
                 transitionId: "t-1",
                 probeNonce: "n-1",
-                serviceLabel: "ai.traycer.host",
+                serviceLabel: "ai.hukum.host",
               },
             }),
             attestProbeSupervisor: async () => ({
-              serviceLabel: "ai.traycer.host",
+              serviceLabel: "ai.hukum.host",
               supervisorPid: process.pid,
               capturedAt: "2026-08-05T00:00:00.000Z",
             }),
@@ -3212,7 +3212,7 @@ describe("runHostStart - relaunch loop, per-attempt isolation", () => {
 });
 
 describe("runHostStart - relaunch loop, spawn-failure policy", () => {
-  const exec = "/opt/traycer/host/install/traycer-host";
+  const exec = "/opt/hukum/host/install/hukum-host";
 
   it("retries a synchronous spawn throw on a relaunch, like the async one", async () => {
     // Whether `spawn()` throws or reports through the `error` event is a
@@ -3307,7 +3307,7 @@ describe("runHostStart - relaunch loop, spawn-failure policy", () => {
           {
             environment: "production",
             cwd: null,
-            serviceLabel: "ai.traycer.host",
+            serviceLabel: "ai.hukum.host",
           },
           {
             ...deps,
@@ -3380,7 +3380,7 @@ describe("runHostStart - relaunch loop, spawn-failure policy", () => {
           {
             environment: "production",
             cwd: null,
-            serviceLabel: "ai.traycer.host",
+            serviceLabel: "ai.hukum.host",
           },
           {
             ...serviceScripted.deps,
@@ -3424,7 +3424,7 @@ describe("runHostStart - production defaults", () => {
   it("wires the real budget and backoff ladder when nothing is injected", async () => {
     // Every other test injects `maxRelaunches`, so without this the shipped
     // default (5) and the ladder are never exercised end to end.
-    const exec = "/opt/traycer/host/install/traycer-host";
+    const exec = "/opt/hukum/host/install/hukum-host";
     const { recorded, deps } = makeRunStubs(sampleRecord(exec), null);
     const scripted = withScriptedAttempts(deps, [{ code: 11, signal: null }]);
     const slept: number[] = [];
@@ -3505,7 +3505,7 @@ describe("runHostStart - production defaults", () => {
 });
 
 describe("runHostStart - stop signals outside the child-running window", () => {
-  const exec = "/opt/traycer/host/install/traycer-host";
+  const exec = "/opt/hukum/host/install/hukum-host";
 
   it("does not spawn when a shutdown signal arrives during per-attempt setup", async () => {
     // Installing the signal handlers once, up front, SUPPRESSES Node's default
@@ -3663,7 +3663,7 @@ describe("runHostStart - stop signals outside the child-running window", () => {
 });
 
 describe("runHostStart - a stop that lands INSIDE the pre-spawn read", () => {
-  const exec = "/opt/traycer/host/install/traycer-host";
+  const exec = "/opt/hukum/host/install/hukum-host";
 
   it("does not spawn when the signal arrives during the intent read itself", async () => {
     // The narrowest window in the pre-spawn guard, and the one operand order
@@ -3708,7 +3708,7 @@ describe("runHostStart - a stop that lands INSIDE the pre-spawn read", () => {
 });
 
 describe("runHostStart - a marker write must never cost the host", () => {
-  const exec = "/opt/traycer/host/install/traycer-host";
+  const exec = "/opt/hukum/host/install/hukum-host";
 
   it("still recovers a crash when every marker write fails", async () => {
     // `writeBootstrapMarker` is an `ensureHostHomeDir` plus an `appendFile`.
@@ -3747,7 +3747,7 @@ describe("runHostStart - a marker write must never cost the host", () => {
 });
 
 describe("runHostStart - per-attempt setup failures stay inside the budget", () => {
-  const exec = "/opt/traycer/host/install/traycer-host";
+  const exec = "/opt/hukum/host/install/hukum-host";
 
   it("spends an attempt and retries when opening the log fd fails mid-ladder", async () => {
     // `openLogFd` is an `fs.open`, and a Windows scanner holding the file or a

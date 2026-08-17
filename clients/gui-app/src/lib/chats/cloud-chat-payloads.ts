@@ -1,15 +1,15 @@
 import {
   decodeBase64,
   type Sha256Hex,
-} from "@traycer-clients/shared/cloud-chat/bytes";
-import type { ReadCloudChatPayloadResponse } from "@traycer/protocol/host/epic/cloud-chat";
+} from "@hukum-clients/shared/cloud-chat/bytes";
+import type { ReadCloudChatPayloadResponse } from "@hukum/protocol/host/epic/cloud-chat";
 
 /**
  * One payload response as the text a block may render - after the bytes have
  * been proved to be the ones the ref names.
  *
  * The other half of the payload channel - which refs are fetchable at all -
- * lives in `@traycer-clients/shared/cloud-chat/payloads`, because the CLI needs
+ * lives in `@hukum-clients/shared/cloud-chat/payloads`, because the CLI needs
  * the same answer. What is here is renderer-specific: how much of a file body
  * may reach the DOM, and what a truncated preview says about itself.
  *

@@ -315,8 +315,8 @@ describe("<ToolSegment /> A2A send-message rendering", () => {
       <ToolSegment
         headerFindUnitId={null}
         id="a2a-send-prefix"
-        toolName="traycer_a2a/traycer_send_message"
-        {...inputProps("traycer_a2a/traycer_send_message", {})}
+        toolName="hukum_a2a/hukum_send_message"
+        {...inputProps("hukum_a2a/hukum_send_message", {})}
         error={null}
         agentMessageSend={{
           receiverAgentId: "9600b202",

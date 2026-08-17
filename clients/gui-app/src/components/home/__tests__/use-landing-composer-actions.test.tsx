@@ -14,7 +14,7 @@ import { useWorkspaceFoldersStore } from "@/stores/workspace/workspace-folders-s
 import { useWorktreeIntentStagingStore } from "@/stores/worktree/worktree-intent-staging-store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -100,7 +100,7 @@ function foldedChatIdFromCreateEpicPayload(payload: unknown): string | null {
   const chatId = chat.chatId;
   return typeof chatId === "string" ? chatId : null;
 }
-const WORKSPACE_PATH = "/tmp/traycer";
+const WORKSPACE_PATH = "/tmp/hukum";
 const DRAFT_WORKSPACE_PATH = "/tmp/draft-workspace";
 const GLOBAL_WORKSPACE_PATH = "/tmp/global-workspace";
 const UNKNOWN_WORKSPACE_PATH = "/tmp/unknown-workspace";
@@ -463,8 +463,8 @@ describe("useLandingComposerActions", () => {
       folderInfoByPath: {
         [WORKSPACE_PATH]: {
           path: WORKSPACE_PATH,
-          name: "traycer",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          name: "hukum",
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           hostId: null,
         },
       },
@@ -504,8 +504,8 @@ describe("useLandingComposerActions", () => {
       folderInfoByPath: {
         [WORKSPACE_PATH]: {
           path: WORKSPACE_PATH,
-          name: "traycer",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          name: "hukum",
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           hostId: null,
         },
       },
@@ -540,7 +540,7 @@ describe("useLandingComposerActions", () => {
     // the stored title.
     expect(createEpicCall?.[1]).toMatchObject({
       epic: { title: "", initialUserPrompt: SUBMITTED_PROMPT },
-      repoIdentifiers: [{ owner: "traycerai", repo: "traycer" }],
+      repoIdentifiers: [{ owner: "hukumai", repo: "hukum" }],
       workspaces: [{ workspacePath: WORKSPACE_PATH }],
     });
 
@@ -800,8 +800,8 @@ describe("useLandingComposerActions", () => {
       folderInfoByPath: {
         [WORKSPACE_PATH]: {
           path: WORKSPACE_PATH,
-          name: "traycer",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          name: "hukum",
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           hostId: null,
         },
       },
@@ -858,8 +858,8 @@ describe("useLandingComposerActions", () => {
       folderInfoByPath: {
         [WORKSPACE_PATH]: {
           path: WORKSPACE_PATH,
-          name: "traycer",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          name: "hukum",
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           hostId: null,
         },
         [SECOND_PATH]: {
@@ -881,7 +881,7 @@ describe("useLandingComposerActions", () => {
           {
             kind: "local",
             workspacePath: WORKSPACE_PATH,
-            repoIdentifier: { owner: "traycerai", repo: "traycer" },
+            repoIdentifier: { owner: "hukumai", repo: "hukum" },
             isPrimary: true,
           },
           {
@@ -956,7 +956,7 @@ describe("useLandingComposerActions", () => {
     // + submit, neither the associations nor the intent may carry the ghost,
     // and the real folder must be the (single) primary.
     window.localStorage.setItem(
-      "traycer-gui-app:workspace-folders",
+      "hukum-gui-app:workspace-folders",
       JSON.stringify({
         version: 1,
         state: {
@@ -964,8 +964,8 @@ describe("useLandingComposerActions", () => {
           folderInfoByPath: {
             [WORKSPACE_PATH]: {
               path: WORKSPACE_PATH,
-              name: "traycer",
-              repoIdentifier: { owner: "traycerai", repo: "traycer" },
+              name: "hukum",
+              repoIdentifier: { owner: "hukumai", repo: "hukum" },
             },
           },
           primaryPath: "/tmp/ghost",
@@ -986,7 +986,7 @@ describe("useLandingComposerActions", () => {
           {
             kind: "local",
             workspacePath: WORKSPACE_PATH,
-            repoIdentifier: { owner: "traycerai", repo: "traycer" },
+            repoIdentifier: { owner: "hukumai", repo: "hukum" },
             isPrimary: false,
           },
         ],
@@ -1047,8 +1047,8 @@ describe("useLandingComposerActions", () => {
       folderInfoByPath: {
         [WORKSPACE_PATH]: {
           path: WORKSPACE_PATH,
-          name: "traycer",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          name: "hukum",
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           hostId: null,
         },
         [NON_GIT_PATH]: {
@@ -1072,11 +1072,11 @@ describe("useLandingComposerActions", () => {
             kind: "worktree",
             scripts: null,
             workspacePath: WORKSPACE_PATH,
-            repoIdentifier: { owner: "traycerai", repo: "traycer" },
+            repoIdentifier: { owner: "hukumai", repo: "hukum" },
             isPrimary: false,
             branch: {
               type: "new",
-              name: "traycer/feature",
+              name: "hukum/feature",
               source: "main",
               carryUncommittedChanges: false,
             },
@@ -1130,7 +1130,7 @@ describe("useLandingComposerActions", () => {
               // demotion restamps `isPrimary`, it never rebuilds the entry.
               branch: {
                 type: "new",
-                name: "traycer/feature",
+                name: "hukum/feature",
                 source: "main",
                 carryUncommittedChanges: false,
               },
@@ -1156,8 +1156,8 @@ describe("useLandingComposerActions", () => {
       folderInfoByPath: {
         [WORKSPACE_PATH]: {
           path: WORKSPACE_PATH,
-          name: "traycer",
-          repoIdentifier: { owner: "traycerai", repo: "traycer" },
+          name: "hukum",
+          repoIdentifier: { owner: "hukumai", repo: "hukum" },
           hostId: null,
         },
       },
@@ -1313,7 +1313,7 @@ describe("useLandingComposerActions", () => {
         [DRAFT_WORKSPACE_PATH]: {
           path: DRAFT_WORKSPACE_PATH,
           name: "draft-workspace",
-          repoIdentifier: { owner: "traycerai", repo: "draft-workspace" },
+          repoIdentifier: { owner: "hukumai", repo: "draft-workspace" },
           hostId: null,
         },
       },
@@ -1325,7 +1325,7 @@ describe("useLandingComposerActions", () => {
         [GLOBAL_WORKSPACE_PATH]: {
           path: GLOBAL_WORKSPACE_PATH,
           name: "global-workspace",
-          repoIdentifier: { owner: "traycerai", repo: "global-workspace" },
+          repoIdentifier: { owner: "hukumai", repo: "global-workspace" },
           hostId: null,
         },
       },
@@ -1356,7 +1356,7 @@ describe("useLandingComposerActions", () => {
       (c) => c[0] === "epic.create",
     );
     expect(createEpicCall?.[1]).toMatchObject({
-      repoIdentifiers: [{ owner: "traycerai", repo: "draft-workspace" }],
+      repoIdentifiers: [{ owner: "hukumai", repo: "draft-workspace" }],
       workspaces: [{ workspacePath: DRAFT_WORKSPACE_PATH }],
     });
     expect(JSON.stringify(createEpicCall?.[1])).not.toContain(
@@ -2089,7 +2089,7 @@ const HELLO_BYTES = new Uint8Array([104, 101, 108, 108, 111]);
 const HELLO_BASE64 = "aGVsbG8=";
 
 function setSingleWorkspace(): void {
-  setWorkspace(WORKSPACE_PATH, "traycer");
+  setWorkspace(WORKSPACE_PATH, "hukum");
 }
 
 function setWorkspace(path: string, name: string): void {
@@ -2099,7 +2099,7 @@ function setWorkspace(path: string, name: string): void {
       [path]: {
         path,
         name,
-        repoIdentifier: { owner: "traycerai", repo: name },
+        repoIdentifier: { owner: "hukumai", repo: name },
         hostId: null,
       },
     },
@@ -2133,7 +2133,7 @@ function worktreeIntentFor(workspacePath: string, branchName: string) {
         kind: "worktree" as const,
         scripts: null,
         workspacePath,
-        repoIdentifier: { owner: "traycerai", repo: "traycer" },
+        repoIdentifier: { owner: "hukumai", repo: "hukum" },
         isPrimary: true,
         branch: {
           type: "new" as const,

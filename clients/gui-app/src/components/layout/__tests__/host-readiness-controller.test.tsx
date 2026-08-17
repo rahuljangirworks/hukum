@@ -427,7 +427,7 @@ describe("<SurfaceReadinessBoundary />", () => {
     // The other half of the tri-state, and the reason it is not simply
     // "resolved-local only": a first-ever install has no directory row until
     // provisioning creates one. Refusing it there would replace the install
-    // card - progress, bootstrap.log path, the traycer#862 diagnostics - with
+    // card - progress, bootstrap.log path, the hukum#862 diagnostics - with
     // a bare line for the whole first run.
     const localBoot: DefaultHostReadinessPresentation = {
       ...DEFAULT_HOST_PRESENTATION,

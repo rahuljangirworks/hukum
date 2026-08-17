@@ -2,13 +2,13 @@ import { describe, expect, it } from "vitest";
 
 import {
   splitConnectionManifest,
-} from "@traycer/protocol/framework/index";
-import { hostRpcRegistry } from "@traycer/protocol/host/registry";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+} from "@hukum/protocol/framework/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/registry";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   mentionGithubCatalogV10,
   mentionGithubSearchV10,
-} from "@traycer/protocol/host/mention-contracts";
+} from "@hukum/protocol/host/mention-contracts";
 import {
   githubIssueMentionFilterSchema,
   githubIssueMentionRowSchema,
@@ -18,7 +18,7 @@ import {
   mentionGithubCatalogResponseSchema,
   mentionGithubSearchRequestSchema,
   mentionGithubSearchResponseSchema,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 
 const REPOSITORY = {
   githubHost: "github.com",

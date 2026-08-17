@@ -49,7 +49,7 @@ import type {
   ChatActiveTurn,
   ChatQueuedItem,
   ChatQueuedPromptItem,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 import { ComposerContentPreview } from "@/components/chat/composer/composer-content-preview";
 import { isReceivedAgentResponse } from "@/components/chat/chat-queue-utils";
 import {

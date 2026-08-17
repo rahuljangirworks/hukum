@@ -12,9 +12,9 @@
  * carry typed snapshots, action acknowledgements, live turn deltas, queue
  * state, approval state, durable event appends, and concise error notices.
  */
-import { commonRecordRegistry } from "@traycer/protocol/common/registry";
-import { getRecordSchema } from "@traycer/protocol/framework/index";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { commonRecordRegistry } from "@hukum/protocol/common/registry";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 import {
   chatEventSchema,
   chatEventSchemaPreInReplyTo,
@@ -32,25 +32,25 @@ import {
   type ChatEvent,
   type ChatRunSettings,
   type Message,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import {
   agentModeSchema,
   permissionModeSchema,
-} from "@traycer/protocol/persistence/epic/foundation";
+} from "@hukum/protocol/persistence/epic/foundation";
 import {
   DEFAULT_ACCOUNT_CONTEXT,
   accountContextSchema,
-} from "@traycer/protocol/common/schemas";
+} from "@hukum/protocol/common/schemas";
 import {
   checkpointArtifactTagSchema,
   checkpointFileOperationSchema,
   restoreResultEntrySchema,
   restoreStartedManifestSchema,
-} from "@traycer/protocol/persistence/epic/checkpoint-manifests";
+} from "@hukum/protocol/persistence/epic/checkpoint-manifests";
 import {
   diffSourceSchema,
   fileEditReasonSchema,
-} from "@traycer/protocol/persistence/epic/content-blocks";
+} from "@hukum/protocol/persistence/epic/content-blocks";
 import {
   chatQueueSteerModeSchema,
   runtimeApprovalDecisionSchema,
@@ -61,20 +61,20 @@ import {
   runtimeInterviewAnswerSchema,
   runtimePlanActionSchema,
   type ImageResolutionUpdatedEvent,
-} from "@traycer/protocol/host/agent/gui/agent-runtime";
+} from "@hukum/protocol/host/agent/gui/agent-runtime";
 
 export {
   chatQueueSteerModeSchema,
   type ChatQueueSteerMode,
-} from "@traycer/protocol/host/agent/gui/agent-runtime";
+} from "@hukum/protocol/host/agent/gui/agent-runtime";
 import { z } from "zod";
-import { guiHarnessIdSchema } from "@traycer/protocol/host/agent/shared";
+import { guiHarnessIdSchema } from "@hukum/protocol/host/agent/shared";
 import {
   worktreeBindingSchema,
   worktreeIntentSchema,
   worktreeIntentSchemaV10,
-} from "@traycer/protocol/host/worktree-schemas";
-import { managedCommandSchema } from "@traycer/protocol/host/managed-command/unary-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
+import { managedCommandSchema } from "@hukum/protocol/host/managed-command/unary-schemas";
 
 const jsonContentSchema = getRecordSchema(
   commonRecordRegistry,
@@ -153,7 +153,7 @@ export const chatAccumulatedFileChangeSchema = z.object({
   afterContent: z.string().nullable(),
   reason: fileEditReasonSchema,
   undoable: z.boolean(),
-  // Present + non-null ⇒ this accumulated change is a Traycer artifact
+  // Present + non-null ⇒ this accumulated change is a Hukum artifact
   // `index.md`. The panel renders it as a titled artifact row (click → diff,
   // per-row undo) rather than a raw file path. Carried through from the manifest
   // entry's tag. Optional for the same reasons as the manifest entry's tag.

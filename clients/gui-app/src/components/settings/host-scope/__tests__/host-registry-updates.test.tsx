@@ -14,7 +14,7 @@ import {
   screen,
   within,
 } from "@testing-library/react";
-import type { HostListItem } from "@traycer/protocol/host/host-status";
+import type { HostListItem } from "@hukum/protocol/host/host-status";
 
 const { mutateSpy } = vi.hoisted(() => ({ mutateSpy: vi.fn() }));
 

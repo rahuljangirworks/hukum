@@ -3,7 +3,7 @@ import type {
   HostListItem,
   HostListResponse,
   HostStatusDTO,
-} from "@traycer/protocol/host/host-status";
+} from "@hukum/protocol/host/host-status";
 import type { AuthEra } from "../../auth/request-context-provider";
 import {
   createRemoteHostFetcher,

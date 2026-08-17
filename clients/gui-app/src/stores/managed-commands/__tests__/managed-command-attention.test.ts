@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import type {
   ManagedCommand,
   ManagedCommandStatus,
-} from "@traycer/protocol/host/managed-command/unary-schemas";
+} from "@hukum/protocol/host/managed-command/unary-schemas";
 import { managedCommandNeedsAttention } from "@/lib/managed-commands/managed-command-copy";
 import {
   unacknowledgedAttentionCommands,

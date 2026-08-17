@@ -199,7 +199,7 @@ export function useHostQueriesWithResponseMap<
         );
         return mapResponse({ response, queryClient, queryKey });
       });
-    const pollPolicy = HOST_METHOD_POLL_TABLE[request.method].poll;
+    const pollPolicy = HOST_METHOD_POLL_TABLE[request.method]?.poll ?? null;
     let tablePollingOptions:
       | {
           readonly refetchInterval: ConditionPollRefetchInterval | false;

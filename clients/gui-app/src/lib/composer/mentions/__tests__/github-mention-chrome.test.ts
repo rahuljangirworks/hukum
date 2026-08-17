@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import type { PrSourceNotice } from "@traycer/protocol/host/pr-schemas";
+import type { PrSourceNotice } from "@hukum/protocol/host/pr-schemas";
 
 import { DEFAULT_PULL_REQUEST_MENTION_FILTER } from "../github-mention-rows";
 import {
@@ -32,8 +32,8 @@ function baseInput(
     repositories: [
       {
         githubHost: "github.com",
-        owner: "traycerai",
-        repo: "traycer",
+        owner: "hukumai",
+        repo: "hukum",
       },
     ],
     selected: DEFAULT_PULL_REQUEST_MENTION_FILTER,
@@ -162,8 +162,8 @@ describe("githubMentionChromeFor — emptyLabel gating", () => {
         repositories: [
           {
             githubHost: "github.com",
-            owner: "traycerai",
-            repo: "traycer",
+            owner: "hukumai",
+            repo: "hukum",
           },
         ],
       }),

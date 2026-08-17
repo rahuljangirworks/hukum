@@ -9,7 +9,7 @@ import { ConfirmDestructiveDialog } from "@/components/ui/confirm-destructive-di
 import { useHostQuery, useHostMutation } from "@/hooks/host/use-host-query";
 import { useRunnerHost } from "@/providers/use-runner-host";
 import { useDeregisterHostFromAccount } from "@/hooks/auth/use-deregister-host-mutation";
-import { useRunnerUninstallTraycer } from "@/hooks/runner/use-runner-uninstall-traycer-mutation";
+import { useRunnerUninstallHukum } from "@/hooks/runner/use-runner-uninstall-hukum-mutation";
 import { requestAppQuit } from "@/lib/desktop-app-lifecycle";
 import { useAuthStore } from "@/stores/auth/auth-store";
 import { useLocalSnapshotClearStore } from "@/stores/settings/local-snapshot-clear-store";
@@ -51,7 +51,7 @@ export function HostDangerZone(props: {
   //
   // Clearing snapshots is host RPC and needs a live route, so it stays behind
   // the gate — which also keeps the gate's explanation of WHY it is missing.
-  // Removing Traycer is the local CLI bridge (`hostManagement.uninstallTraycer()`)
+  // Removing Hukum is the local CLI bridge (`hostManagement.uninstallHukum()`)
   // and needs no route at all; the moment someone reaches for it is precisely
   // the moment there isn't one, on a host that is stopped, broken or wedged.
   // Gating it too took the only way to remove a broken install out of the app
@@ -71,7 +71,7 @@ export function HostDangerZone(props: {
       </HostScopeGate>
       {/* The remote counterpart sits on a THIRD capability plane: not host RPC
           and not the local CLI bridge, but an account write. So it is outside
-          the gate for the same reason "Remove Traycer" is — it needs no route,
+          the gate for the same reason "Remove Hukum" is — it needs no route,
           and a host you cannot reach is a common reason to want it gone. */}
       <HostRemovalRow host={scope.host} />
     </SettingsGroup>
@@ -81,7 +81,7 @@ export function HostDangerZone(props: {
 /**
  * Whichever removal verb this host actually has.
  *
- * They are not two versions of one action. "Remove Traycer" uninstalls
+ * They are not two versions of one action. "Remove Hukum" uninstalls
  * components from THIS computer over the CLI bridge; "Remove from account" ends
  * a host's membership of the account and changes nothing on its machine.
  * Offering both would put two destructive buttons side by side whose difference
@@ -92,7 +92,7 @@ export function HostDangerZone(props: {
  */
 function HostRemovalRow(props: { readonly host: HostScopeOption }): ReactNode {
   const { host } = props;
-  if (host.isLocalMachine) return <RemoveTraycerRow />;
+  if (host.isLocalMachine) return <RemoveHukumRow />;
   if (!host.registered) return null;
   // Keyed by host id so a scope change REMOUNTS the row. Passing the new id
   // into the same instance would leave an already-open confirmation - and the
@@ -130,7 +130,7 @@ function HostRemovalRow(props: { readonly host: HostScopeOption }): ReactNode {
  *
  * Signing in again on that machine does not help either, and the copy must not
  * suggest it: the interactive login path sits BELOW the same early return, so a
- * fresh `traycer login` is never consulted while a matching credential file
+ * fresh `hukum login` is never consulted while a matching credential file
  * exists. Coming back requires the host to be set up again on that machine —
  * and because the row is deregistered rather than revoked, a re-enrollment
  * re-adopts the SAME id with its policy preserved.
@@ -176,7 +176,7 @@ function RemoveFromAccountRow(props: {
         open={confirmOpen}
         onOpenChange={setConfirmOpen}
         title={`Remove ${hostName} from this account?`}
-        description={`${hostName} stops appearing in your host list and stops reporting presence. Nothing on that machine changes - Traycer stays installed and no agents, history or credentials are deleted. It won't rejoin on its own, and signing in on that machine again won't bring it back: it has to be set up again there. Its host ID is kept, so setting it up again restores the same name and settings.`}
+        description={`${hostName} stops appearing in your host list and stops reporting presence. Nothing on that machine changes - Hukum stays installed and no agents, history or credentials are deleted. It won't rejoin on its own, and signing in on that machine again won't bring it back: it has to be set up again there. Its host ID is kept, so setting it up again restores the same name and settings.`}
         cascadeSummary={null}
         actionLabel="Remove from account"
         isPending={removeFromAccount.isPending}
@@ -336,7 +336,7 @@ export function LocalRecoveryDangerZone(): ReactNode {
       dataTestId="host-danger-zone"
       fill={false}
     >
-      <RemoveTraycerRow />
+      <RemoveHukumRow />
     </SettingsGroup>
   );
 }
@@ -346,17 +346,17 @@ export function LocalRecoveryDangerZone(): ReactNode {
  * on the host's own page rather than beside app-global resets in General.
  * Local host only — there is no remote uninstall verb.
  */
-function RemoveTraycerRow(): ReactNode {
+function RemoveHukumRow(): ReactNode {
   const { hostManagement } = useRunnerHost();
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const uninstall = useRunnerUninstallTraycer();
+  const uninstall = useRunnerUninstallHukum();
   if (hostManagement === null) return null;
 
   if (uninstall.isSuccess) {
     return (
       <SettingsRow
-        label="Traycer removed"
-        description="Background components were removed. Your agents, history and credentials are preserved on this computer. To finish, quit Traycer and drag it from Applications to the Trash."
+        label="Hukum removed"
+        description="Background components were removed. Your agents, history and credentials are preserved on this computer. To finish, quit Hukum and drag it from Applications to the Trash."
         control={
           <Button
             type="button"
@@ -365,7 +365,7 @@ function RemoveTraycerRow(): ReactNode {
             data-testid="settings-quit-after-uninstall"
             onClick={() => requestAppQuit()}
           >
-            Quit Traycer
+            Quit Hukum
           </Button>
         }
       />
@@ -375,7 +375,7 @@ function RemoveTraycerRow(): ReactNode {
   return (
     <>
       <SettingsRow
-        label="Remove Traycer from this computer"
+        label="Remove Hukum from this computer"
         description="Stops the background host and services and removes the installed components. Your agents and history are preserved, and the host won't reinstall itself."
         control={
           <Button
@@ -383,27 +383,27 @@ function RemoveTraycerRow(): ReactNode {
             variant="destructive"
             size="sm"
             disabled={uninstall.isPending}
-            data-testid="settings-remove-traycer"
+            data-testid="settings-remove-hukum"
             onClick={() => setConfirmOpen(true)}
           >
             {uninstall.isPending ? (
               <AgentSpinningDots
                 className={undefined}
-                testId="settings-remove-traycer-spinner"
+                testId="settings-remove-hukum-spinner"
                 variant={undefined}
               />
             ) : null}
-            Remove Traycer
+            Remove Hukum
           </Button>
         }
       />
       <ConfirmDestructiveDialog
         open={confirmOpen}
         onOpenChange={setConfirmOpen}
-        title="Remove Traycer from this computer?"
-        description="This stops and removes Traycer's background host and services and won't reinstall them automatically. Your agents, history and credentials stay on this computer - you can reinstall anytime from Settings."
+        title="Remove Hukum from this computer?"
+        description="This stops and removes Hukum's background host and services and won't reinstall them automatically. Your agents, history and credentials stay on this computer - you can reinstall anytime from Settings."
         cascadeSummary={null}
-        actionLabel="Remove Traycer"
+        actionLabel="Remove Hukum"
         isPending={uninstall.isPending}
         onConfirm={() => {
           uninstall.mutate(undefined, {

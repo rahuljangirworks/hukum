@@ -1,6 +1,6 @@
 import type { Disposable } from "../platform/uri-callback";
 import type { IRunnerHost } from "../platform/runner-host";
-import type { VersionedRpcRegistry } from "@traycer/protocol/framework/index";
+import type { VersionedRpcRegistry } from "@hukum/protocol/framework/index";
 import type {
   AuthEra,
   RequestContextProvider,

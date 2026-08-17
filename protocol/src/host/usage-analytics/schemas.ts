@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 /**
- * Wire mirror of `@traycerai/common`'s `UsageSummary` shapes (the shared
- * aggregator's output) - `@traycer/protocol` is an OSS package and must not
- * depend on the internal `@traycerai/common` package, so these are
+ * Wire mirror of `@hukumai/common`'s `UsageSummary` shapes (the shared
+ * aggregator's output) - `@hukum/protocol` is an OSS package and must not
+ * depend on the internal `@hukumai/common` package, so these are
  * independently declared here, the same way `usageAnalyticsIngestFactV1Schema`
  * mirrors the host's fact enums without importing them.
  */

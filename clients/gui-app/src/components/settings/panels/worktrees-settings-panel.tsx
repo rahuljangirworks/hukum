@@ -44,12 +44,12 @@ import {
 import type {
   WorktreeHostEntry,
   WorktreeHostEntryV14,
-} from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/index";
 import type {
   WorktreeEntryScripts,
   WorktreePrState,
   WorktreeSubmoduleMergeFactV12,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   WORKTREE_TIER_LABEL,
   WORKTREE_TIER_ORDER,
@@ -59,8 +59,8 @@ import {
   describeReviewReasons,
   provenRemovable,
   type WorktreeTier,
-} from "@traycer-clients/shared/worktree/classify-worktree";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum-clients/shared/worktree/classify-worktree";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import {
   buildTaskMergeRollups,
   taskMergeRollupEqual,
@@ -219,7 +219,7 @@ function useObservedHeight(): {
 
 /**
  * Inventory-only: this panel lists every git worktree under the selected
- * host's `~/.traycer/worktrees/` creation path (disk-truth, so orphans whose
+ * host's `~/.hukum/worktrees/` creation path (disk-truth, so orphans whose
  * owning chat/agent was deleted still appear) and lets the user delete ones
  * they no longer need. The branch-prefix default lives in General settings;
  * a per-repository override lives in that repo's Environment dialog - this
@@ -246,7 +246,7 @@ export function WorktreesSettingsPanel(): ReactNode {
   return (
     <SettingsPanelShell
       title="Worktrees"
-      description="Traycer-created worktrees on this host."
+      description="Hukum-created worktrees on this host."
       fillHeight
       bodyClassName="relative rounded-none border-none bg-transparent"
     >
@@ -2146,7 +2146,7 @@ function WorktreeBulkDeleteDialog(props: {
                   {summary.title}
                 </DialogTitle>
                 <DialogDescription className="text-ui-sm leading-relaxed text-muted-foreground wrap-anywhere">
-                  Deleting {summary.classSummary}. Traycer runs each repo's
+                  Deleting {summary.classSummary}. Hukum runs each repo's
                   teardown script, then removes the worktree.
                 </DialogDescription>
                 {summary.dirtyLoss !== null ? (
@@ -2938,7 +2938,7 @@ function WorktreePrAnchor(props: {
  * whose title is unknown (deleted / not cached / other user) is DEMOTED to muted
  * "Owner unresolved" text rather than a prominent chip - but it is still a
  * reference, so the classifier keeps such a row out of the green tiers. No owners
- * at all means nothing in Traycer references this worktree - deliberately NOT the
+ * at all means nothing in Hukum references this worktree - deliberately NOT the
  * "Orphaned" tier, which means `gitRemovable: false`.
  */
 function WorktreeTaskAssociation(props: {
@@ -3493,7 +3493,7 @@ function deleteDialogCopy(entry: WorktreeHostEntryV14): {
     const plural = count === 1 ? "" : "s";
     return {
       title: `Discard ${count} uncommitted change${plural}?`,
-      description: `${branch} has ${count} uncommitted change${plural} that will be permanently lost. Traycer runs the repo's teardown script, then force-removes ${entry.worktreePath}.`,
+      description: `${branch} has ${count} uncommitted change${plural} that will be permanently lost. Hukum runs the repo's teardown script, then force-removes ${entry.worktreePath}.`,
       actionLabel: "Delete and discard",
     };
   }
@@ -3509,7 +3509,7 @@ function deleteDialogCopy(entry: WorktreeHostEntryV14): {
     const plural = count === 1 ? "" : "s";
     return {
       title: `Delete worktree with ${count} unpushed commit${plural}?`,
-      description: `${branch} has ${count} commit${plural} not on the default branch. Removing the worktree keeps the branch ref, but that work exists only here. Traycer runs the repo's teardown script, then removes ${entry.worktreePath}.`,
+      description: `${branch} has ${count} commit${plural} not on the default branch. Removing the worktree keeps the branch ref, but that work exists only here. Hukum runs the repo's teardown script, then removes ${entry.worktreePath}.`,
       actionLabel: "Delete worktree",
     };
   }
@@ -3525,13 +3525,13 @@ function deleteDialogCopy(entry: WorktreeHostEntryV14): {
   ) {
     return {
       title: "Delete worktree with unpushed local commits?",
-      description: `${branch} has local-only commits not on the default branch and was never pushed. Removing the worktree keeps the branch ref, so the commits survive on the branch — but this machine is their only copy. Traycer runs the repo's teardown script, then removes ${entry.worktreePath}.`,
+      description: `${branch} has local-only commits not on the default branch and was never pushed. Removing the worktree keeps the branch ref, so the commits survive on the branch — but this machine is their only copy. Hukum runs the repo's teardown script, then removes ${entry.worktreePath}.`,
       actionLabel: "Delete worktree",
     };
   }
   return {
     title: "Delete worktree?",
-    description: `Traycer runs the repo's teardown script, then removes ${branch} (${entry.worktreePath}).`,
+    description: `Hukum runs the repo's teardown script, then removes ${branch} (${entry.worktreePath}).`,
     actionLabel: "Delete worktree",
   };
 }
@@ -3556,13 +3556,13 @@ function unknownRiskDeleteDialogCopy(entry: WorktreeHostEntryV14): {
     const plural = count === 1 ? "" : "s";
     return {
       title: `Discard ${count} uncommitted change${plural}?`,
-      description: `${branch} has ${count} uncommitted change${plural} that will be permanently lost. Its branch and activity status also could not be verified, so Traycer cannot confirm the rest of this worktree is safe to remove either. Traycer runs the repo's teardown script, then force-removes ${entry.worktreePath}.`,
+      description: `${branch} has ${count} uncommitted change${plural} that will be permanently lost. Its branch and activity status also could not be verified, so Hukum cannot confirm the rest of this worktree is safe to remove either. Hukum runs the repo's teardown script, then force-removes ${entry.worktreePath}.`,
       actionLabel: "Delete and discard",
     };
   }
   return {
     title: "Delete worktree with unknown status?",
-    description: `${branch}'s branch and activity status could not be verified, so Traycer cannot confirm this worktree is safe to remove or free of unpushed work. Traycer runs the repo's teardown script, then removes ${entry.worktreePath}.`,
+    description: `${branch}'s branch and activity status could not be verified, so Hukum cannot confirm this worktree is safe to remove or free of unpushed work. Hukum runs the repo's teardown script, then removes ${entry.worktreePath}.`,
     actionLabel: "Delete anyway",
   };
 }
@@ -3825,7 +3825,7 @@ function summarizeBulkWorktreeDelete(
       ? null
       : `Activity status for ${unknownTargets.length} worktree${
           unknownTargets.length === 1 ? "" : "s"
-        } could not be checked. Traycer cannot confirm those are safe to remove or free of unpushed work. Commit, stash, or push anything you want to keep first.`;
+        } could not be checked. Hukum cannot confirm those are safe to remove or free of unpushed work. Commit, stash, or push anything you want to keep first.`;
   const excluded = visible.filter(
     (entry) => !targetPaths.has(entry.worktreePath),
   );

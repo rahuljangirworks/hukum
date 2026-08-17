@@ -1,8 +1,8 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { LineChart } from "lucide-react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   Dialog,
   DialogContent,

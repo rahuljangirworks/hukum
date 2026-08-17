@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import type { LogLevel } from "@traycer/protocol/config/log-level";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { LogLevel } from "@hukum/protocol/config/log-level";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { useHostScopedMutationForClient } from "@/hooks/host/use-host-scoped-mutation";
@@ -39,12 +39,12 @@ export interface LogLevelControl {
 
 const DESKTOP_DESCRIPTION =
   "Verbosity of the desktop app's own logs. Applies to this app, not to a host.";
-// Named per machine, not per host: the store is `~/.traycer/cli/config.json`,
-// shared by every Traycer host environment this OS user runs.
+// Named per machine, not per host: the store is `~/.hukum/cli/config.json`,
+// shared by every Hukum host environment this OS user runs.
 const CLI_DESCRIPTION =
-  "Verbosity of the Traycer CLI's logs. Applies to every Traycer host environment on this machine.";
+  "Verbosity of the Hukum CLI's logs. Applies to every Hukum host environment on this machine.";
 const HOST_DESCRIPTION =
-  "Verbosity of the background host process's logs. Applies to every Traycer host environment on this machine.";
+  "Verbosity of the background host process's logs. Applies to every Hukum host environment on this machine.";
 
 /**
  * The `desktop` row: this window's threshold, always local, offered for every

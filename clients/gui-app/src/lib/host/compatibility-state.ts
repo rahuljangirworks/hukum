@@ -156,7 +156,7 @@ export function useHostCompatibilityProbe(): HostCompatibility {
       // entry observer-less and the default 5-minute garbage collector starts
       // running: coming back to that host later found an empty slot and put
       // the whole app behind a "checking" splash carrying local-bootstrap copy
-      // ("Starting local Traycer Host…") for a host that had been running the
+      // ("Starting local Hukum Host…") for a host that had been running the
       // entire time. Holding the entry for the session makes A -> B -> A
       // render from the held verdict in the same render, while `bind()`'s
       // `refetchActive: true` sweep still re-probes in the background - so the
@@ -209,7 +209,7 @@ export function useHostCompatibilityProbe(): HostCompatibility {
     // A pending-class transport error says the request never got a chance:
     // the session is still dialing, or the call was cancelled as the binding
     // moved. Settling `failed` there is what put a full-screen
-    // "Traycer Host is not responding" in front of a remote host that was
+    // "Hukum Host is not responding" in front of a remote host that was
     // seconds away from ready - and the gate latched it, because the recovery
     // wiring needs a readiness this very state prevents. Report it as the
     // still-in-progress state it is; the strip shows amber and the query's

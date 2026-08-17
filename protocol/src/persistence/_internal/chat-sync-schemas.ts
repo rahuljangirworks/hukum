@@ -1,5 +1,5 @@
-import { chatHeadSchema } from "@traycer/protocol/persistence/chat-sync/head";
-import { chatShardSchema } from "@traycer/protocol/persistence/chat-sync/shard";
+import { chatHeadSchema } from "@hukum/protocol/persistence/chat-sync/head";
+import { chatShardSchema } from "@hukum/protocol/persistence/chat-sync/shard";
 
 /**
  * Private Zod values for the `chat-head` and `chat-shard` records.

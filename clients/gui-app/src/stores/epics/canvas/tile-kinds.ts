@@ -11,6 +11,7 @@ const TILE_KIND_TERMINAL = "terminal";
 const TILE_KIND_WORKSPACE_FILE = "workspace-file";
 export const TILE_KIND_GIT_DIFF = "git-diff";
 export const TILE_KIND_SNAPSHOT_DIFF = "snapshot-diff";
+export const TILE_KIND_PUBLISHED_CHAT = "published-chat";
 // A read-only window on one managed command's log timeline ("Monitors &
 // Shells"). Renderer-local like `terminal`: the tile points at a command the
 // host owns, it does not carry one.
@@ -48,6 +49,7 @@ export type TileKindId =
   | typeof TILE_KIND_BRAIN_GRAPH
   | typeof TILE_KIND_PR_DETAIL
   | typeof TILE_KIND_PR_DIFF
+  | typeof TILE_KIND_PUBLISHED_CHAT
   | typeof TILE_KIND_BLANK;
 
 export const isTileKind = makeLiteralGuard<TileKindId>({
@@ -68,5 +70,6 @@ export const isTileKind = makeLiteralGuard<TileKindId>({
   [TILE_KIND_BRAIN_GRAPH]: true,
   [TILE_KIND_PR_DETAIL]: true,
   [TILE_KIND_PR_DIFF]: true,
+  [TILE_KIND_PUBLISHED_CHAT]: true,
   [TILE_KIND_BLANK]: true,
 });

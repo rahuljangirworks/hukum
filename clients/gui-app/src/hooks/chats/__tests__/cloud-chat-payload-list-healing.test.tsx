@@ -13,15 +13,15 @@ import {
   type RenderHookResult,
 } from "@testing-library/react";
 import { createElement, type ReactNode } from "react";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
 import type {
   HostRpcError,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import type { CloudChatIdentity } from "@traycer/protocol/host/epic/cloud-chat";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import type { CloudChatIdentity } from "@hukum/protocol/host/epic/cloud-chat";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
 import { createAppQueryClient } from "@/lib/query-client";

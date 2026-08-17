@@ -2,13 +2,13 @@ import { createElement, type ReactNode } from "react";
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { cleanup, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import { useCloudChatList } from "@/hooks/chats/use-cloud-chat-queries";
 import {
   cloudChatListQueryKey,

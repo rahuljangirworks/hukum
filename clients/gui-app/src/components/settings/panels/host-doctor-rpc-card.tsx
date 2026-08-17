@@ -6,11 +6,11 @@ import {
   type ReactNode,
 } from "react";
 import { toast } from "sonner";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   HostDoctorIssue,
   HostDoctorResponse,
-} from "@traycer/protocol/host/maintenance/index";
+} from "@hukum/protocol/host/maintenance/index";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import { ConfirmDestructiveDialog } from "@/components/ui/confirm-destructive-dialog";

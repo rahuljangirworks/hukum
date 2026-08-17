@@ -41,12 +41,12 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { toast } from "sonner";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import { hostScopeOptionFixture } from "@/components/settings/host-scope/host-scope-fixture";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { HostSettingsPanel } from "@/components/settings/panels/host-settings-panel";
@@ -103,7 +103,7 @@ function makeRunnerHost(): IRunnerHost {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 
@@ -508,7 +508,7 @@ describe("<HostSettingsPanel /> Overview doctor structured failure", () => {
 
     fireEvent.click(await waitForButton("Run doctor"));
     const message = await screen.findByTestId("host-doctor-message");
-    expect(message.textContent).toContain("no Traycer CLI installed");
+    expect(message.textContent).toContain("no Hukum CLI installed");
     expect(toast.error).not.toHaveBeenCalled();
   });
 });

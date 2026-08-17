@@ -14,16 +14,16 @@ import { chmodSync, mkdtempSync, rmSync, watch, type FSWatcher } from "node:fs";
 import { dirname, join } from "node:path";
 import { tmpdir } from "node:os";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { cliCredentialsPath } from "@traycer/protocol/config/paths";
-import { writeCredentialsFile } from "@traycer/protocol/config/credentials";
-import type { TokenStoreChange } from "@traycer-clients/shared/platform/runner-host";
+import { cliCredentialsPath } from "@hukum/protocol/config/paths";
+import { writeCredentialsFile } from "@hukum/protocol/config/credentials";
+import type { TokenStoreChange } from "@hukum-clients/shared/platform/runner-host";
 import { sandboxHome } from "../../__tests__/sandbox-home";
 import { FileTokenStore } from "../file-token-store";
 
 vi.mock("electron", () => ({
   app: {
     getPath: (): string =>
-      join(tmpdir(), "traycer-file-token-store-watcher-userdata"),
+      join(tmpdir(), "hukum-file-token-store-watcher-userdata"),
   },
 }));
 
@@ -52,7 +52,7 @@ describe("FileTokenStore watcher self-healing (synthetic stream errors)", () => 
   const decoyDirs: string[] = [];
 
   beforeEach(() => {
-    homeDir = mkdtempSync(join(tmpdir(), "traycer-watcher-error-test-"));
+    homeDir = mkdtempSync(join(tmpdir(), "hukum-watcher-error-test-"));
     sandboxHome(homeDir);
     vi.useFakeTimers();
   });
@@ -171,7 +171,7 @@ describe("FileTokenStore watcher self-healing (synthetic stream errors)", () => 
       // can surface the snapshot. (Watching the real dir made this vacuous:
       // the chmod that heals the read is itself an event in that dir, and it
       // delivered the change even with the retry deleted.)
-      const decoyDir = mkdtempSync(join(tmpdir(), "traycer-watch-decoy-"));
+      const decoyDir = mkdtempSync(join(tmpdir(), "hukum-watch-decoy-"));
       decoyDirs.push(decoyDir);
       const created: FSWatcher[] = [];
       const store = new FileTokenStore({

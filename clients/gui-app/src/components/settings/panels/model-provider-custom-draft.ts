@@ -272,7 +272,7 @@ const ENV_REFERENCE_PATTERN = /^\{env:([^}]+)\}$/;
 /**
  * The id proposed from a typed name.
  *
- * A Traycer addition - upstream makes you type the id yourself. A suggestion,
+ * A Hukum addition - upstream makes you type the id yourself. A suggestion,
  * not a rule: the field stays editable, and once touched we stop tracking the
  * name, because re-deriving would overwrite what was typed on the next
  * keystroke. Dashes rather than underscores because that is what the catalog's

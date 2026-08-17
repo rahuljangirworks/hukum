@@ -2,15 +2,15 @@ import { useEffect, type ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   mockLocalHostEntry,
   mockRemoteHostEntry,
-} from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
+} from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
 import {
   HostReadinessControllerContext,
   type DefaultHostReadinessPresentation,
@@ -58,8 +58,8 @@ vi.mock("@/components/layout/header/app-header", () => ({
 // diagnostics correctly stay hidden.
 const hostStatus = vi.hoisted(() => ({ data: undefined }));
 
-vi.mock("@/hooks/runner/use-runner-traycer-host-status-query", () => ({
-  useRunnerTraycerHostStatusQuery: () => hostStatus,
+vi.mock("@/hooks/runner/use-runner-hukum-host-status-query", () => ({
+  useRunnerHukumHostStatusQuery: () => hostStatus,
 }));
 
 const PRESENTATION: DefaultHostReadinessPresentation = {
@@ -194,13 +194,13 @@ function mountSwitchSurface(
   bindingRef.value = { hostClient };
 
   const runnerHost = new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: "http://localhost:5005",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false }, mutations: { retry: false } },

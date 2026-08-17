@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { RpcErrorCode } from "@traycer/protocol/framework/index";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { RpcErrorCode } from "@hukum/protocol/framework/index";
 import {
   readCloudChat,
   type CloudChatRead,
-} from "@traycer-clients/shared/cloud-chat/cloud-chat-reader";
-import { webCryptoSha256Hex } from "@traycer-clients/shared/cloud-chat/bytes";
-import { InMemoryChatPartCache } from "@traycer-clients/shared/cloud-chat/part-cache";
+} from "@hukum-clients/shared/cloud-chat/cloud-chat-reader";
+import { webCryptoSha256Hex } from "@hukum-clients/shared/cloud-chat/bytes";
+import { InMemoryChatPartCache } from "@hukum-clients/shared/cloud-chat/part-cache";
 import {
   DEFAULT_PUBLISH,
   IDENTITY,
@@ -14,7 +14,7 @@ import {
   recordingPort,
   servingBehaviour,
   UNPUBLISHED_SUMMARY,
-} from "@traycer-clients/shared/cloud-chat/__tests__/__fixtures__/published-cloud-chat";
+} from "@hukum-clients/shared/cloud-chat/__tests__/__fixtures__/published-cloud-chat";
 import { composeCloudChatTranscriptState } from "@/lib/chats/cloud-chat-transcript-state";
 
 /**

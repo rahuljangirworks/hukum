@@ -3,40 +3,40 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type {
   IRunnerHost,
-  TraycerDetectedShell,
-} from "@traycer-clients/shared/platform/runner-host";
+  HukumDetectedShell,
+} from "@hukum-clients/shared/platform/runner-host";
 import {
   MockRunnerHost,
-  MockTraycerCli,
-} from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+  MockHukumCli,
+} from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { ShellProgramCombobox } from "@/components/settings/panels/shell/shell-program-combobox";
 import { bridgeShellProbeSource } from "@/components/settings/panels/shell/use-bridge-shell-config-controller";
 
 afterEach(cleanup);
 
-const ZSH: TraycerDetectedShell = {
+const ZSH: HukumDetectedShell = {
   name: "zsh",
   path: "/bin/zsh",
   isDefault: true,
   source: "detected",
   missing: false,
 };
-const BASH: TraycerDetectedShell = {
+const BASH: HukumDetectedShell = {
   name: "bash",
   path: "/bin/bash",
   isDefault: false,
   source: "detected",
   missing: false,
 };
-const NU_ADDED: TraycerDetectedShell = {
+const NU_ADDED: HukumDetectedShell = {
   name: "nu",
   path: "/usr/local/bin/nu",
   isDefault: false,
   source: "added",
   missing: false,
 };
-const FISH_MISSING: TraycerDetectedShell = {
+const FISH_MISSING: HukumDetectedShell = {
   name: "fish",
   path: "/usr/bin/fish",
   isDefault: false,
@@ -44,11 +44,11 @@ const FISH_MISSING: TraycerDetectedShell = {
   missing: true,
 };
 
-function makeHost(configure: (cli: MockTraycerCli) => void): {
+function makeHost(configure: (cli: MockHukumCli) => void): {
   readonly host: IRunnerHost;
-  readonly cli: MockTraycerCli;
+  readonly cli: MockHukumCli;
 } {
-  const cli = new MockTraycerCli();
+  const cli = new MockHukumCli();
   configure(cli);
   const host = new MockRunnerHost({
     signInUrl: "https://example.invalid/signin",
@@ -57,7 +57,7 @@ function makeHost(configure: (cli: MockTraycerCli) => void): {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: cli,
+    hukumCli: cli,
   });
   return { host, cli };
 }
@@ -65,12 +65,12 @@ function makeHost(configure: (cli: MockTraycerCli) => void): {
 function renderCombobox(props: {
   readonly value: string;
   readonly synthesised: boolean;
-  readonly shells: readonly TraycerDetectedShell[];
+  readonly shells: readonly HukumDetectedShell[];
   readonly onSelect?: (path: string) => void;
   readonly onAdd?: (path: string) => void;
   readonly onRemove?: (path: string) => void;
   readonly onUseSystemDefault?: () => void;
-  readonly configure?: (cli: MockTraycerCli) => void;
+  readonly configure?: (cli: MockHukumCli) => void;
 }) {
   const { host, cli } = makeHost(props.configure ?? (() => undefined));
   const queryClient = new QueryClient({

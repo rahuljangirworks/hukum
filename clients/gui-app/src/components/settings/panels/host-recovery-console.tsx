@@ -56,7 +56,7 @@ import type {
   InstallVersionOk,
   IRunnerHost,
   MutationOutcome,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 
 type SettingsUpdateIntent = "apply" | "installVersion";
 

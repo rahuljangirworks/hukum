@@ -26,12 +26,12 @@ vi.mock("@/lib/host", async (importOriginal) => {
 import { cleanup, render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
 import { hostScopeOptionFixture } from "@/components/settings/host-scope/host-scope-fixture";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { ShellSettingsPanel } from "@/components/settings/panels/shell-settings-panel";
@@ -82,7 +82,7 @@ function renderPanel(path: string): void {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false, gcTime: 0 } },
@@ -104,7 +104,7 @@ describe("<ShellSettingsPanel /> WSL agent caption", () => {
     expect(await screen.findByText(WSL_CAPTION)).toBeTruthy();
     // The remedy prose stays out of the inline caption - hover card only.
     expect(
-      screen.queryByText(/run a Traycer host in your WSL distro/),
+      screen.queryByText(/run a Hukum host in your WSL distro/),
     ).toBeNull();
   });
 
@@ -115,7 +115,7 @@ describe("<ShellSettingsPanel /> WSL agent caption", () => {
     // sequential tab order - the caption's Info glyph is a real anchor.
     const link = screen.getByRole("link", { name: /agents inside WSL/i });
     expect(link.getAttribute("href")).toBe(
-      "https://docs.traycer.ai/settings/shell#using-wsl",
+      "https://docs.hukum.ai/settings/shell#using-wsl",
     );
   });
 

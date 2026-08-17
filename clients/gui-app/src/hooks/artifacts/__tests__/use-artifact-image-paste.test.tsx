@@ -17,7 +17,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   artifactImageFinishResponseFixtures,
   MAX_ARTIFACT_IMAGE_BYTES,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import * as Y from "yjs";
 import { Awareness } from "y-protocols/awareness";
 import { buildArtifactExtensions, deriveCollabUser } from "@/editor-core";

@@ -5,7 +5,7 @@ import type {
   FinishArtifactImageRequest,
   PrepareArtifactImageRequest,
   PrepareArtifactImageResponse,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import { useEpicSessionHostClient } from "@/hooks/epic/use-epic-session-host-client";
 import { useEpicSessionHostId } from "@/hooks/epic/use-epic-session-host-id";
 import { useHostMutation } from "@/hooks/host/use-host-query";

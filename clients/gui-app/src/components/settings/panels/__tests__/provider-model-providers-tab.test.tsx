@@ -3,7 +3,7 @@ import type {
   ModelProviderEntry,
   ModelProvidersListResult,
   ProviderModelProvidersCapabilities,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 
 /**
  * The callbacks the tab hands `mutate`, named so a test can fire one by hand.
@@ -471,7 +471,7 @@ describe("ProviderModelProvidersTab source and disconnect", () => {
     expect(screen.getByText("Config")).toBeTruthy();
     expect(screen.getByText("Custom")).toBeTruthy();
     expect(screen.queryByText("Set in config file")).toBeNull();
-    expect(screen.queryByText("Managed outside Traycer")).toBeNull();
+    expect(screen.queryByText("Managed outside Hukum")).toBeNull();
   });
 
   it("shows Disconnect ALONE on a connected row the host will disconnect", () => {
@@ -580,9 +580,9 @@ describe("ProviderModelProvidersTab source and disconnect", () => {
 
   it("names the provider's own store on the api badge", () => {
     // A key entered here is written to OpenCode's `auth.json` via `auth.set`
-    // and never mirrored into Traycer - that ownership is what keeps
+    // and never mirrored into Hukum - that ownership is what keeps
     // `opencode auth login` and this tab interchangeable, so a "Saved in
-    // Traycer" badge described the one thing the design avoids.
+    // Hukum" badge described the one thing the design avoids.
     renderTab({
       result: {
         ok: true,
@@ -600,7 +600,7 @@ describe("ProviderModelProvidersTab source and disconnect", () => {
       capabilities: FULL_CAPS,
     });
     expect(screen.getByText("API key")).toBeTruthy();
-    expect(screen.queryByText("Saved in Traycer")).toBeNull();
+    expect(screen.queryByText("Saved in Hukum")).toBeNull();
   });
 
   it("gives the disconnect control a readable word and destructive intent", () => {

@@ -14,7 +14,7 @@
  * megabyte frame. Single-sourced from the protocol's shared chunking module -
  * both peers import the same constant, so it can no longer drift by hand.
  */
-export { BULK_CHUNK_SIZE_BYTES } from "@traycer/protocol/host-transport/chunking";
+export { BULK_CHUNK_SIZE_BYTES } from "@hukum/protocol/host-transport/chunking";
 
 /**
  * Initial per-session send credits for the bulk (low-priority) class. Interactive

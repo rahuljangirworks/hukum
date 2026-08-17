@@ -988,7 +988,7 @@ export type StopAgentResponse = z.infer<typeof stopAgentResponseSchema>;
  * agent, not the caller), and a fork's natural default is byte-for-byte
  * continuation of whatever profile the SOURCE is already running under.
  * Mirrors `AgentForkProfileSelection`
- * (`traycer-host/src/domain/agent/agent-fork-service.ts`) field-for-field:
+ * (`hukum-host/src/domain/agent/agent-fork-service.ts`) field-for-field:
  *
  *   - `inherit` - omit-default. Keep running under the source's own profile.
  *   - `ambient` - explicitly use the provider's ambient CLI login.
@@ -1012,8 +1012,8 @@ export type ForkAgentProfileSelection = z.infer<
  * `agent.fork@1.0` - clone an existing local agent (GUI chat or Claude Code
  * terminal session) into a NEW agent seeded from the source's latest
  * available checkpoint. Wraps the same core `forkAgentFromRequest` service
- * (`traycer-host/src/domain/agent/agent-fork-service.ts`) the
- * `traycer_fork_agent` A2A tool calls, so a wire caller (the CLI, or any
+ * (`hukum-host/src/domain/agent/agent-fork-service.ts`) the
+ * `hukum_fork_agent` A2A tool calls, so a wire caller (the CLI, or any
  * future client) gets the transactional latest-checkpoint fork without
  * recomposing the GUI's client-side orchestration
  * (`validateForkProfile` → `prepareLaunch` → `createTuiAgent`, or
@@ -1027,7 +1027,7 @@ export type ForkAgentProfileSelection = z.infer<
  *     unambiguous id PREFIX (`resolveAgentIdPrefix`), like the rest of the
  *     A2A id-addressed surface.
  *   - `permissionMode` - GUI forks only; a fork does NOT inherit the
- *     source's mode. Terminal forks ignore it (no Traycer permission mode
+ *     source's mode. Terminal forks ignore it (no Hukum permission mode
  *     exists on that surface).
  *   - `workspace` - `null` inherits the SOURCE agent's binding (the fork
  *     continues in the same directories); explicit entries bind the fork

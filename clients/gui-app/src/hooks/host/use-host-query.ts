@@ -163,7 +163,7 @@ export function useHostQueryWithResponseMap<
   const baseOptions = args.options ?? {};
   const { meta, poll, select, ...queryOptionsWithoutReservedFields } =
     baseOptions;
-  const pollPolicy = HOST_METHOD_POLL_TABLE[method].poll;
+  const pollPolicy = HOST_METHOD_POLL_TABLE[method]?.poll ?? null;
   let tablePollingOptions:
     | {
         readonly refetchInterval: ConditionPollRefetchInterval | false;

@@ -3,8 +3,8 @@ import type {
   HostRpcError,
   RequestOfMethod,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useHostMutation } from "@/hooks/host/use-host-query";
 import { hostQueryKeys, worktreeMutationKeys } from "@/lib/query-keys";
@@ -25,7 +25,7 @@ const SET_REPO_BRANCH_PREFIX_INVALIDATIONS: ReadonlyArray<
 
 /**
  * Persists (or clears) the repository's worktree branch-prefix override to
- * `<repoRoot>/.traycer/environment.json` on an EXPLICIT host client, mirroring
+ * `<repoRoot>/.hukum/environment.json` on an EXPLICIT host client, mirroring
  * `useWorktreeSetRepoScriptsFor`'s shape exactly: same `epicId`/`workspacePath`
  * authn/target contract, same `null`-client no-op guard via `useHostMutation`.
  *

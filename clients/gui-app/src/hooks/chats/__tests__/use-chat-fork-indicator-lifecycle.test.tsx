@@ -2,17 +2,17 @@ import { createElement, type ReactNode } from "react";
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
 import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import type { ChatForkEvent } from "@traycer/protocol/host/chat-fork/schemas";
-import type { HostNotificationsIndicatorStateResponse } from "@traycer/protocol/host/notifications/contracts";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import type { ChatForkEvent } from "@hukum/protocol/host/chat-fork/schemas";
+import type { HostNotificationsIndicatorStateResponse } from "@hukum/protocol/host/notifications/contracts";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
 import { useChatForkEventQuery } from "@/hooks/chats/use-chat-fork-queries";
 import { useChatPublicationTargets } from "@/hooks/chats/use-chat-publication-targets";
 import { useHostNotificationIndicators } from "@/hooks/notifications/use-host-notification-indicators-query";

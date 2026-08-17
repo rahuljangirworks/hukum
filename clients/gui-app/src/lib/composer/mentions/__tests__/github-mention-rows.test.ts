@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { GithubMentionRow } from "@traycer/protocol/host/mention-schemas";
+import type { GithubMentionRow } from "@hukum/protocol/host/mention-schemas";
 
 import {
   asIssueMentionFilter,
@@ -26,9 +26,9 @@ function pullRequest(
   return {
     kind: "pull-request",
     githubHost: "github.com",
-    owner: "traycerai",
-    repo: "traycer",
-    url: `https://github.com/traycerai/traycer/pull/${overrides.number}`,
+    owner: "hukumai",
+    repo: "hukum",
+    url: `https://github.com/hukumai/hukum/pull/${overrides.number}`,
     author: { login: "alice", avatarUrl: null },
     updatedAt: 1_000,
     buckets: ["recent"],
@@ -53,9 +53,9 @@ function issue(
   return {
     kind: "issue",
     githubHost: "github.com",
-    owner: "traycerai",
-    repo: "traycer",
-    url: `https://github.com/traycerai/traycer/issues/${overrides.number}`,
+    owner: "hukumai",
+    repo: "hukum",
+    url: `https://github.com/hukumai/hukum/issues/${overrides.number}`,
     author: { login: "bob", avatarUrl: null },
     updatedAt: 1_000,
     buckets: ["recent"],
@@ -192,13 +192,13 @@ describe("githubMentionRowsWithinScope", () => {
       number: 1,
       title: "Casing",
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
     });
     const rows = [row];
 
     const kept = githubMentionRowsWithinScope(rows, [
-      { githubHost: "GitHub.com", owner: "TraycerAI", repo: "Traycer" },
+      { githubHost: "GitHub.com", owner: "HukumAI", repo: "Hukum" },
     ]);
 
     expect(kept).toEqual([row]);
@@ -214,20 +214,20 @@ describe("githubMentionRowsWithinScope", () => {
       number: 2,
       title: "In scope",
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
     });
     const outOfScope = pullRequest({
       number: 3,
       title: "Out of scope",
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer-internal",
+      owner: "hukumai",
+      repo: "hukum-internal",
     });
 
     const kept = githubMentionRowsWithinScope(
       [inScope, outOfScope],
-      [{ githubHost: "GitHub.com", owner: "TraycerAI", repo: "TRAYCER" }],
+      [{ githubHost: "GitHub.com", owner: "HukumAI", repo: "HUKUM" }],
     );
 
     expect(kept).toEqual([inScope]);
@@ -620,7 +620,7 @@ describe("githubMentionMatchScore", () => {
     expect(
       githubMentionMatchScore(
         wrongKind,
-        "https://github.com/traycerai/traycer/pull/4917",
+        "https://github.com/hukumai/hukum/pull/4917",
       ),
     ).not.toBe(0);
   });
@@ -634,7 +634,7 @@ describe("githubMentionMatchScore", () => {
     expect(
       githubMentionMatchScore(
         wrongKind,
-        "https://github.com/traycerai/traycer/issues/4917",
+        "https://github.com/hukumai/hukum/issues/4917",
       ),
     ).not.toBe(0);
   });
@@ -647,7 +647,7 @@ describe("githubMentionMatchScore", () => {
     expect(
       githubMentionMatchScore(
         rightKind,
-        "https://github.com/traycerai/traycer/issues/4917",
+        "https://github.com/hukumai/hukum/issues/4917",
       ),
     ).toBe(0);
   });
@@ -665,7 +665,7 @@ describe("githubMentionMatchScore", () => {
     expect(
       githubMentionMatchScore(
         pullRequest({ number: 812, title: "Magic link" }),
-        "traycerai/traycer#812",
+        "hukumai/hukum#812",
       ),
     ).toBe(0);
   });
@@ -680,7 +680,7 @@ describe("githubMentionMatchScore", () => {
     expect(
       githubMentionMatchScore(
         row,
-        "https://GitHub.com/traycerai/traycer/pull/4917",
+        "https://GitHub.com/hukumai/hukum/pull/4917",
       ),
     ).toBe(0);
   });
@@ -793,16 +793,16 @@ describe("filterGithubMentionRows", () => {
       title: "Epic PR",
       buckets: ["epic", "recent"],
       state: "open",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
     }),
     pullRequest({
       number: 2,
       title: "Review requested",
       buckets: ["review-requested"],
       state: "open",
-      owner: "traycerai",
-      repo: "traycer-internal",
+      owner: "hukumai",
+      repo: "hukum-internal",
     }),
     pullRequest({
       number: 3,
@@ -863,8 +863,8 @@ describe("filterGithubMentionRows", () => {
       state: "all",
       repository: {
         githubHost: "github.com",
-        owner: "traycerai",
-        repo: "traycer-internal",
+        owner: "hukumai",
+        repo: "hukum-internal",
       },
     });
     expect(filtered.map((row) => row.number)).toEqual([2]);
@@ -877,8 +877,8 @@ describe("filterGithubMentionRows", () => {
           number: 99,
           title: "GHES twin",
           githubHost: "github.enterprise.example",
-          owner: "traycerai",
-          repo: "traycer",
+          owner: "hukumai",
+          repo: "hukum",
           state: "open",
         }),
       ],
@@ -887,8 +887,8 @@ describe("filterGithubMentionRows", () => {
         ...DEFAULT_PULL_REQUEST_MENTION_FILTER,
         repository: {
           githubHost: "github.com",
-          owner: "traycerai",
-          repo: "traycer",
+          owner: "hukumai",
+          repo: "hukum",
         },
       },
     );
@@ -904,8 +904,8 @@ describe("filterGithubMentionRows", () => {
       number: 100,
       title: "Casing",
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
       state: "open",
     });
 
@@ -913,8 +913,8 @@ describe("filterGithubMentionRows", () => {
       ...DEFAULT_PULL_REQUEST_MENTION_FILTER,
       repository: {
         githubHost: "GitHub.com",
-        owner: "TraycerAI",
-        repo: "Traycer",
+        owner: "HukumAI",
+        repo: "Hukum",
       },
     });
 
@@ -1051,8 +1051,8 @@ describe("githubMentionBucketRank", () => {
 describe("filter coercion", () => {
   const REPOSITORY = {
     githubHost: "github.com",
-    owner: "traycerai",
-    repo: "traycer",
+    owner: "hukumai",
+    repo: "hukum",
   };
 
   it("falls back to the default when the stored involvement belongs to the other section", () => {

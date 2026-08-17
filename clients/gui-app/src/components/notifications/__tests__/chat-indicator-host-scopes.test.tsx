@@ -2,19 +2,19 @@ import { createElement, type ReactNode } from "react";
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import {
   mockLocalHostEntry,
   mockRemoteHostEntry,
-} from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
+} from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
 import type {
   HostNotificationsIndicatorState,
   HostNotificationsIndicatorStateRequest,
   HostNotificationsIndicatorStateResponse,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import { ChatIndicatorHostScopes } from "@/components/notifications/chat-indicator-host-scopes";
 import { chatIndicatorHostScopes } from "@/lib/notifications/chat-indicator-scopes";
 import { useSurfaceNotificationIndicatorState } from "@/components/notifications/notification-indicator-context";

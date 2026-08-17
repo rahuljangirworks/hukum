@@ -11,8 +11,8 @@ import { describe, it, expect } from "vitest";
 import {
   upgradeRequestToVersion,
   upgradeResponseToVersion,
-} from "@traycer/protocol/framework/index";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/framework/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   LEGACY_HOST_RESOLVED_AT,
   worktreeBindingEntrySchema,
@@ -50,7 +50,7 @@ import {
   worktreeSubmoduleMergeFactSchemaV12,
   worktreeCreateRequestSchema,
   worktreeCreatePathsRequestSchema,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 
 const V10 = { major: 1, minor: 0 } as const;
 const V11 = { major: 1, minor: 1 } as const;
@@ -194,7 +194,7 @@ const v11SelectorRow = {
 // A v1.0 entry - every field the shipped listing already carries, none of the
 // v1.1 staleness signals.
 const v10Entry = {
-  worktreePath: "/Users/dev/.traycer/worktrees/acme__web/feature-x",
+  worktreePath: "/Users/dev/.hukum/worktrees/acme__web/feature-x",
   repoLabel: "acme/web",
   repoIdentifier: { owner: "acme", repo: "web" },
   branch: "feature-x",
@@ -413,13 +413,13 @@ describe("worktreeListAllForHostRequestSchemaV11", () => {
   it("accepts selection mode with includeActivity=true and null paging fields", () => {
     const parsed = worktreeListAllForHostRequestSchemaV11.parse({
       includeActivity: true,
-      activityPaths: ["/Users/dev/.traycer/worktrees/acme__web/feature-x"],
+      activityPaths: ["/Users/dev/.hukum/worktrees/acme__web/feature-x"],
       cursor: null,
       limit: null,
     });
     expect(parsed).toEqual({
       includeActivity: true,
-      activityPaths: ["/Users/dev/.traycer/worktrees/acme__web/feature-x"],
+      activityPaths: ["/Users/dev/.hukum/worktrees/acme__web/feature-x"],
       cursor: null,
       limit: null,
     });
@@ -429,8 +429,8 @@ describe("worktreeListAllForHostRequestSchemaV11", () => {
     expect(() =>
       worktreeListAllForHostRequestSchemaV11.parse({
         includeActivity: true,
-        activityPaths: ["/Users/dev/.traycer/worktrees/acme__web/feature-x"],
-        cursor: "/Users/dev/.traycer/worktrees/acme__api/feature-y",
+        activityPaths: ["/Users/dev/.hukum/worktrees/acme__web/feature-x"],
+        cursor: "/Users/dev/.hukum/worktrees/acme__api/feature-y",
         limit: null,
       }),
     ).toThrow();
@@ -438,7 +438,7 @@ describe("worktreeListAllForHostRequestSchemaV11", () => {
     expect(() =>
       worktreeListAllForHostRequestSchemaV11.parse({
         includeActivity: true,
-        activityPaths: ["/Users/dev/.traycer/worktrees/acme__web/feature-x"],
+        activityPaths: ["/Users/dev/.hukum/worktrees/acme__web/feature-x"],
         cursor: null,
         limit: 25,
       }),
@@ -459,7 +459,7 @@ describe("worktreeListAllForHostResponseSchemaV11", () => {
           ...mergeProvenanceAbsent,
         },
       ],
-      nextCursor: "/Users/dev/.traycer/worktrees/acme__web/feature-x",
+      nextCursor: "/Users/dev/.hukum/worktrees/acme__web/feature-x",
     };
 
     const parsed1 = worktreeListAllForHostResponseSchemaV11.parse(response);
@@ -485,7 +485,7 @@ describe("worktreeListAllForHostResponseSchemaV11", () => {
             ...mergeProvenanceAbsent,
           },
         ],
-        nextCursor: "/Users/dev/.traycer/worktrees/acme__web/feature-x",
+        nextCursor: "/Users/dev/.hukum/worktrees/acme__web/feature-x",
       }),
     ).toEqual({ worktrees: [v10Entry] });
   });
@@ -747,7 +747,7 @@ describe("worktree.listAllForHost v1.0 <-> v1.2 negotiation", () => {
   it("upgrades a v1.1 request to v1.2 unchanged", () => {
     const request = {
       includeActivity: true,
-      activityPaths: ["/Users/dev/.traycer/worktrees/acme__web/feature-x"],
+      activityPaths: ["/Users/dev/.hukum/worktrees/acme__web/feature-x"],
       cursor: null,
       limit: null,
     };
@@ -940,7 +940,7 @@ describe("worktree.listAllForHost v1.0 <-> v1.2 negotiation", () => {
         },
         {
           ...v10Entry,
-          worktreePath: "/Users/dev/.traycer/worktrees/acme__web/feature-y",
+          worktreePath: "/Users/dev/.hukum/worktrees/acme__web/feature-y",
           lastActivityAt: null,
           owners: [],
           branchStatus: null,
@@ -1317,7 +1317,7 @@ const bindingEntryBase = {
   workspacePath: "/Users/dev/acme/web",
   mode: "worktree" as const,
   repoIdentifier: { owner: "acme", repo: "web" },
-  worktreePath: "/Users/dev/.traycer/worktrees/acme__web/feature-x",
+  worktreePath: "/Users/dev/.hukum/worktrees/acme__web/feature-x",
   branch: "feature-x",
   isPrimary: true,
   isImported: false,
@@ -1377,9 +1377,9 @@ describe("worktreeListBindingsForEpicResponseSchemaV11 (folderlessCwd)", () => {
   it("accepts a non-empty folderlessCwd", () => {
     const parsed = worktreeListBindingsForEpicResponseSchemaV11.parse({
       rows: [],
-      folderlessCwd: "/Users/dev/.traycer/epics/epic-1",
+      folderlessCwd: "/Users/dev/.hukum/epics/epic-1",
     });
-    expect(parsed.folderlessCwd).toBe("/Users/dev/.traycer/epics/epic-1");
+    expect(parsed.folderlessCwd).toBe("/Users/dev/.hukum/epics/epic-1");
   });
 
   it("accepts a null folderlessCwd (bridged up from a v1.0 host)", () => {
@@ -1509,7 +1509,7 @@ describe("worktreeSubmoduleMergeFactSchemaV12", () => {
   it("requires atPinnedCommit", () => {
     const fact = {
       repoIdentifier: { owner: "acme", repo: "lib" },
-      branch: "traycer/sub",
+      branch: "hukum/sub",
       prState: "none" as const,
       prNumber: null,
       prUrl: null,
@@ -1523,7 +1523,7 @@ describe("worktreeSubmoduleMergeFactSchemaV12", () => {
     expect(() =>
       worktreeSubmoduleMergeFactSchemaV12.parse({
         repoIdentifier: { owner: "acme", repo: "lib" },
-        branch: "traycer/sub",
+        branch: "hukum/sub",
         prState: "none" as const,
         prNumber: null,
         prUrl: null,

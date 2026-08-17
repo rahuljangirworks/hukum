@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   HostRpcError,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { useCloudChatViewerId } from "@/hooks/chats/use-cloud-chat-queries";
 

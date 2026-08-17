@@ -1,7 +1,7 @@
 import type {
   WorktreeCreateRequest,
   WorktreeFolderIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 
 /**
  * Promotes shared/persisted folder intents into the current create RPC shape.

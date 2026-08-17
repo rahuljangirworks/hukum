@@ -2,7 +2,7 @@ import { lazy, Suspense, type ReactNode } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Copy, Download, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
-import { isClipboardImageMediaType } from "@traycer-clients/shared/images/clipboard-image-media";
+import { isClipboardImageMediaType } from "@hukum-clients/shared/images/clipboard-image-media";
 import {
   Dialog,
   DialogContent,

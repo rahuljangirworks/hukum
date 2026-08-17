@@ -290,7 +290,7 @@ describe("host binding survives restart", () => {
         hostId: SOURCE_HOST,
         label: "Remote",
         kind: "remote",
-        websocketUrl: "wss://relay.traycer.invalid/attach",
+        websocketUrl: "wss://relay.hukum.invalid/attach",
         version: "1.0.0",
         transportDialability: "dialable",
       },

@@ -1,6 +1,6 @@
 import { CornerUpLeft, File } from "lucide-react";
 import type { ReactElement } from "react";
-import { isSubsequence } from "@traycer/protocol/utils/text/fuzzy";
+import { isSubsequence } from "@hukum/protocol/utils/text/fuzzy";
 import type {
   EpicAgentMentionEntry,
   EpicMentionEntry,
@@ -11,14 +11,14 @@ import type {
   WorkspaceEntry,
 } from "@/lib/composer/types";
 import { basenameOfPath } from "@/lib/path";
-import type { EpicArtifactKind } from "@traycer/protocol/common/registry";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { EpicArtifactKind } from "@hukum/protocol/common/registry";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import type {
   GithubMentionRepository,
   GithubMentionRow,
   GithubMentionSection,
-} from "@traycer/protocol/host/mention-schemas";
-import type { RequestOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum/protocol/host/mention-schemas";
+import type { RequestOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
 import { mentionAttachmentFromSuggestion } from "./attachments";
 import {
   githubMentionAttachmentFromRow,
@@ -32,7 +32,7 @@ import {
   githubMentionEntryId,
   parseGithubReferenceQuery,
 } from "./github-mention-rows";
-import { isDefaultGithubMentionHost } from "@traycer/protocol/common/github-mention-host";
+import { isDefaultGithubMentionHost } from "@hukum/protocol/common/github-mention-host";
 import {
   NO_STEP_CHROME_CAPABILITY,
   type MentionStepChromeCapability,
@@ -820,7 +820,7 @@ class TerminalMentionProvider extends ComposerMentionProvider {
 }
 
 const EPIC_ARTIFACT_MENTION_METHODS: Record<
-  Exclude<EpicArtifactKind, "html-preview">,
+  EpicArtifactKind,
   EpicArtifactMentionMethod
 > = {
   spec: "epic.mentionSpecs",
@@ -829,7 +829,7 @@ const EPIC_ARTIFACT_MENTION_METHODS: Record<
   review: "epic.mentionReviews",
 };
 
-const ALL_ARTIFACT_KINDS: ReadonlyArray<Exclude<EpicArtifactKind, "html-preview">> = [
+const ALL_ARTIFACT_KINDS: ReadonlyArray<EpicArtifactKind> = [
   "spec",
   "ticket",
   "story",

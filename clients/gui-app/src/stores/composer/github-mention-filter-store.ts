@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 import type {
   GithubMentionSection,
   GithubMentionRepository,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 
 import {
   defaultGithubMentionFilter,

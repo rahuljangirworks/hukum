@@ -1,4 +1,4 @@
-import { isSubsequence } from "@traycer/protocol/utils/text/fuzzy";
+import { isSubsequence } from "@hukum/protocol/utils/text/fuzzy";
 import type {
   GithubIssueMentionFilter,
   GithubMentionBucket,
@@ -6,7 +6,7 @@ import type {
   GithubMentionRow,
   GithubMentionSection,
   GithubPullRequestMentionFilter,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 
 /**
  * Pure row algebra for the PR/Issue mention sections: GitHub identity, the
@@ -235,8 +235,8 @@ export function githubMentionRowsWithinScope(
  * from DIFFERENT pipelines with different casing: rows carry the API's
  * canonical spelling, while the scope's repositories are parsed from the
  * folder's configured remote - whatever casing the user happened to type
- * there. Compared verbatim, a `TraycerAI/Traycer` remote dropped every row
- * the API returned as `traycerai/traycer`, as if the repository had left the
+ * there. Compared verbatim, a `HukumAI/Hukum` remote dropped every row
+ * the API returned as `hukumai/hukum`, as if the repository had left the
  * scope. Same rule `referenceMatchesRow` already applies to pasted URLs.
  */
 export function githubRepositoryIdentityKey(entry: {

@@ -1,16 +1,16 @@
 import {
   assembleChat,
   type AssembledChat,
-} from "@traycer/protocol/persistence/chat-sync/assembly";
-import { CHAT_SYNC_READER_VERSION } from "@traycer/protocol/persistence/chat-sync/head";
-import { canonicalizeJsonValue } from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/assembly";
+import { CHAT_SYNC_READER_VERSION } from "@hukum/protocol/persistence/chat-sync/head";
+import { canonicalizeJsonValue } from "@hukum/protocol/persistence/chat-sync/json";
 import {
   NO_PAYLOADS_RESOLVABLE,
   describeMissingPayload,
   describeUnknownVariant,
   presentChat,
   type ChatPayloadResolver,
-} from "@traycer/protocol/persistence/chat-sync/presentation";
+} from "@hukum/protocol/persistence/chat-sync/presentation";
 import { beforeAll, describe, expect, it } from "vitest";
 import {
   publishChat,

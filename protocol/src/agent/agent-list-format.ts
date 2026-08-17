@@ -2,7 +2,7 @@ import type {
   AgentRunConfig,
   AgentSummary,
   ListAgentsResponse,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 
 export function formatAgentListResponse(
   response: ListAgentsResponse,
@@ -40,7 +40,7 @@ export function formatAgentSelf(agent: AgentSummary | null): string {
 
 /**
  * Renders where the current agent runs as a `dir:`/`worktree:` line so
- * `traycer_get_self` carries the same location detail the list rows already
+ * `hukum_get_self` carries the same location detail the list rows already
  * expose - the agent should be able to report its own working directory (or
  * dedicated git worktree) without a separate list call. Falls back to `-` when
  * no folder paths are known (e.g. a chat with no resolved workspace context).

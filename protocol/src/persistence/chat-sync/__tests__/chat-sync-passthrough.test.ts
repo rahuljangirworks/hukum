@@ -1,4 +1,4 @@
-import { getRecordSchema } from "@traycer/protocol/framework/index";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
 import {
   KNOWN_CHAT_EVENT_TYPES,
   KNOWN_CHAT_MESSAGE_ROLES,
@@ -7,24 +7,24 @@ import {
   preserveChatEvent,
   preserveChatMessage,
   preserveContentBlock,
-} from "@traycer/protocol/persistence/chat-sync/entries";
+} from "@hukum/protocol/persistence/chat-sync/entries";
 import {
   canonicalJsonStringify,
   canonicalizeJsonValue,
   type JsonObject,
   type JsonValue,
-} from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/json";
 import {
   encodeChatShard,
   serializeChatShard,
-} from "@traycer/protocol/persistence/chat-sync/shard";
-import { CHAT_SYNC_SCHEMA_VERSION } from "@traycer/protocol/persistence/chat-sync/version";
-import { chatEventTypeSchema } from "@traycer/protocol/persistence/epic/chat-events";
-import { contentBlockSchema } from "@traycer/protocol/persistence/epic/content-blocks";
+} from "@hukum/protocol/persistence/chat-sync/shard";
+import { CHAT_SYNC_SCHEMA_VERSION } from "@hukum/protocol/persistence/chat-sync/version";
+import { chatEventTypeSchema } from "@hukum/protocol/persistence/epic/chat-events";
+import { contentBlockSchema } from "@hukum/protocol/persistence/epic/content-blocks";
 import {
   persistenceRecordRegistry,
   type ChatShard,
-} from "@traycer/protocol/persistence/registry";
+} from "@hukum/protocol/persistence/registry";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 

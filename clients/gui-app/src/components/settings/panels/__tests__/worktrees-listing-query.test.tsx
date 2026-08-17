@@ -2,11 +2,11 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import type { WorktreeHostEntryV15 } from "@traycer/protocol/host/worktree-schemas";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import type { WorktreeHostEntryV15 } from "@hukum/protocol/host/worktree-schemas";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
 import { createAppQueryClient } from "@/lib/query-client";
@@ -363,7 +363,7 @@ describe("useWorktreeListing (warm-open listing snapshot)", () => {
 
   it("discards a corrupt listing snapshot - cold open, storage cleaned up", () => {
     window.localStorage.setItem(
-      `traycer-gui-app:worktree-listing-cache:${HOST_ID}`,
+      `hukum-gui-app:worktree-listing-cache:${HOST_ID}`,
       "{not json",
     );
     const fixture = createFixture(
@@ -379,7 +379,7 @@ describe("useWorktreeListing (warm-open listing snapshot)", () => {
     expect(result.current.worktrees).toHaveLength(0);
     expect(
       window.localStorage.getItem(
-        `traycer-gui-app:worktree-listing-cache:${HOST_ID}`,
+        `hukum-gui-app:worktree-listing-cache:${HOST_ID}`,
       ),
     ).toBeNull();
   });

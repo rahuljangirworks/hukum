@@ -2,11 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   hostListItemToDirectoryEntry,
   RELAY_FUSE_MAX_ATTACH_MS,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
 import type {
   HostConnectivity,
   HostListItem,
-} from "@traycer/protocol/host/host-status";
+} from "@hukum/protocol/host/host-status";
 import { hostSelectRowRefused } from "../host-select-row-refused";
 
 const HOST_ID = "remote-host-1";

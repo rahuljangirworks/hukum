@@ -1,4 +1,4 @@
-import type { CloudChatIdentity } from "@traycer/protocol/host/epic/cloud-chat";
+import type { CloudChatIdentity } from "@hukum/protocol/host/epic/cloud-chat";
 import { hostQueryKeys } from "@/lib/query-keys/host-query-keys";
 
 /**

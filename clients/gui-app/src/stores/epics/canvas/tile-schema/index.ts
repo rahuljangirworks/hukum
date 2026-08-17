@@ -26,6 +26,7 @@ import { brainGraphTileSchema } from "./brain-graph-tile";
 import { prDetailTileSchema } from "./pr-detail-tile";
 import { prDiffTileSchema } from "./pr-diff-tile";
 import { blankTileSchema } from "./blank-tile";
+import { publishedChatTileSchema } from "./published-chat-tile";
 
 export interface TileSchema<R extends EpicCanvasTileRef> {
   readonly parse: (value: unknown) => R | null;
@@ -55,6 +56,7 @@ const TILE_SCHEMAS: TileSchemaRegistry = {
   "brain-graph": brainGraphTileSchema,
   "pr-detail": prDetailTileSchema,
   "pr-diff": prDiffTileSchema,
+  "published-chat": publishedChatTileSchema,
   blank: blankTileSchema,
 };
 

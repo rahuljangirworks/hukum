@@ -5,7 +5,7 @@ import { z } from "zod";
  *
  * ## The host is a byte pipe, and that is the whole design
  *
- * A client has no route to traycer-server: it holds no CloudData base URL and
+ * A client has no route to hukum-server: it holds no CloudData base URL and
  * no service token, and it never has. The local host holds both, so every cloud
  * read hops through it. What changed in v2 is what the host is allowed to DO on
  * that hop: nothing.

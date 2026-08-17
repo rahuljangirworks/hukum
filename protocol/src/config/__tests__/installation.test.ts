@@ -15,7 +15,7 @@ afterEach(async () => {
 });
 
 async function fixtureDir(): Promise<string> {
-  const dir = await mkdtemp(join(tmpdir(), "traycer-installation-test-"));
+  const dir = await mkdtemp(join(tmpdir(), "hukum-installation-test-"));
   dirs.push(dir);
   return dir;
 }
@@ -31,7 +31,7 @@ function stagedRecord(overrides: Record<string, unknown>) {
     source: { kind: "registry", value: "1.5.0" },
     signatureKeyId: "test-key",
     signatureVerifiedAt: "2026-01-01T00:00:00.000Z",
-    executablePath: "traycer-host",
+    executablePath: "hukum-host",
     platform: "darwin",
     arch: "arm64",
     ...overrides,
@@ -52,7 +52,7 @@ describe("shared installation readers", () => {
       signatureVerifiedAt: "2026-01-01T00:00:00.000Z",
       signatureKeyId: "test-key",
       sizeBytes: 12,
-      executablePath: "/tmp/traycer-host",
+      executablePath: "/tmp/hukum-host",
     });
     expect(parsed.installId).toBeNull();
     expect(parsed.runtimeVersion).toBeNull();
@@ -112,7 +112,7 @@ describe("shared installation readers", () => {
       JSON.stringify({
         version: "1.5.0",
         installedAt: "2026-01-01T00:00:00.000Z",
-        binaryPath: "/tmp/traycer",
+        binaryPath: "/tmp/hukum",
         source: "manual",
         pendingUpgrade: null,
       }),
@@ -120,7 +120,7 @@ describe("shared installation readers", () => {
     await expect(readStoredCliInstallManifestAtPath(path)).resolves.toEqual({
       version: "1.5.0",
       installedAt: "2026-01-01T00:00:00.000Z",
-      binaryPath: "/tmp/traycer",
+      binaryPath: "/tmp/hukum",
       source: "manual",
       pendingUpgrade: null,
     });

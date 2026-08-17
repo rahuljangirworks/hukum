@@ -4,11 +4,11 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   MentionGithubCatalogRequest,
   MentionGithubCatalogResponse,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 
 import { useGithubMentionCatalog } from "@/hooks/composer/use-github-mention-catalog";
 import type { GithubMentionScope } from "@/hooks/composer/use-github-mention-catalog";
@@ -85,7 +85,7 @@ function answer(): MentionGithubCatalogResponse {
   return {
     rows: [],
     repositories: [
-      { githubHost: "github.com", owner: "traycerai", repo: "traycer" },
+      { githubHost: "github.com", owner: "hukumai", repo: "hukum" },
     ],
     freshnessAt: 1_000,
     stale: false,

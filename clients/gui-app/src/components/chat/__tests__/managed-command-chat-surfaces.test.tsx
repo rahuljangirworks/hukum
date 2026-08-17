@@ -320,7 +320,7 @@ describe("resume divider", () => {
   });
 
   it("keeps the harness Monitor name for a kind-only trigger, and offers it no door", () => {
-    // No `managedCommand` block means this is not a Traycer shell - kind-only
+    // No `managedCommand` block means this is not a Hukum shell - kind-only
     // "monitor" triggers are produced live by Claude Code's own Monitor tool,
     // which keeps its real name.
     renderInChatTile(

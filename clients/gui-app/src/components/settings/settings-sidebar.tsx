@@ -23,6 +23,7 @@ import {
 import { useAddHostDialogStore } from "@/stores/settings/add-host-dialog-store";
 import { AddHostDialog } from "@/components/settings/host-scope/add-host-dialog";
 import { useRegisteredHostsPollLiveness } from "@/hooks/auth/use-registered-hosts-query";
+import { useHostRemovalStore } from "@/stores/host/host-removal-store";
 
 export type SettingsSidebarMode =
   | { readonly kind: "route" }
@@ -48,6 +49,7 @@ export interface SettingsSidebarProps {
  */
 export function SettingsSidebar(props: SettingsSidebarProps) {
   const scope = useHostScope();
+  const removedInSession = useHostRemovalStore((s) => s.removedInSession);
   // The host picker below shows a live dot and a health word per row, so this
   // is a liveness surface and opts into the registry poll. It is also the ONE
   // place in Settings that has to: the picker is mounted for as long as any
@@ -62,7 +64,10 @@ export function SettingsSidebar(props: SettingsSidebarProps) {
   // them work for whichever host the picker names, so a dimmed row would now be
   // discouraging a click that lands on a working page.
   return (
-    <aside className="flex w-[clamp(13rem,20vw,17rem)] shrink-0 flex-col gap-1 overflow-y-auto border-r border-border/60 bg-background p-4">
+    <aside className={cn(
+      "flex w-[clamp(13rem,20vw,17rem)] shrink-0 flex-col gap-1 overflow-y-auto border-r border-border/60 bg-background p-4",
+      removedInSession && "pointer-events-none opacity-50",
+    )}>
       {SETTINGS_SECTION_GROUPS.map((group, groupIndex) => (
         <Fragment key={group.id}>
           {groupIndex === 0 ? null : <SettingsSidebarGroupRule />}

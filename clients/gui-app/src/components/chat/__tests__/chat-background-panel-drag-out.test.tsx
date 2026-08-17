@@ -15,7 +15,7 @@ import {
   createRouter,
   RouterProvider,
 } from "@tanstack/react-router";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 /**

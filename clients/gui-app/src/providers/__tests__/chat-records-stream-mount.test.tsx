@@ -14,9 +14,9 @@
  */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render } from "@testing-library/react";
-import type { ChatRecordSummary } from "@traycer/protocol/host/epic/chat-records";
-import type { ChatRecordDelta } from "@traycer-clients/shared/host-transport/chat-records-stream-client";
-import type { StreamMethodSupport } from "@traycer-clients/shared/host-transport/ws-stream-client";
+import type { ChatRecordSummary } from "@hukum/protocol/host/epic/chat-records";
+import type { ChatRecordDelta } from "@hukum-clients/shared/host-transport/chat-records-stream-client";
+import type { StreamMethodSupport } from "@hukum-clients/shared/host-transport/ws-stream-client";
 import {
   createOpenEpicStore,
   type EpicStreamClientFactory,
@@ -53,7 +53,7 @@ const stubWsStreamClient = vi.hoisted((): { readonly stub: true } => ({
 }));
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/chat-records-stream-client",
+  "@hukum-clients/shared/host-transport/chat-records-stream-client",
   () => ({
     ChatRecordsStreamClient: class {
       constructor(options: {

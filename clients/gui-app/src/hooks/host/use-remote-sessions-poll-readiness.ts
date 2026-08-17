@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useSyncExternalStore } from "react";
-import { hasReadyRemoteSession } from "@traycer-clients/shared/host-transport/remote/index";
+import { hasReadyRemoteSession } from "@hukum-clients/shared/host-transport/remote/index";
 
 /**
  * How often the ready-session evidence is re-read. Matches the per-host

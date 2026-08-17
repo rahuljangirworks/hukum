@@ -63,7 +63,7 @@ export interface EChartsMockInstance {
   disposed: boolean;
 }
 interface EChartsMockGlobal {
-  __traycerEChartsMockInstances?: EChartsMockInstance[];
+  __hukumEChartsMockInstances?: EChartsMockInstance[];
 }
 /**
  * LIVE chart instances only. The record list is append-only and shared
@@ -77,10 +77,10 @@ export function getEChartsMockInstances(): readonly EChartsMockInstance[] {
   return getAllEChartsMockInstances().filter((record) => !record.disposed);
 }
 export function getAllEChartsMockInstances(): readonly EChartsMockInstance[] {
-  return (globalThis as EChartsMockGlobal).__traycerEChartsMockInstances ?? [];
+  return (globalThis as EChartsMockGlobal).__hukumEChartsMockInstances ?? [];
 }
 export function clearEChartsMockInstances(): void {
-  (globalThis as EChartsMockGlobal).__traycerEChartsMockInstances = [];
+  (globalThis as EChartsMockGlobal).__hukumEChartsMockInstances = [];
 }
 vi.mock("echarts/core", () => ({
   use: (): void => undefined,
@@ -92,8 +92,8 @@ vi.mock("echarts/core", () => ({
       disposed: false,
     };
     const target = globalThis as EChartsMockGlobal;
-    target.__traycerEChartsMockInstances = [
-      ...(target.__traycerEChartsMockInstances ?? []),
+    target.__hukumEChartsMockInstances = [
+      ...(target.__hukumEChartsMockInstances ?? []),
       record,
     ];
     return {

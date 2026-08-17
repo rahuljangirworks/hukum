@@ -5,7 +5,7 @@ import {
   jsonObjectSchema,
   readJsonProperty,
   type JsonObject,
-} from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/json";
 
 /**
  * Semantic unknown-variant passthrough.

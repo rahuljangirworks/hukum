@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { useRouterState } from "@tanstack/react-router";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
@@ -507,8 +507,8 @@ function SlowHostFallback(props: {
         // The pre-consolidation `LocalHostUnavailable` card carried this; a
         // startup failure is exactly where a user needs to report.
         footer: hostFailureReportIssueAction({
-          title: "Traycer Host is unavailable",
-          message: "Traycer Host did not become available.",
+          title: "Hukum Host is unavailable",
+          message: "Hukum Host did not become available.",
           code: "HOST_UNAVAILABLE",
           source: "Host startup",
           presentation: props.presentation,
@@ -542,7 +542,7 @@ function SlowHostFallback(props: {
  *
  * Latch semantics: per-window runtime state, so a window reload always
  * re-gates. That is intended - a cold start still gets the full setup surface
- * and the traycer#738 lockout protection it exists for. A cold start whose
+ * and the hukum#738 lockout protection it exists for. A cold start whose
  * default host is REMOTE latches trivially (readiness passes through as
  * `ready`), which is unchanged from today: the remote direction never had
  * that protection, and its failures have always surfaced inline.
@@ -553,7 +553,7 @@ function SlowHostFallback(props: {
  *    in-surface slot uses, so every recovery action (retry / force update /
  *    reinstall / report) survives the cold-start block. Collapsing this to a
  *    generic spinner - or re-deriving the surface here - would strand a user
- *    whose host cannot start, the exact lockout traycer#738 exists to prevent.
+ *    whose host cannot start, the exact lockout hukum#738 exists to prevent.
  *  - `/settings` still bypasses it. The splash's own "Configure shell" button
  *    navigates there, so gating settings on a ready host would make the
  *    escape hatch unreachable from the screen that offers it.
@@ -744,17 +744,17 @@ function fallbackContent(
       return provisioningErrorFallback(presentation);
     case "removed-host":
       return {
-        message: "Traycer was removed",
+        message: "Hukum was removed",
         // The original card named the actual next step. "Reinstall to start
         // the host again" answered a question the user was not asking: they
         // removed it on purpose and need to know how to finish.
         detail:
-          "You removed Traycer's background components from this device, so the host won't start. Your agents and history are preserved. To finish, quit Traycer and drag it from Applications to the Trash.",
+          "You removed Hukum's background components from this device, so the host won't start. Your agents and history are preserved. To finish, quit Hukum and drag it from Applications to the Trash.",
         body: null,
         footer: null,
         actions: [
           {
-            label: "Quit Traycer",
+            label: "Quit Hukum",
             testId: "local-host-removed-quit",
             variant: "destructive",
             disabled: false,
@@ -794,7 +794,7 @@ function loadingFallback(
     // A remote - or not-yet-resolved - host still settling: the rich
     // progress/log card below is local-bootstrap specific and would be
     // misleading here (it offers to respawn a machine this app may not own).
-    // Never "Starting local Traycer Host…" on this arm. That copy is a claim
+    // Never "Starting local Hukum Host…" on this arm. That copy is a claim
     // about THIS machine's host, and this arm is reached precisely when the
     // wait belongs to some other machine - a remote target, or a selection
     // the app has not resolved yet. Saying it there described the wrong
@@ -803,8 +803,8 @@ function loadingFallback(
     return {
       message:
         kind === "compatibility-checking"
-          ? "Checking Traycer Host compatibility…"
-          : "Connecting to Traycer Host…",
+          ? "Checking Hukum Host compatibility…"
+          : "Connecting to Hukum Host…",
       detail: null,
       body: null,
       footer: null,
@@ -834,12 +834,12 @@ function provisioningErrorFallback(
   return {
     message:
       presentation.provisioningError?.message ??
-      "Could not start Traycer Host.",
+      "Could not start Hukum Host.",
     detail: null,
     body: null,
     footer: hostFailureReportIssueAction({
-      title: "Could not start Traycer Host",
-      message: "Traycer Host could not start.",
+      title: "Could not start Hukum Host",
+      message: "Hukum Host could not start.",
       code: "HOST_PROVISIONING_FAILED",
       source: "Host startup",
       presentation,
@@ -868,8 +868,8 @@ function provisioningErrorFallback(
  * unable to verify the session because it cannot reach the sign-in service.
  * Calling all of that "could not verify host compatibility" is what put
  * `fetch failed` behind a version-mismatch sentence on an offline machine
- * (traycer#858) and what framed a busy, working host as a compat problem
- * (traycer#860). Only a host that ANSWERED and rejected the handshake gets the
+ * (hukum#858) and what framed a busy, working host as a compat problem
+ * (hukum#860). Only a host that ANSWERED and rejected the handshake gets the
  * compatibility wording.
  */
 function compatibilityErrorFallback(
@@ -878,7 +878,7 @@ function compatibilityErrorFallback(
   const unreachable = presentation.compatibility.unreachable;
   return {
     message: unreachable
-      ? "Traycer Host is not responding."
+      ? "Hukum Host is not responding."
       : "Could not verify host compatibility.",
     // The reason rides in its own line rather than concatenated onto the
     // sentence: it is a raw transport/host string, and gluing it on produced
@@ -887,14 +887,14 @@ function compatibilityErrorFallback(
     body: null,
     footer: hostFailureReportIssueAction({
       title: unreachable
-        ? "Traycer Host is not responding"
-        : "Could not verify Traycer Host compatibility",
+        ? "Hukum Host is not responding"
+        : "Could not verify Hukum Host compatibility",
       message: unreachable
-        ? "The app could not reach Traycer Host."
-        : "Traycer Host rejected the compatibility handshake.",
+        ? "The app could not reach Hukum Host."
+        : "Hukum Host rejected the compatibility handshake.",
       code: unreachable ? "HOST_UNREACHABLE" : "HOST_COMPAT_PROBE_REJECTED",
       // Not a startup failure: this fallback is reached when a host that was
-      // already serving stops answering the probe (traycer#860).
+      // already serving stops answering the probe (hukum#860).
       source: "Host connection",
       presentation,
       // Same reason the source differs: an install stage on a #860-shaped
@@ -919,7 +919,7 @@ function incompatibleFallback(
 ): ReadinessFallback {
   const footer = hostFailureReportIssueAction({
     title: "Host update required",
-    message: "Traycer Host requires an update.",
+    message: "Hukum Host requires an update.",
     code: "HOST_INCOMPATIBLE",
     // Neither startup nor connection: this host came up and answered the
     // handshake, and the two sides simply disagree on the version.
@@ -936,7 +936,7 @@ function incompatibleFallback(
     // say what to do, and an unlabelled concatenated reason reads as noise.
     detail: presentation.hostBusy
       ? "The running host has work in progress and is not compatible with this app update. Refresh to check again, or force update the host. Running work may be interrupted."
-      : "This Traycer app update is not compatible with the running host. Update the local host before continuing.",
+      : "This Hukum app update is not compatible with the running host. Update the local host before continuing.",
     body: <IncompatibleDetail presentation={presentation} />,
     footer,
   };
@@ -1035,7 +1035,7 @@ function IncompatibleDetail(props: {
  * `actions: []`, `footer: null`, rendered full-screen with the tab strip and
  * the header's settings entry gone. All four here are reachable without a
  * host: re-read the registry, open the picker (mounted outside the gate,
- * `traycer-app.tsx`), open settings (`/settings` bypasses the gate), and
+ * `hukum-app.tsx`), open settings (`/settings` bypasses the gate), and
  * report - the one affordance every other failure card already carried.
  */
 function unavailableFallback(
@@ -1058,25 +1058,25 @@ function unavailableFallback(
       // listed. Both are real states of this card, and neither is a
       // directory-wide outage.
       {
-        title: "Selected Traycer Host is not reachable",
-        message: "The selected Traycer Host could not be reached.",
+        title: "Selected Hukum Host is not reachable",
+        message: "The selected Hukum Host could not be reached.",
         code: "HOST_SELECTED_UNREACHABLE",
       }
     : {
-        title: "No Traycer Host is reachable",
+        title: "No Hukum Host is reachable",
         message: "No host in the directory could be reached.",
         code: "HOST_NONE_DIALABLE",
       };
   return {
-    message: "Traycer Host is unavailable",
-    // Says only what holds on EVERY path that reaches this arm. "Traycer will
+    message: "Hukum Host is unavailable",
+    // Says only what holds on EVERY path that reaches this arm. "Hukum will
     // switch you automatically" reads well and would be a lie here: the
     // failover moves a REMOTE selection with a dialable alternative, and this
     // card is also what a local host that is down renders (its own lifecycle
     // owns that recovery, and it is never failed away from).
     detail: presentation.anyHostDialable
-      ? "Traycer can't reach this host right now. Another host is available - switch to it, or retry."
-      : "Traycer can't reach this host right now, and no other host in the directory is reachable either.",
+      ? "Hukum can't reach this host right now. Another host is available - switch to it, or retry."
+      : "Hukum can't reach this host right now, and no other host in the directory is reachable either.",
     body: null,
     // Two families, chosen by a FACT the directory answers
     // (`anyHostDialable`), never by the readiness kind that led here - the

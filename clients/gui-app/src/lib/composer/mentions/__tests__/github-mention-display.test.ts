@@ -3,7 +3,7 @@ import type {
   GithubIssueMentionRow,
   GithubMentionRepository,
   GithubPullRequestMentionRow,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 
 import {
   githubMentionAttachmentFromRow,

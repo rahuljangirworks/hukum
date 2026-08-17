@@ -3,8 +3,8 @@ import {
   MAX_ASSET_BYTES,
   type AssetMediaType,
   type AssetStreamErrorReason,
-} from "@traycer/protocol/host/asset-stream-schemas";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/asset-stream-schemas";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type {
   IStreamSession,
   StreamCloseReason,

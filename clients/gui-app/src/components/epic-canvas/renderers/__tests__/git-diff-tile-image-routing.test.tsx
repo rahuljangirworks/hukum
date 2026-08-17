@@ -10,7 +10,7 @@ import {
 import type {
   GitChangedFile,
   GitGetFileDiffResponse,
-} from "@traycer/protocol/host";
+} from "@hukum/protocol/host";
 import type {
   ImageAssetRequest,
   ImageAssetState,

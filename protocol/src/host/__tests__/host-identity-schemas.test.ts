@@ -3,7 +3,7 @@
  * Transport bounds live here; the host-side 80-char reject is a resolver rule.
  */
 import { describe, expect, it } from "vitest";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   hostIdentityGetRequestSchema,
   hostIdentityGetResponseSchema,
@@ -11,7 +11,7 @@ import {
   hostIdentitySetRequestSchema,
   hostIdentitySetResponseSchema,
   HOST_NAME_MAX_TRANSPORT_LENGTH,
-} from "@traycer/protocol/host/identity/schemas";
+} from "@hukum/protocol/host/identity/schemas";
 
 const validIdentity = {
   systemName: "workbox",

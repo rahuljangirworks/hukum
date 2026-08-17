@@ -14,24 +14,24 @@ afterEach(() => {
  * token rather than a filesystem path - which is the whole reason the sent
  * message needs its own branch: the generic chip reads a basename off `path`
  * and shows `absolutePath ?? path` as the tooltip, so this attachment would
- * render as `traycer#4917` with the raw `github-pr:` token hanging off it.
+ * render as `hukum#4917` with the raw `github-pr:` token hanging off it.
  */
 function pullRequestMention(): MentionAttachment {
   return {
     kind: "mention",
     contextType: "github_pull_request",
-    path: "github-pr:traycerai/traycer#4917",
+    path: "github-pr:hukumai/hukum#4917",
     pathKind: null,
     relPath: null,
     absolutePath: null,
     workspacePath: null,
     label: "#4917",
-    description: "traycerai/traycer#4917 · Stop the busy-loop",
+    description: "hukumai/hukum#4917 · Stop the busy-loop",
     githubHost: "github.com",
-    organizationLogin: "traycerai",
-    repositoryName: "traycer",
+    organizationLogin: "hukumai",
+    repositoryName: "hukum",
     issueNumber: 4917,
-    url: "https://github.com/traycerai/traycer/pull/4917",
+    url: "https://github.com/hukumai/hukum/pull/4917",
   };
 }
 
@@ -44,18 +44,18 @@ function issueMention(): MentionAttachment {
   return {
     kind: "mention",
     contextType: "github_issue",
-    path: "github-issue:traycerai/traycer#812",
+    path: "github-issue:hukumai/hukum#812",
     pathKind: null,
     relPath: null,
     absolutePath: null,
     workspacePath: null,
-    label: "traycer#812",
-    description: "traycerai/traycer#812 · Magic link expires",
+    label: "hukum#812",
+    description: "hukumai/hukum#812 · Magic link expires",
     githubHost: "github.com",
-    organizationLogin: "traycerai",
-    repositoryName: "traycer",
+    organizationLogin: "hukumai",
+    repositoryName: "hukum",
     issueNumber: 812,
-    url: "https://github.com/traycerai/traycer/issues/812",
+    url: "https://github.com/hukumai/hukum/issues/812",
   };
 }
 
@@ -63,7 +63,7 @@ describe("ChatUserMessageContent GitHub chips", () => {
   it("keeps the composer's label and title tooltip after the message is sent", () => {
     render(
       <ChatUserMessageContent
-        content="Look at @github-pr:traycerai/traycer#4917 before merging."
+        content="Look at @github-pr:hukumai/hukum#4917 before merging."
         attachments={[pullRequestMention()]}
       />,
     );
@@ -78,9 +78,9 @@ describe("ChatUserMessageContent GitHub chips", () => {
     // to avoid would satisfy it too, since that renders the token as a `title`
     // attribute rather than as text.
     expect(tooltipTextNear(chip)).toBe(
-      "traycerai/traycer#4917 · Stop the busy-loop",
+      "hukumai/hukum#4917 · Stop the busy-loop",
     );
-    expect(screen.queryByText("github-pr:traycerai/traycer#4917")).toBeNull();
+    expect(screen.queryByText("github-pr:hukumai/hukum#4917")).toBeNull();
     expect(
       document.querySelector("[data-composer-chip='mention']"),
     ).toBeTruthy();
@@ -89,20 +89,20 @@ describe("ChatUserMessageContent GitHub chips", () => {
   it("labels an issue chip from the attachment rather than its token basename", () => {
     render(
       <ChatUserMessageContent
-        content="Fixed by @github-issue:traycerai/traycer#812"
+        content="Fixed by @github-issue:hukumai/hukum#812"
         attachments={[issueMention()]}
       />,
     );
 
-    // `traycer#812` is the multi-repository label the composer chose. The
+    // `hukum#812` is the multi-repository label the composer chose. The
     // basename of the token happens to read the same way, so the label alone
     // cannot tell the two branches apart - the tooltip can, and it is the
     // thing a reader actually consults.
-    const chip = screen.getByText("traycer#812");
+    const chip = screen.getByText("hukum#812");
     expect(chip).toBeTruthy();
     expect(tooltipTextNear(chip)).toBe(
-      "traycerai/traycer#812 · Magic link expires",
+      "hukumai/hukum#812 · Magic link expires",
     );
-    expect(screen.queryByText("github-issue:traycerai/traycer#812")).toBeNull();
+    expect(screen.queryByText("github-issue:hukumai/hukum#812")).toBeNull();
   });
 });

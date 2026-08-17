@@ -7,14 +7,14 @@ import {
   screen,
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import {
   mockLocalHostEntry,
   mockRemoteHostEntry,
-} from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { HostTransportFailureError } from "@traycer-clients/shared/host-transport/host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
+} from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { HostTransportFailureError } from "@hukum-clients/shared/host-transport/host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
 import {
   HostReadinessControllerContext,
   type DefaultHostReadinessPresentation,
@@ -677,9 +677,9 @@ describe("<HostStatusStrip />", () => {
     // Same title/code/source as the full-screen compatibility-error card
     // (host-readiness-controller.test.tsx unreachable-host report pin).
     expect(useDesktopDialogStore.getState().reportIssueContext).toEqual({
-      title: "Traycer Host is not responding",
+      title: "Hukum Host is not responding",
       message:
-        "The app could not reach Traycer Host. Host health: host ready, compat unreachable.",
+        "The app could not reach Hukum Host. Host health: host ready, compat unreachable.",
       code: "HOST_UNREACHABLE",
       source: "Host connection",
     });

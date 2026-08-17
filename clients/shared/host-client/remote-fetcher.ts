@@ -3,7 +3,7 @@ import {
   type HostListItem,
   type HostListResponse,
   type HostStatusDTO,
-} from "@traycer/protocol/host/host-status";
+} from "@hukum/protocol/host/host-status";
 import type { AuthEra } from "../auth/request-context-provider";
 import type { HostDirectoryEntry } from "./host-directory";
 
@@ -59,6 +59,10 @@ export async function fetchRegisteredHostsViaHttp(
   authnBaseUrl: string,
   bearerToken: string,
 ): Promise<HostListFetchResult> {
+  if (!authnBaseUrl || authnBaseUrl.trim() === "") {
+    return { kind: "network-error" };
+  }
+
   let response: Response;
   try {
     response = await fetch(hostsApiUrl(authnBaseUrl), {

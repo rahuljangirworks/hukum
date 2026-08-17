@@ -2,9 +2,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
-import type { ListEpicCollaboratorsResponse } from "@traycer/protocol/host/epic/unary-schemas";
-import type { HostRequester } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { ListEpicCollaboratorsResponse } from "@hukum/protocol/host/epic/unary-schemas";
+import type { HostRequester } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   EPIC_COLLABORATORS_CLOSED_STALE_TIME_MS,
   EPIC_COLLABORATORS_OPEN_REFRESH_MS,

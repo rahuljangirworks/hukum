@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ModelProviderEntry } from "@traycer/protocol/host/provider-native-schemas";
+import type { ModelProviderEntry } from "@hukum/protocol/host/provider-native-schemas";
 import {
   filterModelProvidersByMethod,
   MODEL_PROVIDER_METHOD_FILTER,

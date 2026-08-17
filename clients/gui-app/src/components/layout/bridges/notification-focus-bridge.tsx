@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { toast } from "sonner";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   isNotificationPayloadRoutable,
   type NotificationPayload,

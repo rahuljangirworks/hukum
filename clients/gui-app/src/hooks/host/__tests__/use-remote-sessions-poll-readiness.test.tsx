@@ -5,11 +5,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 // so the cache itself is the one dependency the test must control.
 const readySessionHosts = vi.hoisted(() => ({ value: new Set<string>() }));
 vi.mock(
-  "@traycer-clients/shared/host-transport/remote/index",
+  "@hukum-clients/shared/host-transport/remote/index",
   async (importOriginal) => {
     const actual =
       await importOriginal<
-        typeof import("@traycer-clients/shared/host-transport/remote/index")
+        typeof import("@hukum-clients/shared/host-transport/remote/index")
       >();
     return {
       ...actual,

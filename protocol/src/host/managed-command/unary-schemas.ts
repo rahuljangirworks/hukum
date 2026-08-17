@@ -1,6 +1,6 @@
 /**
  * Shared wire shapes for the managed-command surface - the human half of the
- * subsystem whose agent half is the `traycer_*_shell` tool set. A managed
+ * subsystem whose agent half is the `hukum_*_shell` tool set. A managed
  * command is a supervised shell command owned by the host. There is ONE entity
  * and no kinds: a shell either notifies its owning agent as it prints
  * (`monitoring`) or only when it dies, and that flag is live-tunable, so it is

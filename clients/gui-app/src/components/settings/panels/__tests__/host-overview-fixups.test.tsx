@@ -40,13 +40,13 @@ import {
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { HostDoctorIssue } from "@traycer/protocol/host/maintenance/index";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import type { HostDoctorIssue } from "@hukum/protocol/host/maintenance/index";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import { hostScopeOptionFixture } from "@/components/settings/host-scope/host-scope-fixture";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { HostSettingsPanel } from "@/components/settings/panels/host-settings-panel";
@@ -98,7 +98,7 @@ function makeRunnerHost(): IRunnerHost {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 
@@ -289,7 +289,7 @@ describe("<HostSettingsPanel /> Overview rename — a labeled host's untouched d
       name: "Display Name",
     });
     // Seeded with the LABEL (`effectiveName`), not the systemName — a
-    // `TRAYCER_HOST_LABEL` host has no override, so the draft opens on the
+    // `HUKUM_HOST_LABEL` host has no override, so the draft opens on the
     // label the host is actually showing.
     expect(input.value).toBe("Build Box");
     expect(

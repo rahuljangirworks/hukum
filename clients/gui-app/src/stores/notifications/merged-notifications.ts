@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useQueryClient, type QueryClient } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { useHostBinding, type HostRpcRegistry } from "@/lib/host";
 import {
   Analytics,
@@ -79,9 +79,9 @@ import {
   type HostNotificationsCloudFeedMarkAllReadRequest,
   type HostNotificationsCloudFeedClearAllRequest,
   type HostNotificationsEntityRef,
-} from "@traycer/protocol/host/notifications/contracts";
-import type { NotificationEntry } from "@traycer/protocol/notifications/notification-entry";
-import { formatNotification } from "@traycer/protocol/notifications/notification-formatter";
+} from "@hukum/protocol/host/notifications/contracts";
+import type { NotificationEntry } from "@hukum/protocol/notifications/notification-entry";
+import { formatNotification } from "@hukum/protocol/notifications/notification-formatter";
 import {
   compareProviderPackLocalFirst,
   parseProviderPackNotificationAttribution,
@@ -628,7 +628,7 @@ export function useMergedNotificationsActions(): MergedNotificationsActions {
   const handleCloudMutationResult = (data: {
     readonly status: "applied" | "unavailable";
   }): void => {
-    if (data.status === "unavailable") markCloudUnavailable();
+    if (data?.status === "unavailable") markCloudUnavailable();
   };
   const captureCloudMutationContext = useCallback(
     (): CloudFeedMutationContext => ({
@@ -682,9 +682,9 @@ export function useMergedNotificationsActions(): MergedNotificationsActions {
       onMutate: captureCloudMutationContext,
       onSuccess: (data, _variables, context) => {
         if (!isCurrentCloudMutation(context)) return;
-        if (data.status === "applied") {
+        if (data?.status === "applied") {
           handleCloudMutationResult({ status: "applied" });
-        } else if (data.status === "unavailable") {
+        } else if (data?.status === "unavailable") {
           handleCloudMutationResult({ status: "unavailable" });
         }
       },
@@ -1047,7 +1047,7 @@ export function useMergedNotificationsActions(): MergedNotificationsActions {
           void cloudMarkAllRead
             .mutateAsync({ observedVersion: cloudVersion })
             .then(async (result) => {
-              if (result.status === "unsupported") {
+              if (result?.status === "unsupported") {
                 await fallBackToEntryMutations();
               }
             })
@@ -1085,7 +1085,7 @@ export function useMergedNotificationsActions(): MergedNotificationsActions {
             // `unavailable` is a refusal, not a transport failure - the
             // mutation resolves, so the driver has to be told explicitly or it
             // would record a success the server never performed.
-            if (result.status === "unavailable") {
+            if (result?.status === "unavailable") {
               throw new Error("cloud feed unavailable");
             }
           },
@@ -1273,7 +1273,7 @@ export function rowFromAppLocalEntry(
     createdAt: entry.updatedAt,
     readAt: entry.readAt,
     title: entry.message,
-    body: entry.detail ?? "Traycer notification",
+    body: entry.detail ?? "Hukum notification",
     payload: entry.payload,
     hostKind: null,
     appLocalKind: entry.kind,

@@ -4,8 +4,8 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { MentionGithubCatalogResponse } from "@traycer/protocol/host/mention-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { MentionGithubCatalogResponse } from "@hukum/protocol/host/mention-schemas";
 
 import { useGithubMentionCatalog } from "@/hooks/composer/use-github-mention-catalog";
 import type { HostRpcRegistry } from "@/lib/host";

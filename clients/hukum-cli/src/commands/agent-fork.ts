@@ -1,7 +1,7 @@
 import {
   forkAgentRequestSchema,
   forkAgentResponseSchema,
-} from "@traycer/protocol/host/agent/shared";
+} from "@hukum/protocol/host/agent/shared";
 import {
   callHostRpc,
   parseHostResponse,
@@ -14,10 +14,10 @@ import { parseAgentCreateWorkspace } from "./agent-create";
 import type { CommandFn } from "../runner/runner";
 
 /**
- * `traycer agent fork --agent-id …` - clone an existing local agent (GUI chat
+ * `hukum agent fork --agent-id …` - clone an existing local agent (GUI chat
  * or Claude Code terminal session) into a NEW agent seeded from the source's
  * latest available checkpoint (`agent.fork`). Wraps the same
- * `forkAgentFromRequest` core the `traycer_fork_agent` A2A tool calls.
+ * `forkAgentFromRequest` core the `hukum_fork_agent` A2A tool calls.
  *
  * `--agent-id` accepts an unambiguous id PREFIX, resolved host-side
  * (`resolveAgentIdPrefix`) - unlike `agent stop`/`agent archive`, which take a

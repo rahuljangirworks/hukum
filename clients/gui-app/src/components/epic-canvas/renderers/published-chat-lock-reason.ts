@@ -126,11 +126,11 @@ function replicaCopySentence(input: {
  *
  * Both halves of the agreement, in one place: the noun was already pluralized
  * per count and the verb was not, so a single unreadable block read as
- * "1 item need a newer version of Traycer". Shared by the published and
+ * "1 item need a newer version of Hukum". Shared by the published and
  * doc-replica builders, which say the same sentence.
  */
 function unreadableItemsSentence(count: number): string {
   return count === 1
-    ? "1 item needs a newer version of Traycer to render."
-    : `${count} items need a newer version of Traycer to render.`;
+    ? "1 item needs a newer version of Hukum to render."
+    : `${count} items need a newer version of Hukum to render.`;
 }

@@ -7,6 +7,7 @@ import {
   Boxes,
   GitBranch,
   Keyboard,
+  Mic,
   Palette,
   Server,
   ShieldCheck,
@@ -24,6 +25,7 @@ export type SettingsSectionId =
   | "shell"
   | "worktrees"
   | "brain"
+  | "voice"
   | "host"
   | "devices"
   | "diagnostics";
@@ -119,6 +121,13 @@ export const SETTINGS_SECTIONS: ReadonlyArray<SettingsSection> = [
     id: "keybindings",
     label: "Keybindings",
     icon: Keyboard,
+    group: "app",
+    requiresLocalHost: false,
+  },
+  {
+    id: "voice",
+    label: "Voice",
+    icon: Mic,
     group: "app",
     requiresLocalHost: false,
   },

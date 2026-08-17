@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { ProviderSettingsTab } from "@traycer/protocol/host/provider-native-schemas";
-import { providerIdSchema } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderSettingsTab } from "@hukum/protocol/host/provider-native-schemas";
+import { providerIdSchema } from "@hukum/protocol/host/provider-schemas";
 import {
   PROVIDER_TAB_ORDER,
   providerTabLabel,
@@ -57,8 +57,8 @@ describe("supportedTabsFor", () => {
   it("keeps the CLI tab for every provider that advertises it", () => {
     // This used to be the opposite assertion: cursor and amp were dropped by a
     // `hidesCliCandidates` id check, on the premise that their CLI tab body
-    // would render nothing. Both of them spawn the Traycer-resolved binary for
-    // their MCP write verbs, so that tab is where a user points Traycer at a
+    // would render nothing. Both of them spawn the Hukum-resolved binary for
+    // their MCP write verbs, so that tab is where a user points Hukum at a
     // binary - the one thing an amp user with nothing on PATH needs and could
     // not reach. The rule is now purely the host's advertisement, with no
     // provider identity in it at all.

@@ -2,8 +2,8 @@ import {
   hostChatRecordsSubscribeServerFrameSchemaV10,
   type ChatRecordRemovalReason,
   type ChatRecordSummary,
-} from "@traycer/protocol/host/epic/chat-records";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/epic/chat-records";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type {
   IStreamSession,
   StreamCloseReason,

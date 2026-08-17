@@ -3,7 +3,7 @@ import type {
   WorktreeBinding,
   WorktreeHostEntryV12,
   WorktreeWorkspaceSummaryV14,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   ExternalLink,
   FolderGit2,

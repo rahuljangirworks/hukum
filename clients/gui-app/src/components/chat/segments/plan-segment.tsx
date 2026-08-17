@@ -16,8 +16,8 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import type {
   HostRpcError,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import { guiHarnessIdSchema } from "@traycer/protocol/host/index";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import { guiHarnessIdSchema } from "@hukum/protocol/host/index";
 import { HarnessIcon } from "@/components/home/pickers/harness-icon";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
@@ -42,7 +42,7 @@ import {
   type PublishedChatSource,
 } from "@/lib/chats/published-chat-source";
 import { useClipboardCopy } from "@/hooks/ui/use-clipboard-copy";
-import { TraycerMarkdown } from "@/markdown";
+import { HukumMarkdown } from "@/markdown";
 import { useResolvedTheme } from "@/providers/use-resolved-theme";
 import type { PlanSegmentModel } from "@/stores/composer/chat-store";
 import {
@@ -399,7 +399,7 @@ function PlanModalView(
               </button>
             </div>
           )}
-          <TraycerMarkdown
+          <HukumMarkdown
             className={null}
             proseSize="normal"
             components={null}
@@ -409,7 +409,7 @@ function PlanModalView(
             isStreaming={false}
           >
             {modalBody}
-          </TraycerMarkdown>
+          </HukumMarkdown>
         </div>
         <DialogFooter className="sticky bottom-0 mx-0 mb-0 flex-col gap-2 rounded-none border-t border-border/40 bg-popover/95 px-5 py-3 backdrop-blur supports-backdrop-filter:bg-popover/80 sm:flex-row sm:items-center sm:justify-between">
           <PlanCopyButton markdown={modalMarkdown} />

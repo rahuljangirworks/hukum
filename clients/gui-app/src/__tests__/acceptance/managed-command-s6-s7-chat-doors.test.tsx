@@ -399,7 +399,7 @@ describe("S7 · doors", () => {
         ]}
       />,
     );
-    // No `managedCommand` block means this is NOT a Traycer shell: the live
+    // No `managedCommand` block means this is NOT a Hukum shell: the live
     // producer of kind-only "monitor" triggers is Claude Code's own Monitor
     // tool, which keeps its real name.
     expect(screen.getByText("Monitor completed")).toBeTruthy();

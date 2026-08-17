@@ -1,25 +1,25 @@
 import { createHash } from "node:crypto";
-import { getRecordSchema } from "@traycer/protocol/framework/index";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
 import type {
   ChatPartFetcher,
   StagedChatPart,
-} from "@traycer/protocol/persistence/chat-sync/assembly";
+} from "@hukum/protocol/persistence/chat-sync/assembly";
 import {
   serializeChatHeadDocument,
   type ChatHeadPart,
   type ChatHeadRecord,
-} from "@traycer/protocol/persistence/chat-sync/head";
+} from "@hukum/protocol/persistence/chat-sync/head";
 import {
   canonicalJsonStringify,
   type JsonObject,
-} from "@traycer/protocol/persistence/chat-sync/json";
-import { serializeChatShard } from "@traycer/protocol/persistence/chat-sync/shard";
-import { CHAT_SYNC_SCHEMA_VERSION } from "@traycer/protocol/persistence/chat-sync/version";
+} from "@hukum/protocol/persistence/chat-sync/json";
+import { serializeChatShard } from "@hukum/protocol/persistence/chat-sync/shard";
+import { CHAT_SYNC_SCHEMA_VERSION } from "@hukum/protocol/persistence/chat-sync/version";
 import {
   persistenceRecordRegistry,
   type ChatHead,
   type ChatShard,
-} from "@traycer/protocol/persistence/registry";
+} from "@hukum/protocol/persistence/registry";
 
 /**
  * A published chat as a reader actually meets it: a head, the shard bytes it

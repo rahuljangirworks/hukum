@@ -3,7 +3,7 @@ import {
   useQueryClient,
   type UseMutationResult,
 } from "@tanstack/react-query";
-import type { DeregisterHostFetchResult } from "@traycer-clients/shared/host-client/host-deregister-fetcher";
+import type { DeregisterHostFetchResult } from "@hukum-clients/shared/host-client/host-deregister-fetcher";
 import { toastFromAuthError } from "@/lib/auth-error-toast";
 import type { AuthService } from "@/lib/auth/auth-service";
 import { useHostBinding, type HostDirectoryService } from "@/lib/host";
@@ -36,7 +36,7 @@ function unwrapDeregisterHostResult(result: DeregisterHostFetchResult): void {
   if (result.kind === "unauthorized") {
     throw new Error("Sign in again to try that.");
   }
-  throw new Error("Couldn't reach Traycer to remove this host.");
+  throw new Error("Couldn't reach Hukum to remove this host.");
 }
 
 /**

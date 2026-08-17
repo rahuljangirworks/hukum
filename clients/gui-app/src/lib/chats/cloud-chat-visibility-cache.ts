@@ -3,7 +3,7 @@ import type {
   CloudChatSummary,
   CloudChatVisibility,
   ListCloudChatsResponse,
-} from "@traycer/protocol/host/epic/cloud-chat";
+} from "@hukum/protocol/host/epic/cloud-chat";
 import { cloudChatListQueryKey } from "@/lib/chats/cloud-chat-list-cache";
 import { cloudChatQueryKeys } from "@/lib/query-keys/cloud-chat-query-keys";
 

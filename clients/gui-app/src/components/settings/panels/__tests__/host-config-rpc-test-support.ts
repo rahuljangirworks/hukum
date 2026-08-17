@@ -1,14 +1,14 @@
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   MockHostMessenger,
   type MockHandlerMap,
-} from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { MockTraycerCli } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import type { LogLevel } from "@traycer/protocol/config/log-level";
-import type { ConfigLogLevelScope } from "@traycer/protocol/host/config/index";
-import type { DiagnosticsLogTarget } from "@traycer/protocol/host/diagnostics/index";
+} from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { MockHukumCli } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import type { LogLevel } from "@hukum/protocol/config/log-level";
+import type { ConfigLogLevelScope } from "@hukum/protocol/host/config/index";
+import type { DiagnosticsLogTarget } from "@hukum/protocol/host/diagnostics/index";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
 
 /**
@@ -59,7 +59,7 @@ export interface ConfigHostFixture {
   readonly client: HostClient<HostRpcRegistry>;
   readonly hostId: string;
   /** Backs the shell/env handlers - same validated behaviour the bridge tests already relied on. */
-  readonly cli: MockTraycerCli;
+  readonly cli: MockHukumCli;
   readonly setLogLevelCalls: Array<{
     readonly scope: ConfigLogLevelScope;
     readonly level: LogLevel;
@@ -80,8 +80,8 @@ export interface ConfigHostFixture {
 
 /**
  * A real `HostClient` wired to an in-memory messenger whose handlers delegate
- * to a `MockTraycerCli` for the shell/env family - mirroring how the host
- * resolver delegates to the same `@traycer/protocol/config/store` functions
+ * to a `MockHukumCli` for the shell/env family - mirroring how the host
+ * resolver delegates to the same `@hukum/protocol/config/store` functions
  * the CLI uses, so RPC-path tests exercise the same canonicalisation
  * (family-default flags, `synthesised`, entry upserts) the bridge tests always
  * relied on instead of re-deriving it by hand.
@@ -89,7 +89,7 @@ export interface ConfigHostFixture {
 export function buildConfigHostFixture(options: {
   readonly hostId: string;
   readonly isLocalMachine: boolean;
-  readonly cli?: MockTraycerCli;
+  readonly cli?: MockHukumCli;
   readonly logLevels?: { cliLogLevel: LogLevel; hostLogLevel: LogLevel };
   readonly diagnosticsLogs?: readonly DiagnosticsLogFixtureEntry[];
   /**
@@ -100,7 +100,7 @@ export function buildConfigHostFixture(options: {
    */
   readonly overrideHandlers?: MockHandlerMap<HostRpcRegistry>;
 }): ConfigHostFixture {
-  const cli = options.cli ?? new MockTraycerCli();
+  const cli = options.cli ?? new MockHukumCli();
   let logLevels = options.logLevels ?? {
     cliLogLevel: "info" as LogLevel,
     hostLogLevel: "info" as LogLevel,

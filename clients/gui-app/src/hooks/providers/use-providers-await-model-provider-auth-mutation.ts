@@ -1,9 +1,9 @@
 import { useQueryClient, type UseMutationResult } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   ProviderId,
   ProvidersAwaitModelProviderAuthResponse,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { useHostClient, type HostRpcRegistry } from "@/lib/host";
 import { useHostMutation } from "@/hooks/host/use-host-query";
 import { invalidateAfterModelProviderMutation } from "@/hooks/providers/model-provider-invalidations";

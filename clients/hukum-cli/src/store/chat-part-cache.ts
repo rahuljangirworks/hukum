@@ -1,10 +1,10 @@
 import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import type { ChatPartCache } from "@traycer-clients/shared/cloud-chat/part-cache";
+import type { ChatPartCache } from "@hukum-clients/shared/cloud-chat/part-cache";
 
 /**
  * The CLI's content-addressed store for published chat parts: one file per
- * digest, under `~/.traycer/cli/chat-parts/`.
+ * digest, under `~/.hukum/cli/chat-parts/`.
  *
  * ## Why a directory of files is the whole design
  *

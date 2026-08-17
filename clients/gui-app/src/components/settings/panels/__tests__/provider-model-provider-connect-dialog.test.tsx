@@ -11,7 +11,7 @@ import type {
   ModelProviderAuthResult,
   ModelProviderEntry,
   ProviderModelProvidersCapabilities,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 import { connectChoicesFor } from "@/components/settings/panels/model-provider-connect-model";
 import { ProviderModelProviderConnectDialog } from "@/components/settings/panels/provider-model-provider-connect-dialog";
 import { useModelProviderPendingAuthStore } from "@/stores/settings/model-provider-pending-auth-store";
@@ -533,7 +533,7 @@ describe("credential precedence", () => {
     ).toBeTruthy();
   });
 
-  it("says nothing for a provider Traycer itself holds the key for", () => {
+  it("says nothing for a provider Hukum itself holds the key for", () => {
     renderDialog({
       entry: entry({ connected: true, source: "api" }),
       capabilities: FULL_CAPS,

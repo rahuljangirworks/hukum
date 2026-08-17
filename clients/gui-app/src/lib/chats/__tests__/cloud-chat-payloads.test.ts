@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   encodeBase64,
   webCryptoSha256Hex,
-} from "@traycer-clients/shared/cloud-chat/bytes";
-import type { ReadCloudChatPayloadResponse } from "@traycer/protocol/host/epic/cloud-chat";
+} from "@hukum-clients/shared/cloud-chat/bytes";
+import type { ReadCloudChatPayloadResponse } from "@hukum/protocol/host/epic/cloud-chat";
 import {
   decodeCloudChatPayload,
   MAX_ENCODED_PAYLOAD_CHARS,

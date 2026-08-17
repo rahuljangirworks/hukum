@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import { v4 as uuidv4 } from "uuid";
 import { vi } from "vitest";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import { EpicSidebarCloudChatRow } from "@/components/epic-canvas/sidebar/epic-sidebar-cloud-chat-row";
 import type { HostReachabilityStatus } from "@/hooks/agent/use-host-reachability";
 import { useEpicCanvasStore } from "@/stores/epics/canvas/store";

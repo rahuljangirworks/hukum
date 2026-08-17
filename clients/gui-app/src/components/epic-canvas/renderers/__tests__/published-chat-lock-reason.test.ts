@@ -77,7 +77,7 @@ describe("publishedChatLockReason", () => {
         unreadableCount: 2,
         fidelityNotice: null,
       }),
-    ).toContain("2 items need a newer version of Traycer to render.");
+    ).toContain("2 items need a newer version of Hukum to render.");
     expect(
       publishedChatLockReason({
         ownerIsReachable: true,

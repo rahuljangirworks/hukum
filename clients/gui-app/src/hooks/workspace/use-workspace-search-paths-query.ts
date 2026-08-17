@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   HostRpcError,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 import type {
   WorkspaceSearchPathResult,
@@ -12,7 +12,7 @@ import type {
   WorkspaceSearchPathsOutcome,
   WorkspaceSearchPathsResponse,
   WorkspaceSearchSource,
-} from "@traycer/protocol/host/workspace/unary-schemas";
+} from "@hukum/protocol/host/workspace/unary-schemas";
 import { keepPreviousDataForSameHost } from "@/hooks/host/keep-previous-data-same-host";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { useReactiveHostReadiness } from "@/hooks/host/use-reactive-host-readiness";

@@ -6,30 +6,30 @@ import {
   applyAwarenessUpdate,
   encodeAwarenessUpdate,
 } from "y-protocols/awareness";
-import type { PermissionRole } from "@traycer/protocol/host/epic/unary-schemas";
+import type { PermissionRole } from "@hukum/protocol/host/epic/unary-schemas";
 import type {
   EpicCloudSyncStatus,
   EpicMigrationPhase,
-} from "@traycer/protocol/host/epic/subscribe";
+} from "@hukum/protocol/host/epic/subscribe";
 import type {
   ChatRecordRemovalReason,
   ChatRecordSummary,
-} from "@traycer/protocol/host/epic/chat-records";
-import type { ChatRecordDelta } from "@traycer-clients/shared/host-transport/chat-records-stream-client";
-import type { SnapshotMetaEpic } from "@traycer/protocol/host/epic/snapshot-meta";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
+} from "@hukum/protocol/host/epic/chat-records";
+import type { ChatRecordDelta } from "@hukum-clients/shared/host-transport/chat-records-stream-client";
+import type { SnapshotMetaEpic } from "@hukum/protocol/host/epic/snapshot-meta";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
 import type {
   StreamCloseReason,
   StreamConnectionStatus,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
 import type {
   EpicDeletedAttribution,
   EpicStreamCallbacks,
   EpicStreamClient,
-} from "@traycer-clients/shared/host-transport/epic-stream-client";
-import { artifactBodyFragmentName } from "@traycer/protocol/persistence/epic/artifacts";
-import type { DeletedEpicArtifact } from "@traycer/protocol/persistence/epic/artifacts";
-import { createTypedMap } from "@traycer/protocol/utils/yjs-utils";
+} from "@hukum-clients/shared/host-transport/epic-stream-client";
+import { artifactBodyFragmentName } from "@hukum/protocol/persistence/epic/artifacts";
+import type { DeletedEpicArtifact } from "@hukum/protocol/persistence/epic/artifacts";
+import { createTypedMap } from "@hukum/protocol/utils/yjs-utils";
 import { evaluateReparent, reparentRejectionError } from "@/lib/reparent-rules";
 import { isUnavailableEpicReason } from "@/lib/epics/unavailable-epic";
 import { basePersistOptions, openEpicKey } from "@/lib/persist";

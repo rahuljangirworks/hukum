@@ -1,6 +1,6 @@
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import { useChatById } from "@/lib/epic-selectors";
 import { useCloudChatList } from "@/hooks/chats/use-cloud-chat-queries";
 

@@ -1,9 +1,9 @@
-import type { AuthEra } from "@traycer-clients/shared/auth/request-context-provider";
+import type { AuthEra } from "@hukum-clients/shared/auth/request-context-provider";
 import {
   isHostReachable,
   type HostDirectoryEntry,
-} from "@traycer-clients/shared/host-client/host-directory";
-import type { IHostDirectoryService } from "@traycer-clients/shared/host-client/host-runtime";
+} from "@hukum-clients/shared/host-client/host-directory";
+import type { IHostDirectoryService } from "@hukum-clients/shared/host-client/host-runtime";
 import {
   fetchRemoteHosts,
   hostUnavailability,
@@ -12,13 +12,13 @@ import {
   isRemoteHostDirectoryEntry,
   type RemoteHostFetchOutcome,
   type RemoteHostFetcher,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
-import { hasReadyRemoteSession } from "@traycer-clients/shared/host-transport/remote/index";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
+import { hasReadyRemoteSession } from "@hukum-clients/shared/host-transport/remote/index";
 import type {
   IRunnerHost,
   LocalHostSnapshot,
-} from "@traycer-clients/shared/platform/runner-host";
-import type { Disposable } from "@traycer-clients/shared/platform/uri-callback";
+} from "@hukum-clients/shared/platform/runner-host";
+import type { Disposable } from "@hukum-clients/shared/platform/uri-callback";
 import { appLogger, describeLogError } from "@/lib/logger";
 import {
   Analytics,

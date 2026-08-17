@@ -17,11 +17,11 @@
  * to today's `"Binary files cannot be previewed"` placeholder.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 import {
   assetStreamClientFrameSchema,
   assetStreamServerFrameSchema,
-} from "@traycer/protocol/host/asset-stream-schemas";
+} from "@hukum/protocol/host/asset-stream-schemas";
 
 export const workspaceStreamAssetOpenRequestSchema = z.object({
   workspacePath: z.string(),

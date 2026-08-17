@@ -189,7 +189,7 @@ export const providerIdSchemaV70 = z.enum([
   "codex",
   "opencode",
   "cursor",
-  "traycer",
+  "hukum",
   "grok",
   "qwen",
   "kiro",
@@ -539,7 +539,7 @@ export type ProviderManagedInstallStateV70 = z.infer<
 // v8->v7 bridge strips the whole group.
 //
 // Keyed by PACK, not by provider: one pack serves several providers (the
-// opencode pack backs opencode/traycer/openrouter/huggingface), so every
+// opencode pack backs opencode/hukum/openrouter/huggingface), so every
 // provider row on that pack carries the same `packId` and the same
 // `managedVersions`, and clients render one shared panel from whichever row
 // they have. Per-provider policy on a machine-shared cell would be
@@ -649,7 +649,7 @@ export const providerPackVersionSchema = z.object({
   // "0 MB" for it.
   sizeBytes: z.number().int().nonnegative().nullable(),
   certification: providerPackVersionCertificationSchema,
-  // True for the baked pin - the build this Traycer release is paired with.
+  // True for the baked pin - the build this Hukum release is paired with.
   // Rendered "Recommended".
   recommended: z.boolean(),
   current: z.boolean(),
@@ -676,7 +676,7 @@ export const providerManagedVersionsSchema = z.object({
   // expires or the host boots offline (D7).
   updateAvailable: z.object({ version: z.string() }).nullable(),
   // Other provider ids served by this same pack, so the panel can name the
-  // sharing ("Shared by OpenCode, Traycer, OpenRouter, Hugging Face"). Excludes
+  // sharing ("Shared by OpenCode, Hukum, OpenRouter, Hugging Face"). Excludes
   // the provider whose row carries it.
   //
   // `.catch([])` is load-bearing, not decoration: without it a single id this
@@ -2537,7 +2537,7 @@ export type ProvidersNativeMutateResponse = z.infer<
 // `error` / `unsupported` arms) or throws.
 
 /**
- * `providers.listModelProviders@1.0` request. `providerId` is the Traycer
+ * `providers.listModelProviders@1.0` request. `providerId` is the Hukum
  * provider whose settings tab is open - the `opencode` module today, and the
  * host gates the capability to it.
  */

@@ -16,14 +16,14 @@ import {
   textBlockSchema,
   todoBlockSchema,
   toolCallBlockSchema,
-} from "@traycer/protocol/persistence/epic/content-blocks";
-import { chatEventSchema } from "@traycer/protocol/persistence/epic/chat-events";
-import { chatRunSettingsSchema } from "@traycer/protocol/persistence/epic/foundation";
-import { userMessageSchema } from "@traycer/protocol/persistence/epic/messages";
+} from "@hukum/protocol/persistence/epic/content-blocks";
+import { chatEventSchema } from "@hukum/protocol/persistence/epic/chat-events";
+import { chatRunSettingsSchema } from "@hukum/protocol/persistence/epic/foundation";
+import { userMessageSchema } from "@hukum/protocol/persistence/epic/messages";
 import {
   agentSenderSchema,
   userSenderSchema,
-} from "@traycer/protocol/persistence/epic/senders";
+} from "@hukum/protocol/persistence/epic/senders";
 import { z } from "zod";
 
 /**

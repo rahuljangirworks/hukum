@@ -1,28 +1,28 @@
 import { describe, expect, it } from "vitest";
-import type { AssembledChat } from "@traycer/protocol/persistence/chat-sync/assembly";
-import { CAPTURED_RESIDUAL_LEVELS } from "@traycer/protocol/persistence/chat-sync/captured-levels";
+import type { AssembledChat } from "@hukum/protocol/persistence/chat-sync/assembly";
+import { CAPTURED_RESIDUAL_LEVELS } from "@hukum/protocol/persistence/chat-sync/captured-levels";
 import {
   describeUnknownVariant,
   presentChat,
   NO_PAYLOADS_RESOLVABLE,
-} from "@traycer/protocol/persistence/chat-sync/presentation";
+} from "@hukum/protocol/persistence/chat-sync/presentation";
 import {
   serializeChatShard,
   type ChatShardRecord,
-} from "@traycer/protocol/persistence/chat-sync/shard";
+} from "@hukum/protocol/persistence/chat-sync/shard";
 import {
   webCryptoSha256Hex,
   utf8Bytes,
   utf8Text,
-} from "@traycer-clients/shared/cloud-chat/bytes";
-import { readCloudChat } from "@traycer-clients/shared/cloud-chat/cloud-chat-reader";
+} from "@hukum-clients/shared/cloud-chat/bytes";
+import { readCloudChat } from "@hukum-clients/shared/cloud-chat/cloud-chat-reader";
 import {
   buildChatCloneSeed,
   carriedCloneResiduals,
   chatCloneResidualsOf,
-} from "@traycer-clients/shared/cloud-chat/clone";
-import { InMemoryChatPartCache } from "@traycer-clients/shared/cloud-chat/part-cache";
-import { resolverFromPayloadRefs } from "@traycer-clients/shared/cloud-chat/payloads";
+} from "@hukum-clients/shared/cloud-chat/clone";
+import { InMemoryChatPartCache } from "@hukum-clients/shared/cloud-chat/part-cache";
+import { resolverFromPayloadRefs } from "@hukum-clients/shared/cloud-chat/payloads";
 import {
   DEFAULT_PUBLISH,
   FIRST_COHORT,

@@ -3,11 +3,11 @@ import type { TimerHandle } from "../timer-handle";
 import {
   QosClass,
   type EncodeMuxFrameInput,
-} from "@traycer/protocol/host-transport/mux";
+} from "@hukum/protocol/host-transport/mux";
 import {
   ChunkPacer,
   type OutboundChunkSource,
-} from "@traycer/protocol/host-transport/chunking";
+} from "@hukum/protocol/host-transport/chunking";
 
 /**
  * Priority scheduler with per-session bulk credits (Architecture §3, audit C2).

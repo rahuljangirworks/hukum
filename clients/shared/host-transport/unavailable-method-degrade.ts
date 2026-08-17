@@ -4,7 +4,7 @@ import type {
   MethodVersionRegistry,
   SchemaVersion,
   VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import { HostRpcError } from "./host-messenger";
 
 /**

@@ -9,7 +9,7 @@ import {
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Mock } from "vitest";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import {
   type EpicRouteFocusIntent,
   useEpicRouteSynchronization,

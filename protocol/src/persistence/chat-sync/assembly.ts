@@ -1,20 +1,20 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/index";
-import type { ChatHeadCore } from "@traycer/protocol/persistence/chat-sync/core";
-import type { PreservedChatEvent, PreservedChatMessage } from "@traycer/protocol/persistence/chat-sync/entries";
+import type { SchemaVersion } from "@hukum/protocol/framework/index";
+import type { ChatHeadCore } from "@hukum/protocol/persistence/chat-sync/core";
+import type { PreservedChatEvent, PreservedChatMessage } from "@hukum/protocol/persistence/chat-sync/entries";
 import {
   gateChatHeadVersion,
   type ChatHeadPart,
   type ChatHeadRecord,
   type ChatHeadRefusalReason,
-} from "@traycer/protocol/persistence/chat-sync/head";
-import type { ChatSyncHostPrivate } from "@traycer/protocol/persistence/chat-sync/host-private";
-import type { JsonObject } from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/head";
+import type { ChatSyncHostPrivate } from "@hukum/protocol/persistence/chat-sync/host-private";
+import type { JsonObject } from "@hukum/protocol/persistence/chat-sync/json";
 import {
   chatShardReaderSchema,
   type ChatShardRecord,
   type ChatShardSection,
-} from "@traycer/protocol/persistence/chat-sync/shard";
-import type { ChatSyncPayloadVersion } from "@traycer/protocol/persistence/chat-sync/version";
+} from "@hukum/protocol/persistence/chat-sync/shard";
+import type { ChatSyncPayloadVersion } from "@hukum/protocol/persistence/chat-sync/version";
 
 /**
  * The reader half of the chat-sync contract: how a cloud renderer or a clone

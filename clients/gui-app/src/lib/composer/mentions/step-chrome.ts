@@ -1,8 +1,8 @@
 import type {
   GithubMentionRepository,
   GithubMentionSection,
-} from "@traycer/protocol/host/mention-schemas";
-import type { PrSourceNotice } from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/mention-schemas";
+import type { PrSourceNotice } from "@hukum/protocol/host/pr-schemas";
 
 import type { GithubMentionFilter } from "./github-mention-rows";
 

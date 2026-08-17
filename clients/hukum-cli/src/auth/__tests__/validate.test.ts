@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { AuthenticatedUser } from "@traycer/protocol/auth";
+import type { AuthenticatedUser } from "@hukum/protocol/auth";
 import { validateAuthTokenIdentityAccessOnly } from "../../../../shared/auth/auth-validation";
 import { createAuthenticatedUserFixture } from "../../../../shared/test-fixtures/authenticated-user";
 import { config } from "../../config";
@@ -76,7 +76,7 @@ const storedCreds = {
   token: "stored-token",
   refreshToken: "stored-refresh",
   savedAt: "2026-01-01T00:00:00.000Z",
-  user: { id: "u1", email: "old@traycer.ai", name: "Old" },
+  user: { id: "u1", email: "old@hukum.ai", name: "Old" },
 };
 
 // Build an AuthenticatedUser with a specific identity, keeping every other
@@ -86,8 +86,8 @@ function userWith(id: string, email: string, name: string): AuthenticatedUser {
   return { ...base, user: { ...base.user, id, email, name } };
 }
 
-const unchangedUser = userWith("u1", "old@traycer.ai", "Old");
-const changedUser = userWith("u1", "ada@traycer.ai", "Ada");
+const unchangedUser = userWith("u1", "old@hukum.ai", "Old");
+const changedUser = userWith("u1", "ada@hukum.ai", "Ada");
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -119,7 +119,7 @@ describe("validateStoredCredentials", () => {
       outcome: "applied",
       credentials: {
         ...storedCreds,
-        user: { id: "u1", email: "ada@traycer.ai", name: "Ada" },
+        user: { id: "u1", email: "ada@hukum.ai", name: "Ada" },
       },
     });
 
@@ -131,13 +131,13 @@ describe("validateStoredCredentials", () => {
     );
     expect(updateProfileMock).toHaveBeenCalledWith({
       expectedToken: "stored-token",
-      user: { id: "u1", email: "ada@traycer.ai", name: "Ada" },
+      user: { id: "u1", email: "ada@hukum.ai", name: "Ada" },
       signal: null,
     });
     expect(outcome).toMatchObject({
       kind: "valid",
       credentials: {
-        user: { id: "u1", email: "ada@traycer.ai", name: "Ada" },
+        user: { id: "u1", email: "ada@hukum.ai", name: "Ada" },
       },
     });
   });
@@ -171,7 +171,7 @@ describe("validateStoredCredentials", () => {
     expect(rotateMock).not.toHaveBeenCalled();
     expect(outcome).toMatchObject({
       kind: "valid",
-      credentials: { user: { id: "u1", email: "old@traycer.ai", name: "Old" } },
+      credentials: { user: { id: "u1", email: "old@hukum.ai", name: "Old" } },
     });
   });
 
@@ -248,7 +248,7 @@ describe("validateStoredCredentials", () => {
         token: "foreign-token",
         refreshToken: "foreign-refresh",
         savedAt: "2026-02-01T00:00:00.000Z",
-        user: { id: "u2", email: "other@traycer.ai", name: "Other" },
+        user: { id: "u2", email: "other@hukum.ai", name: "Other" },
       },
     });
     expect(await validateStoredCredentials()).toEqual({ kind: "rejected" });

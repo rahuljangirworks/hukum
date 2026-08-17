@@ -73,9 +73,9 @@ class FakeHost extends EventEmitter implements IpcHostLifecycle {
   reloadSnapshotCalls = 0;
   ensureWatcherCalls = 0;
   noteEndpointAnsweredCalls = 0;
-  readonly pidMetadataFile = "/tmp/fake-traycer-host/pid.json";
+  readonly pidMetadataFile = "/tmp/fake-hukum-host/pid.json";
   readonly identityEnrollmentFile =
-    "/tmp/fake-traycer-host/identity/enrollment.json";
+    "/tmp/fake-hukum-host/identity/enrollment.json";
   isDisposed = false;
 
   getSnapshot(): DesktopPublishedHostSnapshot | null {
@@ -360,7 +360,7 @@ function createController(options: {
   ) => boolean;
 }): MenuController {
   return new MenuController({
-    appName: "Traycer",
+    appName: "Hukum",
     platform: "darwin",
     windowRegistry: options.registry,
     host: options.host,
@@ -737,7 +737,7 @@ describe("MenuController", () => {
     const zoomController = new FakeZoomController();
     const dispatchRendererCommand = vi.fn(() => true);
     const controller = new MenuController({
-      appName: "Traycer",
+      appName: "Hukum",
       platform: "darwin",
       windowRegistry: new FakeWindowRegistry(),
       host: new FakeHost(),

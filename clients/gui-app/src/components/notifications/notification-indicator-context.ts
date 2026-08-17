@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { HostNotificationsEntityRef } from "@traycer/protocol/host/notifications/contracts";
+import type { HostNotificationsEntityRef } from "@hukum/protocol/host/notifications/contracts";
 import {
   useNotificationIndicatorState,
   type NotificationIndicatorState,

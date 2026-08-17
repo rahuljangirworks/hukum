@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { GithubMentionRow } from "@traycer/protocol/host/mention-schemas";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { GithubMentionRow } from "@hukum/protocol/host/mention-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 
 import type { HostRpcRegistry } from "@/lib/host";
 import { ROOT_MENTION_STEP } from "@/lib/composer/mentions/providers";
@@ -134,8 +134,8 @@ function issue(
   return {
     kind: "issue",
     githubHost: "github.com",
-    owner: "traycerai",
-    url: `https://github.com/traycerai/${overrides.repo}/issues/${overrides.number}`,
+    owner: "hukumai",
+    url: `https://github.com/hukumai/${overrides.repo}/issues/${overrides.number}`,
     author: { login: "bob", avatarUrl: null },
     updatedAt: 1_000,
     buckets: ["recent"],
@@ -150,13 +150,13 @@ function issue(
 const ROOTS = ["/repo"] as const;
 const KEPT_REPO = {
   githubHost: "github.com",
-  owner: "traycerai",
-  repo: "traycer-internal",
+  owner: "hukumai",
+  repo: "hukum-internal",
 } as const;
 /** In the older answer only: the repository a fresher refresh saw leave. */
 const DEPARTED_REPO = {
   githubHost: "github.com",
-  owner: "traycerai",
+  owner: "hukumai",
   repo: "detached",
 } as const;
 

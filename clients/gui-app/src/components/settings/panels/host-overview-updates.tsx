@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { toast } from "sonner";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostAvailableManifest } from "@traycer/protocol/host/maintenance/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostAvailableManifest } from "@hukum/protocol/host/maintenance/index";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import {
@@ -193,9 +193,9 @@ export function HostOverviewUpdatesRegion(props: {
 /**
  * Which refusals retire the REGION and which are just a bad attempt.
  *
- * `cli-unavailable` is structural — there is no Traycer CLI on that host to
+ * `cli-unavailable` is structural — there is no Hukum CLI on that host to
  * shell, so no amount of retrying changes it. `externally-managed` is a
- * deliberate configuration (`TRAYCER_HOST_UPDATES=external`), and the cloud pin
+ * deliberate configuration (`HUKUM_HOST_UPDATES=external`), and the cloud pin
  * is the supported control there. Both make every control in this region dead,
  * so both retire it.
  *

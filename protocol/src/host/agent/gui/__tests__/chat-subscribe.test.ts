@@ -1,4 +1,4 @@
-import { commonRecordRegistry } from "@traycer/protocol/common/registry";
+import { commonRecordRegistry } from "@hukum/protocol/common/registry";
 import {
   chatActiveTurnSchema,
   chatQueuedItemSchema,
@@ -14,29 +14,29 @@ import {
   chatSubscribeV16,
   chatSubscribeV17,
   createImageResolutionUpdatedFrame,
-} from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/agent/gui/subscribe";
 import {
   guiAgentModelCapabilitiesSchema,
   guiAgentModelOptionSchema,
-} from "@traycer/protocol/host/agent/gui/unary-schemas";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import { getRecordSchema } from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/host/agent/gui/unary-schemas";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
 import {
   autonomousResumeTriggerSchema,
   imageGenerationResultSchema,
   toolCallBlockSchema,
-} from "@traycer/protocol/persistence/epic/content-blocks";
+} from "@hukum/protocol/persistence/epic/content-blocks";
 import {
   imageResolutionEntrySchema,
   imageResolutionStateSchema,
-} from "@traycer/protocol/persistence/epic/messages";
+} from "@hukum/protocol/persistence/epic/messages";
 import type {
   Chat,
   ChatEvent,
   ImageResolutionEntry,
   ImageResolutionState,
   UserMessage,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import { describe, expect, it } from "vitest";
 
 const attachmentMentionNodeSchema = getRecordSchema(

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Command } from "commander";
-import { A2A_PERMISSION_MODE_INSTRUCTION } from "@traycer/protocol/agent/agent-selection-guide-format";
+import { A2A_PERMISSION_MODE_INSTRUCTION } from "@hukum/protocol/agent/agent-selection-guide-format";
 import { buildProgram } from "../../index";
 import { buildAgentForkCommand } from "../agent-fork";
 import { parseForkProfileSelection } from "../../internal/profile-selection";
@@ -37,8 +37,8 @@ vi.mock("../../internal/host-rpc", async () => {
 
 const rpcMock = vi.mocked(callHostRpc);
 const PREV_ENV = {
-  epic: process.env.TRAYCER_EPIC_ID,
-  agent: process.env.TRAYCER_AGENT_ID,
+  epic: process.env.HUKUM_EPIC_ID,
+  agent: process.env.HUKUM_AGENT_ID,
 };
 
 function makeRuntime(): RuntimeContext {
@@ -101,7 +101,7 @@ function expectAgentCommand(name: string): Command {
   const command = findSubcommand(agent, name);
   expect(
     command,
-    `expected 'traycer agent ${name}' to be registered`,
+    `expected 'hukum agent ${name}' to be registered`,
   ).not.toBeNull();
   if (command === null) {
     throw new Error(`unreachable: 'agent ${name}' not registered`);
@@ -131,17 +131,17 @@ function optionDescription(command: Command, longFlag: string): string {
 
 beforeEach(() => {
   vi.clearAllMocks();
-  delete process.env.TRAYCER_EPIC_ID;
-  delete process.env.TRAYCER_AGENT_ID;
+  delete process.env.HUKUM_EPIC_ID;
+  delete process.env.HUKUM_AGENT_ID;
 });
 
 afterEach(() => {
   vi.restoreAllMocks();
   vi.clearAllMocks();
-  if (PREV_ENV.epic === undefined) delete process.env.TRAYCER_EPIC_ID;
-  else process.env.TRAYCER_EPIC_ID = PREV_ENV.epic;
-  if (PREV_ENV.agent === undefined) delete process.env.TRAYCER_AGENT_ID;
-  else process.env.TRAYCER_AGENT_ID = PREV_ENV.agent;
+  if (PREV_ENV.epic === undefined) delete process.env.HUKUM_EPIC_ID;
+  else process.env.HUKUM_EPIC_ID = PREV_ENV.epic;
+  if (PREV_ENV.agent === undefined) delete process.env.HUKUM_AGENT_ID;
+  else process.env.HUKUM_AGENT_ID = PREV_ENV.agent;
 });
 
 describe("--profile parsing", () => {
@@ -211,7 +211,7 @@ describe("agent fork", () => {
 
     await buildAgentForkCommand({
       ...createOpts(null),
-      cwd: "/tmp/traycer-test/worktrees/report",
+      cwd: "/tmp/hukum-test/worktrees/report",
     })(makeCtx());
 
     expect(rpcMock).toHaveBeenCalledWith(
@@ -220,7 +220,7 @@ describe("agent fork", () => {
         workspace: {
           entries: [
             {
-              path: "/tmp/traycer-test/worktrees/report",
+              path: "/tmp/hukum-test/worktrees/report",
               workspacePath: null,
             },
           ],
@@ -250,8 +250,8 @@ describe("agent fork", () => {
 
   it("resolves epicId/senderAgentId from the environment when omitted", async () => {
     rpcMock.mockResolvedValue(forkResponse);
-    process.env.TRAYCER_EPIC_ID = "epic_env";
-    process.env.TRAYCER_AGENT_ID = "agent_env";
+    process.env.HUKUM_EPIC_ID = "epic_env";
+    process.env.HUKUM_AGENT_ID = "agent_env";
 
     await buildAgentForkCommand({
       ...createOpts(null),
@@ -363,7 +363,7 @@ describe("version skew", () => {
 });
 
 describe("command registration", () => {
-  it("registers 'traycer agent fork' with the expected flags", () => {
+  it("registers 'hukum agent fork' with the expected flags", () => {
     const fork = expectAgentCommand("fork");
     expect(requiredOptionFlags(fork)).toContain("--agent-id");
     expect(optionFlags(fork)).toEqual(

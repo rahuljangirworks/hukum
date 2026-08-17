@@ -40,7 +40,7 @@ import { z } from "zod";
 import {
   imageSha256HexSchema,
   supportedImageMediaTypeSchema,
-} from "@traycer/protocol/persistence/epic/images";
+} from "@hukum/protocol/persistence/epic/images";
 
 export const LatestEpicArtifactKindSchema = getRecordSchema(
   commonRecordRegistry,

@@ -1,7 +1,7 @@
 import { cleanup, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { GithubMentionRow } from "@traycer/protocol/host/mention-schemas";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { GithubMentionRow } from "@hukum/protocol/host/mention-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 
 import type { HostRpcRegistry } from "@/lib/host";
 import type { MentionFlowStep } from "@/lib/composer/mentions/providers";
@@ -46,7 +46,7 @@ const mocks = vi.hoisted(() => {
     // rows the resolved set does not cover. `[]` here would be the
     // authoritative "these folders hold no GitHub repo".
     repositories: [
-      { githubHost: "github.com", owner: "traycerai", repo: "traycer" },
+      { githubHost: "github.com", owner: "hukumai", repo: "hukum" },
     ],
     scopeResolved: true,
     freshnessAt: null,
@@ -108,8 +108,8 @@ import { useGithubMentionSections } from "../use-github-mention-sections";
 
 const REPO = {
   githubHost: "github.com",
-  owner: "traycerai",
-  repo: "traycer",
+  owner: "hukumai",
+  repo: "hukum",
 } as const;
 
 function pullRequest(
@@ -121,7 +121,7 @@ function pullRequest(
     ...REPO,
     number,
     title: `PR ${number}`,
-    url: `https://github.com/traycerai/traycer/pull/${number}`,
+    url: `https://github.com/hukumai/hukum/pull/${number}`,
     author: { login: "alice", avatarUrl: null },
     updatedAt: 1_000,
     buckets: ["recent"],
@@ -343,8 +343,8 @@ describe("useGithubMentionSections filter swap", () => {
       pullRequestFromRepo(1, REPO),
       pullRequestFromRepo(2, {
         githubHost: "github.com",
-        owner: "traycerai",
-        repo: "traycer-internal",
+        owner: "hukumai",
+        repo: "hukum-internal",
       }),
     ];
 

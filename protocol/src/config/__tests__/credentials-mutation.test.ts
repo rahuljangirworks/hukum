@@ -1029,7 +1029,7 @@ describe("credentials mutation store", () => {
     describe("migration spends under the same marker protocol", () => {
       const MIGRATED_IDENTITY = {
         id: "u2",
-        email: "grace@traycer.ai",
+        email: "grace@hukum.ai",
         name: "Grace",
       };
       const CANDIDATE = {

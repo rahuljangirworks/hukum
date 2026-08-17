@@ -900,7 +900,7 @@ function LandingTerminalPanelContents(
           // resize drag the global freeze class suspends it - otherwise every
           // per-frame `style.width` write eases over the default duration and
           // the panel rubber-bands behind the pointer.
-          "[.traycer-panel-resizing_&]:transition-none",
+          "[.hukum-panel-resizing_&]:transition-none",
           props.panelOpen
             ? "transition-[width]"
             : "invisible pointer-events-none transition-[width,visibility]",

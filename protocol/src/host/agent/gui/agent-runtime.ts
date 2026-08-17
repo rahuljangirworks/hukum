@@ -1,20 +1,20 @@
-import { commonRecordRegistry } from "@traycer/protocol/common/registry";
-import { providerWorkspaceSchema } from "@traycer/protocol/common/workspace-association";
+import { commonRecordRegistry } from "@hukum/protocol/common/registry";
+import { providerWorkspaceSchema } from "@hukum/protocol/common/workspace-association";
 import {
   DEFAULT_ACCOUNT_CONTEXT,
   accountContextSchema,
-} from "@traycer/protocol/common/schemas";
-import { guiHarnessIdSchema } from "@traycer/protocol/host/agent/shared";
-import { getRecordSchema } from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/common/schemas";
+import { guiHarnessIdSchema } from "@hukum/protocol/host/agent/shared";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
 import {
   userMessageSenderSchema,
   userMessageSenderSchemaPreInReplyTo,
-} from "@traycer/protocol/persistence/epic/senders";
+} from "@hukum/protocol/persistence/epic/senders";
 import {
   interviewAnswerSchema,
   interviewQuestionOptionSchema,
   interviewQuestionSchema,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import {
   agentMessageSendSchema,
   artifactOperationActionSchema,
@@ -27,8 +27,8 @@ import {
   providerNoticeNormalizedMetadataSchema,
   providerNoticeToneSchema,
   workflowActivityEntrySchema,
-} from "@traycer/protocol/persistence/epic/content-blocks";
-import { imageResolutionEntrySchema } from "@traycer/protocol/persistence/epic/messages";
+} from "@hukum/protocol/persistence/epic/content-blocks";
+import { imageResolutionEntrySchema } from "@hukum/protocol/persistence/epic/messages";
 
 export {
   agentMessageSendSchema,
@@ -49,7 +49,7 @@ export {
   type ProviderNoticeNormalizedMetadata,
   type ProviderNoticeTone,
   type WorkflowActivityEntry,
-} from "@traycer/protocol/persistence/epic/content-blocks";
+} from "@hukum/protocol/persistence/epic/content-blocks";
 import { z } from "zod";
 
 const attachmentMentionAttrsSchema = getRecordSchema(
@@ -221,14 +221,14 @@ export const runtimeAgentRunInputSchema = z.object({
   skillInvocations: z.array(runtimeSkillInvocationSchema).optional(),
   // Billing/account context for the turn, sourced from the turn-bearing frame's
   // `accountContext` (a global app-wide selection), not from per-chat
-  // `chatRunSettings`. The Traycer harness threads this to its per-user
+  // `chatRunSettings`. The Hukum harness threads this to its per-user
   // OpenCode server so the inference call bills the right account; other
   // harnesses ignore it.
   accountContext: accountContextSchema.default(DEFAULT_ACCOUNT_CONTEXT),
   // Which of the harness's logged-in profiles (subscriptions) to spawn this
   // turn's adapter with (resolved to a config-dir env override by the host's
   // ProfileResolver). `null` = the ambient/host login. Distinct from
-  // `accountContext`, which selects Traycer's own billing org, not a
+  // `accountContext`, which selects Hukum's own billing org, not a
   // provider-CLI login. See the multi-profile decision log.
   profileId: z.string().nullable().default(null),
 });
@@ -893,8 +893,8 @@ export const cursorUserMessageAnchorResolvedSchema = z.object({
   cursorRunId: z.string().nullable(),
 });
 
-export const traycerUserMessageAnchorResolvedSchema = z.object({
-  harnessId: z.literal("traycer"),
+export const hukumUserMessageAnchorResolvedSchema = z.object({
+  harnessId: z.literal("hukum"),
   sessionId: z.string(),
   opencodeUserMessageId: z.string(),
 });
@@ -1018,7 +1018,7 @@ export const userMessageAnchorResolvedEventSchema = z.object({
     codexUserMessageAnchorResolvedSchema,
     openCodeUserMessageAnchorResolvedSchema,
     cursorUserMessageAnchorResolvedSchema,
-    traycerUserMessageAnchorResolvedSchema,
+    hukumUserMessageAnchorResolvedSchema,
     openRouterUserMessageAnchorResolvedSchema,
     grokUserMessageAnchorResolvedSchema,
     qwenUserMessageAnchorResolvedSchema,

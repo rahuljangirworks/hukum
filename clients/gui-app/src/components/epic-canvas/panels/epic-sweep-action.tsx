@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { Paintbrush } from "lucide-react";
-import type { WorktreeHostEntryV12 } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeHostEntryV12 } from "@hukum/protocol/host/worktree-schemas";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
 import { SweepWorktreesDialog } from "@/components/epics/sweep-worktrees-dialog";

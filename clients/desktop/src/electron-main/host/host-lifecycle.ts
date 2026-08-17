@@ -17,7 +17,7 @@ import {
 import {
   isProcessStartIdentity,
   type ProcessStartIdentity,
-} from "@traycer/protocol/host/lifecycle";
+} from "@hukum/protocol/host/lifecycle";
 import type {
   DesktopLocalHostSnapshot,
   DesktopPublishedHostSnapshot,
@@ -44,7 +44,7 @@ export { isCurrentHostWebsocketUrl } from "./host-endpoint-reachability";
 /**
  * How long we wait for the OS-supervised host to publish its PID
  * metadata before surfacing a Doctor-recovery startup failure to the
- * renderer. The CLI supervisor (`traycer host start`) sources the
+ * renderer. The CLI supervisor (`hukum host start`) sources the
  * user's shell as part of bootstrap, so this needs to absorb the user's
  * full rc-file init cost. 60s is sized for slow oh-my-zsh setups +
  * Prisma/native init.
@@ -53,9 +53,9 @@ export { isCurrentHostWebsocketUrl } from "./host-endpoint-reachability";
  * re-arms it, exactly the way the CLI's own inactivity guard re-arms on every
  * NDJSON progress event. A first install downloads ~800MB and extracts a
  * multi-gigabyte runtime tree, which on a slow or AV-scanned machine takes
- * minutes - a flat 60s deadline declared "Could not start Traycer Host" while
- * that install was demonstrably still progressing (traycer#862, and again in
- * traycer#858's desktop log).
+ * minutes - a flat 60s deadline declared "Could not start Hukum Host" while
+ * that install was demonstrably still progressing (hukum#862, and again in
+ * hukum#858's desktop log).
  */
 const HOST_READY_TIMEOUT_MS = 60_000;
 /**
@@ -169,9 +169,9 @@ export interface HostLifecycleOptions {
   readonly bundledBinaryPath: string | null;
   /**
    * Service registration label. Packaged Desktop passes `PRODUCTION_LABEL`
-   * and reads `~/.traycer/host/`; unpackaged Desktop (`make dev-desktop`)
+   * and reads `~/.hukum/host/`; unpackaged Desktop (`make dev-desktop`)
    * passes `DEV_LABEL` and the matching dev-environment layout so it
-   * reads/watches `~/.traycer/host/dev/`. The two must agree - the
+   * reads/watches `~/.hukum/host/dev/`. The two must agree - the
    * environment of `label` is selected at the boot seam in `main-process.ts`
    * and threaded into both `layout` and the CLI subprocess calls.
    */
@@ -207,23 +207,23 @@ export interface HostLifecycleOptions {
  *   - If no reachable host metadata appears within `readyTimeoutMs`,
  *     the lifecycle surfaces a `HOST_NOT_READY` startup error so the
  *     renderer can route the user into the Doctor recovery card
- *     (`traycer host doctor`) - Desktop does not infer install state
+ *     (`hukum host doctor`) - Desktop does not infer install state
  *     from the legacy service-manager dispatch any more.
  *   - User-invoked start / stop / restart actions delegate through CLI
- *     subprocess (`traycer host restart` / `traycer host stop`)
+ *     subprocess (`hukum host restart` / `hukum host stop`)
  *     instead of the platform service-manager APIs.
  *
  * Responsibilities:
  *   - Read the published PID metadata file from the active environment's
- *     host directory (prod = `~/.traycer/host/pid.json`,
- *     dev = `~/.traycer/host/dev/pid.json`).
+ *     host directory (prod = `~/.hukum/host/pid.json`,
+ *     dev = `~/.hukum/host/dev/pid.json`).
  *   - Watch the metadata file for updates and re-emit `LocalHostSnapshot`
  *     values as they change so the renderer bridge can push them through
  *     `onLocalHostChange`.
  *   - Surface startup diagnostics by tailing the matching `host.log`.
  *   - Expose `respawn()` so the renderer can request a fresh host process
  *     via IPC when the current one is unhealthy - implemented as a CLI
- *     `traycer host restart` subprocess.
+ *     `hukum host restart` subprocess.
  *
  * The class stays transport-agnostic - it never opens the host's
  * WebSocket endpoint. That is the renderer/`WsRpcClient`'s job per the
@@ -318,7 +318,7 @@ export class HostLifecycle extends EventEmitter {
         // That line is not free: it lands at ERROR in the desktop.log
         // attached to every support report from a fresh install, where it
         // has already misdirected three field investigations
-        // (traycer#961, #996, #1001), and holding `bootstrap` open delays
+        // (hukum#961, #996, #1001), and holding `bootstrap` open delays
         // the deferred work gated on it - the host health monitor (which
         // owns Windows auto-respawn) and the macOS login-item revision
         // monitor. The watcher installed below is what picks the host up
@@ -352,7 +352,7 @@ export class HostLifecycle extends EventEmitter {
    * keeping the renderer's cached snapshot consistent (cleared on respawn
    * start, repopulated by the existing pid-file watcher when the new host
    * publishes pid.json). `HostController`'s CLI-owned restart path
-   * (`traycer host restart`) does not call this - it shells out directly
+   * (`hukum host restart`) does not call this - it shells out directly
    * rather than through this lifecycle.
    */
   notifyRespawning(): void {
@@ -753,7 +753,7 @@ export class HostLifecycle extends EventEmitter {
    * no host has ever been provisioned the CLI has not created the host root
    * yet - so `installWatcher` fails ENOENT and this lifecycle is left with NO
    * watcher for the rest of the session. Every fresh-install field report
-   * carries that line (traycer#961, #996, #1001).
+   * carries that line (hukum#961, #996, #1001).
    *
    * It used to be partly self-correcting by accident: the readiness wait gave
    * a provisioning install time to create the root before the watcher was
@@ -809,7 +809,7 @@ export class HostLifecycle extends EventEmitter {
       ) {
         throw new HostStartupException(
           "HOST_NOT_READY",
-          `Traycer Host did not start within ${waitedMs}ms (${quietMs}ms with no installer progress) - run \`traycer host doctor\` to recover.`,
+          `Hukum Host did not start within ${waitedMs}ms (${quietMs}ms with no installer progress) - run \`hukum host doctor\` to recover.`,
         );
       }
       if (extendedFrom === null && lastActivityAt > startedAt) {

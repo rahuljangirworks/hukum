@@ -11,8 +11,8 @@ import { describe, expect, it } from "vitest";
 import type {
   HostConnectivity,
   HostListItem,
-} from "@traycer/protocol/host/host-status";
-import { hostListItemToDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum/protocol/host/host-status";
+import { hostListItemToDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
 import { settingsHostOptionLabel } from "@/components/settings/panels/settings-host-labels";
 
 const RELAY_BASE_URL = "wss://relay.example.test/attach";

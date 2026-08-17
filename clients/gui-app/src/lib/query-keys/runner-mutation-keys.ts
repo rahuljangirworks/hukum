@@ -1,4 +1,4 @@
-import type { GlobalShortcutId } from "@traycer-clients/shared/keybindings/global-shortcuts";
+import type { GlobalShortcutId } from "@hukum-clients/shared/keybindings/global-shortcuts";
 
 const supportBridgeQueryScopeIds = new WeakMap<object, number>();
 let nextSupportBridgeQueryScopeId = 1;
@@ -29,18 +29,18 @@ export const runnerMutationKeys = {
   serviceRestart: () => ["runner.serviceRestart"] as const,
   serviceUpgrade: () => ["runner.serviceUpgrade"] as const,
   serviceEnableLinger: () => ["runner.serviceEnableLinger"] as const,
-  traycerShellConfigSet: () => ["runner.traycer.shellConfigSet"] as const,
-  traycerShellConfigReset: () => ["runner.traycer.shellConfigReset"] as const,
-  traycerShellConfigAdd: () => ["runner.traycer.shellConfigAdd"] as const,
-  traycerShellConfigRemove: () => ["runner.traycer.shellConfigRemove"] as const,
-  traycerShellRevertArgs: () => ["runner.traycer.shellRevertArgs"] as const,
-  traycerEnvOverrideSet: () => ["runner.traycer.envOverrideSet"] as const,
-  traycerEnvOverrideDelete: () => ["runner.traycer.envOverrideDelete"] as const,
+  hukumShellConfigSet: () => ["runner.hukum.shellConfigSet"] as const,
+  hukumShellConfigReset: () => ["runner.hukum.shellConfigReset"] as const,
+  hukumShellConfigAdd: () => ["runner.hukum.shellConfigAdd"] as const,
+  hukumShellConfigRemove: () => ["runner.hukum.shellConfigRemove"] as const,
+  hukumShellRevertArgs: () => ["runner.hukum.shellRevertArgs"] as const,
+  hukumEnvOverrideSet: () => ["runner.hukum.envOverrideSet"] as const,
+  hukumEnvOverrideDelete: () => ["runner.hukum.envOverrideDelete"] as const,
   // A rename is ONE operation on the bridge too: the boundary that loses the
   // second half is the OBSERVER, not the transport, so chaining a delete onto
   // the set's per-`mutate` callback drops it on unmount exactly as the RPC
   // path did before `config.env.rename`.
-  traycerEnvOverrideRename: () => ["runner.traycer.envOverrideRename"] as const,
+  hukumEnvOverrideRename: () => ["runner.hukum.envOverrideRename"] as const,
   // Host-management mutations consumed by the host gate, update banner,
   // Settings → Host, and the Doctor failure card.
   hostInstallVersion: () => ["runner.host.installVersion"] as const,
@@ -53,10 +53,10 @@ export const runnerMutationKeys = {
   hostRunDoctor: () => ["runner.host.runDoctor"] as const,
   hostFreePortAndRestart: () => ["runner.host.freePortAndRestart"] as const,
   hostNameSet: () => ["runner.host.name.set"] as const,
-  // In-app "Remove Traycer" (Settings → General → Danger Zone) and the
+  // In-app "Remove Hukum" (Settings → General → Danger Zone) and the
   // removed-surface "Reinstall" escape hatch.
-  uninstallTraycer: () => ["runner.host.uninstallTraycer"] as const,
-  reinstallTraycer: () => ["runner.host.reinstallTraycer"] as const,
+  uninstallHukum: () => ["runner.host.uninstallHukum"] as const,
+  reinstallHukum: () => ["runner.host.reinstallHukum"] as const,
   supportSubmitReport: () => ["runner.support.submitReport"] as const,
   supportFreezeEvidence: () => ["runner.support.freezeEvidence"] as const,
   supportSaveDiagnosticBundle: () =>
@@ -134,23 +134,23 @@ export const runnerQueryKeys = {
   // the runner object - see `runnerHostQueryScopeId`.
   lastKnownLocalHostId: (runnerHostScopeId: number) =>
     ["runner.host.lastKnownLocalHostId", runnerHostScopeId] as const,
-  // `traycerCli: object` keys these queries to a specific runner-host
+  // `hukumCli: object` keys these queries to a specific runner-host
   // instance so a host swap (test setups, hot reload) invalidates the
   // cache cleanly. Identity comparison only - the object is never
   // serialised.
-  traycerHostStatus: (traycerCli: object) =>
-    ["runner.traycer.hostStatus", traycerCli] as const,
-  traycerShellConfig: (traycerCli: object) =>
-    ["runner.traycer.shellConfig", traycerCli] as const,
-  traycerShellList: (traycerCli: object) =>
-    ["runner.traycer.shellList", traycerCli] as const,
+  hukumHostStatus: (hukumCli: object) =>
+    ["runner.hukum.hostStatus", hukumCli] as const,
+  hukumShellConfig: (hukumCli: object) =>
+    ["runner.hukum.shellConfig", hukumCli] as const,
+  hukumShellList: (hukumCli: object) =>
+    ["runner.hukum.shellList", hukumCli] as const,
   // Live "Add a shell" validation probe, keyed by the candidate path so each
   // debounced value caches independently. Scoped to the runner-host instance
-  // like the other traycer queries.
-  traycerShellProbe: (traycerCli: object, path: string) =>
-    ["runner.traycer.shellProbe", traycerCli, path] as const,
-  traycerEnvOverrideList: (traycerCli: object) =>
-    ["runner.traycer.envOverrideList", traycerCli] as const,
+  // like the other hukum queries.
+  hukumShellProbe: (hukumCli: object, path: string) =>
+    ["runner.hukum.shellProbe", hukumCli, path] as const,
+  hukumEnvOverrideList: (hukumCli: object) =>
+    ["runner.hukum.envOverrideList", hukumCli] as const,
   // Host-management queries carry the `IHostManagement` instance as a key
   // segment.
   //

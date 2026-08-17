@@ -4,20 +4,20 @@ import type { QueryKey } from "@tanstack/react-query";
 import type {
   ConfigShellProbeResponse,
   ConfigShellSetRequest,
-} from "@traycer/protocol/host/config/index";
-import type { ITraycerCli } from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum/protocol/host/config/index";
+import type { IHukumCli } from "@hukum-clients/shared/platform/runner-host";
 import { runnerMutationKeys, runnerQueryKeys } from "@/lib/query-keys";
 import { toastFromRunnerError } from "@/lib/runner-error-toast";
-import { useRunnerTraycerEnvOverrideDeleteMutation } from "@/hooks/runner/use-runner-traycer-env-override-delete-mutation";
-import { useRunnerTraycerEnvOverrideListQuery } from "@/hooks/runner/use-runner-traycer-env-override-list-query";
-import { useRunnerTraycerEnvOverrideSetMutation } from "@/hooks/runner/use-runner-traycer-env-override-set-mutation";
-import { useRunnerTraycerShellConfigAddMutation } from "@/hooks/runner/use-runner-traycer-shell-add-mutation";
-import { useRunnerTraycerShellConfigQuery } from "@/hooks/runner/use-runner-traycer-shell-config-query";
-import { useRunnerTraycerShellConfigRemoveMutation } from "@/hooks/runner/use-runner-traycer-shell-remove-mutation";
-import { useRunnerTraycerShellConfigResetMutation } from "@/hooks/runner/use-runner-traycer-shell-config-reset-mutation";
-import { useRunnerTraycerShellConfigSetMutation } from "@/hooks/runner/use-runner-traycer-shell-config-set-mutation";
-import { useRunnerTraycerShellRevertArgsMutation } from "@/hooks/runner/use-runner-traycer-shell-revert-args-mutation";
-import { useRunnerTraycerShellListQuery } from "@/hooks/runner/use-runner-traycer-shell-list-query";
+import { useRunnerHukumEnvOverrideDeleteMutation } from "@/hooks/runner/use-runner-hukum-env-override-delete-mutation";
+import { useRunnerHukumEnvOverrideListQuery } from "@/hooks/runner/use-runner-hukum-env-override-list-query";
+import { useRunnerHukumEnvOverrideSetMutation } from "@/hooks/runner/use-runner-hukum-env-override-set-mutation";
+import { useRunnerHukumShellConfigAddMutation } from "@/hooks/runner/use-runner-hukum-shell-add-mutation";
+import { useRunnerHukumShellConfigQuery } from "@/hooks/runner/use-runner-hukum-shell-config-query";
+import { useRunnerHukumShellConfigRemoveMutation } from "@/hooks/runner/use-runner-hukum-shell-remove-mutation";
+import { useRunnerHukumShellConfigResetMutation } from "@/hooks/runner/use-runner-hukum-shell-config-reset-mutation";
+import { useRunnerHukumShellConfigSetMutation } from "@/hooks/runner/use-runner-hukum-shell-config-set-mutation";
+import { useRunnerHukumShellRevertArgsMutation } from "@/hooks/runner/use-runner-hukum-shell-revert-args-mutation";
+import { useRunnerHukumShellListQuery } from "@/hooks/runner/use-runner-hukum-shell-list-query";
 import type {
   ShellConfigController,
   ShellProbeSource,
@@ -29,21 +29,21 @@ import type {
  * share a cache slot with a per-host RPC probe of the same path.
  */
 export function bridgeShellProbeSource(
-  traycerCli: ITraycerCli,
+  hukumCli: IHukumCli,
 ): ShellProbeSource {
   return {
     queryKeyFor: (path: string): QueryKey =>
-      runnerQueryKeys.traycerShellProbe(traycerCli, path),
+      runnerQueryKeys.hukumShellProbe(hukumCli, path),
     // The bridge crosses an IPC channel with no cancellation of its own, so
     // the signal is accepted and dropped. Keeping the parameter means the two
     // sources stay interchangeable behind one query-options builder.
     probe: (
       path: string,
       _signal: AbortSignal | undefined,
-    ): Promise<ConfigShellProbeResponse> => traycerCli.shellProbe({ path }),
+    ): Promise<ConfigShellProbeResponse> => hukumCli.shellProbe({ path }),
     // This machine's dialog naming this machine's paths: the fallback only
     // ever describes the local host, so the native picker stays offered.
-    pickProgramFile: traycerCli.pickShellProgramFile,
+    pickProgramFile: hukumCli.pickShellProgramFile,
   };
 }
 
@@ -57,19 +57,19 @@ export function bridgeShellProbeSource(
  * reads is the very config that host loads.
  */
 export function useBridgeShellConfigController(props: {
-  readonly traycerCli: ITraycerCli;
+  readonly hukumCli: IHukumCli;
 }): ShellConfigController {
-  const { traycerCli } = props;
-  const configQuery = useRunnerTraycerShellConfigQuery();
-  const shellListQuery = useRunnerTraycerShellListQuery();
-  const envListQuery = useRunnerTraycerEnvOverrideListQuery();
-  const setMutation = useRunnerTraycerShellConfigSetMutation();
-  const resetMutation = useRunnerTraycerShellConfigResetMutation();
-  const addMutation = useRunnerTraycerShellConfigAddMutation();
-  const removeMutation = useRunnerTraycerShellConfigRemoveMutation();
-  const revertMutation = useRunnerTraycerShellRevertArgsMutation();
-  const envSetMutation = useRunnerTraycerEnvOverrideSetMutation();
-  const envDeleteMutation = useRunnerTraycerEnvOverrideDeleteMutation();
+  const { hukumCli } = props;
+  const configQuery = useRunnerHukumShellConfigQuery();
+  const shellListQuery = useRunnerHukumShellListQuery();
+  const envListQuery = useRunnerHukumEnvOverrideListQuery();
+  const setMutation = useRunnerHukumShellConfigSetMutation();
+  const resetMutation = useRunnerHukumShellConfigResetMutation();
+  const addMutation = useRunnerHukumShellConfigAddMutation();
+  const removeMutation = useRunnerHukumShellConfigRemoveMutation();
+  const revertMutation = useRunnerHukumShellRevertArgsMutation();
+  const envSetMutation = useRunnerHukumEnvOverrideSetMutation();
+  const envDeleteMutation = useRunnerHukumEnvOverrideDeleteMutation();
   const queryClient = useQueryClient();
 
   // Both writes inside ONE `mutationFn`, for the same reason the RPC path does
@@ -87,16 +87,16 @@ export function useBridgeShellConfigController(props: {
       readonly value: string | null;
     }
   >({
-    mutationKey: runnerMutationKeys.traycerEnvOverrideRename(),
+    mutationKey: runnerMutationKeys.hukumEnvOverrideRename(),
     mutationFn: async (rename) => {
-      await traycerCli.envOverrideSet({
+      await hukumCli.envOverrideSet({
         key: rename.newKey,
         value: rename.value,
       });
       // Create first, then drop, so a failed delete leaves a harmless duplicate
       // rather than a lost value.
       if (rename.oldKey.length === 0) return;
-      await traycerCli.envOverrideDelete({ key: rename.oldKey });
+      await hukumCli.envOverrideDelete({ key: rename.oldKey });
     },
     // SETTLED, not success. A rename is two writes: if the set lands and the
     // delete rejects, the store now holds BOTH keys while the editor still
@@ -104,7 +104,7 @@ export function useBridgeShellConfigController(props: {
     // view sitting over a config the host will actually read.
     onSettled: () => {
       void queryClient.invalidateQueries({
-        queryKey: runnerQueryKeys.traycerEnvOverrideList(traycerCli),
+        queryKey: runnerQueryKeys.hukumEnvOverrideList(hukumCli),
       });
     },
     onError: (error) => {
@@ -113,8 +113,8 @@ export function useBridgeShellConfigController(props: {
   });
 
   const probeSource = useMemo(
-    () => bridgeShellProbeSource(traycerCli),
-    [traycerCli],
+    () => bridgeShellProbeSource(hukumCli),
+    [hukumCli],
   );
 
   return {

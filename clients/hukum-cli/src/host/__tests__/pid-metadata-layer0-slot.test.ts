@@ -30,7 +30,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 // `join(tmpdir(), ...)`: `vi.hoisted` runs BEFORE this file's imports are
 // initialised, so referencing them here is a TDZ error.
 const { FAKE_HOME } = vi.hoisted(() => ({
-  FAKE_HOME: `${process.env["TMPDIR"] ?? "/tmp"}/traycer-cli-pid-layer0slot-test-home`,
+  FAKE_HOME: `${process.env["TMPDIR"] ?? "/tmp"}/hukum-cli-pid-layer0slot-test-home`,
 }));
 
 vi.mock("node:os", async (importOriginal) => {

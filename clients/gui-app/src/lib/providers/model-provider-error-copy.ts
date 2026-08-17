@@ -1,7 +1,7 @@
 import type {
   ModelProviderAuthErrorCode,
   ModelProviderListErrorCode,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 
 const LIST_ERROR_COPY: Readonly<Record<ModelProviderListErrorCode, string>> = {
   capability_unavailable:
@@ -30,7 +30,7 @@ const AUTH_ERROR_COPY: Readonly<Record<ModelProviderAuthErrorCode, string>> = {
 
 /**
  * The host's `detail` wins whenever it has one, and it usually does: it is the
- * provider's own wording for a flow Traycer does not otherwise understand
+ * provider's own wording for a flow Hukum does not otherwise understand
  * (which env var it expected, which field it did not recognise), already
  * redacted host-side. The tables above are the fallback for a bare code.
  */

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import type { PresentedChat } from "@traycer/protocol/persistence/chat-sync/presentation";
+import type { PresentedChat } from "@hukum/protocol/persistence/chat-sync/presentation";
 import type {
   JsonObject,
   JsonValue,
-} from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/json";
 import {
   convertPublishedChat,
   convertReplicaChat,

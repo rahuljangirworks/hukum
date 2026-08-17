@@ -1,5 +1,5 @@
-import type { HostListItem } from "@traycer/protocol/host/host-status";
-import type { ServiceStatusSnapshot } from "@traycer-clients/shared/platform/runner-host";
+import type { HostListItem } from "@hukum/protocol/host/host-status";
+import type { ServiceStatusSnapshot } from "@hukum-clients/shared/platform/runner-host";
 import {
   deriveHostPresence,
   formatLastSeen,
@@ -119,7 +119,7 @@ function localServiceHealth(
     return {
       state: "not-installed",
       label: "Not installed",
-      detail: "No Traycer host is installed on this computer yet.",
+      detail: "No Hukum host is installed on this computer yet.",
       tone: HOST_HEALTH_TONE["not-installed"],
       live: false,
     };
@@ -225,7 +225,7 @@ function registryHealth(options: DeriveHostHealthOptions): HostHealth {
       return {
         state: "offline",
         label: "Offline",
-        detail: capitalize(formatLastSeen(item.status.lastSeenAt, nowMs)),
+        detail: capitalize(formatLastSeen(item.status?.lastSeenAt, nowMs)),
         tone: HOST_HEALTH_TONE.offline,
         live: false,
       };

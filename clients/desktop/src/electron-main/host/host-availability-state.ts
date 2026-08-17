@@ -1,4 +1,4 @@
-import type { LiveHostAvailability } from "@traycer-clients/shared/host-client/host-directory";
+import type { LiveHostAvailability } from "@hukum-clients/shared/host-client/host-directory";
 import type { PublishedHostPresence } from "./host-endpoint-reachability";
 
 /**

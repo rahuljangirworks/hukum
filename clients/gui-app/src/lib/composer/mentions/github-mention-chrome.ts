@@ -1,11 +1,11 @@
 import type {
   GithubMentionRepository,
   GithubMentionSection,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 import type {
   PrSourceNotice,
   PrSourceStatus,
-} from "@traycer/protocol/host/pr-schemas";
+} from "@hukum/protocol/host/pr-schemas";
 
 import type { GithubMentionFilter } from "./github-mention-rows";
 import type { MentionStepChrome, MentionStepChromeStatus } from "./step-chrome";

@@ -9,12 +9,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type {
   IRunnerHost,
-  TraycerDetectedShell,
-} from "@traycer-clients/shared/platform/runner-host";
+  HukumDetectedShell,
+} from "@hukum-clients/shared/platform/runner-host";
 import {
   MockRunnerHost,
-  MockTraycerCli,
-} from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+  MockHukumCli,
+} from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { ShellProgramCombobox } from "@/components/settings/panels/shell/shell-program-combobox";
 import { bridgeShellProbeSource } from "@/components/settings/panels/shell/use-bridge-shell-config-controller";
@@ -33,7 +33,7 @@ afterEach(() => {
   toastSpy.mockReset();
 });
 
-const ZSH: TraycerDetectedShell = {
+const ZSH: HukumDetectedShell = {
   name: "zsh",
   path: "/bin/zsh",
   isDefault: true,
@@ -41,11 +41,11 @@ const ZSH: TraycerDetectedShell = {
   missing: false,
 };
 
-function makeHost(configure: ((cli: MockTraycerCli) => void) | undefined): {
+function makeHost(configure: ((cli: MockHukumCli) => void) | undefined): {
   readonly host: IRunnerHost;
-  readonly cli: MockTraycerCli;
+  readonly cli: MockHukumCli;
 } {
-  const cli = new MockTraycerCli();
+  const cli = new MockHukumCli();
   configure?.(cli);
   const host = new MockRunnerHost({
     signInUrl: "https://example.invalid/signin",
@@ -54,14 +54,14 @@ function makeHost(configure: ((cli: MockTraycerCli) => void) | undefined): {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: cli,
+    hukumCli: cli,
   });
   return { host, cli };
 }
 
 function renderCombobox(props: {
   readonly onAdd: ((path: string) => void) | undefined;
-  readonly configure: ((cli: MockTraycerCli) => void) | undefined;
+  readonly configure: ((cli: MockHukumCli) => void) | undefined;
 }) {
   const { host, cli } = makeHost(props.configure);
   const queryClient = new QueryClient({

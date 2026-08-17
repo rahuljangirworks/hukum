@@ -1,6 +1,6 @@
 import { Info } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
-import type { CloudChatVisibility } from "@traycer/protocol/host/epic/cloud-chat";
+import type { CloudChatVisibility } from "@hukum/protocol/host/epic/cloud-chat";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";
 import { Button } from "@/components/ui/button";
 import {

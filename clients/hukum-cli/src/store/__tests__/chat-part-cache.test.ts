@@ -24,7 +24,7 @@ const DIGEST_B =
 let root = "";
 
 beforeEach(async () => {
-  root = await mkdtemp(join(tmpdir(), "traycer-chat-parts-"));
+  root = await mkdtemp(join(tmpdir(), "hukum-chat-parts-"));
 });
 
 afterEach(async () => {

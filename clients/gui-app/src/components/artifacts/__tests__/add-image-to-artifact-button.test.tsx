@@ -13,7 +13,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { artifactImageFinishResponseFixtures } from "@traycer/protocol/host/epic/unary-schemas";
+import { artifactImageFinishResponseFixtures } from "@hukum/protocol/host/epic/unary-schemas";
 import * as Y from "yjs";
 import { AddImageToArtifactButton } from "@/components/artifacts/add-image-to-artifact-button";
 

@@ -1,9 +1,9 @@
 import { Check, Globe, Monitor, Server, type LucideIcon } from "lucide-react";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   hostUnavailability,
   type HostUnavailability,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
 import { cn } from "@/lib/utils";
 import { DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 

@@ -39,16 +39,16 @@ import {
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
 import type {
   IHostManagement,
   IRunnerHost,
-} from "@traycer-clients/shared/platform/runner-host";
-import type { HostDoctorIssue } from "@traycer/protocol/host/maintenance/index";
+} from "@hukum-clients/shared/platform/runner-host";
+import type { HostDoctorIssue } from "@hukum/protocol/host/maintenance/index";
 import { hostScopeOptionFixture } from "@/components/settings/host-scope/host-scope-fixture";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { HostSettingsPanel } from "@/components/settings/panels/host-settings-panel";
@@ -87,7 +87,7 @@ const FREE_PORT_ISSUE: HostDoctorIssue = {
   title: "Port 8765 is in use",
   message: "Another process is holding the host's configured port.",
   fixAction: "host-free-port-and-restart",
-  terminalCommand: "traycer host restart --free-port 8765",
+  terminalCommand: "hukum host restart --free-port 8765",
   details: { port: 8765, conflictingPid: 4242, conflictingProcess: "node" },
 };
 
@@ -154,7 +154,7 @@ function renderDoctor(options: {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
     hostManagement: options.withBridge ? management : null,
   });
 

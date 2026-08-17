@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   modelProviderAuthErrorCodeSchema,
   modelProviderListErrorCodeSchema,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 import {
   modelProviderAuthErrorDisposition,
   modelProviderAuthErrorMessage,
@@ -11,7 +11,7 @@ import {
 
 describe("model provider error copy", () => {
   it("prefers the host's detail over the fallback sentence", () => {
-    // The detail is the provider's own wording for a flow Traycer does not
+    // The detail is the provider's own wording for a flow Hukum does not
     // understand ("expected one of: ANTHROPIC_API_KEY"), already redacted
     // host-side. Our sentence exists for a bare code.
     expect(

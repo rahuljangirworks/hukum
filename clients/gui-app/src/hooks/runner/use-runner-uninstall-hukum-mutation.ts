@@ -1,8 +1,13 @@
-import { useMutation, type UseMutationResult } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  type UseMutationResult,
+} from "@tanstack/react-query";
 import type { HukumUninstallResult } from "@hukum-clients/shared/platform/runner-host";
 import { useRunnerHost } from "@/providers/use-runner-host";
 import { runnerMutationKeys } from "@/lib/query-keys";
 import { toastFromRunnerError } from "@/lib/runner-error-toast";
+import { useHostRemovalStore } from "@/stores/host/host-removal-store";
 
 /**
  * In-app "Remove Hukum" (Settings → General → Danger Zone). Stops + removes
@@ -19,6 +24,7 @@ export function useRunnerUninstallHukum(): UseMutationResult<
   void
 > {
   const { hostManagement } = useRunnerHost();
+  const queryClient = useQueryClient();
   return useMutation<HukumUninstallResult>({
     mutationKey: runnerMutationKeys.uninstallHukum(),
     mutationFn: () => {
@@ -28,6 +34,15 @@ export function useRunnerUninstallHukum(): UseMutationResult<
         );
       }
       return hostManagement.uninstallHukum();
+    },
+    onSuccess: () => {
+      useHostRemovalStore.getState().markRemovedInSession();
+      void queryClient.cancelQueries({
+        queryKey: ["auth", "registered-hosts"],
+      });
+      void queryClient.cancelQueries({
+        queryKey: ["host-picker"],
+      });
     },
     onError: (error) =>
       toastFromRunnerError(error, "Couldn't remove Hukum's components."),

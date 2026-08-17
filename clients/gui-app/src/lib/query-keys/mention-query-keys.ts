@@ -1,5 +1,5 @@
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
-import type { MentionGithubCatalogRequest } from "@traycer/protocol/host/mention-schemas";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
+import type { MentionGithubCatalogRequest } from "@hukum/protocol/host/mention-schemas";
 
 import { hostQueryKeys } from "@/lib/query-keys/host-query-keys";
 

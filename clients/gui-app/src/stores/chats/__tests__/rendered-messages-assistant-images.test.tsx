@@ -1,19 +1,19 @@
 import { describe, expect, it } from "vitest";
 import { renderHook } from "@testing-library/react";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   AgentSender,
   ContentBlock,
   Message,
-} from "@traycer/protocol/persistence/epic/schemas";
-import type { ImageResolutionEntry } from "@traycer/protocol/persistence/epic/messages";
-import type { ImageGenerationResult } from "@traycer/protocol/persistence/epic/content-blocks";
-import { deriveToolInputDetail } from "@traycer/protocol/host/agent/gui/tool-input-detail";
-import { deriveToolInputSummary } from "@traycer/protocol/host/agent/gui/tool-input-summary";
+} from "@hukum/protocol/persistence/epic/schemas";
+import type { ImageResolutionEntry } from "@hukum/protocol/persistence/epic/messages";
+import type { ImageGenerationResult } from "@hukum/protocol/persistence/epic/content-blocks";
+import { deriveToolInputDetail } from "@hukum/protocol/host/agent/gui/tool-input-detail";
+import { deriveToolInputSummary } from "@hukum/protocol/host/agent/gui/tool-input-summary";
 import {
   isTaskTodoToolName,
   parseTaskTodoToolPayloads,
-} from "@traycer/protocol/host/agent/gui/task-todo-tools";
+} from "@hukum/protocol/host/agent/gui/task-todo-tools";
 import {
   computeStableChatTimelineRows,
   EMPTY_STABLE_CHAT_TIMELINE_ROWS_STATE,

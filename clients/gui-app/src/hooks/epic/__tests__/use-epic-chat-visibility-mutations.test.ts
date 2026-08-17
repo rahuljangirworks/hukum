@@ -56,10 +56,10 @@ import {
   QueryClientProvider,
   type MutationFunctionContext,
 } from "@tanstack/react-query";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import { toast } from "sonner";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { RpcErrorCode } from "@traycer/protocol/framework/index";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { RpcErrorCode } from "@hukum/protocol/framework/index";
 import { cloudChatListQueryKey } from "@/lib/chats/cloud-chat-list-cache";
 import { cloudChatQueryKeys } from "@/lib/query-keys/cloud-chat-query-keys";
 import { indexOwnCloudChatsByLocalId } from "@/lib/chats/unified-chat-list";

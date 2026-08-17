@@ -17,7 +17,7 @@ import type {
   WorktreeEntryScripts,
   WorktreeIntent,
   WorktreeWorkspaceSummaryV14,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   useWorktreeIntentStagingStore,
@@ -189,7 +189,7 @@ const PRE_CREATE_CONTEXT: WorktreeScriptsContext = {
   ) =>
     prefixState.status === "present" && typeof prefixState.value === "string"
       ? `${prefixState.value}${suffix}`
-      : `traycer/${suffix}`,
+      : `hukum/${suffix}`,
 };
 
 function renderDialog() {

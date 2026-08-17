@@ -1,53 +1,53 @@
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as Y from "yjs";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
 import type {
   IStreamSession,
   ServerFrameHandler,
   StatusChangeHandler,
   StreamCloseReason,
   StreamFrameEnvelope,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
 import {
   WsStreamClient,
   type ParamsOf,
   type StreamMethodSupport,
-} from "@traycer-clients/shared/host-transport/ws-stream-client";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
+} from "@hukum-clients/shared/host-transport/ws-stream-client";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
 import {
   NOTIFICATION_EVENT_TYPES,
   type NotificationEntry,
-} from "@traycer/protocol/notifications/notification-entry";
+} from "@hukum/protocol/notifications/notification-entry";
 import {
   hostNotificationsSubscribeClientFrameSchema,
   type HostNotificationEntry,
   type HostNotificationsCloudFeedRow,
   type HostNotificationsMarkReadRequest,
   type HostNotificationsSubscribeClientFrame,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   NOTIFICATIONS_ARRAY_KEY,
   createNotificationRoomEntryMap,
   type NotificationRoomEntryMap,
-} from "@traycer/protocol/notifications/notification-room";
+} from "@hukum/protocol/notifications/notification-room";
 import type { NotificationNavigate } from "@/lib/notifications";
 import {
   HOST_STREAM_REOPEN_INITIAL_BACKOFF_MS,
   HOST_STREAM_REOPEN_MAX_BACKOFF_MS,
 } from "@/lib/host/stream-reopen";
 import type { NotificationShow } from "@/hooks/notifications/use-notifications";
-import type { NotificationShowOutcome } from "@traycer-clients/shared/platform/runner-host";
+import type { NotificationShowOutcome } from "@hukum-clients/shared/platform/runner-host";
 
 interface HostState {
   id: string | null;
@@ -240,7 +240,7 @@ import {
 import { useEpicCanvasStore } from "@/stores/epics/canvas/store";
 import { makeOpenableNodeRef } from "@/stores/epics/canvas/types";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
 import { selectNotificationIndicatorState } from "@/stores/notifications/notification-indicator-state";
 import { useNotificationsPopoverStore } from "@/stores/notifications/notifications-popover-store";
 import {

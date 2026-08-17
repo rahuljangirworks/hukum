@@ -6,8 +6,8 @@ import {
   type PresentedChat,
   type PresentedContentBlock,
   type PresentedMessage,
-} from "@traycer/protocol/persistence/chat-sync/presentation";
-import type { SnapshotContentBlock } from "@traycer/protocol/persistence/chat-sync/open-harness";
+} from "@hukum/protocol/persistence/chat-sync/presentation";
+import type { SnapshotContentBlock } from "@hukum/protocol/persistence/chat-sync/open-harness";
 import { extractPlainTextFromComposerJSONContent } from "@/lib/composer/tiptap-json-content";
 
 /**
@@ -110,7 +110,7 @@ export function describeTranscriptFidelity(
     fidelity.unknownMessages + fidelity.unknownBlocks + fidelity.unknownEvents;
   if (unknownItems > 0) {
     parts.push(
-      `${unknownItems} ${unknownItems === 1 ? "item needs" : "items need"} a newer version of Traycer`,
+      `${unknownItems} ${unknownItems === 1 ? "item needs" : "items need"} a newer version of Hukum`,
     );
   }
   if (fidelity.missingPayloads > 0) {

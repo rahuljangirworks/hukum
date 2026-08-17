@@ -8,7 +8,7 @@ import {
   waitFor,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ImageLightbox } from "@/components/chat/segments/image-lightbox";
@@ -93,13 +93,13 @@ function requestUrl(input: RequestInfo | URL): string {
 
 beforeEach(() => {
   runnerHost = new MockRunnerHost({
-    signInUrl: "https://auth.traycer.test/sign-in",
-    authnBaseUrl: "https://auth.traycer.test",
+    signInUrl: "https://auth.hukum.test/sign-in",
+    authnBaseUrl: "https://auth.hukum.test",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   saveBlobToDiskMock.mockReset();
   saveBlobToDiskMock.mockResolvedValue("generated.png");

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type {
   HostConnectivity,
   HostListItem,
-} from "@traycer/protocol/host/host-status";
+} from "@hukum/protocol/host/host-status";
 import { deriveHostHealth } from "@/components/settings/host-scope/host-health";
 
 /**

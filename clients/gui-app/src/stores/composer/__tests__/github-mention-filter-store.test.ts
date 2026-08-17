@@ -100,8 +100,8 @@ describe("github-mention-filter-store", () => {
         involvement: "authored",
         repository: {
           githubHost: "github.com",
-          owner: "traycerai",
-          repo: "traycer",
+          owner: "hukumai",
+          repo: "hukum",
         },
       },
     });
@@ -117,8 +117,8 @@ describe("github-mention-filter-store", () => {
       involvement: "authored",
       repository: {
         githubHost: "github.com",
-        owner: "traycerai",
-        repo: "traycer",
+        owner: "hukumai",
+        repo: "hukum",
       },
     });
     // A different epic still sees defaults.
@@ -137,8 +137,8 @@ describe("github-mention-filter-store", () => {
       involvement: "authored" as const,
       repository: {
         githubHost: "github.com",
-        owner: "traycerai",
-        repo: "traycer",
+        owner: "hukumai",
+        repo: "hukum",
       },
     };
     const landingFilter = {
@@ -216,15 +216,15 @@ describe("reconcileRepositorySelection", () => {
       ...DEFAULT_PULL_REQUEST_MENTION_FILTER,
       repository: {
         githubHost: "github.com",
-        owner: "traycerai",
+        owner: "hukumai",
         repo: "gone",
       },
     };
     const reconciled = reconcileRepositorySelection("pull-requests", filter, [
       {
         githubHost: "github.com",
-        owner: "traycerai",
-        repo: "traycer",
+        owner: "hukumai",
+        repo: "hukum",
       },
     ]);
     expect(reconciled.repository).toBeNull();
@@ -235,8 +235,8 @@ describe("reconcileRepositorySelection", () => {
   it("keeps the selection when the repository is still one of several", () => {
     const repository = {
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
     };
     const filter = {
       ...DEFAULT_PULL_REQUEST_MENTION_FILTER,
@@ -244,7 +244,7 @@ describe("reconcileRepositorySelection", () => {
     };
     const reconciled = reconcileRepositorySelection("pull-requests", filter, [
       repository,
-      { githubHost: "github.com", owner: "traycerai", repo: "other" },
+      { githubHost: "github.com", owner: "hukumai", repo: "other" },
     ]);
     expect(reconciled).toBe(filter);
   });
@@ -257,8 +257,8 @@ describe("reconcileRepositorySelection", () => {
     // attached.
     const repository = {
       githubHost: "github.com",
-      owner: "traycerai",
-      repo: "traycer",
+      owner: "hukumai",
+      repo: "hukum",
     };
     const filter = {
       ...DEFAULT_PULL_REQUEST_MENTION_FILTER,
@@ -293,21 +293,21 @@ describe("reconcileRepositorySelection", () => {
     // (the popover's radio, the row filter's key) agrees on one spelling.
     const scopeEntry = {
       githubHost: "github.com",
-      owner: "TraycerAI",
-      repo: "Traycer",
+      owner: "HukumAI",
+      repo: "Hukum",
     };
     const filter = {
       ...DEFAULT_PULL_REQUEST_MENTION_FILTER,
       repository: {
         githubHost: "GitHub.COM",
-        owner: "traycerai",
-        repo: "traycer",
+        owner: "hukumai",
+        repo: "hukum",
       },
     };
 
     const reconciled = reconcileRepositorySelection("pull-requests", filter, [
       scopeEntry,
-      { githubHost: "github.com", owner: "traycerai", repo: "other" },
+      { githubHost: "github.com", owner: "hukumai", repo: "other" },
     ]);
 
     expect(reconciled.repository).toBe(scopeEntry);
@@ -321,7 +321,7 @@ describe("restoreUnrepresentedRepositorySelection", () => {
     const next = DEFAULT_PULL_REQUEST_MENTION_FILTER;
     expect(
       restoreUnrepresentedRepositorySelection("pull-requests", next, null, [
-        { githubHost: "github.com", owner: "traycerai", repo: "traycer" },
+        { githubHost: "github.com", owner: "hukumai", repo: "hukum" },
       ]),
     ).toBe(next);
   });
@@ -333,13 +333,13 @@ describe("restoreUnrepresentedRepositorySelection", () => {
     // scope's own entry is not a drop.
     const stored = {
       githubHost: "github.com",
-      owner: "TraycerAI",
-      repo: "Traycer",
+      owner: "HukumAI",
+      repo: "Hukum",
     };
     const next = DEFAULT_PULL_REQUEST_MENTION_FILTER;
     expect(
       restoreUnrepresentedRepositorySelection("pull-requests", next, stored, [
-        { githubHost: "github.com", owner: "traycerai", repo: "traycer" },
+        { githubHost: "github.com", owner: "hukumai", repo: "hukum" },
       ]),
     ).toBe(next);
   });
@@ -351,7 +351,7 @@ describe("restoreUnrepresentedRepositorySelection", () => {
     // selection reconcile was only hiding as a display fallback.
     const stored = {
       githubHost: "github.com",
-      owner: "traycerai",
+      owner: "hukumai",
       repo: "gone",
     };
     const next = DEFAULT_PULL_REQUEST_MENTION_FILTER;
@@ -359,7 +359,7 @@ describe("restoreUnrepresentedRepositorySelection", () => {
       "pull-requests",
       next,
       stored,
-      [{ githubHost: "github.com", owner: "traycerai", repo: "traycer" }],
+      [{ githubHost: "github.com", owner: "hukumai", repo: "hukum" }],
     );
     expect(restored.repository).toBe(stored);
   });

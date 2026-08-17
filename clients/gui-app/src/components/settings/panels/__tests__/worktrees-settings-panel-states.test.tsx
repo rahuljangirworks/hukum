@@ -9,17 +9,17 @@ import {
 } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
 import {
   MockHostMessenger,
   type MockHandlerMap,
-} from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import type { WorktreeHostEntryV15 } from "@traycer/protocol/host/index";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { WorktreeHostEntryV15 } from "@hukum/protocol/host/index";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
 import { useDesktopDialogStore } from "@/stores/dialogs/desktop-dialog-store";
 

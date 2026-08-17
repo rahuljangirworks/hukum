@@ -4,11 +4,11 @@ import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { AuthEra } from "@traycer-clients/shared/auth/request-context-provider";
+import type { AuthEra } from "@hukum-clients/shared/auth/request-context-provider";
 import type {
   HostListItem,
   HostListResponse,
-} from "@traycer/protocol/host/host-status";
+} from "@hukum/protocol/host/host-status";
 import type { AuthService } from "@/lib/auth/auth-service";
 import type { HostDirectoryService } from "@/lib/host";
 import { useAuthStore } from "@/stores/auth/auth-store";

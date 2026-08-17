@@ -90,7 +90,7 @@ export function HostOverviewActionButton(props: {
 
 /**
  * `v1.5.0 · ws://127.0.0.1:8765 · pid 4821` for this computer's host;
- * `v1.5.0 · via relay.traycer.ai · 2 active sessions` for one reached over the
+ * `v1.5.0 · via relay.hukum.ai · 2 active sessions` for one reached over the
  * relay. Same line, same place, sourced from whatever is actually true of each.
  */
 export function HostOverviewEndpointRow(props: {

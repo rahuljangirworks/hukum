@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import fc from "fast-check";
 import type {
   DiskWorktreeEntry,
   WorktreeBranch,
@@ -6,10 +7,12 @@ import type {
   WorktreeWorkspaceSummary,
 } from "@hukum/protocol/host/worktree-schemas";
 import {
+  applySeedIntentOverride,
   defaultFolderIntent,
   rememberedNeedsBranchValidation,
   resolveRememberedFolderIntent,
   seedEntryForFolder,
+  type DefaultFolderInput,
   type SeedFolderContext,
 } from "@/lib/worktree/worktree-intent-seeding";
 
@@ -110,8 +113,245 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
+// ---------------------------------------------------------------------------
+// Property-Based Test: Bug Condition Exploration
+// ---------------------------------------------------------------------------
+
+/**
+ * **Validates: Requirements 1.1, 1.2, 1.3**
+ *
+ * Property 1: Bug Condition — Default Intent Returns Local for Git Repos
+ *
+ * For all DefaultFolderInput where isGitRepo == true and currentBranch != null,
+ * defaultFolderIntent(input).kind SHOULD be "local".
+ *
+ * On UNFIXED code, this test is EXPECTED TO FAIL because defaultFolderIntent()
+ * currently returns kind: "worktree" for git repos with a non-null branch.
+ */
+describe("Bug Condition Exploration (Property 1)", () => {
+  // Arbitrary for DefaultFolderInput scoped to the bug condition:
+  // isGitRepo == true AND currentBranch != null
+  const arbDefaultFolderInput: fc.Arbitrary<DefaultFolderInput> = fc.record({
+    workspacePath: fc.stringMatching(/^\/[a-z][a-z0-9/\-_]{0,30}$/),
+    repoIdentifier: fc.oneof(
+      fc.constant(null),
+      fc.record({
+        owner: fc.stringMatching(/^[a-z][a-z0-9_-]{0,10}$/),
+        repo: fc.stringMatching(/^[a-z][a-z0-9_-]{0,10}$/),
+      }),
+    ),
+    isPrimary: fc.boolean(),
+    isGitRepo: fc.constant(true), // scoped to git repos
+    currentBranch: fc.stringMatching(/^[a-z][a-z0-9/\-_]{0,20}$/), // non-null strings
+    defaultNewBranchName: fc.stringMatching(/^hukum\/[a-z][a-z0-9-]{0,15}$/),
+  });
+
+  it("defaultFolderIntent returns kind: 'local' for all git repos with a current branch", () => {
+    fc.assert(
+      fc.property(arbDefaultFolderInput, (input) => {
+        const result = defaultFolderIntent(input);
+
+        // The expected behavior: always return local for git repos
+        expect(result.kind).toBe("local");
+        expect(result.workspacePath).toBe(input.workspacePath);
+        expect(result.repoIdentifier).toEqual(input.repoIdentifier);
+        expect(result.isPrimary).toBe(input.isPrimary);
+      }),
+      { numRuns: 100 },
+    );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Property-Based Tests: Preservation (Property 2)
+// ---------------------------------------------------------------------------
+
+/**
+ * **Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.5**
+ *
+ * Property 2: Preservation — Explicit Worktree Paths and Non-Git Defaults Unchanged
+ *
+ * These tests capture baseline behaviors that MUST remain unchanged after the fix:
+ * - Non-git folders always get kind: "local" from defaultFolderIntent
+ * - Detached HEAD git repos always get kind: "local" from defaultFolderIntent
+ * - seedEntryForFolder returns seed verbatim when seedFolderIntent is non-null
+ * - applySeedIntentOverride with "worktree-carry" produces worktree with carryUncommittedChanges
+ */
+describe("Preservation Property Tests (Property 2)", () => {
+  // Arbitrary for non-git folder inputs
+  const arbNonGitFolderInput: fc.Arbitrary<DefaultFolderInput> = fc.record({
+    workspacePath: fc.stringMatching(/^\/[a-z][a-z0-9/\-_]{0,30}$/),
+    repoIdentifier: fc.constant(null),
+    isPrimary: fc.boolean(),
+    isGitRepo: fc.constant(false),
+    currentBranch: fc.constant(null),
+    defaultNewBranchName: fc.stringMatching(/^hukum\/[a-z][a-z0-9-]{0,15}$/),
+  });
+
+  // Arbitrary for detached HEAD git repo inputs
+  const arbDetachedHeadInput: fc.Arbitrary<DefaultFolderInput> = fc.record({
+    workspacePath: fc.stringMatching(/^\/[a-z][a-z0-9/\-_]{0,30}$/),
+    repoIdentifier: fc.oneof(
+      fc.constant(null),
+      fc.record({
+        owner: fc.stringMatching(/^[a-z][a-z0-9_-]{0,10}$/),
+        repo: fc.stringMatching(/^[a-z][a-z0-9_-]{0,10}$/),
+      }),
+    ),
+    isPrimary: fc.boolean(),
+    isGitRepo: fc.constant(true),
+    currentBranch: fc.constant(null),
+    defaultNewBranchName: fc.stringMatching(/^hukum\/[a-z][a-z0-9-]{0,15}$/),
+  });
+
+  // Arbitrary for a non-null WorktreeFolderIntent seed (local, import, or worktree kinds)
+  const arbLocalIntent: fc.Arbitrary<WorktreeFolderIntent> = fc.record({
+    kind: fc.constant("local" as const),
+    workspacePath: fc.stringMatching(/^\/[a-z][a-z0-9/\-_]{0,20}$/),
+    repoIdentifier: fc.constant(null),
+    isPrimary: fc.boolean(),
+  });
+
+  const arbImportIntent: fc.Arbitrary<WorktreeFolderIntent> = fc.record({
+    kind: fc.constant("import" as const),
+    workspacePath: fc.stringMatching(/^\/[a-z][a-z0-9/\-_]{0,20}$/),
+    repoIdentifier: fc.constant(null),
+    isPrimary: fc.boolean(),
+    worktreePath: fc.stringMatching(/^\/[a-z][a-z0-9/\-_]{0,30}$/),
+  });
+
+  const arbWorktreeNewIntent: fc.Arbitrary<WorktreeFolderIntent> = fc.record({
+    kind: fc.constant("worktree" as const),
+    scripts: fc.constant(null),
+    workspacePath: fc.stringMatching(/^\/[a-z][a-z0-9/\-_]{0,20}$/),
+    repoIdentifier: fc.constant(null),
+    isPrimary: fc.boolean(),
+    branch: fc.record({
+      type: fc.constant("new" as const),
+      name: fc.stringMatching(/^hukum\/[a-z][a-z0-9-]{0,15}$/),
+      source: fc.stringMatching(/^[a-z][a-z0-9/\-_]{0,15}$/),
+      carryUncommittedChanges: fc.boolean(),
+      collision: fc.constant("random" as const),
+      retryIdentity: fc.uuid(),
+    }),
+  });
+
+  const arbNonNullSeedIntent: fc.Arbitrary<WorktreeFolderIntent> = fc.oneof(
+    arbLocalIntent,
+    arbImportIntent,
+    arbWorktreeNewIntent,
+  );
+
+  // Arbitrary for DefaultFolderInput for git repos (used in applySeedIntentOverride)
+  const arbGitFolderInput: fc.Arbitrary<DefaultFolderInput> = fc.record({
+    workspacePath: fc.stringMatching(/^\/[a-z][a-z0-9/\-_]{0,30}$/),
+    repoIdentifier: fc.oneof(
+      fc.constant(null),
+      fc.record({
+        owner: fc.stringMatching(/^[a-z][a-z0-9_-]{0,10}$/),
+        repo: fc.stringMatching(/^[a-z][a-z0-9_-]{0,10}$/),
+      }),
+    ),
+    isPrimary: fc.boolean(),
+    isGitRepo: fc.constant(true),
+    currentBranch: fc.stringMatching(/^[a-z][a-z0-9/\-_]{0,20}$/), // non-null
+    defaultNewBranchName: fc.stringMatching(/^hukum\/[a-z][a-z0-9-]{0,15}$/),
+  });
+
+  it("non-git folders always get kind: 'local' from defaultFolderIntent", () => {
+    fc.assert(
+      fc.property(arbNonGitFolderInput, (input) => {
+        const result = defaultFolderIntent(input);
+        expect(result.kind).toBe("local");
+        expect(result.workspacePath).toBe(input.workspacePath);
+        expect(result.repoIdentifier).toEqual(input.repoIdentifier);
+        expect(result.isPrimary).toBe(input.isPrimary);
+      }),
+      { numRuns: 100 },
+    );
+  });
+
+  it("detached HEAD git repos always get kind: 'local' from defaultFolderIntent", () => {
+    fc.assert(
+      fc.property(arbDetachedHeadInput, (input) => {
+        const result = defaultFolderIntent(input);
+        expect(result.kind).toBe("local");
+        expect(result.workspacePath).toBe(input.workspacePath);
+        expect(result.repoIdentifier).toEqual(input.repoIdentifier);
+        expect(result.isPrimary).toBe(input.isPrimary);
+      }),
+      { numRuns: 100 },
+    );
+  });
+
+  it("seedEntryForFolder returns seed verbatim when seedFolderIntent is non-null", () => {
+    fc.assert(
+      fc.property(arbNonNullSeedIntent, arbGitFolderInput, (seed, folder) => {
+        const ctx: SeedFolderContext = {
+          ...folder,
+          summary: {
+            workspacePath: folder.workspacePath,
+            isGitRepo: folder.isGitRepo,
+            repoIdentifier: folder.repoIdentifier,
+            mainBranch: folder.currentBranch ?? "main",
+            worktrees: [
+              {
+                worktreePath: folder.workspacePath,
+                branch: folder.currentBranch,
+                head: null,
+                isMain: true,
+                isLocked: false,
+              },
+            ],
+            scripts: null,
+          },
+        };
+        const result = seedEntryForFolder({
+          seedFolderIntent: seed,
+          epicIntentEntry: null,
+          rememberedFolderIntent: null,
+          branches: null,
+          folder: ctx,
+          alreadyStaged: false,
+        });
+        // Seed must be returned verbatim — it is the top precedence tier
+        expect(result).toEqual(seed);
+      }),
+      { numRuns: 100 },
+    );
+  });
+
+  it("applySeedIntentOverride with 'worktree-carry' on valid git repo produces worktree with carryUncommittedChanges", () => {
+    fc.assert(
+      fc.property(arbNonNullSeedIntent, arbGitFolderInput, (seedEntry, folder) => {
+        const result = applySeedIntentOverride({
+          override: "worktree-carry",
+          seedEntry,
+          folder,
+        });
+        // For a valid git repo with non-null currentBranch, result must be a worktree with carry
+        expect(result).not.toBeNull();
+        expect(result!.kind).toBe("worktree");
+        if (result!.kind === "worktree") {
+          expect(result!.branch.type).toBe("new");
+          if (result!.branch.type === "new") {
+            expect(result!.branch.carryUncommittedChanges).toBe(true);
+            expect(result!.branch.source).toBe(folder.currentBranch);
+            expect(result!.branch.name).toBe(folder.defaultNewBranchName);
+          }
+        }
+      }),
+      { numRuns: 100 },
+    );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Existing unit tests (preserved from original file)
+// ---------------------------------------------------------------------------
+
 describe("defaultFolderIntent", () => {
-  it("forks a new branch off the working tree for a git repo", () => {
+  it("returns local for a git repo (worktree creation is opt-in)", () => {
     expect(
       defaultFolderIntent({
         workspacePath: "/a",
@@ -122,19 +362,10 @@ describe("defaultFolderIntent", () => {
         defaultNewBranchName: "hukum/swift-otter",
       }),
     ).toEqual({
-      kind: "worktree",
-      scripts: null,
+      kind: "local",
       workspacePath: "/a",
       repoIdentifier: null,
       isPrimary: true,
-      branch: {
-        type: "new",
-        name: "hukum/swift-otter",
-        source: "main",
-        carryUncommittedChanges: false,
-        collision: "random",
-        retryIdentity: "00000000-0000-4000-8000-000000000000",
-      },
     });
   });
 
@@ -371,10 +602,10 @@ describe("seedEntryForFolder", () => {
     }
   });
 
-  it("self-heals a stale per-epic entry to the default instead of replaying a doomed pick", () => {
+  it("self-heals a stale per-epic entry to the default (local) instead of replaying a doomed pick", () => {
     // The epic remembered an existing-branch checkout that no longer exists; it
-    // must fall back to a fresh worktree rather than stage a pick that fails at
-    // worktree.create (the per-epic tier is validated like the per-folder tier).
+    // must fall back to defaultFolderIntent which now returns local (worktree
+    // creation is opt-in) rather than stage a pick that fails at worktree.create.
     const entry = seedEntryForFolder({
       seedFolderIntent: null,
       epicIntentEntry: rememberedExisting("gone-from-epic"),
@@ -383,10 +614,7 @@ describe("seedEntryForFolder", () => {
       folder: folderContext({ defaultNewBranchName: "hukum/fallback" }),
       alreadyStaged: false,
     });
-    expect(entry?.kind).toBe("worktree");
-    if (entry?.kind === "worktree" && entry.branch.type === "new") {
-      expect(entry.branch.name).toBe("hukum/fallback");
-    }
+    expect(entry?.kind).toBe("local");
   });
 
   it("replays a valid per-folder memory over the default", () => {
@@ -402,8 +630,9 @@ describe("seedEntryForFolder", () => {
     ).toBe("local");
   });
 
-  it("falls back to a new worktree off the working tree when the memory is invalid", () => {
+  it("falls back to local when the memory is invalid (worktree creation is opt-in)", () => {
     // Remembered an existing-branch checkout that no longer exists.
+    // The fallback is defaultFolderIntent which now always returns local.
     const entry = seedEntryForFolder({
       seedFolderIntent: null,
       epicIntentEntry: null,
@@ -412,14 +641,10 @@ describe("seedEntryForFolder", () => {
       folder: folderContext({ defaultNewBranchName: "hukum/fallback" }),
       alreadyStaged: false,
     });
-    expect(entry?.kind).toBe("worktree");
-    if (entry?.kind === "worktree" && entry.branch.type === "new") {
-      expect(entry.branch.source).toBe("main");
-      expect(entry.branch.name).toBe("hukum/fallback");
-    }
+    expect(entry?.kind).toBe("local");
   });
 
-  it("defaults to a new worktree off the working tree when nothing is remembered", () => {
+  it("defaults to local when nothing is remembered (worktree creation is opt-in)", () => {
     const entry = seedEntryForFolder({
       seedFolderIntent: null,
       epicIntentEntry: null,
@@ -428,7 +653,7 @@ describe("seedEntryForFolder", () => {
       folder: folderContext({}),
       alreadyStaged: false,
     });
-    expect(entry?.kind).toBe("worktree");
+    expect(entry?.kind).toBe("local");
   });
 
   it("defaults a non-git folder to local", () => {

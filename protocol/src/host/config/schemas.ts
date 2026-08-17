@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { LOG_LEVELS } from "@traycer/protocol/config/log-level";
+import { LOG_LEVELS } from "@hukum/protocol/config/log-level";
 
 /**
  * RPC payloads for the machine-user-global CLI config store.
  *
- * The store lives at `~/.traycer/cli/config.json`, outside a host slot. Shell,
- * environment, and CLI/host log-level changes therefore apply to every Traycer
+ * The store lives at `~/.hukum/cli/config.json`, outside a host slot. Shell,
+ * environment, and CLI/host log-level changes therefore apply to every Hukum
  * host environment run by this OS user. Writes are intentionally last-writer-
  * wins and use the store's atomic-write path; these contracts add no per-host
  * state or locking layer.

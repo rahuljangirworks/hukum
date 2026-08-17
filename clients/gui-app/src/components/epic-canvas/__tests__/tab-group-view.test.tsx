@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import { afterEach, describe, expect, it, onTestFinished, vi } from "vitest";
 import { useLayoutEffect, type ReactNode } from "react";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import { TabGroupView } from "@/components/epic-canvas/canvas/tab-group-view";
 import { paneActivationDeferProps } from "@/components/epic-canvas/pane-activation";
 import { PaneVisibilityContext } from "@/components/epic-tabs/pane-visibility-context";

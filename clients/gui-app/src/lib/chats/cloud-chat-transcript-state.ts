@@ -1,12 +1,12 @@
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { CloudChatRead } from "@traycer-clients/shared/cloud-chat/cloud-chat-reader";
-import { resolverFromPayloadRefs } from "@traycer-clients/shared/cloud-chat/payloads";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { CloudChatRead } from "@hukum-clients/shared/cloud-chat/cloud-chat-reader";
+import { resolverFromPayloadRefs } from "@hukum-clients/shared/cloud-chat/payloads";
 import {
   presentChat,
   NO_PAYLOADS_RESOLVABLE,
   type PresentedChat,
-} from "@traycer/protocol/persistence/chat-sync/presentation";
-import type { ListCloudChatPayloadsOutcome } from "@traycer/protocol/host/epic/cloud-chat";
+} from "@hukum/protocol/persistence/chat-sync/presentation";
+import type { ListCloudChatPayloadsOutcome } from "@hukum/protocol/host/epic/cloud-chat";
 import { isCloudChatsUnsupported } from "@/lib/chats/cloud-chat-read-port";
 import {
   buildCloudChatTranscript,

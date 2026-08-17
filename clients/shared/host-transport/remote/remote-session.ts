@@ -6,22 +6,22 @@ import {
   type MethodVersionRegistry,
   type SchemaVersion,
   type VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   mergeConnectionManifests,
   splitConnectionManifest,
-} from "@traycer/protocol/framework/capability-manifest";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+} from "@hukum/protocol/framework/capability-manifest";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   buildStreamManifest,
   checkStreamMethodCompatibility,
-} from "@traycer/protocol/framework/stream-compat";
-import type { VersionedStreamRpcRegistry } from "@traycer/protocol/framework/versioned-stream-rpc";
-import type { BearerSourceProvider } from "@traycer-clients/shared/auth/bearer-source";
+} from "@hukum/protocol/framework/stream-compat";
+import type { VersionedStreamRpcRegistry } from "@hukum/protocol/framework/versioned-stream-rpc";
+import type { BearerSourceProvider } from "@hukum-clients/shared/auth/bearer-source";
 import type {
   RevalidateOutcome,
   StreamAuthRevalidator,
-} from "@traycer-clients/shared/auth/bearer-revalidator";
+} from "@hukum-clients/shared/auth/bearer-revalidator";
 import type { IStreamWebSocketFactory } from "../ws-stream-factory";
 import type {
   IStreamSession,
@@ -83,14 +83,14 @@ import {
   type QosClassValue,
   type SessionManifests,
   type SessionOpenPayload,
-} from "@traycer/protocol/host-transport/mux";
+} from "@hukum/protocol/host-transport/mux";
 import {
   ChunkReassembler,
   ChunkReassemblyError,
   OutboundChunkSource,
   type OutboundMessage,
   type ReassembledMessage,
-} from "@traycer/protocol/host-transport/chunking";
+} from "@hukum/protocol/host-transport/chunking";
 import { InboundCreditTracker, PriorityScheduler } from "./scheduler";
 import { NoiseChannel } from "./noise-channel";
 import { RelaySocket, type RelayKillReason } from "./relay-socket";
@@ -408,7 +408,7 @@ export class RemoteSession<
       repeatIntervalMs: DIAL_FAILURE_RESTATE_MS,
       // Console on purpose: this is shared OSS transport code with no logger
       // seam (parity with `WsStreamClient`), and the desktop shell forwards
-      // renderer console output into `traycer-desktop.log`.
+      // renderer console output into `hukum-desktop.log`.
       warn: (message) => console.warn(message),
       info: (message) => console.info(message),
     });
@@ -484,7 +484,7 @@ export class RemoteSession<
    * consumer, since the session is built on demand BY those consumers -
    * exhausted its retries against "Remote session is not ready" and then had
    * no automatic signal left. A remote host switch landed on a full-screen
-   * "Traycer Host is not responding" for a host that was seconds from ready.
+   * "Hukum Host is not responding" for a host that was seconds from ready.
    *
    * The wait is bounded by the session's OWN phase machine, deliberately
    * without a second fixed cap: a disconnected ~20s ceiling would re-introduce

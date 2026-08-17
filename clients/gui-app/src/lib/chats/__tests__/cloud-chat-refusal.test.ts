@@ -3,12 +3,12 @@ import {
   encodeBase64,
   utf8Bytes,
   webCryptoSha256Hex,
-} from "@traycer-clients/shared/cloud-chat/bytes";
+} from "@hukum-clients/shared/cloud-chat/bytes";
 import {
   readCloudChat,
   type CloudChatReadOutcome,
-} from "@traycer-clients/shared/cloud-chat/cloud-chat-reader";
-import { InMemoryChatPartCache } from "@traycer-clients/shared/cloud-chat/part-cache";
+} from "@hukum-clients/shared/cloud-chat/cloud-chat-reader";
+import { InMemoryChatPartCache } from "@hukum-clients/shared/cloud-chat/part-cache";
 import {
   DEFAULT_PUBLISH,
   IDENTITY,
@@ -16,7 +16,7 @@ import {
   recordingPort,
   servingBehaviour,
   UNPUBLISHED_SUMMARY,
-} from "@traycer-clients/shared/cloud-chat/__tests__/__fixtures__/published-cloud-chat";
+} from "@hukum-clients/shared/cloud-chat/__tests__/__fixtures__/published-cloud-chat";
 import { describeCloudChatRefusal } from "@/lib/chats/cloud-chat-refusal";
 
 /**

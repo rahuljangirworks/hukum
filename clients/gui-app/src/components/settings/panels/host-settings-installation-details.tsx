@@ -4,7 +4,7 @@ import {
   formatSource,
 } from "@/components/settings/panels/host-settings-panel-model";
 import { cn } from "@/lib/utils";
-import type { HostInstallSourceTag } from "@traycer-clients/shared/platform/runner-host";
+import type { HostInstallSourceTag } from "@hukum-clients/shared/platform/runner-host";
 
 /**
  * The install record as either reader states it.

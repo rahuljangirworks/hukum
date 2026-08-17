@@ -6,7 +6,7 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { WorktreeWorkspaceSummary } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeWorkspaceSummary } from "@hukum/protocol/host/worktree-schemas";
 import { FolderLocationControl } from "@/components/home/host-workspace-selector/folder-location-control";
 import type { WorkspaceRunItem } from "@/components/home/host-workspace-selector/workspace-run-item";
 
@@ -49,7 +49,7 @@ function workspaceRunItem(
     branchLabel: "feature/new",
     summary: SUMMARY,
     currentIntent: null,
-    defaultNewBranchName: "traycer/swift-otter",
+    defaultNewBranchName: "hukum/swift-otter",
     branchPrefixWarning: null,
     repoIdentifier: { owner: "acme", repo: "app" },
     isPrimary: true,

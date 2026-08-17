@@ -1,19 +1,19 @@
 import { describe, expect, it, vi } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import type { IHostDirectoryService } from "@traycer-clients/shared/host-client/host-runtime";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import type { IHostDirectoryService } from "@hukum-clients/shared/host-client/host-runtime";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   hostRpcRegistry,
   type HostRpcRegistry,
-} from "@traycer/protocol/host/index";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
+} from "@hukum/protocol/host/index";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
 import type {
   ProviderCliState,
   ProviderProfile,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import type { CreateChatCommand } from "@/lib/commands/actions/new-chat";
 import {
   cloneChatOnHostSwitch,

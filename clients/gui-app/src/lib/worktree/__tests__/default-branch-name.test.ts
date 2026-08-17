@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { WorktreeWorkspaceSummaryV14 } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeWorkspaceSummaryV14 } from "@hukum/protocol/host/worktree-schemas";
 import {
   buildDefaultBranchByPath,
   regenerateSingleWorkspaceBranchName,
@@ -68,23 +68,23 @@ describe("buildDefaultBranchByPath", () => {
     });
   });
 
-  it("uses the default traycer/ prefix when configured", () => {
-    const result = buildDefaultBranchByPath([summary({})], false, "traycer/");
+  it("uses the default hukum/ prefix when configured", () => {
+    const result = buildDefaultBranchByPath([summary({})], false, "hukum/");
 
     expect(namesOnly(result)).toEqual({
-      "/repos/app": "traycer/swift-otter",
+      "/repos/app": "hukum/swift-otter",
     });
   });
 
   it("inserts the repo slug between prefix and tail when multi-workspace prefixing is on", () => {
     const result = buildDefaultBranchByPath(
-      [summary({ repoIdentifier: { owner: "acme", repo: "Traycer GUI" } })],
+      [summary({ repoIdentifier: { owner: "acme", repo: "Hukum GUI" } })],
       true,
-      "traycer/",
+      "hukum/",
     );
 
     expect(namesOnly(result)).toEqual({
-      "/repos/app": "traycer/traycer-gui-swift-otter",
+      "/repos/app": "hukum/hukum-gui-swift-otter",
     });
   });
 
@@ -131,7 +131,7 @@ describe("buildDefaultBranchByPath", () => {
     const result = buildDefaultBranchByPath([summary({})], false, longPrefix);
 
     expect(namesOnly(result)).toEqual({
-      "/repos/app": "traycer/swift-otter",
+      "/repos/app": "hukum/swift-otter",
     });
   });
 
@@ -144,7 +144,7 @@ describe("buildDefaultBranchByPath", () => {
     );
 
     expect(namesOnly(result)).toEqual({
-      "/repos/app": "traycer/long-repo-name-swift-otter",
+      "/repos/app": "hukum/long-repo-name-swift-otter",
     });
   });
 
@@ -153,7 +153,7 @@ describe("buildDefaultBranchByPath", () => {
     const result = buildDefaultBranchByPath([summary({})], false, "-wip/");
 
     expect(namesOnly(result)).toEqual({
-      "/repos/app": "traycer/swift-otter",
+      "/repos/app": "hukum/swift-otter",
     });
   });
 
@@ -211,7 +211,7 @@ describe("buildDefaultBranchByPath", () => {
 
   it("falls back to the global prefix when a present repo value is invalid", () => {
     // resolveEffectiveBranchPrefix re-validates and hands composition the
-    // global value - so a valid global is used, not the default traycer/.
+    // global value - so a valid global is used, not the default hukum/.
     const result = buildDefaultBranchByPath(
       [
         summary({
@@ -241,7 +241,7 @@ describe("buildDefaultBranchByPath", () => {
     );
 
     expect(namesOnly(result)).toEqual({
-      "/repos/app": "traycer/swift-otter",
+      "/repos/app": "hukum/swift-otter",
     });
   });
 
@@ -330,10 +330,10 @@ describe("buildDefaultBranchByPath warnings", () => {
     );
     expect(result["/repos/app"].warning).toBeNull();
     expect(result["/repos/bad"].warning).toContain(
-      "/repos/bad/.traycer/environment.json",
+      "/repos/bad/.hukum/environment.json",
     );
     expect(result["/repos/broken"].warning).toContain(
-      "/repos/broken/.traycer/environment.json",
+      "/repos/broken/.hukum/environment.json",
     );
   });
 });
@@ -456,11 +456,11 @@ describe("buildDefaultBranchByPath random suffix", () => {
       .mockReturnValueOnce("alpha-one")
       .mockReturnValueOnce("beta-two");
 
-    const first = buildDefaultBranchByPath([summary({})], false, "traycer/");
-    const second = buildDefaultBranchByPath([summary({})], false, "traycer/");
+    const first = buildDefaultBranchByPath([summary({})], false, "hukum/");
+    const second = buildDefaultBranchByPath([summary({})], false, "hukum/");
 
-    expect(first["/repos/app"].name).toBe("traycer/alpha-one");
-    expect(second["/repos/app"].name).toBe("traycer/beta-two");
+    expect(first["/repos/app"].name).toBe("hukum/alpha-one");
+    expect(second["/repos/app"].name).toBe("hukum/beta-two");
     expect(randomMocks.pickFriendlyBranchSuffix).toHaveBeenCalledTimes(2);
   });
 

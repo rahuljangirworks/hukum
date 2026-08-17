@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
- * `traycer host doctor` is the only structured surface where a support
+ * `hukum host doctor` is the only structured surface where a support
  * engineer can learn that a running host started **without** the Layer 0
  * single-writer guarantee.
  *
@@ -18,7 +18,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
  *
  * These rows go through the **real** `readHostPidMetadata` against a real
  * pid.json on disk, whose contents match what
- * `traycer-host/src/transport/rpc/pid-metadata.ts` writes (pinned on that side
+ * `hukum-host/src/transport/rpc/pid-metadata.ts` writes (pinned on that side
  * by its own key-shape test). Mocking the reader would have proved only that
  * the engine can format an object this file made up.
  */
@@ -36,7 +36,7 @@ const ORIGINAL_USERPROFILE = process.env.USERPROFILE;
 let workHome: string;
 
 beforeEach(() => {
-  workHome = mkdtempSync(join(tmpdir(), "traycer-doctor-layer0-test-"));
+  workHome = mkdtempSync(join(tmpdir(), "hukum-doctor-layer0-test-"));
   osHome.current = workHome;
   process.env.HOME = workHome;
   process.env.USERPROFILE = workHome;
@@ -68,7 +68,7 @@ afterEach(() => {
  * metadata (it would describe a process that is already gone).
  */
 function writePidJson(layer0: unknown, layer0Slot: unknown): void {
-  const hostRoot = join(workHome, ".traycer", "host");
+  const hostRoot = join(workHome, ".hukum", "host");
   mkdirSync(hostRoot, { recursive: true });
   writeFileSync(
     join(hostRoot, "pid.json"),
@@ -128,7 +128,7 @@ function stageQuietEnvironment(): void {
       restart: async () => undefined,
     }),
     serviceLabelFor: (environment: string) => ({
-      id: `ai.traycer.host.${environment}`,
+      id: `ai.hukum.host.${environment}`,
     }),
   }));
 }
@@ -172,7 +172,7 @@ describe("runDoctor Layer 0 guarantee reporting", () => {
 
     expect(issue).toBeDefined();
     // Warning, not error: nothing is broken, and promoting it would flip the
-    // exit code of `traycer host doctor` for every user whose home is on a
+    // exit code of `hukum host doctor` for every user whose home is on a
     // network filesystem.
     expect(issue?.severity).toBe("warning");
     // The cause is the actionable half - "the host is degraded" without it
@@ -321,7 +321,7 @@ describe("runDoctor Layer 0 guarantee reporting", () => {
 
   it("stays quiet for a pid.json written before the field existed", async () => {
     stageQuietEnvironment();
-    const hostRoot = join(workHome, ".traycer", "host");
+    const hostRoot = join(workHome, ".hukum", "host");
     mkdirSync(hostRoot, { recursive: true });
     writeFileSync(
       join(hostRoot, "pid.json"),

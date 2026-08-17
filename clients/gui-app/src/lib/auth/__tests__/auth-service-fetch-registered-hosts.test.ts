@@ -8,7 +8,7 @@
  * a poisoned promise for later callers.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { AuthService } from "@/lib/auth/auth-service";
 import { useAuthStore } from "@/stores/auth/auth-store";
 
@@ -100,13 +100,13 @@ const trackedServices: AuthService[] = [];
 function makeService(): { service: AuthService; host: MockRunnerHost } {
   const host = new MockRunnerHost({
     signInUrl:
-      "https://auth.traycer.ai/sign-in?redirect_uri=traycer%3A%2F%2Fauth",
+      "https://auth.hukum.ai/sign-in?redirect_uri=hukum%3A%2F%2Fauth",
     authnBaseUrl: "http://localhost:5005",
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const service = new AuthService({ runnerHost: host });
   trackedServices.push(service);
@@ -219,7 +219,7 @@ describe("AuthService.fetchRegisteredHosts — in-flight coalescing", () => {
     // still clear once that rejection settles, not stay pinned to it.
     await expect(
       service.fetchRegisteredHosts(service.currentAuthEra()),
-    ).rejects.toThrow("Couldn't reach Traycer to load your hosts.");
+    ).rejects.toThrow("Couldn't reach Hukum to load your hosts.");
     expect(hostsCalls).toBe(1);
 
     const secondResult = await service.fetchRegisteredHosts(

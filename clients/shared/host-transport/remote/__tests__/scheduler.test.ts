@@ -3,7 +3,7 @@ import {
   MuxFrameType,
   QosClass,
   type QosClassValue,
-} from "@traycer/protocol/host-transport/mux";
+} from "@hukum/protocol/host-transport/mux";
 import {
   BULK_CHUNK_SIZE_BYTES,
   CHUNK_PACE_BURST_BYTES,
@@ -11,7 +11,7 @@ import {
   CHUNK_PACE_BYTES_PER_SEC,
   CHUNK_PACE_FRAMES_PER_SEC,
   OutboundChunkSource,
-} from "@traycer/protocol/host-transport/chunking";
+} from "@hukum/protocol/host-transport/chunking";
 import { InboundCreditTracker, PriorityScheduler } from "../scheduler";
 import { INBOUND_CREDIT_GRANT_BATCH } from "../config";
 

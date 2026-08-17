@@ -1,4 +1,4 @@
-import { defineRpcContract } from "@traycer/protocol/framework/index";
+import { defineRpcContract } from "@hukum/protocol/framework/index";
 import {
   hostDoctorRequestSchema,
   hostDoctorResponseSchema,

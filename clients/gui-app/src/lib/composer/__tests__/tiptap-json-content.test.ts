@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
-import type { GithubMentionRow } from "@traycer/protocol/host/mention-schemas";
+import type { JsonContent } from "@hukum/protocol/common/registry";
+import type { GithubMentionRow } from "@hukum/protocol/host/mention-schemas";
 
 import {
   buildAttachmentsFromJSONContent,

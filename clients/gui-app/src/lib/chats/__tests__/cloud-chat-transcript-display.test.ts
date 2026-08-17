@@ -1,20 +1,20 @@
 import { describe, expect, it } from "vitest";
-import { readCloudChat } from "@traycer-clients/shared/cloud-chat/cloud-chat-reader";
-import { webCryptoSha256Hex } from "@traycer-clients/shared/cloud-chat/bytes";
-import { InMemoryChatPartCache } from "@traycer-clients/shared/cloud-chat/part-cache";
-import { resolverFromPayloadRefs } from "@traycer-clients/shared/cloud-chat/payloads";
+import { readCloudChat } from "@hukum-clients/shared/cloud-chat/cloud-chat-reader";
+import { webCryptoSha256Hex } from "@hukum-clients/shared/cloud-chat/bytes";
+import { InMemoryChatPartCache } from "@hukum-clients/shared/cloud-chat/part-cache";
+import { resolverFromPayloadRefs } from "@hukum-clients/shared/cloud-chat/payloads";
 import {
   DEFAULT_PUBLISH,
   IDENTITY,
   publishCloudChat,
   recordingPort,
   servingBehaviour,
-} from "@traycer-clients/shared/cloud-chat/__tests__/__fixtures__/published-cloud-chat";
+} from "@hukum-clients/shared/cloud-chat/__tests__/__fixtures__/published-cloud-chat";
 import {
   NO_PAYLOADS_RESOLVABLE,
   presentChat,
   type PresentedChat,
-} from "@traycer/protocol/persistence/chat-sync/presentation";
+} from "@hukum/protocol/persistence/chat-sync/presentation";
 import {
   buildCloudChatTranscript,
   describeTranscriptFidelity,
@@ -63,7 +63,7 @@ describe("nothing is dropped", () => {
     const unknown = assistant.blocks.filter((block) => block.isUnknown);
     expect(unknown).toHaveLength(1);
     expect(unknown[0].label).toContain("holodeck");
-    expect(unknown[0].label).toContain("newer version of Traycer");
+    expect(unknown[0].label).toContain("newer version of Hukum");
   });
 
   it("keeps every row's key unique even where the record carries no id", async () => {
@@ -134,7 +134,7 @@ describe("the fidelity line", () => {
     );
 
     expect(notice).toBe(
-      "1 item needs a newer version of Traycer · 2 attachments are stored on the originating device",
+      "1 item needs a newer version of Hukum · 2 attachments are stored on the originating device",
     );
   });
 

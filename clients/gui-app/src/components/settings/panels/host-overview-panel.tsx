@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { toast } from "sonner";
-import type { HostDoctorIssue } from "@traycer/protocol/host/maintenance/index";
+import type { HostDoctorIssue } from "@hukum/protocol/host/maintenance/index";
 import { RestartHostConfirmDialog } from "@/components/host/restart-host-confirm-dialog";
 import { DoctorSheet } from "@/components/settings/panels/host-settings-doctor-sheet";
 import { HostNameEditForm } from "@/components/settings/panels/host-settings-name-edit";
@@ -54,12 +54,12 @@ import { cn } from "@/lib/utils";
 import { isHostScopeUsable } from "@/components/settings/host-scope/host-scope-status";
 import type { HostScope } from "@/components/settings/host-scope/use-host-scope";
 import type { HostScopeOption } from "@/components/settings/host-scope/host-scope-model";
-import type { HostIdentity } from "@traycer/protocol/host/identity/index";
-import type { HostListItem } from "@traycer/protocol/host/host-status";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { ResponseOfMethod } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostStatusUpdateProgress } from "@traycer/protocol/host/status/index";
-import type { LocalHostSnapshot } from "@traycer-clients/shared/platform/runner-host";
+import type { HostIdentity } from "@hukum/protocol/host/identity/index";
+import type { HostListItem } from "@hukum/protocol/host/host-status";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { ResponseOfMethod } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostStatusUpdateProgress } from "@hukum/protocol/host/status/index";
+import type { LocalHostSnapshot } from "@hukum-clients/shared/platform/runner-host";
 
 /**
  * ONE Overview, for every host.
@@ -77,7 +77,7 @@ import type { LocalHostSnapshot } from "@traycer-clients/shared/platform/runner-
  * where no host process exists to answer.
  *
  * Every button degrades on its OWN capability. An old host can support
- * `host.status` and not `host.restart`; a current host on a box with no Traycer
+ * `host.status` and not `host.restart`; a current host on a box with no Hukum
  * CLI can restart but cannot run doctor or update itself. Collapsing those into
  * one page-level gate is how a capability downgrade during a fleet update turns
  * into "this page is broken".
@@ -412,7 +412,7 @@ export function HostOverviewPanel(props: {
  *
  * Six questions rather than one, because they have six different answers on a
  * fleet mid-update: a host can support `host.status` and not `host.restart`, and
- * a current host on a box with no Traycer CLI can restart but cannot run doctor
+ * a current host on a box with no Hukum CLI can restart but cannot run doctor
  * or update itself. One page-level gate would turn any of those into "this page
  * is broken", which is the ambiguity the whole track exists to remove.
  */

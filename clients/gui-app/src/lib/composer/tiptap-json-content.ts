@@ -14,7 +14,7 @@ import type {
   SlashCommandTrigger,
 } from "@/lib/composer/types";
 import { normalizeComposerContent } from "@/lib/composer/composer-content-normalizer";
-import { DEFAULT_GITHUB_MENTION_HOST } from "@traycer/protocol/common/github-mention-host";
+import { DEFAULT_GITHUB_MENTION_HOST } from "@hukum/protocol/common/github-mention-host";
 import { githubMentionTokenReference } from "@/lib/composer/mentions/github-mention-display";
 
 // Recognizes both picker triggers. This is only the LEXICAL shape - `$` in

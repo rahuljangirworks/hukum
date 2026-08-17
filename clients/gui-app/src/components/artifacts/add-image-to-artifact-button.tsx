@@ -2,7 +2,7 @@ import { useMemo, useState, type MouseEvent, type ReactNode } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { FilePlus2 } from "lucide-react";
 import { prosemirrorJSONToYXmlFragment } from "@tiptap/y-tiptap";
-import { MAX_ARTIFACT_IMAGE_BYTES } from "@traycer/protocol/host/epic/unary-schemas";
+import { MAX_ARTIFACT_IMAGE_BYTES } from "@hukum/protocol/host/epic/unary-schemas";
 import * as Y from "yjs";
 import { Button } from "@/components/ui/button";
 import { AgentSpinningDots } from "@/components/ui/agent-spinning-dots";

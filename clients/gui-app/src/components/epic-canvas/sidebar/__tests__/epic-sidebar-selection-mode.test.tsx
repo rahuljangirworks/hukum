@@ -11,7 +11,7 @@ import { domMax, LazyMotion } from "motion/react";
 import type { ReactNode } from "react";
 import type { Mock } from "vitest";
 import type { ProviderId } from "@/components/home/data/landing-options";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import {
   createChatSessionStore,
   type ChatSessionStoreHandle,

@@ -1,7 +1,7 @@
 import type {
   RepoBranchPrefixState,
   WorktreeWorkspaceSummaryV14,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { workspaceFolderName } from "@/lib/worktree/workspace-folder-name";
 import { pickFriendlyBranchSuffix } from "@/lib/worktree/random-friendly-name";
 import { slugifyBranchSeed } from "@/lib/worktree/slugify-branch-seed";
@@ -26,7 +26,7 @@ export const EMPTY_DEFAULT_BRANCH: DefaultBranchDescriptor = {
  * path, paired with the warning `resolveEffectiveBranchPrefix` produces when
  * a repository override is invalid or unreadable (`null` for an absent or
  * valid override). Each name is a fresh random friendly slug (e.g.
- * `traycer/swift-otter` under the default configured prefix); the host owns
+ * `hukum/swift-otter` under the default configured prefix); the host owns
  * final collision-suffixing at create time. The repo prefix is only added
  * when several git workspaces are configured at once, so multi-repo
  * worktrees branched together stay distinguishable.

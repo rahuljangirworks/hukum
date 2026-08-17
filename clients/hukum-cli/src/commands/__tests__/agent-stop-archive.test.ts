@@ -1,5 +1,5 @@
 /**
- * `traycer agent stop` and `traycer agent archive` command functions.
+ * `hukum agent stop` and `hukum agent archive` command functions.
  *
  * Pins: typed request construction over the existing `agent.stop@1.0` /
  * `epic.setChatArchived@1.0` contracts, env-var epic-id defaulting, and the
@@ -12,7 +12,7 @@ import { buildAgentStopCommand } from "../agent-stop";
 import { buildAgentArchiveCommand } from "../agent-archive";
 import { callHostRpc } from "../../internal/host-rpc";
 import { HostRpcError } from "../../../../shared/host-transport/host-messenger";
-import type { RpcErrorCode } from "@traycer/protocol/framework/index";
+import type { RpcErrorCode } from "@hukum/protocol/framework/index";
 import { noopLogger } from "../../logger";
 import { CLI_ERROR_CODES, CliError } from "../../runner/errors";
 import type { CommandContext } from "../../runner/runner";
@@ -55,16 +55,16 @@ function makeCtx(): CommandContext {
   };
 }
 
-const PREV_EPIC = process.env.TRAYCER_EPIC_ID;
+const PREV_EPIC = process.env.HUKUM_EPIC_ID;
 
 beforeEach(() => {
   rpcMock.mockReset();
-  delete process.env.TRAYCER_EPIC_ID;
+  delete process.env.HUKUM_EPIC_ID;
 });
 
 afterEach(() => {
-  if (PREV_EPIC === undefined) delete process.env.TRAYCER_EPIC_ID;
-  else process.env.TRAYCER_EPIC_ID = PREV_EPIC;
+  if (PREV_EPIC === undefined) delete process.env.HUKUM_EPIC_ID;
+  else process.env.HUKUM_EPIC_ID = PREV_EPIC;
 });
 
 function rpcError(code: RpcErrorCode, message: string): HostRpcError {
@@ -125,8 +125,8 @@ describe("agent stop command function", () => {
     expect(result.human).toBe("no agents stopped");
   });
 
-  it("resolves epicId from $TRAYCER_EPIC_ID when the flag is omitted", async () => {
-    process.env.TRAYCER_EPIC_ID = "epic-env";
+  it("resolves epicId from $HUKUM_EPIC_ID when the flag is omitted", async () => {
+    process.env.HUKUM_EPIC_ID = "epic-env";
     rpcMock.mockResolvedValue({ stoppedAgentIds: [] });
 
     await buildAgentStopCommand({
@@ -313,7 +313,7 @@ describe("agent archive command function", () => {
     if (!(error instanceof CliError)) throw new Error("unreachable");
     expect(error.code).toBe(CLI_ERROR_CODES.AGENT_RECORD_NOT_FOUND);
     expect(error.message).toBe(
-      "traycer: no agent with id agent_missing in this epic.",
+      "hukum: no agent with id agent_missing in this epic.",
     );
   });
 
@@ -384,8 +384,8 @@ describe("agent archive command function", () => {
     expect(error.code).toBe(CLI_ERROR_CODES.HOST_UNSUPPORTED);
   });
 
-  it("resolves epicId from $TRAYCER_EPIC_ID when the flag is omitted", async () => {
-    process.env.TRAYCER_EPIC_ID = "epic-env";
+  it("resolves epicId from $HUKUM_EPIC_ID when the flag is omitted", async () => {
+    process.env.HUKUM_EPIC_ID = "epic-env";
     rpcMock.mockResolvedValue({ updated: true });
 
     await buildAgentArchiveCommand({

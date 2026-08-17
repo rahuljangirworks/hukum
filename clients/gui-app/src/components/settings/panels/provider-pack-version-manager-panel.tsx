@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState, type JSX } from "react";
 import type {
   ProviderManagedVersions,
   ProviderPackVersion,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { MutedAgentSpinner } from "@/components/ui/agent-spinning-dots";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -309,7 +309,7 @@ export function ProviderPackVersionManagerPanel(
         className="w-full max-w-2xl rounded-xl border border-border bg-card px-4 py-3 text-ui-sm text-muted-foreground sm:px-5"
         role="status"
       >
-        Managing managed CLI versions requires a newer Traycer host. The
+        Managing managed CLI versions requires a newer Hukum host. The
         provider table still works; update this host to download, switch, or
         delete individual versions.
       </div>

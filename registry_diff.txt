@@ -1,0 +1,75 @@
+--- /home/rahul/work/personal-projacts/hukum-client/protocol/src/host/registry.ts	2026-08-14 13:27:08.434578468 +0530
++++ /home/rahul/work/personal-projacts/hukum-host/packages/protocol/src/host/registry.ts	2026-08-14 12:53:06.269258404 +0530
+@@ -1,3 +1,4 @@
++import { z } from "zod";
+ import { defineRpcContract } from "@hukum/protocol/framework/index";
+ import { BRAIN_REGISTRY_ENTRIES } from "./registry-domains/brain";
+ import {
+@@ -347,8 +348,6 @@
+   hostNotificationsClearAll,
+   hostNotificationsGetConfig,
+   hostNotificationsIndicatorState,
+-  hostNotificationsIndicatorStateV10,
+-  hostNotificationsIndicatorStateUpgradeV10ToV11,
+   hostNotificationsListDowngradeV21ToV10,
+   hostNotificationsListUpgradeV10ToV20,
+   hostNotificationsListUpgradeV20ToV21,
+@@ -383,6 +382,9 @@
+   speechEnsureModelV10,
+   speechGetModelStatusV10,
+ } from "@hukum/protocol/host/speech/contracts";
++import {
++  supportSubmitReportV10,
++} from "@hukum/protocol/host/support/contracts";
+ import { speechDictateV10 } from "@hukum/protocol/host/speech/subscribe";
+ import {
+   migrationRunV10,
+@@ -3306,7 +3308,6 @@
+         1: {
+           contract: hostNotificationsListV21,
+           upgradeFromPreviousVersion: hostNotificationsListUpgradeV20ToV21,
+-          responseGrowthProjectionGated: true,
+         },
+       },
+       downgradePathsFromLatest: {
+@@ -3486,15 +3487,11 @@
+   "host.notifications.indicatorState": {
+     degrade: { kind: "unsupported" },
+     1: {
+-      latestMinor: 1,
++      latestMinor: 0,
+       versions: {
+         0: {
+-          contract: hostNotificationsIndicatorStateV10,
+-          upgradeFromPreviousVersion: null,
+-        },
+-        1: {
+           contract: hostNotificationsIndicatorState,
+-          upgradeFromPreviousVersion: hostNotificationsIndicatorStateUpgradeV10ToV11,
++          upgradeFromPreviousVersion: null,
+         },
+       },
+       downgradePathsFromLatest: {},
+@@ -5943,6 +5940,22 @@
+           upgradeFromPreviousVersion: null,
+         },
+       },
++      downgradePathsFromLatest: {},
++    },
++  },
++  // `support.submitReport@1.0` - receives issue reports from the desktop
++  // client and persists them on the host for local storage, analytics, and
++  // optional forwarding to external systems.
++  "support.submitReport": {
++    degrade: { kind: "unsupported" },
++    1: {
++      latestMinor: 0,
++      versions: {
++        0: {
++          contract: supportSubmitReportV10,
++          upgradeFromPreviousVersion: null,
++        },
++      },
+       downgradePathsFromLatest: {},
+     },
+   },

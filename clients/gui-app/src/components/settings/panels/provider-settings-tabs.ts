@@ -1,8 +1,8 @@
-import type { ProviderSettingsTab } from "@traycer/protocol/host/provider-native-schemas";
+import type { ProviderSettingsTab } from "@hukum/protocol/host/provider-native-schemas";
 import type {
   ProviderCliState,
   ProviderId,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 /**
  * A tab the detail pane can render. Every wire tab, plus `account` — which is
@@ -76,9 +76,9 @@ export interface ProviderTabInputs {
  *   field, and is now shown whenever the host advertises it. It used to be
  *   suppressed for cursor/amp by a `hidesCliCandidates(providerId)` id check on
  *   the premise that those two have no CLI-binary concept - which was never
- *   true: both route their MCP write verbs through the Traycer-resolved binary
+ *   true: both route their MCP write verbs through the Hukum-resolved binary
  *   (`runAmpCliCapture`, `runCursorMcpCli`), so the candidate table is the only
- *   control over the binary those verbs spawn and the only way to point Traycer
+ *   control over the binary those verbs spawn and the only way to point Hukum
  *   at one when none is found. Hiding it turned "no amp on PATH" into an MCP
  *   tab with no Add button and no route back.
  *
@@ -92,7 +92,7 @@ export interface ProviderTabInputs {
  *   so its visibility must not depend on a host advertisement that (for amp)
  *   legitimately omits every account-ish tab.
  * - `usage` is taken at the host's word. It already gates that tab on being
- *   able to populate it (managed profiles, the Traycer subscription card, or
+ *   able to populate it (managed profiles, the Hukum subscription card, or
  *   rate limits), which is the same question this side would have to re-derive.
  */
 export function supportedTabsFor(
@@ -116,7 +116,7 @@ export function providerTabInputs(state: ProviderCliState): ProviderTabInputs {
  * Whether this provider has MANAGED PROFILES at all.
  *
  * A deliberate mirror of the host's `providerSupportsManagedProfiles`
- * (`traycer-host/src/domain/providers/provider-profile-support.ts`), which is
+ * (`hukum-host/src/domain/providers/provider-profile-support.ts`), which is
  * itself an id check - there is no capability on the wire to read instead,
  * because the host answers this question before it builds one. For a provider
  * outside this set `profiles` is empty BY RULE rather than by chance

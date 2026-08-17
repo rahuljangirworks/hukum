@@ -63,8 +63,8 @@ import path from "node:path";
 import {
   isClipboardImageMediaType,
   type ClipboardImageMediaType,
-} from "@traycer-clients/shared/images/clipboard-image-media";
-import { MAX_ARTIFACT_IMAGE_BYTES } from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum-clients/shared/images/clipboard-image-media";
+import { MAX_ARTIFACT_IMAGE_BYTES } from "@hukum/protocol/host/epic/unary-schemas";
 import type { RunnerIpcBridge } from "./runner-ipc-bridge";
 import {
   getDesktopLogLevel,

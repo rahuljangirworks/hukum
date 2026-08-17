@@ -3,7 +3,7 @@ import type {
   WorktreeHostEntryV12,
   WorktreePrState,
   WorktreeWorkspaceSummaryV14,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 
 export type WorktreeDisplayedPrState = "open" | "closed" | "merged";
 

@@ -18,6 +18,7 @@ import {
   TILE_KIND_PR_DETAIL,
   TILE_KIND_PR_DIFF,
   TILE_KIND_SNAPSHOT_DIFF,
+  TILE_KIND_PUBLISHED_CHAT,
 } from "./tile-kinds";
 import type { BrainNoteTileRef } from "./tile-schema/brain-note-tile";
 
@@ -28,7 +29,7 @@ import type { BrainNoteTileRef } from "./tile-schema/brain-note-tile";
  */
 export type OpenableEpicNodeKind = Extract<
   EpicNodeKind,
-  "chat" | "terminal-agent" | "spec" | "ticket" | "story" | "review" | "html-preview"
+  "chat" | "terminal-agent" | "spec" | "ticket" | "story" | "review"
 >;
 
 export const isOpenableEpicNodeKind = makeLiteralGuard<OpenableEpicNodeKind>({
@@ -38,7 +39,7 @@ export const isOpenableEpicNodeKind = makeLiteralGuard<OpenableEpicNodeKind>({
   ticket: true,
   story: true,
   review: true,
-  "html-preview": true,
+  
 });
 
 /**
@@ -59,7 +60,7 @@ export const isRecordBackedEpicNodeKind =
     ticket: true,
     story: true,
     review: true,
-    "html-preview": true,
+    
   });
 
 export const WORKSPACE_FILE_TAB_KIND = "workspace-file" as const;
@@ -369,6 +370,18 @@ export interface BlankTileRef {
   readonly hostId: string;
 }
 
+export interface PublishedChatTileRef {
+  readonly id: string;
+  readonly instanceId: string;
+  readonly type: typeof TILE_KIND_PUBLISHED_CHAT;
+  readonly name: string;
+  readonly hostId: string;
+  readonly taskId: string;
+  readonly chatId: string;
+  readonly ownerUserId: string;
+  readonly ownerHostId: string;
+}
+
 /**
  * GitHub-style PR full-view tile. Pure ref, `isRecordBacked: false` (same
  * family as `GitDiffTileRef`/`SnapshotDiffTileRef`) - the heavy PR fact is
@@ -427,12 +440,19 @@ export type EpicCanvasTileRef =
   | PrDetailTileRef
   | PrDiffTileRef
   | BlankTileRef
-  | BrainNoteTileRef;
+  | BrainNoteTileRef
+  | PublishedChatTileRef;
 
 export function isBlankTileRef(
   value: EpicCanvasTileRef,
 ): value is BlankTileRef {
   return value.type === TILE_KIND_BLANK;
+}
+
+export function isPublishedChatTileRef(
+  value: EpicCanvasTileRef,
+): value is PublishedChatTileRef {
+  return value.type === TILE_KIND_PUBLISHED_CHAT;
 }
 
 export function isBrainNoteTileRef(

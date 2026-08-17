@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MouseEvent as ReactMouseEvent, ReactNode } from "react";
 import type { ExternalToast } from "sonner";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   ChatActiveTurn,
   ChatQueueState,
   ChatRunSettings,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import type {
   ChatMessage,
   InterviewSegment,

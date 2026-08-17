@@ -1,42 +1,42 @@
 import {
   schemaVersionSchema,
   type SchemaVersion,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   chatHeadCoreSchema,
   chatHeadCoreStorageSchema,
   type ChatHeadCore,
-} from "@traycer/protocol/persistence/chat-sync/core";
+} from "@hukum/protocol/persistence/chat-sync/core";
 import {
   preservedChatEventSchema,
   type PreservedChatEvent,
-} from "@traycer/protocol/persistence/chat-sync/entries";
+} from "@hukum/protocol/persistence/chat-sync/entries";
 import {
   chatSyncHostPrivateSchema,
   chatSyncHostPrivateStorageSchema,
   type ChatSyncHostPrivate,
-} from "@traycer/protocol/persistence/chat-sync/host-private";
+} from "@hukum/protocol/persistence/chat-sync/host-private";
 import {
   canonicalJsonStringify,
   canonicalizeJsonObject,
   isJsonObject,
   readJsonProperty,
   type JsonObject,
-} from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/json";
 import {
   mergeResidual,
   reprojectResidualCapture,
   storageProjection,
   withResidualCapture,
-} from "@traycer/protocol/persistence/chat-sync/residual";
-import { encodeHostPrivate } from "@traycer/protocol/persistence/chat-sync/shard";
+} from "@hukum/protocol/persistence/chat-sync/residual";
+import { encodeHostPrivate } from "@hukum/protocol/persistence/chat-sync/shard";
 import {
   CHAT_SYNC_SCHEMA_VERSION,
   chatSyncReaderVersionSchema,
   chatSyncSchemaVersionSchema,
   sha256HexSchema,
   type ChatSyncPayloadVersion,
-} from "@traycer/protocol/persistence/chat-sync/version";
+} from "@hukum/protocol/persistence/chat-sync/version";
 import { z } from "zod";
 
 /**

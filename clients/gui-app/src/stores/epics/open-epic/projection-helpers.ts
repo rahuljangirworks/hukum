@@ -23,23 +23,23 @@
  *     }>>,
  *   }
  */
-import type { EpicArtifactKind } from "@traycer/protocol/common/registry";
-import type { ChatRecordSummary } from "@traycer/protocol/host/epic/chat-records";
+import type { EpicArtifactKind } from "@hukum/protocol/common/registry";
+import type { ChatRecordSummary } from "@hukum/protocol/host/epic/chat-records";
 import type {
   AgentMode,
   ChatRunSettings,
   Message,
   TuiHarnessId,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import {
   agentModeSchema,
   chatRunSettingsSchema,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import {
   projectVisibleRoleClaims,
   roleClaimSchema,
   type RoleClaim,
-} from "@traycer/protocol/persistence/epic/role-claims";
+} from "@hukum/protocol/persistence/epic/role-claims";
 import * as Y from "yjs";
 import type {
   ArtifactProjection,
@@ -191,7 +191,10 @@ function readHarnessType(map: Y.Map<unknown>): TuiHarnessId | null {
     value === "codex" ||
     value === "opencode" ||
     value === "antigravity" ||
-    value === "gemini"
+    value === "gemini" ||
+    value === "kiro" ||
+    value === "kilocode" ||
+    value === "pi"
   ) {
     return value;
   }
@@ -328,12 +331,16 @@ export function projectTerminalAgent(
   if (typeof hostId !== "string") return null;
   const harnessSessionId = entry.get("harnessSessionId");
   // Claude/OpenCode/Gemini require a non-null harness session id (allocated
-  // synchronously). Codex and Antigravity tolerate null because their
-  // interactive processes allocate the upstream conversation asynchronously.
+  // synchronously). Codex, Antigravity, Kiro, Kilocode, and Pi tolerate null
+  // because their interactive processes allocate the upstream conversation
+  // asynchronously.
   if (
     typeof harnessSessionId !== "string" &&
     harnessId !== "codex" &&
-    harnessId !== "antigravity"
+    harnessId !== "antigravity" &&
+    harnessId !== "kiro" &&
+    harnessId !== "kilocode" &&
+    harnessId !== "pi"
   ) {
     return null;
   }

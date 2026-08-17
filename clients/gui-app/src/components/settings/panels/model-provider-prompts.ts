@@ -2,7 +2,7 @@ import type {
   ModelProviderAuthInputs,
   ModelProviderPrompt,
   ModelProviderPromptCondition,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 
 /**
  * The prompts DSL, evaluated. Upstream advertises the fields an auth method

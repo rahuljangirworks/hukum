@@ -1,33 +1,33 @@
-import { getRecordSchema } from "@traycer/protocol/framework/index";
-import { chatSyncAssistantMessageSchema } from "@traycer/protocol/persistence/chat-sync/entries";
-import { encodeChatHead } from "@traycer/protocol/persistence/chat-sync/head";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
+import { chatSyncAssistantMessageSchema } from "@hukum/protocol/persistence/chat-sync/entries";
+import { encodeChatHead } from "@hukum/protocol/persistence/chat-sync/head";
 import {
   canonicalizeJsonValue,
   jsonValueSchema,
   type JsonObject,
   type JsonValue,
-} from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/json";
 import {
   snapshotChatEventSchema,
   snapshotContentBlockSchema,
   snapshotProviderNoticeMetadataSchema,
   snapshotUserMessageSchema,
-} from "@traycer/protocol/persistence/chat-sync/open-harness";
-import { encodeChatShard } from "@traycer/protocol/persistence/chat-sync/shard";
-import { chatEventSchema } from "@traycer/protocol/persistence/epic/chat-events";
+} from "@hukum/protocol/persistence/chat-sync/open-harness";
+import { encodeChatShard } from "@hukum/protocol/persistence/chat-sync/shard";
+import { chatEventSchema } from "@hukum/protocol/persistence/epic/chat-events";
 import {
   contentBlockSchema,
   providerNoticeMetadataSchema,
-} from "@traycer/protocol/persistence/epic/content-blocks";
+} from "@hukum/protocol/persistence/epic/content-blocks";
 import {
   assistantMessageSchema,
   userMessageSchema,
-} from "@traycer/protocol/persistence/epic/messages";
+} from "@hukum/protocol/persistence/epic/messages";
 import {
   persistenceRecordRegistry,
   type ChatHead,
   type ChatShard,
-} from "@traycer/protocol/persistence/registry";
+} from "@hukum/protocol/persistence/registry";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 

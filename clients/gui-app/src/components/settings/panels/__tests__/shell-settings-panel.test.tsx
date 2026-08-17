@@ -40,16 +40,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type {
   IRunnerHost,
-  TraycerShellConfigSetInput,
-} from "@traycer-clients/shared/platform/runner-host";
+  HukumShellConfigSetInput,
+} from "@hukum-clients/shared/platform/runner-host";
 import {
   MockRunnerHost,
-  MockTraycerCli,
-} from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+  MockHukumCli,
+} from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import {
   recordNegotiatedHostMethods,
   resetNegotiatedManifests,
-} from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
+} from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
 import { hostScopeOptionFixture } from "@/components/settings/host-scope/host-scope-fixture";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { ShellSettingsPanel } from "@/components/settings/panels/shell-settings-panel";
@@ -59,7 +59,7 @@ import {
   buildConfigHostFixture,
   type ConfigHostFixture,
 } from "@/components/settings/panels/__tests__/host-config-rpc-test-support";
-import type { MockHandlerMap } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
+import type { MockHandlerMap } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
 import type { HostRpcRegistry } from "@/lib/host";
 
 afterEach(() => {
@@ -84,14 +84,14 @@ const SAVED_FLASH_MS = 1600;
 /**
  * The panel over the config RPC path - the production path for every
  * reachable host, local or remote. Wires a real `HostClient` (over an
- * in-memory messenger delegating to a `MockTraycerCli`) as the SCOPED host's
+ * in-memory messenger delegating to a `MockHukumCli`) as the SCOPED host's
  * client, so writes exercise the real `useHostQuery`/`useHostMutation` wiring
  * rather than a bridge stub.
  */
 function renderShellPanelOverRpc(options: {
-  readonly configure?: (cli: MockTraycerCli) => void;
+  readonly configure?: (cli: MockHukumCli) => void;
   /** Supply the CLI when a handler override needs to close over it. */
-  readonly cli?: MockTraycerCli;
+  readonly cli?: MockHukumCli;
   /** Replaces individual RPC handlers - e.g. to hold one write pending. */
   readonly overrideHandlers?: MockHandlerMap<HostRpcRegistry>;
   readonly hostId?: string;
@@ -107,7 +107,7 @@ function renderShellPanelOverRpc(options: {
 }): ConfigHostFixture {
   const hostId = options.hostId ?? "host-a";
   const isLocalMachine = options.isLocalMachine ?? true;
-  const cli = options.cli ?? new MockTraycerCli();
+  const cli = options.cli ?? new MockHukumCli();
   options.configure?.(cli);
   const fixture = buildConfigHostFixture({
     hostId,
@@ -141,7 +141,7 @@ function renderShellPanelOverRpc(options: {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false, gcTime: 0 } },
@@ -163,13 +163,13 @@ function renderShellPanelOverRpc(options: {
  * host whose recorded manifest omits `config.shell.get` ("host-outdated").
  */
 function renderShellPanelStoppedLocal(options: {
-  readonly configure: (cli: MockTraycerCli) => void;
+  readonly configure: (cli: MockHukumCli) => void;
   readonly connectable?: boolean;
   /** Recorded via `recordNegotiatedHostMethods` when given; omitted otherwise (no handshake yet). */
   readonly methods?: readonly string[];
-}): MockTraycerCli {
+}): MockHukumCli {
   const hostId = "host-a";
-  const cli = new MockTraycerCli();
+  const cli = new MockHukumCli();
   options.configure(cli);
   if (options.methods !== undefined) {
     recordNegotiatedHostMethods(hostId, options.methods);
@@ -191,7 +191,7 @@ function renderShellPanelStoppedLocal(options: {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: cli,
+    hukumCli: cli,
   });
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false, gcTime: 0 } },
@@ -208,7 +208,7 @@ function renderShellPanelStoppedLocal(options: {
 
 // Kept as a thin wrapper so the existing hierarchy/flags-row suites below stay
 // unchanged apart from the transport underneath them.
-function renderPanel(configure: (cli: MockTraycerCli) => void): MockTraycerCli {
+function renderPanel(configure: (cli: MockHukumCli) => void): MockHukumCli {
   const fixture = renderShellPanelOverRpc({ configure });
   return fixture.cli;
 }
@@ -321,7 +321,7 @@ describe("<ShellSettingsPanel /> hierarchy", () => {
       };
       const originalSet = cli.shellConfigSet.bind(cli);
       cli.shellConfigSet = async (
-        input: TraycerShellConfigSetInput,
+        input: HukumShellConfigSetInput,
       ): Promise<void> => {
         await setGate;
         try {
@@ -716,7 +716,7 @@ describe("<ShellSettingsPanel /> local host falls back to the CLI bridge", () =>
 describe("<ShellSettingsPanel /> capability-probe self-heal", () => {
   it("remote host: probes host.status while parked, then resumes the RPC editor once the host re-handshakes with the shell family", async () => {
     const hostId = "host-old";
-    const cli = new MockTraycerCli();
+    const cli = new MockHukumCli();
     cli.shellConfig = {
       path: "/bin/zsh",
       args: ["-i", "-l"],
@@ -750,7 +750,7 @@ describe("<ShellSettingsPanel /> capability-probe self-heal", () => {
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: undefined,
+      hukumCli: undefined,
     });
     const queryClient = new QueryClient({
       defaultOptions: { queries: { retry: false, gcTime: 0 } },
@@ -826,20 +826,20 @@ describe("<ShellSettingsPanel /> capability-probe self-heal", () => {
 
   it("local, connectable, outdated host: probes host.status while parked on the bridge, then resumes the RPC editor once the host re-handshakes", async () => {
     const hostId = "host-a";
-    const bridgeCli = new MockTraycerCli();
+    const bridgeCli = new MockHukumCli();
     bridgeCli.shellConfig = {
       path: "/bin/zsh",
       args: ["-i", "-l"],
       synthesised: true,
     };
-    const rpcCli = new MockTraycerCli();
+    const rpcCli = new MockHukumCli();
     rpcCli.shellConfig = {
       path: "/bin/zsh",
       args: ["-i", "-l"],
       synthesised: true,
     };
     // Backs the probe's client (and the eventual RPC editor) - independent of
-    // the local bridge's own MockTraycerCli, since a "host-outdated" host
+    // the local bridge's own MockHukumCli, since a "host-outdated" host
     // reads/writes through the bridge until it heals.
     const fixture = buildConfigHostFixture({
       hostId,
@@ -869,7 +869,7 @@ describe("<ShellSettingsPanel /> capability-probe self-heal", () => {
       hosts: [],
       workspaceFolderPickerPaths: undefined,
       hasLocalHost: undefined,
-      traycerCli: bridgeCli,
+      hukumCli: bridgeCli,
     });
     const queryClient = new QueryClient({
       defaultOptions: { queries: { retry: false, gcTime: 0 } },
@@ -959,7 +959,7 @@ describe("<ShellSettingsPanel /> env rename survives unmount", () => {
    * inside its own `mutationFn`.
    */
   it("drops the old key when the set is still in flight as the panel unmounts", async () => {
-    const cli = new MockTraycerCli();
+    const cli = new MockHukumCli();
     cli.shellConfig = {
       path: "/bin/zsh",
       args: ["-i", "-l"],
@@ -1095,7 +1095,7 @@ describe("<ShellSettingsPanel /> partially failed rename refreshes the editor", 
    * actually read. Both controllers invalidate on SETTLEMENT for this reason.
    */
   it("shows the new key after the delete half fails, on the RPC path", async () => {
-    const cli = new MockTraycerCli();
+    const cli = new MockHukumCli();
     cli.shellConfig = {
       path: "/bin/zsh",
       args: ["-i", "-l"],

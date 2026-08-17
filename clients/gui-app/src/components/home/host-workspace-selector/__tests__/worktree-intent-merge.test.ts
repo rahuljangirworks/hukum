@@ -146,12 +146,12 @@ describe("worktree intent merge", () => {
   it("setWorktreeIntentEntryBranchName replaces only a type:new branch name", () => {
     const first = createEntry({
       workspacePath: "/workspace/first",
-      newBranch: "traycer/first",
+      newBranch: "hukum/first",
       isPrimary: true,
     });
     const second = createEntry({
       workspacePath: "/workspace/second",
-      newBranch: "traycer/second",
+      newBranch: "hukum/second",
       isPrimary: false,
     });
     const next = setWorktreeIntentEntryBranchName(
@@ -182,7 +182,7 @@ describe("worktree intent merge", () => {
     ).toBe("random");
     // Sibling folders are untouched.
     expect(other?.kind === "worktree" ? other.branch.name : null).toBe(
-      "traycer/second",
+      "hukum/second",
     );
   });
 

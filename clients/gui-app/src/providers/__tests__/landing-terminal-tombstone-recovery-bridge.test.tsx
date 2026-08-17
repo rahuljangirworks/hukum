@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render, waitFor } from "@testing-library/react";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import { hostListItemToDirectoryEntry } from "@traycer-clients/shared/host-client/remote-fetcher";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import { hostListItemToDirectoryEntry } from "@hukum-clients/shared/host-client/remote-fetcher";
 import type {
   HostConnectivity,
   HostListItem,
-} from "@traycer/protocol/host/host-status";
+} from "@hukum/protocol/host/host-status";
 import { useLandingTerminalStore } from "@/stores/home/landing-terminal-store";
 
 const mocks = vi.hoisted(() => ({
@@ -26,11 +26,11 @@ vi.mock(
 // The ready-session evidence the bridge now subscribes to; the poll hook
 // re-reads it on its tick, so tests drive it with fake timers.
 vi.mock(
-  "@traycer-clients/shared/host-transport/remote/index",
+  "@hukum-clients/shared/host-transport/remote/index",
   async (importOriginal) => {
     const actual =
       await importOriginal<
-        typeof import("@traycer-clients/shared/host-transport/remote/index")
+        typeof import("@hukum-clients/shared/host-transport/remote/index")
       >();
     return {
       ...actual,

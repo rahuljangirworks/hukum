@@ -1,11 +1,11 @@
-import type { AssembledChat } from "@traycer/protocol/persistence/chat-sync/assembly";
-import type { CapturedResidualLevelId } from "@traycer/protocol/persistence/chat-sync/captured-levels";
-import type { ChatHeadCore } from "@traycer/protocol/persistence/chat-sync/core";
+import type { AssembledChat } from "@hukum/protocol/persistence/chat-sync/assembly";
+import type { CapturedResidualLevelId } from "@hukum/protocol/persistence/chat-sync/captured-levels";
+import type { ChatHeadCore } from "@hukum/protocol/persistence/chat-sync/core";
 import type {
   PreservedChatEvent,
   PreservedChatMessage,
-} from "@traycer/protocol/persistence/chat-sync/entries";
-import type { JsonObject } from "@traycer/protocol/persistence/chat-sync/json";
+} from "@hukum/protocol/persistence/chat-sync/entries";
+import type { JsonObject } from "@hukum/protocol/persistence/chat-sync/json";
 
 /**
  * Clone-not-migrate: an assembled cloud chat becomes the seed for a NEW chat

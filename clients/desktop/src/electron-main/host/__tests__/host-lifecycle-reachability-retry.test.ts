@@ -547,7 +547,7 @@ describe("HostLifecycle pid.json read outcomes", () => {
       await lifecycle.reloadSnapshotFromDisk();
       expect(lifecycle.getSnapshot()).not.toBeNull();
 
-      // ENOENT is the one read outcome that IS about the host: `traycer host
+      // ENOENT is the one read outcome that IS about the host: `hukum host
       // stop` unlinks the file, and a stopped host must lock promptly rather
       // than serve out a hold (the 2026-08-08 two-slot lesson).
       await unlink(layout.pidMetadataFile);

@@ -10,7 +10,7 @@ import {
 import type {
   InterviewAnswer,
   InterviewQuestion,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import {
   focusActiveComposer,
   registerComposerFocus,

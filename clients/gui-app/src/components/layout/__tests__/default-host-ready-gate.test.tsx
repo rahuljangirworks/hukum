@@ -467,7 +467,7 @@ describe("<HostReadyGate />", () => {
         stage: "loading",
       },
     );
-    expect(screen.getByText("Traycer Host is unavailable")).toBeTruthy();
+    expect(screen.getByText("Hukum Host is unavailable")).toBeTruthy();
     expect(screen.queryByText("This tab's host is unavailable.")).toBeNull();
     // Must not have been routed to the slow-local startup card.
     expect(screen.queryByTestId("local-host-retry")).toBeNull();
@@ -525,12 +525,12 @@ describe("<HostReadyGate />", () => {
 
     expect(
       screen.getByText(
-        "Traycer can't reach this host right now, and no other host in the directory is reachable either.",
+        "Hukum can't reach this host right now, and no other host in the directory is reachable either.",
       ),
     ).toBeTruthy();
     expect(
       screen.queryByText(
-        "Traycer can't reach this host right now. Another host is available - switch to it, or retry.",
+        "Hukum can't reach this host right now. Another host is available - switch to it, or retry.",
       ),
     ).toBeNull();
 
@@ -560,12 +560,12 @@ describe("<HostReadyGate />", () => {
 
     expect(
       screen.getByText(
-        "Traycer can't reach this host right now. Another host is available - switch to it, or retry.",
+        "Hukum can't reach this host right now. Another host is available - switch to it, or retry.",
       ),
     ).toBeTruthy();
     expect(
       screen.queryByText(
-        "Traycer can't reach this host right now, and no other host in the directory is reachable either.",
+        "Hukum can't reach this host right now, and no other host in the directory is reachable either.",
       ),
     ).toBeNull();
 

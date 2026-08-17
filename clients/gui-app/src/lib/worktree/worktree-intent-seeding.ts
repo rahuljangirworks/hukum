@@ -2,7 +2,7 @@ import type {
   WorktreeBranch,
   WorktreeFolderIntent,
   WorktreeWorkspaceSummary,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { createWorktreeRetryIdentity } from "@/lib/worktree/worktree-retry-identity";
 
 type RepoIdentifier = WorktreeFolderIntent["repoIdentifier"];
@@ -21,37 +21,20 @@ export interface SeedFolderContext extends DefaultFolderInput {
 }
 
 /**
- * The default a freshly-added folder seeds to: a new worktree forking a fresh
- * branch off the working tree (the folder's current branch). A non-git folder or
- * a git repo with no resolvable current branch (detached HEAD) has no valid fork
- * source, so it degrades to `local` rather than emitting a structurally invalid
- * `{ source: "" }` worktree entry that would only fail at send/setup.
+ * The default intent for a freshly-added folder: always `local` (use the
+ * existing checkout in-place). Worktree creation is opt-in — it only happens
+ * when the user explicitly selects "Create new worktree" from the workspace
+ * picker, when a seed/epic/folder memory replays a prior explicit choice, or
+ * when a fork surface inherits an existing worktree binding.
  */
 export function defaultFolderIntent(
   folder: DefaultFolderInput,
 ): WorktreeFolderIntent {
-  if (!folder.isGitRepo || folder.currentBranch === null) {
-    return {
-      kind: "local",
-      workspacePath: folder.workspacePath,
-      repoIdentifier: folder.repoIdentifier,
-      isPrimary: folder.isPrimary,
-    };
-  }
   return {
-    kind: "worktree",
-    scripts: null,
+    kind: "local",
     workspacePath: folder.workspacePath,
     repoIdentifier: folder.repoIdentifier,
     isPrimary: folder.isPrimary,
-    branch: {
-      type: "new",
-      name: folder.defaultNewBranchName,
-      source: folder.currentBranch,
-      carryUncommittedChanges: false,
-      collision: "random",
-      retryIdentity: createWorktreeRetryIdentity(),
-    },
   };
 }
 

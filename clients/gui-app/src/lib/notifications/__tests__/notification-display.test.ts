@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type {
   HostNotificationEntry,
   HostNotificationsCloudFeedRow,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 import {
   displayAppLocalNotification,
   displayCloudSnapshotArrivals,
@@ -16,7 +16,7 @@ import {
 import type {
   NotificationForegroundDisplay,
   NotificationShowOutcome,
-} from "@traycer-clients/shared/platform/runner-host";
+} from "@hukum-clients/shared/platform/runner-host";
 import { buildNotificationActivationEnvelope } from "@/lib/notifications/notification-activation-envelope";
 import type { MergedNotificationRow } from "@/stores/notifications/merged-notifications";
 import { useCloudNotificationsStore } from "@/stores/notifications/cloud-notifications-store";
@@ -274,7 +274,7 @@ describe("notification display", () => {
     );
 
     expect(showNotification).toHaveBeenCalledWith({
-      title: "Traycer",
+      title: "Hukum",
       body: "2 new notifications",
       payload: buildNotificationActivationEnvelope({
         route: {
@@ -296,7 +296,7 @@ describe("notification display", () => {
 
     renderActionableToast();
     fireEvent.click(
-      screen.getByRole("button", { name: "Traycer 2 new notifications" }),
+      screen.getByRole("button", { name: "Hukum 2 new notifications" }),
     );
 
     expect(onToastClick).toHaveBeenCalledWith(first);

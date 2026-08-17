@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
-import { chatSubscribeV16 } from "@traycer/protocol/host/agent/gui/subscribe";
+import { chatSubscribeV16 } from "@hukum/protocol/host/agent/gui/subscribe";
 import { chatSubscribeV16SurfaceBaseline } from "./__fixtures__/chat-subscribe-v16-surface";
 
 /**

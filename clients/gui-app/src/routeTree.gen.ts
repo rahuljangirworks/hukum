@@ -30,6 +30,7 @@ import { Route as SettingsProvidersRouteImport } from "./routes/settings.provide
 import { Route as SettingsServiceRouteImport } from "./routes/settings.service";
 import { Route as SettingsShellRouteImport } from "./routes/settings.shell";
 import { Route as SettingsUsageRouteImport } from "./routes/settings.usage";
+import { Route as SettingsVoiceRouteImport } from "./routes/settings.voice";
 import { Route as SettingsWorktreesRouteImport } from "./routes/settings.worktrees";
 import { Route as EpicsEpicIdTabIdRouteImport } from "./routes/epics.$epicId.$tabId";
 
@@ -138,6 +139,11 @@ const SettingsUsageRoute = SettingsUsageRouteImport.update({
   path: "/usage",
   getParentRoute: () => SettingsRoute,
 } as any);
+const SettingsVoiceRoute = SettingsVoiceRouteImport.update({
+  id: "/voice",
+  path: "/voice",
+  getParentRoute: () => SettingsRoute,
+} as any);
 const SettingsWorktreesRoute = SettingsWorktreesRouteImport.update({
   id: "/worktrees",
   path: "/worktrees",
@@ -169,6 +175,7 @@ export interface FileRoutesByFullPath {
   "/settings/service": typeof SettingsServiceRoute;
   "/settings/shell": typeof SettingsShellRoute;
   "/settings/usage": typeof SettingsUsageRoute;
+  "/settings/voice": typeof SettingsVoiceRoute;
   "/settings/worktrees": typeof SettingsWorktreesRoute;
   "/epics/": typeof EpicsIndexRoute;
   "/settings/": typeof SettingsIndexRoute;
@@ -192,6 +199,7 @@ export interface FileRoutesByTo {
   "/settings/service": typeof SettingsServiceRoute;
   "/settings/shell": typeof SettingsShellRoute;
   "/settings/usage": typeof SettingsUsageRoute;
+  "/settings/voice": typeof SettingsVoiceRoute;
   "/settings/worktrees": typeof SettingsWorktreesRoute;
   "/epics": typeof EpicsIndexRoute;
   "/settings": typeof SettingsIndexRoute;
@@ -218,6 +226,7 @@ export interface FileRoutesById {
   "/settings/service": typeof SettingsServiceRoute;
   "/settings/shell": typeof SettingsShellRoute;
   "/settings/usage": typeof SettingsUsageRoute;
+  "/settings/voice": typeof SettingsVoiceRoute;
   "/settings/worktrees": typeof SettingsWorktreesRoute;
   "/epics/": typeof EpicsIndexRoute;
   "/settings/": typeof SettingsIndexRoute;
@@ -245,6 +254,7 @@ export interface FileRouteTypes {
     | "/settings/service"
     | "/settings/shell"
     | "/settings/usage"
+    | "/settings/voice"
     | "/settings/worktrees"
     | "/epics/"
     | "/settings/"
@@ -268,6 +278,7 @@ export interface FileRouteTypes {
     | "/settings/service"
     | "/settings/shell"
     | "/settings/usage"
+    | "/settings/voice"
     | "/settings/worktrees"
     | "/epics"
     | "/settings"
@@ -293,6 +304,7 @@ export interface FileRouteTypes {
     | "/settings/service"
     | "/settings/shell"
     | "/settings/usage"
+    | "/settings/voice"
     | "/settings/worktrees"
     | "/epics/"
     | "/settings/"
@@ -457,6 +469,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof SettingsUsageRouteImport;
       parentRoute: typeof SettingsRoute;
     };
+    "/settings/voice": {
+      id: "/settings/voice";
+      path: "/voice";
+      fullPath: "/settings/voice";
+      preLoaderRoute: typeof SettingsVoiceRouteImport;
+      parentRoute: typeof SettingsRoute;
+    };
     "/settings/worktrees": {
       id: "/settings/worktrees";
       path: "/worktrees";
@@ -500,6 +519,7 @@ interface SettingsRouteChildren {
   SettingsServiceRoute: typeof SettingsServiceRoute;
   SettingsShellRoute: typeof SettingsShellRoute;
   SettingsUsageRoute: typeof SettingsUsageRoute;
+  SettingsVoiceRoute: typeof SettingsVoiceRoute;
   SettingsWorktreesRoute: typeof SettingsWorktreesRoute;
   SettingsIndexRoute: typeof SettingsIndexRoute;
 }
@@ -518,6 +538,7 @@ const SettingsRouteChildren: SettingsRouteChildren = {
   SettingsServiceRoute: SettingsServiceRoute,
   SettingsShellRoute: SettingsShellRoute,
   SettingsUsageRoute: SettingsUsageRoute,
+  SettingsVoiceRoute: SettingsVoiceRoute,
   SettingsWorktreesRoute: SettingsWorktreesRoute,
   SettingsIndexRoute: SettingsIndexRoute,
 };

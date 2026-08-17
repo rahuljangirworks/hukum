@@ -3,8 +3,8 @@ import { useSyncExternalStore } from "react";
 import type {
   ChatBackupHaltCause,
   ChatBackupStatusRow,
-} from "@traycer/protocol/host/epic/chat-backup-status";
-import type { HostRequester } from "@traycer-clients/shared/host-client/host-client";
+} from "@hukum/protocol/host/epic/chat-backup-status";
+import type { HostRequester } from "@hukum-clients/shared/host-client/host-client";
 import type { HostRpcRegistry } from "@/lib/host";
 import { useEpicSessionHostId } from "@/hooks/epic/use-epic-session-host-id";
 import { useHostClientForHostId } from "@/hooks/host/use-host-client-for-host-id";

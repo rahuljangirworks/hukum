@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { NotificationShowOutcome } from "@traycer-clients/shared/platform/runner-host";
+import type { NotificationShowOutcome } from "@hukum-clients/shared/platform/runner-host";
 import {
   act,
   cleanup,

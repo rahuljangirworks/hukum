@@ -17,10 +17,10 @@
  * while the request underneath it is wrong; that is precisely the bug.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { HostRuntime } from "@traycer-clients/shared/host-client/host-runtime";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
+import { HostRuntime } from "@hukum-clients/shared/host-client/host-runtime";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
 import { QueryClient } from "@tanstack/react-query";
 import { AuthService } from "@/lib/auth/auth-service";
 import { createAuthBoundHostDirectory } from "@/lib/host/auth-bound-host-directory";
@@ -243,13 +243,13 @@ const built: Composition[] = [];
  */
 function buildComposition(): Composition {
   const runnerHost = new MockRunnerHost({
-    signInUrl: "https://auth.traycer.invalid/sign-in",
+    signInUrl: "https://auth.hukum.invalid/sign-in",
     authnBaseUrl: AUTHN_BASE_URL,
     localHost: null,
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const auth = new AuthService({ runnerHost });
   const directory = createAuthBoundHostDirectory({

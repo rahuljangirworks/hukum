@@ -415,7 +415,7 @@ export function formatHostMeta(
   if (item.platform !== null && item.platform.length > 0) {
     parts.push(item.platform);
   }
-  if (item.status.appVersion !== null && item.status.appVersion.length > 0) {
+  if (item.status?.appVersion !== null && item.status?.appVersion !== undefined && item.status.appVersion.length > 0) {
     parts.push(`v${item.status.appVersion}`);
   }
   // For a host we cannot vouch for, the durable last-seen is the more useful
@@ -425,7 +425,7 @@ export function formatHostMeta(
   // `local-only` does NOT: nothing there is stale or missing, so replacing the
   // identity line with a last-seen would read as a fault.
   if (presence.tone === "offline" || presence.tone === "unknown") {
-    const lastSeen = formatLastSeen(item.status.lastSeenAt, nowMs);
+    const lastSeen = formatLastSeen(item.status?.lastSeenAt, nowMs);
     if (lastSeen !== null) {
       return lastSeen;
     }

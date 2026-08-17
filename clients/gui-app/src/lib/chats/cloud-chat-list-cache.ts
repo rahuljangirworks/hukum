@@ -1,7 +1,7 @@
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { ListCloudChatsResponse } from "@traycer/protocol/host/epic/cloud-chat";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { ListCloudChatsResponse } from "@hukum/protocol/host/epic/cloud-chat";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { cloudRowIsViewersOwn } from "@/lib/chats/unified-chat-list";
 import { queryKeys } from "@/lib/query-keys";
 import { useAuthStore } from "@/stores/auth/auth-store";

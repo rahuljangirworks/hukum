@@ -7,6 +7,7 @@ import {
   useHostPickerList,
 } from "@/hooks/host/use-host-picker-list";
 import { uiQueryKeys } from "@/lib/query-keys";
+import { useHostRemovalStore } from "@/stores/host/host-removal-store";
 
 /**
  * Hook form of `useHostPickerList` that internalizes directory binding,
@@ -18,12 +19,15 @@ export function useHostDirectoryList(): UseQueryResult<
 > {
   const binding = useHostBinding();
   const queryClient = useQueryClient();
+  const removedInSession = useHostRemovalStore((s) => s.removedInSession);
   const directory = binding === null ? null : binding.directory;
   const directoryId =
-    directory === null ? null : registerHostPickerDirectory(directory);
+    directory === null || removedInSession
+      ? null
+      : registerHostPickerDirectory(directory);
 
   useEffect(() => {
-    if (directory === null || directoryId === null) return;
+    if (directory === null || directoryId === null || removedInSession) return;
     // The host publishing during boot (the 2026-07-14 incident) arrives as an
     // onChange well after this subscription is installed, so invalidating here
     // refetches and surfaces it. Paired with `staleTime: 0` in
@@ -40,7 +44,7 @@ export function useHostDirectoryList(): UseQueryResult<
     return () => {
       subscription.dispose();
     };
-  }, [directory, directoryId, queryClient]);
+  }, [directory, directoryId, queryClient, removedInSession]);
 
   return useHostPickerList(directoryId);
 }

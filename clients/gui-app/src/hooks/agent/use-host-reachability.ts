@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useSyncExternalStore } from "react";
-import { hasReadyRemoteSession } from "@traycer-clients/shared/host-transport/remote/index";
+import { hasReadyRemoteSession } from "@hukum-clients/shared/host-transport/remote/index";
 import {
   hostUnavailability,
   type HostUnavailability,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
 import { useHostDirectoryList } from "@/hooks/host/use-host-directory-list-query";
 import { isUnknownHost } from "@/lib/host/constants";
 

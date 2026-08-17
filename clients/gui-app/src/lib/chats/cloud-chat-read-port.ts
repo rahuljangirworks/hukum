@@ -1,7 +1,7 @@
-import type { HostRequester } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { CloudChatReadPort } from "@traycer-clients/shared/cloud-chat/cloud-chat-reader";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { HostRequester } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { CloudChatReadPort } from "@hukum-clients/shared/cloud-chat/cloud-chat-reader";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 
 /**
  * The shared reader's transport port, bound to this device's host client.
@@ -9,7 +9,7 @@ import type { HostRpcRegistry } from "@traycer/protocol/host/index";
  * The whole binding is two calls forwarded, and that thinness is the design.
  * Everything a reader DECIDES - the version gate, per-part digest and length
  * verification, head-order assembly, the content-addressed cache - lives in
- * `@traycer-clients/shared/cloud-chat`, environment-agnostic, so the renderer
+ * `@hukum-clients/shared/cloud-chat`, environment-agnostic, so the renderer
  * and the CLI cannot drift on any of it. What differs between them is which
  * wire the bytes come off, and that is exactly what this file is.
  *

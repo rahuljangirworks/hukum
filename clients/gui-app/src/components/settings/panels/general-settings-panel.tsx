@@ -5,7 +5,6 @@ import { useShallow } from "zustand/react/shallow";
 import { SettingsPanelShell } from "@/components/settings/settings-panel-shell";
 import { SettingsRow } from "@/components/settings/settings-row";
 import { SettingsGroup } from "@/components/settings/settings-group";
-import { VoiceSettingsSection } from "@/components/settings/voice-settings-section";
 import { WorktreeBranchPrefixSection } from "@/components/settings/worktree-branch-prefix-section";
 import { useSettingsDensity } from "@/providers/settings-density-context";
 import { cn } from "@/lib/utils";
@@ -117,7 +116,6 @@ export function GeneralSettingsPanel() {
           dataTestId={undefined}
           fill={false}
         >
-          <VoiceSettingsSection />
           <SettingsRow
             label="Quote reply on text selection"
             description="Selecting assistant text shows a quote button that inserts the selection into the composer."

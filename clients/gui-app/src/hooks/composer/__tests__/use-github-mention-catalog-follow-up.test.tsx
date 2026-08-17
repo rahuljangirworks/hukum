@@ -3,11 +3,11 @@ import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   MentionGithubCatalogRequest,
   MentionGithubCatalogResponse,
-} from "@traycer/protocol/host/mention-schemas";
+} from "@hukum/protocol/host/mention-schemas";
 
 import { useGithubMentionCatalog } from "@/hooks/composer/use-github-mention-catalog";
 import type { GithubMentionScope } from "@/hooks/composer/use-github-mention-catalog";

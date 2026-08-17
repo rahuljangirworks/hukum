@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { HarnessModelRow } from "@/components/home/data/harness-model-search";
 import type { ModelOption } from "@/components/home/data/landing-options";
 import { HarnessModelPickerItem } from "@/components/home/pickers/harness-model-picker-item";
-import { guiAgentModelCapabilitiesSchema } from "@traycer/protocol/host/agent/gui/unary-schemas";
+import { guiAgentModelCapabilitiesSchema } from "@hukum/protocol/host/agent/gui/unary-schemas";
 
 function model(overrides: Partial<ModelOption>): ModelOption {
   const base: ModelOption = {

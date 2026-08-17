@@ -4,7 +4,7 @@ import type {
   ModelProviderPrompt,
   ModelProviderSource,
   ProviderModelProvidersCapabilities,
-} from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-native-schemas";
 
 /**
  * The rules the Model Providers tab and its connect dialog render FROM, kept
@@ -37,7 +37,7 @@ export function sortModelProviderEntries(
  *
  * `api` is "API key" rather than "Saved in {provider}". The longer phrasing was
  * making a true and useful point (a key entered here goes to the PROVIDER's own
- * store, never Traycer's) but it was making it in the one slot that has to be
+ * store, never Hukum's) but it was making it in the one slot that has to be
  * scannable at a glance across ~180 rows, and it read as a different fact from
  * the one the upstream app states for the identical row. The provenance point
  * survives in {@link sourceBadgeHint}, which is where a sentence belongs.
@@ -73,11 +73,11 @@ export function sourceBadgeHint(
     case "api":
       return `This key is stored in ${providerLabel}'s own credential store, shared with its CLI, and can be removed from here.`;
     case "env":
-      return "This credential comes from an environment variable, so it's managed outside Traycer.";
+      return "This credential comes from an environment variable, so it's managed outside Hukum.";
     case "config":
       return configDeclaredCustom
         ? `You declared this provider in ${providerLabel}'s config file, with its own base URL and models.`
-        : `This credential comes from a ${providerLabel} config file, so it's managed outside Traycer.`;
+        : `This credential comes from a ${providerLabel} config file, so it's managed outside Hukum.`;
     case "custom":
       return `This provider is loaded by a custom ${providerLabel} loader.`;
   }

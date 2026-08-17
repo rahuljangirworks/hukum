@@ -5,10 +5,10 @@ import {
   type AssetStreamFailure,
   type AssetStreamFailureReason,
   type AssetStreamHeader,
-} from "@traycer-clients/shared/host-transport/asset-stream-client";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import type { AssetMediaType } from "@traycer/protocol/host/asset-stream-schemas";
+} from "@hukum-clients/shared/host-transport/asset-stream-client";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import type { AssetMediaType } from "@hukum/protocol/host/asset-stream-schemas";
 import { useTabHostId } from "@/components/epic-canvas/hooks/use-tab-host-id";
 import { usePaneFocused } from "@/components/epic-tabs/pane-visibility-context";
 import { useHostDirectoryEntry } from "@/hooks/host/use-host-directory-entry";

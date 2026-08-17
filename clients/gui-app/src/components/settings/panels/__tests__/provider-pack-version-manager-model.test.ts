@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type {
   ProviderManagedVersions,
   ProviderPackVersion,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import {
   certificationBadgeLabel,
   certificationMetaLine,
@@ -395,12 +395,12 @@ describe("copy and label rules with no coverage before this", () => {
     expect(formatSharedWithProvidersLine(["opencode"])).toBe(
       "Shared by OpenCode",
     );
-    expect(formatSharedWithProvidersLine(["opencode", "traycer"])).toBe(
-      "Shared by OpenCode and Traycer",
+    expect(formatSharedWithProvidersLine(["opencode", "hukum"])).toBe(
+      "Shared by OpenCode and Hukum",
     );
     expect(
-      formatSharedWithProvidersLine(["opencode", "traycer", "openrouter"]),
-    ).toBe("Shared by OpenCode, Traycer, and OpenRouter");
+      formatSharedWithProvidersLine(["opencode", "hukum", "openrouter"]),
+    ).toBe("Shared by OpenCode, Hukum, and OpenRouter");
   });
 });
 

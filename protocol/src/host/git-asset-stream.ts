@@ -19,11 +19,11 @@
  * `BinaryPlaceholder` in the diff tile.
  */
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
 import {
   assetStreamClientFrameSchema,
   assetStreamServerFrameSchema,
-} from "@traycer/protocol/host/asset-stream-schemas";
+} from "@hukum/protocol/host/asset-stream-schemas";
 
 export const gitStreamFileAssetSideSchema = z.enum(["old", "new"]);
 export type GitStreamFileAssetSide = z.infer<

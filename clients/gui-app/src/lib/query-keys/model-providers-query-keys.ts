@@ -1,5 +1,5 @@
 import type { QueryKey } from "@tanstack/react-query";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import type { HostRpcRegistry } from "@/lib/host";
 import { hostQueryKeys } from "@/lib/query-keys/host-query-keys";
 

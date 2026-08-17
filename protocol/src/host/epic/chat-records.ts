@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { defineStreamRpcContract } from "@traycer/protocol/framework/versioned-stream-rpc";
-import { cloudChatVisibilitySchema } from "@traycer/protocol/host/epic/cloud-chat";
+import { defineStreamRpcContract } from "@hukum/protocol/framework/versioned-stream-rpc";
+import { cloudChatVisibilitySchema } from "@hukum/protocol/host/epic/cloud-chat";
 
 const textFrameFields = {
   hasBinaryPayload: z.literal(false),

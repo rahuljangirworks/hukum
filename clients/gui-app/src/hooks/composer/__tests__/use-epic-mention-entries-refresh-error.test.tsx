@@ -1,7 +1,7 @@
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 
 import { useEpicMentionEntries } from "@/hooks/composer/use-epic-mention-entries";
 

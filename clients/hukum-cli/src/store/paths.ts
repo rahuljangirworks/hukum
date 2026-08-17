@@ -8,41 +8,41 @@ import {
   hostInstallRecordPath as sharedHostInstallRecordPath,
   hostStagedDir as sharedHostStagedDir,
   hostStagedRecordPath as sharedHostStagedRecordPath,
-} from "@traycer/protocol/config/installation";
+} from "@hukum/protocol/config/installation";
 import type { Environment } from "../runner/environment";
 import { devDesktopSlotForEnvironment } from "./dev-desktop-slot";
 
-// ~/.traycer/ is the single Traycer root. Per the Native Packaging
+// ~/.hukum/ is the single Hukum root. Per the Native Packaging
 // tech plan, prod and dev *components* are siblings inside it rather
-// than under sibling root dirs like ~/.traycer-dev - that way a user
+// than under sibling root dirs like ~/.hukum-dev - that way a user
 // sees the full install surface in one tree.
 //
-//   ~/.traycer/cli/                            - shared CLI surface + prod
-//   ~/.traycer/cli/config.json                 - shared CLI config
-//   ~/.traycer/cli/credentials                 - shared auth
-//   ~/.traycer/cli/manifest.json               - prod install manifest
-//   ~/.traycer/cli/.lock                       - prod mutation lock
-//   ~/.traycer/cli/post-finalize.json          - prod pending-upgrade helper marker
-//   ~/.traycer/cli/dev/                        - shared dev CLI home/config scope
-//   ~/.traycer/cli/dev/manifest.json           - legacy/no-slot dev install manifest
-//   ~/.traycer/cli/dev-runs/<slot>/manifest.json      - multi-run dev install manifest
-//   ~/.traycer/cli/dev-runs/<slot>/.lock              - multi-run dev mutation lock
-//   ~/.traycer/cli/dev-runs/<slot>/post-finalize.json - multi-run dev upgrade marker
-//   ~/.traycer/host/                         - prod host runtime root
-//   ~/.traycer/host/host.log               - prod host stdout + bootstrap markers
-//   ~/.traycer/host/pid.json                 - prod host pid metadata
-//   ~/.traycer/host/update-progress.json     - prod cross-process `host update` outcome marker
-//   ~/.traycer/host/install/                 - prod host install dir (atomic-swap target)
-//   ~/.traycer/host/install/install.json     - prod host install record
-//   ~/.traycer/host/staging/                 - prod host staging root (verify-before-replace)
-//   ~/.traycer/host/download-cache/          - prod resumable archive partials (cross-invocation)
-//   ~/.traycer/host/dev/                     - legacy/no-slot dev host runtime root
-//   ~/.traycer/host/dev-runs/<slot>/         - multi-run dev host runtime root
-//   ~/.traycer/host/dev-runs/<slot>/install/install.json - multi-run dev install record
-//   ~/.traycer/host/dev-runs/<slot>/install-staging/     - multi-run dev staging root
-const TRAYCER_HOME = join(homedir(), ".traycer");
-const CLI_HOME = join(TRAYCER_HOME, "cli");
-const HOST_HOME = join(TRAYCER_HOME, "host");
+//   ~/.hukum/cli/                            - shared CLI surface + prod
+//   ~/.hukum/cli/config.json                 - shared CLI config
+//   ~/.hukum/cli/credentials                 - shared auth
+//   ~/.hukum/cli/manifest.json               - prod install manifest
+//   ~/.hukum/cli/.lock                       - prod mutation lock
+//   ~/.hukum/cli/post-finalize.json          - prod pending-upgrade helper marker
+//   ~/.hukum/cli/dev/                        - shared dev CLI home/config scope
+//   ~/.hukum/cli/dev/manifest.json           - legacy/no-slot dev install manifest
+//   ~/.hukum/cli/dev-runs/<slot>/manifest.json      - multi-run dev install manifest
+//   ~/.hukum/cli/dev-runs/<slot>/.lock              - multi-run dev mutation lock
+//   ~/.hukum/cli/dev-runs/<slot>/post-finalize.json - multi-run dev upgrade marker
+//   ~/.hukum/host/                         - prod host runtime root
+//   ~/.hukum/host/host.log               - prod host stdout + bootstrap markers
+//   ~/.hukum/host/pid.json                 - prod host pid metadata
+//   ~/.hukum/host/update-progress.json     - prod cross-process `host update` outcome marker
+//   ~/.hukum/host/install/                 - prod host install dir (atomic-swap target)
+//   ~/.hukum/host/install/install.json     - prod host install record
+//   ~/.hukum/host/staging/                 - prod host staging root (verify-before-replace)
+//   ~/.hukum/host/download-cache/          - prod resumable archive partials (cross-invocation)
+//   ~/.hukum/host/dev/                     - legacy/no-slot dev host runtime root
+//   ~/.hukum/host/dev-runs/<slot>/         - multi-run dev host runtime root
+//   ~/.hukum/host/dev-runs/<slot>/install/install.json - multi-run dev install record
+//   ~/.hukum/host/dev-runs/<slot>/install-staging/     - multi-run dev staging root
+const HUKUM_HOME = join(homedir(), ".hukum");
+const CLI_HOME = join(HUKUM_HOME, "cli");
+const HOST_HOME = join(HUKUM_HOME, "host");
 // The host install temp/extract area (verify-before-replace), kept distinct
 // from the host root. Named "install-staging" for clarity. Also the root
 // under which `host download`'s owner-tokened download/extract temp dirs
@@ -59,7 +59,7 @@ const HOST_STAGING_SUBDIR = "install-staging";
 // `install-staging/`, this area is deliberately NOT per-invocation: the
 // archive path is derived from the version + sha256 so a re-spawned CLI
 // finds the previous invocation's partial file and resumes it with a Range
-// request instead of starting from zero (traycer#585/#588 - a 700MB host
+// request instead of starting from zero (hukum#585/#588 - a 700MB host
 // archive over a throttled link never survives a single process). Contents
 // are owner-tokened and swept by `registry/download-cache.ts`, not by the
 // `install-staging/` temp sweep.
@@ -92,21 +92,21 @@ function devRunSubdir(base: string, slot: string): string {
   return join(base, "dev-runs", slot);
 }
 
-export const traycerHomeDir = (): string => TRAYCER_HOME;
+export const hukumHomeDir = (): string => HUKUM_HOME;
 // Shared (non-environment) config surface. `cliConfigPath`
-// (~/.traycer/cli/config.json) holds machine-local shell/env config that is
+// (~/.hukum/cli/config.json) holds machine-local shell/env config that is
 // genuinely environment-agnostic, so it stays at the shared root and is owned
-// by `@traycer/protocol/config` (the CLI and the host resolve the exact same
+// by `@hukum/protocol/config` (the CLI and the host resolve the exact same
 // file); re-exported here for the CLI's existing callers.
-export { cliConfigPath } from "@traycer/protocol/config/paths";
+export { cliConfigPath } from "@hukum/protocol/config/paths";
 export const cliSharedHomeDir = (): string => CLI_HOME;
 
 // Credentials are environment-scoped (production → shared root, dev/staging →
 // the slot subdir, matching `cliHomeDir`). The path now lives in
-// `@traycer/protocol/config` so the host resolves the exact same file when it
+// `@hukum/protocol/config` so the host resolves the exact same file when it
 // reads `user.id` to pin its owner (the owner-binding gate); re-exported here
 // for the CLI's existing callers.
-export { cliCredentialsPath } from "@traycer/protocol/config/paths";
+export { cliCredentialsPath } from "@hukum/protocol/config/paths";
 
 // Environment-aware shared CLI paths.
 export function cliHomeDir(environment: Environment | undefined): string {
@@ -158,7 +158,7 @@ export function cliPostFinalizeMarkerPath(environment: Environment): string {
 }
 
 // Environment-aware host paths. All environments are rooted under
-// ~/.traycer/host/; non-production environments nest one level deeper.
+// ~/.hukum/host/; non-production environments nest one level deeper.
 // Non-environment callers (bootstrap-log, pid-metadata, host-status) pass
 // `undefined` and resolve to the production root - host bootstrap is
 // production-only, so environment is not threaded through that flow.
@@ -171,7 +171,7 @@ export function hostHomeDir(environment: Environment | undefined): string {
 
 // On-disk contracts written by the host and read here by string path -
 // no host-package import. Shape verified at the host writer site
-// (the host is the external Traycer Host).
+// (the host is the external Hukum Host).
 // Bootstrap markers and host stdout share `host.log` - the supervisor
 // redirects the host's stdio fd to the same file the markers are
 // appended to, so the renderer's failure-card tail is one cohesive log.
@@ -221,7 +221,7 @@ export function hostPendingActivationPath(
 /**
  * Deliberate-stop intent, written by whoever is about to stop the host and read
  * by the supervisor before it relaunches a dead child. Cross-process by
- * necessity: the stopper (`traycer host stop`, an installer, Desktop's
+ * necessity: the stopper (`hukum host stop`, an installer, Desktop's
  * `host restart`) is never the supervisor process itself, and on Windows the
  * supervisor survives the stop it is being asked not to fight.
  */
@@ -238,7 +238,7 @@ export function bootstrapLogPath(environment: Environment | undefined): string {
 // archive under `hostStagingRoot(environment)/stage-*`, verifies it, and
 // then atomically renames into `hostInstallDir(environment)`. The single
 // install record is written at `hostInstallRecordPath(environment)` after
-// the swap. Both environments stay isolated under the single ~/.traycer/
+// the swap. Both environments stay isolated under the single ~/.hukum/
 // root per the Tech Plan; there is no cross-environment sharing.
 export function hostInstallDir(environment: Environment): string {
   return sharedHostInstallDir(environment);
@@ -249,10 +249,10 @@ export function hostStagingRoot(environment: Environment): string {
 export function hostInstallRecordPath(environment: Environment): string {
   return sharedHostInstallRecordPath(environment);
 }
-// Cross-process handoff marker `traycer host update` writes before it
+// Cross-process handoff marker `hukum host update` writes before it
 // touches anything and clears/rewrites on outcome - see
 // `host/update-progress-marker.ts`. Deliberately mirrored (by contract, not
-// by import) at `traycer-host/src/paths.ts::hostHomeDir` so the daemon
+// by import) at `hukum-host/src/paths.ts::hostHomeDir` so the daemon
 // polls the exact same path this CLI writes.
 export function hostUpdateProgressMarkerPath(environment: Environment): string {
   return join(hostHomeDir(environment), HOST_UPDATE_PROGRESS_FILENAME);
@@ -270,8 +270,8 @@ export function hostStagedRecordPath(environment: Environment): string {
   return sharedHostStagedRecordPath(environment);
 }
 
-export async function ensureTraycerHomeDir(): Promise<void> {
-  await mkdir(TRAYCER_HOME, { recursive: true });
+export async function ensureHukumHomeDir(): Promise<void> {
+  await mkdir(HUKUM_HOME, { recursive: true });
 }
 
 // Environment-aware host home mkdir. Non-environment callers pass undefined to
@@ -300,7 +300,7 @@ export async function ensureHostDownloadCacheDir(
 ): Promise<void> {
   // 0o700: the cache holds a partially-written archive at a PREDICTABLE
   // path (that predictability is the whole point - it is what lets the next
-  // invocation resume it). Under ~/.traycer it is already user-owned, and
+  // invocation resume it). Under ~/.hukum it is already user-owned, and
   // an explicit private mode keeps it that way even if the parent's mode is
   // later relaxed, so no other local account can pre-create or swap the
   // file we are about to append to.

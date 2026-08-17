@@ -1,20 +1,20 @@
 import { vi } from "vitest";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   MockHostMessenger,
   type MockHandlerMap,
-} from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
+} from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
 import type {
   HostAvailableSnapshot,
   HostControllerStatus,
   HostInstalledRecord,
   HostRegistryUpdateState,
   IHostManagement,
-} from "@traycer-clients/shared/platform/runner-host";
-import type { HostIdentity } from "@traycer/protocol/host/identity/index";
-import type { HostGetInstallationInfoResponse } from "@traycer/protocol/host/maintenance/index";
+} from "@hukum-clients/shared/platform/runner-host";
+import type { HostIdentity } from "@hukum/protocol/host/identity/index";
+import type { HostGetInstallationInfoResponse } from "@hukum/protocol/host/maintenance/index";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
 
 /**
@@ -196,7 +196,7 @@ export function buildOverviewManagement(
     activateInstalled: vi.fn(notImplemented("activateInstalled")),
     installVersion: vi.fn(notImplemented("installVersion")),
     uninstallHost: vi.fn(notImplemented("uninstallHost")),
-    uninstallTraycer: vi.fn(notImplemented("uninstallTraycer")),
+    uninstallHukum: vi.fn(notImplemented("uninstallHukum")),
     getRemovalState: vi.fn(() => Promise.resolve({ removedByUser: false })),
     clearRemoval: vi.fn(() => Promise.resolve()),
     restartHost: vi.fn(() => Promise.resolve({ kind: "restarted" as const })),
@@ -254,7 +254,7 @@ export function makeInstalledRecord(version: string): HostInstalledRecord {
   return {
     version,
     installedAt: "2026-08-10T00:00:00Z",
-    executablePath: `/tmp/traycer/${version}/host`,
+    executablePath: `/tmp/hukum/${version}/host`,
     source: { kind: "registry", value: version },
     archiveSha256: "abc",
     signatureKeyId: "key",

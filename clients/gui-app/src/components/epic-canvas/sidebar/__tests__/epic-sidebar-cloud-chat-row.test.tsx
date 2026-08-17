@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import { EpicSidebarCloudChatRow } from "@/components/epic-canvas/sidebar/epic-sidebar-cloud-chat-row";
 import type { HostReachabilityStatus } from "@/hooks/agent/use-host-reachability";
 import { DEFAULT_EPIC_NODE_ICON_COLORS } from "@/lib/artifacts/node-display";

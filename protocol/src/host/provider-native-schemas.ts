@@ -1328,7 +1328,7 @@ export type ModelProviderSource = z.infer<typeof modelProviderSourceSchema>;
  * try.
  *
  * `hasStoredCredential` and `canDisconnect` are separate fields because they
- * answer different questions: "does Traycer hold a credential for this?"
+ * answer different questions: "does Hukum hold a credential for this?"
  * versus "will Disconnect actually change something?" Those come apart in both
  * directions. A provider can be usable with nothing in the auth store to
  * delete - declared in a config file, or autoloaded by a plugin - and
@@ -1370,7 +1370,7 @@ const modelProviderEntryBaseSchema = z.object({
    *
    * It is also what tells a client the row is EDITABLE: `updateCustom` applies
    * to exactly the rows this flag is true for, because those are the ones
-   * whose name / base URL / model ids Traycer wrote and can rewrite.
+   * whose name / base URL / model ids Hukum wrote and can rewrite.
    *
    * The predicate is upstream's and stays host-side - a client that re-derived
    * it from a config file would be guessing at `npm` strings and model-map
@@ -1599,7 +1599,7 @@ export type ModelProviderAuthInputs = z.infer<
  * The Model Providers auth action set.
  *
  * `modelProviderId` is the UPSTREAM provider (`anthropic`, `openai`, …); the
- * Traycer provider whose settings tab is open rides the request envelope as
+ * Hukum provider whose settings tab is open rides the request envelope as
  * `providerId`. Two different namespaces that would be very easy to collapse
  * into one field and impossible to separate afterwards.
  *
@@ -1646,7 +1646,7 @@ export type ModelProviderAuthInputs = z.infer<
  * `startOauth` - addresses a provider that already exists, and its id is a
  * fact rather than a choice: the catalog carries `wafer.ai`, and a
  * hand-written `opencode.json` can declare `My.Gateway`. Enforcing a naming
- * rule on those makes a real provider unreachable to punish a name Traycer
+ * rule on those makes a real provider unreachable to punish a name Hukum
  * never chose - and unreachable by the one verb that could rename it.
  */
 const newCustomProviderIdSchema = z
@@ -1716,7 +1716,7 @@ const customProviderShape = {
    * OpenCode's connect dialog enforces - not a full URL parse.
    *
    * The looser rule is the point. A parse rejects inputs their app accepts,
-   * which turns "same form, same values" into a Traycer-only failure the user
+   * which turns "same form, same values" into a Hukum-only failure the user
    * cannot explain; parity on a validation rule means adopting its edges too,
    * including the ones a stricter check would have caught. The host still has
    * to survive a URL that parses here and fails to connect, which it did
@@ -1858,7 +1858,7 @@ export type ModelProviderAuthCancelContext = z.infer<
  *   done), `code` needs the user to paste what the provider shows
  *   (`submitCode`). `instructions` is the provider's own wording for that
  *   step, shown verbatim rather than paraphrased - it is the only honest copy
- *   for a flow Traycer does not otherwise understand.
+ *   for a flow Hukum does not otherwise understand.
  * - `pending` — bounded-poll status: the attempt is still in flight.
  * - `done` — the credential is written (connect / successful OAuth /
  *   disconnect).
@@ -2002,7 +2002,7 @@ export const providerMcpCapabilitiesSchemaV70 = z.object({
   toolsSource: providerMcpDataSourceSchemaV70,
   schemasSource: providerMcpDataSourceSchemaV70,
   instructionsSource: z.enum(["probe", "none"]),
-  traycerSessionsOnlyEnforcement: z.boolean(),
+  hukumSessionsOnlyEnforcement: z.boolean(),
   stdioDegradeNotice: z.boolean(),
   oauthDegradesToConfigOnly: z.boolean(),
 });
@@ -2024,7 +2024,7 @@ export const providerPluginsCapabilitiesSchemaV70 = z.object({
     remove: z.array(providerNativeScopeSchemaV70),
     setEnabled: z.array(providerNativeScopeSchemaV70),
   }),
-  traycerSessionToolsNotice: z.boolean(),
+  hukumSessionToolsNotice: z.boolean(),
 });
 
 export const providerSkillsCapabilitiesSchemaV70 = z.object({

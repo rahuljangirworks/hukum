@@ -101,11 +101,11 @@ vi.mock("@/hooks/composer/use-slash-commands", () => ({
     data: [
       {
         harnessId: "claude",
-        name: "traycer-implement",
+        name: "hukum-implement",
         description: "Implement a ticket",
         argumentHint: null,
         kind: "skill",
-        metadata: { path: "/repo/.agents/skills/traycer-implement/SKILL.md" },
+        metadata: { path: "/repo/.agents/skills/hukum-implement/SKILL.md" },
         source: "provider",
         preview: {
           kind: "text",
@@ -217,12 +217,12 @@ vi.mock("@/hooks/chats/use-cloud-chat-queries", async (importActual) => ({
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import * as Y from "yjs";
-import type { JsonContent } from "@traycer/protocol/common/registry";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { JsonContent } from "@hukum/protocol/common/registry";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import { ChatTile } from "@/components/epic-canvas/renderers/chat-tile";
 import { TabHostProvider } from "@/components/epic-canvas/tab-host-provider";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { useChatTranscriptJumpStore } from "@/stores/chats/chat-transcript-jump-store";
 import { useToolOpenStore } from "@/stores/chats/tool-open-store";
 import { scopedChatOpenId } from "@/stores/chats/open-store-scope";
@@ -238,9 +238,9 @@ import {
 import { useAuthStore } from "@/stores/auth/auth-store";
 import { TestEpicSessionWrapper } from "./test-epic-session";
 import { createEpicSessionTestHarness } from "./test-epic-session-harness";
-import type { ChatStreamCallbacks } from "@traycer-clients/shared/host-transport/chat-stream-client";
-import type { ChatStreamClient } from "@traycer-clients/shared/host-transport/chat-stream-client";
-import type { Message } from "@traycer/protocol/persistence/epic/schemas";
+import type { ChatStreamCallbacks } from "@hukum-clients/shared/host-transport/chat-stream-client";
+import type { ChatStreamClient } from "@hukum-clients/shared/host-transport/chat-stream-client";
+import type { Message } from "@hukum/protocol/persistence/epic/schemas";
 import type {
   ChatActiveTurn,
   ChatApprovalState,
@@ -249,8 +249,8 @@ import type {
   ChatRunSettings,
   ChatRunStatus,
   ChatSubscribeClientFrame,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import type { WorktreeBinding } from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import type { WorktreeBinding } from "@hukum/protocol/host/worktree-schemas";
 import {
   getFocusedComposerControls,
   resetFocusedComposerControlsForTests,
@@ -605,11 +605,11 @@ function nextStepsAssistantMessage(): Message {
         type: "text",
         blockId: "next-steps-block",
         text: [
-          "<TRAYCER_NEXT_STEPS>",
+          "<HUKUM_NEXT_STEPS>",
           "Implementation is complete.",
           "",
           "- [] /implementation-validation all",
-          "</TRAYCER_NEXT_STEPS>",
+          "</HUKUM_NEXT_STEPS>",
         ].join("\n"),
         status: "completed",
         timestamp: 2,
@@ -645,11 +645,11 @@ function skillNextStepsAssistantMessage(): Message {
         type: "text",
         blockId: "next-steps-block",
         text: [
-          "<TRAYCER_NEXT_STEPS>",
+          "<HUKUM_NEXT_STEPS>",
           "Implementation is complete.",
           "",
-          "- [] $traycer-implement Implement the runtime ticket.",
-          "</TRAYCER_NEXT_STEPS>",
+          "- [] $hukum-implement Implement the runtime ticket.",
+          "</HUKUM_NEXT_STEPS>",
         ].join("\n"),
         status: "completed",
         timestamp: 2,
@@ -851,7 +851,7 @@ function chatTileTestTree(queryClient: QueryClient, chatVisible: boolean) {
               hosts: [],
               workspaceFolderPickerPaths: undefined,
               hasLocalHost: undefined,
-              traycerCli: undefined,
+              hukumCli: undefined,
             })
           }
         >
@@ -2027,7 +2027,7 @@ describe("<ChatTile />", () => {
     });
 
     const nextStepButton = getButtonContainingText(
-      "$traycer-implement Implement the runtime ticket.",
+      "$hukum-implement Implement the runtime ticket.",
     );
     expect(nextStepButton.disabled).toBe(false);
 
@@ -2045,12 +2045,12 @@ describe("<ChatTile />", () => {
             {
               type: "slashCommand",
               attrs: {
-                commandName: "traycer-implement",
+                commandName: "hukum-implement",
                 harnessId: "claude",
                 kind: "skill",
                 description: "Implement a ticket",
                 argumentHint: null,
-                path: "/repo/.agents/skills/traycer-implement/SKILL.md",
+                path: "/repo/.agents/skills/hukum-implement/SKILL.md",
                 trigger: "$",
               },
             },

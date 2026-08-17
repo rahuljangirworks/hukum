@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { RpcErrorCode } from "@traycer/protocol/framework";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { RpcErrorCode } from "@hukum/protocol/framework";
 import { UsageErrorCard } from "@/components/usage-analytics/usage-error-card";
 
 afterEach(cleanup);
@@ -46,10 +46,10 @@ describe("UsageErrorCard", () => {
         onRetry={() => undefined}
       />,
     );
-    // Naming Traycer Cloud here would send a local-plane account chasing
+    // Naming Hukum Cloud here would send a local-plane account chasing
     // connectivity for a local-database failure.
     expect(screen.getByText("Couldn't load usage data.")).not.toBeNull();
-    expect(screen.queryByText(/Traycer Cloud/)).toBeNull();
+    expect(screen.queryByText(/Hukum Cloud/)).toBeNull();
     // The specific cause still reaches the reader through the message line.
     expect(screen.getByText("sqlite: database is locked")).not.toBeNull();
   });

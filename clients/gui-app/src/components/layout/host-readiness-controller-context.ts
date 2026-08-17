@@ -304,8 +304,8 @@ export function resolveSurfaceReadiness(args: {
  * A resolved local entry qualifies outright. An UNRESOLVED target qualifies
  * only under local-boot intent: a first-ever install has no directory row to
  * resolve until provisioning creates one, and refusing it there would replace
- * the install card (progress, bootstrap.log path - the traycer#862
- * diagnostics) with a bare "Starting local Traycer Host…" line for the whole
+ * the install card (progress, bootstrap.log path - the hukum#862
+ * diagnostics) with a bare "Starting local Hukum Host…" line for the whole
  * first run. An unresolved REMOTE pick never qualifies, which is the
  * misattribution this whole tri-state exists to close.
  *

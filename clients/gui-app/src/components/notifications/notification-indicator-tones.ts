@@ -10,7 +10,7 @@ import type { NotificationIndicatorState } from "@/stores/notifications/notifica
 import type {
   HostNotificationKind,
   HostNotificationSeverity,
-} from "@traycer/protocol/host/notifications/contracts";
+} from "@hukum/protocol/host/notifications/contracts";
 
 /**
  * Shared presentation metadata for the notification status tiers. Both the

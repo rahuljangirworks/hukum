@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
  * The ONE strip that states what the app-wide host connection is doing:
  * switching to another host, degraded, or broken.
  *
- * It absorbs `HostConnectionDegradedBanner` (the traycer#860 held-verdict
+ * It absorbs `HostConnectionDegradedBanner` (the hukum#860 held-verdict
  * strip) rather than sitting beside it - two owners of one row is how a
  * degraded connection and a switch end up stacked or fighting over the same
  * line. It also absorbs the recovery actions that used to require a
@@ -74,7 +74,7 @@ export function HostStatusStrip(): ReactNode {
       <PlugZap className="size-3.5 shrink-0" aria-hidden />
       <span className="min-w-0 flex-1">
         {state === "degraded"
-          ? "Traycer Host is not responding. Your work is still open - reconnecting."
+          ? "Hukum Host is not responding. Your work is still open - reconnecting."
           : describeSwitchingMessage(switchTarget !== null, label)}
       </span>
       <AgentSpinningDots
@@ -176,9 +176,9 @@ function HostStatusStripFrame(props: {
 }
 
 const STRIP_ARIA_LABEL: Readonly<Record<string, string>> = {
-  switching: "Switching Traycer Host",
-  degraded: "Traycer Host connection degraded",
-  error: "Traycer Host is unavailable",
+  switching: "Switching Hukum Host",
+  degraded: "Hukum Host connection degraded",
+  error: "Hukum Host is unavailable",
 };
 
 /**
@@ -191,7 +191,7 @@ function describeSwitchingMessage(
   fromSwitchGesture: boolean,
   label: string | null,
 ): string {
-  const host = label ?? "Traycer Host";
+  const host = label ?? "Hukum Host";
   return fromSwitchGesture ? `Switching to ${host}…` : `Connecting to ${host}…`;
 }
 
@@ -279,7 +279,7 @@ interface HostStatusStripError {
  * Copy, report code and `source` are kept IDENTICAL to those cards
  * (`fallbackContent`) - a user filing from the strip and a user filing from a
  * cold-start card are reporting the same thing, and triage keys off those
- * fields (traycer#858 / #860 / #862).
+ * fields (hukum#858 / #860 / #862).
  *
  * Readiness kinds are consulted first because a LOCAL target projects its
  * lifecycle into them. A remote (or unresolved) target never does - readiness
@@ -294,7 +294,7 @@ function describeHostStatusStripError(
     return {
       message:
         presentation.provisioningError?.message ??
-        "Could not start Traycer Host.",
+        "Could not start Hukum Host.",
       detail: null,
       action: {
         label: "Retry",
@@ -302,8 +302,8 @@ function describeHostStatusStripError(
         onClick: presentation.retryProvisioning,
       },
       report: {
-        title: "Could not start Traycer Host",
-        message: "Traycer Host could not start.",
+        title: "Could not start Hukum Host",
+        message: "Hukum Host could not start.",
         code: "HOST_PROVISIONING_FAILED",
         source: "Host startup",
         // The one report the retained stage explains: this state is reached
@@ -315,7 +315,7 @@ function describeHostStatusStripError(
   if (kind === "removed-host") {
     return {
       message:
-        "You removed Traycer's background components, so the host won't start.",
+        "You removed Hukum's background components, so the host won't start.",
       detail: null,
       action: {
         label: "Reinstall",
@@ -342,7 +342,7 @@ function describeHostStatusStripError(
           },
       report: {
         title: "Host update required",
-        message: "Traycer Host requires an update.",
+        message: "Hukum Host requires an update.",
         code: "HOST_INCOMPATIBLE",
         source: "Host compatibility",
         includeRetainedProgress: false,
@@ -355,7 +355,7 @@ function describeHostStatusStripError(
   const unreachable = presentation.compatibility.unreachable;
   return {
     message: unreachable
-      ? "Traycer Host is not responding."
+      ? "Hukum Host is not responding."
       : "Could not verify host compatibility.",
     detail: presentation.compatibility.errorMessage,
     action: {
@@ -365,14 +365,14 @@ function describeHostStatusStripError(
     },
     report: {
       title: unreachable
-        ? "Traycer Host is not responding"
-        : "Could not verify Traycer Host compatibility",
+        ? "Hukum Host is not responding"
+        : "Could not verify Hukum Host compatibility",
       message: unreachable
-        ? "The app could not reach Traycer Host."
-        : "Traycer Host rejected the compatibility handshake.",
+        ? "The app could not reach Hukum Host."
+        : "Hukum Host rejected the compatibility handshake.",
       code: unreachable ? "HOST_UNREACHABLE" : "HOST_COMPAT_PROBE_REJECTED",
       // Not a startup failure: this is a host that was already serving and
-      // stopped answering (traycer#860).
+      // stopped answering (hukum#860).
       source: "Host connection",
       includeRetainedProgress: false,
     },

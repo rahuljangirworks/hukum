@@ -16,10 +16,10 @@
  * placeholder and the per-chat worktree binding stays `null` until the user
  * resolves it at send time via the chat tile's create / import picker.
  */
-import type { CreateChatResponse } from "@traycer/protocol/host/epic/unary-schemas";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { WorktreeIntent } from "@traycer/protocol/host/worktree-schemas";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { CreateChatResponse } from "@hukum/protocol/host/epic/unary-schemas";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { WorktreeIntent } from "@hukum/protocol/host/worktree-schemas";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import { v4 as uuidv4 } from "uuid";
 import { displayTitle } from "@/lib/display-title";
 import type { CreateChatMutationInput } from "@/hooks/epic/use-epic-chat-mutations";

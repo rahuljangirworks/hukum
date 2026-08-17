@@ -1,8 +1,8 @@
-import { snapshotChatRunSettingsSchema } from "@traycer/protocol/persistence/chat-sync/open-harness";
+import { snapshotChatRunSettingsSchema } from "@hukum/protocol/persistence/chat-sync/open-harness";
 import {
   storageProjection,
   withResidualCapture,
-} from "@traycer/protocol/persistence/chat-sync/residual";
+} from "@hukum/protocol/persistence/chat-sync/residual";
 import { z } from "zod";
 
 /**

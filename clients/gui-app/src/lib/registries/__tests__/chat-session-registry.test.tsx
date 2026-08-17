@@ -2,25 +2,25 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   hostListItemToDirectoryEntry,
   type RemoteHostDirectoryEntry,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
 import type {
   HostConnectivity,
   HostListItem,
-} from "@traycer/protocol/host/host-status";
-import type { IStreamSession } from "@traycer-clients/shared/host-transport/i-stream-session";
-import type { IHostStreamClient } from "@traycer-clients/shared/host-transport/host-stream-client";
+} from "@hukum/protocol/host/host-status";
+import type { IStreamSession } from "@hukum-clients/shared/host-transport/i-stream-session";
+import type { IHostStreamClient } from "@hukum-clients/shared/host-transport/host-stream-client";
 import {
   hostRpcRegistry,
   type HostRpcRegistry,
-} from "@traycer/protocol/host/index";
-import type { HostStreamRpcRegistry } from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/index";
+import type { HostStreamRpcRegistry } from "@hukum/protocol/host/registry";
 import type { DurableStreamTransport } from "@/lib/host/durable-stream-transport";
 
 // `useChatSessionHandle`'s own module state (the process-wide registry) is
@@ -48,11 +48,11 @@ vi.mock("@/hooks/host/use-host-directory-entry", () => ({
 // transport-survival rule also requires.
 const readySessionHosts = vi.hoisted(() => ({ value: new Set<string>() }));
 vi.mock(
-  "@traycer-clients/shared/host-transport/remote/index",
+  "@hukum-clients/shared/host-transport/remote/index",
   async (importOriginal) => {
     const actual =
       await importOriginal<
-        typeof import("@traycer-clients/shared/host-transport/remote/index")
+        typeof import("@hukum-clients/shared/host-transport/remote/index")
       >();
     return {
       ...actual,

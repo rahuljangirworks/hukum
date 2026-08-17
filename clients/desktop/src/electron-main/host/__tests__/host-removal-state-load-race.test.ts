@@ -8,7 +8,7 @@ import type { HostRemovalState } from "../../../ipc-contracts/host-management-ty
  * `isHostRemovedByUser()` lazily loads the sentinel from disk on first call.
  * That load is async, and `markHostRemovedByUser()` /
  * `clearHostRemovedByUser()` can start AND fully complete while it is still
- * in flight - `removeTraycer` and the launch-time converge preflight run
+ * in flight - `removeHukum` and the launch-time converge preflight run
  * concurrently by design, so this is a real interleaving, not a theoretical
  * one. The load's result is then a PRE-mutation snapshot of the file; caching
  * it unconditionally overwrites the value the mutation just confirmed to

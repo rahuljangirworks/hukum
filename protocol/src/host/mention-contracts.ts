@@ -1,5 +1,5 @@
 /** Versioned unary RPC contracts for GitHub composer mentions. */
-import { defineRpcContract } from "@traycer/protocol/framework/index";
+import { defineRpcContract } from "@hukum/protocol/framework/index";
 import {
   mentionGithubCatalogRequestSchema,
   mentionGithubCatalogResponseSchema,

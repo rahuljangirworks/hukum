@@ -88,7 +88,7 @@ vi.mock("../../manifest/host-install", async (importOriginal) => ({
     signatureVerifiedAt: null,
     signatureKeyId: "test-key",
     sizeBytes: 1,
-    executablePath: "/tmp/traycer-host",
+    executablePath: "/tmp/hukum-host",
   }),
 }));
 
@@ -503,7 +503,7 @@ describe("hukum CLI entrypoint registration", () => {
     await nodeStyle.parseAsync(
       [
         "/custom/node",
-        "/custom/traycer.js",
+        "/custom/hukum.js",
         "host",
         "update",
         "--version",
@@ -518,7 +518,7 @@ describe("hukum CLI entrypoint registration", () => {
     defaultStyle.exitOverride();
     await defaultStyle.parseAsync([
       "/other/node",
-      "/other/traycer.js",
+      "/other/hukum.js",
       "host",
       "update",
       "--version",

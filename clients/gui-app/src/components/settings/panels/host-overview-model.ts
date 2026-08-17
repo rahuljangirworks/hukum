@@ -1,6 +1,6 @@
-import type { HostDoctorIssue } from "@traycer/protocol/host/maintenance/index";
+import type { HostDoctorIssue } from "@hukum/protocol/host/maintenance/index";
 import type { HostScopeOption } from "@/components/settings/host-scope/host-scope-model";
-import type { LocalHostSnapshot } from "@traycer-clients/shared/platform/runner-host";
+import type { LocalHostSnapshot } from "@hukum-clients/shared/platform/runner-host";
 
 /**
  * Pure helpers for the one Overview page local and remote hosts share.
@@ -18,7 +18,7 @@ import type { LocalHostSnapshot } from "@traycer-clients/shared/platform/runner-
  * also treats "typed the machine's own name" as a clear, and that quietly stops
  * being true once the host owns the name: the host computes
  * `effectiveName = customName ?? hostLabel ?? systemName`, and on a provisioned
- * host started with `TRAYCER_HOST_LABEL` the label is NOT the hostname. Clearing
+ * host started with `HUKUM_HOST_LABEL` the label is NOT the hostname. Clearing
  * there would land on the label — so someone who typed the machine name would
  * watch a different name appear, having asked for the one they typed.
  *
@@ -42,10 +42,10 @@ export function customNameFromIdentityDraft(draft: string): string | null {
  *   - `unsupported`         — the host handshaked WITHOUT the method: it predates
  *     it. Self-heals on update, so the copy says so.
  *   - `cli-unavailable`     — the host is current and answered, but has no local
- *     Traycer CLI to shell out to (a tree-run or hand-unpacked host). Updating
+ *     Hukum CLI to shell out to (a tree-run or hand-unpacked host). Updating
  *     the host cannot fix this; installing the CLI can.
  *   - `externally-managed`  — updates are driven from outside this host entirely
- *     (the `TRAYCER_HOST_UPDATES=external` kill switch). Not a failure at all:
+ *     (the `HUKUM_HOST_UPDATES=external` kill switch). Not a failure at all:
  *     the cloud pin is the supported control, so the UI degrades to it.
  */
 export type OverviewDegradeReason =
@@ -75,9 +75,9 @@ export function describeOverviewDegrade(
     case "unsupported":
       return `${hostName} is running a version that doesn't support this yet. Update it and this comes back on its own.`;
     case "cli-unavailable":
-      return `${hostName} has no Traycer CLI installed to run this, so it can't be done over the connection.`;
+      return `${hostName} has no Hukum CLI installed to run this, so it can't be done over the connection.`;
     case "externally-managed":
-      return `${hostName}'s updates are managed outside Traycer. Use the version pin below to say what it should run.`;
+      return `${hostName}'s updates are managed outside Hukum. Use the version pin below to say what it should run.`;
   }
 }
 
@@ -98,11 +98,11 @@ export function describeCliShellFailure(
 ): string {
   switch (failure) {
     case "cli-unavailable":
-      return `${hostName} has no Traycer CLI installed, so it can't run this.`;
+      return `${hostName} has no Hukum CLI installed, so it can't run this.`;
     case "cli-failed":
-      return `${hostName}'s Traycer CLI couldn't complete the request.`;
+      return `${hostName}'s Hukum CLI couldn't complete the request.`;
     case "invalid-output":
-      return `${hostName}'s Traycer CLI answered in a format this app doesn't understand. It's probably a different version than this app expects.`;
+      return `${hostName}'s Hukum CLI answered in a format this app doesn't understand. It's probably a different version than this app expects.`;
   }
 }
 

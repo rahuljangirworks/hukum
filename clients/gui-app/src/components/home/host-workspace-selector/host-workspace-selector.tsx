@@ -24,9 +24,9 @@ import type {
   WorktreeIntent,
   WorktreeFolderIntent,
   WorktreeWorkspaceSummaryV15,
-} from "@traycer/protocol/host/worktree-schemas";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+} from "@hukum/protocol/host/worktree-schemas";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   useHostBinding,
   useHostClient,

@@ -12,7 +12,7 @@ import type {
   WorktreeEntryScripts,
   WorktreeIntent,
   WorktreeWorkspaceSummaryV14,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   useWorktreeIntentStagingStore,
@@ -647,7 +647,7 @@ describe("<WorktreeScriptsDialog />", () => {
         prefixState.status === "present" &&
         typeof prefixState.value === "string"
           ? `${prefixState.value}${suffix}`
-          : `traycer/${suffix}`,
+          : `hukum/${suffix}`,
     );
     renderDialog(
       {
@@ -693,7 +693,7 @@ describe("<WorktreeScriptsDialog />", () => {
         prefixState.status === "present" &&
         typeof prefixState.value === "string"
           ? `${prefixState.value}${suffix}`
-          : `traycer/${suffix}`,
+          : `hukum/${suffix}`,
     );
     renderDialog(
       {
@@ -768,7 +768,7 @@ describe("<WorktreeScriptsDialog />", () => {
         prefixState.status === "present" &&
         typeof prefixState.value === "string"
           ? `${prefixState.value}${suffix}`
-          : `traycer/${suffix}`,
+          : `hukum/${suffix}`,
     );
     renderDialog(
       {
@@ -812,7 +812,7 @@ describe("<WorktreeScriptsDialog />", () => {
         return prefixState.status === "present" &&
           typeof prefixState.value === "string"
           ? `${prefixState.value}${suffix}`
-          : `traycer/${suffix}`;
+          : `hukum/${suffix}`;
       },
     );
     renderDialog(
@@ -867,7 +867,7 @@ describe("<WorktreeScriptsDialog />", () => {
         prefixState.status === "present" &&
         typeof prefixState.value === "string"
           ? `${prefixState.value}${suffix}`
-          : `traycer/${suffix}`,
+          : `hukum/${suffix}`,
     );
     renderDialog(
       {
@@ -902,7 +902,7 @@ describe("<WorktreeScriptsDialog />", () => {
         prefixState.status === "present" &&
         typeof prefixState.value === "string"
           ? `${prefixState.value}app-${suffix}`
-          : `traycer/app-${suffix}`,
+          : `hukum/app-${suffix}`,
     );
     renderDialog(
       {
@@ -936,7 +936,7 @@ describe("<WorktreeScriptsDialog />", () => {
         _path: string,
         _prefixState: { readonly status: string; readonly value?: string },
         suffix: string,
-      ) => `traycer/${suffix}`,
+      ) => `hukum/${suffix}`,
     );
     renderDialog(
       {
@@ -963,7 +963,7 @@ describe("<WorktreeScriptsDialog />", () => {
       return prefixState.status === "present" &&
         typeof prefixState.value === "string"
         ? `${prefixState.value}${suffix}`
-        : `traycer/${suffix}`;
+        : `hukum/${suffix}`;
     }
 
     it("Apply: offer shows previous proposal; Effective branch is the captured candidate; Use new prefix stages that same visible value", () => {
@@ -1092,7 +1092,7 @@ describe("<WorktreeScriptsDialog />", () => {
 
       // After remove, captured candidate uses the inherited (global) prefix.
       const visibleDuringOffer = readEffectiveBranchValue();
-      expect(visibleDuringOffer.startsWith("traycer/")).toBe(true);
+      expect(visibleDuringOffer.startsWith("hukum/")).toBe(true);
       expect(visibleDuringOffer).not.toBe("feat/login");
 
       fireEvent.click(screen.getByRole("button", { name: "Use new prefix" }));
@@ -1183,7 +1183,7 @@ describe("<WorktreeScriptsDialog />", () => {
       return prefixState.status === "present" &&
         typeof prefixState.value === "string"
         ? `${prefixState.value}${suffix}`
-        : `traycer/${suffix}`;
+        : `hukum/${suffix}`;
     }
 
     beforeEach(() => {

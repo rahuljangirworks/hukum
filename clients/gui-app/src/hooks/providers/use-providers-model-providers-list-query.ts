@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { ProvidersListModelProvidersResponse } from "@traycer/protocol/host/provider-schemas";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { ProvidersListModelProvidersResponse } from "@hukum/protocol/host/provider-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 import { useHostClient, type HostRpcRegistry } from "@/lib/host";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 
 /**
- * The upstream LLM provider catalog for one Traycer provider.
+ * The upstream LLM provider catalog for one Hukum provider.
  *
  * A cold read can START the managed OpenCode server (the host leases it lazily),
  * so this query is deliberately quiet: no polling policy in the method table,

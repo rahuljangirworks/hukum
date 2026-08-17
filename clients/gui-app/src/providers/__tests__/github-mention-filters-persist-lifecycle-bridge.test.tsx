@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render, waitFor } from "@testing-library/react";
-import type { GithubMentionRepository } from "@traycer/protocol/host/mention-schemas";
+import type { GithubMentionRepository } from "@hukum/protocol/host/mention-schemas";
 import { GithubMentionFiltersPersistLifecycleBridge } from "@/providers/github-mention-filters-persist-lifecycle-bridge";
 import { useAuthStore } from "@/stores/auth/auth-store";
 import { useGithubMentionFilterStore } from "@/stores/composer/github-mention-filter-store";

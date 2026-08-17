@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef } from "react";
 import type { QueryClient, UseQueryResult } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   HostRpcError,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { queryKeys } from "@/lib/query-keys";
 import { appLogger } from "@/lib/logger";

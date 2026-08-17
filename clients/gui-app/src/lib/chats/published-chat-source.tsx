@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react";
-import type { CloudChatIdentity } from "@traycer/protocol/host/epic/cloud-chat";
-import type { FileEditReason } from "@traycer/protocol/persistence/epic/content-blocks";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { CloudChatIdentity } from "@hukum/protocol/host/epic/cloud-chat";
+import type { FileEditReason } from "@hukum/protocol/persistence/epic/content-blocks";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { useCloudChatPayload } from "@/hooks/chats/use-cloud-chat-queries";
 import type { CloudChatPayloadBytes } from "@/lib/chats/cloud-chat-payloads";
 

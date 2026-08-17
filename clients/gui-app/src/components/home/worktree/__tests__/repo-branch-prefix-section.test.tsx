@@ -9,7 +9,7 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { RepoBranchPrefixState } from "@traycer/protocol/host/worktree-schemas";
+import type { RepoBranchPrefixState } from "@hukum/protocol/host/worktree-schemas";
 import { resolveEffectiveBranchPrefix } from "@/lib/worktree/effective-branch-prefix";
 import {
   DEFAULT_WORKTREE_BRANCH_PREFIX,
@@ -237,9 +237,9 @@ describe("<RepoBranchPrefixSection />", () => {
       expect(screen.getByText("Global default")).toBeTruthy();
       expect(screen.getByText("This repository")).toBeTruthy();
       // Prefix appears both on the radio detail and in the preview split.
-      expect(screen.getAllByText("traycer/").length).toBeGreaterThan(0);
+      expect(screen.getAllByText("hukum/").length).toBeGreaterThan(0);
       expect(screen.getByText("Example")).toBeTruthy();
-      expect(effectiveBranchValue()).toBe(`traycer/${PREVIEW_SUFFIX}`);
+      expect(effectiveBranchValue()).toBe(`hukum/${PREVIEW_SUFFIX}`);
       expect(screen.queryByLabelText("Prefix")).toBeNull();
       expect(screen.queryByRole("button", { name: "Save prefix" })).toBeNull();
       expect(
@@ -260,11 +260,11 @@ describe("<RepoBranchPrefixSection />", () => {
 
     it("lets the picker's real staged proposal win over the composed candidate", () => {
       renderSection({ status: "absent" }, noop, {
-        currentProposedBranchName: "traycer/swift-otter",
+        currentProposedBranchName: "hukum/swift-otter",
       });
 
-      expect(effectiveBranchValue()).toBe("traycer/swift-otter");
-      expect(screen.queryByText(`traycer/${PREVIEW_SUFFIX}`)).toBeNull();
+      expect(effectiveBranchValue()).toBe("hukum/swift-otter");
+      expect(screen.queryByText(`hukum/${PREVIEW_SUFFIX}`)).toBeNull();
     });
 
     it("uses multi-repo composition for the illustrative effective branch", () => {
@@ -272,7 +272,7 @@ describe("<RepoBranchPrefixSection />", () => {
         multiRepoSlug: "tailmark",
       });
 
-      expect(effectiveBranchValue()).toBe(`traycer/tailmark-${PREVIEW_SUFFIX}`);
+      expect(effectiveBranchValue()).toBe(`hukum/tailmark-${PREVIEW_SUFFIX}`);
     });
   });
 
@@ -339,7 +339,7 @@ describe("<RepoBranchPrefixSection />", () => {
         alert.getAttribute("id"),
       );
       expect(screen.getByText("Current example")).toBeTruthy();
-      expect(effectiveBranchValue()).toBe(`traycer/${PREVIEW_SUFFIX}`);
+      expect(effectiveBranchValue()).toBe(`hukum/${PREVIEW_SUFFIX}`);
       expect(screen.queryByText(`has spaces/${PREVIEW_SUFFIX}`)).toBeNull();
       fireEvent.click(applyButton());
       expect(mocks.mutate).not.toHaveBeenCalled();
@@ -464,11 +464,11 @@ describe("<RepoBranchPrefixSection />", () => {
       // While Keep/Use is up, Effective branch must show the captured candidate
       // the offer would stage - not the stale old staged proposal.
       renderSection({ status: "present", value: "team/" }, noop, {
-        currentProposedBranchName: "traycer/swift-otter",
+        currentProposedBranchName: "hukum/swift-otter",
         activeRegenerateCandidate: "team/soft-wombat",
       });
       expect(effectiveBranchValue()).toBe("team/soft-wombat");
-      expect(screen.queryByText("traycer/swift-otter")).toBeNull();
+      expect(screen.queryByText("hukum/swift-otter")).toBeNull();
     });
 
     it("warns for a present value that fails client validation but still offers Edit", () => {
@@ -480,7 +480,7 @@ describe("<RepoBranchPrefixSection />", () => {
       );
       expect(screen.getByRole("button", { name: "Edit prefix" })).toBeTruthy();
       // Falls back to global for the effective branch while the stored value is bad.
-      expect(effectiveBranchValue()).toBe(`traycer/${PREVIEW_SUFFIX}`);
+      expect(effectiveBranchValue()).toBe(`hukum/${PREVIEW_SUFFIX}`);
     });
   });
 
@@ -514,7 +514,7 @@ describe("<RepoBranchPrefixSection />", () => {
       });
       expect(onSaved).toHaveBeenCalledWith(
         { status: "absent" },
-        `traycer/${PREVIEW_SUFFIX}`,
+        `hukum/${PREVIEW_SUFFIX}`,
       );
       expect(
         screen.getByTestId("repo-branch-prefix-choice-global"),
@@ -532,7 +532,7 @@ describe("<RepoBranchPrefixSection />", () => {
       expect(alert.getAttribute("role")).toBe("alert");
       expect(alert.textContent).toMatch(/malformed|unreadable/i);
       expect(alert.textContent).toContain(
-        `${WORKSPACE}/.traycer/environment.json`,
+        `${WORKSPACE}/.hukum/environment.json`,
       );
       expect(screen.getByText("Example")).toBeTruthy();
       expect(effectiveBranchValue()).toBe(`global/${PREVIEW_SUFFIX}`);
@@ -566,9 +566,9 @@ describe("<RepoBranchPrefixSection />", () => {
       renderSection({ status: "absent" }, noop, null);
 
       expect(screen.getByTestId("repo-branch-prefix-unsupported")).toBeTruthy();
-      expect(screen.getByText(/require a newer Traycer host/i)).toBeTruthy();
+      expect(screen.getByText(/require a newer Hukum host/i)).toBeTruthy();
       expect(screen.getByText("Global default")).toBeTruthy();
-      expect(effectiveBranchValue()).toBe(`traycer/${PREVIEW_SUFFIX}`);
+      expect(effectiveBranchValue()).toBe(`hukum/${PREVIEW_SUFFIX}`);
       expect(
         screen.queryByRole("radiogroup", { name: "Branch prefix source" }),
       ).toBeNull();

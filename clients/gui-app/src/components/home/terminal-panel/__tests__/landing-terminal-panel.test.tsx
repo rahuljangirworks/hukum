@@ -7,7 +7,7 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import type { CanonicalTerminalSessionInfo } from "@traycer/protocol/host/terminal/unary-schemas";
+import type { CanonicalTerminalSessionInfo } from "@hukum/protocol/host/terminal/unary-schemas";
 import {
   landingTerminalLayoutFor,
   useLandingTerminalStore,

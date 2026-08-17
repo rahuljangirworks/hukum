@@ -5,9 +5,9 @@ import type {
   SetChatSharingDefaultResponse,
   SetCloudChatVisibilityRequest,
   SetCloudChatVisibilityResponse,
-} from "@traycer/protocol/host/epic/cloud-chat";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/epic/cloud-chat";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { useCloudChatViewerId } from "@/hooks/chats/use-cloud-chat-queries";
 import { useEpicSessionHostClient } from "@/hooks/epic/use-epic-session-host-client";
 import { useHostMutation } from "@/hooks/host/use-host-query";

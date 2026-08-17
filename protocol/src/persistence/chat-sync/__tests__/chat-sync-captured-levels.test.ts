@@ -1,9 +1,9 @@
-import { CAPTURED_RESIDUAL_LEVELS } from "@traycer/protocol/persistence/chat-sync/captured-levels";
+import { CAPTURED_RESIDUAL_LEVELS } from "@hukum/protocol/persistence/chat-sync/captured-levels";
 // Importing the barrel builds every schema reachable from both records, which
 // is what populates the registration list below. Without it the guard would
 // measure whatever happened to be loaded.
-import "@traycer/protocol/persistence/chat-sync/index";
-import { listCapturedLevelRegistrations } from "@traycer/protocol/persistence/chat-sync/residual";
+import "@hukum/protocol/persistence/chat-sync/index";
+import { listCapturedLevelRegistrations } from "@hukum/protocol/persistence/chat-sync/residual";
 import { describe, expect, it } from "vitest";
 
 /**

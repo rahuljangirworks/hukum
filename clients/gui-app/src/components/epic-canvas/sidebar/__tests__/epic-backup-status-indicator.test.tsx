@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { ChatBackupStatusResponse } from "@traycer/protocol/host/epic/chat-backup-status";
+import type { ChatBackupStatusResponse } from "@hukum/protocol/host/epic/chat-backup-status";
 import { __getOpenEpicRegistryForTests } from "@/lib/registries/epic-session-registry";
 import {
   createOpenEpicStore,

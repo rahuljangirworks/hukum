@@ -58,7 +58,7 @@ describe("computeDescendantCounts", () => {
       review: 0,
       chat: 0,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     });
   });
 
@@ -77,7 +77,7 @@ describe("computeDescendantCounts", () => {
       review: 0,
       chat: 1,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     });
   });
 
@@ -96,7 +96,7 @@ describe("computeDescendantCounts", () => {
       review: 0,
       chat: 0,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     });
   });
 
@@ -115,7 +115,7 @@ describe("computeDescendantCounts", () => {
       review: 0,
       chat: 0,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     });
   });
 });
@@ -195,7 +195,7 @@ describe("computeDescendantCountsFromTree", () => {
       review: 0,
       chat: 0,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     });
   });
 });
@@ -209,7 +209,7 @@ describe("formatCascadeSummary", () => {
       review: 0,
       chat: 0,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     };
     expect(formatCascadeSummary(counts)).toBeNull();
   });
@@ -222,7 +222,7 @@ describe("formatCascadeSummary", () => {
       review: 0,
       chat: 0,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     };
     expect(formatCascadeSummary(counts)).toBe("3 specs");
   });
@@ -235,7 +235,7 @@ describe("formatCascadeSummary", () => {
       review: 0,
       chat: 0,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     };
     expect(formatCascadeSummary(counts)).toBe("1 spec and 1 story");
   });
@@ -248,7 +248,7 @@ describe("formatCascadeSummary", () => {
       review: 0,
       chat: 1,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     };
     expect(formatCascadeSummary(counts)).toBe("2 specs and 1 agent");
   });
@@ -261,7 +261,7 @@ describe("formatCascadeSummary", () => {
       review: 1,
       chat: 3,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     };
     expect(formatCascadeSummary(counts)).toBe(
       "1 spec, 2 tickets, 1 review, and 3 agents",
@@ -276,7 +276,7 @@ describe("formatCascadeSummary", () => {
       review: 0,
       chat: 1,
       "terminal-agent": 1,
-      "html-preview": 0,
+      
     };
     // Agent is the durable entity; Chat/Terminal are only its interfaces, so
     // the summary must not split them into "1 chat and 1 terminal agent".
@@ -291,7 +291,7 @@ describe("formatCascadeSummary", () => {
       review: 0,
       chat: 0,
       "terminal-agent": 1,
-      "html-preview": 0,
+      
     };
     expect(formatCascadeSummary(counts)).toBe("1 agent");
   });
@@ -304,7 +304,7 @@ describe("formatCascadeSummary", () => {
       review: 0,
       chat: 0,
       "terminal-agent": 0,
-      "html-preview": 0,
+      
     };
     expect(formatCascadeSummary(counts)).toBe("2 stories");
   });

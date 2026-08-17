@@ -1,23 +1,23 @@
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useEffect, useRef, type ReactNode } from "react";
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
-import type { AssetStreamServerFrame } from "@traycer/protocol/host/asset-stream-schemas";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
+import type { AssetStreamServerFrame } from "@hukum/protocol/host/asset-stream-schemas";
 import type {
   IStreamSession,
   ServerFrameHandler,
   StatusChangeHandler,
   StreamCloseReason,
   StreamFrameEnvelope,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   WsStreamClient,
   type ParamsOf,
-} from "@traycer-clients/shared/host-transport/ws-stream-client";
+} from "@hukum-clients/shared/host-transport/ws-stream-client";
 
 import { imageBlobCache } from "@/lib/attachments/image-blob-cache";
 import {
@@ -25,7 +25,7 @@ import {
   PaneVisibilityContext,
 } from "@/components/epic-tabs/pane-visibility-context";
 import { useImageAsset, type ImageAssetRequest } from "../use-image-asset";
-import type { AssetStreamFailureReason } from "@traycer-clients/shared/host-transport/asset-stream-client";
+import type { AssetStreamFailureReason } from "@hukum-clients/shared/host-transport/asset-stream-client";
 
 const tabHostIdRef = vi.hoisted(() => ({ value: "host-1" }));
 const wsStreamClientRef = vi.hoisted(() => ({

@@ -7,7 +7,7 @@ import {
   listAgentsResponseSchemaV40,
   listAgentsResponseSchemaV50,
   listAgentsResponseSchemaV60,
-} from "@traycer/protocol/host/agent/shared";
+} from "@hukum/protocol/host/agent/shared";
 import {
   listGuiHarnessesResponseSchemaV10,
   listGuiHarnessesResponseSchemaV20,
@@ -16,7 +16,7 @@ import {
   listGuiHarnessesResponseSchemaV40,
   listGuiHarnessesResponseSchemaV50,
   listGuiHarnessesResponseSchemaV60,
-} from "@traycer/protocol/host/agent/gui/unary-schemas";
+} from "@hukum/protocol/host/agent/gui/unary-schemas";
 import {
   providersListRequestSchemaBeforeV70,
   providersListRequestSchemaV70,
@@ -27,7 +27,7 @@ import {
   providersListResponseSchemaV50,
   providersListResponseSchemaV60,
   providersListResponseSchemaV70,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { FROZEN_CATALOG_LINE_SNAPSHOTS } from "./__fixtures__/frozen-catalog-lines";
 
 /**

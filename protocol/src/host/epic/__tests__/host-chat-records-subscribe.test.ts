@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
   buildStreamManifest,
   checkStreamMethodCompatibility,
-} from "@traycer/protocol/framework/stream-compat";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/index";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
+} from "@hukum/protocol/framework/stream-compat";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/index";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
 import {
   chatRecordSummarySchema,
   hostChatRecordsSubscribeClientFrameSchemaV10,
@@ -12,7 +12,7 @@ import {
   hostChatRecordsSubscribeServerFrameSchemaV10,
   hostChatRecordsSubscribeV10,
   listChatRecordsResponseSchema,
-} from "@traycer/protocol/host/epic/chat-records";
+} from "@hukum/protocol/host/epic/chat-records";
 
 /**
  * `host.chatRecords.subscribe@1.0` contract fixtures, plus the record-row

@@ -11,9 +11,9 @@
  * a tab that silently renders nothing instead of falling back to the poll.
  */
 import { describe, expect, it, vi } from "vitest";
-import { hostStreamRpcRegistry } from "@traycer/protocol/host/registry";
-import type { ChatRecordSummary } from "@traycer/protocol/host/epic/chat-records";
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
+import { hostStreamRpcRegistry } from "@hukum/protocol/host/registry";
+import type { ChatRecordSummary } from "@hukum/protocol/host/epic/chat-records";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
 import type {
   IStreamSession,
   ServerFrameHandler,

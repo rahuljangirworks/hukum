@@ -6,7 +6,7 @@ import { z } from "zod";
  * ## Verbatim pass-through
  *
  * The event schemas here are a wire-shape mirror of
- * `traycer-host/src/domain/chat-publish/chat-fork-event.ts`'s `ChatForkEvent`
+ * `hukum-host/src/domain/chat-publish/chat-fork-event.ts`'s `ChatForkEvent`
  * and its nested types - one for one, field for field, deliberately. That file
  * says so about itself: "ticket 09 should be able to pass this through
  * verbatim." Nothing here re-derives, summarizes, or adds interpretation the

@@ -17,7 +17,7 @@ import {
 import { useDurableStreamTransportFactory } from "@/lib/host/use-durable-stream-transport";
 import { openOwnedDurableStreamClient } from "@/lib/host/owned-durable-stream-client";
 import { useOpenEpicId } from "@/lib/epic-selectors";
-import type { FatalErrorDetails } from "@traycer/protocol/framework/ws-protocol";
+import type { FatalErrorDetails } from "@hukum/protocol/framework/ws-protocol";
 import { useAuthStore } from "@/stores/auth/auth-store";
 import {
   createChatSessionStore,

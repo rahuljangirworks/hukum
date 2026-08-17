@@ -1,10 +1,10 @@
 import { afterEach, describe, expect, it } from "vitest";
-import type { JsonContent } from "@traycer/protocol/common/registry";
+import type { JsonContent } from "@hukum/protocol/common/registry";
 import type {
   ChatEvent,
   ClaudePendingWake,
   Message,
-} from "@traycer/protocol/persistence/epic/schemas";
+} from "@hukum/protocol/persistence/epic/schemas";
 import type {
   BackgroundItem,
   ChatFileEditApprovalState,
@@ -12,30 +12,30 @@ import type {
   ChatQueueState,
   ChatRunSettings,
   ChatSubscribeClientFrame,
-} from "@traycer/protocol/host/agent/gui/subscribe";
-import { createImageResolutionUpdatedFrame } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
-import type { WorktreeBinding } from "@traycer/protocol/host/worktree-schemas";
-import type { SchemaVersion } from "@traycer/protocol/framework/versioned-stream-rpc";
+} from "@hukum/protocol/host/agent/gui/subscribe";
+import { createImageResolutionUpdatedFrame } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
+import type { WorktreeBinding } from "@hukum/protocol/host/worktree-schemas";
+import type { SchemaVersion } from "@hukum/protocol/framework/versioned-stream-rpc";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import {
   ChatStreamClient,
   type ChatStreamCallbacks,
-} from "@traycer-clients/shared/host-transport/chat-stream-client";
+} from "@hukum-clients/shared/host-transport/chat-stream-client";
 import type {
   IStreamSession,
   ServerFrameHandler,
   StatusChangeHandler,
   StreamCloseReason,
   StreamFrameEnvelope,
-} from "@traycer-clients/shared/host-transport/i-stream-session";
+} from "@hukum-clients/shared/host-transport/i-stream-session";
 import {
   WsStreamClient,
   type ParamsOf,
-} from "@traycer-clients/shared/host-transport/ws-stream-client";
+} from "@hukum-clients/shared/host-transport/ws-stream-client";
 import { resolveSubmitDeliveryPolicy } from "@/lib/chats/resolve-steer-submit";
 import {
   ACCEPTED_CHAT_ACTION_RETENTION_MS,
@@ -61,7 +61,7 @@ import {
   useInterviewDraftStore,
 } from "@/stores/composer/interview-draft-store";
 import { isOptimisticQueuedItem } from "@/stores/chats/optimistic-queue";
-import type { WorktreeIntent } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeIntent } from "@hukum/protocol/host/worktree-schemas";
 import {
   __resetAppLocalNotificationsStoreForTests,
   useAppLocalNotificationsStore,

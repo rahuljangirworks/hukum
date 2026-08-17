@@ -1,0 +1,323 @@
+{
+  "pbtResults": {
+    "1. Write bug condition exploration test": {
+      "status": "unexpected_pass",
+      "failingExample": "Test PASSED (unexpected for a bug exploration test). The blank-URL bug condition does NOT manifest at the fetchRegisteredHostsViaHttp layer.\n\nInvestigation conclusion:\n- hostsApiUrl(\"\") throws TypeError inside the try block (it's an argument to fetch())\n- The catch block catches it and returns { kind: \"network-error\" }\n- The ACTUAL bug loop originates at a higher layer: performFetchRegisteredHosts in auth-service.ts converts { kind: \"network-error\" } into a throw, TanStack retries on interval, query stays enabled post-uninstall\n- The fix needed is query disabling (Task 4), not a URL guard in the fetch function\n- This test serves as a regression guard for the blank-URL graceful handling",
+      "lastRunTimestamp": 1786851147844
+    },
+    "2. Write preservation property tests (BEFORE implementing fix)": {
+      "status": "passed",
+      "lastRunTimestamp": 1786852946676
+    },
+    "3.2 Verify bug condition exploration test (blank URL cases) now passes": {
+      "status": "passed",
+      "lastRunTimestamp": 1786853422304
+    }
+  },
+  "executionHistory": {
+    "1. Write bug condition exploration test": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850566619
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850582519
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786851168781
+      }
+    ],
+    "2. Write preservation property tests (BEFORE implementing fix)": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850566687
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786851176275
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786852963508
+      }
+    ],
+    "3.1 Implement the URL guard": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850566769
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786852971274
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853180627
+      }
+    ],
+    "3.2 Verify bug condition exploration test (blank URL cases) now passes": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850566863
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853187879
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853444260
+      }
+    ],
+    "3.3 Verify preservation tests still pass": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850566950
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853451133
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853461159
+      }
+    ],
+    "4.1 Create the Zustand store": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850566991
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853468608
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853542481
+      }
+    ],
+    "4.2 Wire the store into the uninstall mutation": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567070
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853549424
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853714656
+      }
+    ],
+    "4.3 Gate useRegisteredHosts with removedInSession": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567133
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853721644
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853795760
+      }
+    ],
+    "4.4 Gate useHostDirectoryList with removedInSession": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567202
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853803814
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853924175
+      }
+    ],
+    "4.5 Verify bug condition exploration test (post-uninstall query) now passes": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567268
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853933712
+      }
+    ],
+    "4.6 Verify preservation tests still pass": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567318
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853940663
+      }
+    ],
+    "5.1 Persist removed-by-user marker on uninstall": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567369
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853948745
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853983154
+      }
+    ],
+    "5.2 Implement relaunch detection in app boot": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567440
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853990182
+      }
+    ],
+    "5.3 Verify relaunch scenario works correctly": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567494
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853999815
+      }
+    ],
+    "6.1 Implement navigation lock in sidebar/settings layout": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567559
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786854007064
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786854082524
+      }
+    ],
+    "6.2 Verify bug condition exploration test (navigation lock) now passes": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567639
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786854089032
+      }
+    ],
+    "6.3 Verify preservation tests still pass": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567706
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786854095953
+      }
+    ],
+    "7. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786850567791
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786854103205
+      },
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786854410911
+      }
+    ],
+    "3. Fix: URL guard in fetchRegisteredHostsViaHttp": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853461196
+      }
+    ],
+    "4. Fix: Zustand host-removal store and query disabling": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853940722
+      }
+    ],
+    "5. Fix: Removed-by-user marker and relaunch detection": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786853999903
+      }
+    ],
+    "6. Fix: Navigation lock after uninstall": [
+      {
+        "executionId": "97bb6915-243a-4c09-ad10-4377c69cb93c",
+        "chatSessionId": "sess_09cf76cc-f31c-42b6-b1d8-46fc31879953",
+        "timestamp": 1786854096035
+      }
+    ]
+  }
+}

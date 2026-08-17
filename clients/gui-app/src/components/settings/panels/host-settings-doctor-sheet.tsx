@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostDoctorIssue } from "@traycer/protocol/host/maintenance/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostDoctorIssue } from "@hukum/protocol/host/maintenance/index";
 import { HostDoctorCard } from "@/components/settings/panels/host-doctor-card";
 import { HostDoctorRpcCard } from "@/components/settings/panels/host-doctor-rpc-card";
 import {

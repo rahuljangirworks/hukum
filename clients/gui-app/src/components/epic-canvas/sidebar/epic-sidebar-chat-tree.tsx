@@ -4,8 +4,8 @@
  */
 import { useDraggable } from "@dnd-kit/core";
 import { AnimatePresence, m, useReducedMotion } from "motion/react";
-import type { RoleClaim } from "@traycer/protocol/persistence/epic/role-claims";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { RoleClaim } from "@hukum/protocol/persistence/epic/role-claims";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import { v4 as uuidv4 } from "uuid";
 import { useReactiveActiveHostId } from "@/hooks/host/use-reactive-active-host-id";
 import { useHostReachability } from "@/hooks/agent/use-host-reachability";
@@ -40,7 +40,7 @@ import { useOpenEpicHandle } from "@/providers/use-open-epic-handle";
 import { cn } from "@/lib/utils";
 import { useCompactRelativeTime } from "@/lib/relative-time";
 import { OwnerResourceChip } from "@/components/resources/resource-usage-chip";
-import type { ResourceOwnerKindWire } from "@traycer/protocol/host/resources/subscribe";
+import type { ResourceOwnerKindWire } from "@hukum/protocol/host/resources/subscribe";
 import { ChatProgressIcon } from "@/components/chat/chat-progress-icon";
 import { NotificationIndicatorsProvider } from "@/components/notifications/notification-indicators-provider";
 import {

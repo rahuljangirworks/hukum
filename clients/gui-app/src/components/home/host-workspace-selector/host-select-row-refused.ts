@@ -1,5 +1,5 @@
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
-import { isConfirmedTransportRefusal } from "@traycer-clients/shared/host-client/remote-fetcher";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
+import { isConfirmedTransportRefusal } from "@hukum-clients/shared/host-client/remote-fetcher";
 
 /**
  * Whether a host row in the composer's host-only picker refuses selection.

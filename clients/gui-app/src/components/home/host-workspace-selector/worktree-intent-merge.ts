@@ -2,7 +2,7 @@ import type {
   WorktreeEntryScripts,
   WorktreeIntent,
   WorktreeFolderIntent,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { createWorktreeRetryIdentity } from "@/lib/worktree/worktree-retry-identity";
 
 /**

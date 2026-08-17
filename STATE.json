@@ -1,6 +1,6 @@
 {
   "schema_version": "rahulos-state-pointer-v1",
-  "project": "hukum",
+  "project": "hukum-client",
   "scope": "personal",
   "role": "project-executor",
   "canonical_state": "PROJECT-STATE.md",

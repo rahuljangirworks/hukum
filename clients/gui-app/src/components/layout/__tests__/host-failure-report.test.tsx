@@ -60,7 +60,7 @@ function reportedMessage(
   presentation: DefaultHostReadinessPresentation,
 ): string {
   const element = hostFailureReportIssueAction({
-    title: "Could not start Traycer Host",
+    title: "Could not start Hukum Host",
     message: "Something went wrong.",
     code: "host-failure-test",
     source: "test",
@@ -99,7 +99,7 @@ function compatiblePresentation(
   };
 }
 
-describe("hostFailureReportIssueAction — busySessionCount null vs 0 (traycer#860 health line)", () => {
+describe("hostFailureReportIssueAction — busySessionCount null vs 0 (hukum#860 health line)", () => {
   // The regression this line exists to prevent: a fabricated `0` used to read
   // as "busy 0 sessions" for a host that never reported a count at all. The
   // upgrade path now yields `null` instead (see `hostStatusUpgradeV10ToV11`),

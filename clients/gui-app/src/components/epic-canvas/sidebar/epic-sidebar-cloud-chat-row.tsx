@@ -1,7 +1,7 @@
 import { useCallback, type ReactNode } from "react";
 import { Lock } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import { cn } from "@/lib/utils";
 import { EPIC_NODE_ICONS } from "@/lib/artifacts/node-display";
 import { UNKNOWN_HOST_PLACEHOLDER } from "@/lib/host/constants";

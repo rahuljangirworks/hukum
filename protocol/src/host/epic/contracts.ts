@@ -1,7 +1,7 @@
 import {
   defineRpcContract,
   defineUpgradePath,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   batchDeleteRequestSchema,
   batchDeleteResponseSchema,
@@ -91,11 +91,11 @@ import {
   updateChatRunSettingsResponseSchema,
   updateEpicRequestSchema,
   updateEpicResponseSchema,
-} from "@traycer/protocol/host/epic/unary-schemas";
+} from "@hukum/protocol/host/epic/unary-schemas";
 import {
   epicSubscribeV10,
   epicSubscribeV11,
-} from "@traycer/protocol/host/epic/subscribe";
+} from "@hukum/protocol/host/epic/subscribe";
 import {
   listCloudChatPayloadsRequestSchema,
   listCloudChatPayloadsResponseSchema,
@@ -111,23 +111,23 @@ import {
   setChatSharingDefaultResponseSchema,
   setCloudChatVisibilityRequestSchema,
   setCloudChatVisibilityResponseSchema,
-} from "@traycer/protocol/host/epic/cloud-chat";
+} from "@hukum/protocol/host/epic/cloud-chat";
 import {
   listChatPublicationTargetsRequestSchema,
   listChatPublicationTargetsResponseSchema,
-} from "@traycer/protocol/host/epic/chat-publication-identity";
+} from "@hukum/protocol/host/epic/chat-publication-identity";
 import {
   chatBackupStatusRequestSchema,
   chatBackupStatusResponseSchema,
-} from "@traycer/protocol/host/epic/chat-backup-status";
+} from "@hukum/protocol/host/epic/chat-backup-status";
 import {
   chatReplicaReadRequestSchema,
   chatReplicaReadResponseSchema,
-} from "@traycer/protocol/host/epic/chat-replica-read";
+} from "@hukum/protocol/host/epic/chat-replica-read";
 import {
   listChatRecordsRequestSchema,
   listChatRecordsResponseSchema,
-} from "@traycer/protocol/host/epic/chat-records";
+} from "@hukum/protocol/host/epic/chat-records";
 
 // `epic.listTasks@1.0` - frozen pre-pinning host entry point for the CloudData
 // task-list query. Both request and response preserve the released wire shape.

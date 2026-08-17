@@ -4,12 +4,12 @@ import {
   type ChatPartFetcher,
   type ChatPartRequest,
   type StagedChatPart,
-} from "@traycer/protocol/persistence/chat-sync/assembly";
+} from "@hukum/protocol/persistence/chat-sync/assembly";
 import {
   CHAT_SYNC_READER_VERSION,
   listChatHeadParts,
   type ChatHeadRecord,
-} from "@traycer/protocol/persistence/chat-sync/head";
+} from "@hukum/protocol/persistence/chat-sync/head";
 import { describe, expect, it } from "vitest";
 import {
   CHAT_ID,

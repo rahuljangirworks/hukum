@@ -8,11 +8,11 @@ describe("resolveEffectiveBranchPrefix", () => {
     expect(
       resolveEffectiveBranchPrefix(
         { status: "absent" },
-        "traycer/",
+        "hukum/",
         WORKSPACE_PATH,
       ),
     ).toEqual({
-      value: "traycer/",
+      value: "hukum/",
       source: "global",
       warning: null,
     });
@@ -28,7 +28,7 @@ describe("resolveEffectiveBranchPrefix", () => {
     expect(result.source).toBe("global");
     expect(result.warning).toContain("malformed");
     expect(result.warning).toContain(
-      `${WORKSPACE_PATH}/.traycer/environment.json`,
+      `${WORKSPACE_PATH}/.hukum/environment.json`,
     );
   });
 
@@ -36,7 +36,7 @@ describe("resolveEffectiveBranchPrefix", () => {
     expect(
       resolveEffectiveBranchPrefix(
         { status: "present", value: "team/" },
-        "traycer/",
+        "hukum/",
         WORKSPACE_PATH,
       ),
     ).toEqual({
@@ -50,7 +50,7 @@ describe("resolveEffectiveBranchPrefix", () => {
     expect(
       resolveEffectiveBranchPrefix(
         { status: "present", value: "" },
-        "traycer/",
+        "hukum/",
         WORKSPACE_PATH,
       ),
     ).toEqual({
@@ -63,15 +63,15 @@ describe("resolveEffectiveBranchPrefix", () => {
   it("falls back to global with a warning when a present value fails validation", () => {
     const result = resolveEffectiveBranchPrefix(
       { status: "present", value: "has spaces" },
-      "traycer/",
+      "hukum/",
       WORKSPACE_PATH,
     );
-    expect(result.value).toBe("traycer/");
+    expect(result.value).toBe("hukum/");
     expect(result.source).toBe("global");
     expect(result.warning).toContain("has spaces");
     expect(result.warning).toContain("invalid");
     expect(result.warning).toContain(
-      `${WORKSPACE_PATH}/.traycer/environment.json`,
+      `${WORKSPACE_PATH}/.hukum/environment.json`,
     );
   });
 });

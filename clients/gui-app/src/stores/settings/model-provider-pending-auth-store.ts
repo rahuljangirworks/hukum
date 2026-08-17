@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ProviderId } from "@traycer/protocol/host/provider-schemas";
+import type { ProviderId } from "@hukum/protocol/host/provider-schemas";
 
 /**
  * Navigate-safe pending OAuth state for the Model Providers tab, mirroring

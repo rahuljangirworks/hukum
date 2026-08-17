@@ -4,7 +4,7 @@
   "scripts": {
     "dev-desktop": "bun scripts/dev-desktop.js",
     "compile": "nx run-many --target=compile --all --tui=false",
-    "build": "nx run-many --target=build --all --exclude=@traycer-clients/desktop --tui=false",
+    "build": "nx run-many --target=build --all --exclude=@hukum-clients/desktop --tui=false",
     "format": "nx run-many --target=format --all --tui=false",
     "lint": "nx run-many --target=lint --all --tui=false",
     "test": "nx run-many --target=test --all --tui=false",

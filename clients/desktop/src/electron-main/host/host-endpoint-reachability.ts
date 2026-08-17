@@ -1,4 +1,4 @@
-import type { ProcessStartIdentity } from "@traycer/protocol/host/lifecycle";
+import type { ProcessStartIdentity } from "@hukum/protocol/host/lifecycle";
 import {
   getPublishedProcessIdentityVerdict,
   type PublishedProcessIdentityVerdict,
@@ -84,7 +84,7 @@ export function isCurrentHostWebsocketUrl(url: string): boolean {
  * `startIdentity` is `pid.json`'s `processStartIdentity`. It replaced a
  * publication-timestamp comparison that a wall-clock adjustment could turn
  * into a false `"mismatch"` - which, because this predicate reads
- * `"mismatch"` as unreachable, is how traycerai/traycer#740 reported a host
+ * `"mismatch"` as unreachable, is how hukumai/hukum#740 reported a host
  * answering in 8ms as down. The identity operands are kernel-recorded and
  * immune to that; when either is missing the verdict is `"indeterminate"` and
  * the successful handshake carries the decision, as documented above.

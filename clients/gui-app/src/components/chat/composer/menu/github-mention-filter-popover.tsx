@@ -1,7 +1,7 @@
 import { useRef, useState, type ReactNode } from "react";
 import { FilterIcon } from "lucide-react";
 
-import type { GithubMentionRepository } from "@traycer/protocol/host/mention-schemas";
+import type { GithubMentionRepository } from "@hukum/protocol/host/mention-schemas";
 
 import { Button } from "@/components/ui/button";
 import {

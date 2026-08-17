@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type {
   ProviderManagedVersions,
   ProviderPackVersion,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 import { ProviderPackVersionManagerPanel } from "@/components/settings/panels/provider-pack-version-manager-panel";
 import { PROVIDER_PACK_VERSION_MANAGER_CAPABILITY_METHODS } from "@/components/settings/panels/provider-pack-version-manager-capability";
 
@@ -402,7 +402,7 @@ describe("<ProviderPackVersionManagerPanel /> install-state surfaces", () => {
 
   it("wears ONE chip — Current outranks Recommended rather than stacking", () => {
     // Both flags are set. The row used to render both badges plus a meta line
-    // that said "pairs with this Traycer release" a third time. One chip; the
+    // that said "pairs with this Hukum release" a third time. One chip; the
     // rest is in the details.
     renderPanel({
       hostId: "host-1",
@@ -424,7 +424,7 @@ describe("<ProviderPackVersionManagerPanel /> install-state surfaces", () => {
     const row = screen.getByTestId("provider-pack-version-row-1.2.0");
     expect(row.textContent).not.toMatch(/Recommended/u);
     // Not lost — demoted.
-    expect(detailsLabel("1.2.0")).toMatch(/pairs with this Traycer release/iu);
+    expect(detailsLabel("1.2.0")).toMatch(/pairs with this Hukum release/iu);
   });
 
   it("offers no Download or Retry button for a non-retryable error (finding 1)", () => {
@@ -771,7 +771,7 @@ describe("ProviderPackVersionManagerPanel: row density", () => {
     const card = await screen.findByTestId("version-details-1.2.0");
     expect(card.textContent).toMatch(/Installed/u);
     expect(card.textContent).toMatch(/40 MB/u);
-    expect(card.textContent).toMatch(/pairs with this Traycer release/iu);
+    expect(card.textContent).toMatch(/pairs with this Hukum release/iu);
   });
 
   it("keeps a plain published version down to its number and its button", () => {

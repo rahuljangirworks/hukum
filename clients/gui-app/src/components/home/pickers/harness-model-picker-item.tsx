@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { TooltipWrapper } from "@/components/ui/tooltip-wrapper";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
-import { guiAgentModelCapabilitiesSchema } from "@traycer/protocol/host/agent/gui/unary-schemas";
+import { guiAgentModelCapabilitiesSchema } from "@hukum/protocol/host/agent/gui/unary-schemas";
 
 interface HarnessModelPickerItemProps {
   readonly idPrefix: string;

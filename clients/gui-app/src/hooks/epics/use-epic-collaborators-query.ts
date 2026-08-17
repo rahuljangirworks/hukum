@@ -4,10 +4,10 @@ import type {
   CollaboratorEntry,
   ListEpicCollaboratorsResponse,
   PermissionRole,
-} from "@traycer/protocol/host/epic/unary-schemas";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostRequester } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/host/epic/unary-schemas";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostRequester } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { normalizeAvatarUrl } from "@/lib/avatar-url";
 

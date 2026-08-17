@@ -24,10 +24,10 @@ vi.mock("@/lib/host", async (importOriginal) => {
 import { cleanup, render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import { resetNegotiatedManifests } from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
-import type { HostInstalledRecord } from "@traycer-clients/shared/platform/runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import { resetNegotiatedManifests } from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
+import type { HostInstalledRecord } from "@hukum-clients/shared/platform/runner-host";
 import { hostScopeOptionFixture } from "@/components/settings/host-scope/host-scope-fixture";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { HostSettingsPanel } from "@/components/settings/panels/host-settings-panel";
@@ -106,7 +106,7 @@ function renderPanel(options: {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
     hostManagement: management,
   });
   const queryClient = new QueryClient({

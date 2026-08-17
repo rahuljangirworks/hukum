@@ -1,4 +1,4 @@
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import {
   DEFAULT_SORT_MODE,
   makeNodeComparator,

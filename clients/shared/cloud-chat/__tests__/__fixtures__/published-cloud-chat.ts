@@ -1,30 +1,30 @@
-import { getRecordSchema } from "@traycer/protocol/framework/index";
+import { getRecordSchema } from "@hukum/protocol/framework/index";
 import {
   chatHeadReaderSchema,
   serializeChatHeadDocument,
   type ChatHeadPart,
   type ChatHeadRecord,
-} from "@traycer/protocol/persistence/chat-sync/head";
+} from "@hukum/protocol/persistence/chat-sync/head";
 import {
   canonicalJsonStringify,
   type JsonObject,
   type JsonValue,
-} from "@traycer/protocol/persistence/chat-sync/json";
-import { serializeChatShard } from "@traycer/protocol/persistence/chat-sync/shard";
-import { persistenceRecordRegistry } from "@traycer/protocol/persistence/registry";
-import { CHAT_SYNC_SCHEMA_VERSION } from "@traycer/protocol/persistence/chat-sync/version";
+} from "@hukum/protocol/persistence/chat-sync/json";
+import { serializeChatShard } from "@hukum/protocol/persistence/chat-sync/shard";
+import { persistenceRecordRegistry } from "@hukum/protocol/persistence/registry";
+import { CHAT_SYNC_SCHEMA_VERSION } from "@hukum/protocol/persistence/chat-sync/version";
 import type {
   CloudChatIdentity,
   CloudChatSummary,
   ReadCloudChatPartResponse,
   ResolveCloudChatHeadResponse,
-} from "@traycer/protocol/host/epic/cloud-chat";
+} from "@hukum/protocol/host/epic/cloud-chat";
 import {
   encodeBase64,
   utf8Bytes,
   webCryptoSha256Hex,
-} from "@traycer-clients/shared/cloud-chat/bytes";
-import type { CloudChatReadPort } from "@traycer-clients/shared/cloud-chat/cloud-chat-reader";
+} from "@hukum-clients/shared/cloud-chat/bytes";
+import type { CloudChatReadPort } from "@hukum-clients/shared/cloud-chat/cloud-chat-reader";
 
 /**
  * A published chat as a CLIENT meets it: a head DOCUMENT (record plus the

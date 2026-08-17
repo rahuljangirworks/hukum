@@ -485,7 +485,7 @@ export type WorktreeListByWorkspacePathsResponseV13 = z.infer<
 >;
 
 /**
- * Resolved read of a repository's `.traycer/environment.json` worktree
+ * Resolved read of a repository's `.hukum/environment.json` worktree
  * branch-prefix override. `"absent"` means the file/key doesn't exist (or the
  * workspace isn't a git repo) - the client silently inherits the global
  * default. `"present"` carries the raw stored string VERBATIM, including an
@@ -506,7 +506,7 @@ export type RepoBranchPrefixState = z.infer<typeof repoBranchPrefixStateSchema>;
 /**
  * `worktree.listByWorkspacePaths` v1.4 summary. Adds `repoBranchPrefix`, the
  * resolved repository-local branch-prefix override read from the same
- * `.traycer/environment.json` `scripts` already reads. Request is unchanged
+ * `.hukum/environment.json` `scripts` already reads. Request is unchanged
  * from v1.3.
  */
 export const worktreeWorkspaceSummarySchemaV14 =

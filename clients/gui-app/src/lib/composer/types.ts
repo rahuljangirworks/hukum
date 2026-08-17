@@ -13,7 +13,7 @@ export type EntityMentionContextType =
   "epic" | "chat" | "terminal-agent" | "terminal" | EpicArtifactKind | "user";
 /**
  * Wire spelling, not a local one: these strings ARE `ContextType` members in
- * `@traycer/protocol`'s json-content serializer, which reads the mention
+ * `@hukum/protocol`'s json-content serializer, which reads the mention
  * node's `contextType` attribute straight off the submitted document. Renaming
  * them here would silently stop the serializer recognizing the chip.
  */

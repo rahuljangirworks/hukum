@@ -2,7 +2,7 @@ import { type CSSProperties, type ReactNode } from "react";
 import type {
   ImageGenerationResult,
   ToolInputDetail,
-} from "@traycer/protocol/persistence/epic/content-blocks";
+} from "@hukum/protocol/persistence/epic/content-blocks";
 import type { SegmentEndState } from "@/stores/composer/chat-store";
 import { useAttachmentBlobSrc } from "@/lib/attachments/use-attachment-blob-src";
 import { CHAT_IMAGE_MAX_EDGE } from "./chat-image-size";

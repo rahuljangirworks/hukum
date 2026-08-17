@@ -8,13 +8,13 @@ import {
   defineVersionedRpcRegistry,
   type FatalErrorDetails,
   type VersionedRpcRegistry,
-} from "@traycer/protocol/framework/index";
+} from "@hukum/protocol/framework/index";
 import {
   defineStreamRpcContract,
   defineVersionedStreamRpcRegistry,
   type VersionedStreamRpcRegistry,
-} from "@traycer/protocol/framework/versioned-stream-rpc";
-import { buildStreamManifest } from "@traycer/protocol/framework/stream-compat";
+} from "@hukum/protocol/framework/versioned-stream-rpc";
+import { buildStreamManifest } from "@hukum/protocol/framework/stream-compat";
 import {
   createResponderHandshake,
   generateStaticKeyPair,
@@ -22,7 +22,7 @@ import {
   NoiseSession,
   type NoiseHandshakeState,
   type NoiseKeyPair,
-} from "@traycer/protocol/crypto/noise";
+} from "@hukum/protocol/crypto/noise";
 import {
   MuxFrameType,
   NOISE_PROLOGUE,
@@ -33,8 +33,8 @@ import {
   type EncodeMuxFrameInput,
   type MuxFrameTypeValue,
   type QosClassValue,
-} from "@traycer/protocol/host-transport/mux";
-import { MutableBearerLease } from "@traycer-clients/shared/auth/bearer-source";
+} from "@hukum/protocol/host-transport/mux";
+import { MutableBearerLease } from "@hukum-clients/shared/auth/bearer-source";
 import {
   HostRequestAbortedError,
   HostRpcError,
@@ -45,7 +45,7 @@ import {
   getNegotiatedHostMethods,
   resetNegotiatedManifests,
 } from "../../negotiated-manifest-registry";
-import type { StreamAuthRevalidator } from "@traycer-clients/shared/auth/bearer-revalidator";
+import type { StreamAuthRevalidator } from "@hukum-clients/shared/auth/bearer-revalidator";
 import type {
   IStreamWebSocketFactory,
   StreamWebSocketLike,
@@ -63,7 +63,7 @@ import {
   OutboundChunkSource,
   type OutboundMessage,
   type ReassembledMessage,
-} from "@traycer/protocol/host-transport/chunking";
+} from "@hukum/protocol/host-transport/chunking";
 import { RemoteSession, type RemoteSessionOptions } from "../remote-session";
 import { RemoteStreamClient } from "../remote-stream-client";
 import { INBOUND_CREDIT_GRANT_BATCH } from "../config";

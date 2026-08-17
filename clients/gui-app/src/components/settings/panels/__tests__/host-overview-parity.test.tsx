@@ -27,10 +27,10 @@ vi.mock("@/lib/host", async (importOriginal) => {
 import { cleanup, render, screen, within } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
-import { resetNegotiatedManifests } from "@traycer-clients/shared/host-transport/negotiated-manifest-registry";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
-import type { HostListItem } from "@traycer/protocol/host/host-status";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
+import { resetNegotiatedManifests } from "@hukum-clients/shared/host-transport/negotiated-manifest-registry";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
+import type { HostListItem } from "@hukum/protocol/host/host-status";
 import { hostScopeOptionFixture } from "@/components/settings/host-scope/host-scope-fixture";
 import { RunnerHostProvider } from "@/providers/runner-host-provider";
 import { HostSettingsPanel } from "@/components/settings/panels/host-settings-panel";
@@ -157,7 +157,7 @@ const LOCAL_ONLY_SNAPSHOT_DIFFERENCES = [
   // Only `host.isLocalMachine` gets the "This computer" tag next to its name.
   "thisComputerTagPresent",
   // The danger zone's removal row sits on a third capability plane the page was
-  // never meant to unify: "Remove Traycer" uninstalls components from THIS
+  // never meant to unify: "Remove Hukum" uninstalls components from THIS
   // computer over the CLI bridge, "Remove from account" ends registry
   // membership and touches nothing on the machine. They are, in that file's own
   // words, "not two versions of one action". Asserted below per variant.
@@ -192,7 +192,7 @@ function normalizeTestId(testId: string, hostId: string): string {
  * The Danger Zone's REMOVAL verb, filtered out by name rather than folded
  * into a broader "ignore the danger zone" carve-out.
  *
- * `HostDangerZone`'s own comments settle this: "Remove Traycer" uninstalls
+ * `HostDangerZone`'s own comments settle this: "Remove Hukum" uninstalls
  * components from THIS computer over the CLI bridge; "Remove from account"
  * ends registry membership and touches nothing on the machine. They are "not
  * two versions of one action" — a local host with no CLI bridge (this
@@ -204,15 +204,15 @@ function normalizeTestId(testId: string, hostId: string): string {
  * comparison, so a real regression there still fails the test.
  */
 const DANGER_ZONE_REMOVAL_TEST_IDS: ReadonlySet<string> = new Set([
-  "settings-remove-traycer",
-  "settings-remove-traycer-spinner",
+  "settings-remove-hukum",
+  "settings-remove-hukum-spinner",
   "settings-quit-after-uninstall",
   "settings-remove-host-from-account",
   "settings-remove-host-from-account-spinner",
 ]);
 const DANGER_ZONE_REMOVAL_BUTTON_NAMES: ReadonlySet<string> = new Set([
-  "Remove Traycer",
-  "Quit Traycer",
+  "Remove Hukum",
+  "Quit Hukum",
   "Remove from account",
 ]);
 
@@ -262,7 +262,7 @@ async function renderOverviewSnapshot(options: {
             hostId: options.hostId,
             label: options.hostId,
             kind: "remote",
-            websocketUrl: "wss://relay.traycer.ai/rpc/abc123",
+            websocketUrl: "wss://relay.hukum.ai/rpc/abc123",
             version: "1.5.0",
             transportDialability: "dialable",
           },
@@ -290,7 +290,7 @@ async function renderOverviewSnapshot(options: {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false, gcTime: 0 } },
@@ -450,7 +450,7 @@ describe("<HostSettingsPanel /> Overview local/remote parity", () => {
     // A registered remote host gets the account-removal control. The local
     // variant gets NEITHER control here — not because local hosts have none,
     // but because this fixture's `MockRunnerHost` carries no CLI bridge and
-    // `RemoveTraycerRow` renders nothing without one. Both halves are stated so
+    // `RemoveHukumRow` renders nothing without one. Both halves are stated so
     // that deleting the remote row, or growing a local one that should not
     // exist without a bridge, fails here instead of passing as "they agree".
     expect(remote.removalTestIds).toEqual([

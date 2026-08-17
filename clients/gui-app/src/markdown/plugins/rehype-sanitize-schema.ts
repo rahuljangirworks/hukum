@@ -87,13 +87,13 @@ export function extendHukumSanitizeSchema(schema: Schema): Schema {
 /** Assistant-only image source protocols. Other markdown surfaces keep the
  * shared schema above, which deliberately owns only link destinations. */
 export function extendAssistantImageSanitizeSchema(schema: Schema): Schema {
-  const traycerSchema = extendTraycerSanitizeSchema(schema);
+  const hukumSchema = extendHukumSanitizeSchema(schema);
   return {
-    ...traycerSchema,
+    ...hukumSchema,
     protocols: {
-      ...traycerSchema.protocols,
+      ...hukumSchema.protocols,
       src: [
-        ...(traycerSchema.protocols?.src ?? []),
+        ...(hukumSchema.protocols?.src ?? []),
         "data",
         "file",
         ...DRIVE_LETTER_SCHEMES,

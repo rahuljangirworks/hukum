@@ -16,7 +16,7 @@ import {
 
 /**
  * Structural shape of the reassembler under test. The implementation now
- * lives HERE in `@traycer/protocol` (the two hand-mirrored transport copies
+ * lives HERE in `@hukum/protocol` (the two hand-mirrored transport copies
  * were collapsed after they diverged once already), but the spec stays
  * factory-shaped so each consumer's own test file can keep running it against
  * whatever it actually imports — the "guard for the guard" (Architecture §4

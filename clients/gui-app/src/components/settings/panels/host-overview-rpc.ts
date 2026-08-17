@@ -1,14 +1,14 @@
 import { useQueryClient, type UseMutationResult } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   HostDoctorResponse,
   HostGetInstallationInfoResponse,
   HostUpdateCheckResponse,
   HostUpdateInstallResponse,
-} from "@traycer/protocol/host/maintenance/index";
-import type { HostIdentity } from "@traycer/protocol/host/identity/index";
-import type { HostRestartResponse } from "@traycer/protocol/host/restart/index";
+} from "@hukum/protocol/host/maintenance/index";
+import type { HostIdentity } from "@hukum/protocol/host/identity/index";
+import type { HostRestartResponse } from "@hukum/protocol/host/restart/index";
 import { useHostMutation, useHostQuery } from "@/hooks/host/use-host-query";
 import { hostMaintenanceMutationKeys, hostQueryKeys } from "@/lib/query-keys";
 import type { HostRpcRegistry } from "@/lib/host";

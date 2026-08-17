@@ -14,7 +14,7 @@ import {
   screen,
   type RenderResult,
 } from "@testing-library/react";
-import type { GitChangedFile } from "@traycer/protocol/host";
+import type { GitChangedFile } from "@hukum/protocol/host";
 import type {
   ImageAssetRequest,
   ImageAssetState,

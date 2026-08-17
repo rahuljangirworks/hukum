@@ -11,7 +11,7 @@ import type {
   WorktreeBinding,
   WorktreeHostEntryV12,
   WorktreeWorkspaceSummaryV14,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   HoverCard,

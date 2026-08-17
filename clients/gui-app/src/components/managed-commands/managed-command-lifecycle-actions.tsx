@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Play, Trash2 } from "lucide-react";
-import type { ManagedCommand } from "@traycer/protocol/host/managed-command/unary-schemas";
+import type { ManagedCommand } from "@hukum/protocol/host/managed-command/unary-schemas";
 import {
   ManagedCommandActionButton,
   ManagedCommandStopButton,

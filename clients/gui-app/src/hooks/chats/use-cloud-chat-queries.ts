@@ -4,23 +4,23 @@ import {
   useQuery,
   type UseQueryResult,
 } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import {
   toHostRpcError,
   type HostRpcError,
   type ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   readCloudChat,
   type CloudChatRead,
-} from "@traycer-clients/shared/cloud-chat/cloud-chat-reader";
-import { webCryptoSha256Hex } from "@traycer-clients/shared/cloud-chat/bytes";
+} from "@hukum-clients/shared/cloud-chat/cloud-chat-reader";
+import { webCryptoSha256Hex } from "@hukum-clients/shared/cloud-chat/bytes";
 import {
   decodeCloudChatPayload,
   type CloudChatPayloadBytes,
 } from "@/lib/chats/cloud-chat-payloads";
-import type { CloudChatIdentity } from "@traycer/protocol/host/epic/cloud-chat";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+import type { CloudChatIdentity } from "@hukum/protocol/host/epic/cloud-chat";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { cloudChatListCacheKeyIdentity } from "@/lib/chats/cloud-chat-list-cache";
 import { createHostCloudChatReadPort } from "@/lib/chats/cloud-chat-read-port";

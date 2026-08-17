@@ -9,8 +9,8 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
-import type { SnapshotMetaEpic } from "@traycer/protocol/host/epic/snapshot-meta";
-import type { EpicStreamCallbacks } from "@traycer-clients/shared/host-transport/epic-stream-client";
+import type { SnapshotMetaEpic } from "@hukum/protocol/host/epic/snapshot-meta";
+import type { EpicStreamCallbacks } from "@hukum-clients/shared/host-transport/epic-stream-client";
 import { isUnknownHost } from "@/lib/host/constants";
 import { TestRouterProvider } from "@/__tests__/with-test-router";
 import { EpicSurface } from "@/components/epic-tabs/epic-surface";

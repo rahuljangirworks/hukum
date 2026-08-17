@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+import { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import {
   cloudChatListAuthorizesRecordSweep,
   isCloudChatListSettled,

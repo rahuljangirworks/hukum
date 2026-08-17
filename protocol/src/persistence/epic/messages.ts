@@ -1,22 +1,22 @@
-import { commonRecordRegistry } from "@traycer/protocol/common/registry";
-import { getRecordSchema } from "@traycer/protocol/framework/versioned-record";
+import { commonRecordRegistry } from "@hukum/protocol/common/registry";
+import { getRecordSchema } from "@hukum/protocol/framework/versioned-record";
 import {
   contentBlockSchema,
   contentBlockSchemaPreImage,
-} from "@traycer/protocol/persistence/epic/content-blocks";
-import { tokenUsageSchema } from "@traycer/protocol/persistence/epic/foundation";
+} from "@hukum/protocol/persistence/epic/content-blocks";
+import { tokenUsageSchema } from "@hukum/protocol/persistence/epic/foundation";
 import {
   imageDimensionSchema,
   imageSha256HexSchema,
   supportedImageMediaTypeSchema,
-} from "@traycer/protocol/persistence/epic/images";
+} from "@hukum/protocol/persistence/epic/images";
 import {
   agentSenderSchema,
   agentSenderSchemaPreInReplyTo,
   chatSessionAnchorSchema,
   userMessageSenderSchema,
   userMessageSenderSchemaPreInReplyTo,
-} from "@traycer/protocol/persistence/epic/senders";
+} from "@hukum/protocol/persistence/epic/senders";
 import { z } from "zod";
 
 /**

@@ -1,17 +1,17 @@
 import { useCallback, useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import type {
   HostRpcError,
   RequestOfMethod,
   ResponseOfMethod,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import type {
   WorktreeBinding,
   WorktreeBindingOwnerKind,
   WorktreeHostEntryV14,
   WorktreeWorkspaceSummaryV14,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { useHostMutation, useHostQuery } from "@/hooks/host/use-host-query";
 import { useWorktreeGetBinding } from "@/hooks/worktree/use-worktree-get-binding-query";
 import {

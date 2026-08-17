@@ -18,7 +18,7 @@
  * → rejected → adopt, because nothing on that path calls `registerHost()` — the
  * only thing that would clear `deregisteredAt`. Signing in again on the machine
  * does not help either: the interactive login sits below the same early
- * return, so a fresh `traycer login` is never consulted while a matching
+ * return, so a fresh `hukum login` is never consulted while a matching
  * credential file exists. Coming back requires setting the host up again on
  * that machine, and because the row is deregistered rather than revoked, the
  * re-enrollment re-adopts the SAME id with its policy preserved.

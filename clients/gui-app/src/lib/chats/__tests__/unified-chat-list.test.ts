@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import type { SortableNode } from "@/lib/epic-sort";
 import {
   cloudChatRowKey,

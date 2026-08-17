@@ -1,8 +1,8 @@
-import { jsonObjectSchema } from "@traycer/protocol/persistence/chat-sync/json";
+import { jsonObjectSchema } from "@hukum/protocol/persistence/chat-sync/json";
 import {
   storageProjection,
   withResidualCapture,
-} from "@traycer/protocol/persistence/chat-sync/residual";
+} from "@hukum/protocol/persistence/chat-sync/residual";
 import { z } from "zod";
 
 /**

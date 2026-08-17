@@ -12,21 +12,21 @@ import { queryOptions, useQueryClient } from "@tanstack/react-query";
 import type {
   HostClient,
   IHostQueryInvalidator,
-} from "@traycer-clients/shared/host-client/host-client";
-import { HostRuntime } from "@traycer-clients/shared/host-client/host-runtime";
-import type { IHostMessenger } from "@traycer-clients/shared/host-transport/host-messenger";
-import { createAuthAwareMessenger } from "@traycer-clients/shared/host-transport/auth-aware-messenger";
-import { retireAllRemoteSessions } from "@traycer-clients/shared/host-transport/remote/index";
+} from "@hukum-clients/shared/host-client/host-client";
+import { HostRuntime } from "@hukum-clients/shared/host-client/host-runtime";
+import type { IHostMessenger } from "@hukum-clients/shared/host-transport/host-messenger";
+import { createAuthAwareMessenger } from "@hukum-clients/shared/host-transport/auth-aware-messenger";
+import { retireAllRemoteSessions } from "@hukum-clients/shared/host-transport/remote/index";
 import {
   createRetryingMessenger,
   DEFAULT_TRANSPORT_RETRY_POLICY,
-} from "@traycer-clients/shared/host-transport/retrying-messenger";
-import type { RemoteHostFetcher } from "@traycer-clients/shared/host-client/remote-fetcher";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
-import { HostBindingAuthorityRegistry } from "@traycer-clients/shared/host-client/host-binding-authority-registry";
-import { HostRequestCoordinator } from "@traycer-clients/shared/host-client/host-request-coordinator";
-import type { RpcSchedulingPolicy } from "@traycer-clients/shared/host-client/rpc-scheduling-policy";
-import type { VersionedRpcRegistry } from "@traycer/protocol/framework/index";
+} from "@hukum-clients/shared/host-transport/retrying-messenger";
+import type { RemoteHostFetcher } from "@hukum-clients/shared/host-client/remote-fetcher";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
+import { HostBindingAuthorityRegistry } from "@hukum-clients/shared/host-client/host-binding-authority-registry";
+import { HostRequestCoordinator } from "@hukum-clients/shared/host-client/host-request-coordinator";
+import type { RpcSchedulingPolicy } from "@hukum-clients/shared/host-client/rpc-scheduling-policy";
+import type { VersionedRpcRegistry } from "@hukum/protocol/framework/index";
 import { AuthService } from "@/lib/auth/auth-service";
 import { createStreamAuthRevalidator } from "@/lib/auth/stream-auth-revalidator";
 import { createAuthBoundHostDirectory } from "@/lib/host/auth-bound-host-directory";
@@ -265,7 +265,7 @@ export function createHostRuntime<Registry extends VersionedRpcRegistry>(
               },
             })).messenger;
       // Closes the unary-RPC auth-recovery loop: a mid-call 401 from
-      // the Traycer cloud backend is surfaced by the host as
+      // the Hukum cloud backend is surfaced by the host as
       // `HostRpcError { code: "UNAUTHORIZED" }`, and this wrapper drives
       // `AuthService.revalidateCurrentContext()` so the GUI either rotates
       // the existing context's credential lease in place (refresh

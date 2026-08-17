@@ -20,7 +20,7 @@ import type { ProgressInfo } from "../runner/output";
 import type { CommandFn, CommandResult } from "../runner/runner";
 import { withCliLock } from "../store/cli-lock";
 
-// `traycer host update [--version X] [--force]` - the composite (Host Update Layer
+// `hukum host update [--version X] [--force]` - the composite (Host Update Layer
 // Redesign Tech Plan, "New/changed commands" > `host update`, D6): stage
 // whatever `latest` requires (reusing an existing stage, explicit-
 // incomparable policy - a `local-*` install proceeds), then promote it.
@@ -315,7 +315,7 @@ async function requireInstalled(
   if (installed === null) {
     throw cliError({
       code: CLI_ERROR_CODES.HOST_NOT_INSTALLED,
-      message: `host update: no host installed for environment=${environment}; run 'traycer host install latest' first`,
+      message: `host update: no host installed for environment=${environment}; run 'hukum host install latest' first`,
       details: { environment },
       exitCode: 1,
     });

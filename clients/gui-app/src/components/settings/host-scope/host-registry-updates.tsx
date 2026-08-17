@@ -78,10 +78,10 @@ export function HostRegistryUpdates(props: {
   const { item } = props;
   const mutation = useUpdateHostVersionPolicy(item.hostId);
   const affordance = deriveUpdateAffordance({
-    updateState: item.status.updateState,
+    updateState: item.status?.updateState,
     liveBusySessionCount: props.liveBusySessionCount,
   });
-  const pill = deriveUpdatePill(item.status.updateState);
+  const pill = deriveUpdatePill(item.status?.updateState);
   const isAuto = item.updatePolicy === "auto";
 
   return (

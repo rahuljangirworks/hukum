@@ -8,12 +8,12 @@ import {
 } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { ImageResolutionEntry } from "@traycer/protocol/persistence/epic/messages";
+import type { ImageResolutionEntry } from "@hukum/protocol/persistence/epic/messages";
 import {
   AssistantMarkdownImageNode,
   AssistantMarkdownImageProvider,
 } from "@/components/chat/segments/assistant-markdown-image";
-import { TraycerMarkdown } from "@/markdown";
+import { HukumMarkdown } from "@/markdown";
 import {
   ChatScrollToBlockContext,
   type ScrollToChatBlock,
@@ -790,7 +790,7 @@ describe("AssistantMarkdownImage markdown pipeline", () => {
             ],
           }}
         >
-          <TraycerMarkdown
+          <HukumMarkdown
             className={null}
             proseSize="normal"
             components={ASSISTANT_IMAGE_COMPONENTS}
@@ -801,7 +801,7 @@ describe("AssistantMarkdownImage markdown pipeline", () => {
             isStreaming={false}
           >
             {`![windows chart](${encodedSource})`}
-          </TraycerMarkdown>
+          </HukumMarkdown>
         </AssistantMarkdownImageProvider>
       </QueryClientProvider>,
     );

@@ -62,8 +62,8 @@ import { startMainThreadBlockProbe } from "@/lib/perf/main-thread-block-probe";
 startMainThreadBlockProbe();
 import { QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "@tanstack/react-router";
-import type { RemoteHostFetcher } from "@traycer-clients/shared/host-client/remote-fetcher";
-import type { IRunnerHost } from "@traycer-clients/shared/platform/runner-host";
+import type { RemoteHostFetcher } from "@hukum-clients/shared/host-client/remote-fetcher";
+import type { IRunnerHost } from "@hukum-clients/shared/platform/runner-host";
 import { LazyMotion, domMax } from "motion/react";
 import { lazy, Suspense, useCallback, useMemo, type ReactNode } from "react";
 
@@ -75,7 +75,7 @@ const ReactQueryDevtools = import.meta.env.DEV
     )
   : null;
 
-export interface TraycerAppProps {
+export interface HukumAppProps {
   readonly runnerHost: IRunnerHost;
   readonly registry: HostRpcRegistry;
   /**
@@ -101,7 +101,7 @@ export interface TraycerAppProps {
 }
 
 /**
- * Public shell-agnostic entry point for the Traycer GUI.
+ * Public shell-agnostic entry point for the Hukum GUI.
  *
  * Mounts the documented provider stack - outer to inner -
  *   RunnerHostProvider → QueryClientProvider → ThemeProvider →
@@ -114,7 +114,7 @@ export interface TraycerAppProps {
  * `hostRpcRegistry`. The shell owns the React root and the renderer
  * entry - this component is a plain React element.
  */
-export function TraycerApp(props: TraycerAppProps): ReactNode {
+export function HukumApp(props: HukumAppProps): ReactNode {
   const desktopWindowId = readDesktopWindowId(props.runnerHost);
   const router = useMemo(
     () => createAppRouter(props.initialRoute ?? null, desktopWindowId),
@@ -124,7 +124,7 @@ export function TraycerApp(props: TraycerAppProps): ReactNode {
     () => (
       <CenteredCard
         testId={null}
-        message="Initializing Traycer Host…"
+        message="Initializing Hukum Host…"
         spinnerVariant="sparkle"
       />
     ),
@@ -167,7 +167,7 @@ export function TraycerApp(props: TraycerAppProps): ReactNode {
                         onOpenSettings={openSettings}
                       >
                         <RootErrorBoundary router={router}>
-                          <TraycerAuthenticatedRuntime router={router} />
+                          <HukumAuthenticatedRuntime router={router} />
                         </RootErrorBoundary>
                       </HostReadinessControllerProvider>
                     </HostCompatibilityProvider>
@@ -199,11 +199,11 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
-interface TraycerAuthenticatedRuntimeProps {
+interface HukumAuthenticatedRuntimeProps {
   readonly router: AppRouter;
 }
 
-function TraycerAuthenticatedRuntime(props: TraycerAuthenticatedRuntimeProps) {
+function HukumAuthenticatedRuntime(props: HukumAuthenticatedRuntimeProps) {
   return (
     <CommandPaletteProvider router={props.router}>
       <SupportContextRegistryBridge router={props.router} />
@@ -230,7 +230,7 @@ function TraycerAuthenticatedRuntime(props: TraycerAuthenticatedRuntimeProps) {
                                 <NotificationsSessionProvider
                                   navigate={props.router.navigate}
                                 >
-                                  <TraycerAppRuntimeSurface
+                                  <HukumAppRuntimeSurface
                                     router={props.router}
                                   />
                                 </NotificationsSessionProvider>
@@ -251,11 +251,11 @@ function TraycerAuthenticatedRuntime(props: TraycerAuthenticatedRuntimeProps) {
   );
 }
 
-interface TraycerAppRuntimeSurfaceProps {
+interface HukumAppRuntimeSurfaceProps {
   readonly router: AppRouter;
 }
 
-function TraycerAppRuntimeSurface(props: TraycerAppRuntimeSurfaceProps) {
+function HukumAppRuntimeSurface(props: HukumAppRuntimeSurfaceProps) {
   // The host-readiness gate now lives INSIDE the router (around the routed
   // page, in `RootComponent`'s `HostReadyGate`), so `RouterProvider` mounts
   // unconditionally here. That keeps the root-route bridges - the menu command

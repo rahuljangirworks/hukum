@@ -1,10 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { HostListItem } from "@traycer/protocol/host/host-status";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostListItem } from "@hukum/protocol/host/host-status";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 import {
   hostListItemToDirectoryEntry,
   type RemoteHostDirectoryEntry,
-} from "@traycer-clients/shared/host-client/remote-fetcher";
+} from "@hukum-clients/shared/host-client/remote-fetcher";
 
 // `hostTransportKey`/`dialableHostEndpoint` ask this for live-session
 // evidence. Stubbed at the module boundary - the single rule under test is
@@ -13,11 +13,11 @@ import {
 // than merely having a `hostId` that happens to answer false.
 const readySessionHosts = vi.hoisted(() => ({ value: new Set<string>() }));
 vi.mock(
-  "@traycer-clients/shared/host-transport/remote/index",
+  "@hukum-clients/shared/host-transport/remote/index",
   async (importOriginal) => {
     const actual =
       await importOriginal<
-        typeof import("@traycer-clients/shared/host-transport/remote/index")
+        typeof import("@hukum-clients/shared/host-transport/remote/index")
       >();
     return {
       ...actual,

@@ -4,27 +4,27 @@ import {
   type ChatAssemblyIntegrityReason,
   type ChatPartRequest,
   type StagedChatPart,
-} from "@traycer/protocol/persistence/chat-sync/assembly";
+} from "@hukum/protocol/persistence/chat-sync/assembly";
 import {
   CHAT_SYNC_READER_VERSION,
   decodeChatHeadDocument,
   type ChatHeadDocumentCorruptionReason,
   type ChatHeadRefusalReason,
-} from "@traycer/protocol/persistence/chat-sync/head";
-import type { AssembledChat } from "@traycer/protocol/persistence/chat-sync/assembly";
+} from "@hukum/protocol/persistence/chat-sync/head";
+import type { AssembledChat } from "@hukum/protocol/persistence/chat-sync/assembly";
 import type {
   CloudChatIdentity,
   CloudChatSummary,
   ReadCloudChatPartResponse,
   ResolveCloudChatHeadResponse,
-} from "@traycer/protocol/host/epic/cloud-chat";
+} from "@hukum/protocol/host/epic/cloud-chat";
 import {
   decodeBase64,
   utf8Bytes,
   utf8Text,
   type Sha256Hex,
-} from "@traycer-clients/shared/cloud-chat/bytes";
-import type { ChatPartCache } from "@traycer-clients/shared/cloud-chat/part-cache";
+} from "@hukum-clients/shared/cloud-chat/bytes";
+import type { ChatPartCache } from "@hukum-clients/shared/cloud-chat/part-cache";
 
 /**
  * The client half of the cloud-chat read path: resolve, gate, fetch what is

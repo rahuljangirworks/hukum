@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
-import type { WorkspaceMentionSuggestion } from "@traycer/protocol/host/index";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
+import type { WorkspaceMentionSuggestion } from "@hukum/protocol/host/index";
 import type { HostRpcRegistry } from "@/lib/host";
 import { keepPreviousDataForSameHost } from "@/hooks/host/keep-previous-data-same-host";
 import { useHostQueries } from "@/hooks/host/use-host-queries";

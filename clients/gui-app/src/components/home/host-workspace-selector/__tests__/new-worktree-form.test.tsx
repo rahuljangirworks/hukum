@@ -632,7 +632,7 @@ describe("NewWorktreeForm — new-branch name", () => {
           isPrimary
           summary={SUMMARY}
           currentIntent={currentIntent}
-          defaultNewBranchName="traycer/swift-otter"
+          defaultNewBranchName="hukum/swift-otter"
           onEmit={onEmit}
         />
       </TooltipProvider>
@@ -643,7 +643,7 @@ describe("NewWorktreeForm — new-branch name", () => {
       ...currentIntent,
       branch: {
         type: "new",
-        name: "traycer/fresh-otter",
+        name: "hukum/fresh-otter",
         source: "development",
         carryUncommittedChanges: false,
         collision: "random",
@@ -654,7 +654,7 @@ describe("NewWorktreeForm — new-branch name", () => {
 
     expect(
       screen.getByTestId<HTMLInputElement>("new-worktree-branch-name").value,
-    ).toBe("traycer/fresh-otter");
+    ).toBe("hukum/fresh-otter");
     expect(screen.getByTestId("new-worktree-save-status").textContent).toBe(
       "Saved",
     );

@@ -71,12 +71,12 @@ describe("source badges", () => {
       "OpenCode's own credential store",
     );
     // A declared custom row is the user's own work, not something managed away
-    // from them - so it does not get the "managed outside Traycer" line.
+    // from them - so it does not get the "managed outside Hukum" line.
     expect(sourceBadgeHint("config", "OpenCode", true)).toContain(
       "with its own base URL and models",
     );
     expect(sourceBadgeHint("config", "OpenCode", false)).toContain(
-      "managed outside Traycer",
+      "managed outside Hukum",
     );
   });
 });

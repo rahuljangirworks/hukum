@@ -19,7 +19,7 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { WorktreeWorkspaceSummaryV15 } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeWorkspaceSummaryV15 } from "@hukum/protocol/host/worktree-schemas";
 import type { ResolvedFolder } from "@/lib/workspace/resolved-folder";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
@@ -346,7 +346,7 @@ beforeEach(() => {
   mocks.setRepoBranchPrefixMutate.mockReset();
   useWorktreeIntentStagingStore.getState().resetForTests();
   useWorktreeIntentMemoryStore.getState().resetForTests();
-  useSettingsStore.setState({ worktreeBranchPrefix: "traycer/" });
+  useSettingsStore.setState({ worktreeBranchPrefix: "hukum/" });
 });
 
 afterEach(cleanup);

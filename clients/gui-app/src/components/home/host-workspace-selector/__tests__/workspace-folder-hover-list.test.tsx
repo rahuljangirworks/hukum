@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
-import type { WorktreeFolderIntent } from "@traycer/protocol/host/worktree-schemas";
+import type { WorktreeFolderIntent } from "@hukum/protocol/host/worktree-schemas";
 import {
   HoverCard,
   HoverCardContent,
@@ -30,7 +30,7 @@ function folder(over: {
     branchLabel: over.branchLabel,
     summary: null,
     currentIntent: over.currentIntent,
-    defaultNewBranchName: "traycer/swift-otter",
+    defaultNewBranchName: "hukum/swift-otter",
     branchPrefixWarning: null,
     repoIdentifier: null,
     isPrimary: true,
@@ -60,9 +60,9 @@ describe("WorkspaceFolderHoverList", () => {
         items={[
           folder({
             key: "/a",
-            displayName: "traycer",
+            displayName: "hukum",
             branchLabel: "main",
-            displayPath: "/Users/me/Work/traycer",
+            displayPath: "/Users/me/Work/hukum",
             mode: "local",
             currentIntent: null,
           }),
@@ -77,17 +77,17 @@ describe("WorkspaceFolderHoverList", () => {
               workspacePath: "/Users/me/Work/infra",
               repoIdentifier: null,
               isPrimary: true,
-              worktreePath: "/Users/me/.traycer/worktrees/infra/feat-login",
+              worktreePath: "/Users/me/.hukum/worktrees/infra/feat-login",
             },
           }),
         ]}
       />,
     );
     // Local → the source folder path.
-    expect(screen.getByText("/Users/me/Work/traycer")).toBeTruthy();
+    expect(screen.getByText("/Users/me/Work/hukum")).toBeTruthy();
     // Worktree (adopted) → the worktree path, NOT the source folder.
     expect(
-      screen.getByText("/Users/me/.traycer/worktrees/infra/feat-login"),
+      screen.getByText("/Users/me/.hukum/worktrees/infra/feat-login"),
     ).toBeTruthy();
     expect(screen.queryByText("/Users/me/Work/infra")).toBeNull();
     // This renders inside a HoverCard (not a Tooltip), which mounts a single
@@ -116,9 +116,9 @@ describe("WorkspaceFolderHoverList", () => {
             items={[
               folder({
                 key: "/a",
-                displayName: "traycer",
+                displayName: "hukum",
                 branchLabel: "main",
-                displayPath: "/Users/me/Work/traycer",
+                displayPath: "/Users/me/Work/hukum",
                 mode: "local",
                 currentIntent: null,
               }),
@@ -140,9 +140,9 @@ describe("WorkspaceFolderHoverList", () => {
         items={[
           folder({
             key: "/a",
-            displayName: "traycer",
-            branchLabel: "traycer/new-thing",
-            displayPath: "/Users/me/Work/traycer",
+            displayName: "hukum",
+            branchLabel: "hukum/new-thing",
+            displayPath: "/Users/me/Work/hukum",
             mode: "worktree",
             currentIntent: null,
           }),
@@ -151,7 +151,7 @@ describe("WorkspaceFolderHoverList", () => {
     );
     expect(screen.getByText(/New worktree/)).toBeTruthy();
     // The source folder path is not shown — there's no path yet.
-    expect(screen.queryByText("/Users/me/Work/traycer")).toBeNull();
+    expect(screen.queryByText("/Users/me/Work/hukum")).toBeNull();
   });
 
   it("claims a viewport-aware width so a long path cannot drive unpredictable w-fit sizing", () => {
@@ -160,7 +160,7 @@ describe("WorkspaceFolderHoverList", () => {
         items={[
           folder({
             key: "/a",
-            displayName: "traycer",
+            displayName: "hukum",
             branchLabel: "main",
             displayPath:
               "/Users/me/Work/a-very-long-path-that-would-otherwise-drive-unpredictable-sizing",
@@ -185,18 +185,18 @@ describe("WorkspaceFolderHoverList", () => {
           folder({
             key: "/a",
             displayName: "a-very-long-repository-name-that-needs-more-room",
-            branchLabel: "traycer/a-very-long-target-branch-name",
-            displayPath: "/Users/me/Work/traycer",
+            branchLabel: "hukum/a-very-long-target-branch-name",
+            displayPath: "/Users/me/Work/hukum",
             mode: "worktree",
             currentIntent: {
               kind: "worktree",
-              workspacePath: "/Users/me/Work/traycer",
+              workspacePath: "/Users/me/Work/hukum",
               repoIdentifier: null,
               isPrimary: true,
               scripts: null,
               branch: {
                 type: "new",
-                name: "traycer/a-very-long-target-branch-name",
+                name: "hukum/a-very-long-target-branch-name",
                 source: "release/a-very-long-base-branch-name",
                 carryUncommittedChanges: false,
               },
@@ -214,7 +214,7 @@ describe("WorkspaceFolderHoverList", () => {
     expect(folderName.className).toContain("break-words");
     expect(folderName.className).not.toContain("truncate");
     expect(branchName.textContent).toBe(
-      "traycer/a-very-long-target-branch-name",
+      "hukum/a-very-long-target-branch-name",
     );
     expect(branchName.className).toContain("break-words");
     expect(branchName.className).not.toContain("truncate");

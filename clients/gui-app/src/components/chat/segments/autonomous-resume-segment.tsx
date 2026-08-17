@@ -195,7 +195,7 @@ function resumeStatusTitle(trigger: AutonomousResumeTrigger): string {
 }
 
 function resumeNoun(trigger: AutonomousResumeTrigger): string {
-  // A trigger WITH a managed-command block names a Traycer shell, so it is
+  // A trigger WITH a managed-command block names a Hukum shell, so it is
   // named the way every other shell surface names one - by its monitor flag. A
   // divider persisted before the flag existed reads as `false`, so an old chat
   // says Shell rather than guessing at a watcher.
@@ -222,12 +222,12 @@ function resumeKindTitle(kind: AutonomousResumeTrigger["kind"]): string {
   switch (kind) {
     case "command":
       return "Command";
-    // NOT the Traycer shell entity: a trigger with no `managedCommand` block
+    // NOT the Hukum shell entity: a trigger with no `managedCommand` block
     // that still says "monitor" is the harness's OWN background task - Claude
-    // Code's native Monitor tool - and keeps that tool's real name. Traycer
+    // Code's native Monitor tool - and keeps that tool's real name. Hukum
     // shells are titled through `resumeNoun`'s `managedCommand` branch, which
     // now reaches the same word for a watching shell; the two dividers still
-    // differ where it counts, since only a Traycer shell offers a door into
+    // differ where it counts, since only a Hukum shell offers a door into
     // its output window.
     case "monitor":
       return "Monitor";

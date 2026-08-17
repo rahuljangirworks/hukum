@@ -1,11 +1,11 @@
-import type { IHostDirectoryService } from "@traycer-clients/shared/host-client/host-runtime";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { IHostDirectoryService } from "@hukum-clients/shared/host-client/host-runtime";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import {
   classifyHostRequestFailure,
   type HostRpcError,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { ChatRunSettings } from "@traycer/protocol/host/agent/gui/subscribe";
-import type { HostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { ChatRunSettings } from "@hukum/protocol/host/agent/gui/subscribe";
+import type { HostRpcRegistry } from "@hukum/protocol/host/index";
 import { buildTransientHostClient } from "@/hooks/host/use-host-client-for";
 import type { CreateChatMutationInput } from "@/hooks/epic/use-epic-chat-mutations";
 import {

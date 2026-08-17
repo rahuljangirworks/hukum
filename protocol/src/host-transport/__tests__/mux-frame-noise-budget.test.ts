@@ -5,7 +5,7 @@ import {
   generateStaticKeyPair,
   NoiseSession,
   DEFAULT_REPLAY_WINDOW_SIZE,
-} from "@traycer/protocol/crypto/noise";
+} from "@hukum/protocol/crypto/noise";
 import {
   assertMuxFrameFits,
   encodeMuxFrame,

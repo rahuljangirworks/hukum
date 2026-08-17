@@ -8,7 +8,7 @@ import type {
   StepUpChallengeFetchResult,
   RetainedStepUpVerifyFetchResult,
 } from "../auth/devices-sessions-fetcher";
-import type { MintHostCredentialRequest } from "@traycer/protocol/auth/devices-sessions";
+import type { MintHostCredentialRequest } from "@hukum/protocol/auth/devices-sessions";
 import type { HostListFetchResult } from "../host-client/remote-fetcher";
 import type { LiveHostAvailability } from "../host-client/host-directory";
 import type {
@@ -16,9 +16,9 @@ import type {
   UpdateHostVersionPolicyInput,
 } from "../host-client/host-version-policy-fetcher";
 import type { DeregisterHostFetchResult } from "../host-client/host-deregister-fetcher";
-import type { StoredCredentials } from "@traycer/protocol/config/credentials";
+import type { StoredCredentials } from "@hukum/protocol/config/credentials";
 
-export type { StoredCredentials } from "@traycer/protocol/config/credentials";
+export type { StoredCredentials } from "@hukum/protocol/config/credentials";
 
 /**
  * Composite runner-host surface consumed by `gui-app` on standalone desktop
@@ -52,7 +52,7 @@ export type { StoredCredentials } from "@traycer/protocol/config/credentials";
  *   UX. Shells without native folder access return an empty selection.
  *
  * The concrete `IRunnerHost` is constructed by each shell at bootstrap and
- * passed explicitly into `<TraycerApp />`. Shared code does not resolve or
+ * passed explicitly into `<HukumApp />`. Shared code does not resolve or
  * register it through module-level globals.
  */
 export interface IRunnerHost {
@@ -74,7 +74,7 @@ export interface IRunnerHost {
 
   /**
    * Browser-safe WebSocket attach endpoint for the Remote Host Support relay
-   * (Architecture §3/§4b, S2/T14), e.g. `wss://relay.traycer.ai/attach`.
+   * (Architecture §3/§4b, S2/T14), e.g. `wss://relay.hukum.ai/attach`.
    * Shell-owned, read-only, parity with `authnBaseUrl`. Populated onto a
    * connectable `RemoteHostDirectoryEntry.websocketUrl` so the existing
    * `kind === "remote"` transport branch (`createRemoteHostTransport`) can
@@ -84,7 +84,7 @@ export interface IRunnerHost {
   readonly relayBaseUrl: string;
 
   /**
-   * Validates a Traycer bearer token and returns the full AuthnV3 identity
+   * Validates a Hukum bearer token and returns the full AuthnV3 identity
    * shape required to mint a client `RequestContext`. ACCESS-ONLY (tech plan
    * §3): a single `/api/v3/user` lookup with NO refresh-on-401 fallback, so it
    * can never spend a refresh token - a stale token comes back `rejected` and
@@ -255,7 +255,7 @@ export interface IRunnerHost {
 
   /**
    * Subscribes to the browser-return signal the shell delivers when the user
-   * comes back from the device-approval browser tab (the `traycer://` deep
+   * comes back from the device-approval browser tab (the `hukum://` deep
    * link on desktop). The signal is **payload-free**: device flow is the only
    * interactive login, so the shell carries no token or code here - it only
    * tells the renderer "the browser returned" so the in-flight device poll can
@@ -377,7 +377,7 @@ export interface IRunnerHost {
   readonly service: IServiceHost | null;
 
   /**
-   * Surface to the local `traycer` CLI subprocess. Used by the renderer
+   * Surface to the local `hukum` CLI subprocess. Used by the renderer
    * for two host-independent concerns:
    *   1. Reading bootstrap status (pid metadata + recent bootstrap.log
    *      markers) when the host is unreachable, so the failure card
@@ -387,10 +387,10 @@ export interface IRunnerHost {
    *
    * Present on shells where the CLI ships (desktop) and `null` everywhere
    * else (mobile, web, in-browser dev). Each call corresponds to a single
-   * `traycer` subcommand invocation; failures bubble as rejected promises
+   * `hukum` subcommand invocation; failures bubble as rejected promises
    * with the CLI's stderr in the message.
    */
-  readonly traycerCli: ITraycerCli | null;
+  readonly hukumCli: IHukumCli | null;
 
   /**
    * Cross-window migration-run channel. Used by the migration controller to
@@ -401,8 +401,8 @@ export interface IRunnerHost {
   readonly migration: IMigrationHost | null;
 
   /**
-   * Host-management surface for the local Traycer host. Backed by NDJSON
-   * subcommand invocations against the `traycer` CLI subprocess on desktop;
+   * Host-management surface for the local Hukum host. Backed by NDJSON
+   * subcommand invocations against the `hukum` CLI subprocess on desktop;
    * `null` on shells that don't ship the CLI (mobile, web). Settings → Host
    * and the Doctor failure card consume this surface; long-running operations
    * (install / update / register-service) call `onProgress` for every NDJSON
@@ -469,26 +469,26 @@ export interface IMigrationHost {
 }
 
 /**
- * Renderer-facing view of `traycer host status` output. Mirrors the JSON
+ * Renderer-facing view of `hukum host status` output. Mirrors the JSON
  * the CLI prints on stdout. Field semantics:
- *   - `running`: `true` iff `~/.traycer/host.pid.json` exists and parsed.
+ *   - `running`: `true` iff `~/.hukum/host.pid.json` exists and parsed.
  *     A stale PID file (process gone, file not yet cleaned up) still reads
  *     as `running: true` here - the renderer pairs this with its own
  *     `LocalHostSnapshot` stream to reconcile.
  *   - `pidMetadata`: same shape the host writes; mirrored locally so
- *     `gui-app` does not import from `traycer-host` directly.
- *   - `bootstrapMarkers`: most-recent N entries from `~/.traycer/bootstrap.log`,
+ *     `gui-app` does not import from `hukum-host` directly.
+ *   - `bootstrapMarkers`: most-recent N entries from `~/.hukum/bootstrap.log`,
  *     newest last. Lines that aren't structured markers (raw host stdout
  *     captured into the same file) are filtered out by the CLI.
  *   - `bootstrapLogPath`: absolute path the user can `tail` to debug.
  */
-export interface TraycerHostStatusSnapshot {
+export interface HukumHostStatusSnapshot {
   readonly running: boolean;
-  readonly pidMetadata: TraycerPidMetadata | null;
+  readonly pidMetadata: HukumPidMetadata | null;
   readonly bootstrapMarkers: readonly BootstrapMarkerEntry[];
   readonly bootstrapLogPath: string;
   /**
-   * Last ~80 lines of `~/.traycer/bootstrap.log` verbatim - includes both
+   * Last ~80 lines of `~/.hukum/bootstrap.log` verbatim - includes both
    * structured markers and raw shell stdout/stderr captured into the same
    * file. The loading card renders this live so users see what their shell
    * is doing during a slow init (sourcing zshrc, fzf prompts, asdf shim
@@ -497,7 +497,7 @@ export interface TraycerHostStatusSnapshot {
   readonly bootstrapLogTail: string;
 }
 
-export interface TraycerPidMetadata {
+export interface HukumPidMetadata {
   readonly pid: number;
   readonly hostId: string;
   readonly version: string;
@@ -520,7 +520,7 @@ export interface BootstrapMarkerEntry {
  * defaults were filled in by the CLI - the settings UI surfaces this as
  * "(default - not stored)".
  */
-export interface TraycerShellConfig {
+export interface HukumShellConfig {
   readonly path: string;
   readonly args: readonly string[];
   readonly synthesised: boolean;
@@ -536,7 +536,7 @@ export interface TraycerShellConfig {
  * so the UI can flag a customised-but-uninstalled shell while keeping its ✕;
  * detected rows are always `false`.
  */
-export interface TraycerDetectedShell {
+export interface HukumDetectedShell {
   readonly name: string;
   readonly path: string;
   readonly isDefault: boolean;
@@ -550,7 +550,7 @@ export interface TraycerDetectedShell {
  * shell answers this natively (fs access in Electron main), mirroring the
  * protocol's detection check rather than spawning the CLI per keystroke.
  */
-export interface TraycerShellProbeResult {
+export interface HukumShellProbeResult {
   readonly exists: boolean;
   readonly executable: boolean;
 }
@@ -559,12 +559,12 @@ export interface TraycerShellProbeResult {
 // at its next start. Per-harness env overrides live per-provider in the
 // host's provider-overrides (Settings → Providers), set over the
 // `providers.*` RPC - not through this CLI bridge.
-export interface TraycerEnvOverride {
+export interface HukumEnvOverride {
   readonly key: string;
   readonly value: string | null;
 }
 
-export interface TraycerShellConfigSetInput {
+export interface HukumShellConfigSetInput {
   /** New shell path; null preserves the stored value (or default). */
   readonly path: string | null;
   /**
@@ -575,10 +575,10 @@ export interface TraycerShellConfigSetInput {
   readonly args: readonly string[] | null;
 }
 
-export interface ITraycerCli {
-  hostStatus(): Promise<TraycerHostStatusSnapshot>;
-  shellConfigGet(): Promise<TraycerShellConfig>;
-  shellConfigSet(input: TraycerShellConfigSetInput): Promise<void>;
+export interface IHukumCli {
+  hostStatus(): Promise<HukumHostStatusSnapshot>;
+  shellConfigGet(): Promise<HukumShellConfig>;
+  shellConfigSet(input: HukumShellConfigSetInput): Promise<void>;
   shellConfigReset(): Promise<void>;
   /**
    * Remembers a program in `shell.entries` and selects it (`config shell add`).
@@ -605,15 +605,15 @@ export interface ITraycerCli {
    */
   shellProbe(input: {
     readonly path: string;
-  }): Promise<TraycerShellProbeResult>;
+  }): Promise<HukumShellProbeResult>;
   /**
    * Opens the shell's native "choose a program file" dialog, resolving the
    * chosen absolute path or `null` on cancel. `null` (not a method) on shells
    * with no native file dialog - the picker hides its Browse affordance then.
    */
   readonly pickShellProgramFile: (() => Promise<string | null>) | null;
-  shellListDetected(): Promise<readonly TraycerDetectedShell[]>;
-  envOverrideList(): Promise<readonly TraycerEnvOverride[]>;
+  shellListDetected(): Promise<readonly HukumDetectedShell[]>;
+  envOverrideList(): Promise<readonly HukumEnvOverride[]>;
   envOverrideSet(input: {
     readonly key: string;
     readonly value: string | null;
@@ -881,7 +881,7 @@ export function shouldWipeLegacyCredentials(
 
 /**
  * Typed credential store owned by the shell, backed by the single machine-local
- * `~/.traycer/cli/<env>/credentials` file (tech plan §3). It carries the FULL
+ * `~/.hukum/cli/<env>/credentials` file (tech plan §3). It carries the FULL
  * identity now (the host reads `user.id` from the same file to pin its owner
  * gate), and every token *spend* happens inside the file lock via `rotate` — the
  * renderer never refreshes a token itself.
@@ -970,7 +970,7 @@ export interface INotificationHost {
 }
 
 /**
- * App-local data that must cross renderer realms when another Traycer window
+ * App-local data that must cross renderer realms when another Hukum window
  * owns the foreground. `entry` stays unknown at the shell boundary; gui-app
  * validates it before merging it into the focused renderer's store.
  */
@@ -980,7 +980,7 @@ export interface NotificationForegroundAppLocal {
 }
 
 /** Plain-data main -> renderer relay used instead of an OS notification while
- * another Traycer window is focused. */
+ * another Hukum window is focused. */
 export interface NotificationForegroundDisplay {
   readonly title: string;
   readonly body: string;
@@ -1072,7 +1072,7 @@ export interface LocalHostSnapshot {
 /**
  * Host-management types crossing the shell↔renderer boundary.
  *
- * Mirrors the NDJSON `result.data` payloads emitted by the `traycer host …`
+ * Mirrors the NDJSON `result.data` payloads emitted by the `hukum host …`
  * subcommands. Renderer-facing copy of `clients/desktop/src/
  * ipc-contracts/host-management-types.ts` so `gui-app` can import the
  * shapes from the platform contract instead of reaching across into the
@@ -1107,8 +1107,8 @@ export interface HostInstallResult {
 // reachable; `host-busy` means the running host had work in progress, so
 // the CLI did not restart it and the desktop surfaced it for the renderer's
 // compat probe (continue if compatible, else prompt Retry/Force restart);
-// `removed` means the user uninstalled Traycer's background components from
-// this device (see `uninstallTraycer`), so provisioning is intentionally
+// `removed` means the user uninstalled Hukum's background components from
+// this device (see `uninstallHukum`), so provisioning is intentionally
 // skipped until they reinstall - the renderer shows the removed surface
 // instead of reinstalling the host.
 export interface HostEnsureResult {
@@ -1117,7 +1117,7 @@ export interface HostEnsureResult {
   readonly version: string | null;
 }
 
-// Whether the user has uninstalled Traycer's background components from this
+// Whether the user has uninstalled Hukum's background components from this
 // device via Settings → General → Danger Zone. Persisted by the desktop main
 // process; gates every auto-provision / respawn path so a removed host is not
 // silently reinstalled when it goes unreachable. Cleared by an explicit
@@ -1126,11 +1126,11 @@ export interface HostRemovalState {
   readonly removedByUser: boolean;
 }
 
-// Result of the in-app "Remove Traycer" action. The desktop stops + removes
+// Result of the in-app "Remove Hukum" action. The desktop stops + removes
 // the host service, the host install, and (on macOS) the SMAppService login
-// item, while preserving all `~/.traycer` user data. Each flag reports what
+// item, while preserving all `~/.hukum` user data. Each flag reports what
 // the teardown actually accomplished so the renderer can confirm.
-export interface TraycerUninstallResult {
+export interface HukumUninstallResult {
   readonly removedHost: boolean;
   readonly deregisteredService: boolean;
   readonly removedLoginItem: boolean;
@@ -1234,7 +1234,7 @@ export type MutationKind =
   | "recoverIfDown"
   | "freePortAndRestart"
   | "uninstallHost"
-  | "removeTraycer";
+  | "removeHukum";
 
 export interface MutationLaneStatus {
   readonly kind: MutationKind;
@@ -1283,7 +1283,7 @@ export type BusyContinuation = "retry-with-force" | "activate";
 // `IHostManagement.restartHost`). `declined` is a resolved value, not an
 // error: the host was deliberately NOT restarted - it denied the shutdown
 // claim to protect in-progress work, was removed by the user, or another
-// Traycer process holds the management lock - and the condition clears on
+// Hukum process holds the management lock - and the condition clears on
 // its own or on a later retry. Surfaces render `declined` as plain
 // information; only a rejected promise means something actually broke and
 // deserves an error affordance (field RCA 2026-07-28: a busy denial inside
@@ -1364,7 +1364,7 @@ export type HostTrayCommand =
 /**
  * Snapshot of the CLI install manifest exposed to the renderer. Used by the
  * Settings → Host and Doctor panels to surface the staged-but-not-applied
- * `pendingUpgrade` state recorded by `traycer cli upgrade` when the live
+ * `pendingUpgrade` state recorded by `hukum cli upgrade` when the live
  * binary was locked at upgrade time, plus the Desktop-driven launch-time
  * reconciliation hint for package-manager-owned installs that are older than
  * the bundled CLI. `null` when no manifest or reconciliation hint exists yet.
@@ -1451,10 +1451,10 @@ export interface IHostManagement {
   readonly uninstallHost: (input: {
     readonly all: boolean;
   }) => Promise<HostUninstallResult>;
-  // In-app "Remove Traycer" (Settings → General → Danger Zone). Marks the
+  // In-app "Remove Hukum" (Settings → General → Danger Zone). Marks the
   // device as removed-by-user (suppressing auto-reinstall), tears down the
   // host service + install + macOS login item, and preserves all user data.
-  readonly uninstallTraycer: () => Promise<TraycerUninstallResult>;
+  readonly uninstallHukum: () => Promise<HukumUninstallResult>;
   // Reads the persisted removal sentinel so the renderer can short-circuit to
   // the removed surface before attempting any provisioning.
   readonly getRemovalState: () => Promise<HostRemovalState>;

@@ -36,9 +36,9 @@ function readySupport(): DesktopSupportBridge {
     ...createDesktopSupportBridgeStub(),
     getSnapshot: () =>
       Promise.resolve({
-        appName: "Traycer",
+        appName: "Hukum",
         appVersion: "1.1.8",
-        supportEmail: "support@traycer.ai",
+        supportEmail: "support@hukum.ai",
         privateDeliveryAvailable: true,
         platform: "darwin",
         arch: "arm64",
@@ -57,7 +57,7 @@ function readySupport(): DesktopSupportBridge {
         user: {
           status: "signed-in",
           userName: "Pranshu Gupta",
-          email: "pranshu@traycer.ai",
+          email: "pranshu@hukum.ai",
         },
         links: [],
       }),
@@ -86,8 +86,8 @@ describe("<AboutDetailsDialog />", () => {
     expect(writeText).toHaveBeenCalledWith(
       [
         "Version: 1.1.8",
-        "Signed In: Pranshu Gupta <pranshu@traycer.ai>",
-        "Support: support@traycer.ai",
+        "Signed In: Pranshu Gupta <pranshu@hukum.ai>",
+        "Support: support@hukum.ai",
         "Platform: darwin arm64",
         "Electron: 42.7.1",
         "Chrome: 148.0.7778.280",

@@ -13,23 +13,23 @@ import {
 } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { createRequestContextFixture } from "@traycer-clients/shared/test-fixtures/request-context";
-import { WsStreamClient } from "@traycer-clients/shared/host-transport/ws-stream-client";
-import type { WorktreeDeleteStreamCallbacks } from "@traycer-clients/shared/host-transport/worktree-delete-stream-client";
-import type { WorktreeDeleteBatchStreamCallbacks } from "@traycer-clients/shared/host-transport/worktree-delete-batch-stream-client";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { createRequestContextFixture } from "@hukum-clients/shared/test-fixtures/request-context";
+import { WsStreamClient } from "@hukum-clients/shared/host-transport/ws-stream-client";
+import type { WorktreeDeleteStreamCallbacks } from "@hukum-clients/shared/host-transport/worktree-delete-stream-client";
+import type { WorktreeDeleteBatchStreamCallbacks } from "@hukum-clients/shared/host-transport/worktree-delete-batch-stream-client";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import type { WorktreeHostEntryV15 } from "@traycer/protocol/host/index";
+import type { WorktreeHostEntryV15 } from "@hukum/protocol/host/index";
 import type {
   WorktreeEntryScripts,
   WorktreeSubmoduleMergeFactV12,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import {
   hostStreamRpcRegistry,
   type HostStreamRpcRegistry,
-} from "@traycer/protocol/host/registry";
+} from "@hukum/protocol/host/registry";
 import { WorktreesList } from "@/components/settings/panels/worktrees-settings-panel";
 import { useWorktreeListing } from "@/components/settings/panels/worktrees-listing-query";
 import { hostRpcRegistry, type HostRpcRegistry } from "@/lib/host";
@@ -188,7 +188,7 @@ vi.mock("@/components/ui/dropdown-menu", () => {
 });
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/worktree-delete-stream-client",
+  "@hukum-clients/shared/host-transport/worktree-delete-stream-client",
   () => ({
     WorktreeDeleteStreamClient: class {
       constructor(options: {
@@ -213,7 +213,7 @@ vi.mock(
 );
 
 vi.mock(
-  "@traycer-clients/shared/host-transport/worktree-delete-batch-stream-client",
+  "@hukum-clients/shared/host-transport/worktree-delete-batch-stream-client",
   () => ({
     WorktreeDeleteBatchStreamClient: class {
       constructor(options: {
@@ -2951,8 +2951,8 @@ describe("WorktreesList v1.2 signals", () => {
 
   it("explains unmerged submodule commits with a count and newest subjects", async () => {
     const submodule: WorktreeSubmoduleMergeFactV12 = {
-      repoIdentifier: { owner: "acme", repo: "traycer" },
-      branch: "traycer/feature",
+      repoIdentifier: { owner: "acme", repo: "hukum" },
+      branch: "hukum/feature",
       prState: "none",
       prNumber: null,
       prUrl: null,
@@ -2986,12 +2986,12 @@ describe("WorktreesList v1.2 signals", () => {
     });
 
     const chip = screen.getByTestId("worktree-pr-chip");
-    screen.getByText("traycer · 7 unmerged commits");
+    screen.getByText("hukum · 7 unmerged commits");
     fireEvent.pointerMove(chip);
     expect(
       (
         await screen.findAllByText(
-          "This submodule branch has commits that never landed on traycer's main branch. Deleting the worktree deletes the branch and these commits with it:",
+          "This submodule branch has commits that never landed on hukum's main branch. Deleting the worktree deletes the branch and these commits with it:",
         )
       ).length,
     ).toBeGreaterThan(0);
@@ -3013,7 +3013,7 @@ describe("WorktreesList v1.2 signals", () => {
           submodules: [
             {
               repoIdentifier: { owner: "acme", repo: "lib" },
-              branch: "traycer/lib",
+              branch: "hukum/lib",
               prState: "none",
               prNumber: null,
               prUrl: null,
@@ -3038,7 +3038,7 @@ describe("WorktreesList v1.2 signals", () => {
       (await screen.findAllByText("2 uncommitted changes")).length,
     ).toBeGreaterThan(0);
     expect(
-      screen.getAllByText("acme/lib (traycer/lib): 3 unmerged commits").length,
+      screen.getAllByText("acme/lib (hukum/lib): 3 unmerged commits").length,
     ).toBeGreaterThan(0);
   });
 

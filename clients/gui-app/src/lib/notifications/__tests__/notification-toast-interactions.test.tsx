@@ -13,7 +13,7 @@ import {
   type NotificationDisplayTarget,
 } from "@/lib/notifications/notification-display";
 import type { MergedNotificationRow } from "@/stores/notifications/merged-notifications";
-import type { NotificationShowOutcome } from "@traycer-clients/shared/platform/runner-host";
+import type { NotificationShowOutcome } from "@hukum-clients/shared/platform/runner-host";
 
 vi.mock("next-themes", () => ({
   useTheme: () => ({ theme: "dark" }),

@@ -19,11 +19,11 @@ import {
   type EpicStreamClientFactory,
   type OpenEpicStoreHandle,
 } from "@/stores/epics/open-epic/store";
-import { HostClient } from "@traycer-clients/shared/host-client/host-client";
-import { mockLocalHostEntry } from "@traycer-clients/shared/host-client/mock/mock-host-directory";
-import { MockHostMessenger } from "@traycer-clients/shared/host-client/mock/mock-host-messenger";
-import { hostRpcRegistry, type HostRpcRegistry } from "@traycer/protocol/host";
-import type { CloudChatSummary } from "@traycer/protocol/host/epic/cloud-chat";
+import { HostClient } from "@hukum-clients/shared/host-client/host-client";
+import { mockLocalHostEntry } from "@hukum-clients/shared/host-client/mock/mock-host-directory";
+import { MockHostMessenger } from "@hukum-clients/shared/host-client/mock/mock-host-messenger";
+import { hostRpcRegistry, type HostRpcRegistry } from "@hukum/protocol/host";
+import type { CloudChatSummary } from "@hukum/protocol/host/epic/cloud-chat";
 import { cloudChatListQueryKey } from "@/lib/chats/cloud-chat-list-cache";
 import { createHostQueryInvalidator } from "@/lib/host/query-invalidator";
 import { queryClient } from "@/lib/query-client";

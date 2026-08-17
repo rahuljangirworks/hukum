@@ -3,8 +3,8 @@ import {
   downgradeRequestAcrossMajors,
   downgradeResponseAcrossMajors,
   upgradeResponseToVersion,
-} from "@traycer/protocol/framework/versioned-rpc";
-import { hostRpcRegistry } from "@traycer/protocol/host/index";
+} from "@hukum/protocol/framework/versioned-rpc";
+import { hostRpcRegistry } from "@hukum/protocol/host/index";
 import {
   DEFAULT_PROVIDER_NATIVE_CAPABILITIES,
   providerCliStateSchema,
@@ -19,7 +19,7 @@ import {
   providersListResponseSchema,
   providersListResponseSchemaV60,
   providersListResponseSchemaV70,
-} from "@traycer/protocol/host/provider-schemas";
+} from "@hukum/protocol/host/provider-schemas";
 
 /**
  * Pins the `providers.list@7.0` freeze (the v7.0 line's wire shapes were
@@ -107,7 +107,7 @@ const EXPECTED_PROVIDER_ID_V70_OPTIONS = [
   "codex",
   "opencode",
   "cursor",
-  "traycer",
+  "hukum",
   "grok",
   "qwen",
   "kiro",

@@ -6,7 +6,7 @@ import {
 import { createChatSessionStoreWithNotificationDependencies } from "@/stores/chats/chat-session-store";
 import { IMMEDIATE_STREAM_FLUSH_COORDINATOR } from "@/stores/chats/stream-flush-coordinator";
 import { createAppLocalNotificationsStore } from "@/stores/notifications/app-local-notifications-store";
-import type { ChatStreamCallbacks } from "@traycer-clients/shared/host-transport/chat-stream-client";
+import type { ChatStreamCallbacks } from "@hukum-clients/shared/host-transport/chat-stream-client";
 
 class FakeBroadcastChannel {
   static readonly channels = new Map<string, Set<FakeBroadcastChannel>>();

@@ -12,7 +12,7 @@ import type { ReactNode } from "react";
 import type {
   WorktreeFolderIntent,
   WorktreeWorkspaceSummary,
-} from "@traycer/protocol/host/worktree-schemas";
+} from "@hukum/protocol/host/worktree-schemas";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   contrastRatio,
@@ -137,7 +137,7 @@ function item(over: Partial<WorkspaceRunItem>): WorkspaceRunItem {
     branchLabel: "feat/x",
     summary: GIT_SUMMARY,
     currentIntent: null,
-    defaultNewBranchName: "traycer/swift-otter",
+    defaultNewBranchName: "hukum/swift-otter",
     branchPrefixWarning: null,
     repoIdentifier: { owner: "acme", repo: "app" },
     isPrimary: true,
@@ -385,7 +385,7 @@ describe("FolderRow", () => {
         mode: "worktree",
         currentIntent: null,
         branchPrefixWarning:
-          'Repository branch prefix "has spaces" in /repo/.traycer/environment.json is invalid: Prefix can\'t contain spaces. Using the global default.',
+          'Repository branch prefix "has spaces" in /repo/.hukum/environment.json is invalid: Prefix can\'t contain spaces. Using the global default.',
       },
       NOOP,
     );
@@ -525,7 +525,7 @@ describe("FolderRow", () => {
   it("shows a new worktree's target and lower-emphasis source without changing the branch track", async () => {
     renderRow(
       {
-        branchLabel: "traycer/new-feature",
+        branchLabel: "hukum/new-feature",
         currentIntent: {
           kind: "worktree",
           workspacePath: "/repo",
@@ -534,7 +534,7 @@ describe("FolderRow", () => {
           scripts: null,
           branch: {
             type: "new",
-            name: "traycer/new-feature",
+            name: "hukum/new-feature",
             source: "development",
             carryUncommittedChanges: false,
           },
@@ -544,7 +544,7 @@ describe("FolderRow", () => {
     );
 
     const trigger = screen.getByTestId("folder-branch-trigger");
-    expect(trigger.textContent).toContain("traycer/new-feature");
+    expect(trigger.textContent).toContain("hukum/new-feature");
     expect(trigger.textContent).toContain("from development");
     expect(screen.getByTestId("folder-branch-target").className).toContain(
       "truncate",
@@ -556,7 +556,7 @@ describe("FolderRow", () => {
     expect(trigger.className).toContain("max-w-full");
     fireEvent.focus(trigger);
     expect((await screen.findByRole("tooltip")).textContent).toContain(
-      "traycer/new-feature · from development",
+      "hukum/new-feature · from development",
     );
   });
 
@@ -846,7 +846,7 @@ describe("WorkspaceFolderRows", () => {
               displayName:
                 "a-repository-name-long-enough-to-exceed-a-dialog-column",
               branchLabel:
-                "traycer/a-target-branch-long-enough-to-exceed-a-dialog-column",
+                "hukum/a-target-branch-long-enough-to-exceed-a-dialog-column",
               currentIntent: {
                 kind: "worktree",
                 workspacePath: "/repo",
@@ -855,7 +855,7 @@ describe("WorkspaceFolderRows", () => {
                 scripts: null,
                 branch: {
                   type: "new",
-                  name: "traycer/a-target-branch-long-enough-to-exceed-a-dialog-column",
+                  name: "hukum/a-target-branch-long-enough-to-exceed-a-dialog-column",
                   source:
                     "release/a-base-branch-long-enough-to-exceed-a-dialog-column",
                   carryUncommittedChanges: false,
@@ -1098,7 +1098,7 @@ describe("WorkspaceSummaryTrigger", () => {
         <WorkspaceSummaryTrigger
           items={[
             item({
-              branchLabel: "traycer/new-feature",
+              branchLabel: "hukum/new-feature",
               currentIntent: {
                 kind: "worktree",
                 workspacePath: "/repo",
@@ -1107,7 +1107,7 @@ describe("WorkspaceSummaryTrigger", () => {
                 scripts: null,
                 branch: {
                   type: "new",
-                  name: "traycer/new-feature",
+                  name: "hukum/new-feature",
                   source: "development",
                   carryUncommittedChanges: false,
                 },
@@ -1121,7 +1121,7 @@ describe("WorkspaceSummaryTrigger", () => {
     );
 
     const trigger = screen.getByTestId("workspace-summary-trigger");
-    expect(trigger.textContent).toContain("traycer/new-feature");
+    expect(trigger.textContent).toContain("hukum/new-feature");
     expect(trigger.textContent).toContain("from development");
     expect(screen.getByTestId("folder-branch-source").className).toContain(
       "text-muted-foreground",
@@ -1230,7 +1230,7 @@ describe("FolderBranchControl — Escape close", () => {
           item={item({
             mode: "worktree",
             currentIntent: null,
-            branchLabel: "traycer/swift-otter",
+            branchLabel: "hukum/swift-otter",
             summary: GIT_SUMMARY,
             onEmit,
           })}
@@ -1277,7 +1277,7 @@ describe("FolderBranchControl — Escape close", () => {
           item={item({
             mode: "worktree",
             currentIntent: null,
-            branchLabel: "traycer/swift-otter",
+            branchLabel: "hukum/swift-otter",
             summary: GIT_SUMMARY,
           })}
           boundaryEl={null}
@@ -1428,7 +1428,7 @@ describe("WorkspaceFolderSummaryControl", () => {
           items={[
             item({
               displayName: "a-very-long-repository-name-that-is-truncated",
-              branchLabel: "traycer/a-very-long-target-branch",
+              branchLabel: "hukum/a-very-long-target-branch",
               currentIntent: {
                 kind: "worktree",
                 workspacePath: "/repo",
@@ -1437,7 +1437,7 @@ describe("WorkspaceFolderSummaryControl", () => {
                 scripts: null,
                 branch: {
                   type: "new",
-                  name: "traycer/a-very-long-target-branch",
+                  name: "hukum/a-very-long-target-branch",
                   source: "release/a-very-long-base-branch",
                   carryUncommittedChanges: false,
                 },
@@ -1470,7 +1470,7 @@ describe("WorkspaceFolderSummaryControl", () => {
       "a-very-long-repository-name-that-is-truncated",
     );
     expect(hoverList.textContent).toContain(
-      "traycer/a-very-long-target-branch",
+      "hukum/a-very-long-target-branch",
     );
     expect(hoverList.textContent).toContain(
       "From release/a-very-long-base-branch",

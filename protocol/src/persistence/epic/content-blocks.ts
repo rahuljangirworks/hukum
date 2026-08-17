@@ -7,7 +7,7 @@ import {
   imageDimensionSchema,
   imageSha256HexSchema,
   supportedImageMediaTypeSchema,
-} from "@traycer/protocol/persistence/epic/images";
+} from "@hukum/protocol/persistence/epic/images";
 
 /**
  * Discriminated union of content blocks rendered inside an assistant

@@ -1,15 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { splitConnectionManifest } from "@traycer/protocol/framework/index";
-import { hostRpcRegistry } from "@traycer/protocol/host/registry";
-import { RELEASED_FLOOR_METHOD_NAMES } from "@traycer/protocol/host/released-floor";
-import { releasedMethodNames } from "@traycer/protocol/host/__tests__/__fixtures__/released-method-names";
+import { splitConnectionManifest } from "@hukum/protocol/framework/index";
+import { hostRpcRegistry } from "@hukum/protocol/host/registry";
+import { RELEASED_FLOOR_METHOD_NAMES } from "@hukum/protocol/host/released-floor";
+import { releasedMethodNames } from "@hukum/protocol/host/__tests__/__fixtures__/released-method-names";
 import {
   setChatSharingDefaultRequestSchema,
   setChatSharingDefaultResponseSchema,
   setCloudChatVisibilityRequestSchema,
   setCloudChatVisibilityResponseSchema,
   type CloudChatSummary,
-} from "@traycer/protocol/host/epic/cloud-chat";
+} from "@hukum/protocol/host/epic/cloud-chat";
 
 /**
  * `epic.setCloudChatVisibility` and `epic.setChatSharingDefault` are new

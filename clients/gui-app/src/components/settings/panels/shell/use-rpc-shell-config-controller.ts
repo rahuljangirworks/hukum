@@ -4,13 +4,13 @@ import {
   useQueryClient,
   type QueryKey,
 } from "@tanstack/react-query";
-import type { HostClient } from "@traycer-clients/shared/host-client/host-client";
+import type { HostClient } from "@hukum-clients/shared/host-client/host-client";
 import {
   toHostRpcError,
   type HostRpcError,
-} from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
 import { toastFromHostError } from "@/lib/host-error-toast";
-import type { ConfigShellProbeResponse } from "@traycer/protocol/host/config/index";
+import type { ConfigShellProbeResponse } from "@hukum/protocol/host/config/index";
 import { useHostBinding, type HostRpcRegistry } from "@/lib/host";
 import { useHostQuery } from "@/hooks/host/use-host-query";
 import { useHostScopedMutationForClient } from "@/hooks/host/use-host-scoped-mutation";

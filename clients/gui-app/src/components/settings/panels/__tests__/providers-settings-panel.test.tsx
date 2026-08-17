@@ -7,14 +7,14 @@ import {
   type ProviderCliState,
   type ProviderProfile,
   type ProviderSelection,
-} from "@traycer/protocol/host/provider-schemas";
-import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@traycer/protocol/host/provider-native-schemas";
-import type { ProviderNativeCapabilities } from "@traycer/protocol/host/provider-native-schemas";
+} from "@hukum/protocol/host/provider-schemas";
+import { DEFAULT_PROVIDER_NATIVE_CAPABILITIES } from "@hukum/protocol/host/provider-native-schemas";
+import type { ProviderNativeCapabilities } from "@hukum/protocol/host/provider-native-schemas";
 import {
   HostTransportFailureError,
   RetryableTransportError,
-} from "@traycer-clients/shared/host-transport/host-messenger";
-import type { HostRpcError } from "@traycer-clients/shared/host-transport/host-messenger";
+} from "@hukum-clients/shared/host-transport/host-messenger";
+import type { HostRpcError } from "@hukum-clients/shared/host-transport/host-messenger";
 import type { HostScopeStatus } from "@/components/settings/host-scope/host-scope-status";
 import type { HostScopeOption } from "@/components/settings/host-scope/host-scope-model";
 import { hostScopeOptionFixture } from "@/components/settings/host-scope/host-scope-fixture";
@@ -554,7 +554,7 @@ vi.mock("@/hooks/host/use-reactive-active-host-id", () => ({
   useReactiveActiveHostId: () => "host-1",
 }));
 
-// The Traycer provider mounts the subscription card; stub its credits query so
+// The Hukum provider mounts the subscription card; stub its credits query so
 // the real AuthService (which needs a host-runtime provider) isn't invoked.
 vi.mock("@/hooks/auth/use-auth-user-query", () => ({
   useAuthUser: () => ({
@@ -566,10 +566,10 @@ vi.mock("@/hooks/auth/use-auth-user-query", () => ({
   }),
 }));
 
-// Pure side-effect hook in the Traycer subscription card; no render output, and
+// Pure side-effect hook in the Hukum subscription card; no render output, and
 // it needs a QueryClient this harness doesn't set up.
-vi.mock("@/hooks/auth/use-refresh-credits-on-traycer-turn", () => ({
-  useRefreshCreditsOnTraycerTurn: () => {},
+vi.mock("@/hooks/auth/use-refresh-credits-on-hukum-turn", () => ({
+  useRefreshCreditsOnHukumTurn: () => {},
 }));
 
 // Rate-limit usage query + its refresh hook (RateLimitView). Same reason:
@@ -577,8 +577,8 @@ vi.mock("@/hooks/auth/use-refresh-credits-on-traycer-turn", () => ({
 vi.mock("@/hooks/host/use-host-rate-limit-usage-query", () => ({
   useHostRateLimitUsageQuery: () => ({ data: undefined }),
 }));
-vi.mock("@/hooks/host/use-refresh-rate-limit-usage-on-traycer-turn", () => ({
-  useRefreshRateLimitUsageOnTraycerTurn: () => {},
+vi.mock("@/hooks/host/use-refresh-rate-limit-usage-on-hukum-turn", () => ({
+  useRefreshRateLimitUsageOnHukumTurn: () => {},
 }));
 
 // Provider rate-limit query + its refresh hook (ProviderRateLimitForProvider,
@@ -695,7 +695,7 @@ import {
   AMBIENT_AUTH_PENDING_REPOLL_CAP,
   AMBIENT_AUTH_PENDING_REPOLL_DELAY_MS,
 } from "@/components/settings/panels/use-provider-profile-login-flow";
-import { MockRunnerHost } from "@traycer-clients/shared/host-client/mock/mock-runner-host";
+import { MockRunnerHost } from "@hukum-clients/shared/host-client/mock/mock-runner-host";
 import { RunnerHostContext } from "@/providers/runner-host-context";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { redactEmail } from "@/lib/providers/redact-email";
@@ -799,7 +799,7 @@ const SAMPLE_MCP: NonNullable<ProviderNativeCapabilities["mcp"]> = {
   toolsSource: "probe",
   schemasSource: "probe",
   instructionsSource: "probe",
-  traycerSessionsOnlyEnforcement: false,
+  hukumSessionsOnlyEnforcement: false,
   stdioDegradeNotice: false,
   oauthDegradesToConfigOnly: true,
 };
@@ -818,7 +818,7 @@ const FULL_TABS: ProviderNativeCapabilities = {
       remove: [...BOTH_SCOPES],
       setEnabled: [...BOTH_SCOPES],
     },
-    traycerSessionToolsNotice: false,
+    hukumSessionToolsNotice: false,
   },
   skills: {
     actionScopes: {
@@ -848,7 +848,7 @@ const CURSOR_TABS: ProviderNativeCapabilities = {
       remove: [],
       setEnabled: [],
     },
-    traycerSessionToolsNotice: false,
+    hukumSessionToolsNotice: false,
   },
   skills: {
     actionScopes: {
@@ -1084,7 +1084,7 @@ function createRunnerHost(): MockRunnerHost {
     hosts: [],
     workspaceFolderPickerPaths: undefined,
     hasLocalHost: undefined,
-    traycerCli: undefined,
+    hukumCli: undefined,
   });
 }
 
@@ -1182,7 +1182,7 @@ describe("<ProvidersSettingsPanel />", () => {
           nativeCapabilities: FULL_TABS,
         }),
         providerState({
-          providerId: "traycer",
+          providerId: "hukum",
           selected: { kind: "bundled" },
           candidates: [],
           envOverrides: [],
@@ -1557,14 +1557,14 @@ describe("<ProvidersSettingsPanel />", () => {
     expect(screen.getByText(/Couldn't load provider state/)).toBeDefined();
   });
 
-  it("lists OpenCode CLI candidates for Traycer and mutates Traycer selection", () => {
+  it("lists OpenCode CLI candidates for Hukum and mutates Hukum selection", () => {
     render(
       <TooltipProvider>
         <ProvidersSettingsPanel />
       </TooltipProvider>,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: /Traycer/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Hukum/i }));
     // CLI candidates live on CLI & Args; Account / Profiles lead the tab order.
     selectTab("CLI & Args");
 
@@ -1577,7 +1577,7 @@ describe("<ProvidersSettingsPanel />", () => {
     );
 
     expect(providerMocks.setSelectionMutate).toHaveBeenCalledWith({
-      providerId: "traycer",
+      providerId: "hukum",
       selection: { kind: "path" },
     });
   });
@@ -1585,7 +1585,7 @@ describe("<ProvidersSettingsPanel />", () => {
   it("shows the CLI & Args tab and empty-state notice for amp (no longer id-hidden)", () => {
     // hidesCliCandidates(amp||cursor) used to suppress this whole tab on the
     // premise that those two have no user-selectable binary. Both spawn the
-    // Traycer-resolved binary for MCP write verbs, so the table is the only
+    // Hukum-resolved binary for MCP write verbs, so the table is the only
     // route out of the F2 dead end when nothing is on PATH.
     providerMocks.listResult.data = {
       providers: [
@@ -1618,7 +1618,7 @@ describe("<ProvidersSettingsPanel />", () => {
     selectTab("CLI & Args");
     expect(
       screen.getByText(
-        "No Amp CLI was found on this machine, and Traycer ships no bundled copy of it. Install it, or add its path below.",
+        "No Amp CLI was found on this machine, and Hukum ships no bundled copy of it. Install it, or add its path below.",
       ),
     ).toBeDefined();
     expect(
@@ -1668,7 +1668,7 @@ describe("<ProvidersSettingsPanel />", () => {
                 remove: [],
                 setEnabled: [],
               },
-              traycerSessionToolsNotice: true,
+              hukumSessionToolsNotice: true,
             },
             skills: null,
             modelProviders: null,
@@ -1756,7 +1756,7 @@ describe("<ProvidersSettingsPanel />", () => {
 
     expect(
       screen.getByText(
-        "No Hermes Agent CLI was found on this machine, and Traycer ships no bundled copy of it. Install it, or add its path below.",
+        "No Hermes Agent CLI was found on this machine, and Hukum ships no bundled copy of it. Install it, or add its path below.",
       ),
     ).toBeDefined();
     const guide = screen.getByRole("link", {
@@ -1933,7 +1933,7 @@ describe("<ProvidersSettingsPanel />", () => {
     );
     expect(railProviderNames()).toEqual([
       "OpenCode",
-      "Traycer Inference",
+      "Hukum Inference",
       "OpenRouter",
     ]);
   });
@@ -2023,7 +2023,7 @@ describe("<ProvidersSettingsPanel />", () => {
         },
         {
           ...providerState({
-            providerId: "traycer",
+            providerId: "hukum",
             selected: { kind: "bundled" },
             candidates: [],
             envOverrides: [],
@@ -2046,7 +2046,7 @@ describe("<ProvidersSettingsPanel />", () => {
 
     expect(screen.queryByText(/Disabled by/)).toBeNull();
 
-    fireEvent.click(screen.getByRole("button", { name: /Traycer/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Hukum/i }));
 
     expect(screen.queryByText(/Disabled by/)).toBeNull();
   });
@@ -2086,7 +2086,7 @@ describe("<ProvidersSettingsPanel />", () => {
           nativeCapabilities: FULL_TABS,
         }),
         providerState({
-          providerId: "traycer",
+          providerId: "hukum",
           selected: { kind: "bundled" },
           candidates: [],
           envOverrides: [],
@@ -2106,7 +2106,7 @@ describe("<ProvidersSettingsPanel />", () => {
     expect(screen.getByText("Environment variables")).toBeDefined();
     expect(screen.getByDisplayValue("OPENAI_API_KEY")).toBeDefined();
     expect(
-      screen.getByText(/Applied when Traycer spawns the OpenCode/),
+      screen.getByText(/Applied when Hukum spawns the OpenCode/),
     ).toBeDefined();
   });
 
@@ -2214,7 +2214,7 @@ describe("<ProvidersSettingsPanel />", () => {
     providerMocks.listResult.data = {
       providers: [
         providerState({
-          providerId: "traycer",
+          providerId: "hukum",
           selected: { kind: "bundled" },
           candidates: [],
           envOverrides: [],

@@ -157,7 +157,7 @@ const ARTIFACT_KIND_CARD_CLASSES: Readonly<
     "border-emerald-400/45 border-l-2 shadow-sm shadow-emerald-950/5 dark:border-emerald-300/45",
   review:
     "border-rose-400/45 border-l-2 shadow-sm shadow-rose-950/5 dark:border-rose-300/45",
-  "html-preview": "",
+  
 };
 
 const ARTIFACT_KIND_SURFACE_CLASSES: Readonly<
@@ -167,7 +167,7 @@ const ARTIFACT_KIND_SURFACE_CLASSES: Readonly<
   ticket: "bg-violet-400/[0.07] dark:bg-violet-300/[0.08]",
   story: "bg-emerald-400/[0.07] dark:bg-emerald-300/[0.08]",
   review: "bg-rose-400/[0.07] dark:bg-rose-300/[0.08]",
-  "html-preview": "",
+  
 };
 
 // Opaque equivalent of the collapsed card's surface, for the sticky header. A
@@ -190,7 +190,7 @@ const ARTIFACT_KIND_STICKY_SURFACE_CLASSES: Readonly<
     "bg-[color-mix(in_srgb,var(--background)_86.5%,var(--color-emerald-400))] dark:bg-[color-mix(in_srgb,var(--background)_84.6%,var(--color-emerald-300))]",
   review:
     "bg-[color-mix(in_srgb,var(--background)_86.5%,var(--color-rose-400))] dark:bg-[color-mix(in_srgb,var(--background)_84.6%,var(--color-rose-300))]",
-  "html-preview": "",
+  
 };
 
 const ARTIFACT_KIND_ICON_CLASSES: Readonly<
@@ -203,7 +203,7 @@ const ARTIFACT_KIND_ICON_CLASSES: Readonly<
     "border-emerald-400/25 bg-emerald-400/10 text-emerald-700 dark:border-emerald-300/25 dark:bg-emerald-300/10 dark:text-emerald-300",
   review:
     "border-rose-400/25 bg-rose-400/10 text-rose-700 dark:border-rose-300/25 dark:bg-rose-300/10 dark:text-rose-300",
-  "html-preview": "",
+  
 };
 
 const ARTIFACT_KIND_HOVER_CLASSES: Readonly<
@@ -214,7 +214,7 @@ const ARTIFACT_KIND_HOVER_CLASSES: Readonly<
     ticket: "group-hover/artifact-card:bg-violet-400/[0.11]",
     story: "group-hover/artifact-card:bg-emerald-400/[0.11]",
     review: "group-hover/artifact-card:bg-rose-400/[0.11]",
-    "html-preview": "",
+    
   };
 
 /**

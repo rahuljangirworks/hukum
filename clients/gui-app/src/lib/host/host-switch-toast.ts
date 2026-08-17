@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import type { HostDirectoryEntry } from "@traycer-clients/shared/host-client/host-directory";
+import type { HostDirectoryEntry } from "@hukum-clients/shared/host-client/host-directory";
 
 /**
  * The label a host announcement names, falling back to the id for an entry
