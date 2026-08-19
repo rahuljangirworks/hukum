@@ -15,6 +15,7 @@ import { AgentsSettingsPanel } from "@/components/settings/panels/agents-setting
 import { NotificationsSettingsPanel } from "@/components/settings/panels/notifications-settings-panel";
 import { BrainCapabilitiesPanel } from "@/components/brain/brain-capabilities-panel";
 import { VoiceSettingsPanel } from "@/components/settings/panels/voice-settings-panel";
+import { WorkflowDashboard } from "@/components/workflow/workflow-dashboard";
 import { useSystemTabModalActions } from "@/stores/tabs/use-system-tab-modal";
 
 export interface SettingsModalContentProps {
@@ -63,6 +64,8 @@ export function SettingsPanelForSection(props: {
       return <NotificationsSettingsPanel />;
     case "agents":
       return <AgentsSettingsPanel />;
+    case "workflows":
+      return <WorkflowDashboard />;
     case "keybindings":
       return <KeybindingsSettingsPanel />;
     case "shell":

@@ -67,6 +67,14 @@ export function WorkflowExecutionDetail({
                 addSuffix: true,
               })}
             </CardDescription>
+            <div className="text-muted-foreground mt-1 flex flex-col gap-1 text-xs">
+              <span>
+                <strong>Brain ID:</strong> {exec.brainId}
+              </span>
+              <span>
+                <strong>Intent:</strong> {exec.intent}
+              </span>
+            </div>
           </div>
           <div className="flex flex-row items-center gap-2">
             <Badge variant="outline">{exec.status}</Badge>
@@ -99,7 +107,14 @@ export function WorkflowExecutionDetail({
                   >
                     <div className="flex flex-row items-center justify-between">
                       <span className="font-medium">{step.name}</span>
-                      <Badge variant="secondary">{step.status}</Badge>
+                      <div className="flex items-center gap-2">
+                        {step.agentId ? (
+                          <Badge variant="outline" className="text-xs">
+                            🤖 Agent: {step.agentId.substring(0, 8)}
+                          </Badge>
+                        ) : null}
+                        <Badge variant="secondary">{step.status}</Badge>
+                      </div>
                     </div>
                     {approval && approval.status === "pending" && (
                       <div className="bg-muted flex flex-col gap-2 rounded-md p-2">

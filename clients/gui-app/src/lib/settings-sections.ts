@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Settings as SettingsIcon,
   TerminalSquare,
+  Workflow,
 } from "lucide-react";
 
 export type SettingsSectionId =
@@ -28,7 +29,8 @@ export type SettingsSectionId =
   | "voice"
   | "host"
   | "devices"
-  | "diagnostics";
+  | "diagnostics"
+  | "workflows";
 
 /**
  * What a section BELONGS to — the organising idea of the whole surface.
@@ -183,6 +185,13 @@ export const SETTINGS_SECTIONS: ReadonlyArray<SettingsSection> = [
     id: "agents",
     label: "Agent selection",
     icon: Bot,
+    group: "host",
+    requiresLocalHost: false,
+  },
+  {
+    id: "workflows",
+    label: "Workflows",
+    icon: Workflow,
     group: "host",
     requiresLocalHost: false,
   },
